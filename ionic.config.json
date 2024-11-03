@@ -1,0 +1,7 @@
+{
+  "name": "NoMercy App",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "vue-vite"
+}
