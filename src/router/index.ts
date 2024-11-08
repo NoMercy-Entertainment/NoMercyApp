@@ -1,39 +1,23 @@
-import { createRouter, createWebHistory } from '@ionic/vue-router';
-import { RouteRecordRaw } from 'vue-router';
-import TabsPage from '../views/TabsPage.vue'
-
-const routes: Array<RouteRecordRaw> = [
-  {
-    path: '/',
-    redirect: '/tabs/tab1'
-  },
-  {
-    path: '/tabs/',
-    component: TabsPage,
-    children: [
-      {
-        path: '',
-        redirect: '/tabs/tab1'
-      },
-      {
-        path: 'tab1',
-        component: () => import('@/views/Tab1Page.vue')
-      },
-      {
-        path: 'tab2',
-        component: () => import('@/views/Tab2Page.vue')
-      },
-      {
-        path: 'tab3',
-        component: () => import('@/views/Tab3Page.vue')
-      }
-    ]
-  }
-]
+import {createRouter, createWebHashHistory, createWebHistory} from '@ionic/vue-router';
+import {routes} from '@/router/routes';
+import beforeEach from '@/router/middleware/beforeEach';
+import afterEach from '@/router/middleware/afterEach';
+import promises from '@/router/middleware/beforeResolve';
+import {handlePromises} from '@/router/middleware/handlePromises';
+import {isPlatform} from '@ionic/vue';
 
 const router = createRouter({
-  history: createWebHistory(import.meta.env.BASE_URL),
-  routes
-})
+	history: isPlatform('capacitor')
+		? createWebHistory(import.meta.env.BASE_URL)
+		: createWebHashHistory(import.meta.env.BASE_URL),
+	routes: routes,
+});
 
-export default router
+router.beforeResolve(async (to, from, next) => {
+	await handlePromises(promises, next);
+});
+
+beforeEach(router);
+afterEach(router);
+
+export default router;

@@ -1,0 +1,45 @@
+<script setup lang="ts">
+import {IonToggle} from '@ionic/vue';
+
+const modelValue = defineModel({
+  type: Boolean,
+  required: true,
+});
+
+</script>
+
+<template>
+  <ion-toggle
+      :checked="modelValue"
+      @ionChange="modelValue = $event.target.checked"
+      mode="ios"
+      @click="$event.stopPropagation()"
+      />
+</template>
+
+<style scoped>
+
+ion-toggle {
+  --handle-width: 1.2rem;
+  --track-background: rgb(var(--color-slate-11));
+  --track-background-checked: linear-gradient(0deg, rgba(111, 82, 255, 0.73), rgba(142, 117, 255, 0.84));
+}
+
+ion-toggle::part(track) {
+  border: 0.2px solid #0000000a;
+  box-shadow: 0 0.5px 2px 0 rgba(0, 0, 0, 0.24) inset;
+}
+
+ion-toggle::part(track),
+ion-toggle.toggle-checked::part(track) {
+  @apply flex justify-end items-center flex-grow-0 flex-shrink-0 w-9 h-5 relative overflow-hidden p-0.5 rounded-xl;
+}
+
+ion-toggle::part(handle) {
+  @apply rounded-full w-4 h-4;
+}
+
+ion-toggle.toggle-checked::part(handle) {
+  @apply translate-x-[];
+}
+</style>

@@ -1,2 +1,19 @@
 /* For information on how to create your own theme, please see:
 http://ionicframework.com/docs/theming/ */
+
+:root {
+    --ion-color-primary: rgb(var(--color-theme-8));
+    --ion-color-primary-rgb: 121,56,178;
+    --ion-color-primary-shade:  rgb(var(--color-theme-9));
+    --ion-color-primary-tint:  rgb(var(--color-theme-10));
+
+    --ion-color-primary-contrast: #ffffff;
+    --ion-color-primary-contrast-rgb: 255,255,255;
+}
+
+html.scheme-dark {
+    --ion-color-primary: rgb(var(--color-theme-7));
+    --ion-color-primary-rgb: 121,56,178;
+    --ion-color-primary-shade:  rgb(var(--color-theme-7));
+    --ion-color-primary-tint:  rgb(var(--color-theme-6));
+}

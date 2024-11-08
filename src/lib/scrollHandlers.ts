@@ -1,0 +1,119 @@
+import {SliderBar} from '@/lib/MusicPlayer/lib/sliderBar';
+import {LogoResponse} from '@/types/server';
+
+HTMLElement.prototype.sliderBar = function (player: any, callbackFn: string, getSizeFn?: string) {
+    if (!(this instanceof HTMLElement) || this.dataset.type != 'slider-bar')
+        return null;
+    return new SliderBar(this, player, callbackFn, getSizeFn);
+};
+
+HTMLElement.prototype.scrollHorizontalIntoView = function (    parent?: HTMLElement): void {
+    if (!(this instanceof HTMLElement)) return;
+    const rect = this.getBoundingClientRect();
+    const parentElement = parent ?? this.parentElement;
+    if (!parentElement) return;
+    const elementLeft = rect.left - parentElement.getBoundingClientRect().left;
+    parentElement.scrollTo({
+        left: elementLeft,
+        behavior: 'smooth',
+    });
+};
+HTMLElement.prototype.scrollVerticalIntoView = function (    parent?: HTMLElement): void {
+    if (!(this instanceof HTMLElement)) return;
+    const rect = this.getBoundingClientRect();
+    const parentElement = parent ?? this.parentElement;
+    if (!parentElement) return;
+    const elementTop = rect.top - parentElement.getBoundingClientRect().top;
+    parentElement.scrollTo({
+        top: elementTop,
+        behavior: 'smooth',
+    });
+};
+HTMLElement.prototype.animateVerticalIntoView = function (    parentElement: HTMLElement | null = null,    duration: number = 420) {
+    if (!(this instanceof HTMLElement)) return;
+    const rect = this.getBoundingClientRect();
+    if (!parentElement) parentElement = this.parentElement;
+    if (!parentElement) return;
+    const elementTop =
+        rect.top -
+        parentElement.getBoundingClientRect().top -
+        parentElement.getBoundingClientRect().height / 2;
+    const startTime = performance.now();
+    const startY = parentElement.scrollTop;
+    function scrollStep(timestamp: number) {
+        if (!parentElement) return;
+
+        const currentTime = timestamp - startTime;
+        let progress = Math.min(currentTime / duration, 1);
+
+        progress = easeInOutCubic(progress);
+
+        parentElement.scrollTo(0, startY + elementTop * progress);
+
+        if (currentTime < duration) {
+            requestAnimationFrame(scrollStep);
+        }
+    }
+
+    requestAnimationFrame(scrollStep);
+};
+
+const easeInOutCubic = (t: number): number =>
+    t < 0.5 ? 4 * t * t * t : (t - 1) * (2 * t - 2) * (2 * t - 2) + 1;
+
+let timeout: string | number | NodeJS.Timeout | undefined;
+
+export const scrollToDiv = (i: string) => {
+    clearTimeout(timeout);
+
+    let target: HTMLDivElement | null = null;
+    if (i == '#') {
+        target = document.querySelector<HTMLDivElement>('[data-scroll]');
+    } else {
+        target = document.querySelector<HTMLDivElement>(
+            `[data-scroll='scroll_${i}']`
+        );
+    }
+
+    const scrollContainer =
+        document.querySelector<HTMLDivElement>('.group\\/scrollContainer:has(main)')!;
+
+    if (target && scrollContainer) {
+        (scrollContainer as HTMLDivElement).scrollTo({
+            top: target.offsetTop - 58,
+            behavior: 'smooth',
+        });
+
+        timeout = setTimeout(() => {
+            target?.classList.add('flashing');
+            setTimeout(() => {
+                target?.classList.remove('flashing');
+            }, 3000);
+        }, 700);
+    }
+};
+
+export const keyHandler = (e: KeyboardEvent) => {
+    if (e.key) {
+        scrollToDiv(e.key?.toUpperCase());
+    }
+};
+
+export const openImageModal = function (data: LogoResponse | null = null, aspectRatio: string = '16:9') {
+    if (data) {
+        data.aspectRatio = data.aspectRatio ?? aspectRatio;
+    }
+
+    // window.Alpine.store('config').imageModalData = data;
+    // window.Alpine.store('config').imageModalOpen = true;
+};
+
+// HTMLElement.prototype.openImageModal = function (data: LogoResponse | null = null, aspectRatio: string = '16:9') {
+//     if (data) {
+//         data.aspectRatio = data.aspectRatio ?? aspectRatio;
+//     }
+    // window.Alpine.store('config').screensaverDisabled = true;
+
+    // window.Alpine.store('config').imageModalData = data;
+    // window.Alpine.store('config').imageModalOpen = true;
+// };

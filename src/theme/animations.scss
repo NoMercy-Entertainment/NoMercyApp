@@ -1,0 +1,348 @@
+.background-animate {
+  background-size: 400%;
+
+  -webkit-animation: background-animate 3s ease infinite;
+  -moz-animation: background-animate 3s ease infinite;
+  animation: background-animate 3s ease infinite;
+}
+
+@keyframes background-animate {
+
+  0%,
+  100% {
+    background-position: 0 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+.hover-animate-pause:hover {
+  animation-play-state: paused !important;
+}
+
+.hover-animate-pause:hover * {
+  animation-play-state: paused !important;
+}
+
+@-moz-keyframes animate-loading {
+  @for $i from 0 through 100 {
+    #{$i}% {
+        --angle: #{($i*3.6) + 145}deg;
+    }
+  }
+}
+
+@-webkit-keyframes animate-loading {
+  @for $i from 0 through 100 {
+    #{$i}% {
+        --angle: #{($i*3.6) + 145}deg;
+    }
+  }
+}
+
+@keyframes animate-loading {
+  @for $i from 0 through 100 {
+    #{$i}% {
+      --angle: #{($i*3.6) + 145}deg;
+    }
+  }
+}
+
+#gradientBorder.busy,
+html.nprogress-busy #gradientBorder {
+    -webkit-animation: animate-loading 2s linear infinite;
+    -moz-animation: animate-loading 2s linear infinite;
+    animation: animate-loading 2s linear infinite;
+}
+
+@-moz-keyframes flashing {
+  0% {
+    filter: brightness(1) saturate(1);
+    box-shadow: 0 0 0 3px rgb(var(--color-focus, var(--color-theme-6)) / 0%);
+  }
+  50% {
+    filter: brightness(0.5) saturate(0.8);
+    box-shadow: 0 0 0 3px rgb(var(--color-focus, var(--color-theme-6)) / 100%);
+  }
+  100% {
+    filter: brightness(1) saturate(1.2);
+    box-shadow: 0 0 0 3px rgb(var(--color-focus, var(--color-theme-6)) / 0%);
+  }
+}
+
+@-webkit-keyframes flashing {
+  0% {
+    filter: brightness(1) saturate(1);
+    box-shadow: 0 0 0 3px rgb(var(--color-focus, var(--color-theme-6)) / 0%);
+  }
+  50% {
+    filter: brightness(0.5) saturate(0.8);
+    box-shadow: 0 0 0 3px rgb(var(--color-focus, var(--color-theme-6)) / 100%);
+  }
+  100% {
+    filter: brightness(1) saturate(1.2);
+    box-shadow: 0 0 0 3px rgb(var(--color-focus, var(--color-theme-6)) / 0%);
+  }
+}
+
+@keyframes flashing {
+  0% {
+    filter: brightness(1) saturate(1);
+    box-shadow: 0 0 0 3px rgb(var(--color-focus, var(--color-theme-6)) / 0%);
+  }
+  50% {
+    filter: brightness(0.5) saturate(0.8);
+    box-shadow: 0 0 0 3px rgb(var(--color-focus, var(--color-theme-6)) / 100%);
+  }
+  100% {
+    filter: brightness(1) saturate(1.2);
+    box-shadow: 0 0 0 3px rgb(var(--color-focus, var(--color-theme-6)) / 0%);
+  }
+}
+
+.flashing {
+  animation: flashing 1s linear infinite;
+}
+
+@-moz-keyframes move {
+  0% {
+    rotate: 0deg;
+    translate: -15% 0;
+  }
+  50% {
+    rotate: 180deg;
+    translate: 0 15%;
+  }
+  100% {
+    rotate: 360deg;
+    translate: -15% 0;
+  }
+}
+
+@-webkit-keyframes move {
+  0% {
+    rotate: 0deg;
+    translate: -15% 0;
+  }
+  50% {
+    rotate: 180deg;
+    translate: 0 15%;
+  }
+  100% {
+    rotate: 360deg;
+    translate: -15% 0;
+  }
+}
+
+@keyframes move {
+  0% {
+    rotate: 0deg;
+    translate: -15% 0;
+  }
+  50% {
+    rotate: 180deg;
+    translate: 0 15%;
+  }
+  100% {
+    rotate: 360deg;
+    translate: -15% 0;
+  }
+}
+
+.bg-blur {
+  -moz-filter: blur(80px) brightness(1.5) saturate(2);
+  -webkit-filter: blur(80px) brightness(1.5) saturate(2);
+  filter: blur(80px) brightness(0.8) saturate(2);
+  transform: scale(-1);
+  background-size: cover !important;
+  background-position: center !important;
+  animation: linear 240s infinite move;
+}
+
+@-moz-keyframes animation {
+  0% {
+    -webkit-transform: translateX(-100%);
+    -moz-transform: translateX(-100%);
+    -ms-transform: translateX(-100%);
+    transform: translateX(-100%);
+  }
+  50% {
+    -webkit-transform: translateX(100%);
+    -moz-transform: translateX(100%);
+    -ms-transform: translateX(100%);
+    transform: translateX(100%);
+  }
+  100% {
+    -webkit-transform: translateX(100%);
+    -moz-transform: translateX(100%);
+    -ms-transform: translateX(100%);
+    transform: translateX(100%);
+  }
+}
+
+@-webkit-keyframes animation {
+  0% {
+    -webkit-transform: translateX(-100%);
+    -moz-transform: translateX(-100%);
+    -ms-transform: translateX(-100%);
+    transform: translateX(-100%);
+  }
+  50% {
+    -webkit-transform: translateX(100%);
+    -moz-transform: translateX(100%);
+    -ms-transform: translateX(100%);
+    transform: translateX(100%);
+  }
+  100% {
+    -webkit-transform: translateX(100%);
+    -moz-transform: translateX(100%);
+    -ms-transform: translateX(100%);
+    transform: translateX(100%);
+  }
+}
+
+@keyframes animation {
+  0% {
+    -webkit-transform: translateX(-100%);
+    -moz-transform: translateX(-100%);
+    -ms-transform: translateX(-100%);
+    transform: translateX(-100%);
+  }
+  50% {
+    -webkit-transform: translateX(100%);
+    -moz-transform: translateX(100%);
+    -ms-transform: translateX(100%);
+    transform: translateX(100%);
+  }
+  100% {
+    -webkit-transform: translateX(100%);
+    -moz-transform: translateX(100%);
+    -ms-transform: translateX(100%);
+    transform: translateX(100%);
+  }
+}
+
+.loadingAnimate {
+  inset: 0;
+  height: 200%;
+  width: 200%;
+  pointer-events: none;
+  color: rgb(255, 255, 255);
+  transition: box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+  box-shadow: rgb(0 0 0 / 20%) 0 2px 1px -1px,
+  rgb(0 0 0 / 14%) 0px 1px 1px 0px, rgb(0 0 0 / 12%) 0px 1px 3px 0px;
+  background-image: linear-gradient(
+                  rgba(50, 50, 50, 0.05),
+                  rgba(50, 50, 50, 0.05)
+  );
+  display: block;
+  background-color: rgba(50, 50, 50, 0.13);
+  position: absolute;
+  mask-image: -webkit-radial-gradient(white, black);
+  overflow: hidden;
+}
+
+.loadingAnimate:after {
+  animation: 1.6s linear 0.5s infinite normal none running animation;
+  background: linear-gradient(
+                  90deg,
+                  transparent,
+                  rgba(255, 255, 255, 0.08),
+                  transparent
+  );
+  content: "";
+  position: absolute;
+  transform: translateX(-100%);
+  inset: 0;
+}
+
+
+.bg-\[\#2b2f31\],
+.bg-\[\#111314\] {
+    //background-image: url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/1295275/background-noise.png);
+    //animation: 0.2s infinite noise;
+}
+@keyframes noise {
+    0%, 100% {
+        background-position: 0 0;
+    }
+    10% {
+        background-position: -5% -10%;
+    }
+    20% {
+        background-position: -15% 5%;
+    }
+    30% {
+        background-position: 7% -25%;
+    }
+    40% {
+        background-position: 20% 25%;
+    }
+    50% {
+        background-position: -25% 10%;
+    }
+    60% {
+        background-position: 15% 5%;
+    }
+    70% {
+        background-position: 0 15%;
+    }
+    80% {
+        background-position: 25% 35%;
+    }
+    90% {
+        background-position: -10% 10%;
+    }
+}
+
+
+.bar {
+    --width: 2px;
+    --left: 0;
+    --space: 2px;
+    --height: 24px;
+    background: rgb(var(--color-focus, var(--color-theme-6)));
+    bottom: 1px;
+    height: var(--height);
+    position: absolute;
+    width: var(--width);
+    border-radius: 4px 4px 0 0;
+    animation: sound 0ms -800ms ease-in infinite alternate;
+    left: calc(var(--left, 0) * (var(--width, 4px) + var(--space, 2px)));
+}
+
+@keyframes sound {
+    0% {
+        opacity: .35;
+        height: calc(var(--height) / 4);
+    }
+    100% {
+        opacity: 1;
+        height: var(--height);
+    }
+}
+
+.bar:nth-child(1)  { --left: 1; animation-duration: 600ms; animation-delay: -600ms; filter: brightness(1.5) saturate(1.2); }
+.bar:nth-child(2)  { --left: 2; animation-duration: 600ms; animation-delay: -800ms; filter: brightness(1.2) saturate(0.8); }
+.bar:nth-child(3)  { --left: 3; animation-duration: 600ms; animation-delay: -200ms; filter: brightness(3) saturate(0.5);}
+.bar:nth-child(4)  { --left: 4; animation-duration: 600ms; animation-delay: 0ms; filter: brightness(1.2) saturate(0.8);}
+.bar:nth-child(5)  { --left: 5; animation-duration: 600ms; animation-delay: 400ms; filter: brightness(1.5) saturate(0.8);}
+
+#bars.paused .bar {
+    animation: none;
+    height: calc(var(--height) / 2);
+}
+
+
+.gradient-border {
+    --bg-color: linear-gradient(rgb(var(--background-auto-1)), rgb(var(--background-auto-1)));
+    --border-color: linear-gradient(var(--angle, 145deg),
+        rgb(from rgb(var(--color-focus)) r g b / 100%) 0%,
+        rgb(from rgb(var(--color-focus)) r g b / 30%) 33.33%,
+        rgb(from rgb(var(--color-focus)) r g b / 14%) 66.67%,
+        rgb(from rgb(var(--color-focus)) r g b / 10%) 100%);
+
+    background: padding-box var(--bg-color),border-box var(--border-color)
+}

@@ -30,3 +30,89 @@ npm-debug.log*
 /platforms
 /plugins
 /www
+
+# Created by https://www.toptal.com/developers/gitignore/api/ionic3,vuejs,android
+# Edit at https://www.toptal.com/developers/gitignore?templates=ionic3,vuejs,android
+
+### Android ###
+# Gradle files
+.gradle/
+build/
+
+# Local configuration file (sdk path, etc)
+local.properties
+
+# Log/OS Files
+*.log
+
+# Android Studio generated files and folders
+captures/
+.externalNativeBuild/
+.cxx/
+*.apk
+output.json
+
+# IntelliJ
+*.iml
+.idea/
+misc.xml
+deploymentTargetDropDown.xml
+render.experimental.xml
+
+# Keystore files
+*.jks
+*.keystore
+
+# Google Services (e.g. APIs or Firebase)
+google-services.json
+
+# Android Profiling
+*.hprof
+
+### Android Patch ###
+gen-external-apklibs
+
+# Replacement of .externalNativeBuild directories introduced
+# with Android Studio 3.5.
+
+### Ionic3 ###
+# Log an tmp data
+*~
+*.sw[mnpcod]
+*.tmp
+*.tmp.*
+log.txt
+
+# NPM (Node Package Manager) files
+npm-debug.log*
+node_modules/
+tmp/
+temp/
+
+# Preprocessors cache files
+.sourcemaps/
+.sass-cache/
+.tmp/
+hooks/
+
+# Ionic 3 plugins files
+platforms/
+plugins/
+plugins/android.json
+plugins/ios.json
+www/
+
+# Trash data
+$RECYCLE.BIN/
+.DS_Store
+Thumbs.db
+UserInterfaceState.xcuserstate
+
+### Vuejs ###
+# Recommended template: Node.gitignore
+
+dist/
+npm-debug.log
+yarn-error.log
+
+# End of https://www.toptal.com/developers/gitignore/api/ionic3,vuejs,android

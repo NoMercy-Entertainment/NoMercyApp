@@ -1,0 +1,70 @@
+@use "sass:meta";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@include meta.load-css("theme-base");
+@include meta.load-css("theme-colors");
+@include meta.load-css("theme");
+@include meta.load-css("animations");
+@include meta.load-css("transitions");
+
+:root {
+  interpolate-size: allow-keywords;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+}
+
+ion-content::part(background),
+ion-content::part(background) *,
+ion-content::part(scroll),
+ion-content::part(scroll) *,
+.scheme-transition *:not(img, .relative, .absolute, picture) {
+  //transition: all calc(var(--speed) * 1ms) ease-in-out !important;
+}
+
+:root {
+  --color-background:  rgb(var(--background-light-slate-1));
+  --color-text: rgb(var(--background-auto-12));
+}
+
+html.scheme-dark {
+  --color-background: rgb(var(--background-dark-slate-3));
+  --color-text:  rgb(var(--background-auto-1));
+}
+
+body {
+  @apply text-slate-dark-1 dark:text-slate-light-1;
+  //transition: all calc(var(--speed) * 1ms) ease-in-out !important;
+}
+
+ion-content::part(background) {
+  @apply bg-slate-light-4 dark:bg-slate-dark-1;
+  //transition: all calc(var(--speed) * 1ms) ease-in-out !important;
+}
+
+@media (min-width: 800px) {
+  ion-content::part(background) {
+    @apply bg-slate-light-4 dark:bg-slate-dark-2;
+    //transition: all calc(var(--speed) * 1ms) ease-in-out !important;
+  }
+}
+
+ion-content::part(scroll):not(svg),
+*:not(svg) {
+  @apply text-slate-dark-3 dark:text-slate-light-3 scrollbar scrollbar-w-2 scrollbar-h-2 scrollbar-thumb-rounded-full scrollbar-corner-rounded-none scrollbar-track-[#202425]/20 scrollbar-thumb-[#dfeffe]/[0.14] scrollbar-track-rounded-full;
+  scrollbar-color: unset;
+
+  --scrollbar-thumb: rgb(var(--background-auto-8) / 60%) !important;
+
+  @media (max-width: 640px) {
+    @apply scrollbar-none;
+  }
+
+  ::selection {
+    @apply bg-focus text-white;
+    background-color: var(--select-background, rgb(var(--color-focus) / calc(var(--tw-bg-opacity) - 0.5)));
+  }
+}
