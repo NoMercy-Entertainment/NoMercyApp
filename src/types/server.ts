@@ -7,6 +7,7 @@ import {
 	LibraryTv,
 	LibraryUser
 } from '@/types/api/base/library';
+import {ColorPalettes} from '@/types/api/shared';
 
 export interface ErrorResponse {
 	type: string;
@@ -70,23 +71,23 @@ export interface ServerLibrary {
 	subtitles: any[];
 }
 
-export interface PaletteColors {
-	dominant?: string;
-	primary?: string;
-	lightVibrant?: string;
-	darkVibrant?: string;
-	lightMuted?: string;
-	darkMuted?: string;
-}
-
-export interface ColorPalettes {
-	poster?: PaletteColors,
-	backdrop?: PaletteColors,
-	logo?: PaletteColors,
-	image?: PaletteColors,
-	profile?: PaletteColors,
-	cover?: PaletteColors,
-}
+// export interface PaletteColors {
+// 	dominant?: string;
+// 	primary?: string;
+// 	lightVibrant?: string;
+// 	darkVibrant?: string;
+// 	lightMuted?: string;
+// 	darkMuted?: string;
+// }
+//
+// export interface ColorPalettes {
+// 	poster?: PaletteColors,
+// 	backdrop?: PaletteColors,
+// 	logo?: PaletteColors,
+// 	image?: PaletteColors,
+// 	profile?: PaletteColors,
+// 	cover?: PaletteColors,
+// }
 
 export interface LogoResponse {
 	aspectRatio?: string | number | null;

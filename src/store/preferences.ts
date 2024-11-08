@@ -12,3 +12,16 @@ watch(useAutoThemeColors, async (value) => {
 	const { value } = await Preferences.get({ key: 'autoThemeColors' });
 	useAutoThemeColors.value = (value ?? true) == true;
 })();
+
+
+export const showBackdrops = ref<boolean>(false);
+watch(showBackdrops, async (value) => {
+	await Preferences.set({
+		key: 'showBackdrops',
+		value: value.toString(),
+	});
+});
+(async () => {
+	const { value } = await Preferences.get({ key: 'showBackdrops' });
+	showBackdrops.value = (value ?? false) == 'true';
+})();

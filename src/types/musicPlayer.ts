@@ -1,6 +1,7 @@
-import {Artist} from '@/types/api/music/artist';
-import {ColorPalettes, ServerLibrary} from '@/types/server';
-import {Album} from '@/types/api/music/album';
+import type {Artist} from '@/types/api/music/artist';
+import type { ServerLibrary} from '@/types/server';
+import type {Album} from '@/types/api/music/album';
+import type {ColorPalettes} from '@/types/api/shared';
 
 export enum VisibilityState {
 	hidden = 'hidden',

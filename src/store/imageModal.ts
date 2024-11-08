@@ -1,38 +1,56 @@
 import {computed, ref} from 'vue';
 import {LogoResponse} from '@/types/server';
 
-const showImageModal = ref<boolean>();
-export const showImageModalState = computed(() => showImageModal.value);
+const sim = ref<boolean>();
+export const showImageModal = computed(() => sim.value);
 export const toggleImageModal = () => {
-	showImageModal.value = !showImageModal.value;
+	sim.value = !sim.value;
 };
 export const setImageModalOpen = (open: boolean) => {
-	showImageModal.value = open;
+	sim.value = open;
 }
 
-const screensaverDelay = ref<number>(5);
-export const screensaverDelayState = computed(() => screensaverDelay.value);
+const ssd = ref<number>(5);
+export const screensaverDelay = computed(() => ssd.value);
 export const setScreensaverDelay = (delay: number) => {
-	screensaverDelay.value = delay;
+	ssd.value = delay;
 }
 
-const showScreensaver = ref<boolean>();
-export const showScreensaverState = computed(() => showScreensaver.value);
+const sss = ref<boolean>();
+export const showScreensaver = computed(() => sss.value);
 export const toggleScreensaver = () => {
-	showScreensaver.value = !showScreensaver.value;
+	sss.value = !sss.value;
 };
 export const setShowScreensaver = (open: boolean) => {
-	showScreensaver.value = open;
+	sss.value = open;
 }
 
-const disableScreensaver = ref<boolean>();
-export const disableScreensaverState = computed(() => disableScreensaver.value);
+const dss = ref<boolean>();
+export const disableScreensaver = computed(() => dss.value);
 export const setDisableScreensaver = (disable: boolean) => {
-	disableScreensaver.value = disable;
+	dss.value = disable;
 }
 
-const imageModalData = ref<LogoResponse>();
-export const imageModalDataState = computed(() => imageModalData.value);
+const imd = ref<LogoResponse>();
+export const imageModalData = computed(() => imd.value);
 export const setImageModalData = (data: any) => {
-	imageModalData.value = data;
+	imd.value = data;
+}
+
+const ct = ref<'poster'|'backdrop'>();
+export const currentType = computed(() => ct.value);
+export const setCurrentType = (type: 'poster'|'backdrop') => {
+	ct.value = type;
+}
+
+const ni = ref<number>(0);
+export const newIndex = computed(() => ni.value);
+export const setNewIndex = (index: number) => {
+	ni.value = index;
+}
+
+const tmp = ref();
+export const temp = computed(() => tmp.value);
+export const setTemp = (temp: any) => {
+	tmp.value = temp;
 }
