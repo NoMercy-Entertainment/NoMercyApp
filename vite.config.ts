@@ -146,7 +146,7 @@ export default defineConfig({
         // 'https://www.gstatic.com/cv/js/sender/v1/cast_sender.js',
         // 'https://www.gstatic.com/cast/sdk/libs/sender/1.0/cast_framework.js',
         'https://cdn.jsdelivr.net/npm/webvtt-parser@2.2.0/parser.min.js',
-        'https://static.cloudflareinsights.com/beacon.min.js/v84a3a4012de94ce1a686ba8c167c359c1696973893317',
+        'https://static.cloudflareinsights.com/beacon.min.js/vcd15cbe7772f49c399c6a5babf22c1241717689176015',
         'https://ssl.p.jwpcdn.com',
         'https://vjs.zencdn.net',
         'https://cdn.jsdelivr.net',
@@ -174,8 +174,13 @@ export default defineConfig({
         // 'https://unpkg.com/@sabre-js/sabre@0.5.1-pre.8bd763/dist/font-server.min.js',
         // 'https://unpkg.com/@sabre-js/sabre@0.5.1-pre.8bd763/dist/lib/BSpline.min.js',
         // 'https://unpkg.com/@sabre-js/sabre@0.5.1-pre.8bd763/dist/lib/earcut.min.js',
-
         'sha256-G3Q1p4s6LacltrOf4BnWiwdl1rEp+mmS6DwpXr5fjKg=',
+        'sha256-VA8O2hAdooB288EpSTrGLl7z3QikbWU9wwoebO/QaYk=',
+        'sha256-+5XkZFazzJo8n0iOP4ti/cLCMUudTf//Mzkb7xNPXIc=',
+        'sha256-MS6/3FCg4WjP9gwgaBGwLpRCY6fZBgwmhVCdrPrNf3E=',
+        'sha256-tQjf8gvb2ROOMapIxFvFAYBeUJ0v1HCbOcSmDNXGtDo=',
+        'sha256-+5XkZFazzJo8n0iOP4ti/cLCMUudTf//Mzkb7xNPXIc=',
+        'sha256-XC/gbdknUrCiLbZdZ8y96M9KVODooJYGbxrY7P+a1Rg='
       ],
       'style-src': [
         'self',
@@ -281,6 +286,9 @@ export default defineConfig({
   preview: {
     port: 5501,
     host: true,
+  },
+  build: {
+    sourcemap: 'inline',
   },
   resolve: {
     alias: {

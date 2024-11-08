@@ -1,14 +1,11 @@
 <script setup lang="ts">
-import {ref, watch} from 'vue';
 import {RouterLink} from 'vue-router';
 import {useTranslation} from 'i18next-vue';
 import {isPlatform } from '@ionic/vue';
 
-import currentServer from '@/store/currentServer';
 import sidebar, { toggleSidebar} from '@/store/sidebar';
-import libraries, {shouldShowLibraryLinks} from '@/store/Libraries';
+import {shouldShowLibraryLinks} from '@/store/Libraries';
 import user from '@/store/user';
-import router from '@/router';
 
 import NotificationMenu from '@/Layout/Desktop/components/Menus/NotificationMenu.vue';
 import ProfileMenu from '@/Layout/Desktop/components/Menus/ProfileMenu.vue';
@@ -49,6 +46,7 @@ const {t} = useTranslation();
         <div
             class="relative flex flex-shrink-0 flex-grow-0 items-center justify-center gap-2 self-stretch px-1">
           <RouterLink
+              aria-label="Home"
               to="/home"
                 class="relative -mr-6 flex w-48 flex-shrink-0 flex-grow-0 items-center justify-center gap-2 self-stretch px-1 pl-4 md:w-56">
             <AppLogo class="h-10 w-auto"/>
@@ -81,7 +79,7 @@ const {t} = useTranslation();
       <div v-if="user" class="flex flex-shrink-0 flex-grow-0 items-center justify-start gap-2">
 
         <div class="hidden flex-shrink-0 flex-grow-0 items-center justify-start gap-1 sm:flex">
-          <RouterLink :to="searchUrl"
+          <RouterLink :to="searchUrl" aria-label="Search"
                 class="relative my-1 flex flex-shrink-0 flex-grow-0 items-start justify-start gap-2 overflow-hidden rounded-md text-auto-12 p-2.5 hover:bg-focus/10 focus:bg-auto-12/2">
             <MoooomIcon icon="searchMagnifyingGlass" class="w-6"/>
           </RouterLink>

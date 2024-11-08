@@ -142,8 +142,8 @@ const {isSwiping, lengthX} = useSwipe(
                           @click="darkMode = !darkMode">
           <label
               class="inline-flex w-min cursor-pointer items-center gap-3"
-              for="toggleScheme">
-            <Toggle :model-value="darkMode" @update:model-value="darkMode = $event"/>
+              for="ion-tg-0">
+            <Toggle :model-value="darkMode" @update:model-value="darkMode = $event" id="toggleScheme"/>
           </label>
         </SideFlyoutButton>
 

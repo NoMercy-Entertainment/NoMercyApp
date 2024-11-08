@@ -4,10 +4,11 @@
       class="md h-screen overflow-clip scheme-auto theme-violet">
 <head>
     <meta charset="utf-8"/>
-    <meta
-            name="viewport"
-            content="viewport-fit=cover, width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"
-    />
+<!--    <meta-->
+<!--            name="viewport"-->
+<!--            content="viewport-fit=cover, width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0"-->
+<!--    />-->
+    <meta name="viewport" content="viewport-fit=cover, width=device-width, initial-scale=1.0, minimum-scale=1.0">
     <meta name="format-detection" content="telephone=no"/>
     <meta name="msapplication-tap-highlight" content="no"/>
 
@@ -143,9 +144,10 @@
             scroll-behavior: smooth;
             text-size-adjust: 100%;
             -webkit-text-size-adjust: 100%;
-            background: var(--color-auto-50, rgb(var(--gray-950)));
             height: -webkit-fill-available;
             -webkit-overflow-scrolling: touch;
+            --tw-bg-opacity: 1;
+            background-color: rgb(26 29 30 / var(--tw-bg-opacity));
         }
 
         html:focus-within {
@@ -158,7 +160,8 @@
             -webkit-overflow-scrolling: touch;
             -moz-osx-font-smoothing: grayscale;
             color: #DDD;
-            background: var(--color-auto-50, rgb(var(--gray-950)));
+            --tw-bg-opacity: 1;
+            background-color: rgb(26 29 30 / var(--tw-bg-opacity));
             height: 100vh;
             height: -webkit-fill-available;
             width: 100vw;

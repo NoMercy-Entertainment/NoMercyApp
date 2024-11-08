@@ -27,6 +27,7 @@ const isFetching = useIsFetching();
           class="flex justify-between items-center self-stretch flex-grow-0 flex-shrink-0 h-[50px] overflow-hidden px-1 py-1.5"
       >
         <button  @click="toggleSidebar"
+                 aria-label="menu"
                  class="text-slate-dark-1 dark:text-slate-light-1 flex justify-center items-center flex-grow-0 flex-shrink-0 h-14 w-14 relative overflow-hidden gap-2 p-2.5 rounded-lg bg-transparent children:absolute children:transition-opacity children:duration-100 children:inset-4"
         >
           <MoooomIcon icon="cross" :class="{
@@ -45,6 +46,7 @@ const isFetching = useIsFetching();
         <RouterLink
             :to="searchUrl"
             @click="closeSidebar"
+            aria-label="search"
             class="flex justify-center items-center flex-grow-0 flex-shrink-0  h-14 w-14 relative overflow-hidden gap-2 p-2.5 rounded-lg bg-transparent"
         >
           <MoooomIcon icon="searchMagnifyingGlass" class="text-slate-dark-1 dark:text-slate-light-1" />

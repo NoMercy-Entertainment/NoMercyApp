@@ -61,7 +61,7 @@ onMounted(() => {
 
           <div
               class="tv:children:w-[30%] tv:mt-0 -mt-24 tv:-ml-8 flex children:h-fit w-full flex-auto flex-wrap content-center justify-center gap-2 children:w-[47%] sm:children:w-[22%] sm:gap-4"
-              role="list">
+          >
             <template v-for="server in servers" :key="server.id">
               <ServerCard :server="server" :onclick="() => handleSelectServer(server)"/>
             </template>

@@ -116,11 +116,13 @@ const reload = () => window.location.reload();
               class="flex justify-center items-center self-stretch flex-grow-0 flex-shrink-0 h-10 relative pl-1 py-2.5 rounded-md bg-transparent border border-transparent"
       >
         <ion-icon aria-hidden="true" :icon="moonDiagonal" class="w-6 h-6"/>
-        <div class="flex justify-center items-center flex-grow relative gap-2 px-2">
-          <p class="flex-grow w-[255px] text-lg font-medium text-left">
+        <label
+            for="ion-tg-0"
+             class="flex justify-center items-center flex-grow relative gap-2 px-2">
+          <span class="flex-grow w-[255px] text-lg font-medium text-left">
             {{ $t('Dark mode') }}
-          </p>
-        </div>
+          </span>
+        </label>
         <Toggle :model-value="darkMode" @update:model-value="darkMode = $event"/>
       </button>
     </div>

@@ -47,7 +47,7 @@ defineProps({
               to="/setup/select-servers"
               class="flex justify-center items-center self-stretch h-10 relative py-2.5 px-1 rounded-md border border-transparent hover:border-focus/4 active:!bg-focus/11 dark:active:!bg-focus/8 active:border-focus/4 active:hover:border-focus/4 focus:bg-focus-9 hover:!bg-focus/10 disabled:!bg-focus/2 disabled:!border-focus/2 transition-colors duration-300 hover:text-auto-12"
               data-nav-title="Switch server"
-              name="Switch server" role="menuitem">
+              name="Switch server" >
 							<span
                   class="relative flex w-full flex-grow items-center justify-center gap-2 px-2 text-lg font-medium text-left">
 									<MoooomIcon className="" icon="serverSwitch"/>
@@ -69,7 +69,7 @@ defineProps({
               to="/dashboard/system"
               class="flex justify-center items-center self-stretch h-10 relative py-2.5 px-1 rounded-md border border-transparent hover:border-focus/4 active:!bg-focus/11 dark:active:!bg-focus/8 active:border-focus/4 active:hover:border-focus/4 focus:bg-focus-9 hover:!bg-focus/10 disabled:!bg-focus/2 disabled:!border-focus/2 transition-colors duration-300 hover:text-auto-12"
               data-nav-title="System"
-              name="System" role="menuitem">
+              name="System" >
 						<span
                 class="relative flex w-full flex-grow items-center justify-center gap-2 px-2 text-lg font-medium text-left">
 								<MoooomIcon className="" icon="gridMasonry"/>
@@ -86,7 +86,7 @@ defineProps({
               to="/preferences"
               class="flex justify-center items-center self-stretch h-10 relative py-2.5 px-1 rounded-md border border-transparent hover:border-focus/4 active:!bg-focus/11 dark:active:!bg-focus/8 active:border-focus/4 active:hover:border-focus/4 focus:bg-focus-9 hover:!bg-focus/10 disabled:!bg-focus/2 disabled:!border-focus/2 transition-colors duration-300 hover:text-auto-12"
               data-nav-title="Preferences"
-              name="Preferences" role="menuitem">
+              name="Preferences" >
 							<span
                   class="relative flex w-full flex-grow items-center justify-center gap-2 px-2 text-lg font-medium text-left">
 									<MoooomIcon className="" icon="paintSwatches"/>
@@ -102,7 +102,7 @@ defineProps({
           <button
               class="flex justify-center items-center self-stretch h-10 relative py-2.5 px-1 rounded-md border border-transparent hover:border-focus/4 active:!bg-focus/11 dark:active:!bg-focus/8 active:border-focus/4 active:hover:border-focus/4 focus:bg-focus-9 hover:!bg-focus/10 disabled:!bg-focus/2 disabled:!border-focus/2 transition-colors duration-300"
               data-nav-title="Refresh"
-              name="Refresh" role="menuitem"
+              name="Refresh"
               @click="reload"
           >
 							<span
@@ -130,8 +130,8 @@ defineProps({
 								</span>
 						<label
                 class="inline-flex cursor-pointer items-center gap-3"
-                for="toggleScheme">
-              <Toggle :model-value="darkMode" @update:model-value="darkMode = $event"/>
+                for="ion-tg-0">
+              <Toggle :model-value="darkMode" @update:model-value="darkMode = $event" id="toggleScheme"/>
 							</label>
 						</span>
           </div>
@@ -145,8 +145,7 @@ defineProps({
               @click="$keycloak.keycloak?.logout()"
               class="flex justify-center items-center self-stretch h-10 relative py-2.5 px-1 rounded-md border border-transparent hover:border-focus/4 active:!bg-focus/11 dark:active:!bg-focus/8 active:border-focus/4 active:hover:border-focus/4 focus:bg-focus-9 hover:!bg-focus/10 disabled:!bg-focus/2 disabled:!border-focus/2 transition-colors duration-300 hover:text-auto-12"
               data-nav-title="Logout"
-              name="Logout"
-              role="menuitem">
+              name="Logout">
                         <span
                             class="relative flex w-full flex-grow items-center justify-center gap-2 px-2 text-lg font-medium text-left">
                             <MoooomIcon className="" icon="doorOpen"/>
