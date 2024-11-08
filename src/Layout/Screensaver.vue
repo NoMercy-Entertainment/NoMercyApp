@@ -6,13 +6,13 @@ import type {LogoResponse} from "@/types/server";
 
 import useServerClient from "@/lib/clients/useServerClient";
 import {
-  disableScreensaverState, screensaverDelayState,
+  disableScreensaver, screensaverDelay,
   setImageModalData, setShowScreensaver,
-  showImageModalState,
-  showScreensaverState
+  showImageModal,
+  showScreensaver
 } from '@/store/imageModal';
 
-const { idle, reset } = useIdle((screensaverDelayState.value ?? 0) * 60 * 1000);
+const { idle, reset } = useIdle((screensaverDelay.value ?? 0) * 60 * 1000);
 
 const index = ref(-1);
 const interval = ref<NodeJS.Timeout | null>(null);
@@ -24,8 +24,8 @@ const { data: images } = useServerClient<LogoResponse[]>({
 onMounted(() => {
 	interval.value = setInterval(() => {
 		if (!images.value) return;
-        if (disableScreensaverState.value) return;
-        if (!showScreensaverState.value) return;
+        if (disableScreensaver.value) return;
+        if (!showScreensaver.value) return;
 
 		index.value = index.value + 1 >= images.value?.length
 			? 0
@@ -35,12 +35,12 @@ onMounted(() => {
 
 watch(index, () => {
 	if (!images.value) return;
-	if (disableScreensaverState.value || showImageModalState.value) return;
+	if (disableScreensaver.value || showImageModal.value) return;
 
 	setImageModalData(images.value[index.value % images.value.length]);
 });
 
-watch(screensaverDelayState, () => {
+watch(screensaverDelay, () => {
   reset();
 });
 

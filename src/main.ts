@@ -13,6 +13,9 @@ import VueKeycloak from '@dsb-norge/vue-keycloak-js'
 import {VueQueryPlugin} from '@tanstack/vue-query';
 import KonamiCode from 'vue3-konami-code';
 
+import PrimeVue from 'primevue/config';
+import Aura from '@primevue/themes/aura';
+
 import {setUserFromKeycloak} from '@/store/user';
 
 import {setColorScheme} from '@/store/colorScheme';
@@ -52,6 +55,7 @@ import './theme/variables.css';
 import konamiEnabled from '@/store/konami';
 
 import './theme/app.scss';
+import {suffix} from '@/config/config';
 
 declare global {
   interface Console {
@@ -75,7 +79,7 @@ app.use(I18NextVue, {
 const keycloakConfig = {
   clientId: 'nomercy-ui',
   realm: 'NoMercyTV',
-  url: 'https://auth-dev.nomercy.tv',
+  url: `https://auth${suffix}.nomercy.tv`,
 };
 
 if (isPlatform('capacitor')) {
@@ -112,6 +116,18 @@ if (isPlatform('capacitor')) {
 }
 
 app.use(VueQueryPlugin)
+app.use(PrimeVue, {
+  theme: {
+    preset: Aura,
+  },
+  ripple: true,
+  options: {
+    prefix: 'p',
+    darkModeSelector: 'system',
+    cssLayer: false,
+  }
+
+});
 
 app.use(KonamiCode, {
   onKonamiCodeEntered: () => {

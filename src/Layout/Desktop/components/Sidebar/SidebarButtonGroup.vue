@@ -34,7 +34,7 @@ const classes = computed(() =>
 </script>
 
 <template>
-    <div class="flex h-auto w-full flex-col gap-1 transition-transform duration-300 ease-in-out handle"
+    <div class="flex h-auto w-full flex-col gap-1 transition-transform duration-300 handle"
          v-if="show"
     >
         <button @click="toggle"
@@ -49,8 +49,8 @@ const classes = computed(() =>
         </button>
 
         <div :class="open ||  sidebarState != 'open' ? 'grid-rows-1' : 'grid-rows-0'"
-             class="grid h-auto w-full grid-rows-1 transition-transform duration-300 ease-in-out">
-            <div class="flex flex-col gap-1 overflow-hidden transition-transform duration-300 ease-in-out">
+             class="grid h-auto w-full grid-rows-1 transition-transform duration-300">
+            <div class="flex flex-col gap-1 overflow-hidden transition-transform duration-300">
                 <slot/>
             </div>
         </div>

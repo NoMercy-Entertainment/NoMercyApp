@@ -121,7 +121,6 @@ export interface ExtendedVideo extends Video {
 	size: number;
 }
 
-
 export interface Tv {
 	id: number;
 	title: string;
@@ -173,4 +172,43 @@ export interface Movie extends Tv {
 	releaseDate: string;
 	revenue: number;
 	runtime: number;
+}
+
+export interface Person {
+	adult: boolean;
+	alsoKnownAs: string;
+	biography: string;
+	birthday: string;
+	createdAt: string;
+	deathday: null | string;
+	gender: number;
+	homepage: null | string;
+	id: number;
+	imdb_id: string;
+	knownForDepartment: string;
+	name: string;
+	placeOfBirth: string;
+	popularity: number;
+	profile: string;
+	updatedAt: string;
+	blurHash: string;
+	color_palette: ColorPalettes;
+	poster: string;
+	media_type: string;
+}
+
+export interface InfoCredit {
+	gender: number | null;
+	id: number;
+	job?: string | null;
+	department?: string | null;
+	character?: string | null;
+	knownForDepartment: string | null;
+	media_type: string;
+	name: string | null;
+	poster: string | null;
+	popularity: number | null;
+	titleSort: string | null;
+	deathday: string | null | undefined;
+	color_palette: ColorPalettes;
 }

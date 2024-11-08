@@ -2,12 +2,12 @@
 import {computed, onBeforeUnmount, onMounted, ref, watch} from 'vue';
 import {Portal} from '@headlessui/vue';
 import {
-  disableScreensaverState,
-  imageModalDataState,
+  disableScreensaver,
+  imageModalData,
   setImageModalData,
   setImageModalOpen,
-  showImageModalState,
-  showScreensaverState
+  showImageModal,
+  showScreensaver
 } from '@/store/imageModal';
 import currentServer from '@/store/currentServer';
 import {pickPaletteColor} from '@/lib/colorHelper';
@@ -31,10 +31,10 @@ const imageBaseUrl = computed(() => {
 });
 
 const delay = computed(() => {
-  return showScreensaverState.value ? 2400 : 400;
+  return showScreensaver.value ? 2400 : 400;
 });
 
-watch(imageModalDataState, (data) => {
+watch(imageModalData, (data) => {
 
   if (overlayRef?.value?.style) {
     overlayRef.value.style.opacity = '1';
@@ -121,7 +121,7 @@ const handleClick = (e: MouseEvent | TouchEvent) => {
 };
 
 onMounted(() => {
-  if (!showImageModalState) return;
+  if (!showImageModal) return;
 
   window.addEventListener('mousemove', handleShowButtonToggle);
   return () => {
@@ -135,12 +135,12 @@ onMounted(() => {
 <template>
   <Portal>
     <div id="imageModal"
-         v-if="(showImageModalState || showScreensaverState) && !disableScreensaverState"
+         v-if="(showImageModal || showScreensaver) && !disableScreensaver"
          class="fixed inset-0 w-full z-[999999999] bg-auto-4 dark:bg-auto-9"
-         :class="(showImageModalState || showScreensaverState) && !disableScreensaverState ? '' : 'hidden pointer-events-none'"
+         :class="(showImageModal || showScreensaver) && !disableScreensaver ? '' : 'hidden pointer-events-none'"
          @click="handleClick">
       <div ref="overlayRef"
-           :style="`--delay: ${showScreensaverState ? '2400ms' : '400ms'}`"
+           :style="`--delay: ${showScreensaver ? '2400ms' : '400ms'}`"
            class="pointer-events-none absolute inset-0 bg-black w-available h-available z-999 transitioning-slower"></div>
       <div
           class="absolute z-0 h-screen w-screen items-center border-solid border-black bg-black p-8 text-center left-50 border-1 transitioning-slower">
@@ -155,17 +155,17 @@ onMounted(() => {
                 tabindex="-1"
                 @click="handleClose"
                 class="absolute flex transitioning top-8 right-8 w-10 min-w-[2.5rem] h-10 min-h-[2.5rem] z-0 items-center justify-center disabled:opacity-50 disabled:text-auto-3 disabled:hover:!bg-transparent rounded-full overflow-clip hover:bg-transparent focus-visible:bg-transparent active:bg-transparent sm:focus-visible:bg-auto-4/80 sm:hover:bg-auto-4/80 pointer-events-auto"
-                :class="!showButton && !showScreensaverState ? 'flex' : 'hidden'">
+                :class="!showButton && !showScreensaver ? 'flex' : 'hidden'">
           <MoooomIcon icon="cross" class="h-5 w-5"/>
         </button>
 
         <div
             class="absolute inset-2 tv:inset-2 z-0 m-auto h-auto overflow-clip rounded-xl bg-cover bg-center bg-no-repeat opacity-90 shadow-img max-w-[82vw] max-h-[83vh] bg-image-blur md:inset-16"
-            :style="`background-image: url(${src}); aspect-ratio: ${imageModalDataState?.aspectRatio}`"></div>
+            :style="`background-image: url(${src}); aspect-ratio: ${imageModalData?.aspectRatio}`"></div>
 
         <div
             class="absolute inset-2 tv:inset-20 z-0 m-auto h-auto overflow-clip rounded-xl bg-cover bg-center bg-no-repeat shadow-img max-w-[82vw] max-h-[83vh] md:inset-24"
-            :style="`background-image: url(${src}); aspect-ratio: ${imageModalDataState?.aspectRatio}; box-shadow: 0 0 800px 80px rgba(0,0,0,.2) inset;`">
+            :style="`background-image: url(${src}); aspect-ratio: ${imageModalData?.aspectRatio}; box-shadow: 0 0 800px 80px rgba(0,0,0,.2) inset;`">
           <div class="absolute tv:bottom-2 left-2 tv:left-4 z-0 p-4 bottom:2 sm:bottom-6 sm:left-8">
             <div
                 class="pointer-events-none flex h-full w-full select-none items-start justify-start bg-cover min-h-[20vh] max-h-[20vh] min-w-[30vw] max-w-[30vw] tv:min-h-[20vh] tv:max-h-[20vh] tv:min-w-[40vw] tv:max-w-[40vw]">
@@ -184,7 +184,7 @@ onMounted(() => {
         </div>
 
         <div class="absolute bottom-6 mx-auto -ml-8 flex w-full justify-center gap-8 text-crimson-11"
-             :class="showButton && !showScreensaverState ? 'flex' : 'hidden'">
+             :class="showButton && !showScreensaver ? 'flex' : 'hidden'">
           <button aria-hidden="true"
                   tabindex="-1"
                   data-state="closed"

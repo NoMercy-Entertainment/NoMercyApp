@@ -54,8 +54,8 @@ const background = ref<boolean>(false);
             <!--									<Shadow/>-->
             <div id="overlay" class="pointer-events-none absolute inset-0 hidden dark:flex"
                  :style="`
-                            background: ${background ? 'rgba(0, 0, 0, 0.7)' : 'rgba(0, 0, 0, 0)'};
-                         `"
+                    background: ${background ? 'rgba(0, 0, 0, 0.7)' : 'rgba(0, 0, 0, 0)'};
+                 `"
             ></div>
             <div
                 class="flex flex-col relative overflow-auto justify-start items-start w-available h-available sm:rounded-2xl flex-1 border-auto-alpha-2 !bg-cover children:scrollbar-none sm:border-3">

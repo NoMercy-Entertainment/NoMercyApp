@@ -103,7 +103,7 @@ router.afterEach(enable);
                  'top-0 mr-1': !static,
                  className,
              }"
-             class="right-0 bottom-0 mt-2 mb-2 hidden rounded-full border-r-2 border-l-4 border-transparent transition-all duration-300 w-3.5 group-active/scrollContainer:bg-auto-2/9 hover:bg-auto-2/9 sm:flex">
+             class="right-0 bottom-0 mt-2 mb-2 hidden rounded-full border-r-2 border-l-4 border-transparent transition-all w-3.5 group-active/scrollContainer:bg-auto-2/9 hover:bg-auto-2/9 sm:flex">
             <span draggable="true"
                   data-scrollbar
                   ref="refHandle"

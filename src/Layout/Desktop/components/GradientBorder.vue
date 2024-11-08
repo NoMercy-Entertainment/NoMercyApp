@@ -10,7 +10,7 @@ const isFetching = useIsFetching();
 
 <template>
     <div id="gradientBorder" tabindex="-1"
-         class="relative flex flex-1 overflow-clip border-transparent text-start outline-none transition-transform duration-300 h-available w-available scrollbar-none gradient-border sm:rounded-3xl"
+         class="relative flex flex-1 overflow-clip border-transparent text-start outline-none transition-all duration-300 h-available w-available scrollbar-none gradient-border sm:rounded-3xl"
         :class="{
             'sm:ml-4': sidebarState == 'hidden',
             'sm:mr-4': !indexer,
