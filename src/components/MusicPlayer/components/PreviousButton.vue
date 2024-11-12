@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import audioPlayer from '@/store/audioPlayer';
-import MusicButton from '@/components/Buttons/MusicButton.vue';
+import MusicButton from './MusicButton.vue';
 import PlayerIcon from '@/components/Images/icons/PlayerIcon.vue';
 
-const handleClick = (e: MouseEvent) => {
-	e.stopPropagation();
+const handleClick = (e?: MouseEvent) => {
+	e?.stopPropagation();
 	audioPlayer.value?.previous();
 };
 </script>

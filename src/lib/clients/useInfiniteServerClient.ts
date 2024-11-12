@@ -4,8 +4,8 @@ import serverClient from '@/lib/clients/serverClient';
 import {AxiosError} from 'axios';
 import {ErrorResponse} from '@/types/server';
 import {ServerClientProps} from '@/lib/clients/useServerClient';
-import router from '@/router';
 import currentServer from '@/store/currentServer';
+import {useRouter} from 'vue-router';
 
 interface InfiniteServerClientProps {
 	path?: string;
@@ -22,6 +22,7 @@ interface InfiniteServerClientProps {
 export const queryKey = (options?: ServerClientProps | InfiniteServerClientProps) => {
 	if (options?.queryKey) return options?.queryKey
 
+	const router = useRouter();
 	const options2: string[] = [];
 
 	(options?.path ?? router.currentRoute.value.fullPath)?.split('/').slice(1).forEach(p => {
@@ -57,6 +58,7 @@ const useInfiniteServerClient = <T, >(options?: {
 }): Return<T> => {
 
 	const LIMIT = 3;
+	const router = useRouter();
 
 	return useInfiniteQuery({
 		...options,

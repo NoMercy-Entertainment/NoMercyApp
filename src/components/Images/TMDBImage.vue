@@ -10,6 +10,7 @@ import {useMediaQuery} from '@vueuse/core';
 import currentServer from '@/store/currentServer';
 import AppLogoSquare from '@/components/Images/icons/AppLogoSquare.vue';
 import {useAutoThemeColors} from '@/store/preferences';
+import {imageBaseUrl} from '@/config/global';
 
 const props = defineProps({
   path: {
@@ -82,6 +83,7 @@ const onError = (e: Event) => {
 
 const baseImageUrl = computed(() => {
   if (!props.path) return;
+  // return `${imageBaseUrl.value}/${props.size ?? 'original'}${props.path}`;
   return `${currentServer.value?.serverBaseUrl}/images/original${props.path}`;
 });
 
@@ -248,7 +250,7 @@ const height = computed(() => {
            :width="size"
            :height="height"
            :fetchpriority="priority"
-           :loading="isPlatform('tablet') || loading == 'eager' ? 'eager' : 'lazy'"
+           :loading="loading == 'eager' ? 'eager' : 'lazy'"
            :alt="`tmdb image for ${title ?? 'image'}`"
            class="pointer-events-auto inset-0 h-auto bg-top transition-all duration-500 max-h-available"
            :class="`

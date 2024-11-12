@@ -68,7 +68,7 @@ export class MediaSession {
 				pause ?? (() => {
 				})
 			);
-		} 
+		}
 		else {
 			CapMediaSession.setActionHandler(
 				{
@@ -89,15 +89,15 @@ export class MediaSession {
 				typeof getPosition === 'function'
 			) {
 				CapMediaSession.setActionHandler({
-				    action: 'seekbackward'
+                    action: 'seekbackward'
 				}, details => seek(getPosition() - (details.seekTime ?? 30))).then();
 
 				CapMediaSession.setActionHandler({
-				    action: 'seekforward'
+                    action: 'seekforward'
 				}, details => seek(getPosition() + (details.seekTime ?? 30))).then();
 
 				CapMediaSession.setActionHandler({
-				    action: 'seekto'
+                    action: 'seekto'
 				}, detail => seek(detail.seekTime ?? 0)).then();
 			}
 
@@ -213,10 +213,10 @@ export class MediaSession {
 	}
 
 	setPositionState({
-		                 duration,
-		                 playbackRate,
-		                 position,
-	                 }: {
+                    duration,
+                    playbackRate,
+                    position
+	}: {
 		duration: number;
 		playbackRate: number;
 		position: number;

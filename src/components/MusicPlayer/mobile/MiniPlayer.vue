@@ -3,35 +3,21 @@ import {computed, ref} from 'vue';
 import {useSwipe} from '@vueuse/core';
 
 import {pickPaletteColor} from '@/lib/colorHelper';
+import audioPlayer, {currentSong, openFullPlayer, percentage} from '@/store/audioPlayer';
+import {useAutoThemeColors} from '@/store/preferences';
+import {menuOpen} from '@/store/profileMenu';
+
+import CoverImage from '@/components/MusicPlayer/components/CoverImage.vue';
+import MediaLikeButton from '@/components/Buttons/MediaLikeButton.vue';
 
 import DeviceButton from '../components/DeviceButton.vue';
 import PlaybackButton from '../components/PlaybackButton.vue';
 import TrackLinks from '../components/TrackLinks.vue';
-import audioPlayer, {currentSong, musicSize, percentage, setMusicSize} from '@/store/audioPlayer';
-import {SizeState} from '@/types/musicPlayer';
-import {useAutoThemeColors} from '@/store/preferences';
-import CoverImage from '@/components/MusicPlayer/components/CoverImage.vue';
-import MediaLikeButton from '@/components/Buttons/MediaLikeButton.vue';
-
-defineProps({
-  menuOpen: {
-    type: Boolean,
-    required: false,
-  },
-});
-
-const togglePlayerSize = () => {
-  if (musicSize.value === SizeState.compact) {
-    setMusicSize(SizeState.full);
-  } else {
-    setMusicSize(SizeState.compact);
-  }
-};
 
 const focusColor = computed(() => {
   if (!useAutoThemeColors.value) return 'var(--color-theme-7)';
 
-  return pickPaletteColor(currentSong.value?.color_palette?.cover, 40, 160)
+  return pickPaletteColor(currentSong.value?.color_palette?.cover, 20, 160)
       .replace(/,/gu, ' ')
       .replace('rgb(', '');
 });
@@ -84,13 +70,14 @@ const {isSwiping, lengthX} = useSwipe(
 </script>
 
 <template>
-  <div @click="togglePlayerSize"
-       v-if="currentSong && !menuOpen"
+  <div @click="openFullPlayer()"
+       v-if="!menuOpen"
+       id="miniPlayer"
        ref="container"
        :style="`--color-focus: ${focusColor}`"
-       class="flex justify-between items-center self-stretch  h-14 relative overflow-hidden p-2 bg-[#e2f0fd]/[0.08]"
+       class="flex absolute bottom-0 w-available justify-between items-center self-stretch  h-14 overflow-hidden p-2 bg-slate-light-1 dark:bg-slate-dark-3 mt-auto z-0"
   >
-    <div class="absolute inset-0 h-full w-full bg-gradient-to-b to-black/40 from-focus/60"></div>
+    <div class="absolute inset-0 h-full w-full bg-gradient-to-b to-black/40 from-focus/40"></div>
     <div class="flex flex-grow items-center justify-start gap-2.5">
       <div
           class="relative flex w-10 items-start justify-start gap-2 overflow-hidden rounded"
@@ -132,8 +119,16 @@ const {isSwiping, lengthX} = useSwipe(
       <div
           class="w-0 h-0.5 absolute left-[-1px] top-[-1px] rounded-sm bg-gradient-to-r from-black/5 to-[rgb(var(--color-focus))] z-10"
           :style="`width: ${percentage}%;`"></div>
-      <div class="w-1 h-0.5 absolute top-[-1px] rounded-sm bg-[#f1eefe] -translate-x-[2px] z-0"
+      <div class="w-1 h-0.5 absolute top-[-1px] rounded-sm bg-[#f1EEFE] -translate-x-[2px] z-0"
            :style="`left: ${percentage}%;`"></div>
     </div>
   </div>
 </template>
+
+<style>
+@media screen and (max-width: 800px) {
+  ion-content::part(scroll) {
+    --offset-bottom: -3.5rem;
+  }
+}
+</style>

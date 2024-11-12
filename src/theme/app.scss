@@ -3,19 +3,31 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  interpolate-size: allow-keywords;
+}
+
+html {
+  height: -webkit-fill-available;
+  scroll-behavior: smooth;
+}
+
+body {
+  height: -webkit-fill-available;
+  font-family: 'Inter', sans-serif;
+}
+
+/* If using React, set height on the root div as well */
+#root {
+  height: -webkit-fill-available;
+}
+
 @include meta.load-css("theme-base");
 @include meta.load-css("theme-colors");
 @include meta.load-css("theme");
 @include meta.load-css("animations");
 @include meta.load-css("transitions");
-
-:root {
-  interpolate-size: allow-keywords;
-}
-
-body {
-  font-family: 'Inter', sans-serif;
-}
+@include meta.load-css("grid");
 
 ion-content::part(background),
 ion-content::part(background) *,
@@ -26,30 +38,36 @@ ion-content::part(scroll) *,
 }
 
 :root {
-  --color-background:  rgb(var(--background-light-slate-1));
+  --color-background:  rgb(var(--background-light-slate-3));
   --color-text: rgb(var(--background-auto-12));
 }
 
 html.scheme-dark {
-  --color-background: rgb(var(--background-dark-slate-3));
+  --color-background: rgb(var(--background-dark-slate-1));
   --color-text:  rgb(var(--background-auto-1));
 }
 
 body {
-  @apply text-slate-dark-1 dark:text-slate-light-1;
+  @apply bg-slate-light-1 dark:bg-slate-dark-1 text-slate-dark-1 dark:text-slate-light-1;
   //transition: all calc(var(--speed) * 1ms) ease-in-out !important;
 }
 
 ion-content::part(background) {
-  @apply bg-slate-light-4 dark:bg-slate-dark-1;
+  @apply bg-slate-lightA-4 dark:bg-slate-darkA-4;
   //transition: all calc(var(--speed) * 1ms) ease-in-out !important;
 }
 
 @media (min-width: 800px) {
   ion-content::part(background) {
-    @apply bg-slate-light-4 dark:bg-slate-dark-2;
+    @apply bg-slate-lightA-4 dark:bg-slate-darkA-4;
     //transition: all calc(var(--speed) * 1ms) ease-in-out !important;
   }
+}
+
+ion-content::part(scroll) {
+  scroll-behavior: smooth;
+  will-change: auto;
+  margin-top: var(--ion-safe-area-top);
 }
 
 ion-content::part(scroll):not(svg),
@@ -67,4 +85,18 @@ ion-content::part(scroll):not(svg),
     @apply bg-focus text-white;
     background-color: var(--select-background, rgb(var(--color-focus) / calc(var(--tw-bg-opacity) - 0.5)));
   }
+}
+
+ion-content::part(scroll) {
+  @apply scrollbar-none;
+  --offset-bottom: 0px;
+}
+
+.swiper {
+  overflow-y: visible !important;
+  overflow-x: clip !important;
+}
+
+.monospace {
+  font-feature-settings: 'tnum' on, 'lnum' on !important;
 }

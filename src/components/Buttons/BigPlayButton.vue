@@ -4,8 +4,9 @@ import {computed, onUnmounted, PropType, ref, watch} from 'vue';
 import type {AlbumResponse, ArtistResponse, DisplayList} from '@/types/api/music/musicPlayer';
 import router from '@/router';
 import audioPlayer, {currentPlaylist, currentSong, setCurrentPlaylist} from '@/store/audioPlayer';
-import MusicButton from '@/components/Buttons/MusicButton.vue';
+
 import PlayerIcon from '@/components/Images/icons/PlayerIcon.vue';
+import MusicButton from '@/components/MusicPlayer/components/MusicButton.vue';
 
 const props = defineProps({
   data: {

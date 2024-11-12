@@ -5,11 +5,11 @@ export const breakpoints = (isBackdrop: boolean) => {
 	return {
 		0: !isBackdrop
 			? {
-				slidesPerView: 2.4,
-				slidesPerGroup: 2,
+				slidesPerView: 3,
+				slidesPerGroup: 1,
 			}
 			: {
-				slidesPerView: 1.4,
+				slidesPerView: 1.8,
 				slidesPerGroup: 1,
 			},
 		768: !isBackdrop
@@ -78,13 +78,15 @@ export type Breakpoints = ReturnType<typeof breakpoints>;
 export const swiperConfig = (isBackdrop: boolean) => {
 	return {
 		breakpoints: breakpoints(isBackdrop),
+		allowTouchMove: true,
 		mousewheelControl: {
 			enabled: true,
 		},
 		breakpointsBase: 'window',
-		virtual: true,
+		virtual: false,
 		updateOnWindowResize: true,
-		speed: 400,
+		speed: 100,
+		spaceBefore: 12,
 		slidesOffsetAfter: 8,
 		spaceBetween: 12,
 		keyboard: false,
@@ -94,7 +96,7 @@ export const swiperConfig = (isBackdrop: boolean) => {
 			forceToAxis: true,
 			invert: true,
 			releaseOnEdges: true,
-			sensitivity: 1,
+			sensitivity: 10,
 		},
 		onProgress: (swiper: any) => {
 			// const slides = swiper.slides;

@@ -4,21 +4,27 @@ import {alphaNumericRange} from '@/lib/stringArray';
 import {isNative} from '@/config/global';
 import indexer, {setIndexerOpen} from '@/store/indexer';
 import router from '@/router';
+import {onMounted, onUnmounted} from 'vue';
 
 const openPaths = [
-  '/libraries',
-  '/collection',
-  '/music/albums',
-  '/music/artists',
+  'Libraries',
+  'Library',
+  'Collections',
+  'Albums',
+  'Artists',
 ];
+
+const closedPaths = [
+  'Collection',
+]
 
 const queryPaths = [
   '/music/albums',
   '/music/artists',
 ];
 
-const indexerState = (route: string) => openPaths.some((path) => route.startsWith(path));
-const isQueryPath = (route: string) => queryPaths.some((path) => route.startsWith(path));
+const indexerState = (route: string) => openPaths.some((path) => route == path);
+const isQueryPath = (route: string) => queryPaths.some((path) => route == path);
 
 function handleScrollToDiv(letter: string) {
   if (isQueryPath(router.currentRoute.value.fullPath)) {
@@ -61,13 +67,14 @@ const disableScrollableTargets = () => {
 };
 
 const triggerIndexer = (route: string) => {
+  console.log('triggerIndexer', route);
   setIndexerOpen(indexerState(route));
   updateScrollableTargets();
 };
 
 router.afterEach((to) => {
   setTimeout(() => {
-    triggerIndexer(to.fullPath);
+    triggerIndexer(to.name as string ?? to.fullPath);
   }, 50);
 });
 
@@ -78,6 +85,14 @@ router.beforeEach(() => {
   //     el.remove();
   // });
 });
+
+onMounted(() => {
+  document.addEventListener("indexer", updateScrollableTargets);
+});
+
+onUnmounted(() => {
+  document.removeEventListener("indexer", updateScrollableTargets);
+})
 
 </script>
 

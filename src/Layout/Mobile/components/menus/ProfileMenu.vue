@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import {PropType} from 'vue';
 import {RouterLink} from 'vue-router';
 import {IonIcon, IonRippleEffect} from '@ionic/vue';
 import {arrowRefreshVertical, doorOpen, gridMasonry, monitor, moonDiagonal, serverSwitch} from '@Icons/index';
@@ -11,40 +10,15 @@ import BottomFlyout from '@/Layout/Mobile/components/BottomFlyout.vue';
 
 import Toggle from '@/components/Forms/Toggle.vue';
 
-defineProps({
-  menuOpen: {
-    type: Boolean,
-    required: true,
-  },
-  transparent: {
-    type: Boolean,
-    required: false,
-    default: false,
-  },
-  openMenu: {
-    type: Function as PropType<() => void>,
-    required: true,
-  },
-  closeMenu: {
-    type: Function as PropType<() => void>,
-    required: true,
-  },
-});
-
 const reload = () => window.location.reload();
 
 </script>
 
 <template>
 
-  <BottomFlyout
-      :menuOpen="menuOpen"
-      :transparent="transparent"
-      @close="openMenu"
-      :closeMenu="closeMenu"
-  >
+  <BottomFlyout >
     <div
-        class="flex flex-col justify-start items-start self-stretch flex-grow-0 flex-shrink-0 px-3 py-2 border-t-0 border-r-0 border-b border-l-0 border-slate-lightA-4 dark:border-slate-darkA-4"
+        class="flex z-1099 flex-col justify-start items-start self-stretch flex-grow-0 flex-shrink-0 px-3 py-2 border-t-0 border-r-0 border-b border-l-0 border-slate-lightA-4 dark:border-slate-darkA-4"
     >
       <ProfileMenuServerSection/>
     </div>

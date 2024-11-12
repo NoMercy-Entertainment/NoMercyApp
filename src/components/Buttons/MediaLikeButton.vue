@@ -64,7 +64,7 @@ const handleLike = (e: Event) => {
 			value: !liked.value,
 		})
 		.then(({data}) => {
-			liked.value = data.args?.[1] == 'liked';
+			liked.value = data.args?.[0] == 'liked';
 			// showNotification({
 			// 	title: translate(data.message, ...data.args ?? []),
 			// 	type: data.status == 'ok'

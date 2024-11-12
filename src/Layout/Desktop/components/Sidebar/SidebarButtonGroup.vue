@@ -4,7 +4,7 @@ import {useTranslation} from "i18next-vue";
 
 import type {MoooomIcons} from '@Icons/icons';
 import MoooomIcon from '@/components/Images/icons/MoooomIcon.vue';
-import sidebar, {sidebarState} from '@/store/sidebar';
+import sidebar from '@/store/sidebar';
 
 const {t} = useTranslation();
 
@@ -48,7 +48,7 @@ const classes = computed(() =>
             <MoooomIcon icon="chevronRight" :class="`transition-transform duration-300 ${open ? 'rotate-90' : 'rotate-0'}`"/>
         </button>
 
-        <div :class="open ||  sidebarState != 'open' ? 'grid-rows-1' : 'grid-rows-0'"
+        <div :class="open ||  sidebar != 'open' ? 'grid-rows-1' : 'grid-rows-0'"
              class="grid h-auto w-full grid-rows-1 transition-transform duration-300">
             <div class="flex flex-col gap-1 overflow-hidden transition-transform duration-300">
                 <slot/>

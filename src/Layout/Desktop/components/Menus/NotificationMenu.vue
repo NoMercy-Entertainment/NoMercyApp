@@ -78,8 +78,10 @@ onMounted(() => {
                         </button>
                     </div>
 
-                    <template v-if="messagesState?.length > 0" v-for="item in messagesState?.latest()" :key="item.id">
+                    <template v-if="messagesState?.length > 0">
+                      <template v-for="item in messagesState?.latest()" :key="item.id">
                         <NotificationItem :data="item"/>
+                      </template>
                     </template>
                     <template v-else>
                         <div class="relative flex items-start justify-start gap-2 rounded-lg p-2" >

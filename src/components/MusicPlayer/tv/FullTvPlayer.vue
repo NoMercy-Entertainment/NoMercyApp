@@ -129,8 +129,8 @@ onUnmounted(() => {
 
 const isDarkMode = ref(false);
 
-const toggleDarkMode = (e: MouseEvent) => {
-	e.stopPropagation();
+const toggleDarkMode = (e?: MouseEvent) => {
+	e?.stopPropagation();
 	isDarkMode.value = !isDarkMode.value;
 };
 

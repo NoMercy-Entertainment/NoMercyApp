@@ -65,9 +65,9 @@ watch(currentSeason, reset);
           v-model="currentSeason"
           :disabled="seasonSelectorData.length == 1"
           :items="seasonSelectorData"
-          class="min-w-52 max-w-[20rem]"
+          class="min-w-52 max-w-[20rem] ml-3"
           label=""
-          variant="dense"
+          variant="normal"
       />
     </template>
 

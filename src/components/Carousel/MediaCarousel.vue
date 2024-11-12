@@ -16,6 +16,7 @@ import {setBackground, setColorPalette, setPoster} from '@/store/ui';
 import Carousel from '@/components/Carousel/Carousel.vue';
 import MediaCard from '@/components/Cards/MediaCard.vue';
 import {showBackdrops} from '@/store/preferences';
+import MoooomIcon from '@/components/Images/icons/MoooomIcon.vue';
 
 const props = defineProps({
   data: {
@@ -25,6 +26,10 @@ const props = defineProps({
   title: {
     type: String,
     required: true,
+  },
+  moreLink: {
+    type: String,
+    required: false,
   },
   type: {
     type: String as PropType<'poster' | 'backdrop'>,
@@ -103,10 +108,25 @@ const onRightClick = (event: MouseEvent, item: any) => {
 </script>
 
 <template>
-  <ContextMenu v-if="menuItems" ref="cardMenu" :model="menuItems"/>
+  <!--  <ContextMenu v-if="menuItems" ref="cardMenu" :model="menuItems"/>-->
 
-  <Carousel :index="index" :limitCardCountBy="limitCardCountBy" :title="title" class=""
-            :type="!backdropCards ? 'backdrop' : 'poster'" :disableAutoAspect="!backdropCards">
+  <Carousel
+      :index="index"
+      :limitCardCountBy="limitCardCountBy"
+      :title="title"
+      class=""
+      :type="!backdropCards ? 'backdrop' : 'poster'"
+      :disableAutoAspect="!backdropCards"
+  >
+    <template v-slot:link>
+      <RouterLink v-if="moreLink"
+                  :to="moreLink"
+                  class="text-base text-slate-dark-9 dark:text-slate-light-9 flex items-center ml-auto mr-2">
+        <span>{{ $t('See more') }}</span>
+        <MoooomIcon icon="chevronRight" className="w-6 mt-1"/>
+      </RouterLink>
+    </template>
+
     <template v-for="(item, itemIndex) in data"
               :key="item?.id">
       <swiper-slide v-if="item?.id"

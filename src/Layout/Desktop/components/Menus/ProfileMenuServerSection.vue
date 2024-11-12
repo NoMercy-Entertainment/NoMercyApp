@@ -12,7 +12,7 @@ import MoooomIcon from '@/components/Images/icons/MoooomIcon.vue';
         class="flex flex-shrink-0 flex-grow-0 flex-col items-start justify-start self-stretch border-0 py-2 px-2.5">
         <div
             class="relative flex flex-shrink-0 flex-grow-0 items-center justify-start self-stretch gap-2.5">
-            <div class="relative mx-auto rounded-full size-12 bg-auto-alpha-5">
+            <div class="relative mx-auto rounded-full size-12">
                 <NoMercyAvatar :user="user" :size="40" class="h-12"/>
             </div>
             <div

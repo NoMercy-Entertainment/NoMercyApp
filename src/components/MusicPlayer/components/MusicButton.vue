@@ -24,7 +24,7 @@ const { t } = useTranslation();
             @click="onclick?.()"
             :data-state="musicVisibility"
             :tabindex="musicVisibility == 'showing' ? 0 : -1"
-            class="grid relative place-content-center w-10 h-10 min-w-[2.5rem] z-0 justify-center disabled:opacity-50 disabled:text-auto-300 disabled:hover:!bg-transparent rounded-full overflow-clip text-contrast bg-transparent active:bg-transparent focus-visible:sm:bg-auto-900/10 items-center sm:hover:bg-auto-900/10 pointer-events-auto focus-visible:ring-white focus-visible:ring-2 group/button children:transition-all children:duration-200">
+            class="grid relative place-content-center w-10 h-10 min-w-[2.5rem] z-0 justify-center disabled:opacity-50 disabled:text-auto-300 disabled:hover:!bg-transparent overflow-clip text-contrast pointer-events-auto focus-visible:ring-white focus-visible:ring-2 group/button gap-2 p-2.5 items-center rounded-lg bg-slate-lightA-2 active:!bg-slate-lightA-4 focus-visible:sm:!bg-slate-lightA-4 sm:hover:!bg-slate-lightA-4 dark:active:!bg-slate-darkA-4 dark:focus-visible:sm:!bg-slate-darkA-4 dark:sm:hover:!bg-slate-darkA-4">
         <slot />
     </button>
 </template>

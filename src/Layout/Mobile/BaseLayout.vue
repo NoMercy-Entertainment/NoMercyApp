@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import {onMounted, ref} from 'vue';
+import {onMounted, onUnmounted, watch} from 'vue';
 import router from '@/router';
 
 import {
@@ -9,55 +9,53 @@ import {
   isPlatform,
 } from '@ionic/vue';
 
-import ProfileMenu from '@/Layout/Mobile/components/menus/ProfileMenu.vue';
-import BottomBar from '@/Layout/Mobile/components/BottomBar.vue';
-import SideFlyout from '@/Layout/Mobile/components/SideFlyout.vue';
+import {lockPortrait, unlockOrientation} from '@/lib/utils';
+import {closeMenu} from '@/store/profileMenu';
 
-const menuOpen = ref(false);
+import ImageModal from '@/Layout/ImageModal.vue';
+import Screensaver from '@/Layout/Screensaver.vue';
 
-const openMenu = () => {
-  menuOpen.value = !menuOpen.value;
-};
-const closeMenu = () => {
-  menuOpen.value = false;
-};
+import FullPlayer from '@/components/MusicPlayer/mobile/FullPlayer.vue';
+import MiniPlayer from '@/components/MusicPlayer/mobile/MiniPlayer.vue';
+
+import ProfileMenu from './components/menus/ProfileMenu.vue';
+import BottomBar from './components/BottomBar.vue';
+import SideFlyout from './components/SideFlyout.vue';
+import NavBar from './components/NavBar.vue';
+import {currentSong} from '@/store/audioPlayer';
 
 onMounted(() => {
+  lockPortrait();
   router.afterEach(() => {
     closeMenu();
   });
 });
 
-const toggleMenu = async () => {
-  if (menuOpen.value) {
-    closeMenu();
-  } else {
-    openMenu();
-  }
-};
+onUnmounted(() => {
+  unlockOrientation();
+});
 
 </script>
 
 <template>
   <ion-page id="main-content">
     <ion-tabs>
+      <NavBar/>
 
       <ion-router-outlet animated="false" class="pointer-events-none children:pointer-events-auto">
       </ion-router-outlet>
 
-      <ProfileMenu v-if="isPlatform('capacitor')"
-         :menuOpen="menuOpen"
-          :closeMenu="closeMenu"
-          :openMenu="openMenu"
-      />
+      <ProfileMenu v-if="isPlatform('capacitor')" />
 
-      <BottomBar v-if="isPlatform('capacitor')"
-         :menuOpen="menuOpen"
-          :closeMenu="closeMenu"
-          :openMenu="openMenu"
-          :toggleMenu="toggleMenu"
-       />
+      <FullPlayer v-if="currentSong" />
+      <MiniPlayer v-if="currentSong" />
+
+      <BottomBar v-if="isPlatform('capacitor')" />
     </ion-tabs>
+
+    <ImageModal />
+    <!--      <Toast class="z-1199" />-->
+    <Screensaver />
 
     <SideFlyout v-if="!isPlatform('capacitor')"    />
   </ion-page>

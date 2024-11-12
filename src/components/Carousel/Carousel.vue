@@ -11,6 +11,7 @@ import {Breakpoints, breakpoints, swiperConfig} from "@/lib/swiper-config";
 import {showBackdrops} from '@/store/preferences';
 
 import MoooomIcon from '@/components/Images/icons/MoooomIcon.vue';
+import {isMobile} from '@/config/global';
 
 const {t} = useTranslation();
 
@@ -116,13 +117,13 @@ onBeforeMount(() => {
     bp.value = newBp;
 });
 
-const show = ref(false);
+const show = ref(true);
 
-onMounted(() => {
-    setTimeout(() => {
-        show.value = true;
-    }, 200 * props.index);
-});
+// onMounted(() => {
+//     setTimeout(() => {
+//         show.value = true;
+//     }, 200 * props.index);
+// });
 
 const handleFocus = (e: FocusEvent) => {
     console.log('focus');
@@ -133,15 +134,17 @@ const handleFocus = (e: FocusEvent) => {
 
 <template>
     <div
-        v-if="show" data-scroll
-        class="mb-1 flex w-auto flex-shrink-0 flex-grow-0 flex-col items-start justify-start gap-2 self-stretch"
+        v-if="show"
+        class="mb-1 flex w-auto flex-shrink-0 flex-grow-0 flex-col items-start justify-start gap-2 self-stretch will-change-auto"
     >
         <div class="flex w-full flex-1 flex-col gap-2">
-            <div class="relative ml-5 flex flex-shrink-0 flex-grow-0 items-center justify-between self-stretch">
-                <h3 v-if="title" class="text-lg font-bold text-auto-12">{{ t(title ?? 'Continue watching') }}</h3>
+            <div class="relative ml-2 flex flex-shrink-0 flex-grow-0 items-center self-stretch">
+                <h3 v-if="title" class="text-2xl font-bold text-auto-12 mr-2 ml-1 sm:ml-3 text-slate-light-1">
+                  {{ t(title ?? 'Continue watching') }}
+                </h3>
                 <slot v-else name="selector"></slot>
                 <slot name="link"></slot>
-                <div class="flex flex-shrink-0 flex-grow-0 items-start justify-start gap-2 pr-4">
+                <div class="flex flex-shrink-0 flex-grow-0 items-start justify-start gap-2 pr-4 ml-auto" v-if="!isMobile">
 
                     <button
                         :class="`hidden sm:flex justify-center items-center p-1 rounded-lg bg-auto-alpha-7 active:scale-95 hover:bg-auto-alpha-9 transition-transform duration-300 ${backButtonEnabled ? '' : 'cursor-not-allowed opacity-50'}`"

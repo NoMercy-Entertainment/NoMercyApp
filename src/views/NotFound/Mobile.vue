@@ -36,7 +36,7 @@ const description = computed(() => {
 
 <template>
   <ion-page>
-    <NavBar title="Home"/>
+    <NavBar />
     <ion-content :fullscreen="true">
       <div class="grid h-full w-full place-items-center">
 

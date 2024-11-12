@@ -27,7 +27,7 @@ defineProps({
 <template>
   <DropdownMenu v-if="user" :direction="direction" className="rounded-full">
     <template v-slot:button>
-      <div class="relative mx-auto flex flex-col rounded-full size-12 bg-auto-alpha-5">
+      <div class="relative mx-auto flex flex-col rounded-full size-12">
         <NoMercyAvatar :user="user" :size="40" class="absolute inset-0"/>
         <span
             class="absolute rounded-full border-white bg-green-600 size-[25%] bottom-[2%] end-[2%] border-[0.125rem] dark:border-stone-900">

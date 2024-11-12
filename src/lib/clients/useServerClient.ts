@@ -5,8 +5,8 @@ import serverClient from './serverClient';
 import {AxiosError} from 'axios';
 import {ErrorResponse} from '@/types/server'
 import {queryKey} from '@/lib/clients/useInfiniteServerClient';
-import router from '@/router';
 import currentServer from '@/store/currentServer';
+import {useRouter} from 'vue-router';
 
 export interface ServerClientProps {
 	path?: string;
@@ -29,6 +29,8 @@ type Return<T> = UseQueryReturnType<T, AxiosError<ErrorResponse>> extends {
 };
 
 const useServerClient = <T, >(options?: ServerClientProps): Return<T> => {
+
+	const router = useRouter();
 
 	const letter = ref<string>(router.currentRoute.value.query?.letter as string || '_');
 

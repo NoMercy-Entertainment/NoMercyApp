@@ -1,6 +1,6 @@
 import {pad} from './stringArray';
 import {Song} from '@/types/api/music/musicPlayer';
-import {Namespace, t} from 'i18next';
+import {t} from 'i18next';
 import i18next from '@/config/i18next';
 
 export const convertToHumanReact = (t: (arg: string) => string, time: number, zeroPad = false): string => {

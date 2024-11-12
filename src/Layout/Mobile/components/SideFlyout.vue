@@ -14,7 +14,7 @@ import {
   isPreferencesRoute
 } from '@/store/routeState';
 
-import {closeSidebar, sidebarState} from '@/store/sidebar';
+import {closeSidebar, sidebar} from '@/store/sidebar';
 import currentServer from '@/store/currentServer';
 
 import ProfileMenuServerSection from '@/Layout/Desktop/components/Menus/ProfileMenuServerSection.vue';
@@ -31,7 +31,7 @@ const left = ref('-100%');
 const opacity = ref(0);
 
 onMounted(() => {
-  if (sidebarState.value === 'open') {
+  if (sidebar.value === 'open') {
     left.value = '0';
     opacity.value = 1;
   }
@@ -41,7 +41,7 @@ onMounted(() => {
   }
 });
 
-watch(sidebarState, (value) => {
+watch(sidebar, (value) => {
   if (value === 'open') {
       left.value = '0'
       opacity.value = 1;
@@ -96,7 +96,7 @@ const {isSwiping, lengthX} = useSwipe(
          :style="{ opacity }"
          :class="{
             'transition-opacity duration-300 ease-in-out ': !isSwiping,
-            'pointer-events-none': sidebarState !== 'open'
+            'pointer-events-none': sidebar !== 'open'
           }"
          @click="closeSidebar"
     ></div>

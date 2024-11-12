@@ -8,6 +8,7 @@ import type {
 } from './types';
 
 import {Item, PlayerState, VolumeState} from './types';
+import promises from '@/router/middleware/beforeResolve';
 
 export class Helpers extends EventTarget {
     public volume: Volume = Number(localStorage.getItem('music-volume')) || 100;
@@ -47,11 +48,6 @@ export class Helpers extends EventTarget {
     constructor() {
         super();
 
-        if (document.querySelector<HTMLDivElement>('#music-events')) {
-            this._eventElement = document.querySelector<HTMLDivElement>('#music-events') as HTMLDivElement;
-            return;
-        }
-
         this._eventElement = document.createElement('div');
         this._eventElement.id = 'music-events';
         this._eventElement.style.display = 'none';
@@ -67,7 +63,7 @@ export class Helpers extends EventTarget {
     }
 
     public getNewSource(newItem: CurrentItem|null): Promise<string> {
-        if (!newItem) return Promise.resolve('');
+        if (!newItem?.folder) return Promise.resolve('');
         return new Promise((resolve) => {
             return resolve(
                 encodeURI(
@@ -107,6 +103,7 @@ export class Helpers extends EventTarget {
     emit(eventType: 'shuffle', data: IsShuffling): void;
     emit(eventType: 'mute', data: IsMuted): void;
     emit(eventType: 'repeat', data: RepeatState): void;
+    emit(eventType: 'seeked', data: TimeState): void;
     emit(eventType: 'setCurrentAudio', data: HTMLAudioElement): void;
     emit(eventType: 'time', data: TimeState): void;
     emit(eventType: 'time-internal', data: TimeState): void;
@@ -153,6 +150,7 @@ export class Helpers extends EventTarget {
     on(event: 'shuffle', callback: (data: IsShuffling) => void): void;
     on(event: 'mute', callback: (data: IsMuted) => void): void;
     on(event: 'repeat', callback: (data: RepeatState) => void): void;
+    on(event: 'seeked', callback: (data: TimeState) => void): void;
     on(event: 'setCurrentAudio', callback: () => void): void;
     on(event: 'time', callback: (data: TimeState) => void): void;
     on(event: 'time-internal', callback: (data: TimeState) => void): void;
@@ -192,6 +190,7 @@ export class Helpers extends EventTarget {
     off(event: 'shuffle', callback: (data: IsShuffling) => void): void;
     off(event: 'mute', callback: (data: IsMuted) => void): void;
     off(event: 'repeat', callback: (data: RepeatState) => void): void;
+    off(event: 'seeked', callback: (data: TimeState) => void): void;
     off(event: 'setCurrentAudio',callback: (data: HTMLAudioElement) => void): void;
     off(event: 'time', callback: (data: TimeState) => void): void;
     off(event: 'time-internal', callback: (data: TimeState) => void): void;
@@ -228,6 +227,7 @@ export class Helpers extends EventTarget {
     once(event: 'shuffle', callback: (data: IsShuffling) => void): void;
     once(event: 'mute', callback: (data: IsMuted) => void): void;
     once(event: 'repeat', callback: (data: RepeatState) => void): void;
+    once(event: 'seeked', callback: (data: TimeState) => void): void;
     once(event: 'setCurrentAudio',callback: (data: HTMLAudioElement) => void): void;
     once(event: 'time', callback: (data: TimeState) => void): void;
     once(event: 'time-internal', callback: (data: TimeState) => void): void;

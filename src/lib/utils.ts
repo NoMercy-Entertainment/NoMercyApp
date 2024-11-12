@@ -1,10 +1,10 @@
 import {camelize, getCurrentInstance, toHandlerKey} from 'vue';
 import {type ClassValue, clsx} from 'clsx';
 import {twMerge} from 'tailwind-merge';
-import {ScreenOrientation} from '@capacitor/screen-orientation';
 
 import type {InfoResponse} from '@/types/api/base/info';
 import {isNative} from '@/config/global';
+import {isPlatform} from '@ionic/vue';
 
 export function cn(...inputs: ClassValue[]) {
 	return twMerge(clsx(inputs));
@@ -76,6 +76,7 @@ export const scrollCenter = (el: HTMLElement, container: HTMLElement, options?: 
 	margin?: number;
 }) => {
 	if (!el) return;
+	console.log('scroll Center', el, container);
 
 	const scrollDuration = options?.duration || 60;
 	const margin = options?.margin || 1.5;
@@ -188,8 +189,9 @@ export const stopAndPrevent = (e: Event) => {
 	e.preventDefault();
 };
 
-export const lockPortrait = () => {
-	if (isNative) {
+export const lockPortrait = async () => {
+	if (isPlatform('capacitor')) {
+		const {ScreenOrientation} = (await import('@capacitor/screen-orientation'));
 		try {
 			ScreenOrientation.lock({
 				orientation: 'portrait',
@@ -201,8 +203,9 @@ export const lockPortrait = () => {
 	}
 }
 
-export const lockLandscape = () => {
-	if (isNative) {
+export const lockLandscape = async () => {
+	if (isPlatform('capacitor')) {
+		const {ScreenOrientation} = (await import('@capacitor/screen-orientation'));
 		try {
 			ScreenOrientation.lock({
 				orientation: 'landscape',
@@ -214,11 +217,11 @@ export const lockLandscape = () => {
 	}
 }
 
-export const unlockOrientation = () => {
-	if (isNative) {
+export const unlockOrientation = async () => {
+	if (isPlatform('capacitor')) {
+		const {ScreenOrientation} = (await import('@capacitor/screen-orientation'));
 		try {
 			ScreenOrientation.unlock().then();
-			// screen.orientation.unlock();
 		} catch (e) {
 			//
 		}

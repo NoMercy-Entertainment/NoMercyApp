@@ -3,8 +3,14 @@ import {onMounted, ref, watch} from 'vue';
 
 import type {Song} from '@/types/api/music/musicPlayer';
 
-import {pickPaletteColor} from '@/lib/colorHelper';
 import serverClient from '@/lib/clients/serverClient';
+import {setTitle} from '@/lib/stringArray';
+import audioPlayer, {currentSong, musicSize, musicVisibility} from '@/store/audioPlayer';
+import currentServer from '@/store/currentServer';
+import sidebar from '@/store/sidebar';
+
+import CoverImage from '@/components/MusicPlayer/components/CoverImage.vue';
+import MediaLikeButton from '@/components/Buttons/MediaLikeButton.vue';
 
 import DeviceButton from './components/DeviceButton.vue';
 import NextButton from './components/NextButton.vue';
@@ -18,14 +24,8 @@ import StopButton from './components/StopButton.vue';
 import TrackLinks from './components/TrackLinks.vue';
 import VolumeContainer from './components/VolumeContainer.vue';
 import LyricsButton from './components/LyricsButton.vue';
-import {setTitle} from '@/lib/stringArray';
-import currentServer from '@/store/currentServer';
-import audioPlayer, {currentSong, musicSize, musicVisibility, setMusicVisibility} from '@/store/audioPlayer';
-import {VisibilityState} from '@/types/musicPlayer';
-import sidebar from '@/store/sidebar';
-import CoverImage from '@/components/MusicPlayer/components/CoverImage.vue';
-import MediaLikeButton from '@/components/Buttons/MediaLikeButton.vue';
-
+import {shouldMarquee} from '@/lib/utils';
+import Marquee from '@/components/Marquee.vue';
 const dataAttribute = ref<any>();
 const shouldSubmitPlayback = ref(true);
 
@@ -50,11 +50,8 @@ onMounted(() => {
     shouldSubmitPlayback.value = true;
 
     if (item) {
-      setMusicVisibility(VisibilityState.showing);
       // setMusicColor(pickPaletteColor(item?.color_palette?.cover));
       setTitle(`${item.name} - ${item.artist_track.at(0)?.name} - ${item.album_track.at(0)?.name}`);
-    } else {
-      setMusicVisibility(VisibilityState.hidden);
     }
 
     dataAttribute.value = createMusicDatasetAttribute(
@@ -81,10 +78,7 @@ watch(audioPlayer, (value) => {
     shouldSubmitPlayback.value = true;
 
     if (item) {
-      setMusicVisibility(VisibilityState.showing);
       // setMusicColor(pickPaletteColor(item?.color_palette?.cover));
-    } else {
-      setMusicVisibility(VisibilityState.hidden);
     }
 
     dataAttribute.value = createMusicDatasetAttribute(
@@ -106,7 +100,6 @@ watch(audioPlayer, (value) => {
   });
 });
 
-
 const submitPlayback = async () => {
   if (!currentSong.value) return;
 
@@ -114,16 +107,11 @@ const submitPlayback = async () => {
       .post<Song>(`music/tracks/${currentSong.value?.id}/playback`);
 };
 
-// watch(musicVisibility, (value) => {
-// 	const container = document.querySelector<HTMLDivElement>('#container');
-// 	container?.setAttribute('data-music', value);
-// });
-
 </script>
 
 <template>
-  <div id="container"
-       class="-mt-2 mb-2 hidden h-0 music-showing:h-20 flex-shrink-0 flex-grow-0 flex-row items-center justify-start gap-12 self-stretch overflow-hidden music-showing:py-1 pr-6 sidebar-open:pl-6 sidebar-hidden:pl-8 sidebar-closed:pl-20 transition-transform duration-300 sm:flex 2xl:sidebar-open:pl-[17rem] 3xl:sidebar-open:pl-[17rem]"
+  <div id="fullPlayer"
+       class="bg-slate-lightA-4 dark:bg-slate-darkA-4 hidden h-0 music-showing:h-20 flex-shrink-0 flex-grow-0 flex-row items-center justify-start gap-12 self-stretch pr-6 sidebar-open:ml-64 rounded-lg m-2 mt-1 pl-4 mx-5 transition-all duration-300 sm:flex 2xl:sidebar-open:ml-[16.3rem]"
        :data-music="musicVisibility"
        :data-sidebar="sidebar">
     <div v-if="currentSong"
@@ -139,12 +127,14 @@ const submitPlayback = async () => {
 
         <div v-if="currentSong"
              class="mx-4 flex flex-col overflow-hidden gap-0.5 w-available hover-animate-pause">
-          <div class="relative flex flex-grow flex-col items-start justify-start gap-2"
-               :data-data="dataAttribute">
-            <div class="w-full flex-shrink-0 flex-grow-0 self-stretch font-semibold">
-              {{ currentSong?.name }}
-            </div>
-          </div>
+          <Marquee :text="currentSong?.name"/>
+<!--          <div class="relative flex flex-grow flex-col items-start justify-start gap-2"-->
+<!--               :data-data="dataAttribute" data-marquee="container">-->
+<!--            <div class="flex-shrink-0 flex-grow-0 self-stretch font-semibold line-clamp-1 w-fit whitespace-nowrap"-->
+<!--                 data-marquee="scroller">-->
+<!--              {{ currentSong?.name }}-->
+<!--            </div>-->
+<!--          </div>-->
           <div :data-size="musicSize"
                :key="currentSong.id"
                class="mb-1 inline-flex h-5 gap-1 overflow-hidden whitespace-nowrap text-xs w-available line-clamp-1 hover-animate-pause">
@@ -169,12 +159,12 @@ const submitPlayback = async () => {
           <div class="flex flex-shrink-0 flex-grow-0 items-center justify-center gap-2">
             <ShuffleButton/>
             <PreviousButton/>
-            <PlaybackButton class="children:h-10 h-12 children:w-10 w-12"/>
+            <PlaybackButton class="children:h-10 h-12 children:w-10 w-12 !bg-white dark:!bg-slate-darkA-2"/>
             <NextButton/>
             <RepeatButton/>
           </div>
         </div>
-        <ProgressBarContainer/>
+        <ProgressBarContainer />
       </div>
       <div id="right"
            class="relative flex flex-grow items-center justify-end gap-2 min-w-[30%] max-w-[30%]"

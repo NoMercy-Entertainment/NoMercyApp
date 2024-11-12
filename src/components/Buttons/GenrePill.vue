@@ -2,11 +2,11 @@
 import {type PropType} from 'vue';
 
 import type {Genre} from '@/types/api/base/genre';
+import type {CollectionGenre} from '@/types/api/base/collection';
 
-import {CollectionGenre} from '@/types/api/base/collection';
-import MoooomIcon from '@/components/Images/icons/MoooomIcon.vue';
 import {genreColors} from '@/config/global';
-import router from '@/router';
+
+import MoooomIcon from '@/components/Images/icons/MoooomIcon.vue';
 
 defineProps({
   genre: {
@@ -17,10 +17,9 @@ defineProps({
 </script>
 
 <template>
-  <button
-      @click="router.push(`/genre/${genre?.id}`)"
-        class="relative flex flex-shrink-0 flex-grow-0 items-center justify-start rounded-2xl text-auto-1 dark:text-auto-12 px-2 py-0.5 hover:!grayscale-0"
-        :class="genreColors(genre?.name).iconBg"
+  <RouterLink :to="`/genre/${genre?.id}`"
+              class="relative flex flex-shrink-0 flex-grow-0 items-center justify-start rounded-2xl px-2 py-0.5 hover:!grayscale-0  text-slate-lightA-12  dark:text-slate-darkA-12"
+              :class="genreColors(genre?.name).iconBg"
   >
     <MoooomIcon
         className="relative w-5 flex-shrink-0 flex-grow-0"
@@ -31,5 +30,5 @@ defineProps({
         {{ genre?.name }}
       </p>
     </div>
-  </button>
+  </RouterLink>
 </template>

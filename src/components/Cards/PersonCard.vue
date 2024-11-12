@@ -53,13 +53,13 @@ const color = computed(() => {
         <div
             class="absolute bottom-0 left-0 z-0 grid h-16 w-full items-stretch rounded-b-lg px-2 pt-2 pb-1">
             <div class="absolute inset-0 z-0 rounded-b-lg bg-auto-1/60"></div>
-            <p class="z-10 w-auto flex-shrink-0 flex-grow-0 self-stretch text-sm font-bold leading-4 line-clamp-2">
+            <p class="z-10 w-auto flex-shrink-0 flex-grow-0 self-stretch text-sm font-bold leading-4 line-clamp-2  text-slate-lightA-12/70  dark:text-slate-darkA-12/80">
                 {{ data?.name }}
 							<span v-if="data.deathday"
 										class="-mr-1 text-base leading-none">&#8224;</span>
             </p>
             <p :title="data?.character ?? data?.job as string"
-               class="z-10 w-auto flex-shrink-0 flex-grow-0 self-stretch text-xs font-semibold line-clamp-2 leading-[1.2] text-auto-12/80 empty:hidden dark:font-medium">
+               class="z-10 w-auto flex-shrink-0 flex-grow-0 self-stretch text-xs font-semibold line-clamp-2 leading-[1.2] text-slate-lightA-12/60 dark:text-slate-darkA-12/70 empty:hidden dark:font-medium">
                 {{ data?.character ?? data?.job }}
             </p>
         </div>

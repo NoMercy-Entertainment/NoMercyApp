@@ -18,7 +18,7 @@ import StopButton from '../components/StopButton.vue';
          :data-size="musicSize">
         <ShuffleButton />
         <PreviousButton />
-        <PlaybackButton class="!h-14 !w-14 !bg-white text-black !min-w-14 !min-h-14 !max-w-14 !max-h-14 !relative !rounded-full !overflow-clip !pl-0.5" />
+        <PlaybackButton class="!h-14 !w-14 !bg-white text-black !rounded-full" />
         <NextButton />
         <RepeatButton />
     </div>

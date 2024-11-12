@@ -74,7 +74,7 @@ defineEmits(['update:modelValue']);
           }"
       >
         <ListboxButton
-            class="relative flex items-center w-full cursor-default rounded-md text-contrast shadow-sm sm:text-sm data-[headlessui-state='disabled']:grayscale *:last:data-[headlessui-state='disabled']:hidden"
+            class="relative flex items-center w-full cursor-default rounded-md  text-slate-lightA-12/70  dark:text-slate-darkA-12/80 shadow-sm sm:text-sm data-[headlessui-state='disabled']:grayscale *:last:data-[headlessui-state='disabled']:hidden"
             :class="{
               '!bg-auto-1 ring-[1.5px] ring-inset ring-auto-3 focus:outline-none focus:ring-2 focus:ring-focus data-[headlessui-state=\'open\']:ring-2 data-[headlessui-state=\'open\']:ring-focus': variant === 'normal' || variant === 'dense',
               'h-10 min-h-10 px-3': variant === 'normal',
@@ -110,9 +110,9 @@ defineEmits(['update:modelValue']);
           <ListboxOptions
               class="absolute top-full z-10 h-auto max-h-56 min-w-fit overflow-auto rounded-md text-base shadow-lg ring-1 ring-black ring-opacity-5 min-h-auto w-available bg-auto-1 focus:outline-none sm:text-sm"
               :class="{
-                'py-1.5 px-3': variant === 'normal',
-                'py-1 px-2': variant === 'dense',
-                'py-0.5 px-1.5': variant === 'tight',
+                'p-1.5': variant === 'normal',
+                'p-1': variant === 'dense',
+                'p-0.5': variant === 'tight',
               }"
           >
             <ListboxOption v-slot="{ active, selected }"
@@ -122,8 +122,8 @@ defineEmits(['update:modelValue']);
                            as="template">
               <li class="relative flex w-full min-w-fit cursor-default select-none items-center rounded-sm"
                   :class="{
-                  '!bg-focus text-auto-12 ': active,
-                  'text-contrast' : !active,
+                  '!bg-focus  text-slate-lightA-5/70  dark:text-slate-darkA-5/80 ': active,
+                  ' text-slate-lightA-12/70  dark:text-slate-darkA-12/80' : !active,
                   'h-8 min-h-8': variant === 'normal',
                   'h-6 min-h-6': variant === 'dense',
 							}">

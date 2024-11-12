@@ -42,9 +42,10 @@ router.beforeEach(() => {
 
 <template>
   <div ref="menu"
-       class="relative flex h-auto items-center gap-2 z-1099 group">
+       class="relative flex h-auto items-center gap-2 z-1099 group"
+  >
     <div
-        :class="twMerge('flex justify-start items-start relative gap-2 focus:bg-auto-2 hover:text-auto-12 transition-colors duration-300', className)"
+        :class="twMerge('flex justify-start items-start relative gap-2 bg-transparent focus:bg-auto-2 hover:text-auto-12 transition-colors duration-300', className)"
         @click="handleClick"
     >
       <slot :open="open" name="button"/>

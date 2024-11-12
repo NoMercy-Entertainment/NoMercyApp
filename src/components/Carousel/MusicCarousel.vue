@@ -40,7 +40,7 @@ const handleClick = (item: HomeDataItem) => {
 
     <template v-slot:link v-if="data.moreLink">
       <RouterLink
-          :to="`/${data.moreLink}`"
+          :to="data.moreLink"
           class="mr-auto ml-4 font-medium underline underline-offset-4">
         see more
       </RouterLink>

@@ -346,3 +346,9 @@ html.nprogress-busy #gradientBorder {
 
     background: padding-box var(--bg-color),border-box var(--border-color)
 }
+
+@property --focus-color {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: 255, 255, 255;
+}

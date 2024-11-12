@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import {computed, type PropType} from "vue"
+import {computed, type PropType, ref} from 'vue';
 
 import type {ContinueWatching, HomeItem} from "@/types/api/base/home";
 import type {Collection} from "@/types/api/base/collection";
@@ -13,6 +13,7 @@ import {showBackdrops} from '@/store/preferences';
 
 import TMDBImage from '@/components/Images/TMDBImage.vue';
 import CardIndicator from '@/components/Cards/CardIndicator.vue';
+import router from '@/router';
 
 const props = defineProps({
     data: {
@@ -54,12 +55,19 @@ const url = computed(() => {
     }
 });
 
+const show = ref(true);
+
+router.beforeEach(() => {
+    // show.value = false;
+});
+
 </script>
 
 <template>
     <RouterLink
+        v-if="show"
         :data-scroll="scrollLetter"
-          :to="url"
+        :to="url"
         class="group/card flex flex-col h-full items-center focus-outline overflow-clip relative rounded-lg select-none shadow-[0px_0px_0_1px_rgb(var(--color-focus,var(--color-theme-6))/70%)] w-full z-0 bg-auto-50/70 flex-grow-0"
         :class="backdropStyle ? 'aspect-backdrop' : 'aspect-poster'"
         :style="`
@@ -75,6 +83,7 @@ const url = computed(() => {
         <TMDBImage
             :path="image"
             :title="data?.title"
+            loading="lazy"
             :size="backdropStyle ? 330 : 180"
             :aspect="backdropStyle ? 'backdrop' : 'poster'"
             :colorPalette="data?.color_palette?.[backdropStyle ? 'backdrop' : 'poster']"

@@ -9,6 +9,7 @@ import type {ColorScheme} from '@/types/config';
 
 import {isDarkMode} from '@/config/global';
 import {RGBString2hex} from '@/lib/colorHelper';
+import {SafeArea} from 'capacitor-plugin-safe-area';
 
 export const setColorScheme = async (value: ColorScheme) => {
 	document.body.classList.add('scheme-transition');
@@ -37,19 +38,25 @@ export const setColorScheme = async (value: ColorScheme) => {
 	if (isPlatform('capacitor') && isPlatform('android')) {
 		const {StatusBar, Style} = (await import('@capacitor/status-bar'));
 
+		StatusBar.setOverlaysWebView({overlay: true}).then();
+		StatusBar.setBackgroundColor({color: '#00000080'}).then();
+
+		const safeAreaData = await SafeArea.getSafeAreaInsets();
+		const {insets} = safeAreaData;
+		for (const [key, value] of Object.entries(insets)) {
+			document.documentElement.style.setProperty(
+				`--safe-area-inset-${key}`,
+				`${value}px`,
+			);
+		}
+
 		if (value === 'dark') {
 			darkMode.value = true;
-			const topNavColor = RGBString2hex(twConfig.theme.extend.colors.violet.dark[7].replace(/\s/gu, ','));
-			const bottomButtonsColor = RGBString2hex(twConfig.theme.extend.colors.slate.dark[2].replace(/\s/gu, ','));
-			StatusBar.setBackgroundColor({color: topNavColor}).then();
-			await NavigationBar.setColor({color: bottomButtonsColor, darkButtons: true});
+			await NavigationBar.setColor({color: '#00000080', darkButtons: true});
 			StatusBar.setStyle({style: Style.Dark}).then();
 		} else {
 			darkMode.value = false;
-			const topNavColor = RGBString2hex(twConfig.theme.extend.colors.violet.light[8].replace(/\s/gu, ','));
-			const bottomButtonsColor = RGBString2hex(twConfig.theme.extend.colors.slate.light[1].replace(/\s/gu, ','));
-			StatusBar.setBackgroundColor({color: topNavColor}).then();
-			await NavigationBar.setColor({color: bottomButtonsColor, darkButtons: false});
+			await NavigationBar.setColor({color: '#00000080', darkButtons: false});
 			StatusBar.setStyle({style: Style.Light}).then();
 		}
 	}

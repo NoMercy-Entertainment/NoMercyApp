@@ -71,7 +71,7 @@ export class Queue extends Helpers {
     public setCurrentSong(payload: Item | null) {
         this.currentSong = payload;
 
-        this.emit('song', this.currentSong);
+        this.emit('song', payload);
 
         if (!payload) return;
 
@@ -216,8 +216,8 @@ export class Queue extends Helpers {
 
                             this.removeFromQueue(nexItem);
 
-                            this.emit('song', this.currentSong);
-                            
+                            this.emit('song', nexItem);
+
                             this.once('setCurrentAudio', () => {
                                 if (this._repeat == 'one') return;
 

@@ -1,11 +1,11 @@
 import getLibraries from '@/lib/middleware/getLibraries';
 import getLocations from '@/lib/middleware/getLocations';
-// import initializeAudioPlayer from '@/lib/middleware/inititalizeAudioPlayer';
+import initializeAudioPlayer from '@/lib/middleware/inititalizeAudioPlayer';
 
 const promises: Array<() => Promise<void>> = [
 	getLocations,
 	getLibraries,
-	// initializeAudioPlayer,
+	initializeAudioPlayer,
 ];
 
 export default promises;

@@ -1,29 +1,33 @@
 import {computed, ref} from 'vue';
 
-const sidebar = ref<'open' | 'closed' | 'hidden'>('hidden');
+const sb = ref<'open' | 'closed' | 'hidden'>('hidden');
 
-export const sidebarState = computed(() => sidebar.value);
+export const sidebar = computed(() => sb.value);
+
+export const setSidebar = (state: 'open' | 'closed' | 'hidden') => {
+	sb.value = state;
+}
 
 export const toggleSidebar = () => {
-	sidebar.value = sidebar.value === 'open' ? 'closed' : 'open';
+	sb.value = sb.value === 'open' ? 'closed' : 'open';
 };
 
 export const hideSidebar = () => {
-	sidebar.value = 'hidden';
+	sb.value = 'hidden';
 }
 
 export const openSidebar = () => {
-	sidebar.value = 'open';
+	sb.value = 'open';
 }
 
 export const closeSidebar = () => {
-	sidebar.value = 'closed';
+	sb.value = 'closed';
 }
 
-export const isSidebarOpen = () => sidebar.value === 'open';
+export const isSidebarOpen = () => sb.value === 'open';
 
-export const isSidebarClosed = () => sidebar.value === 'closed';
+export const isSidebarClosed = () => sb.value === 'closed';
 
-export const isSidebarHidden = () => sidebar.value === 'hidden';
+export const isSidebarHidden = () => sb.value === 'hidden';
 
 export default sidebar;

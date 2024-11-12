@@ -1,4 +1,4 @@
-import {RouteRecordRaw} from 'vue-router';
+import {NavigationGuardNext, RouteLocationNormalizedGeneric, RouteRecordRaw} from 'vue-router';
 import {computed} from 'vue';
 import {isMobile, isTv} from '@/config/global';
 
@@ -14,8 +14,6 @@ import BaseLibrary from '@/views/Base/Library';
 import BasePerson from '@/views/Base/Person';
 import BaseSearch from '@/views/Base/Search';
 import BaseWatch from '@/views/Base/Watch';
-
-import MusicAlbum from '@/views/Music/Album';
 import MusicArtist from '@/views/Music/Artist';
 import MusicCards from '@/views/Music/Cards';
 import MusicList from '@/views/Music/List';
@@ -50,6 +48,7 @@ import PreferencesSubtitles from '@/views/Preferences/Subtitles';
 import SetupSelectServers from '@/views/Setup/SelectServers';
 
 import NotFound from '@/views/NotFound';
+import libraries from '@/store/Libraries';
 
 const layout = computed(() => {
 	if (isMobile.value) {
@@ -91,6 +90,19 @@ export const routes: Array<RouteRecordRaw> = [
 				path: 'libraries',
 				name: 'Libraries',
 				component: BaseLibraries,
+				beforeEnter: (_: RouteLocationNormalizedGeneric, __: RouteLocationNormalizedGeneric, next: NavigationGuardNext) => {
+					const firstLibrary = libraries.value.at(0);
+					if (firstLibrary && !isMobile.value) {
+						next({
+							name: 'Library',
+							params: {
+								id: firstLibrary.id
+							}
+						});
+					} else {
+						next();
+					}
+				}
 			},
 			{
 				path: 'libraries/:id',
@@ -152,269 +164,249 @@ export const routes: Array<RouteRecordRaw> = [
 				name: 'Watch',
 				component: BaseWatch,
 			},
-		]
-	},
-	{
-		path: '/music',
-		component: layout.value,
-		children: [
 			{
-				path: '',
+				path: 'music',
 				redirect: '/music/start'
 			},
 			{
-				path: 'start',
+				path: 'music/start',
 				name: 'Music Start',
 				component: MusicStart
 			},
 			{
-				path: 'artists',
+				path: 'music/artists',
 				name: 'Artists',
 				component: MusicCards,
-				props:{
+				props: {
 					type: 'artists'
 				},
 			},
 			{
-				path: 'artists/:id',
+				path: 'music/artists/:id',
 				name: 'Artist',
-				component: MusicArtist
+				component: MusicArtist,
+				props: {
+					type: 'artists'
+				},
 			},
 			{
-				path: 'albums',
+				path: 'music/albums',
 				name: 'Albums',
 				component: MusicCards,
-				props:{
+				props: {
 					type: 'albums'
 				},
 			},
 			{
-				path: 'albums/:id',
+				path: 'music/albums/:id',
 				name: 'Album',
-				component: MusicAlbum
+				component: MusicList,
+				props: {
+					type: 'albums'
+				},
 			},
 			{
-				path: 'genres',
+				path: 'music/genres',
 				name: 'Music Genres',
 				component: MusicCards,
-				props:{
+				props: {
 					type: 'genres'
 				},
 			},
 			{
-				path: 'genres/:id',
-				name: 'Genre',
+				path: 'music/genres/:id',
+				name: 'Music Genre',
 				component: MusicCards
 			},
 			{
-				path: 'playlists',
+				path: 'music/playlists',
 				name: 'Music Playlists',
 				component: MusicCards,
-				props:{
+				props: {
 					type: 'playlists'
 				},
 			},
 			{
-				path: 'playlists/:id',
+				path: 'music/playlists/:id',
 				name: 'Music Playlist',
 				component: MusicList,
 			},
 			{
-				path: 'tracks',
+				path: 'music/tracks',
 				name: 'Tracks',
 				component: MusicList,
-				props:{
+				props: {
 					type: 'tracks'
 				},
 			},
 			{
-				path: 'search',
+				path: 'music/search',
 				name: 'Music Search',
 				component: MusicSearch,
 				props: {
 					type: 'music'
 				}
-			}
-		],
-	},
-	{
-		path: '/dashboard',
-		component: layout.value,
-		children: [
+			},
 			{
-				path: '',
+				path: 'dashboard',
 				name: 'System',
 				redirect: '/dashboard/system'
 			},
 			{
-				path: 'system',
+				path: 'dashboard/system',
 				name: 'System',
 				component: DashboardSystem,
 			},
 			{
-				path: 'general',
+				path: 'dashboard/general',
 				name: 'General',
 				component: DashboardGeneral,
 			},
 			{
-				path: 'users',
+				path: 'dashboard/users',
 				name: 'Users',
 				component: DashboardUsers,
 			},
 			{
-				path: 'users/:id',
+				path: 'dashboard/users/:id',
 				name: 'User',
 				component: DashboardUsers
 			},
 			{
-				path: 'libraries',
+				path: 'dashboard/libraries',
 				name: 'Dashboard Libraries',
 				component: DashboardLibraries,
 			},
 			{
-				path: 'libraries/:id',
+				path: 'dashboard/libraries/:id',
 				name: 'Dashboard Library',
 				component: DashboardLibraries
 			},
 			{
-				path: 'specials',
+				path: 'dashboard/specials',
 				name: 'Dashboard Specials',
 				component: DashboardSpecials,
 			},
 			{
-				path: 'specials/:id',
+				path: 'dashboard/specials/:id',
 				name: 'Dashboard Special',
 				component: DashboardSpecials
 			},
 			{
-				path: 'devices',
+				path: 'dashboard/devices',
 				name: 'Devices',
 				component: DashboardDevices,
 			},
 			{
-				path: 'devices/:id',
+				path: 'dashboard/devices/:id',
 				name: 'Device',
 				component: DashboardDevices
 			},
 			{
-				path: 'ripper',
+				path: 'dashboard/ripper',
 				name: 'Ripper',
 				component: DashboardRipper,
 			},
 			{
-				path: 'encoderprofiles',
+				path: 'dashboard/encoderprofiles',
 				name: 'Encoder Profiles',
 				component: DashboardEncoderProfiles,
 			},
 			{
-				path: 'encoderprofiles/:id',
+				path: 'dashboard/encoderprofiles/:id',
 				name: 'Encoder Profile',
 				component: DashboardEncoderProfiles
 			},
 			{
-				path: 'notifications',
+				path: 'dashboard/notifications',
 				name: 'Notifications',
 				component: DashboardNotifications,
 			},
 			{
-				path: 'notifications/:id',
+				path: 'dashboard/notifications/:id',
 				name: 'Notification',
 				component: DashboardNotifications
 			},
 			{
-				path: 'metadata',
+				path: 'dashboard/metadata',
 				name: 'Metadata',
 				component: DashboardMetadata,
 			},
 			{
-				path: 'activity',
+				path: 'dashboard/activity',
 				name: 'Activity',
 				component: DashboardActivity,
 			},
 			{
-				path: 'dlna',
+				path: 'dashboard/dlna',
 				name: 'DLNA',
 				component: DashboardDlna,
 			},
 			{
-				path: 'logs',
+				path: 'dashboard/logs',
 				name: 'Logs',
 				component: DashboardLogs,
 			},
 			{
-				path: 'plugins',
+				path: 'dashboard/plugins',
 				name: 'Plugins',
 				component: DashboardPlugins,
 			},
 			{
-				path: 'plugins/:id',
+				path: 'dashboard/plugins/:id',
 				name: 'Plugin',
 				component: DashboardPlugins
 			},
 			{
-				path: 'schedule',
+				path: 'dashboard/schedule',
 				name: 'Scheduled Tasks',
 				component: DashboardSchedule,
 			},
 			{
-				path: 'schedule/:id',
+				path: 'dashboard/schedule/:id',
 				name: 'Scheduled Task',
 				component: DashboardSchedule
 			},
-		],
-	},
-	{
-		path: '/preferences',
-		component: layout.value,
-		children: [
+
 			{
-				path: '',
-				redirect: '/preferences/display'
-			},
-			{
-				path: 'display',
+				path: 'preferences/display',
 				name: 'Display',
 				component: PreferencesDisplay,
 			},
 			{
-				path: 'profile',
+				path: 'preferences/profile',
 				name: 'Profile',
 				component: PreferencesProfile,
 			},
 			{
-				path: 'controls',
+				path: 'preferences/controls',
 				name: 'Controls',
 				component: PreferencesControls,
 			},
 			{
-				path: 'subtitles',
+				path: 'preferences/subtitles',
 				name: 'Subtitles',
 				component: PreferencesSubtitles,
 			},
-		],
-	},
-	{
-		path: '/setup',
-		component: layout.value,
-		children: [
+
 			{
-				path: '',
+				path: 'setup',
 				redirect: 'setup/select-servers'
 			},
 			{
-				path: 'select-servers',
+				path: 'setup/select-servers',
 				name: 'Select Servers',
 				component: SetupSelectServers,
 			},
-		],
-	},
-	{
-		path: '/:catchAll(.*)*',
-		component: NotFound,
-		props: {
-			message: 'Page not found',
-			status: 404,
-		}
+			{
+				path: ':catchAll(.*)*',
+				component: NotFound,
+				props: {
+					message: 'Page not found',
+					status: 404,
+				}
+			},
+		]
 	},
 ];
 

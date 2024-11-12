@@ -18,7 +18,7 @@ const togglePlayerSize = () => {
 </script>
 
 <template>
-    <div class="flex w-full flex-col justify-end gap-8" v-if="currentSong">
+    <div class="flex w-full flex-col justify-end gap-8" >
         <div class="my-1 flex w-full items-center">
             <div class="z-10 flex w-full flex-col gap-2 overflow-clip">
                 <h6 class="w-full overflow-clip text-xl font-semibold line-clamp-1">
@@ -27,7 +27,6 @@ const togglePlayerSize = () => {
                     </span>
                 </h6>
                 <div
-                    v-if="currentSong"
                      :data-size="musicSize"
                      class="mb-1 inline-flex w-fit gap-1 overflow-hidden whitespace-nowrap text-xs line-clamp-1 hover:animate-pause">
                     <TrackLinks v-if="currentSong"

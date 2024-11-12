@@ -13,7 +13,7 @@ import {Server} from '@/types/auth';
 
 const handleSelectServer = (server: Server) => {
   setCurrentServer(server);
-  router.go(-1);
+  router.replace('/home');
 };
 
 const queryClient = useQueryClient();

@@ -48,16 +48,13 @@ export class PlayerCore extends Queue {
 		this.emit('song', null);
 		this.emit('stop');
 
-		this.mediaSession?.setMetadata({
-			title: '',
-			artist: '',
-			album: '',
-			artwork: '',
-		});
-		this.mediaSession?.setPlaybackState('none');
-
 		this.setQueue([]);
 		this.dispose();
+
+		this.mediaSession?.setPlaybackState('none');
+		setTimeout(() => {
+			this.mediaSession?.setPlaybackState('none');
+			}, 500);
 	}
 
 	public setSource(src: string) {
@@ -178,10 +175,9 @@ export class PlayerCore extends Queue {
 	}
 
 	private handleCurrentSongChange(value: Song | null): void {
-		this.mediaSession?.setPlaybackState('none');
-
 		if (!value) {
 			this.currentSong = null;
+			this.mediaSession?.setPlaybackState('none');
 
 			return;
 		}

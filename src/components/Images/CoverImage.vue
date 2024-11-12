@@ -10,6 +10,7 @@ import type {Artist} from "@/types/api/music/artist";
 import {hexLighter} from "@/lib/colorHelper";
 import currentServer from '@/store/currentServer';
 import {useAutoThemeColors} from '@/store/preferences';
+import AppLogoSquare from '@/components/Images/icons/AppLogoSquare.vue';
 
 const props = defineProps({
     data: {

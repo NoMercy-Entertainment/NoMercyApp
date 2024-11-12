@@ -23,7 +23,7 @@ const handleClick = () => {
 
 <template>
     <div
-        :class="`flex justify-start items-start relative gap-2 p-2 rounded-lg border ${data.read ? 'border-transparent' : ' bg-auto-alpha-2 border-auto-alpha-2'}`"
+        :class="`flex justify-start items-start relative gap-2 p-2 rounded-lg border ${data.read ? 'border-transparent' : ' border-auto-alpha-2'}`"
     >
         <NoMercyAvatar v-if="(data.from as User).email" :user="data.from as User" class="w-10 min-w-10"/>
         <MoooomIcon v-else-if="data.type == 'notice' && data.from == 'System'" icon="wrench" className="w-10 p-2.5"/>

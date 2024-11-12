@@ -14,7 +14,7 @@ import NavBar from '@/Layout/Mobile/components/NavBar.vue';
 
 const handleSelectServer = (server: Server) => {
   setCurrentServer(server);
-  router.go(-1);
+  router.replace('/home');
 };
 
 const queryClient = useQueryClient();

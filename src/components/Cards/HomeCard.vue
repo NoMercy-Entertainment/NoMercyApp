@@ -74,12 +74,6 @@ watch(data, (value) => {
   });
 });
 
-const handleClick = (item: HomeItem | undefined) => {
-
-};
-
-const size = window.innerWidth;
-
 const toggleWatched = () => {
   // if (!homeItem?.value) return;
 };
@@ -88,7 +82,7 @@ const toggleWatched = () => {
 
 <template>
   <div data-scroll v-if="!isMobile"
-       class="relative m-4 flex flex-shrink-0 flex-grow-0 items-end justify-start gap-4 self-stretch overflow-clip rounded-2xl bg-black/5 p-4 text-auto-12 h-[65vh] sm:flex-col">
+       class="scheme-dark relative m-4 mt-0 sm:mt-4 flex flex-shrink-0 flex-grow-0 items-end justify-start gap-4 self-stretch overflow-clip rounded-2xl bg-black/5 p-4 text-auto-12 h-[65vh] sm:flex-col">
 
     <TMDBImage
         v-if="homeItem && !isMobile"
@@ -200,7 +194,7 @@ const toggleWatched = () => {
     </div>
   </div>
   <div v-else
-       class="flex h-auto w-full flex-shrink-0 flex-grow-0 items-start justify-start gap-2 self-stretch overflow-hidden p-2 aspect-poster"
+       class="flex h-auto w-full flex-shrink-0 flex-grow-0 items-start justify-start gap-2 self-stretch overflow-hidden p-6 pb-0 aspect-poster -mb-6"
   >
     <div
         class="relative flex h-auto w-full flex-grow flex-col items-center justify-end overflow-hidden rounded-lg bg-cover bg-center bg-no-repeat aspect-poster"

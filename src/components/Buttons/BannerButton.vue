@@ -24,14 +24,14 @@ defineProps({
 </script>
 
 <template>
-	<button v-if="href"
-				:href="href" title="watch"
+	<RouterLink v-if="href"
+				:to="href" title="watch"
 				:id="$t(title)"
 				:aria-label="$t(title)"
 				:onclick="onclick"
 				:class="`flex justify-center items-center relative gap-2 p-2 rounded-lg hover:bg-auto-5/6 transition-colors duration-300 ${isActive ? 'text-focus' : 'text-auto-12'}`">
 		<slot/>
-	</button>
+	</RouterLink>
 	<button v-else
 					:id="$t(title)"
 					:aria-label="$t(title)"

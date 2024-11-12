@@ -19,4 +19,9 @@ export const isLibraryRoute = computed(() => router.currentRoute.value.fullPath.
 export const isDashboardRoute = computed(() => router.currentRoute.value.fullPath.startsWith('/dashboard'));
 export const isPreferencesRoute = computed(() => router.currentRoute.value.fullPath.startsWith('/preferences'));
 export const hasMusicLibrary = computed(() => libraries.value?.some?.(l => l.type != 'music'));
+export const isAlbumRoute = computed(() => router.currentRoute.value.fullPath.startsWith('/music/albums'));
+export const isArtistRoute = computed(() => router.currentRoute.value.fullPath.startsWith('/music/artists'));
+export const isPlaylistRoute = computed(() => router.currentRoute.value.fullPath.startsWith('/music/playlists'));
+export const isSongRoute = computed(() => router.currentRoute.value.fullPath.startsWith('/music/songs'));
+export const isQueueRoute = computed(() => router.currentRoute.value.fullPath.startsWith('/music/queue'));
 

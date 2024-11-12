@@ -5,9 +5,12 @@ import {updateUserFromApi} from '@/store/user';
 import {setCurrentServer} from '@/store/currentServer';
 
 import type {User} from '@/types/auth';
+import {ref} from 'vue';
+
+const done = ref(false);
 
 const getLocations = (): Promise<void> => new Promise((resolve, reject) => {
-	if (servers.value.length > 0) {
+	if (servers.value.length > 0 && done.value) {
 		resolve();
 		return;
 	}
@@ -22,6 +25,8 @@ const getLocations = (): Promise<void> => new Promise((resolve, reject) => {
 
 			setServers(data.data.servers);
 			setCurrentServer(data.data.currentServer);
+
+			done.value = true;
 
 			resolve();
 		})

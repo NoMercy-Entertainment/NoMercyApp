@@ -1,4 +1,4 @@
-import {hexToRgba} from '@uiw/color-convert';
+import {hexToRgba, hsvaToHex} from '@uiw/color-convert';
 import {chunk} from '@/lib/stringArray';
 
 export const greenToRed = [
@@ -170,6 +170,13 @@ export const pickPaletteColor = (color_palette?: PaletteColors | null | undefine
 	if (!color_palette || !color_palette.darkVibrant) {
 		return 'var(--color-theme-9)';
 	}
+	if (!tooDark(color_palette.primary, dark) && !tooLight(color_palette.primary, light)) {
+		if (color_palette.primary!.includes('#')) {
+			const rgb = hexToRgba(color_palette.primary!);
+			return `${rgb.r} ${rgb.g} ${rgb.b}`;
+		}
+		return color_palette.primary ?? 'var(--color-theme-9)';
+	}
 	if (!tooLight(color_palette.lightVibrant, light) && !tooDark(color_palette.lightVibrant, dark)) {
 		if (color_palette.lightVibrant!.includes('#')) {
 			const rgb = hexToRgba(color_palette.lightVibrant!);
@@ -184,13 +191,7 @@ export const pickPaletteColor = (color_palette?: PaletteColors | null | undefine
 		}
 		return color_palette.dominant ?? 'var(--color-theme-9)';
 	}
-	if (!tooDark(color_palette.primary, dark) && !tooLight(color_palette.primary, light)) {
-		if (color_palette.primary!.includes('#')) {
-			const rgb = hexToRgba(color_palette.primary!);
-			return `${rgb.r} ${rgb.g} ${rgb.b}`;
-		}
-		return color_palette.primary ?? 'var(--color-theme-9)';
-	}
+
 	if (!tooDark(color_palette.darkVibrant, dark) && !tooLight(color_palette.darkVibrant, light)) {
 		if (color_palette.darkVibrant!.includes('#')) {
 			const rgb = hexToRgba(color_palette.darkVibrant!);
@@ -524,5 +525,19 @@ export const hexLighter = (hex?: string, luminosity?: number) => {
 		hsl.l += luminosity;
 	}
 
-	return `hsl(${hsl.h}, ${hsl.s}%, ${hsl.l}%)`;
+	return hsvaToHex({h:hsl.h, s:hsl.s, v:hsl.l, a:1});
+	// return `hsl(${hsl.h}, ${hsl.s}%, ${hsl.l}%)`;
+}
+
+export const hexDarker = (hex: string, luminosity?: number): string => {
+	const rgb = hexToRgba(hex);
+	const hsl = RGBToHSL(rgb.r, rgb.g, rgb.b);
+
+	if (luminosity) {
+		hsl.l -= luminosity;
+	}
+
+	return hsvaToHex({h:hsl.h, s:hsl.s, v:hsl.l, a:1});
+
+	// return `hsl(${hsl.h}, ${hsl.s}%, ${hsl.l}%)`;
 }

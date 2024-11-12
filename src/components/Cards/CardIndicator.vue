@@ -46,7 +46,7 @@ const value = computed(() => {
 
 <template>
     <span v-if="isMovie"
-          class="absolute top-3 left-0 z-50 flex h-5 w-3 sm:w-4 place-items-center items-center justify-center overflow-hidden whitespace-nowrap rounded-tr-md rounded-br-md border-r border-b border-gray-900/50 px-1 text-xs text-transparent duration-300 animate-[grow_.3] pill shadow-pill lg:-left-2 lg:text-transparent"
+          class="absolute top-3 left-0 z-50 flex h-5 w-2 sm:w-4 place-items-center items-center justify-center overflow-hidden whitespace-nowrap rounded-tr-md rounded-br-md border-r border-b border-gray-900/50 px-1 text-xs text-transparent duration-300 animate-[grow_.3] pill shadow-pill lg:-left-2 lg:text-transparent"
         :class="{
             'bg-[#94f]' : number_of_items == 1,
         }"
@@ -61,10 +61,10 @@ const value = computed(() => {
         class="absolute text-white sm:text-transparent w-[var(--width)] sm:w-4 items-center h-5 z-50 left-0 lg:-left-2 top-3 rounded-tr-md rounded-br-md overflow-hidden flex px-1 text-xs whitespace-nowrap animate-[grow_.3] duration-300 place-items-center justify-center border-r border-b border-gray-900/50 pill shadow-pill lg:text-transparent lg:group-hover/card:text-white lg:group-focus/card:text-white group-hover/card:left-0 group-focus-visible/card:left-0 group-hover/card:w-[var(--width)] group-focus-visible:w-[var(--width)] tv:text-white transition-all"
 
         :class="{
-            'bg-[#94f] group-hover/card:text-white font-semibold': percent == 100,
-            'bg-[#4b4] group-hover/card:text-white font-semibold': percent >= 70 && percent < 100,
+            'bg-[#94f] group-hover/card:text-white': percent == 100,
+            'bg-[#4b4] group-hover/card:text-white': percent >= 70 && percent < 100,
             '!text-black sm:!text-transparent group-hover/card:!text-black font-semibold' : percent > 40 && percent < 80,
-            'bg-[#fb3] sm:group-hover/card:text-white font-semibold': percent > 0 && percent < 70,
+            'bg-[#fb3] sm:group-hover/card:text-white': percent > 0 && percent < 70,
             'bg-[#f44]': percent == 0,
         }"
         :style="`

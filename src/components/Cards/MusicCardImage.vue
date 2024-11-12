@@ -36,7 +36,7 @@ defineProps({
 
     <template v-else-if="data?.type == 'artists'">
         <div
-            class="relative flex aspect-square h-auto w-full items-center justify-end gap-2 self-stretch overflow-clip rounded-2xl group-hover/musicCard:p-1 p-2 transition-all duration-100 bg-auto-2/7"
+            class="relative flex aspect-square h-auto w-full items-center justify-end gap-2 self-stretch overflow-clip rounded-2xl group-hover/musicCard:p-1 p-1.5 transition-all duration-100 bg-auto-2/7"
         >
             <div class="backdropCard-overlay !rounded-2xl"></div>
             <FavoriteImage v-if="data?.id == 'favorite'" class=""/>

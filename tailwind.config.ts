@@ -4,6 +4,10 @@ import selectorParser from 'postcss-selector-parser';
 import markdownBase from "./markdownStyles";
 import radialGradientPlugin from './radialGradientPlugin';
 // @ts-ignore
+import safeArea from 'tailwindcss-safe-area-capacitor';
+// @ts-ignore
+import primeUI from 'tailwindcss-primeui';
+// @ts-ignore
 import mdBase from '@geoffcodesthings/tailwind-md-base';
 import scrollBar from 'tailwind-scrollbar';
 import animate from 'tailwindcss-animate';
@@ -14,6 +18,7 @@ export default {
   content: [
     "./index.html",
     "./src/**/*.{js,ts,jsx,tsx,vue}",
+    './node_modules/nomercyplayer/src/**/*.ts',
   ],
   theme: {
     ...defaultTheme,
@@ -2091,6 +2096,8 @@ export default {
     scrollBar({nocompatible: true}),
     animate,
     radialGradientPlugin,
+    safeArea,
+    primeUI,
     plugin(({addVariant}) => {
       addVariant('compact', '&[data-size="compact"]');
       addVariant('full', '&[data-size="full"]');

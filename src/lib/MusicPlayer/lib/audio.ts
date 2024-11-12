@@ -233,10 +233,6 @@ export class PlayerAudio {
     }
 
     protected _createAudioElement(id: number): this {
-        if (document.querySelector<HTMLAudioElement>(`#audio-${id}`)) {
-            this._audioElement = document.querySelector<HTMLAudioElement>(`audio-${id}`) as HTMLAudioElement;
-            return this;
-        }
 
         this._audioElement = document.createElement('audio');
         this._audioElement.id = `audio-${id}`;
@@ -342,6 +338,17 @@ export class PlayerAudio {
         this.parent.emit('volume', this.volume);
     }
 
+    private seekedEvent() {
+        console.log('seeked', this._audioElement.currentTime);
+        this.parent.emit('seeked', {
+            buffered: this._audioElement.buffered.length,
+            duration: this._audioElement.duration,
+            percentage: (this._audioElement.currentTime / this._audioElement.duration) * 100,
+            position: this._audioElement.currentTime,
+            remaining: this._audioElement.duration - this._audioElement.currentTime,
+        });
+    }
+
     private _addEvents() {
         this._audioElement.addEventListener('play', this.playEvent.bind(this));
         this._audioElement.addEventListener(
@@ -383,6 +390,10 @@ export class PlayerAudio {
         this._audioElement.addEventListener(
             'volumechange',
             this.volumechangeEvent.bind(this)
+        );
+        this._audioElement.addEventListener(
+            'seeked',
+            this.seekedEvent.bind(this)
         );
     }
 
@@ -430,6 +441,10 @@ export class PlayerAudio {
         this._audioElement.removeEventListener(
             'volumechange',
             this.volumechangeEvent.bind(this)
+        );
+        this._audioElement.removeEventListener(
+            'seeked',
+            this.seekedEvent.bind(this)
         );
     }
 }

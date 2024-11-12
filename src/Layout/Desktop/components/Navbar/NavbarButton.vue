@@ -23,7 +23,7 @@ const props = defineProps({
 
 const classes = computed(() =>
     (props.active
-        ? ' bg-slate-light-4 text-slate-dark-4 hover:text-slate-dark-4 dark:bg-slate-light-4 dark:text-slate-light-4 dark:hover:text-slate-light-4 ' +
+        ? ' bg-slate-light-3 text-slate-dark-4 hover:text-slate-dark-4 dark:bg-slate-light-3 dark:text-slate-light-4 dark:hover:text-slate-light-4 ' +
         'shadow-[0_1px_0_0_rgba(0,0,0,0.20)_inset,0_-1px_0_0_rgba(var(--background-auto-2)/30%)_inset,0_22px_30px_-4px_rgba(var(--background-auto-2)/60%)]  ' +
         'hover:!shadow-[0_1px_0_0_rgba(0,0,0,0.20)_inset,0_-1px_0_0_rgba(var(--background-auto-2)/30%)_inset,0_22px_30px_-4px_rgba(var(--background-auto-2)/60%)] ' +
         'dark:shadow-[0_1px_0_0_rgba(255,255,255,0.20)_inset,0_-1px_0_0_rgba(var(--background-auto-1)/70%)_inset,0_22px_30px_-4px_rgba(var(--background-auto-1)/30%)] ' +

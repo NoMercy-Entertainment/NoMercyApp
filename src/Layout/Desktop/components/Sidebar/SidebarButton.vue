@@ -4,7 +4,7 @@ import {RouterLink} from 'vue-router';
 import {useTranslation} from 'i18next-vue';
 
 import router from '@/router';
-import {sidebarState} from '@/store/sidebar';
+import {sidebar} from '@/store/sidebar';
 
 import type {MoooomIcons} from '@Icons/icons';
 
@@ -84,7 +84,7 @@ const styles = computed(() =>
 
     <span
         class="flex h-8 flex-shrink-0 flex-grow-0 items-center overflow-clip font-semibold transition-opacity sidebar-open:delay-300 w-[168px]"
-        :class="`${sidebarState == 'open' ? 'opacity-100' : 'sm:opacity-0'}`"
+        :class="`${sidebar == 'open' ? 'opacity-100' : 'sm:opacity-0'}`"
     >
             <span class="ml-2 flex-grow overflow-clip font-medium w-inherit line-clamp-1 text-left">
                 {{ t(name) }}

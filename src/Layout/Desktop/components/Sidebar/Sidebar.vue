@@ -34,6 +34,8 @@ const isLibraryRoute = computed(() => {
       || router.currentRoute.value.fullPath?.startsWith('/collection')
       || router.currentRoute.value.fullPath?.startsWith('/specials')
       || router.currentRoute.value.fullPath?.startsWith('/genres')
+      || router.currentRoute.value.fullPath?.startsWith('/movie')
+      || router.currentRoute.value.fullPath?.startsWith('/tv')
       || router.currentRoute.value.fullPath?.startsWith('/person');
 });
 
@@ -91,7 +93,7 @@ const libraryIconName = (type: string) => {
 <template>
   <aside id="sidebar"
          :data-sidebar="sidebar"
-         class="absolute bg-slate-light-2 dark:bg-slate-dark-1 top-0 bottom-0 left-0 flex sidebar-open:w-64 sidebar-closed:-translate-x-full sidebar-hidden:-translate-x-full items-start justify-start self-stretch overflow-x-visible transition-all duration-300 sidebar h-available z-1099 group/aside sidebar-hidden:sm:w-0 sidebar-closed:sm:w-20 sidebar-closed:sm:translate-x-0 sidebar-hidden:sm:translate-x-0 sm:!relative max-h-available overflow-clip children:opacity-100 sidebar-hidden:children:opacity-0">
+         class="absolute bg-slate-light-1 dark:bg-slate-dark-1 top-0 bottom-0 left-0 flex sidebar-open:w-64 sidebar-closed:-translate-x-full sidebar-hidden:-translate-x-full items-start justify-start self-stretch overflow-x-visible transition-[transform,width] duration-300 sidebar h-available z-1099 group/aside sidebar-hidden:sm:w-0 sidebar-closed:sm:w-20 sidebar-closed:sm:translate-x-0 sidebar-hidden:sm:translate-x-0 sm:!relative max-h-available overflow-clip children:opacity-100 sidebar-hidden:children:opacity-0">
       <div
           class="flex sidebar-open:w-64 flex-grow flex-col items-start justify-start self-stretch overflow-clip h-available sidebar-hidden:sm:w-4 sidebar-closed:sm:w-20 sm:mt-4 overflow-x-hidden"
           :data-sidebar="sidebar">
@@ -251,7 +253,8 @@ const libraryIconName = (type: string) => {
       </div>
     <button @click="toggleSidebar()"
             :data-sidebar="sidebar"
-            class="hidden sm:group-hover/aside:flex absolute top-[30px] overflow-hidden z-1099 duration-300 w-8 h-8 p-1.5 bg-auto-alpha-7 rounded-md shadow justify-center items-center gap-2 border border-auto-alpha-7 sidebar-open:left-60 sidebar-closed:left-16 sidebar-hidden:!hidden">
+            style="box-shadow: 0 1px 2px 0 rgba(16,24,40,0.05);"
+            class="bg-slate-light-5 dark:bg-slate-dark-5 border-slate-light-10 dark:border-slate-dark-10 hidden sm:group-hover/aside:flex absolute top-[30px] overflow-hidden z-1099 duration-300 w-8 h-8 p-1.5 rounded-md shadow justify-center items-center gap-2 border border-auto-alpha-7 sidebar-open:left-60 sidebar-closed:left-16 sidebar-hidden:!hidden">
       <MoooomIcon icon="chevronLeft"
                   :data-sidebar="sidebar"
                   className="rotate-0 sidebar-closed:rotate-180"/>

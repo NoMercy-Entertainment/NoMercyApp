@@ -1,34 +1,11 @@
 <script setup lang="ts">
-import {type PropType} from 'vue';
 
 import {folder, home1, noteEighthPair, searchMagnifyingGlass} from '@Icons/index';
 import {IonIcon, IonLabel, IonTabBar, IonTabButton} from '@ionic/vue';
 
-import NoMercyAvatar from '@/components/Images/NoMercyAvatar.vue';
+import {closeMenu, menuOpen, toggleMenu} from '@/store/profileMenu';
 
-defineProps({
-  menuOpen: {
-    type: Boolean,
-    required: true,
-  },
-  transparent: {
-    type: Boolean,
-    required: false,
-    default: false,
-  },
-  openMenu: {
-    type: Function as PropType<() => void>,
-    required: true,
-  },
-  closeMenu: {
-    type: Function as PropType<(e?: Event) => void>,
-    required: true,
-  },
-  toggleMenu: {
-    type: Function as PropType<() => void>,
-    required: true,
-  },
-});
+import NoMercyAvatar from '@/components/Images/NoMercyAvatar.vue';
 
 </script>
 
@@ -43,22 +20,22 @@ defineProps({
      }"
   >
 
-    <ion-tab-button tab="home" href="/home" @click="closeMenu" >
+    <ion-tab-button tab="home" href="/home" @click="closeMenu()" >
       <ion-icon aria-hidden="true" :icon="home1"/>
       <ion-label>{{ $t('Home') }}</ion-label>
     </ion-tab-button>
 
-    <ion-tab-button tab="search" href="/search" @click="closeMenu">
+    <ion-tab-button tab="search" href="/search" @click="closeMenu()">
       <ion-icon aria-hidden="true" :icon="searchMagnifyingGlass"/>
       <ion-label>{{ $t('Search') }}</ion-label>
     </ion-tab-button >
 
-    <ion-tab-button tab="library" href="/libraries" @click="closeMenu">
+    <ion-tab-button tab="library" href="/libraries" @click="closeMenu()">
       <ion-icon aria-hidden="true" :icon="folder" class="icon"/>
       <ion-label>{{ $t('Library') }}</ion-label>
     </ion-tab-button >
 
-    <ion-tab-button tab="music" href="/music/start" @click="closeMenu" >
+    <ion-tab-button tab="music" href="/music/start" @click="closeMenu()" >
       <ion-icon aria-hidden="true" :icon="noteEighthPair"/>
       <ion-label>{{ $t('Music') }}</ion-label>
     </ion-tab-button>
