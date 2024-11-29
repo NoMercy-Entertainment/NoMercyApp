@@ -82,9 +82,9 @@ const isArtist = computed(() => {
 
         <div
             class="relative mb-4 flex w-full flex-1 flex-shrink-0 flex-col items-start justify-start gap-4 flex-grow-1 sm:hidden">
-            <p class="w-full text-3xl font-semibold line-clamp-1 leading-[130%]"
-               v-html="breakTitle2(data?.name ?? 'Songs you like', 'text-xl line-clamp-1')">
-            </p>
+            <div class="w-full text-3xl font-semibold line-clamp-1 leading-[130%] whitespace-pre"
+               v-html="breakTitle2(data?.name ?? 'Songs you like', 'text-2xl line-clamp-1')">
+            </div>
             <p class="text-left font-semibold uppercase text-white">
                 {{ data?.type?.replace(/s$/u, '') }}
             </p>
@@ -95,9 +95,10 @@ const isArtist = computed(() => {
             <p class="text-left font-semibold uppercase text-white">
                 {{ data?.type?.replace(/s$/u, '') }}
             </p>
-            <p class="w-full text-5xl font-semibold line-clamp-2 leading-[130%]">
-                {{ data?.name ?? t('Songs you like') }}
-            </p>
+            <div class="w-full text-5xl font-semibold line-clamp-2 leading-[130%] whitespace-pre"
+               v-html="breakTitle2(data?.name ?? 'Songs you like', 'text-2xl line-clamp-1')">
+
+            </div>
 
             <div class="relative flex items-center justify-start gap-2">
                 <div v-if="isArtistRoute"
