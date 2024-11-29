@@ -1,10 +1,12 @@
-import {camelize, getCurrentInstance, toHandlerKey} from 'vue';
+import {camelize, getCurrentInstance, ref, toHandlerKey} from 'vue';
 import {type ClassValue, clsx} from 'clsx';
 import {twMerge} from 'tailwind-merge';
 
 import type {InfoResponse} from '@/types/api/base/info';
-import {isNative} from '@/config/global';
+import {isTv} from '@/config/global';
 import {isPlatform} from '@ionic/vue';
+import {AndroidFullScreen, AndroidSystemUiFlags} from '@awesome-cordova-plugins/android-full-screen';
+import {StatusBar} from '@capacitor/status-bar';
 
 export function cn(...inputs: ClassValue[]) {
 	return twMerge(clsx(inputs));
@@ -28,7 +30,6 @@ export function useEmitAsProps<Name extends string>(
 	});
 	return result;
 }
-
 
 export const episodeCounter = (data: InfoResponse) => {
 
@@ -74,7 +75,8 @@ export const scrollIntoView = (parent?: HTMLElement) => {
 export const scrollCenter = (el: HTMLElement, container: HTMLElement, options?: {
 	duration?: number;
 	margin?: number;
-}) => {
+}
+) => {
 	if (!el) return;
 	console.log('scroll Center', el, container);
 
@@ -190,13 +192,12 @@ export const stopAndPrevent = (e: Event) => {
 };
 
 export const lockPortrait = async () => {
-	if (isPlatform('capacitor')) {
+	if (isPlatform('capacitor') && !isTv.value) {
 		const {ScreenOrientation} = (await import('@capacitor/screen-orientation'));
 		try {
 			ScreenOrientation.lock({
 				orientation: 'portrait',
 			}).then();
-			// screen.orientation.lock('portrait-primary');
 		} catch (e) {
 			//
 		}
@@ -204,13 +205,12 @@ export const lockPortrait = async () => {
 }
 
 export const lockLandscape = async () => {
-	if (isPlatform('capacitor')) {
+	if (isPlatform('capacitor') && !isTv.value) {
 		const {ScreenOrientation} = (await import('@capacitor/screen-orientation'));
 		try {
 			ScreenOrientation.lock({
 				orientation: 'landscape',
 			}).then();
-			// screen.orientation.lock('landscape');
 		} catch (e) {
 			//
 		}
@@ -235,4 +235,49 @@ export const isPortrait = () => {
 export const isLandscape = () => {
 	return window.innerHeight < window.innerWidth;
 }
+
+const timeout = ref<NodeJS.Timeout>();
+const isLeanModeEnabled = ref(false);
+
+export const enableImmersiveMode = async () => {
+	if (isPlatform('capacitor') && !isTv.value && !isLeanModeEnabled.value) {
+		isLeanModeEnabled.value = true;
+		window.addEventListener('touchstart', listener);
+		listener();
+
+		await AndroidFullScreen.setSystemUiVisibility(
+			AndroidSystemUiFlags.LayoutHideNavigation
+			| AndroidSystemUiFlags.HideNavigation
+			| AndroidSystemUiFlags.LayoutFullscreen
+			| AndroidSystemUiFlags.LayoutStable
+			| AndroidSystemUiFlags.Fullscreen);
+		await StatusBar.setOverlaysWebView({overlay: true});
+	}
+};
+
+export const disableImmersiveMode = () => {
+	if (isPlatform('capacitor') && !isTv.value && isLeanModeEnabled.value) {
+		isLeanModeEnabled.value = false;
+
+		window.removeEventListener('touchstart', listener);
+		clearInterval(timeout.value);
+
+		StatusBar.show().then();
+		AndroidFullScreen.showSystemUI().then();
+		StatusBar.setOverlaysWebView({overlay: true}).then();
+	}
+};
+
+const listener = () => {
+	clearInterval(timeout.value);
+
+	timeout.value = setInterval(async () => {
+		await AndroidFullScreen.setSystemUiVisibility(
+			AndroidSystemUiFlags.LayoutHideNavigation
+			| AndroidSystemUiFlags.HideNavigation
+			| AndroidSystemUiFlags.LayoutFullscreen
+			| AndroidSystemUiFlags.LayoutStable
+			| AndroidSystemUiFlags.Fullscreen);
+	}, 3000);
+};
 

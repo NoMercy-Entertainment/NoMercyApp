@@ -10,7 +10,7 @@
 // } from '@/lib/MusicPlayer/lib/types';
 // import type {Song} from '@/types/api/music/musicPlayer';
 // import type {Device} from '@/types/server';
-// import {useSocket} from '@/lib/clients/socketClient';
+// import {useSocket} from '@/store/socket';
 //
 // interface Actions {
 // 	setCurrentDevice?: (value: any) => void;

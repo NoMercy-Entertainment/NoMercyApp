@@ -4,7 +4,7 @@ import {type PropType} from "vue";
 import {twMerge} from "tailwind-merge";
 import {SpriteIcons} from '@Icons/icons';
 
-import icons from '/resources/sprie-icons.svg';
+import icons from '/resources/sprite-icons.svg';
 
 defineProps({
     icon: {

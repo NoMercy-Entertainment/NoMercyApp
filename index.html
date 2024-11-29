@@ -114,68 +114,14 @@
             --color-logo-brand: var(--gray-100);
         }
 
-        .draggable-area {
-            -webkit-app-region: drag;
-        }
-
-        * {
-            padding: 0;
-            margin: 0;
-            outline: none;
-            text-decoration: none;
-            box-sizing: border-box;
-            scrollbar-width: thin;
-            font-size: var(--font-size);
-        }
-
-        *,
-        *:focus {
-            box-sizing: border-box;
-        }
-
-
         html {
-            overflow-x: hidden;
-            scroll-behavior: smooth;
-            text-size-adjust: 100%;
-            -webkit-text-size-adjust: 100%;
-            height: -webkit-fill-available;
-            -webkit-overflow-scrolling: touch;
-            --tw-bg-opacity: 1;
             background-color: rgb(26 29 30 / var(--tw-bg-opacity));
-        }
-
-        html:focus-within {
-            scroll-behavior: smooth;
-        }
-
-        body {
-            margin: 0;
-            -webkit-font-smoothing: antialiased;
-            -webkit-overflow-scrolling: touch;
-            -moz-osx-font-smoothing: grayscale;
-            color: #DDD;
-            --tw-bg-opacity: 1;
-            background-color: rgb(26 29 30 / var(--tw-bg-opacity));
-            height: 100vh;
-            height: -webkit-fill-available;
-            width: 100vw;
-            overflow: hidden;
-            position: relative;
-            z-index: 1;
         }
 
         @media (max-width: 700px) {
             *::-webkit-scrollbar {
                 width: 0px !important;
                 height: 0px !important;
-            }
-        }
-
-
-        @supports (font-variation-settings: normal) {
-            :root {
-                font-family: 'Inter var', sans-serif;
             }
         }
     </style>
@@ -276,7 +222,6 @@
             height: 100vh;
             align-items: center;
             background: var(--color-auto-50, rgb(var(--gray-950)));
-            transition: all 2s linear;
             z-index: 10;
             inset: 0;
             top: 0;

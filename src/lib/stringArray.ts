@@ -55,15 +55,37 @@ export const createEnumFromArray = (array: any[]) => {
 	}, {});
 };
 
-export const copyToClipboard = (text: string): void => {
-	navigator.clipboard?.writeText(text).then(
-		() => {
+export const copyToClipboard = async (text: string): Promise<boolean> => {
+	// Navigator clipboard api needs a secure context (https)
+	if (navigator.clipboard && window.isSecureContext) {
+		try {
+			await navigator.clipboard.writeText(text);
 			return true;
-		},
-		() => {
+		} catch (e) {
 			return false;
 		}
-	);
+	} else {
+		// Use the 'out of viewport hidden text area' trick
+		const textArea = document.createElement('textarea');
+		textArea.value = text;
+
+		// Move textarea out of the viewport so it's not visible
+		textArea.style.position = 'absolute';
+		textArea.style.left = '-999999px';
+
+		document.body.prepend(textArea);
+		textArea.select();
+
+		try {
+			document.execCommand('copy');
+			return Promise.resolve(true);
+		} catch (error) {
+			console.error(error);
+			return Promise.resolve(false);
+		} finally {
+			textArea.remove();
+		}
+	}
 };
 
 export const find_most = (array: Array<number>): number => {
@@ -512,6 +534,7 @@ declare global {
 		// @ts-ignore
 		toPascalCase: (string: any) => string;
 		titleCase: (lang: string | 'NL' | 'FR', withLowers: boolean) => string;
+		toInt: () => number;
 	}
 }
 
@@ -635,6 +658,10 @@ String.prototype.toPascalCase = function(): string {
         .map((word: string) => word.charAt(0).toUpperCase() + word.substr(1).toLowerCase())
         .join('_');
 };
+
+String.prototype.toInt = function(): number {
+	return parseInt(this as string, 10);
+}
 
 export const mathPercentage = (strA: string, strB: string): number => {
 	let result = 0;
@@ -869,7 +896,7 @@ export const breakTitle = (title: string, className: string | null = null) => {
 export const breakTitle2 = (title: string, className: string | null = null) => {
 	if (!title) return '';
 
-	return title?.replace(/(:\s|\sand\sthe|\sen\sde)(.*)/u, `</br><span class='${className}'>$2</span>`);
+	return title?.replace(/(:\s|\sand\sthe|\sen\sde)(.*)/u, `:</br><span class='${className}'>$2</span>`);
 
 };
 

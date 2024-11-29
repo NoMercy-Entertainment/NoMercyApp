@@ -1,7 +1,7 @@
 import {ref, watch} from 'vue';
 
 import type {LibrariesResponse} from '@/types/api/base/library';
-import currentServer from '@/store/currentServer';
+import {currentServer} from '@/store/currentServer';
 
 const libraries = ref<LibrariesResponse[]>([]);
 

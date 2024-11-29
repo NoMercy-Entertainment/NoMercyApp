@@ -9,10 +9,12 @@
   "scripts": {
     "postinstall": "npx shx cp ./public/img/icons/ic_baseline_play_arrow_24.xml ./node_modules/@jofr/capacitor-media-session/android/src/main/res/drawable/ic_baseline_volume_up_24.xml",
     "dev": "vite --host --mode development",
+    "dev:android": "ionic capacitor run android -l --external --host 192.168.2.201 --port 5501",
     "dev:phone": "ionic capacitor run android -l --external --target 192.168.2.95:5555 --host 192.168.2.201 --port 5501",
     "dev:tv": "ionic capacitor run android -l --external --target 192.168.2.80:5555 --host 192.168.2.201 --port 5501",
     "dev:emu": "ionic capacitor run android -l --external --host 192.168.2.201 --port 5501",
-    "phone:build": "npx ionic capacitor build android",
+    "build:android": "npx ionic capacitor build android",
+    "build:ios": "npx ionic capacitor build ios",
     "build": "vue-tsc && vite build",
     "preview": "vite preview --host --port=5501 ./",
     "test:e2e": "cypress run",
@@ -20,6 +22,8 @@
     "lint": "eslint ."
   },
   "dependencies": {
+    "@awesome-cordova-plugins/android-full-screen": "^6.11.0",
+    "@awesome-cordova-plugins/core": "^6.11.0",
     "@capacitor-community/keep-awake": "^5.0.1",
     "@capacitor/android": "^6.1.2",
     "@capacitor/app": "6.0.1",
@@ -37,9 +41,10 @@
     "@dsb-norge/vue-keycloak-js": "^2.4.0",
     "@headlessui/vue": "^1.7.23",
     "@hugotomazi/capacitor-navigation-bar": "^4.0.1",
+    "@ionic-native/core": "^5.36.0",
     "@ionic-native/deeplinks": "^5.36.0",
     "@ionic/vue": "^8.0.0",
-    "@ionic/vue-router": "^8.0.0",
+    "@ionic/vue-router": "^8.4.0",
     "@jofr/capacitor-media-session": "^4.0.0",
     "@microsoft/signalr": "^8.0.7",
     "@primevue/auto-import-resolver": "^4.0.0-beta.5",
@@ -52,14 +57,17 @@
     "capacitor-plugin-safe-area": "^3.0.3",
     "clsx": "^2.1.1",
     "collect.js": "^4.36.1",
+    "cordova-plugin-fullscreen": "^1.3.0",
     "i18next": "^23.16.4",
     "i18next-http-backend": "^2.6.2",
     "i18next-vue": "^5.0.0",
     "ionicons": "^7.0.0",
+    "jwt-decode": "^4.0.0",
     "keycloak-ionic": "^13.0.1",
     "md5": "^2.3.0",
     "nomercyplayer": "https://github.com/NoMercy-Entertainment/NoMercyVideoPlayer.git",
     "primevue": "^4.2.1",
+    "qrcode.vue": "^3.6.0",
     "swiper": "^11.1.14",
     "tailwind-merge": "^2.5.4",
     "ua-parser-js": "^1.0.39",
@@ -67,7 +75,8 @@
     "vue": "^3.3.0",
     "vue-markdown-render": "^2.2.1",
     "vue-router": "^4.2.0",
-    "vue3-konami-code": "^1.0.0"
+    "vue3-konami-code": "^1.0.0",
+    "yarn-git-install": "^0.4.7"
   },
   "devDependencies": {
     "@capacitor/cli": "6.1.2",
@@ -94,11 +103,12 @@
     "tailwindcss-primeui": "^0.3.4",
     "tailwindcss-safe-area-capacitor": "^0.5.1",
     "terser": "^5.4.0",
-    "typescript": "^5.1.6",
+    "typescript": "^5.7.2",
     "vite": "~5.2.0",
     "vite-plugin-minify": "^2.0.1",
     "vite-plugin-pwa": "^0.20.5",
     "vitest": "^0.34.6",
     "vue-tsc": "^2.0.22"
-  }
+  },
+  "packageManager": "yarn@2.4.3"
 }

@@ -2,6 +2,8 @@ import {computed} from 'vue';
 import {rgbaToHex} from '@uiw/color-convert';
 import {isPlatform} from '@ionic/vue';
 import {focusColor} from '@/store/ui';
+import {setColorScheme} from "@/store/colorScheme";
+import {isDarkMode} from "@/config/global";
 
 const topNavColor = computed(() => {
 	return rgbaToHex({
@@ -24,10 +26,10 @@ const setBackgroundColor = computed(() => {
 export const change = async (value: boolean) => {
 	if (isPlatform('capacitor')) {
 		if (value) {
-			// (await setBackgroundColor.value)?.({color: topNavColor.value});
+			(await setBackgroundColor.value)?.({color: topNavColor.value});
 		}
 		else {
-			// await setColorScheme(isDarkMode ? 'dark' : 'light');
+			await setColorScheme(isDarkMode ? 'dark' : 'light');
 		}
 	}
 };

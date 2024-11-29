@@ -21,15 +21,6 @@ const props = defineProps({
   },
 });
 
-const url = computed(() => {
-  let url = `/watch/${props.data?.id}${props.suffix}`;
-  if (props.data?.season_number && props.data?.episode_number) {
-    url += `?season=${props.data?.season_number}&episode=${props.data?.episode_number}`;
-  }
-
-  return props.data?.available ? url : '';
-});
-
 </script>
 
 <template>
@@ -42,7 +33,7 @@ const url = computed(() => {
                                 .replace(')', '')
                                 .replace('rgb(', '')};`"
         data-card="true"
-        :to="url"
+        :to="data?.available ? data?.link : '#'"
   >
     <div
         class="relative mb-1 h-auto w-full overflow-clip rounded-t-md group-focus-visible/season:rounded-b-none group-hover/season:rounded-b-none aspect-backdrop bg-auto-1">
@@ -73,7 +64,7 @@ const url = computed(() => {
       </div>
     </div>
 
-    <div class="grid w-full items-stretch gap-2 rounded-b-md p-2 transitioning">
+    <div class="grid w-full items-stretch gap-2 rounded-b-md p-2 transitioning text-left">
       <p class="z-10 w-auto flex-shrink-0 flex-grow-0 self-stretch text-sm font-bold leading-5 line-clamp-1"
          :title="`${data?.episode_number ? data?.episode_number + ' - ' : '' }${ data?.title}`">
         {{ data?.episode_number ? data?.episode_number + ' - ' : '' }}{{ data?.title }}
@@ -123,7 +114,7 @@ const url = computed(() => {
       </div>
     </div>
 
-    <div class="grid w-full items-stretch gap-2 rounded-b-md p-2 transitioning">
+    <div class="grid w-full items-stretch gap-2 rounded-b-md p-2 transitioning text-left">
       <p class="z-10 w-auto flex-shrink-0 flex-grow-0 self-stretch text-sm font-bold leading-5 line-clamp-1"
          :title="`${data?.episode_number ? data?.episode_number + ' - ' : '' }${ data?.title}`">
         {{ data?.episode_number ? data?.episode_number + ' - ' : '' }}{{ data?.title }}

@@ -9,7 +9,7 @@ import MusicCard from '@/components/Cards/MusicCard.vue';
 
 defineProps({
 	data: {
-		type: Object as PropType<MusicHomeResponseItem> | undefined,
+		type: Object as PropType<MusicHomeResponseItem<HomeDataItem>> | undefined,
 		required: true,
 	},
 	index: {

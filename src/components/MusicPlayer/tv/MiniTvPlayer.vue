@@ -2,7 +2,7 @@
 import { PropType, watch } from 'vue';
 import { useTranslation } from 'i18next-vue';
 
-import type { Song } from '@/types/api/music/musicPlayer';
+import type { Song } from '@/types/musicPlayer';
 
 import {isPlaying, musicSize, musicVisibility, setMusicSize} from '@/store/audioPlayer';
 import sidebar from '@/store/sidebar';

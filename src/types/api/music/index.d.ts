@@ -1,14 +1,15 @@
-import type { Album, Artist } from './album';
+import type { Album } from './album';
+import type { Artist } from './artist';
 import type {ColorPalettes} from '@/types/api/shared';
 
 export interface MusicHomeResponse {
 	items: MusicHomeResponseItem[];
 }
 
-export interface MusicHomeResponseItem {
+export interface MusicHomeResponseItem<T> {
 	title: string;
 	moreLink: string;
-	items: HomeDataItem[];
+	items: T[];
 }
 
 export interface HomeDataItem {
@@ -30,6 +31,7 @@ export interface HomeDataItem {
 	tracks?: number;
 	Artist?: Artist[];
 	Album?: Album[];
+	link: string;
 }
 
 export interface Count {

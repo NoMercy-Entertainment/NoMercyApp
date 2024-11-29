@@ -1,8 +1,9 @@
 import {setTitle} from '@/lib/stringArray';
-import {Song} from '@/types/api/music/musicPlayer';
+import type {Song} from '@/types/musicPlayer';
 import {MediaSession} from '@/lib/MediaSession';
 import {Queue} from '@/lib/MusicPlayer/lib/queue';
 import {PlayerState, TimeState, VolumeState} from '@/lib/MusicPlayer/lib/types';
+import {Band} from "@/store/audioPlayer";
 
 export class PlayerCore extends Queue {
 	mediaSession:MediaSession;
@@ -52,9 +53,6 @@ export class PlayerCore extends Queue {
 		this.dispose();
 
 		this.mediaSession?.setPlaybackState('none');
-		setTimeout(() => {
-			this.mediaSession?.setPlaybackState('none');
-			}, 500);
 	}
 
 	public setSource(src: string) {
@@ -133,6 +131,7 @@ export class PlayerCore extends Queue {
 
 		this.on('pause', this.handlePause.bind(this));
 
+		// @ts-ignore
 		this.on('song', this.handleCurrentSongChange.bind(this));
 
 		this.on('time', this.handleTimeUpdate.bind(this));
@@ -198,7 +197,7 @@ export class PlayerCore extends Queue {
 			title: `${this.currentSong?.name}`,
 			artist: `${this.currentSong?.artist_track?.[0]?.name} ${feat}`,
 			album: this.currentSong?.album_track?.[0]?.name ?? '',
-			artwork: `${this.serverLocation}/images/music${this.currentSong?.cover}`,
+			artwork: this.currentSong?.cover ? `${this.serverLocation}/images/music${this.currentSong?.cover}` :  undefined,
 		});
 	}
 
@@ -229,5 +228,20 @@ export class PlayerCore extends Queue {
 		this.isPlaying = false;
 
 		this.mediaSession?.setPlaybackState('none');
+	}
+
+	public setPreGain(gain: number): void {
+		// @ts-ignore internal event
+		this.emit('setPreGain', gain);
+	}
+
+	public setPanner(pan: number): void {
+		// @ts-ignore internal event
+		this.emit('setPanner', pan);
+	}
+
+	public setFilter(filter: Band): void {
+		// @ts-ignore internal event
+		this.emit('setFilter', filter);
 	}
 }

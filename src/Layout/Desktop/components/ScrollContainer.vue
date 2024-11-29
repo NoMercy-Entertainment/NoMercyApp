@@ -105,7 +105,7 @@ const mouseLeave = () => {
 </script>
 
 <template>
-    <div class="flex h-auto w-full flex-col overflow-auto min-h-available scrollbar-none group/scrollContainer h-available scroll-container"
+    <div class="flex h-auto w-full flex-col overflow-auto min-h-available scrollbar-none group/scrollContainer h-available scroll-container pb-4"
          ref="element"
          @scroll="$emit('scroll', $event as unknown as VueScrollEvent)"
          @mousemove="mouseEnter"

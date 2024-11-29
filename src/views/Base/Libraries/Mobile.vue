@@ -1,67 +1,56 @@
 <script setup lang="ts">
-import {onMounted, onUnmounted} from 'vue';
-import {IonPage, IonContent} from '@ionic/vue';
+import {IonPage, IonContent, onIonViewWillEnter} from '@ionic/vue';
 
-import type {MobileLibrariesResponseItem} from '@/types/api/base/libraries';
+import {type PropType} from 'vue';
+import type {HomeItem} from '@/types/api/base/home';
+import {type Component, getMutating, getMutation, getQuery, queryKey} from '@/lib/routerHelper';
 
-import useServerClient from '@/lib/clients/useServerClient';
-import {setTitle} from '@/lib/stringArray';
-import {isNative} from '@/config/global';
-import {setBackground} from '@/store/ui';
-import {currentSong} from '@/store/audioPlayer';
+import router from '@/router';
+import {useRoute} from 'vue-router';
 
-import HomeCard from '@/components/Cards/HomeCard.vue';
-import MediaCarousel from '@/components/Carousel/MediaCarousel.vue';
-import NavBar from '@/Layout/Mobile/components/NavBar.vue';
-
-const {data} = useServerClient<MobileLibrariesResponseItem[]>({
-  path: '/libraries/mobile',
-  queryKey: ['libraries', 'mobile'],
-  keepForever: true,
+const props = defineProps({
+  options: {
+    type: Object as PropType<Component<HomeItem>[] & { queryKey?: string[], path?: string }>,
+    required: false,
+    default: () => ({
+      keepForever: true,
+      queryKey: queryKey(),
+    }),
+  },
 });
 
-console.raw(data.value);
+const route = useRoute();
+const routeName = router.currentRoute.value.name;
 
-onMounted(() => {
-  setTitle();
-  document.dispatchEvent(new Event('sidebar'));
-  setBackground(null);
+const isMutating = getMutating({queryKey: props.options?.queryKey, path: '/libraries/mobile'});
+
+const {data: homeData} = getQuery({queryKey: props.options.queryKey, path: '/libraries/mobile'});
+
+const {data: mutatedData, mutate} = getMutation({queryKey: props.options.queryKey, homeData: homeData});
+
+onIonViewWillEnter(() => {
+  if (!homeData.value) return;
+
+  if (route.name !== routeName) return;
+
+  const mutations = homeData.value?.filter?.(item => item?.update?.when == 'pageLoad') ?? [];
+  mutate(mutations);
 });
-
-onUnmounted(() => {
-  document.dispatchEvent(new Event('sidebar'));
-  stop();
-});
-
-setTitle();
 
 </script>
 
 <template>
   <ion-page>
-    <NavBar />
-    <ion-content :fullscreen="true" >
-        <div v-if="data"
-             class="flex flex-col gap-4 pt-2 w-available"
-             :class="{
-               'pb-4 mt-1.5' : isNative &&  !currentSong,
-               'pb-2 mt-1.5' : isNative &&  currentSong,
-               'pb-4 sm:pb-4' : !isNative &&  currentSong,
-               'mb-2' : !isNative &&  !currentSong
-            }"
-        >
-
-          <HomeCard/>
-
-          <template v-for="(library, index) in data ?? []" :key="index">
-            <MediaCarousel v-if="library?.items.length > 0"
-                           :key="library.title"
-                           :data="library.items"
-                           :moreLink="library.moreLink"
-                           :index="index"
-                           :title="library.title"/>
-          </template>
-        </div>
+    <ion-content :fullscreen="true">
+      <template v-if="!isMutating && (mutatedData?.every?.(d => d.component) || homeData?.every?.(d => d.component))">
+        <component
+            v-for="(render, index) in mutatedData ?? homeData"
+            :index="index"
+            :key="render.id"
+            :is="render.component"
+            v-bind="render.props"
+        />
+      </template>
     </ion-content>
   </ion-page>
 </template>

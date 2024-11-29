@@ -1,46 +1,48 @@
 import {pad} from './stringArray';
-import {Song} from '@/types/api/music/musicPlayer';
+import {Song} from '@/types/musicPlayer';
 import {t} from 'i18next';
 import i18next from '@/config/i18next';
 
-export const convertToHumanReact = (t: (arg: string) => string, time: number, zeroPad = false): string => {
-	if (!time) {
-		return '';
+export const convertToHumanReact = (t: (arg: string) => string, time: number, short = false): string => {
+	let seconds: number|string = parseInt(time.toString(), 10);
+
+	let days: number|string = Math.floor(seconds / (3600*24));
+	seconds  -= days*3600*24;
+	let hours: number|string   = Math.floor(seconds / 3600);
+	seconds  -= hours*3600;
+	let minutes: number|string = Math.floor(seconds / 60);
+	seconds  -= minutes*60;
+
+	if(days === 0) {
+		days = '';
+	} else if(days > 0 && days < 2) {
+		days = days + ' ' + t('day');
+	} else if(days > 0) {
+		days = days + ' ' + t('days');
 	}
 
-	const days = Math.floor(time / (3600 * 24));
-	const hours = Math.floor((time % 86400) / 3600);
-	time %= 3600;
-	const minutes = pad(Math.floor(time / 60), zeroPad && hours > 0
-		? 2
-		: 0);
-
-	if (days === 0 && hours === 0 && parseInt(minutes, 10) === 0) {
-		return `${minutes} ${t('minutes').slice(0, 3)}`;
+	if(hours === 0) {
+		hours = '';
+	} else if(hours > 0 && hours < 2) {
+		hours = hours + ' ' + t('hour');
+	} else if(hours > 0) {
+		hours = hours + ' ' + t('hours');
 	}
-	if (days === 0 && hours === 0 && parseInt(minutes, 10) > 0) {
-		return `${minutes} ${t('minutes').slice(0, 3)}`;
-	}
-	if (days === 0 && hours > 0 && parseInt(minutes, 10) === 0) {
-		return `${hours} ${t('hour')}`;
-	}
-	if (days === 0 && hours === 1 && parseInt(minutes, 10) !== 0) {
-		return `${hours} ${t('hour')} ${minutes} ${t('minutes').slice(0, 3)}`;
-	}
-	if (days === 0 && hours === 1 && parseInt(minutes, 10) === 0) {
-		return `${hours} ${t('hour')} ${minutes} ${t('minutes').slice(0, 3)}`;
-	}
-	if (days === 0 && hours > 1) {
-		return `${hours} ${t('hours')} ${minutes} ${t('minutes').slice(0, 3)}`;
+	if(minutes === 0) {
+		minutes = '';
+	} else if(minutes > 0 && minutes < 2) {
+		minutes = minutes + ' ' + t('minute');
+	} else if(minutes > 0) {
+		minutes = minutes + ' ' + t('minutes');
 	}
 
-	if (days === 1 && hours > 1) {
-		return `${days} ${t('day')} ${hours} ${t('hours')} ${minutes} ${t('minutes').slice(0, 3)}`;
+	if(seconds > 0 && !short) {
+		seconds = seconds + ' ' + t('seconds');
+	} else {
+		seconds = '';
 	}
-	if (days > 1 && hours > 1) {
-		return `${days} ${t('days')} ${hours} ${t('hours')} ${minutes} ${t('minutes').slice(0, 3)}`;
-	}
-	return `${minutes} ${t('minutes').slice(0, 3)}`;
+
+	return days + ' ' + hours + ' ' + minutes + ' ' + seconds;
 };
 
 export const humanTime = function(time: any) {

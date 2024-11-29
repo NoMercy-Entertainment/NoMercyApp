@@ -1,19 +1,18 @@
-import {ref} from 'vue';
+import {computed, ref} from 'vue';
 
 import type {Server} from '@/types/auth';
 
-const currentServer = ref<Server | null>(null);
+const cs = ref<Server | null>(null);
+export const currentServer = computed(() => cs.value);
 
 export const setCurrentServer = (server: Server | null): void => {
-	currentServer.value = server;
+	cs.value = server;
 };
 
 export const getCurrentServer = (): Server | null => {
-	return currentServer.value;
+	return cs.value;
 }
 
 export const clearCurrentServer = (): void => {
-	currentServer.value = null;
+	cs.value = null;
 };
-
-export default currentServer;

@@ -1,7 +1,7 @@
 import {computed} from 'vue';
 
-import router from '@/router';
 import libraries from '@/store/Libraries';
+import router from '@/router';
 
 export const searchUrl = computed(() => {
   if (isMusicRoute.value) {
@@ -10,18 +10,19 @@ export const searchUrl = computed(() => {
   return '/search';
 });
 
-export const isSearchRoute = computed(() => router.currentRoute.value.fullPath == '/search');
-export const isMusicSearchRoute = computed(() => router.currentRoute.value.fullPath == '/music/search');
+export const isSearchRoute = computed(() => router.currentRoute.value.path == '/search');
+export const isMusicSearchRoute = computed(() => router.currentRoute.value.path == '/music/search');
 
-export const isHomeRoute = computed(() => router.currentRoute.value.fullPath == '/home' || router.currentRoute.value.fullPath == '/');
-export const isMusicRoute = computed(() => router.currentRoute.value.fullPath.startsWith('/music'));
-export const isLibraryRoute = computed(() => router.currentRoute.value.fullPath.startsWith('/libraries') || router.currentRoute.value.fullPath.startsWith('/library'));
-export const isDashboardRoute = computed(() => router.currentRoute.value.fullPath.startsWith('/dashboard'));
-export const isPreferencesRoute = computed(() => router.currentRoute.value.fullPath.startsWith('/preferences'));
+export const isHomeRoute = computed(() => router.currentRoute.value.path == '/home' || router.currentRoute.value.path == '/');
+export const isMusicRoute = computed(() => router.currentRoute.value.path.startsWith('/music'));
+export const isLibraryRoute = computed(() => router.currentRoute.value.path.startsWith('/libraries') || router.currentRoute.value.path.startsWith('/library'));
+export const isDashboardRoute = computed(() => router.currentRoute.value.path.startsWith('/dashboard'));
+export const isPreferencesRoute = computed(() => router.currentRoute.value.path.startsWith('/preferences'));
 export const hasMusicLibrary = computed(() => libraries.value?.some?.(l => l.type != 'music'));
-export const isAlbumRoute = computed(() => router.currentRoute.value.fullPath.startsWith('/music/albums'));
-export const isArtistRoute = computed(() => router.currentRoute.value.fullPath.startsWith('/music/artists'));
-export const isPlaylistRoute = computed(() => router.currentRoute.value.fullPath.startsWith('/music/playlists'));
-export const isSongRoute = computed(() => router.currentRoute.value.fullPath.startsWith('/music/songs'));
-export const isQueueRoute = computed(() => router.currentRoute.value.fullPath.startsWith('/music/queue'));
+export const isAlbumRoute = computed(() => router.currentRoute.value.path.startsWith('/music/album'));
+export const isArtistRoute = computed(() => router.currentRoute.value.path.startsWith('/music/artist'));
+export const isPlaylistRoute = computed(() => router.currentRoute.value.path.startsWith('/music/playlist'));
+export const isSongRoute = computed(() => router.currentRoute.value.path.startsWith('/music/song'));
+export const isQueueRoute = computed(() => router.currentRoute.value.path.startsWith('/music/queue'));
+export const isTrackRoute = computed(() => router.currentRoute.value.path.startsWith('/music/artist/') || router.currentRoute.value.path.startsWith('/music/album/'));
 

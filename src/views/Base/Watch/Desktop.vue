@@ -3,15 +3,12 @@ import {onMounted, onUnmounted, ref} from 'vue';
 import {useRoute} from 'vue-router';
 import {useTranslation} from 'i18next-vue';
 import {IonPage, isPlatform} from '@ionic/vue';
-import {App} from '@capacitor/app';
 
-import currentServer from '@/store/currentServer';
-import user from '@/store/user';
+import {currentServer} from '@/store/currentServer';
+import {user} from '@/store/user';
 import {setDisableScreensaver} from '@/store/imageModal';
 import MediaSession from '@/lib/MediaSession';
-import {lockLandscape, lockPortrait, unlockOrientation} from '@/lib/utils';
 import {isNative} from '@/config/global';
-import {NavigationBar} from '@hugotomazi/capacitor-navigation-bar';
 
 import type {
   NMPlayer,
@@ -27,7 +24,8 @@ import {
   AutoSkipPlugin
 } from '@/lib/VideoPlayer';
 import {pad} from '@/lib/stringArray';
-import {hideStatusbar, showStatusbar} from '@/store/ui';
+import router from '@/router';
+import audioPlayer from '@/store/audioPlayer';
 
 const {t} = useTranslation();
 const route = useRoute();
@@ -78,8 +76,7 @@ onMounted(() => {
       .setup(config);
 
   player.value?.once('back', () => {
-    console.log('back');
-    // history.back();
+    router.back();
   });
 
   const desktopUIPlugin = new DesktopUIPlugin();
@@ -108,48 +105,33 @@ onMounted(() => {
 
   player.value?.once('play', () => {
     player.value?.enterFullscreen();
-    // player.value?.emit('quality');
-
-    // //@ts-ignore
-    // let audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-    // //@ts-ignore
-    // let source = audioCtx.createMediaElementSource(document.querySelector('video'));
-    //
-    // let gainNode = audioCtx.createGain();
-    // //@ts-ignore
-    // window.gainNode = gainNode;
-    // gainNode.gain.value = 1;
-    // source.connect(gainNode);
-    // gainNode.connect(audioCtx.destination);
   });
 
   player.value?.on('playlistComplete', () => {
-    history.back();
+    router.back();
+  });
+
+  player.value?.once('back', () => {
   });
 
   player.value?.on('play', () => {
     setDisableScreensaver(true);
-    if (isNative) {
-      // @ts-ignore
-      hideStatusbar();
-      // NavigationBar.hide();
-    }
     mediaSession.setPlaybackState('playing');
   });
 
   player.value?.on('pause', () => {
     setDisableScreensaver(false);
-    if (isNative) {
-      // @ts-ignore
-      showStatusbar();
-      // NavigationBar.show();
-    }
     mediaSession.setPlaybackState('paused');
   });
 
   player.value?.on('ready', () => {
+
+    audioPlayer.value?.stop();
     mediaSession.setActionHandler({
-      play: () => player.value?.play(),
+      play: () => {
+        alert('play');
+        player.value?.play();
+      },
       pause: () => player.value?.pause(),
       stop: () => player.value?.stop(),
       previous: () => player.value?.previous(),
@@ -157,6 +139,22 @@ onMounted(() => {
       seek: (n) => player.value?.seek(n),
       getPosition: () => player.value?.getCurrentTime() || 0,
     });
+
+    const observer = new MutationObserver(mutationList =>
+        mutationList.filter(m => m.type === 'childList').forEach(m => {
+          m.addedNodes.forEach(node => {
+            if (node instanceof HTMLElement) {
+              if (node.tagName === 'VIDEO') {
+                console.log('video removed');
+              }
+            }
+          });
+        }));
+
+    const videoElement = player.value?.getVideoElement();
+    if (videoElement) {
+      observer.observe(videoElement, {childList: true, subtree: true});
+    }
   });
 
   player.value?.on('time', (data: any) => {
@@ -186,54 +184,22 @@ onMounted(() => {
     player.value?.play();
   });
 
-  App.addListener('backButton', () => {
-      player.value?.emit('back-button-hyjack');
-    history.back();
+  player.value?.on('error', () => {
+    mediaSession?.setPlaybackState('none');
   });
 
-  if (isNative) {
-    player.value?.on('fullscreen', (value: any) => {
-      if (value) {
-        if (isNative) {
-          hideStatusbar();
-        }
-        lockLandscape();
-        NavigationBar.hide();
-      } else {
-        if (isNative) {
-          showStatusbar();
-        }
-        unlockOrientation();
-      }
-    });
-    player.value?.on('controls', (value: any) => {
-      if (value) {
-        NavigationBar.show();
-      } else {
-        if (isNative) {
-          hideStatusbar();
-        }
-      }
-    });
-  }
-
-  document.dispatchEvent(new Event('sidebar'));
-  lockLandscape();
 });
 
 onUnmounted(() => {
-  setDisableScreensaver(false);
-  if (isNative) {
-    showStatusbar();
-  }
-  lockPortrait();
   player.value?.dispose();
+  setDisableScreensaver(false);
+  mediaSession?.setPlaybackState('none');
 });
 </script>
 
 <template>
   <ion-page>
-      <Teleport to="body">
+      <Teleport to="body" :keepAlive="true">
         <div class="absolute inset-0 flex h-full w-full overflow-clip bg-black z-1199"
              :class="{
              'mb-28': isNative,
@@ -244,7 +210,3 @@ onUnmounted(() => {
       </Teleport>
   </ion-page>
 </template>
-
-<style scoped lang="css">
-@import 'nomercyplayer/dist/style.css';
-</style>

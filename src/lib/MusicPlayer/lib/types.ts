@@ -1,4 +1,4 @@
-import {Song} from '@/types/api/music/musicPlayer';
+import {Song} from '@/types/musicPlayer';
 
 export interface PlayerOptions {}
 
@@ -36,9 +36,6 @@ export interface TimeState {
 export type RepeatState = 'off' | 'one' | 'all';
 export type Time = number;
 export type Volume = number;
-export type Queue = Song[];
-export type BackLog = Song[];
-export type CurrentItem = Song | null;
 export type Item = Song;
 export type IsPlaying = boolean;
 export type IsMuted = boolean;

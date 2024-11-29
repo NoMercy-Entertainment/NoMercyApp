@@ -1,112 +1,56 @@
 <script setup lang="ts">
-import {onMounted, onUnmounted, ref, watch} from 'vue';
-import {IonPage, IonContent} from '@ionic/vue';
-import {MenuItem} from 'primevue/menuitem';
+import {IonPage, IonContent, onIonViewWillEnter} from '@ionic/vue';
 
+import {type PropType} from 'vue';
 import type {HomeItem} from '@/types/api/base/home';
-import type {MoooomIcons} from '@Icons/icons';
+import {type Component, getMutating, getMutation, getQuery, queryKey} from '@/lib/routerHelper';
 
-import {setTitle} from '@/lib/stringArray';
-import serverClient from '@/lib/clients/serverClient';
-import {isNative} from '@/config/global';
-import {setBackground} from '@/store/ui';
-import {currentSong} from '@/store/audioPlayer';
+import router from '@/router';
+import {useRoute} from 'vue-router';
 
-import {useContinueWatchingData, useHomeData} from '@/views/Base/data';
-
-import NavBar from '@/Layout/Mobile/components/NavBar.vue';
-
-import HomeCard from '@/components/Cards/HomeCard.vue';
-import MediaCarousel from '@/components/Carousel/MediaCarousel.vue';
-
-const {data: home, fetchNextPage, hasNextPage} = useHomeData();
-const {data: continueWatching, refetch} = useContinueWatchingData();
-
-onMounted(() => {
-  setTitle();
-  document.dispatchEvent(new Event('sidebar'));
-  setBackground(null);
+const props = defineProps({
+  options: {
+    type: Object as PropType<Component<HomeItem>[] & { queryKey?: string[], path?: string }>,
+    required: false,
+    default: () => ({
+      keepForever: true,
+      queryKey: queryKey(),
+    }),
+  },
 });
 
-onUnmounted(() => {
-  document.dispatchEvent(new Event('sidebar'));
-  stop();
+const route = useRoute();
+const routeName = router.currentRoute.value.name;
+
+const isMutating = getMutating({queryKey: props.options?.queryKey});
+
+const {data: homeData} = getQuery({queryKey: props.options.queryKey});
+
+const {data: mutatedData, mutate} = getMutation({queryKey: props.options.queryKey, homeData: homeData});
+
+onIonViewWillEnter(() => {
+  if (!homeData.value) return;
+
+  if (route.name !== routeName) return;
+
+  const mutations = homeData.value?.filter?.(item => item?.update?.when == 'pageLoad') ?? [];
+  mutate(mutations);
 });
-
-setTitle();
-
-watch(home, () => {
-  if (hasNextPage.value) {
-    fetchNextPage();
-  }
-});
-
-const selectedCard = ref<HomeItem>();
-
-const onRightClick = (event: Event, data: HomeItem) => {
-  console.log('right click', data);
-  selectedCard.value = data;
-};
-
-const menuItems = ref<(MenuItem & { icon: `mooooom-${keyof typeof MoooomIcons}` })[]>([
-  {
-    label: 'Remove from watchlist',
-    icon: 'mooooom-trash',
-    command: () => {
-      serverClient()
-          .delete('/userdata/continue', {
-            data: {
-              id: selectedCard.value!.id,
-              type: selectedCard.value!.media_type
-            }
-          })
-          .then(() => {
-            refetch();
-          });
-    }
-  }
-]);
 
 </script>
 
 <template>
   <ion-page>
-    <NavBar />
     <ion-content :fullscreen="true">
-        <div v-if="home"
-             class="pt-safe flex flex-col gap-4 w-available scrollbar-none will-change-contents"
-             :class="{
-               'pb-4' : isNative &&  !currentSong,
-               'pb-2' : isNative &&  currentSong,
-               'pb-2 sm:pb-4' : !isNative &&  currentSong,
-               'mb-2' : !isNative &&  !currentSong
-            }">
-          <HomeCard/>
-
-          <MediaCarousel v-if="continueWatching?.[0]"
-                         :data="continueWatching"
-                         :index="0"
-                         :title="'Continue watching'"
-                         :menuItems="menuItems"
-                         :onRightClick="onRightClick"
-                         suffix="/watch"/>
-
-          <template v-if="home?.pages">
-            <template v-for="(group, index) in home.pages" :key="index">
-              <template v-if="group">
-                <template v-for="(data, index2) in group?.data ?? []" :key="index2">
-
-                  <MediaCarousel v-if="data.items?.length > 0"
-                                 :key="data.title"
-                                 :data="data.items"
-                                 :index="index2"
-                                 :moreLink="data.moreLink"
-                                 :title="data.title"/>
-                </template>
-              </template>
-            </template>
-          </template>
-        </div>
+      <template v-if="!isMutating && (mutatedData?.every?.(d => d.component) || homeData?.every?.(d => d.component))">
+        <component
+            v-for="(render, index) in mutatedData ?? homeData"
+            :index="index"
+            :key="render.id"
+            :is="render.component"
+            v-bind="render.props"
+        />
+      </template>
     </ion-content>
   </ion-page>
 </template>

@@ -50,6 +50,7 @@ export interface Collection {
 	number_of_items: number;
 	have_items: number;
     videos: ExtendedVideo[];
+	link: string;
 }
 
 export interface Backdrop {

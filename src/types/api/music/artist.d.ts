@@ -12,7 +12,7 @@ export interface ArtistResponse {
 	folder: null | string;
 	color_palette: ColorPalettes | null;
 	blurHash: string | null;
-	libraryId: string;
+	library_id: string;
 	trackId: null | string;
 	_count: Count;
 	type: string;
@@ -36,9 +36,12 @@ export interface Artist {
 	folder: string | null;
 	color_palette: ColorPalettes | null;
 	blurHash?: string | null;
-	libraryId: string;
+	library_id: string;
 	trackId?: string | null;
 	origin: string;
+	disambiguation?: string | null;
+	type?: string;
+	link: string;
 }
 
 export interface Count {

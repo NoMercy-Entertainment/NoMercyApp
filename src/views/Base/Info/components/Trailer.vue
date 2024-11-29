@@ -160,7 +160,7 @@ onUnmounted(() => {
 </style>
 
 <template>
-  <div @click="toggle" class="fixed h-full w-full overflow-hidden rounded-lg bg-black/80">
+  <div @click="toggle" class="fixed h-full w-full overflow-hidden rounded-lg bg-black/5 0">
     <div :data-music="musicVisibility"
          :data-sidebar="sidebar"
          class="absolute w-auto overflow-hidden inset-1/2 aspect-video transition-transform duration-300 -translate-y-[50%]  music-showing:-translate-y-[52%]

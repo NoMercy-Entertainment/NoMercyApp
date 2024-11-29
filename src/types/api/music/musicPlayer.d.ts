@@ -1,23 +1,8 @@
 import type { LibraryItem } from '../base/library';
 import type { ColorPalettes } from '../shared';
-import {Album, Artist} from '@/types/api/music/album';
-
-export enum State {
-	idle = 'idle',
-	loading = 'loading',
-	ready = 'ready',
-	error = 'error',
-}
-
-export enum PlayState {
-	paused = 'paused',
-	playing = 'playing',
-}
-
-export enum MutedState {
-	unmuted = 'unmuted',
-	muted = 'muted',
-}
+import { Album } from '@/types/api/music/album';
+import { Artist } from '@/types/api/music/artist';
+import {Song} from '@/types/musicPlayer';
 
 export interface Music {
 	playlists: any[];
@@ -46,20 +31,6 @@ export interface Music {
 	volumeState: number;
 }
 
-export enum MusicType {
-	artist = 'artist',
-	album = 'album',
-	playlist = 'playlist',
-	search = 'search',
-	genre = 'genre',
-}
-
-
-export interface MusicCardPageResponse {
-	type: string;
-	data: MusicCardPageResponseData[];
-}
-
 export interface MusicCardPageResponseData {
 	id: string;
 	name: string;
@@ -79,34 +50,7 @@ export interface MusicCardPageResponseData {
 	type: string;
 	titleSort: string;
 	origin: string;
-}
-
-export interface Song {
-	id: string;
-	name: string;
-	track: number;
-	disc: number;
-	cover: string;
-	folder: string;
-	filename: string;
-	duration: string;
-	quality: number;
-	path: string;
-    media_type: string;
-	lyrics: Lyric[] | undefined;
-	color_palette: ColorPalettes;
-	blurHash: string;
-	folder_id: string;
-	created_at: string;
-	updated_at: string;
-	album_track: Album[];
-	artist_track: Artist[];
-	track_user: any[];
-	type: string;
-	favorite: boolean;
-	origin: string;
-	libraryId: string;
-	date: string;
+	link: string;
 }
 
 export interface Lyric {
@@ -132,7 +76,7 @@ export interface ArtistResponse {
 	created_at: string;
 	updated_at: string;
 	library_id: string;
-	library: LibraryItem;
+	library: string;
 	type: string;
 	tracks: Song[];
 }

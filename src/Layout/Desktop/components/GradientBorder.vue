@@ -2,9 +2,10 @@
 import {sidebar} from '@/store/sidebar';
 
 import indexer from '@/store/indexer';
-import {useIsFetching} from '@tanstack/vue-query';
+import {useIsFetching, useIsMutating} from '@tanstack/vue-query';
 
 const isFetching = useIsFetching();
+const isMutating = useIsMutating();
 
 </script>
 
@@ -14,8 +15,8 @@ const isFetching = useIsFetching();
         :class="{
             'sm:ml-[1.35rem]': sidebar == 'hidden',
             'sm:mr-[1.35rem]': !indexer,
-            'busy sm:border-4': isFetching > 0,
-            'm-1': isFetching == 0,
+            'busy sm:border-4': isFetching > 0 || isMutating > 0,
+            'sm:border-4 border-slate-light-3 dark:border-slate-dark-2': isFetching == 0 && isMutating == 0,
         }">
         <slot />
     </div>

@@ -65,6 +65,7 @@ watch(currentSeason, reset);
           v-model="currentSeason"
           :disabled="seasonSelectorData.length == 1"
           :items="seasonSelectorData"
+          optionLabel="title"
           class="min-w-52 max-w-[20rem] ml-3"
           label=""
           variant="normal"
@@ -78,17 +79,18 @@ watch(currentSeason, reset);
           id="item-0"
           :key="0"
           :data="{
-          id: 1,
-          title: t('To be announced'),
-           season_number: null,
-           episode_number: null,
-           available: false,
-           overview: '',
-           airDate: '',
-           still: '',
-           color_palette: {still: {darkVibrant: '', lightVibrant: ''}},
-           progress: null
-         }"
+            id: 1,
+            title: t('To be announced'),
+             season_number: null,
+             episode_number: null,
+             available: false,
+             overview: '',
+             airDate: '',
+             still: '',
+             link: '',
+             color_palette: {still: {darkVibrant: '', lightVibrant: ''}},
+             progress: null
+           }"
           :onclick="() => {}"/>
 
     </swiper-slide>

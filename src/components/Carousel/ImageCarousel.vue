@@ -1,23 +1,25 @@
 <script setup lang="ts">
-import {PropType, ref, toRaw, watch} from 'vue';
+import {computed, onMounted, PropType, ref, toRaw, watch} from 'vue';
 import {SwiperSlide} from 'swiper/vue';
+import {createGesture, Gesture, GestureDetail} from '@ionic/vue';
+import {useEventListener} from '@vueuse/core';
 
 import type {MediaItem} from '@/types/api/base/info';
+import type {ColorPalettes} from '@/types/api/shared';
 
-import Carousel from '@/components/Carousel/Carousel.vue';
-import {useEventListener} from '@vueuse/core';
-import ImageCard from '@/components/Cards/ImageCard.vue';
-import {ColorPalettes} from '@/types/api/shared';
 import {
   currentType,
   newIndex,
+  setCurrentType,
   setImageModalData,
-  setImageModalOpen,
+  setImageModalOpen, setNewIndex,
   setTemp,
-  showImageModal,
-  temp
+  showImageModal, temp,
 } from '@/store/imageModal';
 import {colorPalette} from '@/store/ui';
+
+import Carousel from '@/components/Carousel/Carousel.vue';
+import ImageCard from '@/components/Cards/ImageCard.vue';
 
 const props = defineProps({
   data: {
@@ -36,6 +38,7 @@ const props = defineProps({
 });
 
 const isPlaying = ref(false);
+const gesture = ref<Gesture>();
 
 const setData = (data: MediaItem) => {
 
@@ -54,18 +57,20 @@ const setData = (data: MediaItem) => {
     index: props.data.indexOf(data),
   });
 
+  setCurrentType(props.type);
+
   setImageModalOpen(true);
 };
 
 const handleLeft = () => {
   const item = props.data[newIndex.value - 1];
-
   if (!item) return;
 
   setTemp({
     index: newIndex.value - 1,
-    type: props.type,
+    type: temp.value.type,
   });
+  setNewIndex(newIndex.value - 1);
 
   setImageModalData({
     ...item,
@@ -80,13 +85,14 @@ const handleLeft = () => {
 
 const handleRight = () => {
   const item = props.data[newIndex.value + 1];
-
   if (!item) return;
 
   setTemp({
     index: newIndex.value + 1,
-    type: props.type,
+    type: temp.value.type,
   });
+
+  setNewIndex(newIndex.value + 1);
 
   setImageModalData({
     ...item,
@@ -124,17 +130,18 @@ const handleStop = () => {
 watch(showImageModal, value => {
   if (!value) {
     handleStop();
+    gesture.value?.destroy();
+  } else {
+    gesture.value?.enable();
   }
 });
 
-useEventListener(document, 'keyup', (event) => {
+useEventListener(window, 'keyup', (event) => {
   if (document.activeElement!.nodeName == 'TEXTAREA') return;
   if (document.activeElement!.nodeName == 'INPUT') return;
   if (event.key == 'Enter' && showImageModal.value) return;
 
   if (currentType.value != props.type) return;
-
-  console.log(event.key);
 
   if (event.key == 'ArrowLeft') {
     handleStop();
@@ -159,6 +166,32 @@ useEventListener(document, 'keyup', (event) => {
     handleStop();
   }
 });
+
+onMounted(() => {
+  gesture.value = createGesture({
+    el: document.querySelector<HTMLDivElement>('#imageModal')!,
+    onStart: () => onStart(),
+    onMove: (detail) => onMove(detail),
+    onEnd: () => onEnd(),
+    gestureName: 'swipe',
+  });
+});
+
+const onMove = ({velocityX}: GestureDetail) => {
+  if (currentType.value != props.type) return;
+
+  if  (velocityX > 0) {
+    handleLeft();
+  } else {
+    handleRight();
+  }
+};
+
+const onStart = () => {
+};
+
+const onEnd = () => {
+};
 
 </script>
 

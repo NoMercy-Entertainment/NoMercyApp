@@ -47,14 +47,6 @@ const debouncedSearchValue = useDebounce(searchValue, 500);
 const results = ref<Array<Movie| Tv| Person & any>>([]);
 const page = ref(1);
 
-watch(searchValue, (value) => {
-	console.raw(value);
-});
-
-watch(results, (value) => {
-  console.raw(value);
-});
-
 watch(debouncedSearchValue, (value) => {
 	page.value = 1; // Reset page number on new search
 	const api_key = 'ed3bf860adef0537783e4abee86d65af';
@@ -147,7 +139,7 @@ const loadMore = ref(null);
 
 					<RouterLink
             :to="`/search/${item?.media_type ?? 'unknown'}/${item?.id ?? 'unknown'}`"
-						class="relative flex w-full gap-4 overflow-hidden rounded-lg bg-zinc-900 p-2 sm:w-[32.45%]">
+						class="relative flex w-full gap-4 overflow-hidden rounded-lg bg-zinc-900 p-2 sm:w-[32.67%]">
 						<img
 							v-if="item?.backdrop_path"
 							:src="'https://image.tmdb.org/t/p/original' + item?.backdrop_path"

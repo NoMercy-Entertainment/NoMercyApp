@@ -7,7 +7,7 @@ HTMLElement.prototype.sliderBar = function (player: any, callbackFn: string, get
     return new SliderBar(this, player, callbackFn, getSizeFn);
 };
 
-HTMLElement.prototype.scrollHorizontalIntoView = function (    parent?: HTMLElement): void {
+HTMLElement.prototype.scrollHorizontalIntoView = function (parent?: HTMLElement): void {
     if (!(this instanceof HTMLElement)) return;
     const rect = this.getBoundingClientRect();
     const parentElement = parent ?? this.parentElement;
@@ -18,7 +18,7 @@ HTMLElement.prototype.scrollHorizontalIntoView = function (    parent?: HTMLElem
         behavior: 'smooth',
     });
 };
-HTMLElement.prototype.scrollVerticalIntoView = function (    parent?: HTMLElement): void {
+HTMLElement.prototype.scrollVerticalIntoView = function (parent?: HTMLElement): void {
     if (!(this instanceof HTMLElement)) return;
     const rect = this.getBoundingClientRect();
     const parentElement = parent ?? this.parentElement;
@@ -29,7 +29,7 @@ HTMLElement.prototype.scrollVerticalIntoView = function (    parent?: HTMLElemen
         behavior: 'smooth',
     });
 };
-HTMLElement.prototype.animateVerticalIntoView = function (    parentElement: HTMLElement | null = null,    duration: number = 420) {
+HTMLElement.prototype.animateVerticalIntoView = function (parentElement: HTMLElement | null = null, duration: number = 420) {
     if (!(this instanceof HTMLElement)) return;
     const rect = this.getBoundingClientRect();
     if (!parentElement) parentElement = this.parentElement;
@@ -57,6 +57,26 @@ HTMLElement.prototype.animateVerticalIntoView = function (    parentElement: HTM
 
     requestAnimationFrame(scrollStep);
 };
+HTMLElement.prototype.isVisible = function (parent?: HTMLElement): boolean {
+    if (!this) return false;
+    const rect = this.getBoundingClientRect();
+    return (
+        rect.top >= 0 &&
+        rect.left >= 0 &&
+        rect.bottom <= (parent?.offsetHeight ||  document.documentElement.clientHeight) &&
+        rect.right <= (parent?.offsetWidth || document.documentElement.clientWidth)
+    );
+}
+
+Document.prototype.querySelectorAllArray = function <K extends keyof HTMLElementTagNameMap>(selector: K):  HTMLElementTagNameMap[K][] {
+    return Array.from(this.querySelectorAll<K>(selector));
+}
+Element.prototype.querySelectorAllArray = function <K extends keyof HTMLElementTagNameMap>(selector: K):  HTMLElementTagNameMap[K][] {
+    return Array.from(this.querySelectorAll<K>(selector));
+}
+HTMLElement.prototype.querySelectorAllArray = function <K extends keyof HTMLElementTagNameMap>(selector: K):  HTMLElementTagNameMap[K][] {
+    return Array.from(this.querySelectorAll<K>(selector));
+}
 
 const easeInOutCubic = (t: number): number =>
     t < 0.5 ? 4 * t * t * t : (t - 1) * (2 * t - 2) * (2 * t - 2) + 1;
@@ -75,8 +95,13 @@ export const scrollToDiv = (i: string) => {
         );
     }
 
-    const scrollContainer =
-        document.querySelector<HTMLDivElement>('.group\\/scrollContainer:has(main)')!;
+    document.dispatchEvent(new CustomEvent("scrollToDiv", { detail: { top: target?.offsetTop } }));
+
+    let scrollContainer =
+        document.querySelector<HTMLDivElement>('main .group\\/scrollContainer')!;
+    if (!scrollContainer) {
+        scrollContainer = document.querySelector<HTMLDivElement>('ion-content .group\\/scrollContainer')!;
+    }
 
     if (target && scrollContainer) {
         (scrollContainer as HTMLDivElement).scrollTo({

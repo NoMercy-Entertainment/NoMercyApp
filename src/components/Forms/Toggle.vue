@@ -22,7 +22,7 @@ const modelValue = defineModel({
 ion-toggle {
   --handle-width: 1.2rem;
   --track-background: rgb(var(--color-slate-11));
-  --track-background-checked: linear-gradient(0deg, rgba(111, 82, 255, 0.73), rgba(142, 117, 255, 0.84));
+  --track-background-checked: linear-gradient(0deg, rgb(var(--color-focus)/ 0.43), rgb(var(--color-focus)/ 0.74));
 }
 
 ion-toggle::part(track) {

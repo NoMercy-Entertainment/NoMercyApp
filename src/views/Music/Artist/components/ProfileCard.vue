@@ -1,18 +1,30 @@
 <script setup lang="ts">
-import {type PropType} from "vue";
+import {onMounted, onUnmounted, type PropType} from 'vue';
 
 import type {ArtistResponse} from "@/types/api/music/artist";
 
 import {limitSentenceByCharacters} from "@/lib/stringArray";
 
 import CoverImage from "@/components/MusicPlayer/components/CoverImage.vue";
+import {setColorPalette} from '@/store/ui';
 
-defineProps({
+const props = defineProps({
     data: {
         type: Object as PropType<ArtistResponse>,
         required: true,
     },
 });
+
+onMounted(() => {
+  if (props.data?.color_palette) {
+    setColorPalette(props.data?.color_palette?.cover);
+  }
+});
+
+onUnmounted(() => {
+  setColorPalette(null);
+});
+
 </script>
 
 <template>

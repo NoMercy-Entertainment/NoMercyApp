@@ -41,6 +41,7 @@ export interface InfoResponse {
 	writer: Item[];
 	creator: Item[];
 	color_palette?: ColorPalettes;
+	link: string;
 
 	videos: ExtendedVideo[];
 	similar: any[];
@@ -73,6 +74,7 @@ export interface Episode {
 	color_palette: EpisodeColorPalette;
 	progress: null;
 	available: boolean;
+	link: string;
 }
 
 export interface EpisodeColorPalette {
@@ -211,4 +213,5 @@ export interface InfoCredit {
 	titleSort: string | null;
 	deathday: string | null | undefined;
 	color_palette: ColorPalettes;
+	link: string;
 }

@@ -1,5 +1,4 @@
 import Keycloak from 'keycloak-ionic';
-//import Keycloak from 'keycloak-js';
 import type {
   VueKeycloakConfig,
   VueKeycloakOptions,

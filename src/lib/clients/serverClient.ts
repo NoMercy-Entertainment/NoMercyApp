@@ -1,5 +1,5 @@
 import client from '@/lib/clients/client';
-import currentServer from '@/store/currentServer';
+import {currentServer} from '@/store/currentServer';
 
 export default <T>(timeout?: number) => {
 

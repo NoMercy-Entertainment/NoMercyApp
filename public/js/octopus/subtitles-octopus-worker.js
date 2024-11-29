@@ -33,6 +33,7 @@ Module.expectedDataFileDownloads++;
 		function fetchRemotePackage(packageName, packageSize, callback, errback) {
 			const xhr = new XMLHttpRequest();
 			xhr.open('GET', packageName, true);
+			xhr.setRequestHeader('Authorization', `Bearer ${self.token}`);
 			xhr.responseType = 'arraybuffer';
 			xhr.onprogress = function (event) {
 				const url = packageName;
@@ -438,6 +439,7 @@ if (ENVIRONMENT_IS_NODE) {
 		Module.readBinary = function readBinary(url) {
 			const xhr = new XMLHttpRequest();
 			xhr.open('GET', url, false);
+			xhr.setRequestHeader('Authorization', `Bearer ${self.token}`);
 			xhr.responseType = 'arraybuffer';
 			xhr.send(null);
 			return new Uint8Array(xhr.response);
@@ -446,6 +448,7 @@ if (ENVIRONMENT_IS_NODE) {
 	Module.readAsync = function readAsync(url, onload, onerror) {
 		const xhr = new XMLHttpRequest();
 		xhr.open('GET', url, true);
+		xhr.setRequestHeader('Authorization', `Bearer ${self.token}`);
 		xhr.responseType = 'arraybuffer';
 		xhr.onload = function xhr_onload() {
 			if (xhr.status == 200 || (xhr.status == 0 && xhr.response)) {
@@ -1482,7 +1485,7 @@ var Browser = {
 				const canvas = document.createElement('canvas');
 				canvas.width = img.width;
 				canvas.height = img.height;
-				const ctx = canvas.getContext('2d');
+				const ctx = canvas.getContext('2d', { willReadFrequently: true });
 				ctx.drawImage(img, 0, 0);
 				Module.preloadedImages[name] = canvas;
 				Browser.URLObject.revokeObjectURL(url);
@@ -4248,6 +4251,7 @@ var FS = {
 		};
 		LazyUint8Array.prototype.cacheLength = function LazyUint8Array_cacheLength() {
 			const xhr = new XMLHttpRequest();
+			xhr.setRequestHeader('Authorization', `Bearer ${self.token}`);
 			xhr.open('HEAD', url, false);
 			xhr.send(null);
 			if (!((xhr.status >= 200 && xhr.status < 300) || xhr.status === 304)) throw new Error(`Couldn't load ${url}. Status: ${xhr.status}`);
@@ -4261,6 +4265,7 @@ var FS = {
 				if (from > to) throw new Error(`invalid range (${from}, ${to}) or no bytes requested!`);
 				if (to > datalength - 1) throw new Error(`only ${datalength} bytes available! programmer error!`);
 				const xhr = new XMLHttpRequest();
+				xhr.setRequestHeader('Authorization', `Bearer ${self.token}`);
 				xhr.open('GET', url, false);
 				if (datalength !== chunkSize) xhr.setRequestHeader('Range', `bytes=${from}-${to}`);
 				if (typeof Uint8Array != 'undefined') xhr.responseType = 'arraybuffer';

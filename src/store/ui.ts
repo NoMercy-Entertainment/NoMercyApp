@@ -4,6 +4,8 @@ import {isPlatform} from '@ionic/vue';
 import {SortOrder, SortType} from '@/types/musicPlayer';
 import {useAutoThemeColors} from '@/store/preferences';
 
+export const setupComplete = ref(false);
+
 const p = ref<string|null>();
 export const poster = computed(() => p.value);
 export function setPoster(value?: string | null) {
@@ -28,7 +30,7 @@ export function setColorPalette(value?: PaletteColors|null) {
         fc.value = 'var(--color-theme-7)';
     }
     else {
-        fc.value = pickPaletteColor(value, 1, 80)
+        fc.value = pickPaletteColor(value, 30, 160)
             .replace(/,/gu, ' ')
             .replace('rgb(', '');
 
@@ -63,7 +65,7 @@ export const showStatusbar = async () => {
 }
 
 export const hideStatusbar = async () => {
-  (await statusbar.value as StatusBarPlugin)?.hide();
+  (await statusbar.value as StatusBarPlugin).hide();
 }
 
 export const setStatusBarColor = async (color: string) => {
@@ -80,4 +82,19 @@ const so = ref<SortOrder>(SortOrder.asc);
 export const sortOrder = computed(() => so.value);
 export const setSortOrder = (value: any) => {
     so.value = value;
+}
+
+const nav = ref(true);
+export const navBarVisible = computed(() => nav.value);
+export const setNavBarVisible = (value: boolean) => {
+    nav.value = value;
+}
+export const toggleNavBarVisible = () => {
+    nav.value = !nav.value;
+}
+export const showNavBar = () => {
+    nav.value = true;
+}
+export const hideNavBar = () => {
+    nav.value = false;
 }

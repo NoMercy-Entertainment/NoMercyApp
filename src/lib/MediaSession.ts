@@ -147,42 +147,54 @@ export class MediaSession {
 							`${artwork}?width=96&type=png&aspect_ratio=1`
 						),
 						sizes: '96x96',
-						type: 'image/png',
+						type: artwork.endsWith('.png')
+							? 'image/png'
+							: 'image/jpeg',
 					},
 					{
 						src: encodeURI(
 							`${artwork}?width=128&type=png&aspect_ratio=1`
 						),
 						sizes: '128x128',
-						type: 'image/png',
+						type: artwork.endsWith('.png')
+							? 'image/png'
+							: 'image/jpeg',
 					},
 					{
 						src: encodeURI(
 							`${artwork}?width=192&type=png&aspect_ratio=1`
 						),
 						sizes: '192x192',
-						type: 'image/png',
+						type: artwork.endsWith('.png')
+							? 'image/png'
+							: 'image/jpeg',
 					},
 					{
 						src: encodeURI(
 							`${artwork}?width=256&type=png&aspect_ratio=1`
 						),
 						sizes: '256x256',
-						type: 'image/png',
+						type: artwork.endsWith('.png')
+							? 'image/png'
+							: 'image/jpeg',
 					},
 					{
 						src: encodeURI(
 							`${artwork}?width=384&type=png&aspect_ratio=1`
 						),
 						sizes: '384x384',
-						type: 'image/png',
+						type: artwork.endsWith('.png')
+							? 'image/png'
+							: 'image/jpeg',
 					},
 					{
 						src: encodeURI(
 							`${artwork}?width=512&type=png&aspect_ratio=1`
 						),
 						sizes: '512x512',
-						type: 'image/png',
+						type: artwork.endsWith('.png')
+							? 'image/png'
+							: 'image/jpg',
 					},
 				]
 				: [];

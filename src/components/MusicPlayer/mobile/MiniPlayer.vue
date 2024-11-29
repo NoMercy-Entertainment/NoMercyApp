@@ -57,7 +57,7 @@ const {isSwiping, lengthX} = useSwipe(
         ) {
           left.value = '100%';
           opacity.value = 0;
-          audioPlayer.value.stop();
+          audioPlayer.value?.stop();
           reset();
         } else {
           left.value = '0';
@@ -108,6 +108,7 @@ const {isSwiping, lengthX} = useSwipe(
       <DeviceButton class="pointer-events-auto"/>
       <MediaLikeButton :key="currentSong?.id"
                        :data="currentSong"
+                        v-if="currentSong"
                        type="music/tracks"
                        color="var(--color-focus)"
                        class="pointer-events-auto flex"

@@ -29,7 +29,6 @@ onMounted(() => {
 
 <template>
   <ion-page>
-    <NavBar />
     <ion-content :fullscreen="true">
       <div class="flex h-full w-full flex-auto flex-col items-center justify-center gap-8">
         <svg viewBox="0 0 814 806" fill="none"

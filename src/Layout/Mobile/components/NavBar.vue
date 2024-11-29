@@ -1,7 +1,7 @@
 <script setup lang="ts">
 
 import {
-  IonHeader,
+  IonHeader, IonModal,
   IonProgressBar,
   IonToolbar,
   isPlatform,
@@ -57,7 +57,7 @@ const isFetching = useIsFetching();
     <MobileLibraryHeader />
   </ion-header>
 
-  <ion-progress-bar v-if="isFetching > 0" type="indeterminate"></ion-progress-bar>
+  <ion-progress-bar v-if="isFetching > 0" type="indeterminate" class="absolute mt-safe top-0 z-1199 bg-black"></ion-progress-bar>
 </template>
 
 <style scoped>
@@ -70,4 +70,11 @@ ion-toolbar {
   --background: var(--color-background);
 }
 
+ion-progress-bar::part(track) {
+  @apply bg-focus/50;
+}
+
+ion-progress-bar::part(progress) {
+  @apply bg-focus;
+}
 </style>

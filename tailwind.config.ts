@@ -6,11 +6,10 @@ import radialGradientPlugin from './radialGradientPlugin';
 // @ts-ignore
 import safeArea from 'tailwindcss-safe-area-capacitor';
 // @ts-ignore
-import primeUI from 'tailwindcss-primeui';
-// @ts-ignore
 import mdBase from '@geoffcodesthings/tailwind-md-base';
 import scrollBar from 'tailwind-scrollbar';
 import animate from 'tailwindcss-animate';
+import primeui from 'tailwindcss-primeui';
 
 export default {
   darkMode: ['selector', '.scheme-dark', 'media'],
@@ -232,7 +231,7 @@ export default {
         highlight:
             'radial-gradient(81.87% 66.22% at 0% 0%, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0) 100%)',
         spotifyBottom:
-            'linear-gradient(rgb(0,0,0,var(--bg-opacity, 0.3)) 0, rgb(var(--background-auto-1)) 90%),url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMDAiIGhlaWdodD0iMzAwIj48ZmlsdGVyIGlkPSJhIiB4PSIwIiB5PSIwIj48ZmVUdXJidWxlbmNlIHR5cGU9ImZyYWN0YWxOb2lzZSIgYmFzZUZyZXF1ZW5jeT0iLjc1IiBzdGl0Y2hUaWxlcz0ic3RpdGNoIi8+PGZlQ29sb3JNYXRyaXggdHlwZT0ic2F0dXJhdGUiIHZhbHVlcz0iMCIvPjwvZmlsdGVyPjxwYXRoIGZpbHRlcj0idXJsKCNhKSIgb3BhY2l0eT0iLjA1IiBkPSJNMCAwaDMwMHYzMDBIMHoiLz48L3N2Zz4=)',
+            'linear-gradient(rgb(0,0,0,var(--bg-opacity, 0.3)) 0, rgb(var(--background-auto)) 90%),url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMDAiIGhlaWdodD0iMzAwIj48ZmlsdGVyIGlkPSJhIiB4PSIwIiB5PSIwIj48ZmVUdXJidWxlbmNlIHR5cGU9ImZyYWN0YWxOb2lzZSIgYmFzZUZyZXF1ZW5jeT0iLjc1IiBzdGl0Y2hUaWxlcz0ic3RpdGNoIi8+PGZlQ29sb3JNYXRyaXggdHlwZT0ic2F0dXJhdGUiIHZhbHVlcz0iMCIvPjwvZmlsdGVyPjxwYXRoIGZpbHRlcj0idXJsKCNhKSIgb3BhY2l0eT0iLjA1IiBkPSJNMCAwaDMwMHYzMDBIMHoiLz48L3N2Zz4=)',
         spotifyTop:
             'linear-gradient(transparent 0,rgb(0,0,0,var(--bg-opacity, 0.5)) 100%),url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMDAiIGhlaWdodD0iMzAwIj48ZmlsdGVyIGlkPSJhIiB4PSIwIiB5PSIwIj48ZmVUdXJidWxlbmNlIGJhc2VGcmVxdWVuY3k9Ii43NSIgc3RpdGNoVGlsZXM9InN0aXRjaCIgdHlwZT0iZnJhY3RhbE5vaXNlIi8+PGZlQ29sb3JNYXRyaXggdHlwZT0ic2F0dXJhdGUiIHZhbHVlcz0iMCIvPjwvZmlsdGVyPjxwYXRoIGQ9Ik0wIDBoMzAwdjMwMEgweiIgZmlsdGVyPSJ1cmwoI2EpIiBvcGFjaXR5PSIuMDUiLz48L3N2Zz4=)',
       },
@@ -315,6 +314,7 @@ export default {
       },
       transitionTimingFunction: {
         'ease-in-out': 'cubic-bezier(0.4, 0, 0.2, 1)',
+        'ease': 'cubic-bezier(0,0,0.2,1)',
       },
       opacity: {
         ...defaultTheme.opacity,
@@ -2097,7 +2097,7 @@ export default {
     animate,
     radialGradientPlugin,
     safeArea,
-    primeUI,
+    primeui,
     plugin(({addVariant}) => {
       addVariant('compact', '&[data-size="compact"]');
       addVariant('full', '&[data-size="full"]');

@@ -10,7 +10,7 @@ import type {GenreResponse} from '@/types/api/base/genre';
 
 import useInfiniteServerClient from '@/lib/clients/useInfiniteServerClient';
 import {showBackdrops} from '@/store/preferences';
-import {setBackground} from '@/store/ui';
+import {setBackground, setColorPalette} from '@/store/ui';
 import router from '@/router';
 import {setTitle} from '@/lib/stringArray';
 
@@ -31,22 +31,6 @@ const {data, fetchNextPage, hasNextPage} = useInfiniteServerClient<{
   keepForever: true,
 });
 
-onMounted(() => {
-  setTitle();
-  setBackground(null);
-  document.dispatchEvent(new Event('sidebar'));
-  setTimeout(() => {
-    document.dispatchEvent(new Event('indexer'));
-  }, 1000);
-});
-
-watch(data, (value) => {
-  if (!value) return;
-  setTimeout(() => {
-    document.dispatchEvent(new Event('indexer'));
-  }, 1000);
-});
-
 const backdropStyle = 'grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 2xl:grid-cols-4 3xl:grid-cols-5 4xl:grid-cols-5 5xl:grid-cols-9 tv:grid-cols-6';
 
 const posterStyle = 'grid-cols-2 md:grid-cols-5 lg:grid-cols-6 xl:grid-cols-7 2xl:grid-cols-7 3xl:grid-cols-9 4xl:grid-cols-10 5xl:grid-cols-[repeat(14,minmax(0,1fr))] tv:grid-cols-6';
@@ -55,14 +39,19 @@ const useBackdropStyle = computed(() => {
   return showBackdrops.value && data.value?.pages?.[0]?.data[0].media_type !== 'person' && data.value?.pages?.[0]?.data[0].media_type !== 'genres';
 });
 
-onUnmounted(() => {
-  setBackground(null);
-});
-
 onMounted(() => {
+  setTitle();
+  setBackground(null);
+  setColorPalette(null);
+
   if (hasNextPage.value && (data?.value?.pages?.length ?? 0) < 50) {
     fetchNextPage();
   }
+
+  document.dispatchEvent(new Event('sidebar'));
+  setTimeout(() => {
+    document.dispatchEvent(new Event('indexer'));
+  }, 500);
 });
 
 watch(data, (value) => {
@@ -71,6 +60,16 @@ watch(data, (value) => {
   if (hasNextPage.value && value?.pages?.length < 50) {
     fetchNextPage();
   }
+
+  setTimeout(() => {
+    document.dispatchEvent(new Event('indexer'));
+  }, 500);
+});
+
+onUnmounted(() => {
+  setTitle();
+  setBackground(null);
+  setColorPalette(null);
 });
 
 const items = ref([]);
@@ -82,7 +81,6 @@ const onRightClick = (event: Event, data: LibraryResponse | GenreResponse | Peop
   selectedCard.value = data;
   cardMenu.value.show(event);
 };
-console.raw(data.value);
 
 </script>
 
@@ -125,7 +123,7 @@ console.raw(data.value);
                       :index="index2"/>
                 </template>
               </template>
-              <template v-else-if="data.pages?.[0]?.data?.length == 0">
+              <template v-else-if="data?.pages?.[0]?.data?.length == 0">
                 <EmptyCard/>
               </template>
           </template>

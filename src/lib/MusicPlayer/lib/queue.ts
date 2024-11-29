@@ -1,10 +1,12 @@
 import {Helpers} from '@/lib/MusicPlayer/lib/helpers';
-import {BackLog, CurrentItem, IsShuffling, Item, RepeatState} from '@/lib/MusicPlayer/lib/types';
+import {IsShuffling, RepeatState} from '@/lib/MusicPlayer/lib/types';
+import {Song} from '@/types/musicPlayer';
+import {toRaw} from 'vue';
 
 export class Queue extends Helpers {
-    public currentSong: CurrentItem = null;
-    protected _queue: Array<Item> = [];
-    protected _backLog: BackLog = [];
+    public currentSong: Song|null = null;
+    protected _queue: Array<Song> = [];
+    protected _backLog: Array<Song> = [];
     protected _shuffle: IsShuffling = false;
     public _repeat: RepeatState = 'off';
 
@@ -14,61 +16,63 @@ export class Queue extends Helpers {
         this._initializeQueue();
     }
 
-    public getQueue(): Array<Item> {
-        return this._queue;
+    public getQueue(): Array<Song> {
+        return this._queue
     }
 
-    public setQueue(payload: Array<Item>) {
-        this._queue = [...payload];
-        this.emit('queue', this._queue);
+    public setQueue(payload: Array<Song>) {
+        this._queue = [...toRaw(payload)].map((item) => Object.assign({}, item));
+        this.emit('queue', this._queue)
     }
 
-    public addToQueue(payload: Item) {
-        this._queue.push(payload);
-        this.emit('queue', this._queue);
+    public addToQueue(payload: Song) {
+        this._queue.push(Object.assign({}, payload));
+        this.emit('queue', this._queue)
     }
 
-    public pushToQueue(payload: Item[]) {
+    public pushToQueue(payload: Song[]) {
+        payload = Object.assign({}, payload)
         payload.forEach((song) => this._queue.push(song));
-        this.emit('queue', this._queue);
+        this.emit('queue', this._queue)
     }
 
-    public removeFromQueue(payload: Item) {
+    public removeFromQueue(payload: Song) {
         this._queue.splice(this._queue.indexOf(payload), 1);
-        this.emit('queue', this._queue);
+        this.emit('queue', this._queue)
     }
 
-    public addToQueueNext(payload: Item) {
-        this._queue.unshift(payload);
-        this.emit('queue', this._queue);
+    public addToQueueNext(payload: Song) {
+        this._queue.unshift(Object.assign({}, payload));
+        this.emit('queue', this._queue)
     }
 
-    public getBackLog(): Array<Item> {
-        return Array.from(this._backLog);
+    public getBackLog(): Array<Song> {
+        return this._backLog;
     }
 
-    public setBackLog(payload: Array<Item>) {
-        this._backLog = [...payload];
-        this.emit('backlog', this._backLog);
+    public setBackLog(payload: Array<Song>) {
+        this._backLog = [...toRaw(payload)].map((item) => Object.assign({}, item));
+        this.emit('backlog', this._backLog)
     }
 
-    public addToBackLog(payload: Item | null) {
+    public addToBackLog(payload: Song | null) {
         if (!payload) return;
-        this._backLog.push(payload);
-        this.emit('backlog', this._backLog);
+        this._backLog.push(Object.assign({}, payload));
+        this.emit('backlog', this._backLog)
     }
 
-    public pushToBackLog(payload: Item[]) {
+    public pushToBackLog(payload: Song[]) {
+        payload = Object.assign({}, payload)
         payload.forEach((song) => this._backLog.push(song));
-        this.emit('backlog', this._backLog);
+        this.emit('backlog', this._backLog)
     }
 
-    public removeFromBackLog(payload: Item) {
+    public removeFromBackLog(payload: Song) {
         this._backLog.splice(this._backLog.indexOf(payload), 1);
-        this.emit('backlog', this._backLog);
+        this.emit('backlog', this._backLog)
     }
 
-    public setCurrentSong(payload: Item | null) {
+    public setCurrentSong(payload: Song | null) {
         this.currentSong = payload;
 
         this.emit('song', payload);
@@ -131,7 +135,8 @@ export class Queue extends Helpers {
         }
     }
 
-    public playTrack(track: Item, tracks?: Item[]) {
+    public playTrack(track: Song, tracks?: Song[]) {
+        tracks = toRaw(tracks);
         if (!this.currentSong?.id || this.currentSong?.id != track?.id) {
             this.setCurrentSong(track);
         }

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import {nextTick, onMounted, ref, watch} from 'vue';
-import {useRouter} from 'vue-router';
+import {useRoute, useRouter} from 'vue-router';
 import {IonPage, IonContent} from '@ionic/vue';
 
 import type {MusicCardPageResponse} from '@/types/musicPlayer';
@@ -11,12 +11,13 @@ import {currentSong} from '@/store/audioPlayer';
 
 import ScrollContainer from '@/Layout/Desktop/components/ScrollContainer.vue';
 import MusicCard from '@/components/Cards/MusicCard.vue';
+import {setColorPalette} from '@/store/ui';
 
 const show = ref(false);
 
-const router = useRouter();
+const route = useRoute();
 const { data } = useServerClient<MusicCardPageResponse['data']>({
-  path: router.currentRoute.value.fullPath,
+  path: route.fullPath,
   keepForever: true,
 });
 
@@ -26,6 +27,7 @@ watch(data, () => {
 
 onMounted(() => {
   show.value = true;
+  setColorPalette(null);
   nextTick(() =>{
     document.dispatchEvent(new Event('indexer'));
   });

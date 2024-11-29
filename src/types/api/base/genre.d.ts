@@ -14,4 +14,5 @@ export interface GenreResponse {
 export interface Genre {
     id: string;
     name: string;
+	link: string;
 }

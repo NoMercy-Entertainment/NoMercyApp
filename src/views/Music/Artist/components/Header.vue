@@ -8,7 +8,7 @@ import {calculateDuration} from "@/lib/dateTime";
 import {stringFormat} from "@/lib/stringArray";
 import {setColorPalette} from '@/store/ui';
 
-import currentServer from '@/store/currentServer';
+import {currentServer} from '@/store/currentServer';
 import {audioPlayer, currentPlaylist, currentSong, isPlaying, setCurrentPlaylist} from '@/store/audioPlayer';
 import {isSongRoute} from '@/store/routeState';
 
@@ -29,18 +29,18 @@ const duration = ref<string | undefined>('');
 
 onMounted(() => {
 	duration.value = calculateDuration(props.data);
-	if (props.data?.color_palette) {
-		setColorPalette(props.data?.color_palette?.cover);
-	}
-});
-
-onUnmounted(() => {
-	setColorPalette(null);
 });
 
 const backdrop = computed(() => {
-	const image = props.data?.images?.find(image => image.type === 'background');
-	if (!image) return;
+	let image = props.data?.images
+      ?.toSorted((a, b) => b.voteCount - a.voteCount)
+      ?.find(image => image.type === 'banner');
+  if (!image) {
+    image = props.data?.images
+        ?.toSorted((a, b) => b.voteCount - a.voteCount)
+        ?.find(image => image.type === 'background');
+  }
+  if (!image) return;
 	return currentServer.value?.serverBaseUrl + '/images/music' + image?.src;
 });
 
@@ -90,7 +90,7 @@ const handlePlay = () => {
 <template>
 
 	<div
-		class="relative -mx-2 flex flex-shrink-0 flex-grow-0 items-end justify-between self-stretch overflow-hidden bg-cover bg-center bg-no-repeat object-cover p-9 w-available"
+		class="relative -mx-2 flex flex-shrink-0 flex-grow-0 items-end justify-between self-stretch overflow-hidden bg-cover bg-start bg-no-repeat object-cover p-9 w-available !h-[306px]"
 		:class="backdrop ? 'h-[425px]' : 'h-[200px]'"
 		:style="backdrop
             ? `background-image: url('${backdrop}')`
@@ -162,7 +162,7 @@ const handlePlay = () => {
       <MediaLikeButton v-if="data && !isSongRoute"
                        :data="data"
                        color="var(--color-focus)"
-                       :type="'music/' + data.type"
+                       :type="'music/' + data.type?.replace(/s$/, '')"
                        className="h-5 w-5"/>
 <!--			<BannerButton title="">-->
 <!--				<MoooomIcon icon="addCircle" className="relative h-5 w-5 text-white"/>-->

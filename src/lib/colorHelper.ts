@@ -119,7 +119,7 @@ export const tooLight = function (c: any, max = 130) {
 	if (c) {
 		if (c.includes('#')) {
 			const rgb = hexToRgba(c);
-			c = `rgb(${rgb.r}, ${rgb.g}, ${rgb.b})`;
+			c = `rgb(${rgb.r} ${rgb.g} ${rgb.b})`;
 		}
 
 		const luminosity = getLuminosity(c);
@@ -133,7 +133,7 @@ export const tooDark = function (c: any, min = 50) {
 	if (c) {
 		if (c.includes('#')) {
 			const rgb = hexToRgba(c);
-			c = `rgb(${rgb.r}, ${rgb.g}, ${rgb.b})`;
+			c = `rgb(${rgb.r} ${rgb.g} ${rgb.b})`;
 		}
 
 		const luminosity = getLuminosity(c);
@@ -163,19 +163,12 @@ export const RGBString2hex = (string: string): string => {
 
 export const hexToRGB = (hex: string) => {
 	const rgb = hexToRgba(hex);
-	return `rgb(${rgb.r}, ${rgb.g}, ${rgb.b})`;
+	return `rgb(${rgb.r} ${rgb.g} ${rgb.b})`;
 }
 
 export const pickPaletteColor = (color_palette?: PaletteColors | null | undefined, dark = 60, light = 160): string => {
 	if (!color_palette || !color_palette.darkVibrant) {
 		return 'var(--color-theme-9)';
-	}
-	if (!tooDark(color_palette.primary, dark) && !tooLight(color_palette.primary, light)) {
-		if (color_palette.primary!.includes('#')) {
-			const rgb = hexToRgba(color_palette.primary!);
-			return `${rgb.r} ${rgb.g} ${rgb.b}`;
-		}
-		return color_palette.primary ?? 'var(--color-theme-9)';
 	}
 	if (!tooLight(color_palette.lightVibrant, light) && !tooDark(color_palette.lightVibrant, dark)) {
 		if (color_palette.lightVibrant!.includes('#')) {
@@ -183,6 +176,13 @@ export const pickPaletteColor = (color_palette?: PaletteColors | null | undefine
 			return `${rgb.r} ${rgb.g} ${rgb.b}`;
 		}
 		return color_palette.lightVibrant ?? 'var(--color-theme-9)';
+	}
+	if (!tooDark(color_palette.primary, dark) && !tooLight(color_palette.primary, light)) {
+		if (color_palette.primary!.includes('#')) {
+			const rgb = hexToRgba(color_palette.primary!);
+			return `${rgb.r} ${rgb.g} ${rgb.b}`;
+		}
+		return color_palette.primary ?? 'var(--color-theme-9)';
 	}
 	if (!tooDark(color_palette.dominant, dark) && !tooLight(color_palette.dominant, light)) {
 		if (color_palette.dominant!.includes('#')) {
@@ -525,8 +525,11 @@ export const hexLighter = (hex?: string, luminosity?: number) => {
 		hsl.l += luminosity;
 	}
 
+	while (hsvaToHex({h:hsl.h, s:hsl.s, v:hsl.l, a:1}).length !== 7) {
+		hsl.l -= 1;
+	}
+
 	return hsvaToHex({h:hsl.h, s:hsl.s, v:hsl.l, a:1});
-	// return `hsl(${hsl.h}, ${hsl.s}%, ${hsl.l}%)`;
 }
 
 export const hexDarker = (hex: string, luminosity?: number): string => {
@@ -537,7 +540,11 @@ export const hexDarker = (hex: string, luminosity?: number): string => {
 		hsl.l -= luminosity;
 	}
 
-	return hsvaToHex({h:hsl.h, s:hsl.s, v:hsl.l, a:1});
+	while (hsvaToHex({h:hsl.h, s:hsl.s, v:hsl.l, a:1}).length !== 7) {
+		hsl.l += 1;
+	}
 
-	// return `hsl(${hsl.h}, ${hsl.s}%, ${hsl.l}%)`;
+	console.log(hsvaToHex({h:hsl.h, s:hsl.s, v:hsl.l, a:1}));
+
+	return hsvaToHex({h:hsl.h, s:hsl.s, v:hsl.l, a:1});
 }

@@ -8,16 +8,16 @@ import {isAlbumRoute} from '@/store/routeState';
 
 <template>
   <div id="sortHeaderElement"
-       class="sticky top-safe-offset-16 -mx-4 px-4 z-30 my-2 block h-10 content-center items-center justify-start self-stretch bg-transparent text-sm font-medium transition-transform duration-300 w-available -mt-0.5 group/track sm:w-available sm:-top-px"
+       class="sticky top-safe-offset-10 -mx-4 px-4 z-30 my-2 block h-10 content-center items-center justify-start self-stretch bg-transparent text-sm font-medium transition-transform duration-500 w-available -mt-0.5 group/track sm:w-available sm:-top-px"
        tabindex="0">
     <span id="sorterChild"
-          class="absolute inset-0 h-10 sm:rounded-t-2xl overflow-clip w-full transition-transform duration-300"></span>
+          class="absolute inset-0 h-10 sm:rounded-t-2xl overflow-clip w-full transition-transform duration-500"></span>
     <span
         :class="{
           'album-grid': isAlbumRoute,
           'artist-grid': !isAlbumRoute
         }"
-        class="grid justify-start items-center self-stretch pr-3 sm:px-3 rounded-lg sm:hover:bg-[#e2f0fd]/20 text-auto-12 group/track text-sm font-medium py-2 z-0 group/track gap-2 ">
+        class="grid justify-start items-center self-stretch pr-3 sm:px-3 rounded-lg sm:hover:bg-slate-lightA-6 dark:hover:bg-slate-darkA-6 text-auto-12 group/track text-sm font-medium py-2 z-0 group/track gap-2 ">
 
             <SortButton id="sortIndex" :sortingType="SortType.index"
                         class="!flex justify-center"

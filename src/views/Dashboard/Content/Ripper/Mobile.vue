@@ -7,7 +7,7 @@ import router from '@/router';
 </script>
 
 <template>
-  <ion-page><NavBar />
+  <ion-page>
     <ion-content :fullscreen="true">
 
       <ExploreContainer :name="`${router.currentRoute.value.name as string} Mobile page`" />

@@ -3,7 +3,7 @@ import {PropType} from 'vue';
 import {RouterLink} from 'vue-router';
 
 import {darkMode} from '@/store/colorScheme';
-import user from '@/store/user';
+import {user} from '@/store/user';
 
 import DropdownMenu from '@/Layout/Desktop/components/Menus/DropdownMenu.vue';
 import ProfileMenuServerSection from '@/Layout/Desktop/components/Menus/ProfileMenuServerSection.vue';
@@ -11,6 +11,7 @@ import ProfileMenuServerSection from '@/Layout/Desktop/components/Menus/ProfileM
 import NoMercyAvatar from '@/components/Images/NoMercyAvatar.vue';
 import MoooomIcon from '@/components/Images/icons/MoooomIcon.vue';
 import Toggle from '@/components/Forms/Toggle.vue';
+import {currentServer} from '@/store/currentServer';
 
 const reload = () => window.location.reload();
 
@@ -66,6 +67,7 @@ defineProps({
             class="flex flex-shrink-0 flex-grow-0 flex-col items-start justify-start gap-1 self-stretch border-0 py-2">
 
           <RouterLink
+              v-if="currentServer"
               to="/dashboard/system"
               class="flex justify-center items-center self-stretch h-10 relative py-2.5 px-1 rounded-md border border-transparent hover:border-focus/4 active:!bg-focus/11 dark:active:!bg-focus/8 active:border-focus/4 active:hover:border-focus/4 focus:bg-focus-9 hover:!bg-focus/10 disabled:!bg-focus/2 disabled:!border-focus/2 transition-colors duration-300 hover:text-auto-12"
               data-nav-title="System"
@@ -83,7 +85,7 @@ defineProps({
           </RouterLink>
 
           <RouterLink
-              to="/preferences"
+              to="/preferences/display"
               class="flex justify-center items-center self-stretch h-10 relative py-2.5 px-1 rounded-md border border-transparent hover:border-focus/4 active:!bg-focus/11 dark:active:!bg-focus/8 active:border-focus/4 active:hover:border-focus/4 focus:bg-focus-9 hover:!bg-focus/10 disabled:!bg-focus/2 disabled:!border-focus/2 transition-colors duration-300 hover:text-auto-12"
               data-nav-title="Preferences"
               name="Preferences" >
@@ -142,7 +144,7 @@ defineProps({
         <div
             class="flex flex-shrink-0 flex-grow-0 flex-col items-start justify-start gap-1 self-stretch border-0 pt-2">
           <button
-              @click="$keycloak.keycloak?.logout()"
+              @click="$keycloak?.keycloak?.logout()"
               class="flex justify-center items-center self-stretch h-10 relative py-2.5 px-1 rounded-md border border-transparent hover:border-focus/4 active:!bg-focus/11 dark:active:!bg-focus/8 active:border-focus/4 active:hover:border-focus/4 focus:bg-focus-9 hover:!bg-focus/10 disabled:!bg-focus/2 disabled:!border-focus/2 transition-colors duration-300 hover:text-auto-12"
               data-nav-title="Logout"
               name="Logout">

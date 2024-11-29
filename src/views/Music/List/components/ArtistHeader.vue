@@ -9,6 +9,8 @@ import {convertToHumanReact, convertToSeconds} from '@/lib/dateTime';
 import {setColorPalette} from '@/store/ui';
 import CoverImage from '@/components/MusicPlayer/components/CoverImage.vue';
 import {isPlatform} from '@ionic/vue';
+import {isArtistRoute} from '@/store/routeState';
+import {breakTitle2} from "@/lib/stringArray";
 
 const props = defineProps({
     data: {
@@ -59,29 +61,29 @@ const isArtist = computed(() => {
 </script>
 
 <template>
-    <div class="relative z-0 flex flex-col items-end justify-start gap-4 px-8 text-white sm:flex-row sm:gap-9 sm:p-8"
+    <div class="relative z-0 flex flex-col items-end justify-start gap-4 px-8 text-white sm:flex-row sm:gap-9 sm:pt-12 sm:pb-8 sm:px-8"
       :class="{
-        'pt-safe-offset-6': isPlatform('capacitor'),
+        'pt-safe-offset-12': isPlatform('capacitor'),
         'pt-8': !isPlatform('capacitor')
       }"
     >
         <div class="absolute top-0 left-0 h-full w-full overflow-clip bg-focus"></div>
-        <div class="absolute top-0 left-0 h-full w-full overflow-clip bg-black/5"></div>
+        <div class="absolute top-0 left-0 h-full w-full overflow-clip bg-black/5  "></div>
         <div
-            class="relative mx-auto flex aspect-square h-auto w-64 flex-col items-center justify-center overflow-clip rounded-xl bg-gradient-to-br shadow-lg min-w-64 bg-theme-7 from-theme-5 via-theme-7 to-theme-11">
+            class="relative mx-auto flex aspect-square -mt-4 h-amin-w-80 flex-col items-center justify-center overflow-clip rounded-xl bg-gradient-to-br min-w-64 bg-theme-7 from-theme-5 via-theme-7 to-theme-11 shadow">
             <CoverImage
                 id="image"
                 :data="data"
                 :onload="processImage"
                 :size="250"
-                className="aspect-square h-auto w-64 rounded-xl min-w-64"
+                className="aspect-square h-amin-w-80 rounded-xl min-w-80"
                 loading="eager"/>
         </div>
 
         <div
             class="relative mb-4 flex w-full flex-1 flex-shrink-0 flex-col items-start justify-start gap-4 flex-grow-1 sm:hidden">
-            <p class="w-full text-3xl font-semibold line-clamp-2 leading-[130%]">
-                {{ data?.name ?? t('Songs you like') }}
+            <p class="w-full text-3xl font-semibold line-clamp-1 leading-[130%]"
+               v-html="breakTitle2(data?.name ?? 'Songs you like', 'text-xl line-clamp-1')">
             </p>
             <p class="text-left font-semibold uppercase text-white">
                 {{ data?.type?.replace(/s$/u, '') }}
@@ -98,8 +100,7 @@ const isArtist = computed(() => {
             </p>
 
             <div class="relative flex items-center justify-start gap-2">
-<!--              v-if="!routeIs('app.music.artist')"-->
-                <div
+                <div v-if="isArtistRoute"
                     class="flex items-center gap-4 text-sm font-medium">
                     <div v-if="data?.artists?.length == 1 && data?.artists?.[0].cover"
                          class="relative aspect-square h-12 w-12 overflow-clip rounded-full min-w-12">
@@ -112,13 +113,12 @@ const isArtist = computed(() => {
                             loading="eager"/>
 
                     </div>
-                    <RouterLink :to="`/music/artists/${data?.artists?.[0]?.id}`"
+                    <RouterLink :to="data?.artists?.[0].link ?? '#'"
                           class="text-sm empty:hidden">
                         {{ data?.artists?.[0]?.name ?? 'Various artists' }}
                     </RouterLink>
                 </div>
-<!--              && !routeIs('app.music.artist')-->
-                <p v-if="data?.tracks "
+                <p v-if="data?.tracks && isArtistRoute"
                    class="text-left text-sm font-medium text-white">•</p>
                 <p class="text-left text-sm font-medium text-white">
                     {{ data?.tracks?.length }}

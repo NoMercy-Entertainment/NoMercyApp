@@ -27,7 +27,7 @@ type Return<T> = UseQueryReturnType<T, AxiosError<ErrorResponse>> extends {
 	setLetter: (value: string) => void;
 };
 
-const useServerClient = <T, >(options?: ServerClientProps): Return<T> => {
+const useApiClient = <T, >(options?: ServerClientProps): Return<T> => {
 
 	const letter = ref<string>(router.currentRoute.value.params?.letter as string || '_');
 
@@ -184,4 +184,4 @@ const useServerClient = <T, >(options?: ServerClientProps): Return<T> => {
 
 };
 
-export default useServerClient;
+export default useApiClient;

@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import {type PropType} from "vue";
+import {defineComponent, type PropType} from "vue";
 
 import {twMerge} from "tailwind-merge";
 import {MoooomIcons} from '@Icons/icons';
 
-import icons from '/resources/mooooom-icons.svg?inline';
+import icons from '/resources/mooooom-icons.svg';
 
 defineProps({
     icon: {
@@ -16,6 +16,16 @@ defineProps({
         required: false,
         default: '',
     },
+});
+
+defineComponent({
+  name: 'MoooomIcon',
+  props: {
+    icon: {
+      type: String as PropType<MoooomIcons>,
+      required: true
+    }
+  }
 });
 
 </script>

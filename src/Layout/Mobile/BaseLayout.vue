@@ -1,13 +1,8 @@
 <script setup lang="ts">
-import {onMounted, onUnmounted, watch} from 'vue';
+import {onMounted, onUnmounted} from 'vue';
 import router from '@/router';
 
-import {
-  IonPage,
-  IonRouterOutlet,
-  IonTabs,
-  isPlatform,
-} from '@ionic/vue';
+import {IonPage, IonRouterOutlet, IonTabs, isPlatform,} from '@ionic/vue';
 
 import {lockPortrait, unlockOrientation} from '@/lib/utils';
 import {closeMenu} from '@/store/profileMenu';
@@ -23,6 +18,7 @@ import BottomBar from './components/BottomBar.vue';
 import SideFlyout from './components/SideFlyout.vue';
 import NavBar from './components/NavBar.vue';
 import {currentSong} from '@/store/audioPlayer';
+import EqualizerMenu from "@/Layout/Mobile/components/menus/EqualizerMenu.vue";
 
 onMounted(() => {
   lockPortrait();
@@ -45,19 +41,20 @@ onUnmounted(() => {
       <ion-router-outlet animated="false" class="pointer-events-none children:pointer-events-auto">
       </ion-router-outlet>
 
-      <ProfileMenu v-if="isPlatform('capacitor')" />
+      <ProfileMenu v-if="isPlatform('capacitor')"/>
+      <EqualizerMenu v-if="isPlatform('capacitor')"/>
 
-      <FullPlayer v-if="currentSong" />
-      <MiniPlayer v-if="currentSong" />
+      <FullPlayer v-if="currentSong"/>
+      <MiniPlayer v-if="currentSong"/>
 
-      <BottomBar v-if="isPlatform('capacitor')" />
+      <BottomBar v-if="isPlatform('capacitor')"/>
     </ion-tabs>
 
-    <ImageModal />
+    <ImageModal/>
     <!--      <Toast class="z-1199" />-->
-    <Screensaver />
+    <Screensaver/>
 
-    <SideFlyout v-if="!isPlatform('capacitor')"    />
+    <SideFlyout v-if="!isPlatform('capacitor')"/>
   </ion-page>
 </template>
 

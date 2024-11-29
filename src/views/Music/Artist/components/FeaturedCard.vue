@@ -2,7 +2,7 @@
 import {computed, type PropType} from "vue";
 
 import type {ArtistResponse} from "@/types/api/music/artist";
-import type {Song} from "@/types/api/music/musicPlayer";
+import type {Song} from "@/types/musicPlayer";
 
 import CoverImage from "@/components/MusicPlayer/components/CoverImage.vue";
 import {Artist} from "@/types/api/music/artist";
@@ -42,7 +42,7 @@ const artists = computed(() => {
 		<div class="grid grid-cols-2 gap-4">
 
 			<template v-for="artist in artists as Artist[]" :key="artist.id">
-				<RouterLink :to="`/music/artists/${artist.id}`"
+				<RouterLink :to="artist.link"
 							class="inline-flex items-center justify-start gap-4 underline-offset-4 hover:underline">
 					<div class="flex h-16 w-16 items-center justify-center rounded px-px py-px">
 						<CoverImage :data="artist" :size="60" class="h-14 w-14 rounded-lg"/>

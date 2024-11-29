@@ -3,7 +3,7 @@ import {onMounted, PropType, watch} from 'vue';
 
 import {Artist} from '@/types/api/music/artist';
 import {Album} from '@/types/api/music/album';
-import {musicSize} from '@/store/audioPlayer';
+import {closeFullPlayer, musicSize} from '@/store/audioPlayer';
 import {shouldMarquee} from '@/lib/utils';
 import router from '@/router';
 
@@ -52,6 +52,11 @@ onMounted(() => {
   }
 });
 
+const handleClick = (e: Event) => {
+  e.stopPropagation();
+  closeFullPlayer();
+};
+
 </script>
 
 <template>
@@ -68,17 +73,17 @@ onMounted(() => {
 
       <span class="flex w-fit flex-wrap gap-1 whitespace-wrap line-clamp-2 h-inherit"
             v-for="(item, index) in data">
-        <button
-               @click="onclick ?? router.push(`/music/${type}/${item.id}`)"
+        <RouterLink :to="item.link"
                :onkeyup="onkeyup"
                :key="item.id"
                tabindex="0"
                data-target="album"
+               @click="handleClick($event)"
                class="pointer-events-auto flex gap-1 whitespace-nowrap text-xs font-semibold line-clamp-2 h-inherit hover:underline focus:underline dark:font-medium">
-            <span class="flex whitespace-nowrap leading-6">
+            <span class="flex whitespace-nowrap leading-5">
               {{ item.name }}{{ index < data.length - 1 ? ',' : '' }}
             </span>
-        </button>
+        </RouterLink>
       </span>
     </div>
   </div>

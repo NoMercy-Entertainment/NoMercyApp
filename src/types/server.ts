@@ -71,24 +71,6 @@ export interface ServerLibrary {
 	subtitles: any[];
 }
 
-// export interface PaletteColors {
-// 	dominant?: string;
-// 	primary?: string;
-// 	lightVibrant?: string;
-// 	darkVibrant?: string;
-// 	lightMuted?: string;
-// 	darkMuted?: string;
-// }
-//
-// export interface ColorPalettes {
-// 	poster?: PaletteColors,
-// 	backdrop?: PaletteColors,
-// 	logo?: PaletteColors,
-// 	image?: PaletteColors,
-// 	profile?: PaletteColors,
-// 	cover?: PaletteColors,
-// }
-
 export interface LogoResponse {
 	aspectRatio?: string | number | null;
 	src: string;
@@ -101,4 +83,17 @@ export interface LogoResponse {
 			src: string;
 		} | null;
 	} | null;
+}
+
+export interface ActivityLog {
+	id: string;
+	user_id: string;
+	device_id: string;
+	type: string;
+	device: number;
+	user: number;
+	time: number;
+	from: string;
+	created_at?: number;
+	updated_at?: number;
 }

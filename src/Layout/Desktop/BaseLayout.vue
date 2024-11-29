@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import {computed} from 'vue';
+import {useRoute} from 'vue-router';
 
 import {
   IonPage,
@@ -7,9 +8,17 @@ import {
 } from '@ionic/vue';
 
 import {VueQueryDevtools} from '@tanstack/vue-query-devtools'
+import ContextMenu from 'primevue/contextmenu';
+import Toast from 'primevue/toast';
+import ConfirmDialog from 'primevue/confirmdialog';
 
-import router from '@/router';
+import type {MenuItem} from 'primevue/menuitem';
+
+import {focusColor, background} from '@/store/ui';
+import {currentServer} from '@/store/currentServer';
+import {contextMenu, contextMenuItems} from '@/store/contextMenuItems';
 import {konamiEnabledState} from '@/store/konami';
+import {cardMenu, trackContextMenuItems} from '@/store/contextMenuItems';
 
 import Indexer from '@/Layout/Indexer.vue';
 import ImageModal from '@/Layout/ImageModal.vue';
@@ -23,14 +32,14 @@ import LyricsOverlay from './components/Overlays/LyricsOverlay.vue';
 import DeviceOverlay from './components/Overlays/DeviceOverlay.vue';
 
 import MusicPlayerDesktop from '@/components/MusicPlayer/MusicPlayerDesktop.vue';
-import {focusColor, background} from '@/store/ui';
-// import {imageBaseUrl} from '@/config/global';
-import currentServer from '@/store/currentServer';
+import EqualizerOverlay from "@/Layout/Desktop/components/Overlays/EqualizerOverlay.vue";
+
 
 const backgroundUrl = computed(() => {
   return `${currentServer.value?.serverBaseUrl}/images/original${background.value}`;
-  // return `${imageBaseUrl.value}/original${background.value}`;
 });
+
+const route = useRoute();
 
 </script>
 
@@ -64,9 +73,9 @@ const backgroundUrl = computed(() => {
                 <main id="main"
                       class="flex h-auto flex-1 flex-grow flex-col items-start justify-start self-stretch bg-cover bg-center bg-no-repeat will-change-auto min-h-available w-available scrollbar-none sm:child:border-2 sm:rounded-2xl"
                       style=" box-shadow: 0 1px 3px 0 rgba(16,24,40,0.1), 0 1px 2px 0 rgba(16,24,40,0.06); ">
-
-                  <ion-tabs>
-                    <ion-router-outlet animated="false" class="pointer-events-none children:pointer-events-auto" :key="router.currentRoute.value.fullPath">
+                  <slot v-if="$slots.default"/>
+                  <ion-tabs v-else>
+                    <ion-router-outlet animated="false" class="pointer-events-none children:pointer-events-auto" :key="route.path">
                     </ion-router-outlet>
                   </ion-tabs>
                 </main>
@@ -77,6 +86,7 @@ const backgroundUrl = computed(() => {
           <LyricsOverlay class="hidden sm:block bg-focus"/>
           <QueueOverlay />
           <DeviceOverlay />
+          <EqualizerOverlay />
 
         </GradientBorder>
         <Indexer />
@@ -87,8 +97,14 @@ const backgroundUrl = computed(() => {
       <ImageModal />
 <!--      <Toast class="z-1199" />-->
       <Screensaver />
+
+      <Toast />
+      <ConfirmDialog></ConfirmDialog>
+      <ContextMenu ref="contextMenu" :model="contextMenuItems" />
+
       <VueQueryDevtools v-if="konamiEnabledState" buttonPosition="bottom-left"/>
     </div>
+    <ContextMenu ref="cardMenu" :model="trackContextMenuItems as MenuItem[]"/>
   </ion-page>
 </template>
 

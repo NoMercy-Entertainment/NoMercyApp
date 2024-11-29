@@ -32,6 +32,7 @@ const SubtitlesOctopus = function (options) {
 	self.pixelRatio = window.devicePixelRatio || 1; // (internal) Device pixel ratio (for high dpi devices)
 
 	self.timeOffset = options.timeOffset || 0; // Time offset would be applied to currentTime from video (option)
+	self.accessToken = options.accessToken || null; // Access token for some services (optional)
 
 	self.hasAlphaBug = false;
 
@@ -48,7 +49,7 @@ const SubtitlesOctopus = function (options) {
 		}
 
 		const canvas = document.createElement('canvas');
-		const ctx = canvas.getContext('2d');
+		const ctx = canvas.getContext('2d', { willReadFrequently: true });
 
 		window.ImageData = function () {
 			let i = 0;
@@ -104,7 +105,7 @@ const SubtitlesOctopus = function (options) {
 			fonts: self.fonts,
 			availableFonts: self.availableFonts,
 			debug: self.debug,
-			token: window.player.options_.token,
+			token: self.accessToken,
 		});
 	};
 
@@ -129,9 +130,9 @@ const SubtitlesOctopus = function (options) {
 					self.workerError('Don\'t know where to render: you should give video or canvas in options.');
 				}
 		}
-		self.ctx = self.canvas.getContext('2d');
+		self.ctx = self.canvas.getContext('2d', { willReadFrequently: true });
 		self.bufferCanvas = document.createElement('canvas');
-		self.bufferCanvasCtx = self.bufferCanvas.getContext('2d');
+		self.bufferCanvasCtx = self.bufferCanvas.getContext('2d', { willReadFrequently: true });
 
 		// test for alpha bug, where e.g. WebKit can render a transparent pixel
 		// (with alpha == 0) as non-black which then leads to visual artifacts
@@ -226,8 +227,8 @@ const SubtitlesOctopus = function (options) {
 			} else {
 				self.video.addEventListener(
 					'loadedmetadata',
-					function (e) {
-						e.target.removeEventListener(e.type, arguments.callee);
+					function onLoadedMetadata(e) {
+						e.target.removeEventListener(e.type, onLoadedMetadata);
 						self.resize();
 					},
 					false
@@ -622,3 +623,5 @@ if (typeof exports !== 'undefined') {
 		exports = module.exports = SubtitlesOctopus;
 	}
 }
+
+export default SubtitlesOctopus;

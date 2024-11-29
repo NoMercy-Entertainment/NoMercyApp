@@ -1,16 +1,14 @@
 <script setup lang="ts">
-
 import {computed, onMounted, PropType, ref, watch} from 'vue';
 
 import type {PaletteColors} from '@/types/api/shared';
 
-import {isPlatform} from '@ionic/vue';
+import {isDarkMode} from '@/config/global';
 import {getImageBrightness, hexLighter} from '@/lib/colorHelper';
-import {useMediaQuery} from '@vueuse/core';
-import currentServer from '@/store/currentServer';
-import AppLogoSquare from '@/components/Images/icons/AppLogoSquare.vue';
+import {currentServer} from '@/store/currentServer';
 import {useAutoThemeColors} from '@/store/preferences';
-import {imageBaseUrl} from '@/config/global';
+import AppLogoSquare from '@/components/Images/icons/AppLogoSquare.vue';
+import {tmdbImageBaseUrl} from '@/config/config';
 
 const props = defineProps({
   path: {
@@ -41,11 +39,6 @@ const props = defineProps({
     type: String as PropType<'image' | 'logo'>,
     required: false,
     default: 'image',
-  },
-  disableGradient: {
-    type: Boolean as PropType<boolean>,
-    required: false,
-    default: false,
   },
   autoShadow: {
     type: Boolean as PropType<boolean>,
@@ -81,23 +74,27 @@ const onError = (e: Event) => {
   error.value = true;
 };
 
-const baseImageUrl = computed(() => {
+const serverImageUrl = computed(() => {
   if (!props.path) return;
-  // return `${imageBaseUrl.value}/${props.size ?? 'original'}${props.path}`;
   return `${currentServer.value?.serverBaseUrl}/images/original${props.path}`;
+});
+
+const tmdbImageUrl = computed(() => {
+  if (!props.path) return;
+  return `${tmdbImageBaseUrl}/original${props.path}`;
 });
 
 onMounted(() => {
   if (props?.type != 'logo') return;
 
-  getImageBrightness(`${baseImageUrl.value}`, ({nonTransparentBrightness}) => {
+  getImageBrightness(`${serverImageUrl.value}`, ({nonTransparentBrightness}) => {
     brightness.value = nonTransparentBrightness;
     shouldLighten.value = nonTransparentBrightness < 20;
     shouldDarken.value = nonTransparentBrightness > 80;
   });
 });
 
-watch(baseImageUrl, (value) => {
+watch(serverImageUrl, (value) => {
   if (!value) return;
 
   if (props?.type == 'logo') return;
@@ -119,16 +116,8 @@ const onLoadStart = () => {
   opacity.value = 0;
 };
 
-const isDarkMode = computed(() => {
-  const classList = (document.body.parentElement as HTMLElement).classList;
-  if (!classList.contains('scheme-dark') && !classList.contains('scheme-light')) {
-    return useMediaQuery('(prefers-color-scheme: dark)');
-  }
-  return classList.contains('scheme-dark');
-});
-
 const luminosityValue = computed(() => {
-  return isDarkMode.value ? 20 : 30;
+  return isDarkMode.value ? 0 : 20;
 });
 
 const style = computed(() => {
@@ -138,8 +127,8 @@ const style = computed(() => {
     '--c-3': 'rgb(var(--color-focus) / 14%)',
     '--c-4': 'rgb(var(--color-focus) / 1%)',
 
-    backgroundImage: props.type == 'logo' || props.disableGradient || !useAutoThemeColors
-        ? props.type == 'logo' || props.disableGradient
+    backgroundImage: props.type == 'logo' || !useAutoThemeColors
+        ? props.type == 'logo'
             ? ''
             : `
                     radial-gradient(
@@ -215,24 +204,23 @@ const height = computed(() => {
 });
 
 </script>
-
 <template>
-  <div class="pointer-events-none bottom-0 mx-auto flex w-full select-none place-self-start overflow-hidden h-available"
-       :class="aspect == 'poster'
-        ? ' aspect-poster'
-        : aspect == 'backdrop'
-          ? ' aspect-backdrop'
-          : ' '"
+  <div class="pointer-events-none bottom-0 mx-auto flex w-full select-none place-self-start h-available"
+       :class="{
+        'aspect-poster  w-available h-auto': aspect == 'poster',
+        'aspect-backdrop  w-available h-auto': aspect == 'backdrop',
+        'w-auto h-available': aspect == null,
+       }"
        :style="style">
-    <div class="absolute inset-0 h-full w-full animate-pulse bg-black/50 shadow"
+    <div class="absolute inset-0 h-full w-full bg-black/5  0 shadow"
          v-if="opacity == 0 && type == 'image'"></div>
     <picture v-if="!error && path && !path?.includes?.('undefined')"
              class="pointer-events-none absolute inset-0 flex select-none flex-col items-end justify-end self-end transition-all duration-500"
-             :class="aspect == 'poster'
-                ? ' aspect-poster  w-available h-auto'
-                : aspect == 'backdrop'
-                  ? ' aspect-backdrop  w-available h-auto'
-                  : 'w-auto h-available'"
+             :class="{
+                'aspect-poster  w-available h-auto': aspect == 'poster',
+                'aspect-backdrop  w-available h-auto': aspect == 'backdrop',
+                'w-auto h-available': aspect == null,
+             }"
              :style="`opacity: ${opacity}; float: ${type == 'logo'? 'right' : ''}`">
       <!--			<source-->
       <!--				:srcset="`${baseImageUrl}?width=${size ? (size * 2) : null}&type=avif&aspect_ratio=${aspectRatio} 1x`"-->
@@ -242,25 +230,27 @@ const height = computed(() => {
       <!--				:srcset="`${baseImageUrl}?width=${size ? (size * 2) : null}&type=webp&aspect_ratio=${aspectRatio} 1x`"-->
       <!--				type="image/webp"-->
       <!--			/>-->
-      <!--			<source-->
-      <!--				:srcset="`${baseImageUrl}?width=${size ? (size * 2) : null}&type=jpg&aspect_ratio=${aspectRatio} 1x`"-->
-      <!--				type="image/jpeg"-->
-      <!--			/>-->
-      <img :src="baseImageUrl"
+      <source v-if="loading == 'eager'"
+        :srcset="`${tmdbImageUrl}?width=${size ? (size * 2) : null}&type=jpg&aspect_ratio=${aspectRatio} 1x`"
+        type="image/jpeg"
+      />
+      <img :src="serverImageUrl"
            :width="size"
            :height="height"
            :fetchpriority="priority"
            :loading="loading == 'eager' ? 'eager' : 'lazy'"
            :alt="`tmdb image for ${title ?? 'image'}`"
            class="pointer-events-auto inset-0 h-auto bg-top transition-all duration-500 max-h-available"
-           :class="`
-						${className}
-						${widthClass}
-						${type == 'logo' ? 'object-scale-down' : 'object-cover'}
-						${shouldDarken
-                 ? `[filter:drop-shadow(0px_0px_6px_black)_drop-shadow(0px_0px_6px_black)_drop-shadow(0px_0px_6px_black)]`
-                 : ''
-					}`"
+           :class="{
+                'aspect-poster  w-available h-auto': aspect == 'poster',
+                'aspect-backdrop  w-available h-auto': aspect == 'backdrop',
+                'w-available h-available': aspect == null,
+                'object-scale-down !w-auto' : type == 'logo',
+                'object-cover object-top' : type == 'image',
+                '[filter:drop-shadow(0px_0px_6px_black)_drop-shadow(0px_0px_6px_black)_drop-shadow(0px_0px_6px_black)]': shouldDarken,
+                [`${widthClass}`]: true,
+                [`${className}`]: true,
+             }"
            :style="`
             float: ${type == 'logo' ? 'right' : ''};
             filter: ${shouldLighten || shouldDarken

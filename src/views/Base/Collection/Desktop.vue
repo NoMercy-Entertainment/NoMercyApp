@@ -2,7 +2,7 @@
 import {onMounted, onUnmounted, ref, watch} from 'vue';
 import {useRouter} from 'vue-router';
 import {IonPage, IonContent} from '@ionic/vue';
-;import collect from 'collect.js';
+import collect from 'collect.js';
 
 import type {CollectionResponse} from '@/types/api/base/collection';
 
@@ -10,7 +10,7 @@ import i18next from '@/config/i18next';
 import useServerClient from '@/lib/clients/useServerClient';
 import {setBackground, setColorPalette} from '@/store/ui';
 import {setTitle, sortByPosterAlphabetized, unique} from '@/lib/stringArray';
-import {convertToHumanReact} from '@/lib/dateTime'
+import {convertToHumanReact, humanTimeExtended} from '@/lib/dateTime';
 
 import ScrollContainer from '@/Layout/Desktop/components/ScrollContainer.vue';
 import FloatingBackButton from '@/components/Buttons/FloatingBackButton.vue';
@@ -129,7 +129,7 @@ onUnmounted(() => {
                       {{ convertToHumanReact(t, data?.total_duration) }}
                     </p>
                   </div>
-                  <div class="relative flex flex-grow flex-col items-start justify-center gap-1">
+                  <div class="relative flex flex-grow flex-col items-start justify-center text-left gap-1">
                     <p class="flex-shrink-0 flex-grow-0 text-xs font-bold uppercase text-auto-alpha-10">
                       {{ $t('Genre') }}
                     </p>
@@ -204,11 +204,11 @@ onUnmounted(() => {
             </div>
 
             <PersonCarousel v-if="data?.cast && data?.cast?.length > 0"
-                            :data="unique(data?.cast, 'id')"
+                            :data="unique(data?.cast, 'id').slice(0, 50)"
                             title="Cast"/>
 
             <PersonCarousel v-if="data?.crew && data?.crew?.length > 0"
-                            :data="sortByPosterAlphabetized(data?.crew)"
+                            :data="sortByPosterAlphabetized(data?.crew).slice(0, 50)"
                             title="Crew"/>
 
             <ImageCarousel v-if="data?.posters && data?.posters?.length > 0"

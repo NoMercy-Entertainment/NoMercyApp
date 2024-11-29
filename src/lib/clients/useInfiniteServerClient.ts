@@ -4,8 +4,8 @@ import serverClient from '@/lib/clients/serverClient';
 import {AxiosError} from 'axios';
 import {ErrorResponse} from '@/types/server';
 import {ServerClientProps} from '@/lib/clients/useServerClient';
-import currentServer from '@/store/currentServer';
-import {useRouter} from 'vue-router';
+import {currentServer} from '@/store/currentServer';
+import {useRoute, useRouter} from 'vue-router';
 
 interface InfiniteServerClientProps {
 	path?: string;
@@ -22,10 +22,10 @@ interface InfiniteServerClientProps {
 export const queryKey = (options?: ServerClientProps | InfiniteServerClientProps) => {
 	if (options?.queryKey) return options?.queryKey
 
-	const router = useRouter();
+	const route = useRoute();
 	const options2: string[] = [];
 
-	(options?.path ?? router.currentRoute.value.fullPath)?.split('/').slice(1).forEach(p => {
+	(options?.path ?? route.fullPath)?.split('/').slice(1).forEach(p => {
 		if (p.includes('?')) {
 			options2.push(p.split('?')[0]);
 			options2.push(p.split('?')[1].split('=')[1]);
@@ -58,11 +58,11 @@ const useInfiniteServerClient = <T, >(options?: {
 }): Return<T> => {
 
 	const LIMIT = 3;
-	const router = useRouter();
+	const route = useRoute();
 
 	return useInfiniteQuery({
 		...options,
-		queryKey: options?.queryKey ?? (options?.path ?? router.currentRoute.value.fullPath).split('/').slice(1),
+		queryKey: options?.queryKey ?? (options?.path ?? route.fullPath).split('/').slice(1),
 		enabled: !!currentServer.value?.id && options?.enabled,
 		retry: 0,
 		staleTime: options?.keepForever
@@ -88,7 +88,7 @@ const useInfiniteServerClient = <T, >(options?: {
 				setTimeout(() => {
 
 					serverClient()
-						.get(options?.path ?? router.currentRoute.value.fullPath, {
+						.get(options?.path ?? route.fullPath, {
 							signal: controller.signal,
 							params: {
 								page: pageParam,

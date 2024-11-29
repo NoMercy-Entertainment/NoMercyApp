@@ -15,11 +15,6 @@ const props = defineProps({
         type: Object as PropType<HomeDataItem | MusicCardPageResponseData | Album> | undefined,
         required: true,
     },
-    link: {
-        type: String as PropType<string | null>,
-        required: false,
-        default: null,
-    },
     className: {
         type: String,
         required: false,
@@ -71,16 +66,16 @@ const ringColor = ref(pickPaletteColor(props.data.color_palette?.cover)
 </script>
 
 <template>
-    <RouterLink v-if="data"
+    <RouterLink v-if="data?.link"
           class="relative flex flex-grow flex-col items-center justify-end transition-transform duration-100 group/musicCard active:scale-[98%]"
-                :to="`/music/${(data as HomeDataItem)?.type}/${data?.id}`"
+                :to="data.link"
          :style="`--color-focus: ${ringColor}`"
     >
         <MusicCardImage :data="data" />
         <div
             class="flex flex-shrink-0 flex-grow-0 items-center justify-start self-stretch py-2 pr-1 pl-2"
         >
-            <div class="relative flex flex-grow flex-col items-start justify-center">
+            <div class="relative flex flex-grow flex-col items-start justify-center text-left">
                 <p
                     class="h-6 w-full flex-shrink-0 flex-grow-0 self-stretch text-sm font-semibold line-clamp-1"
                     :title="data?.name ?? (data as HomeDataItem)?.title"

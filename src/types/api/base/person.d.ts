@@ -42,6 +42,7 @@ export interface PersonResponseItem extends PeopleResponse {
 	images: Images;
 	translations: Translations;
 	known_for: KnownFor[];
+	link: string;
 }
 
 export interface Credits {
@@ -86,6 +87,7 @@ export interface KnownFor {
 	vote_average: number;
 	vote_count: number;
 	year?: number;
+	link: string;
 }
 
 export interface Images {

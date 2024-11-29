@@ -5,8 +5,8 @@ import serverClient from './serverClient';
 import {AxiosError} from 'axios';
 import {ErrorResponse} from '@/types/server'
 import {queryKey} from '@/lib/clients/useInfiniteServerClient';
-import currentServer from '@/store/currentServer';
-import {useRouter} from 'vue-router';
+import {currentServer} from '@/store/currentServer';
+import {useRoute} from 'vue-router';
 
 export interface ServerClientProps {
 	path?: string;
@@ -23,25 +23,14 @@ export interface ServerClientProps {
 }
 
 type Return<T> = UseQueryReturnType<T, AxiosError<ErrorResponse>> extends {
-	setLetter: (value: string) => void;
+	setLetter?: (value: string) => void;
 } ? UseQueryReturnType<T, AxiosError<ErrorResponse>> : UseQueryReturnType<T, AxiosError<ErrorResponse>> & {
-	setLetter: (value: string) => void;
+	setLetter?: (value: string) => void;
 };
 
 const useServerClient = <T, >(options?: ServerClientProps): Return<T> => {
 
-	const router = useRouter();
-
-	const letter = ref<string>(router.currentRoute.value.query?.letter as string || '_');
-
-	const setLetter = (value: string) => {
-		letter.value = value;
-		// queryClient.refetch();
-	};
-
-	router.afterEach(() => {
-		setLetter(router.currentRoute.value.query?.letter as string);
-	});
+	const route = useRoute();
 
 	const getDataValues = () => {
 		return Object.keys(options?.data ?? {})
@@ -70,15 +59,15 @@ const useServerClient = <T, >(options?: ServerClientProps): Return<T> => {
 
 					let promise;
 
-					if ((options?.path ?? router.currentRoute.value.fullPath).includes('undefined')) return Promise.reject();
+					if ((options?.path ?? route.fullPath).includes('undefined')) return Promise.reject();
 
 					if (type.value == 'get') {
 						promise = serverClient<T>()
 							.get<T>(
-								options?.path ?? router.currentRoute.value.fullPath,
+								options?.path ?? route.fullPath,
 								{
 									params: {
-										letter: letter.value,
+										letter: route.query?.letter,
 										...getDataValues(),
 									},
 									signal: signal,
@@ -93,9 +82,9 @@ const useServerClient = <T, >(options?: ServerClientProps): Return<T> => {
 					else if (type.value == 'post') {
 
 						promise = serverClient<T>()
-							.post<T>(options?.path ?? router.currentRoute.value.fullPath,
+							.post<T>(options?.path ?? route.fullPath,
 								{
-									letter: router.currentRoute.value.query?.letter ?? undefined,
+									letter: route.query?.letter ?? undefined,
 									...getDataValues(),
 								},
 								{
@@ -109,9 +98,9 @@ const useServerClient = <T, >(options?: ServerClientProps): Return<T> => {
 					}
 					else if (type.value == 'put') {
 						promise = serverClient<T>()
-							.put<T>(options?.path ?? router.currentRoute.value.fullPath,
+							.put<T>(options?.path ?? route.fullPath,
 								{
-									letter: router.currentRoute.value.query?.letter ?? undefined,
+									letter: route.query?.letter ?? undefined,
 									...getDataValues(),
 								},
 								{
@@ -124,9 +113,9 @@ const useServerClient = <T, >(options?: ServerClientProps): Return<T> => {
 					}
 					else if (type.value == 'patch') {
 						promise = serverClient<T>()
-							.patch<T>(options?.path ?? router.currentRoute.value.fullPath,
+							.patch<T>(options?.path ?? route.fullPath,
 								{
-									letter: router.currentRoute.value.query?.letter ?? undefined,
+									letter: route.query?.letter ?? undefined,
 									...getDataValues(),
 								},
 								{
@@ -139,9 +128,9 @@ const useServerClient = <T, >(options?: ServerClientProps): Return<T> => {
 					}
 					else if (type.value == 'delete') {
 						promise = serverClient<T>()
-							.delete<T>(options?.path ?? router.currentRoute.value.fullPath,
+							.delete<T>(options?.path ?? route.fullPath,
 								{
-									letter: router.currentRoute.value.query?.letter ?? undefined,
+									letter: route.query?.letter ?? undefined,
 									...getDataValues(),
 								},
 								{
@@ -166,7 +155,6 @@ const useServerClient = <T, >(options?: ServerClientProps): Return<T> => {
 
 	return {
 		...useQueryC,
-		setLetter,
 	};
 
 };

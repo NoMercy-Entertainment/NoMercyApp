@@ -15,7 +15,7 @@ import {
 } from '@/store/routeState';
 
 import {closeSidebar, sidebar} from '@/store/sidebar';
-import currentServer from '@/store/currentServer';
+import {currentServer} from '@/store/currentServer';
 
 import ProfileMenuServerSection from '@/Layout/Desktop/components/Menus/ProfileMenuServerSection.vue';
 import SideFlyoutButton from '@/Layout/Mobile/components/SideFlyoutButton.vue';
@@ -156,7 +156,7 @@ const {isSwiping, lengthX} = useSwipe(
       <div
           class="flex flex-shrink-0 flex-grow-0 flex-col items-start justify-start gap-1 self-stretch px-3 py-2 mt-auto border-t border-r-0 border-b-0 border-l-0 border-auto-12/[0.08]"
       >
-        <SideFlyoutButton icon="doorOpen" title="Logout" @click="$keycloak.keycloak?.logout()"/>
+        <SideFlyoutButton icon="doorOpen" title="Logout" @click="$keycloak?.keycloak?.logout()"/>
 
       </div>
     </div>

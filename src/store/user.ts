@@ -1,24 +1,32 @@
-import {ref} from 'vue';
+import {computed, ref} from 'vue';
 
 import type {User} from '@/types/auth';
 import Keycloak from '@/types/keycloak';
 
-const user = ref<User>(<User>{});
+const u = ref<User>(<User>{});
+export const user = computed(() => u.value);
+
+export const testUserToken = ref('test');
+
 export const keycloak = ref<Keycloak>(<Keycloak>{});
 
 export const setUser = (newUser: User): void => {
-	user.value = newUser;
+	u.value = newUser;
 }
 
 export const getUser = (): User => {
-	return user.value!;
+	return u.value!;
 }
 
 export const setUserFromKeycloak = (keycloakUser: Keycloak): void => {
 	keycloak.value = keycloakUser;
 
-	user.value = {
-		...user.value,
+	localStorage.setItem('access_token', keycloakUser.token);
+	localStorage.setItem('refresh_token', keycloakUser.refreshToken);
+	localStorage.setItem('id_token', keycloakUser.idToken);
+
+	u.value = {
+		...u.value,
 		name: keycloakUser.tokenParsed.display_name,
 		email: keycloakUser.tokenParsed.email,
 		id: keycloakUser.tokenParsed.sub,
@@ -29,12 +37,9 @@ export const setUserFromKeycloak = (keycloakUser: Keycloak): void => {
 }
 
 export const updateUserFromApi = (newUser: User): void => {
-	console.log('Updating user from api', newUser);
-	user.value = {
-		...user.value,
+	u.value = {
+		...u.value,
 		avatar: newUser.avatar,
 		messages: newUser.messages,
 	}
 }
-
-export default user;

@@ -1,6 +1,7 @@
 import { Helpers } from './helpers';
 import { type AudioOptions, PlayerState } from './types';
 import { isPlatform} from '@ionic/vue';
+import {Band, bands, loadEqualizerSettings} from "@/store/audioPlayer";
 
 export class PlayerAudio {
     public state: PlayerState = PlayerState.STOPPED;
@@ -9,17 +10,21 @@ export class PlayerAudio {
     public volume: number = 100;
     public fadeDuration: number = 3;
     protected _options: AudioOptions = <AudioOptions>{};
-    protected _audioElement: HTMLAudioElement = <HTMLAudioElement>{};
+    _audioElement: HTMLAudioElement = <HTMLAudioElement>{};
     protected parent: Helpers;
     protected _prefetchLeeway: number = 10;
-    protected crossfadeSteps = 20;
+    protected crossFadeSteps = 20;
     protected fadeOutVolume = 0;
     protected fadeInVolume = 100;
+
+    public context: AudioContext | null = null;
+    preGain: GainNode | null = null;
+    filters: BiquadFilterNode[] = [];
+    panner: StereoPannerNode | null = null;
 
     private isFading: boolean = false;
     protected hasNextQueued: boolean = false;
     protected repeat: 'off'|'one'|'all' = 'off';
-    protected isCurrentAudio: boolean = true;
 
     constructor(options: AudioOptions, parent: Helpers) {
         this._options = options;
@@ -92,14 +97,6 @@ export class PlayerAudio {
         return this.state === PlayerState.PLAYING;
     }
 
-    public isPaused(): boolean {
-        return this.state === PlayerState.PAUSED;
-    }
-
-    public isStopped(): boolean {
-        return this.state === PlayerState.STOPPED;
-    }
-
     public getDuration(): number {
         return this.duration;
     }
@@ -151,7 +148,7 @@ export class PlayerAudio {
     }
 
     public setCrossfadeSteps(steps: number) {
-        this.crossfadeSteps = steps;
+        this.crossFadeSteps = steps;
     }
 
     public _fadeIn(firstRun: boolean = false) {
@@ -164,7 +161,7 @@ export class PlayerAudio {
         this._audioElement.play().then();
 
         if (this.fadeInVolume < this.volume) {
-            this.fadeInVolume += this.crossfadeSteps;
+            this.fadeInVolume += this.crossFadeSteps;
 
             setTimeout(() => this._fadeIn(), 200);
         } else {
@@ -179,7 +176,7 @@ export class PlayerAudio {
         // console.log('in', this._audioElement.id, this.fadeInVolume, this.volume, this.crossfadeSteps);
         this.fadeVolume(this.fadeInVolume);
 
-        if (this.fadeInVolume >= this.volume - this.crossfadeSteps * 12) {
+        if (this.fadeInVolume >= this.volume - this.crossFadeSteps * 12) {
             this.parent.emit('nextSong');
         }
     }
@@ -191,7 +188,7 @@ export class PlayerAudio {
         }
 
         if (this.fadeOutVolume > 0) {
-            this.fadeOutVolume -= this.crossfadeSteps;
+            this.fadeOutVolume -= this.crossFadeSteps;
             setTimeout(() => this._fadeOut(), 200);
         } else {
             this.fadeOutVolume = 0;
@@ -242,7 +239,8 @@ export class PlayerAudio {
         this._audioElement.loop = false;
         this._audioElement.setAttribute('tabindex', '-1');
         this._audioElement.volume = this._options.volume ?? 1;
-        this._audioElement.style.display = 'none';
+        // this._audioElement.style.display = 'none';
+        this._audioElement.crossOrigin = 'anonymous';
 
         document.body.appendChild(this._audioElement);
 
@@ -252,6 +250,7 @@ export class PlayerAudio {
     private playEvent() {
         this.state = PlayerState.PLAYING;
         this.parent.emit('play-internal', this._audioElement);
+        this._initializeContext();
         if (!this.isFading) {
             this.parent.emit('play', this._audioElement);
         }
@@ -446,5 +445,68 @@ export class PlayerAudio {
             'seeked',
             this.seekedEvent.bind(this)
         );
+    }
+
+    private createFilter(frequency: number, type: BiquadFilterType) {
+        const filter = this.context!.createBiquadFilter();
+        filter.frequency.value = frequency;
+        filter.type = type;
+        filter.gain.value = 0;
+        return filter;
+    }
+
+    private _initializeContext(): void {
+
+        if (!this.context && localStorage.getItem('supports-audio-context') === 'true') {
+            try {
+                // @ts-ignore
+                this.context = new (window.AudioContext || window.webkitAudioContext)();
+                this.preGain = this.context.createGain();
+                this.filters = bands.value
+                    .slice(1)
+                    .map(band =>
+                        this.createFilter(band.frequency as number, 'peaking'));
+                this.panner = this.context.createStereoPanner();
+
+                const track1 = this.context
+                    .createMediaElementSource(this._audioElement);
+                track1.connect(this.preGain);
+
+                this.filters
+                    .reduce((prev, curr) => (prev.connect(curr), curr), this.preGain)
+                    .connect(this.panner)
+                    .connect(this.context.destination);
+
+                // @ts-ignore internal event
+                this.parent.on('setPreGain', (gain: number) => {
+                    this.preGain!.gain.value = gain;
+                });
+
+                // @ts-ignore internal event
+                this.parent.on('setPanner', (pan: number) => {
+                    this.panner!.pan.value = pan;
+                });
+
+                // @ts-ignore internal event
+                this.parent.on('setFilter', (band: Band) => {
+                    const index = bands.value.findIndex(b => b.frequency === band.frequency);
+                    this.filters[index - 1].gain.value = band.gain;
+                });
+
+                loadEqualizerSettings();
+
+            } catch (e) {
+                console.error('Failed to create AudioContext:', e);
+                return;
+            }
+        }
+
+        if (this.context && this.context.state === 'suspended') {
+            this.context.resume().then(() => {
+                console.log('AudioContext resumed');
+            }).catch(e => {
+                console.error('Failed to resume AudioContext:', e);
+            });
+        }
     }
 }

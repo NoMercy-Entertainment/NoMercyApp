@@ -1,11 +1,22 @@
 <script setup lang="ts">
-
+import {computed} from 'vue';
 import {folder, home1, noteEighthPair, searchMagnifyingGlass} from '@Icons/index';
 import {IonIcon, IonLabel, IonTabBar, IonTabButton} from '@ionic/vue';
 
+import {user} from '@/store/user';
 import {closeMenu, menuOpen, toggleMenu} from '@/store/profileMenu';
 
 import NoMercyAvatar from '@/components/Images/NoMercyAvatar.vue';
+import {useRoute} from 'vue-router';
+
+const route = useRoute();
+
+const searchUrl = computed(() => {
+  if (route.path.includes('/music')) {
+    return '/music/search';
+  }
+  return '/search';
+});
 
 </script>
 
@@ -15,8 +26,8 @@ import NoMercyAvatar from '@/components/Images/NoMercyAvatar.vue';
       mode="ios"
       selected-tab="home"
       :class="{
-        ' bg-sand-light-1 dark:bg-slate-dark-3 hide-bg': menuOpen,
-        'bg-sand-light-1 dark:bg-slate-dark-3': !menuOpen
+        ' bg-sand-light-1 dark:bg-slate-dark-3 hide-bg pl-4': menuOpen,
+        'bg-sand-light-1 dark:bg-slate-dark-3 pl-4': !menuOpen
      }"
   >
 
@@ -25,7 +36,7 @@ import NoMercyAvatar from '@/components/Images/NoMercyAvatar.vue';
       <ion-label>{{ $t('Home') }}</ion-label>
     </ion-tab-button>
 
-    <ion-tab-button tab="search" href="/search" @click="closeMenu()">
+    <ion-tab-button tab="search" :href="searchUrl" @click="closeMenu()">
       <ion-icon aria-hidden="true" :icon="searchMagnifyingGlass"/>
       <ion-label>{{ $t('Search') }}</ion-label>
     </ion-tab-button >
@@ -41,8 +52,8 @@ import NoMercyAvatar from '@/components/Images/NoMercyAvatar.vue';
     </ion-tab-button>
 
     <ion-tab-button @click="toggleMenu()" :class="{'tab-selected': menuOpen}">
-      <div class="relative mx-auto flex flex-col rounded-full size-10 my-1">
-        <NoMercyAvatar :user="$keycloak.tokenParsed" :size="40" class="absolute"/>
+      <div class="relative mx-auto flex flex-col rounded-full size-12 mt-1.5">
+        <NoMercyAvatar :user="user" :size="52" class="absolute"/>
         <span
             class="absolute rounded-full border-white bg-green-600 size-[25%] bottom-[5%] end-[5%] border-[0.125rem] dark:border-stone-900">
         </span>
@@ -72,7 +83,7 @@ ion-tab-button ion-icon {
 }
 
 ion-tab-button ion-label {
-  @apply text-slate-dark-1 dark:text-slate-light-1 overflow-visible mb-1 mt-0 text-base;
+  @apply text-slate-dark-1 dark:text-slate-light-1 overflow-visible mb-1 mt-0 text-2xs;
 }
 
 .tab-selected ion-icon {
@@ -80,12 +91,24 @@ ion-tab-button ion-label {
 }
 
 .tab-selected ion-avatar:after {
-  @apply content-[''] -z-10 absolute w-[2.75rem] h-[2.75rem] inset-[-2px_-2px] justify-center items-center rounded-full  bg-gradient-to-b from-violet-dark-10 to-violet-dark-12 dark:from-violet-dark-6 dark:to-violet-dark-8;
+  @apply content-[''] -z-10 absolute w-[2.75rem] h-[2.75rem] inset-[4px_5px] justify-center items-center rounded-full bg-focus
+  shadow-none
+  dark:shadow-none
+  hover:shadow-none
+  dark:hover:shadow-none
+  active:shadow-none
+  active:dark:shadow-none;
   box-shadow: 0 -1px 3px 0 rgba(0, 0, 0, 0.08) inset, 0 -1px 2px 0 rgba(0, 0, 0, 0.16) inset, 0 1px 0 0 rgba(255, 255, 255, 0.25) inset, 0 1px 1px 0 rgba(255, 255, 255, 0.45) inset;
 }
 
 ion-tab-bar:not(.hide-bg) .tab-selected ion-icon:after {
-  @apply content-[''] -z-10 absolute w-[2.75rem] h-[2.75rem] inset-[4px_5px] justify-center items-center rounded-full  bg-gradient-to-b from-violet-dark-10 to-violet-dark-12 dark:from-violet-dark-6 dark:to-violet-dark-8;
+  @apply content-[''] -z-10 absolute w-[2.75rem] h-[2.75rem] inset-[4px_5px] justify-center items-center rounded-full bg-focus dark:brightness-[0.6]
+  shadow-none
+  dark:shadow-none
+  hover:shadow-none
+  dark:hover:shadow-none
+  active:shadow-none
+  active:dark:shadow-none;
   box-shadow: 0 -1px 3px 0 rgba(0, 0, 0, 0.08) inset, 0 -1px 2px 0 rgba(0, 0, 0, 0.16) inset, 0 1px 0 0 rgba(255, 255, 255, 0.25) inset, 0 1px 1px 0 rgba(255, 255, 255, 0.45) inset;
 }
 

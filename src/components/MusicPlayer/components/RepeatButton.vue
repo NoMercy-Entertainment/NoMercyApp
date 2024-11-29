@@ -19,6 +19,7 @@ const {state, next, go} = useCycleList<'off' | 'one' | 'all'>([
 ]);
 
 onMounted(() => {
+  if (!audioPlayer.value?._repeat) return;
   go(states.indexOf(audioPlayer.value?._repeat));
 
 });

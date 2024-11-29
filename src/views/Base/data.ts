@@ -1,20 +1,10 @@
-import type { ContinueWatching, HomeItem, HomeResponse } from '@/types/api/base/home';
+import type {ContinueWatching, HomeItem, HomeResponse} from '@/types/api/base/home';
 
-import useServerClient from '@/lib/clients/useServerClient';
-import useInfiniteServerClient from '@/lib/clients/useInfiniteServerClient';
 import { shuffle } from '@/lib/stringArray';
-
-export const useCollectionData = <T>(props?: any) => useServerClient<T>({
-	limit: 10,
-	keepForever: true,
-	...props,
-});
-
-export const useHomeData = () => useInfiniteServerClient<{ data: HomeResponse[] }>({
-	path: '/',
-	queryKey: ['home'],
-	limit: 3,
-});
+import {InfiniteData} from '@tanstack/vue-query';
+import {MobileLibrariesResponseItem} from '@/types/api/base/libraries';
+import {LibraryResponse} from '@/types/api/base/library';
+import useServerClient from '@/lib/clients/useServerClient';
 
 export const useContinueWatchingData = () => useServerClient<ContinueWatching[]>({
 	path: 'userdata/continue',
@@ -22,10 +12,21 @@ export const useContinueWatchingData = () => useServerClient<ContinueWatching[]>
 	refetchInterval: 1000 * 60 * 5,
 });
 
-export const getHomeItem = (data: ReturnType<typeof useHomeData>['data']['value']): HomeItem | undefined => {
+export const getHomeItem = (data:  InfiniteData<{ data: HomeResponse[] }, unknown>): HomeItem | undefined => {
 	if (data?.pages) {
 		const page = shuffle([...data.pages]);
 		const items = shuffle([...page[0]?.data ?? []])
+			.filter(item => item.items.length > 0);
+		const item = shuffle([...items[0]?.items ?? []]
+			.filter(item => item && item?.backdrop));
+
+		return item[0];
+	}
+};
+
+export const getHomeItem2 = (data: MobileLibrariesResponseItem[] | undefined): LibraryResponse | undefined => {
+	if (data) {
+		const items = shuffle([...data])
 			.filter(item => item.items.length > 0);
 		const item = shuffle([...items[0]?.items ?? []]
 			.filter(item => item && item?.backdrop));

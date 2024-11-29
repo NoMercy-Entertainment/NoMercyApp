@@ -1,12 +1,12 @@
 <script setup lang="ts">
 import {onMounted, ref, watch} from 'vue';
 
-import type {Song} from '@/types/api/music/musicPlayer';
+import type {Song} from '@/types/musicPlayer';
 
 import serverClient from '@/lib/clients/serverClient';
 import {setTitle} from '@/lib/stringArray';
 import audioPlayer, {currentSong, musicSize, musicVisibility} from '@/store/audioPlayer';
-import currentServer from '@/store/currentServer';
+import {currentServer} from '@/store/currentServer';
 import sidebar from '@/store/sidebar';
 
 import CoverImage from '@/components/MusicPlayer/components/CoverImage.vue';
@@ -26,6 +26,7 @@ import VolumeContainer from './components/VolumeContainer.vue';
 import LyricsButton from './components/LyricsButton.vue';
 import {shouldMarquee} from '@/lib/utils';
 import Marquee from '@/components/Marquee.vue';
+import EqButton from "@/components/MusicPlayer/components/EqButton.vue";
 const dataAttribute = ref<any>();
 const shouldSubmitPlayback = ref(true);
 
@@ -137,7 +138,7 @@ const submitPlayback = async () => {
 <!--          </div>-->
           <div :data-size="musicSize"
                :key="currentSong.id"
-               class="mb-1 inline-flex h-5 gap-1 overflow-hidden whitespace-nowrap text-xs w-available line-clamp-1 hover-animate-pause">
+               class="inline-flex gap-1 overflow-hidden whitespace-nowrap text-xs w-available line-clamp-1 hover-animate-pause">
             <TrackLinks v-if="currentSong"
                         :id="currentSong.id"
                         :key="currentSong.id"
@@ -171,6 +172,8 @@ const submitPlayback = async () => {
            :data-size="musicSize">
 
         <StopButton/>
+
+        <EqButton />
 
         <LyricsButton/>
 

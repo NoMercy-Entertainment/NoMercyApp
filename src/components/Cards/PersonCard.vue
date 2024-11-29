@@ -5,8 +5,8 @@ import type {PersonResponseItem} from "@/types/api/base/person";
 import type {InfoCredit} from '@/types/api/base/info';
 
 import {pickPaletteColor} from "@/lib/colorHelper";
-import TMDBImage from '@/components/Images/TMDBImage.vue';
 
+import TMDBImage from '@/components/Images/TMDBImage.vue';
 
 const props = defineProps({
     data: {
@@ -37,7 +37,8 @@ const color = computed(() => {
 <template>
     <RouterLink
         :data-scroll="scrollLetter"
-        :to="`/person/${data?.id}`"
+        v-if="data?.link"
+        :to="data?.link"
         class="group/card border-0 border-focus focus-shift focus-outline transition-all duration-300 flex flex-col h-full items-center overflow-clip relative rounded-lg select-none shadow-[0px_0px_0_1px_rgb(var(--color-focus,var(--color-theme-6))/70%)] w-full z-0 bg-auto-50/70 aspect-poster flex-grow-0 [flex:1_1_162px]"
         :style="`
             --color-focus: ${color};
@@ -51,15 +52,15 @@ const color = computed(() => {
             :colorPalette="data?.color_palette?.profile"
             className="h-full overflow-clip children:overflow-clip rounded-lg children:rounded-lg"/>
         <div
-            class="absolute bottom-0 left-0 z-0 grid h-16 w-full items-stretch rounded-b-lg px-2 pt-2 pb-1">
-            <div class="absolute inset-0 z-0 rounded-b-lg bg-auto-1/60"></div>
-            <p class="z-10 w-auto flex-shrink-0 flex-grow-0 self-stretch text-sm font-bold leading-4 line-clamp-2  text-slate-lightA-12/70  dark:text-slate-darkA-12/80">
+            class="absolute bottom-0 left-0 z-0 grid h-16 w-full items-stretch rounded-b-lg px-2 pt-2 pb-1 text-left overflow-clip">
+            <div class="absolute inset-0 z-0 rounded-b-lg bg-auto-1/60 backdrop-blur-lg"></div>
+            <p class="z-10 text-2xs sm:text-sm font-bold leading-none sm:leading-4 h-7 sm:h-5 line-clamp-2 w-available text-slate-lightA-12/70  dark:text-slate-darkA-12/80">
                 {{ data?.name }}
 							<span v-if="data.deathday"
-										class="-mr-1 text-base leading-none">&#8224;</span>
+										class="-mr-1 text-xs sm:text-base leading-none sm:leading-4 h-7 sm:h-6">&#8224;</span>
             </p>
             <p :title="data?.character ?? data?.job as string"
-               class="z-10 w-auto flex-shrink-0 flex-grow-0 self-stretch text-xs font-semibold line-clamp-2 leading-[1.2] text-slate-lightA-12/60 dark:text-slate-darkA-12/70 empty:hidden dark:font-medium">
+               class="z-10 text-2xs sm:text-xs font-bold leading-none sm:leading-4 h-6 sm:h-9 line-clamp-2 w-available text-slate-lightA-12/60 dark:text-slate-darkA-12/70 empty:hidden dark:font-medium">
                 {{ data?.character ?? data?.job }}
             </p>
         </div>

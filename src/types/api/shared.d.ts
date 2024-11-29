@@ -61,6 +61,7 @@ export interface Crew {
 	year?: number;
 	character?: string;
 	order?: number;
+	link: string;
 }
 
 export interface Lolomo {

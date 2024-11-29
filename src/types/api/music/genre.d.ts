@@ -28,7 +28,7 @@ export interface Track {
 	blurHash: string | null;
 	Album: Album[];
 	Artist: Artist[];
-	type: Type;
+	type: string;
 	favorite_track: boolean;
 	artistId: string;
 	origin: string;

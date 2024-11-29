@@ -1,9 +1,11 @@
 <script setup lang="ts">
 
-import audioPlayer, {currentSong, queue, queueMenuOpen} from '@/store/audioPlayer';
+import audioPlayer, {currentPlaylist, currentSong, queue, queueMenuOpen} from '@/store/audioPlayer';
 import CoverImage from '@/components/Images/CoverImage.vue';
 import router from '@/router';
 import ScrollContainer from '@/Layout/Desktop/components/ScrollContainer.vue';
+import MoooomIcon from "@/components/Images/icons/MoooomIcon.vue";
+import {MoooomIcons} from "@Icons/icons";
 </script>
 
 <template>
@@ -16,10 +18,16 @@ import ScrollContainer from '@/Layout/Desktop/components/ScrollContainer.vue';
       <div id="queue_container" v-if="currentSong"
            class="flex w-full flex-col px-4 pt-4 pr-0 h-available overflow-clip">
 
-        <div class="flex w-full items-center justify-between p-2">
+        <div class="flex w-full items-center justify-between p-2 pr-6">
           <p class="text-lg font-semibold">
             {{ $t('Now Playing') }}
           </p>
+          <RouterLink v-if="currentPlaylist"
+                      :to="currentPlaylist"
+                      class="text-sm font-semibold flex gap-1 items-center hover:underline underline-offset-2">
+            <span>{{ $t('View Playlist') }}</span>
+            <MoooomIcon :icon="MoooomIcons.shareSquare" className="w-4 h-4"/>
+          </RouterLink>
         </div>
 
         <div
@@ -42,7 +50,7 @@ import ScrollContainer from '@/Layout/Desktop/components/ScrollContainer.vue';
                                     tabindex="0"
                                     @click="e => {
                                      e.stopPropagation();
-                                     router.push(`/music/artists/${currentSong?.artist_track?.[0]?.id ?? 'unknown'}`);
+                                     router.push(currentSong?.artist_track?.[0]?.link ?? '#');
                                    }">
                                     <span class="flex items-center gap-1 leading-none line-clamp-2">
                                         {{ currentSong?.artist_track?.[0]?.name }}
@@ -85,7 +93,7 @@ import ScrollContainer from '@/Layout/Desktop/components/ScrollContainer.vue';
                                             tabindex="0"
                                             @click="e => {
                                              e.stopPropagation();
-                                              router.push(`/music/artists/${song?.artist_track?.[0]?.id ?? 'unknown'}`);
+                                              router.push(song?.artist_track?.[0]?.link ?? '#');
                                            }"
                                         >
                                             <span class="flex items-center gap-1 leading-none line-clamp-2"

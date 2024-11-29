@@ -2,9 +2,9 @@
 import {computed, type PropType} from 'vue';
 
 import type {ArtistResponse} from '@/types/api/music/artist';
-import {Artist} from '@/types/api/music/artist';
-import {HomeDataItem, MusicHomeResponseItem} from '@/types/api/music';
-import type {Song} from '@/types/api/music/musicPlayer';
+import type {Artist} from '@/types/api/music/artist';
+import type {HomeDataItem, MusicHomeResponseItem} from '@/types/api/music';
+import type {Song} from '@/types/musicPlayer';
 
 import MusicCarousel from '@/components/Carousel/MusicCarousel.vue';
 import TabFrame from '@/views/Music/Artist/components/TabFrame.vue';
@@ -39,8 +39,8 @@ const artistCarousel = computed(() => {
   return [{
     title: 'Featuring artists',
     moreLink: '',
-    items: artists.value as HomeDataItem[],
-  }] as MusicHomeResponseItem[];
+    children: artists.value as unknown as any,
+  }];
 });
 
 const transformToBionic = (content: string) => {
@@ -87,7 +87,7 @@ const transformToBionic = (content: string) => {
 
       <div class="max-w-available">
         <template v-for="carousel in artistCarousel ?? []" :key="carousel.title">
-          <MusicCarousel :data="carousel" class="-mx-3" :limitCardCountBy="2"/>
+          <MusicCarousel :data="carousel as unknown as MusicHomeResponseItem<HomeDataItem>" class="-mx-3" :limitCardCountBy="2"/>
         </template>
       </div>
     </TabFrame>

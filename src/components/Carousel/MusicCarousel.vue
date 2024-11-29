@@ -9,7 +9,7 @@ import MusicCard from '@/components/Cards/MusicCard.vue';
 
 defineProps({
   data: {
-    type: Object as PropType<MusicHomeResponseItem> | undefined,
+    type: Object as PropType<MusicHomeResponseItem<HomeDataItem>> | undefined,
     required: true,
   },
   index: {
@@ -47,12 +47,14 @@ const handleClick = (item: HomeDataItem) => {
     </template>
 
     <swiper-slide v-for="item in data.items"
-                  class="flex py-1" :key="item.id"
+                  class="flex py-1" :key="item?.id"
                   :virtualIndex="index">
 
-      <MusicCard :data="item"
+      <MusicCard
+                v-if="item?.id"
+                :data="item"
                  class=""
-                 :id="`item-${item.name}-${item.id}`"
+                 :id="`item-${item?.name}-${item?.id}`"
                  :onclick="() => handleClick(item)"/>
     </swiper-slide>
   </Carousel>

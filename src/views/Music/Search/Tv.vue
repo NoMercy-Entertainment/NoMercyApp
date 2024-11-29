@@ -1,16 +1,27 @@
 <script setup lang="ts">
-import { IonPage, IonContent } from '@ionic/vue';
-import ExploreContainer from '@/components/ExploreContainer.vue';
-import NavBar from '@/Layout/Mobile/components/NavBar.vue';
-import router from '@/router';
+import {watch} from 'vue';
+import {IonPage, IonContent} from '@ionic/vue';
+import {musicSearchResult, musicSearchValue} from '@/store/search';
+
 </script>
 
 <template>
   <ion-page>
-    <NavBar :title="router.currentRoute.value.name as string" />
     <ion-content :fullscreen="true">
+      <div class="flex w-available m-4">
+        <InputText type="text" v-model="musicSearchValue" variant="filled" class="w-available" />
+      </div>
 
-      <ExploreContainer :name="`${router.currentRoute.value.name as string} Desktop page`" />
+      <template v-if="musicSearchResult">
+        <component
+            v-for="(render, index) in musicSearchResult ?? []"
+            :index="index"
+            :key="render.id"
+            :is="render.component"
+            v-bind="render.props"
+        />
+      </template>
+
     </ion-content>
   </ion-page>
 </template>

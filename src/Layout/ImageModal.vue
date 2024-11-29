@@ -9,12 +9,11 @@ import {
   showImageModal,
   showScreensaver
 } from '@/store/imageModal';
-import currentServer from '@/store/currentServer';
+import {currentServer} from '@/store/currentServer';
 import {pickPaletteColor} from '@/lib/colorHelper';
 import AppLogoSquare from '@/components/Images/icons/AppLogoSquare.vue';
 import MoooomIcon from '@/components/Images/icons/MoooomIcon.vue';
 import TMDBImage from '@/components/Images/TMDBImage.vue';
-
 
 const showButton = ref(false);
 const src = ref<string | null>();
@@ -50,12 +49,8 @@ watch(imageModalData, (data) => {
         .replace(/,/gu, ' ');
 
     timeout2.value = setTimeout(() => {
-      // if (!data.meta?.logo?.src) {
       logoSrc.value = undefined;
-      // 	return;
-      // }
       setTimeout(() => {
-        // logoSrc.value = `${imageBaseUrl.value}/original${data.meta?.logo?.src}`;
         logoSrc.value = data.meta?.logo?.src;
         logoAspect.value = data.meta?.logo?.aspectRatio || 1;
       }, 4000);
@@ -69,12 +64,8 @@ watch(imageModalData, (data) => {
           .replace(')', '')
           .replace(/,/gu, ' ');
 
-      // if (!data.meta?.logo?.src) {
       logoSrc.value = undefined;
-      //     return;
-      // }
       setTimeout(() => {
-        // logoSrc.value = `${imageBaseUrl.value}/original${data.meta?.logo?.src}`;
         logoSrc.value = data.meta?.logo?.src;
         logoAspect.value = data.meta?.logo?.aspectRatio || 1;
       }, 4000);
@@ -93,7 +84,6 @@ const handleClose = () => {
   setImageModalOpen(false);
   setImageModalData(null);
   src.value = null;
-  // setTemp(null);
 };
 
 const handleShowButtonToggle = () => {
@@ -135,11 +125,11 @@ onMounted(() => {
 <template>
   <Portal>
     <div id="imageModal"
-         v-if="(showImageModal || showScreensaver) && !disableScreensaver"
          class="fixed inset-0 w-full z-[999999999] bg-auto-4 dark:bg-auto-9"
          :class="(showImageModal || showScreensaver) && !disableScreensaver ? '' : 'hidden pointer-events-none'"
          @click="handleClick">
       <div ref="overlayRef"
+           v-if="(showImageModal || showScreensaver) && !disableScreensaver"
            :style="`--delay: ${showScreensaver ? '2400ms' : '400ms'}`"
            class="pointer-events-none absolute inset-0 bg-black w-available h-available z-999 transitioning-slower"></div>
       <div
@@ -166,9 +156,9 @@ onMounted(() => {
         <div
             class="absolute inset-2 tv:inset-20 z-0 m-auto h-auto overflow-clip rounded-xl bg-cover bg-center bg-no-repeat shadow-img max-w-[82vw] max-h-[83vh] md:inset-24"
             :style="`background-image: url(${src}); aspect-ratio: ${imageModalData?.aspectRatio}; box-shadow: 0 0 800px 80px rgba(0,0,0,.2) inset;`">
-          <div class="absolute tv:bottom-2 left-2 tv:left-4 z-0 p-4 bottom:2 sm:bottom-6 sm:left-8">
+          <div class="absolute left-0 z-0 p-4 bottom:2 sm:bottom-6 sm:left-8 tv:bottom-4 tv:left-6">
             <div
-                class="pointer-events-none flex h-full w-full select-none items-start justify-start bg-cover min-h-[20vh] max-h-[20vh] min-w-[30vw] max-w-[30vw] tv:min-h-[20vh] tv:max-h-[20vh] tv:min-w-[40vw] tv:max-w-[40vw]">
+                class="pointer-events-none flex h-full w-full select-none items-start justify-start bg-cover min-h-[20vh] max-h-[20vh] min-w-[30vw] max-w-[30vw] tv:min-h-[15vh] tv:max-h-[15vh] tv:min-w-[30vw] tv:max-w-[30vw]">
               <TMDBImage
                   v-if="logoSrc"
                   :key="logoSrc"
@@ -177,7 +167,7 @@ onMounted(() => {
                   :shadow="logoColor"
                   :size="500"
                   class="w-auto object-contain h-available object-[0_0%] max-h-inherit !duration-700 children:!duration-700"
-                  className="mr-auto p-4 !duration-700 children:!duration-700"
+                  className="relative h-auto w-auto self-start px-4 py-4 !items-start"
                   type="logo"/>
             </div>
           </div>
@@ -190,7 +180,7 @@ onMounted(() => {
                   data-state="closed"
                   class="z-0 flex h-10 w-10 items-center justify-center min-w-[2.5rem] min-h-[2.5rem]"
                   style="opacity: 0.3;">
-            <MoooomIcon icon="arrowRight" class="h-8 w-8 rotate-180 text-white/10"/>
+            <MoooomIcon icon="arrowLeft" class="h-8 w-8 text-white/10"/>
           </button>
           <button aria-hidden="true"
                   tabindex="-1"
@@ -198,7 +188,7 @@ onMounted(() => {
                   class="z-0 flex h-10 w-10 items-center justify-center transitioning min-w-[2.5rem] min-h-[2.5rem]"
                   style="opacity: 0.3;">
 
-            <MoooomIcon icon="arrowLeft" class="h-8 w-8 text-white/10"/>
+            <MoooomIcon icon="arrowRight" class="h-8 w-8 text-white/10"/>
           </button>
         </div>
         <div class="absolute right-6 bottom-3 z-0 tv:h-12 h-20 tv:w-12 w-20 tv:right-3.5"

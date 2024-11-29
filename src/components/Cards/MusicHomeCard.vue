@@ -23,7 +23,7 @@ const ringColor = ref(pickPaletteColor(props.data?.color_palette?.cover)
 
 <template>
     <RouterLink v-if="data?.type !== 'playlists'"
-                :to="`/music/${data?.type?.replace(/s$/u, '')}/${data?.id}`"
+                :to="data?.link"
           :style="`
             --color-focus: ${ringColor};
           `"
@@ -49,7 +49,7 @@ const ringColor = ref(pickPaletteColor(props.data?.color_palette?.cover)
         </div>
     </RouterLink>
     <RouterLink v-else-if="data?.type == 'playlists'"
-                :to="`/music/${data?.type?.replace(/s$/u, '')}/${data?.id}`"
+                :to="data?.link"
          :style="`--color-focus: ${ringColor}`"
                 class="relative flex flex-grow items-center justify-start gap-4 overflow-clip rounded-2xl p-1.5 bg-slate-light-9 dark:bg-slate-dark-4 group/musicCard"
 >

@@ -1,7 +1,6 @@
 <script lang="ts" setup>
 import {computed, type PropType, ref} from 'vue';
 import {SwiperSlide} from 'swiper/vue';
-import {MenuItem} from 'primevue/menuitem';
 
 import type {KnownFor} from '@/types/api/base/person';
 import type {InfoResponse} from '@/types/api/base/info';
@@ -9,6 +8,7 @@ import type {Collection} from '@/types/api/base/collection';
 import type {ContinueWatching, HomeItem} from '@/types/api/base/home';
 import type {LibraryResponse} from '@/types/api/base/library';
 import type {ColorPalettes} from '@/types/api/shared';
+import type {MenuItem} from 'primevue/menuitem';
 
 import {setTitle} from '@/lib/stringArray';
 import {setBackground, setColorPalette, setPoster} from '@/store/ui';

@@ -4,7 +4,7 @@ import {PropType, ref} from 'vue';
 import {InvalidateQueryFilters, useQueryClient} from '@tanstack/vue-query';
 
 import type {InfoResponse} from '@/types/api/base/info';
-import type {DisplayList, Song} from "@/types/api/music/musicPlayer";
+import type {Song} from "@/types/musicPlayer";
 import type {Collection, CollectionResponse} from "@/types/api/base/collection";
 import type {ContinueWatching, HomeItem} from "@/types/api/base/home";
 import type {LibraryResponse, StatusResponse} from '@/types/api/base/library';
@@ -16,6 +16,8 @@ import serverClient from '@/lib/clients/serverClient';
 
 import BannerButton from '@/components/Buttons/BannerButton.vue';
 import MoooomIcon from '@/components/Images/icons/MoooomIcon.vue';
+import {DisplayList} from '@/types/api/music/musicPlayer';
+import {queryKey} from "@/lib/routerHelper";
 
 
 const props = defineProps({
@@ -42,21 +44,6 @@ const query = useQueryClient();
 
 const liked = ref(props.data?.favorite);
 
-const queryKey = (): InvalidateQueryFilters => {
-	const props2: string[] = [];
-
-	router.currentRoute.value.fullPath?.split('/').slice(1).forEach(p => {
-		if (p.includes('?')) {
-			props2.push(p.split('?')[0]);
-			props2.push(p.split('?')[1].split('=')[1]);
-		} else {
-			props2.push(p);
-		}
-	});
-
-	return props2 as InvalidateQueryFilters;
-};
-
 const handleLike = (e: Event) => {
 	e.stopPropagation();
 	serverClient()
@@ -64,7 +51,7 @@ const handleLike = (e: Event) => {
 			value: !liked.value,
 		})
 		.then(({data}) => {
-			liked.value = data.args?.[0] == 'liked';
+			liked.value = data.args?.[0] == 'liked' || data.args?.[1] == 'liked';
 			// showNotification({
 			// 	title: translate(data.message, ...data.args ?? []),
 			// 	type: data.status == 'ok'
@@ -74,7 +61,9 @@ const handleLike = (e: Event) => {
 			// 	duration: 2000,
 			// });
 
-			query.invalidateQueries(queryKey());
+			query.invalidateQueries({
+        queryKey: queryKey(),
+      });
 		});
 };
 

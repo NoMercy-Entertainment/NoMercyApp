@@ -4,9 +4,10 @@ import {onMounted, type PropType, ref, watch} from 'vue';
 import type {HomeDataItem} from '@/types/api/music';
 import type {Artist, ArtistResponse, Featured} from '@/types/api/music/artist';
 import type {Album, AlbumResponse,} from '@/types/api/music/album';
-import type {DisplayList, MusicCardPageResponseData, Song} from '@/types/api/music/musicPlayer';
+import type {DisplayList, MusicCardPageResponseData} from '@/types/api/music/musicPlayer';
+import type {Song} from '@/types/musicPlayer';
 
-import currentServer from '@/store/currentServer';
+import {currentServer} from '@/store/currentServer';
 
 import AppLogoSquare from '@/components/Images/icons/AppLogoSquare.vue';
 
@@ -98,7 +99,7 @@ const onClick = () => {
 </script>
 
 <template>
-  <div v-if="data" :class="`${className} aspect-square relative z-0`"
+  <div v-if="data" :class="`${className} aspect-square relative z-0 overflow-clip`"
        :style="{
                  backgroundImage: `
                         radial-gradient(
@@ -126,7 +127,7 @@ const onClick = () => {
              }">
 
     <picture v-if="source"
-             class="aspect-square !absolute top-0 overflow-clip z-10 h-available w-available object-cover">
+             class="aspect-square !absolute inset-0 overflow-clip z-10 h-available w-available object-cover">
       <source
           :srcset="`${source}?width=${(size ?? 500)}&type=avif 1x`"
           type="image/avif"
@@ -144,7 +145,7 @@ const onClick = () => {
       <img :src="`${source}`"
            :alt="`tmdb image for ${data.name ?? 'image'}`"
            :id="id"
-           class="aspect-square !absolute top-0 overflow-clip z-10 h-available w-available object-cover"
+           class="aspect-square !absolute inset-0 overflow-clip z-10 h-available w-available object-cover"
            :loading="loading"
            crossorigin="anonymous"
            :data-id="data?.id"

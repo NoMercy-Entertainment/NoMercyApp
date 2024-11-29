@@ -1,22 +1,21 @@
 <script setup lang="ts">
 import {onMounted, onUnmounted, ref, watch} from 'vue';
 import {useRouter} from 'vue-router';
-import {IonPage, IonContent} from '@ionic/vue';
+import {IonContent, IonPage, onIonViewWillEnter, onIonViewWillLeave} from '@ionic/vue';
 
 import type {ScrollCustomEvent} from '@ionic/core/dist/types/components/content/content-interface';
-import type {DisplayList, Song} from '@/types/api/music/musicPlayer';
-import {SortOrder, SortType} from '@/types/musicPlayer';
+import type {DisplayList} from '@/types/api/music/musicPlayer';
+
+import {Song, SortOrder, SortType} from '@/types/musicPlayer';
 
 import useServerClient from '@/lib/clients/useServerClient';
-import {setTitle, sortByType} from '@/lib/stringArray';
+import {breakTitle2, setTitle, sortByType} from '@/lib/stringArray';
 import {setColorPalette, setSortOrder, sortOrder, sortType} from '@/store/ui';
-import {audioPlayer, currentSong} from '@/store/audioPlayer';
 
 import ControlHeader from '@/views/Music/List/components/ControlHeader.vue';
 import ArtistHeader from '@/views/Music/List/components/ArtistHeader.vue';
 import SortHeader from '@/views/Music/List/components/SortHeader.vue';
 import TrackRow from '@/views/Music/List/components/TrackRow.vue';
-import NavBar from '@/Layout/Mobile/components/NavBar.vue';
 import MoooomIcon from '@/components/Images/icons/MoooomIcon.vue';
 
 const router = useRouter();
@@ -37,11 +36,6 @@ watch(data, (value) => {
   sort(value?.tracks ?? [], sortType.value, sortOrder.value, filter.value);
 
   setColorPalette(value?.color_palette?.cover);
-
-  const match = data.value?.tracks?.find((t: Song) => t.id == currentSong.value?.id);
-  if (match) {
-    audioPlayer.value?.playTrack(match);
-  }
 });
 
 watch(sortOrder, (value) => {
@@ -69,101 +63,38 @@ const sort = (songs: Song[], sortType: SortType, sortOrder: SortOrder, value: st
   }
 };
 
-onMounted(() => {
+onIonViewWillEnter(() => {
   sort(data?.value?.tracks ?? [], sortType.value, sortOrder.value, filter.value);
   setColorPalette(data.value?.color_palette?.cover);
 });
 
-onUnmounted(() => {
+onIonViewWillLeave(() => {
   setColorPalette(null);
 });
 
-const items = ref([
-  {
-    label: 'Add to playlist',
-    icon: 'mooooom-add',
-    items: [
-      {
-        label: 'New Playlist',
-        icon: 'mooooom-add',
-      },
-      {
-        label: 'Existing Playlist',
-        icon: 'pi pi-pause'
-      }
-    ]
-  },
-  {
-    label: 'Save to your Liked Songs',
-    icon: 'mooooom-add-circle',
-    command: () => {
-      alert(selectedCard.value?.id);
-    }
-  },
-  {
-    label: 'Add to Queue',
-    icon: 'mooooom-add-circle',
-    command: () => {
-      alert(selectedCard.value?.id);
-    }
-  },
-  {
-    separator: true
-  },
-  {
-    label: 'Go to Album',
-    icon: 'pi pi-volume-up',
-  },
-  {
-    label: 'Go to Artist',
-    icon: 'pi pi-volume-up',
-  },
-  {
-    label: 'Share',
-    icon: 'pi pi-print',
-    items: [
-      {
-        label: 'Facebook',
-        icon: 'pi pi-caret-right'
-      },
-      {
-        label: 'Twitter',
-        icon: 'pi pi-pause'
-      }
-    ]
-  }
-]);
-
-const selectedCard = ref<Song>();
-const cardMenu = ref();
-
-const onRightClick = (event: Event, data: Song) => {
-  selectedCard.value = data;
-  cardMenu.value.show(event);
-};
-
 const handleBack = () => {
   window.history.back();
-}
+};
 
 const showScrollHeader = ref(false);
 const showScrollHeaderText = ref(false);
 const sortHeader = ref<VueDivElement>();
 
 const onScroll = (e: ScrollCustomEvent) => {
-  const headerScrollTop = 250;
-  const headerScrollTextTop = 270;
+  console.log(sortHeader.value?.$el?.getBoundingClientRect().top);
+  const headerScrollTop = 290;
+  const headerScrollTextTop = 310;
   const sortHeaderTop = 88;
 
-  showScrollHeader.value = e.detail?.scrollTop > headerScrollTop;
-  showScrollHeaderText.value = e.detail?.scrollTop > headerScrollTextTop;
+  showScrollHeader.value = e.detail?.scrollTop >= headerScrollTop;
+  showScrollHeaderText.value = e.detail?.scrollTop >= headerScrollTextTop;
 
   if (sortHeader.value?.$el?.getBoundingClientRect().top == sortHeaderTop) {
     sortHeader.value?.$el?.classList.add('!bg-focus');
-    sortHeader.value?.$el?.firstChild?.classList.add('!bg-black/50');
+    sortHeader.value?.$el?.firstChild?.classList.add('!bg-slate-light-10/11', 'dark:!bg-black/45');
   } else {
     sortHeader.value?.$el?.classList.remove('!bg-focus');
-    sortHeader.value?.$el?.firstChild?.classList.remove('!bg-black/50');
+    sortHeader.value?.$el?.firstChild?.classList.remove('!bg-slate-light-10/11', 'dark:!bg-black/45');
   }
 };
 
@@ -171,12 +102,11 @@ const onScroll = (e: ScrollCustomEvent) => {
 
 <template>
   <ion-page>
-    <NavBar />
-    <ion-content :fullscreen="true"  @ionScroll="onScroll" :scrollEvents="true">
+    <ion-content :fullscreen="true" @ionScroll="onScroll" :scrollEvents="true">
       <div
           v-if="!router.currentRoute.value.params.id || (router.currentRoute.value.params.id && data?.id == router.currentRoute.value.params.id)"
           ref="main"
-          class="flex flex-col overflow-x-clip w-available h-min sm:rounded-2xl"
+          class="flex flex-col overflow-x-clip w-available h-min sm:rounded-2xl -mt-safe-offset-12"
       >
         <ArtistHeader
             :data="data"
@@ -187,28 +117,28 @@ const onScroll = (e: ScrollCustomEvent) => {
           <div class="pointer-events-none absolute z-0 h-96 w-full bg-spotifyBottom bg-focus"></div>
 
           <div id="navbar"
-               class=" fixed z-1099 -mx-2 flex gap-4 p-2 px-4 w-available sm:hidden bg-focus top-0 pt-safe-offset-4 transition-opacity duration-300"
+               class=" fixed z-1099 -mx-2 flex gap-4 p-2 px-4 w-available sm:hidden bg-slate-light-11 dark:bg-slate-dark-1 top-0 pt-safe-offset-4 transition-opacity duration-300"
                :class="{
                   'opacity-0 pointer-events-none': !showScrollHeader,
                   'opacity-100 pointer-events-auto': showScrollHeader
                }"
           >
             <div id="navBg"
-                 class="z-20 absolute flex items-center inset-0 w-available h-full bg-focus transition-transform duration-300 bg-spotifyTop opacity-80 pointer-events-none">
+                 class="z-20 absolute flex items-center inset-0 w-available h-full bg-focus/12 dark:bg-focus transition-transform duration-300 bg-spotifyTop opacity-80 pointer-events-none">
             </div>
 
             <button @click="handleBack" class="z-30 flex h-10 w-12 items-center justify-center rounded-md">
-              <MoooomIcon icon="arrowLeft" />
+              <MoooomIcon icon="arrowLeft"/>
             </button>
 
             <div id="navText"
-                 class="pointer-events-none relative z-20 h-auto w-full self-center text-2xl font-bold leading-none transition-opacity duration-300"
+                 class="pointer-events-none whitespace-pre text-left relative z-20 h-auto line-clamp-2 w-full self-center text-xl font-bold leading-none transition-opacity duration-300"
                  :class="{
                   'opacity-0 pointer-events-none': !showScrollHeader,
                   'opacity-100 pointer-events-auto': showScrollHeader
                }"
+                 v-html="breakTitle2(data?.name ?? 'Songs you like')"
             >
-              {{ $t(data?.name ?? 'Songs you like') }}
             </div>
           </div>
 
@@ -219,8 +149,7 @@ const onScroll = (e: ScrollCustomEvent) => {
               @filter-change="(e: string) => filter = e"/>
 
           <div
-              class="flex flex-1 flex-shrink-0 flex-col items-start justify-start self-stretch bg-auto-1/95 flex-grow-1 gap-0.5 sm:p-4"
-          >
+              class="flex flex-1 flex-shrink-0 flex-col items-start justify-start self-stretch bg-slate-dark-12 dark:bg-transparent flex-grow-1 gap-0.5 sm:p-4">
             <SortHeader
                 ref="sortHeader"
                 :key="data?.id"/>
@@ -230,11 +159,9 @@ const onScroll = (e: ScrollCustomEvent) => {
                 :key="item.id"
                 :data="item"
                 :displayList="displayList"
-                @contextmenu="onRightClick($event, item)"
                 :index="index"/>
           </div>
         </div>
-        <!--          <ContextMenu ref="cardMenu" :model="items"/>-->
       </div>
     </ion-content>
   </ion-page>

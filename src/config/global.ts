@@ -2,11 +2,11 @@ import {computed, ref} from 'vue';
 import {isPlatform} from '@ionic/vue';
 import {useLocalStorage, useMediaQuery} from '@vueuse/core';
 import {MoooomIcons} from '@Icons/icons';
-
-export const imageBaseUrl = ref('https://image.tmdb.org/t/p');
+import {NameVal} from '@/types/api/dashboard/server';
 
 export const isTv = useMediaQuery('(width: 960px) and (height: 540px)');
-export const isMobile = useMediaQuery('(max-width: 800px) and (orientation: portrait), (max-height: 800px) and (orientation: landscape)');
+// export const isMobile = useMediaQuery('(max-width: 800px) and (orientation: portrait), (max-height: 800px) and (orientation: landscape)');
+export const isMobile = ref(isPlatform('mobile') || isPlatform('mobileweb'));
 
 const nativeOverride = useLocalStorage('nativeOverride', false);
 
@@ -16,13 +16,17 @@ export const dashboardCardGrid = ref('grid grid-cols-2 md:grid-cols-3 lg:grid-co
 export const dashboardBigCardGrid = ref('grid grid-cols-1 xl:grid-cols-3');
 export const dashboardColumnGrid = ref('grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4 2xl:grid-cols-6 5xl:grid-cols-10');
 
-export const isDarkMode = computed(() => {
-	const classList = (document.body.parentElement as HTMLElement).classList;
-	if (!classList.contains('scheme-dark') && !classList.contains('scheme-light')) {
-		return useMediaQuery('(prefers-color-scheme: dark)').value;
-	}
-	return classList.contains('scheme-dark');
-});
+export const isDarkMode = ref((document.body.parentElement as HTMLElement).classList.contains('scheme-dark'));
+
+// export const isDarkMode = computed(() => {
+// 	const classList = (document.body.parentElement as HTMLElement).classList;
+// 	if (!classList.contains('scheme-dark') && !classList.contains('scheme-light')) {
+// 		console.log('isDarkMode');
+// 		return useMediaQuery('(prefers-color-scheme: dark)').value;
+// 	}
+// 	console.log('classList', classList.contains('scheme-dark'));
+// 	return classList.contains('scheme-dark');
+// });
 
 export const genreColors = (title: string) => {
 	let bg;
@@ -172,3 +176,45 @@ export const genreColors = (title: string) => {
 	return {bg, iconBg, icon};
 };
 
+export const media_types: NameVal[] = [
+	{
+		title: 'Anime',
+		value: 'anime',
+	},
+	{
+		title: 'Movie',
+		value: 'movie',
+	},
+	{
+		title: 'TV Show',
+		value: 'tv',
+	},
+	{
+		title: 'Music',
+		value: 'music',
+	},
+	{
+		title: 'Images',
+		value: 'image',
+	},
+	{
+		title: 'Audio Books',
+		value: 'audiobook',
+	},
+];
+
+export const greetingValue = computed(() => {
+	const now = new Date().getHours();
+
+	switch (true) {
+		case (now >= 6 && now < 12):
+			return 'Morning!';
+		case (now >= 12 && now < 16):
+			return 'Afternoon!';
+		case (now >= 16 && now < 20):
+			return 'Evening!';
+		case (now >= 20 || now < 6):
+			return 'Night!';
+	}
+	return 'Day!';
+});

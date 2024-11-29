@@ -1,17 +1,18 @@
 import serverClient from '../clients/serverClient';
-import currentServer from '@/store/currentServer';
+import {currentServer} from '@/store/currentServer';
 import libraries, {setLibraries} from '@/store/Libraries';
 
 import type {LibrariesResponse} from '@/types/api/base/library';
-import router from '@/router';
+import {setupComplete} from '@/store/ui';
 
 const getLibraries = (): Promise<void> => new Promise((resolve, reject) => {
-	if (!currentServer.value) {
-		router.push('/setup/select-servers').then();
+
+	if (libraries.value.length > 0) {
+		resolve();
 		return;
 	}
 
-	if (libraries.value.length > 0) {
+	if (!currentServer.value) {
 		resolve();
 		return;
 	}
@@ -20,7 +21,7 @@ const getLibraries = (): Promise<void> => new Promise((resolve, reject) => {
 		.get<{ data: LibrariesResponse[] }>('/libraries')
 		.then(({data}) => {
 			setLibraries(data.data);
-
+			setupComplete.value = true;
 			resolve();
 		})
 		.catch((error) => {

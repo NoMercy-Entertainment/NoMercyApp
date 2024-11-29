@@ -1,30 +1,37 @@
 <script setup lang="ts">
 import { IonPage, IonContent } from '@ionic/vue';
 
-import type {MusicHomeResponseItem} from '@/types/api/music';
+import type {HomeDataItem} from '@/types/api/music';
+import type {Component} from '@/lib/routerHelper';
 
 import useServerClient from '@/lib/clients/useServerClient';
 
-import NavBar from '@/Layout/Mobile/components/NavBar.vue';
-import MusicCarousel from '@/components/Carousel/MusicCarousel.vue';
+import {onMounted} from 'vue';
+import {setColorPalette} from '@/store/ui';
 
-const {data} = useServerClient<MusicHomeResponseItem[]>({
-  path: '/music',
+const {data} = useServerClient<Component<HomeDataItem>[]>({
   queryKey: ['music', 'home']
+});
+
+onMounted(() => {
+  setColorPalette(null);
 });
 
 </script>
 
 <template>
   <ion-page>
-    <NavBar />
     <ion-content :fullscreen="true">
-      <div class="z-0 flex h-auto flex-col gap-4 p-3 w-available pt-safe-offset-4 pb-safe-offset-10">
-        <MusicCarousel :data="carousel"
-                       v-for="carousel in data?.filter(d => d.title != 'recent' && d.title != null) ?? []"
-                       :key="carousel.title"
-                       class="-mx-3"/>
-      </div>
+      <template v-if="data">
+        <template v-for="(render, index) in data ?? []" :key="render.id">
+          <component
+              v-if="render.component"
+              :index="index"
+              :is="render.component"
+              v-bind="render.props"
+          />
+        </template>
+      </template>
     </ion-content>
   </ion-page>
 </template>

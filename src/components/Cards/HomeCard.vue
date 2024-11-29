@@ -1,74 +1,46 @@
 <script lang="ts" setup>
-import {nextTick, onBeforeMount, onMounted, ref, toRaw, watch} from 'vue';
-import type {HomeItem} from '@/types/api/base/home';
+import {computed, PropType, ref, watch} from 'vue';
 
 import i18next from '@/config/i18next';
 import {isMobile} from '@/config/global';
 import {breakLogoTitle} from '@/lib/stringArray';
 import {pickPaletteColor} from '@/lib/colorHelper';
 
-import {getHomeItem, useHomeData} from '@/views/Base/data';
-
 import TMDBImage from '@/components/Images/TMDBImage.vue';
 import MediaLikeButton from '@/components/Buttons/MediaLikeButton.vue';
 import MoooomIcon from '@/components/Images/icons/MoooomIcon.vue';
 import BannerButton from '@/components/Buttons/BannerButton.vue';
+import {LibraryResponse} from '@/types/api/base/library';
+import {setColorPalette} from '@/store/ui';
 
-const {data} = useHomeData();
-
-const homeItem = ref<HomeItem>();
+const props = defineProps({
+  homeItem: {
+    type: Object as PropType<LibraryResponse | undefined>,
+    required: true,
+  },
+});
 
 const hasWatched = ref(false);
 const endTime = ref<string | 0 | null | undefined>(null);
 
-const ringPosterColor = ref(pickPaletteColor(homeItem?.value?.color_palette?.poster)
+const ringPosterColor = computed(() => pickPaletteColor(props.homeItem?.color_palette?.poster)
     ?.replace('rgb(', '')
     .replace(')', '')
     .replace(/,/gu, ' ') ?? 'var(--color-primary)');
 
-const ringBackdropColor = ref(pickPaletteColor(homeItem?.value?.color_palette?.backdrop)
+const ringBackdropColor =  computed(() => pickPaletteColor(props.homeItem?.color_palette?.backdrop)
     ?.replace('rgb(', '')
     .replace(')', '')
     .replace(/,/gu, ' ') ?? 'var(--color-primary)');
 
-onBeforeMount(() => {
-  nextTick(() => {
-    document.dispatchEvent(new Event('indexer'));
-  });
-});
+watch(props, (value) => {
+  if (!value.homeItem) return;
 
-onMounted(() => {
-  if (!data.value) return;
+  if (value.homeItem.color_palette) {
+    setColorPalette(value.homeItem?.color_palette?.poster);
+  }
 
-  homeItem.value = toRaw(getHomeItem(data.value));
-  ringPosterColor.value = pickPaletteColor(homeItem?.value?.color_palette?.poster)
-      ?.replace('rgb(', '')
-      .replace(')', '')
-      .replace(/,/gu, ' ') ?? 'var(--color-primary)';
-
-  ringBackdropColor.value = pickPaletteColor(homeItem?.value?.color_palette?.backdrop)
-      ?.replace('rgb(', '')
-      .replace(')', '')
-      .replace(/,/gu, ' ') ?? 'var(--color-primary)';
-
-});
-
-watch(data, (value) => {
-  if (homeItem.value) return;
-
-  homeItem.value = toRaw(getHomeItem(value));
-
-  ringPosterColor.value = pickPaletteColor(homeItem?.value?.color_palette?.poster)
-      ?.replace('rgb(', '')
-      .replace(')', '')
-      .replace(/,/gu, ' ') ?? 'var(--color-primary)';
-
-  ringBackdropColor.value = pickPaletteColor(homeItem?.value?.color_palette?.backdrop)
-      ?.replace('rgb(', '')
-      .replace(')', '')
-      .replace(/,/gu, ' ') ?? 'var(--color-primary)';
-
-  endTime.value = homeItem.value?.duration && new Date(new Date().getTime() + (homeItem.value?.duration * 60 * 1000)).toLocaleTimeString(i18next.language, {
+  endTime.value = value.homeItem?.duration && new Date(new Date().getTime() + (value.homeItem?.duration * 60 * 1000)).toLocaleTimeString(i18next.language, {
     hour: '2-digit',
     minute: '2-digit',
   });
@@ -82,7 +54,7 @@ const toggleWatched = () => {
 
 <template>
   <div data-scroll v-if="!isMobile"
-       class="scheme-dark relative m-4 mt-0 sm:mt-4 flex flex-shrink-0 flex-grow-0 items-end justify-start gap-4 self-stretch overflow-clip rounded-2xl bg-black/5 p-4 text-auto-12 h-[65vh] sm:flex-col">
+       class="scheme-dark relative m-4 mt-0 sm:mt-4 flex flex-shrink-0 flex-grow-0 items-end justify-start gap-4 self-stretch overflow-clip rounded-2xl bg-black/5   p-4 text-auto-12 h-[65vh] sm:flex-col">
 
     <TMDBImage
         v-if="homeItem && !isMobile"
@@ -121,12 +93,11 @@ const toggleWatched = () => {
 
               <TMDBImage
                   v-if="homeItem"
-                  :colorPalette="homeItem?.color_palette?.backdrop"
                   :path="homeItem?.logo"
                   :title="homeItem?.title"
                   :width="500"
                   class="relative mr-4 justify-end translate-y-[5%]"
-                  className="relative h-auto w-auto self-start px-4 py-4"
+                  className="relative h-auto w-auto self-start px-4 py-4 !items-start"
                   loading="eager"
                   type="logo">
               </TMDBImage>
@@ -197,7 +168,7 @@ const toggleWatched = () => {
        class="flex h-auto w-full flex-shrink-0 flex-grow-0 items-start justify-start gap-2 self-stretch overflow-hidden p-6 pb-0 aspect-poster -mb-6"
   >
     <div
-        class="relative flex h-auto w-full flex-grow flex-col items-center justify-end overflow-hidden rounded-lg bg-cover bg-center bg-no-repeat aspect-poster"
+        class="relative flex h-auto w-full flex-grow flex-col items-center justify-end overflow-hidden rounded-lg bg-cover bg-center bg-no-repeat aspect-poster bg-focus"
         style="box-shadow: 0 8px 24px 0 rgba(0,0,0,0.08);"
     >
       <TMDBImage
@@ -469,7 +440,7 @@ const toggleWatched = () => {
           </RouterLink>
           <button
               @click="toggleWatched"
-              class="flex justify-center items-center flex-grow h-10 relative overflow-hidden gap-3 px-6 py-4 rounded-lg bg-[#e5f2fe]/[0.26] backdrop-blur-[50px] mix-blend-screen"
+              class="flex justify-center items-center flex-grow h-10 relative overflow-hidden gap-3 px-6 py-4 rounded-lg bg-black/5   backdrop-blur-[50px] mix-blend-screen"
           >
             <MoooomIcon icon="addCircle" className="w-6"/>
             <p class="flex-shrink-0 flex-grow-0 text-center font-medium text-[15px]">

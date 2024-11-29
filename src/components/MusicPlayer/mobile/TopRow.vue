@@ -2,13 +2,14 @@
 import {computed} from 'vue';
 
 import {currentSong, musicSize, closeFullPlayer} from '@/store/audioPlayer';
+import {breakTitle2} from "@/lib/stringArray";
 
 import MoooomIcon from '@/components/Images/icons/MoooomIcon.vue';
 import DropdownMenu from '@/Layout/Desktop/components/Menus/DropdownMenu.vue';
 import MusicButton from '@/components/MusicPlayer/components/MusicButton.vue';
 
 const playlistTitle = computed(() => {
-  return 'Playing:\n' + currentSong.value?.album_track?.[0]?.name;
+  return currentSong.value?.album_track?.[0]?.name;
 });
 
 </script>
@@ -21,10 +22,11 @@ const playlistTitle = computed(() => {
       <MoooomIcon icon="chevronDown" class="h-6 w-6"/>
     </MusicButton>
 
-    <div class="relative flex flex-col">
-      <p class="whitespace-pre text-center text-pretty">
-        {{ playlistTitle }}
-      </p>
+    <div class="relative flex flex-col gap-1">
+      <span v-if="playlistTitle" class="whitespace-pre text-center leading-none text-2xs">{{ $t('Now playing') }}</span>
+      <div v-if="playlistTitle" class="whitespace-pre text-left leading-none text-base" v-html="breakTitle2(playlistTitle, 'text-xs line-clamp-1')" >
+
+      </div>
     </div>
 
     <DropdownMenu orientation="vertical">

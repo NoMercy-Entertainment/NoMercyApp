@@ -14,6 +14,7 @@ export interface GenreItem {
 	titleSort: string;
 	origin: string;
 	blurHash: string;
+	link: string;
 }
 
 export interface MusicGenreTrack {

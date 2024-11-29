@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import {onMounted, onUnmounted, ref, watch} from 'vue';
 import {useRoute} from 'vue-router';
-import {IonContent, IonPage} from '@ionic/vue';
+import {IonContent, IonPage, onIonViewWillEnter, onIonViewWillLeave} from '@ionic/vue';
 
-import type {DisplayList, Song} from '@/types/api/music/musicPlayer';
-import {SortOrder, SortType} from '@/types/musicPlayer';
+import type {DisplayList} from '@/types/api/music/musicPlayer';
+import type {Song, SortOrder, SortType} from '@/types/musicPlayer';
 
 import {isNative} from '@/config/global';
 import useServerClient from '@/lib/clients/useServerClient';
@@ -36,11 +36,6 @@ watch(data, (value) => {
   sort(value?.tracks ?? [], sortType.value, sortOrder.value, filter.value);
 
   setColorPalette(value?.color_palette?.cover);
-
-  const match = data.value?.tracks?.find((t: Song) => t.id == currentSong.value?.id);
-  if (match) {
-    audioPlayer.value?.playTrack(match);
-  }
 });
 
 watch(sortOrder, (value) => {
@@ -68,84 +63,20 @@ const sort = (songs: Song[], sortType: SortType, sortOrder: SortOrder, value: st
   }
 };
 
-onMounted(() => {
-  sort(data?.value?.tracks ?? [], sortType.value, sortOrder.value, filter.value);
+onIonViewWillEnter(() => {
+  if (data?.value?.tracks) {
+    sort(data?.value?.tracks ?? [], sortType.value, sortOrder.value, filter.value);
+  }
 
   setColorPalette(data.value?.color_palette?.cover);
-
 });
 
-onUnmounted(() => {
+onIonViewWillLeave(() => {
   if (document.getElementById('navbar')) {
     document.getElementById('navbar')!.style.display = 'flex';
   }
   setColorPalette(null);
 });
-
-
-const items = ref([
-  {
-    label: 'Add to playlist',
-    icon: 'mooooom-add',
-    items: [
-      {
-        label: 'New Playlist',
-        icon: 'mooooom-add',
-      },
-      {
-        label: 'Existing Playlist',
-        icon: 'pi pi-pause'
-      }
-    ]
-  },
-  {
-    label: 'Save to your Liked Songs',
-    icon: 'mooooom-add-circle',
-    command: () => {
-      alert(selectedCard.value?.id);
-    }
-  },
-  {
-    label: 'Add to Queue',
-    icon: 'mooooom-add-circle',
-    command: () => {
-      alert(selectedCard.value?.id);
-    }
-  },
-  {
-    separator: true
-  },
-  {
-    label: 'Go to Album',
-    icon: 'pi pi-volume-up',
-  },
-  {
-    label: 'Go to Artist',
-    icon: 'pi pi-volume-up',
-  },
-  {
-    label: 'Share',
-    icon: 'pi pi-print',
-    items: [
-      {
-        label: 'Facebook',
-        icon: 'pi pi-caret-right'
-      },
-      {
-        label: 'Twitter',
-        icon: 'pi pi-pause'
-      }
-    ]
-  }
-]);
-
-const selectedCard = ref<Song>();
-const cardMenu = ref();
-
-const onRightClick = (event: Event, data: Song) => {
-  selectedCard.value = data;
-  cardMenu.value.show(event);
-};
 
 const sortHeader = ref<VueDivElement>();
 
@@ -160,7 +91,6 @@ const onScroll = () => {
     sortHeader.value?.$el?.firstChild?.classList.remove('!bg-black/50');
   }
 };
-
 
 </script>
 
@@ -187,12 +117,12 @@ const onScroll = () => {
                 @filter-change="(e: string) => filter = e"/>
 
             <div
-                class="flex flex-1 flex-shrink-0 flex-col items-start justify-start self-stretch bg-auto-1/95 flex-grow-1 gap-0.5 sm:p-4"
+                class="flex flex-1 flex-shrink-0 flex-col items-start justify-start self-stretch bg-slate-light-1 dark:bg-slate-dark-2 flex-grow-1 gap-0.5 sm:p-4"
                 :class="{
-               'pb-24' : isNative &&  !currentSong,
-               'pb-40' : isNative &&  currentSong,
-               'pb-4 sm:pb-4' : !isNative &&  currentSong
-            }"
+                   'pb-24' : isNative &&  !currentSong,
+                   'pb-40' : isNative &&  currentSong,
+                   'pb-4 sm:pb-4' : !isNative &&  currentSong
+                }"
             >
               <SortHeader
                   ref="sortHeader"
@@ -203,11 +133,9 @@ const onScroll = () => {
                   :key="item.id"
                   :data="item"
                   :displayList="displayList"
-                  @contextmenu="onRightClick($event, item)"
                   :index="index"/>
             </div>
           </div>
-          <!--          <ContextMenu ref="cardMenu" :model="items"/>-->
         </div>
       </ScrollContainer>
     </ion-content>

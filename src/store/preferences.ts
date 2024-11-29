@@ -1,8 +1,9 @@
-import {ref, watch} from 'vue';
+import {computed, ref, watch} from 'vue';
 import {Preferences} from '@capacitor/preferences';
 
-export const useAutoThemeColors = ref<boolean>(true);
-watch(useAutoThemeColors, async (value) => {
+const autoThemeColors = ref<boolean>(true);
+export const useAutoThemeColors = computed(() => autoThemeColors.value);
+watch(autoThemeColors, async (value) => {
 	await Preferences.set({
 		key: 'autoThemeColors',
 		value: value.toString(),
@@ -10,12 +11,16 @@ watch(useAutoThemeColors, async (value) => {
 });
 (async () => {
 	const { value } = await Preferences.get({ key: 'autoThemeColors' });
-	useAutoThemeColors.value = (value ?? true) == true;
+	autoThemeColors.value = (value ?? true) == true;
 })();
+export const setUseAutoThemeColors = (value: boolean) => {
+	autoThemeColors.value = value;
+}
 
 
-export const showBackdrops = ref<boolean>(false);
-watch(showBackdrops, async (value) => {
+const backdrops = ref<boolean>(false);
+export const showBackdrops = computed(() => backdrops.value);
+watch(backdrops, async (value) => {
 	await Preferences.set({
 		key: 'showBackdrops',
 		value: value.toString(),
@@ -23,5 +28,24 @@ watch(showBackdrops, async (value) => {
 });
 (async () => {
 	const { value } = await Preferences.get({ key: 'showBackdrops' });
-	showBackdrops.value = (value ?? false) == 'true';
+	backdrops.value = (value ?? false) == 'true';
 })();
+export const setShowBackdrops = (value: boolean) => {
+	backdrops.value = value;
+}
+
+const percentageColors = ref<boolean>(true);
+export const usePercentageColors = computed(() => percentageColors.value);
+watch(percentageColors, async (value) => {
+	await Preferences.set({
+		key: 'percentageColors',
+		value: value.toString(),
+	});
+});
+(async () => {
+	const { value } = await Preferences.get({ key: 'percentageColors' });
+	percentageColors.value = (value ?? true) == 'true';
+})();
+export const setUsePercentageColors = (value: boolean) => {
+	percentageColors.value = value;
+}

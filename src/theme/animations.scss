@@ -298,44 +298,6 @@ html.nprogress-busy #gradientBorder {
 }
 
 
-.bar {
-    --width: 2px;
-    --left: 0;
-    --space: 2px;
-    --height: 24px;
-    background: rgb(var(--color-focus, var(--color-theme-6)));
-    bottom: 1px;
-    height: var(--height);
-    position: absolute;
-    width: var(--width);
-    border-radius: 4px 4px 0 0;
-    animation: sound 0ms -800ms ease-in infinite alternate;
-    left: calc(var(--left, 0) * (var(--width, 4px) + var(--space, 2px)));
-}
-
-@keyframes sound {
-    0% {
-        opacity: .35;
-        height: calc(var(--height) / 4);
-    }
-    100% {
-        opacity: 1;
-        height: var(--height);
-    }
-}
-
-.bar:nth-child(1)  { --left: 1; animation-duration: 600ms; animation-delay: -600ms; filter: brightness(1.5) saturate(1.2); }
-.bar:nth-child(2)  { --left: 2; animation-duration: 600ms; animation-delay: -800ms; filter: brightness(1.2) saturate(0.8); }
-.bar:nth-child(3)  { --left: 3; animation-duration: 600ms; animation-delay: -200ms; filter: brightness(3) saturate(0.5);}
-.bar:nth-child(4)  { --left: 4; animation-duration: 600ms; animation-delay: 0ms; filter: brightness(1.2) saturate(0.8);}
-.bar:nth-child(5)  { --left: 5; animation-duration: 600ms; animation-delay: 400ms; filter: brightness(1.5) saturate(0.8);}
-
-#bars.paused .bar {
-    animation: none;
-    height: calc(var(--height) / 2);
-}
-
-
 .gradient-border {
     --bg-color: linear-gradient(rgb(var(--background-auto-1)), rgb(var(--background-auto-1)));
     --border-color: linear-gradient(var(--angle, 145deg),
@@ -350,5 +312,11 @@ html.nprogress-busy #gradientBorder {
 @property --focus-color {
   syntax: "<color>";
   inherits: true;
-  initial-value: 255, 255, 255;
+  initial-value: 255,255,255;
+}
+
+@property -webkit-line-clamp {
+  syntax: '<integer>';
+  inherits: false;
+  initial-value: 3;
 }

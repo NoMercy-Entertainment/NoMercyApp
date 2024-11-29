@@ -1,8 +1,9 @@
 import { SyncPlugin } from './plugins/syncPlugin';
 import { AutoSkipPlugin } from './plugins/autoSkipPlugin';
+import { OctopusPlugin } from './plugins/octopusPlugin';
 
-import nmplayer from 'nomercyplayer/src/index'
-import { OctopusPlugin } from 'nomercyplayer/src/plugins/octopusPlugin';
+import nmplayer from 'nomercyplayer/src/index';
+// import { OctopusPlugin } from 'nomercyplayer/src/plugins/octopusPlugin';
 import { TVUIPlugin } from 'nomercyplayer/src/plugins/tvUIPlugin';
 import { DesktopUIPlugin } from 'nomercyplayer/src/plugins/desktopUIPlugin';
 import { KeyHandlerPlugin } from 'nomercyplayer/src/plugins/keyHandlerPlugin';

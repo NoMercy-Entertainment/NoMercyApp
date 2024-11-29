@@ -3,12 +3,13 @@ import {type PropType, ref, computed} from 'vue';
 
 import type {HomeDataItem} from '@/types/api/music';
 import type {PaletteColors} from "@/types/api/shared";
-import type {DisplayList, MusicCardPageResponseData, Song} from "@/types/api/music/musicPlayer";
+import type {DisplayList, MusicCardPageResponseData} from "@/types/api/music/musicPlayer";
 import type {Album, AlbumResponse} from "@/types/api/music/album";
 import type {Artist} from "@/types/api/music/artist";
+import type {Song} from '@/types/musicPlayer';
 
 import {hexLighter} from "@/lib/colorHelper";
-import currentServer from '@/store/currentServer';
+import {currentServer} from '@/store/currentServer';
 import {useAutoThemeColors} from '@/store/preferences';
 import AppLogoSquare from '@/components/Images/icons/AppLogoSquare.vue';
 
@@ -161,7 +162,7 @@ const style = computed(() => {
                 type="image/jpeg"
             />
             <img :src="baseImageUrl"
-                 :alt="`tmdb image for ${data?.name ?? 'image'}`"
+                 :alt="`cover image for ${data?.name ?? 'image'}`"
                  :id="id"
                  class="aspect-square !absolute top-0 z-10 h-available w-available object-cover"
                  :loading="loading"

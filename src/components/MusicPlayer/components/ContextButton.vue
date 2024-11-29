@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { type PropType } from 'vue';
 
-import type { Song } from '@/types/api/music/musicPlayer';
+import type { Song } from '@/types/musicPlayer';
 
 import MusicButton from './MusicButton.vue';
 import MoooomIcon from '@/components/Images/icons/MoooomIcon.vue';

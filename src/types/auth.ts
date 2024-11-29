@@ -6,12 +6,17 @@ export interface User {
 	email: string;
 	id: string;
 	avatar: string;
-	accessToken: string;
-	locale: string;
+	locale: string | null;
 	moderator: boolean;
 	servers: Server[];
 	currentServer: Server;
 	messages: Message[];
+
+	accessToken: string;
+	expiresIn: number;
+	refreshToken: string;
+	idToken: string;
+	refreshIn: number;
 }
 
 export interface Server {
@@ -44,3 +49,9 @@ export type Message = {
 	created_at: number;
 	updated_at: number;
 };
+
+export interface ServerUser {
+	id: string,
+	name: string,
+	email: string,
+}

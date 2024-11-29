@@ -3,21 +3,22 @@
 import {link} from '@Icons/index';
 import {IonIcon} from '@ionic/vue';
 
-import currentServer from '@/store/currentServer';
+import {currentServer} from '@/store/currentServer';
 
 import NoMercyAvatar from '@/components/Images/NoMercyAvatar.vue';
+import {user} from '@/store/user';
 
 </script>
 
 <template>
 
   <div
-      class="flex justify-start items-center self-stretch flex-grow-0 flex-shrink-0 relative gap-2.5"
+      class="flex justify-start items-center self-stretch flex-grow-0 flex-shrink-0 relative gap-2.5 mb-2"
   >
-    <NoMercyAvatar :user="$keycloak.tokenParsed" :size="40"/>
+    <NoMercyAvatar :user="user" :size="40"/>
     <div class="flex flex-col justify-start items-start flex-grow relative gap-0.5">
       <p class="flex-grow-0 flex-shrink-0 w-48 text-base font-semibold text-left text-slate-dark-1 dark:text-slate-light-1">
-        {{ $keycloak.tokenParsed?.display_name ?? $keycloak.tokenParsed?.name }}
+        {{ user.name }}
       </p>
       <div
           class="flex justify-start items-center self-stretch flex-grow-0 flex-shrink-0 relative gap-0.5"

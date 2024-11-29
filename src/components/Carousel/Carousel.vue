@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import {computed, onBeforeMount, onMounted, PropType, ref} from 'vue';
+import {computed, onBeforeMount, PropType, ref} from 'vue';
 import {useTranslation} from 'i18next-vue';
 import {Swiper} from 'swiper';
-import {register, SwiperContainer} from 'swiper/element/bundle';
 import {Swiper as SwiperComponent} from 'swiper/vue';
+import {register} from 'swiper/element/bundle';
 
 import {mappedEntries} from '@/lib/stringArray';
 import {Breakpoints, breakpoints, swiperConfig} from "@/lib/swiper-config";
@@ -49,7 +49,7 @@ const backButtonEnabled = ref(false);
 const nextButtonEnabled = ref(true);
 const isLastSlide = ref(false);
 const hasScroll = ref(false);
-const swiperElement = ref<HTMLDivElement>();
+const swiper = ref<VueSwiperElement>();
 
 const onProgress = (swiper: Swiper, progress: number) => {
     swiper.progress = Math.floor(((progress * 100) + 1) / 100);
@@ -69,27 +69,30 @@ const onSlideChange = (swiper: Swiper) => {
     hasScroll.value = !swiper.isLocked;
 };
 
+const afterInit = (swiper: Swiper) => {
+  setTimeout(() => {
+    swiper.el?.classList.remove('opacity-0');
+  }, 150 * props.index);
+};
+
 register();
 
 const reset = () => {
-    const swiper: Swiper = document.querySelector<SwiperContainer>(`.swiper-${props.title?.replace(/[\s&#]/gu, '-')}`)?.swiper as Swiper;
-    swiper?.slideTo(0, 300);
+    swiper.value?.$el?.swiper?.slideTo(0, 300);
 
     hasScroll.value = true;
 };
 
 const next = () => {
-    const swiper: Swiper = document.querySelector<SwiperContainer>(`.swiper-${props.title?.replace(/[\s&#]/gu, '-')}`)?.swiper as Swiper;
-    swiper?.slideNext(300);
+    swiper.value?.$el?.swiper?.slideNext(300);
 };
 
 const prev = () => {
-    const swiper: Swiper = document.querySelector<SwiperContainer>(`.swiper-${props.title?.replace(/[\s&#]/gu, '-')}`)?.swiper as Swiper;
-    swiper?.slidePrev(300);
+    swiper.value?.$el?.swiper?.slidePrev(300);
 };
 
 const offsetBefore = window.innerWidth < 800
-    ? 10
+    ? 24
     : 20;
 
 const bp = ref<Breakpoints>();
@@ -117,29 +120,15 @@ onBeforeMount(() => {
     bp.value = newBp;
 });
 
-const show = ref(true);
-
-// onMounted(() => {
-//     setTimeout(() => {
-//         show.value = true;
-//     }, 200 * props.index);
-// });
-
-const handleFocus = (e: FocusEvent) => {
-    console.log('focus');
-    (e.currentTarget as HTMLElement).querySelector('a')?.focus();
-};
-
 </script>
 
 <template>
     <div
-        v-if="show"
-        class="mb-1 flex w-auto flex-shrink-0 flex-grow-0 flex-col items-start justify-start gap-2 self-stretch will-change-auto"
+        class="mb-1 flex w-auto flex-shrink-0 flex-grow-0 flex-col items-start justify-start gap-2 self-stretch will-change-auto text-left"
     >
-        <div class="flex w-full flex-1 flex-col gap-2">
+        <div class="flex w-available flex-1 flex-col gap-2">
             <div class="relative ml-2 flex flex-shrink-0 flex-grow-0 items-center self-stretch">
-                <h3 v-if="title" class="text-2xl font-bold text-auto-12 mr-2 ml-1 sm:ml-3 text-slate-light-1">
+                <h3 v-if="title" class="text-2xl font-bold text-auto-12 mr-2 ml-4 sm:ml-3 text-slate-dark-1 dark:text-slate-light-1">
                   {{ t(title ?? 'Continue watching') }}
                 </h3>
                 <slot v-else name="selector"></slot>
@@ -169,12 +158,13 @@ const handleFocus = (e: FocusEvent) => {
             <div class="gap-3 py-1 pr-0 w-available swiper">
                 <SwiperComponent
 																 v-bind="swiperConfig(backdropCards) as any"
-                                 ref="swiperElement"
-                                 :class="`swiper-${title?.replace(/[\s&#]/gu, '-')}`"
+                                 ref="swiper"
+                                 :class="`swiper-${title?.replace(/[\s&#]/gu, '-')} opacity-0`"
                                  :slidesOffsetBefore="offsetBefore"
                                  :breakpoints="bp"
                                  data-spatial-container="row"
                                  @progress="onProgress"
+                                 @afterInit="afterInit"
                                  @slideChange="onSlideChange">
                     <slot/>
                 </SwiperComponent>

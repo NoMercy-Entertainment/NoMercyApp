@@ -30,6 +30,7 @@ export interface HomeItem {
 	number_of_items: number;
 	have_items: number;
 	videos: ExtendedVideo[];
+	link: string;
 }
 
 export interface ContinueWatching {
@@ -51,4 +52,5 @@ export interface ContinueWatching {
 	content_ratings: Rating[];
 	videoId: string;
 	videos: ExtendedVideo[];
+	link: string;
 }

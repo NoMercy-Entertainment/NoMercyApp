@@ -3,7 +3,7 @@ import {computed, ref, watch} from 'vue';
 import {useTranslation} from 'i18next-vue';
 import {IonContent, IonModal} from '@ionic/vue';
 
-import {currentSong, fullPlayerModalOpen} from '@/store/audioPlayer';
+import {audioPlayer, currentSong, fullPlayerModalOpen, queue} from '@/store/audioPlayer';
 
 import LyricsOverlay from '@/Layout/Desktop/components/Overlays/LyricsOverlay.vue';
 
@@ -15,36 +15,24 @@ import TopRow from '../mobile/TopRow.vue';
 import TrackRow from '../mobile/TrackRow.vue';
 import ButtonContainer from '../mobile/ButtonContainer.vue';
 import {useAutoThemeColors} from '@/store/preferences';
-import {pickPaletteColor} from '@/lib/colorHelper';
+import {PaletteColors, pickPaletteColor} from '@/lib/colorHelper';
 import MusicButton from '@/components/MusicPlayer/components/MusicButton.vue';
+import {colorPalette, setColorPalette} from '@/store/ui';
+
+import {Swiper} from 'swiper';
+import {Swiper as SwiperComponent} from 'swiper/vue';
+import {Song} from '@/types/musicPlayer';
 
 const {t} = useTranslation();
 
 const lyricsSize = ref<'small' | 'full'>('small');
 const content = ref<VueDivElement>();
 const lyricsContainer = ref<HTMLElement>();
-
-const handleExpand = () => {
-  if (!lyricsContainer.value) return;
-
-  lyricsSize.value = lyricsSize.value == 'small'
-      ? 'full'
-      : 'small';
-
-  if (lyricsSize.value == 'small') {
-    // @ts-ignore
-    content.value?.$el?.scrollToTop(window.innerHeight);
-    setTimeout(() => {
-      lyricsContainer.value!.style.height = '25rem';
-    }, 200);
-  } else {
-    lyricsContainer.value!.style.height = `${window.innerHeight * 0.85}px`;
-    setTimeout(() => {
-      // @ts-ignore
-      content.value.$el?.scrollToBottom(window.innerHeight);
-    }, 200);
-  }
-};
+const oldColorPalette = ref<PaletteColors | null | undefined>();
+const currentFullPlaylistItem = ref(0);
+const swiper = ref<VueSwiperElement>();
+const loading = ref<'lazy'|'eager'>('lazy');
+const fullPlaylist = ref<Song[]>([currentSong.value!, ...Object.values(queue.value!)]);
 
 watch(lyricsSize, () => {
   setTimeout(() => {
@@ -62,9 +50,31 @@ watch(lyricsSize, () => {
   }, 200);
 }, {immediate: true});
 
-const onWillDismiss = async () => {
-  fullPlayerModalOpen.value = false;
-};
+watch(fullPlayerModalOpen, (value) => {
+  if (value) {
+    oldColorPalette.value = colorPalette.value;
+    setTimeout(() => {
+      setColorPalette(currentSong.value?.color_palette?.cover);
+      loading.value = 'eager';
+    }, 50);
+  } else {
+    setColorPalette(oldColorPalette.value);
+  }
+});
+
+watch(currentSong, (value) => {
+  if (!value) return;
+
+  const current = fullPlaylist.value.findIndex((item) => item.id == value.id);
+
+  currentFullPlaylistItem.value = current;
+
+  swiper.value?.$el?.swiper.slideTo(current);
+
+  if (fullPlayerModalOpen.value) {
+    setColorPalette(value?.color_palette?.cover);
+  }
+});
 
 const focusColor = computed(() => {
   if (!useAutoThemeColors.value) return 'var(--color-theme-7)';
@@ -73,6 +83,41 @@ const focusColor = computed(() => {
       .replace(/,/gu, ' ')
       .replace('rgb(', '');
 });
+
+const handleSwiperChange = (swiper: Swiper) => {
+  if (swiper.touches.diff == 0) return;
+  if(swiper.touches.startX > swiper.touches.currentX) {
+    audioPlayer.value?.next();
+  } else {
+    audioPlayer.value?.previous();
+  }
+};
+
+const handleExpand = () => {
+  if (!lyricsContainer.value) return;
+
+  lyricsSize.value = lyricsSize.value == 'small'
+      ? 'full'
+      : 'small';
+
+  if (lyricsSize.value == 'small') {
+    // @ts-ignore
+    content.value?.$el?.scrollToTop();
+    setTimeout(() => {
+      lyricsContainer.value!.style.height = '25rem';
+    }, 500);
+  } else {
+    lyricsContainer.value!.style.height = `${window.innerHeight * 0.85}px`;
+    setTimeout(() => {
+      // @ts-ignore
+      content.value.$el?.scrollToBottom();
+    }, 0);
+  }
+};
+
+const onWillDismiss = async () => {
+  fullPlayerModalOpen.value = false;
+};
 
 </script>
 
@@ -83,32 +128,52 @@ const focusColor = computed(() => {
       :initial-breakpoint="1"
       :breakpoints="[0, 1]"
       id="fullPlayer"
-      class=""
   >
     <ion-content ref="content" :fullscreen="true" :style="`--color-focus: ${focusColor}`">
+
       <div
-          class="pt-safe relative z-0 flex h-screen min-h-screen flex-col items-center justify-between gap-2 px-6 w-inherit scrollbar-none text-slate-light-12 dark:text-slate-dark-12">
+          class="relative z-0 pt-safe flex h-screen min-h-screen flex-col items-center justify-between gap-2 w-inherit scrollbar-none text-slate-light-12 dark:text-slate-dark-12">
         <div class="pointer-events-none absolute inset-0 w-full  bg-spotifyBottom bg-focus transition-all duration-500"></div>
 
-        <TopRow/>
+        <TopRow class="pt-safe px-6"/>
 
-        <div class="w-full max-w-2xl h-auto aspect-square">
-          <CoverImage
-              :data="currentSong"
-              v-if="currentSong"
-              :size="320"
-              className="pointer-events-none relative aspect-square h-auto overflow-clip rounded-md w-inherit"/>
-        </div>
+          <SwiperComponent
+              ref="swiper"
+              :slides-per-view="1"
+              :initialSlide="currentFullPlaylistItem"
+              :loop="true"
+              @touchEnd="handleSwiperChange"
+              class="w-available swiper"
+          >
+            <template v-for="(item, index) in fullPlaylist ?? []" :key="item.id">
+              <swiper-slide class="h-full" :data-index="index" :data-id="item.id">
+                <div class="w-available max-w-2xl h-auto aspect-square shadow mx-6 relative items-center flex">
+                <CoverImage
+                    :data="item"
+                    :loading="index == currentFullPlaylistItem ? 'eager' : loading"
+                    className="pointer-events-none relative aspect-square h-auto overflow-clip rounded-md w-inherit shadow"/>
+                </div>
+              </swiper-slide>
+            </template>
+          </SwiperComponent>
 
-        <TrackRow/>
+<!--        <div class="w-full max-w-2xl h-auto aspect-square shadow">-->
+<!--          <CoverImage-->
+<!--              :data="currentSong"-->
+<!--              v-if="currentSong"-->
+<!--              :size="320"-->
+<!--              className="pointer-events-none relative aspect-square h-auto overflow-clip rounded-md w-inherit shadow"/>-->
+<!--        </div>-->
+
+        <TrackRow class=" px-6"/>
 
         <ProgressBarContainer
-            class="children:!mx-0 gap-4"
+            class="children:!mx-0 gap-4 px-6"
         />
-        <ButtonContainer/>
+        <ButtonContainer />
       </div>
 
-      <div class="relative mx-3 -mt-10 mb-3 rounded-2xl pt-10 pb-4 w-available bg-focus/60">
+      <div class="relative mx-3 -mt-10 mb-3 rounded-2xl pt-10 pb-4 w-available bg-focus/60 shadow" >
         <div class="absolute top-0 z-10 flex w-full items-center rounded-t-2xl pr-2 pl-4 font-semibold">
           <span>{{ t('Lyrics') }}</span>
           <MusicButton label="expand"
@@ -137,6 +202,11 @@ const focusColor = computed(() => {
 ion-modal {
   --height: 100%;
   --ion-color-step-350: transparent;
+  @apply mt-0 -mb-safe-offset-16;
+}
+
+ion-modal#fullPlayer ion-content::part(scroll) {
+  @apply pt-0
 }
 
 ion-modal::part(content) {

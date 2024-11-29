@@ -50,6 +50,9 @@ export interface LibraryResponse {
 	titleSort: string;
 	type: string;
 	year: number;
+	duration: number;
+	link: string;
+	tags: string[];
 }
 
 export interface StatusResponse<T> {
@@ -81,9 +84,46 @@ export interface EncoderProfile {
 	id: string;
 	name: string;
 	container: string;
-	param: string;
-	created_at: string;
-	updated_at: string;
+	type: string;
+	videoProfiles: VideoProfile[];
+	audioProfiles: Profile[];
+	subtitleProfiles: Profile[];
+	encoder_profile_folder: null;
+	created_at: Date;
+	updated_at: Date;
+}
+
+export interface Profile {
+	codec: string;
+	channels?: number;
+	segmentName: string;
+	playlistName: string;
+	allowedLanguages: string[];
+	opts: any[];
+	customArguments: any[];
+}
+
+
+export interface VideoProfile {
+	codec: string;
+	bitrate: number;
+	width: number;
+	height: number;
+	framerate: number;
+	preset: string;
+	tune: string;
+	segmentName: string;
+	playlistName: string;
+	colorSpace: string;
+	crf: number;
+	keyint: number;
+	opts: any[];
+	customArguments: CustomArgument[];
+}
+
+export interface CustomArgument {
+	item1: string;
+	item2: string;
 }
 
 export interface LibraryMovie {

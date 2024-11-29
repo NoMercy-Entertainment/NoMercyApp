@@ -1,14 +1,13 @@
 
 import { PlayerAudio } from './audio';
 import type {
-    BackLog,
-    CurrentItem, Time, IsMuted, IsShuffling,
-    PlayerOptions, Queue, RepeatState,
+    Time, IsMuted, IsShuffling,
+    PlayerOptions, RepeatState,
     TimeState, Volume, IsRepeating, IsPlaying,
 } from './types';
 
-import {Item, PlayerState, VolumeState} from './types';
-import promises from '@/router/middleware/beforeResolve';
+import {PlayerState, VolumeState} from './types';
+import {Song} from '@/types/musicPlayer';
 
 export class Helpers extends EventTarget {
     public volume: Volume = Number(localStorage.getItem('music-volume')) || 100;
@@ -18,7 +17,7 @@ export class Helpers extends EventTarget {
     public buffered: number = 0;
     public playbackRate: number = 1;
     public fadeDuration: number = 3;
-    public currentSong: Item | null = null;
+    public currentSong: Song | null = null;
     public state: PlayerState = PlayerState.IDLE;
     public volumeState: VolumeState = VolumeState.UNMUTED;
     public isShuffling: IsShuffling = false;
@@ -33,20 +32,40 @@ export class Helpers extends EventTarget {
     public serverLocation?: string = '';
     public accessToken: string = '';
     protected _options: PlayerOptions = <PlayerOptions>{};
-    protected _audioElement1: PlayerAudio = new PlayerAudio(
-        { id: 1, volume: this.volume / 100 },
+
+    // public context: AudioContext = new (window.AudioContext || window.webkitAudioContext)();
+    public context: AudioContext | null = null;
+    protected preGain: GainNode | null = null;
+    protected filters: BiquadFilterNode[] = [];
+    protected panner: StereoPannerNode | null = null;
+
+    _audioElement1: PlayerAudio = new PlayerAudio(
+        { id: 1,
+            volume: this.volume / 100,
+        },
         this
     );
-    protected _audioElement2: PlayerAudio = new PlayerAudio(
-        { id: 2, volume: this.volume / 100 },
+    _audioElement2: PlayerAudio = new PlayerAudio(
+        { id: 2,
+            volume: this.volume / 100,
+        },
         this
     );
-    protected _currentAudio: PlayerAudio = this._audioElement1;
+    _currentAudio: PlayerAudio = this._audioElement1;
     protected _nextAudio: PlayerAudio = this._audioElement2;
     protected _eventElement: HTMLDivElement = <HTMLDivElement>{};
 
     constructor() {
         super();
+        this._audioElement1.context = this.context;
+        this._audioElement1.preGain = this.preGain;
+        this._audioElement1.filters = this.filters;
+        this._audioElement1.panner = this.panner;
+
+        this._audioElement2.context = this.context;
+        this._audioElement2.preGain = this.preGain;
+        this._audioElement2.filters = this.filters;
+        this._audioElement2.panner = this.panner;
 
         this._eventElement = document.createElement('div');
         this._eventElement.id = 'music-events';
@@ -62,7 +81,7 @@ export class Helpers extends EventTarget {
         this.serverLocation = serverLocation;
     }
 
-    public getNewSource(newItem: CurrentItem|null): Promise<string> {
+    public getNewSource(newItem: Song|null): Promise<string> {
         if (!newItem?.folder) return Promise.resolve('');
         return new Promise((resolve) => {
             return resolve(
@@ -97,9 +116,9 @@ export class Helpers extends EventTarget {
     emit(eventType: 'endFadeOut'): void;
     emit(eventType: 'nextSong'): void;
     emit(eventType: 'ready'): void;
-    emit(eventType: 'song', data: CurrentItem | null): void;
-    emit(eventType: 'backlog', data: CurrentItem[]): void;
-    emit(eventType: 'queue', data: CurrentItem[]): void;
+    emit(eventType: 'song', data: Song | null): void;
+    emit(eventType: 'backlog', data: Song[]): void;
+    emit(eventType: 'queue', data: Song[]): void;
     emit(eventType: 'shuffle', data: IsShuffling): void;
     emit(eventType: 'mute', data: IsMuted): void;
     emit(eventType: 'repeat', data: RepeatState): void;
@@ -144,9 +163,9 @@ export class Helpers extends EventTarget {
     on(event: 'endFadeOut', callback: () => void): void;
     on(event: 'nextSong', callback: () => void): void;
     on(event: 'ready', callback: () => void): void;
-    on(event: 'song', callback: (data: CurrentItem | null) => void): void;
-    on(event: 'backlog', callback: (data: BackLog) => void): void;
-    on(event: 'queue', callback: (data: Queue) => void): void;
+    on(event: 'song', callback: (data: Song | null) => void): void;
+    on(event: 'backlog', callback: (data: Song[]) => void): void;
+    on(event: 'queue', callback: (data: Song[]) => void): void;
     on(event: 'shuffle', callback: (data: IsShuffling) => void): void;
     on(event: 'mute', callback: (data: IsMuted) => void): void;
     on(event: 'repeat', callback: (data: RepeatState) => void): void;
@@ -155,7 +174,7 @@ export class Helpers extends EventTarget {
     on(event: 'time', callback: (data: TimeState) => void): void;
     on(event: 'time-internal', callback: (data: TimeState) => void): void;
     on(event: 'volume', callback: (data: Volume) => void): void;
-    on(event: any, callback: (arg0: any) => any) {
+    on(event: any, callback: (arg0?: any) => any) {
         this.eventHooks(event, true);
         this._eventElement?.addEventListener(event, (e: { detail: any }) =>
             callback(e.detail)
@@ -184,9 +203,9 @@ export class Helpers extends EventTarget {
     off(event: 'endFadeOut', callback: () => void): void;
     off(event: 'nextSong', callback: () => void): void;
     off(event: 'ready', callback: () => void): void;
-    off(event: 'song', callback: (data: CurrentItem | null) => void): void;
-    off(event: 'backlog', callback: (data: BackLog) => void): void;
-    off(event: 'queue', callback: (data: Queue) => void): void;
+    off(event: 'song', callback: (data: Song | null) => void): void;
+    off(event: 'backlog', callback: (data: Song[]) => void): void;
+    off(event: 'queue', callback: (data: Song[]) => void): void;
     off(event: 'shuffle', callback: (data: IsShuffling) => void): void;
     off(event: 'mute', callback: (data: IsMuted) => void): void;
     off(event: 'repeat', callback: (data: RepeatState) => void): void;
@@ -221,9 +240,9 @@ export class Helpers extends EventTarget {
     once(event: 'endFadeOut', callback: () => void): void;
     once(event: 'nextSong', callback: () => void): void;
     once(event: 'ready', callback: () => void): void;
-    once(event: 'song', callback: (data: CurrentItem | null) => void): void;
-    once(event: 'backlog', callback: (data: BackLog) => void): void;
-    once(event: 'queue', callback: (data: Queue) => void): void;
+    once(event: 'song', callback: (data: Song | null) => void): void;
+    once(event: 'backlog', callback: (data: Song[]) => void): void;
+    once(event: 'queue', callback: (data: Song[]) => void): void;
     once(event: 'shuffle', callback: (data: IsShuffling) => void): void;
     once(event: 'mute', callback: (data: IsMuted) => void): void;
     once(event: 'repeat', callback: (data: RepeatState) => void): void;

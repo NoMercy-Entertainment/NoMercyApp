@@ -38,6 +38,7 @@ const togglePlayerSize = () => {
             </div>
 
             <MediaLikeButton :key="currentSong?.id"
+                             v-if="currentSong"
                              :data="currentSong"
                              type="music/tracks"
                              color="var(--color-focus)"

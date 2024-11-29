@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import {computed, type PropType, ref} from 'vue';
+import {computed, type PropType} from 'vue';
 
 import type {ContinueWatching, HomeItem} from "@/types/api/base/home";
 import type {Collection} from "@/types/api/base/collection";
@@ -13,7 +13,6 @@ import {showBackdrops} from '@/store/preferences';
 
 import TMDBImage from '@/components/Images/TMDBImage.vue';
 import CardIndicator from '@/components/Cards/CardIndicator.vue';
-import router from '@/router';
 
 const props = defineProps({
     data: {
@@ -47,27 +46,13 @@ const image = computed(() => {
     return props.data?.[backdropStyle.value ? 'backdrop' : 'poster'] as string;
 });
 
-const url = computed(() => {
-    if (props.watch){
-      return `/${props.data?.media_type}/${props.data?.id}/watch`;
-    } else {
-      return `/${props.data?.media_type}/${props.data?.id}`;
-    }
-});
-
-const show = ref(true);
-
-router.beforeEach(() => {
-    // show.value = false;
-});
-
 </script>
 
 <template>
     <RouterLink
-        v-if="show"
+        v-if="data?.link"
         :data-scroll="scrollLetter"
-        :to="url"
+        :to="data?.link"
         class="group/card flex flex-col h-full items-center focus-outline overflow-clip relative rounded-lg select-none shadow-[0px_0px_0_1px_rgb(var(--color-focus,var(--color-theme-6))/70%)] w-full z-0 bg-auto-50/70 flex-grow-0"
         :class="backdropStyle ? 'aspect-backdrop' : 'aspect-poster'"
         :style="`
@@ -125,7 +110,7 @@ router.beforeEach(() => {
 
         </template>
         <div v-else
-            :class="`flex flex-col justify-start items-start w-full h-12 z-0 absolute left-0 transition-all duration-300 px-2 py-1 group-hover/card:-bottom-0 ${image ? '-bottom-20' : 'bottom-0'}`">
+            :class="`flex flex-col justify-start items-start w-full h-12 z-0 absolute left-0 transition-all duration-300 px-2 py-1 group-hover/card:-bottom-0 text-left ${image ? '-bottom-20' : 'bottom-0'}`">
             <div class="absolute inset-0 z-0 opacity-0 group-hover/card:opacity-100 transition-all duration-300 bg-auto-1/60"></div>
             <p class="z-10 w-auto flex-shrink-0 flex-grow-0 self-stretch text-xs font-semibold line-clamp-2 leading-[1.2] text-auto-12 empty:hidden dark:font-medium">
                 {{ data?.title }}

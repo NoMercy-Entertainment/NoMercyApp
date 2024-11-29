@@ -26,10 +26,10 @@ const calculateTranslation = (index: number, total: number) => {
 </script>
 
 <template>
-  <div class="absolute inset-0 flex w-full h-full bg-gradient-to-b from-[#202425] to-black z-0">
-    <div class="absolute inset-0 z-0 flex h-full w-full to-transparent bg-gradient-circle-t from-focus/25 from-10%">
+  <div class="absolute inset-0 flex w-full h-full bg-black/12 dark:bg-black z-0 overflow-clip">
+    <div class="absolute inset-0 z-0 flex h-full w-full to-transparent bg-gradient-circle-t from-focus dark:from-focus/8 from-10%">
     </div>
-    <div class="absolute top-1/2 z-10 flex w-available w-[110%]">
+    <div class="absolute top-[40%] sm:top-1/2 z-10 flex w-available w-[110%]">
       <div class="flex h-full w-auto -translate-x-1/3 flex-nowrap gap-6 sm:-translate-x-0">
         <template v-for="(image, index) in images" :key="image">
           <div class="z-10 h-auto w-36 rounded-lg aspect-poster sm:w-[14.285%]"

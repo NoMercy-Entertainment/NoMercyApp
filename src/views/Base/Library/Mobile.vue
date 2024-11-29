@@ -11,7 +11,7 @@ import {isNative} from '@/config/global';
 import {currentSong} from '@/store/audioPlayer';
 import useInfiniteServerClient from '@/lib/clients/useInfiniteServerClient';
 import {showBackdrops} from '@/store/preferences';
-import {setBackground} from '@/store/ui';
+import {setBackground, setColorPalette} from '@/store/ui';
 import router from '@/router';
 import {setTitle} from '@/lib/stringArray';
 
@@ -35,6 +35,7 @@ const {data, fetchNextPage, hasNextPage} = useInfiniteServerClient<{
 onMounted(() => {
   setTitle();
   setBackground(null);
+  setColorPalette(null);
   document.dispatchEvent(new Event('sidebar'));
   setTimeout(() => {
     document.dispatchEvent(new Event('indexer'));
@@ -61,10 +62,20 @@ onUnmounted(() => {
   setBackground(null);
 });
 
+const lib = ref<HTMLDivElement>();
+
 onMounted(() => {
   if (hasNextPage.value && (data?.value?.pages?.length ?? 0) < 50) {
     fetchNextPage();
   }
+
+  document.addEventListener('scrollToDiv', (e: Event) => {
+    lib.value?.scrollTo({
+      // @ts-ignore
+      top: e.detail.top - 100,
+      behavior: 'smooth',
+    });
+  });
 });
 
 watch(data, (value) => {
@@ -75,8 +86,6 @@ watch(data, (value) => {
   }
 });
 
-const items = ref([]);
-
 const selectedCard = ref<LibraryResponse | GenreResponse | PeopleResponse>();
 const cardMenu = ref();
 
@@ -85,14 +94,16 @@ const onRightClick = (event: Event, data: LibraryResponse | GenreResponse | Peop
   cardMenu.value.show(event);
 };
 
+
 </script>
 
 <template>
   <ion-page>
     <ion-content :fullscreen="true" class="ion-padding ">
-      <div class="pt-safe-offset-2 flex w-full pr-8 h-inherit p-2">
+      <div class="fixed top-0 pt-safe w-full bg-slate-light-1 dark:bg-slate-dark-3 z-1199" ></div>
+      <div ref="lib" class="pt-safe-offset-16 flex w-full pr-9 h-available overflow-auto py-0 scroll-container">
         <div
-            class="z-0 flex flex-col gap-4 rounded-3xl border-0 w-available scrollbar-none border-auto-3"
+            class="z-0 flex flex-col gap-4 rounded-3xl border-0 w-available scrollbar-none border-auto-3 pt-2"
             :class="{
            'pb-2' : isNative &&  currentSong,
            'children:pb-4 sm:children:pb-3' : !isNative &&  currentSong
@@ -136,7 +147,7 @@ const onRightClick = (event: Event, data: LibraryResponse | GenreResponse | Peop
         <Indexer class="w-8 !-mt-4 pt-4 pb-4 mb-0 fixed right-0 bg-slate-light-1 dark:bg-slate-dark-3"
                  :class="{
                     'h-available': !isNative,
-                    'h-inherit': isNative
+                    'h-inherit top-24': isNative
                  }"
         />
       </div>
@@ -144,15 +155,15 @@ const onRightClick = (event: Event, data: LibraryResponse | GenreResponse | Peop
   </ion-page>
 </template>
 
-<style scoped>
+<!--<style scoped>-->
 
-@media screen and (max-width: 800px) {
-  ion-content::part(scroll) {
-    --offset-top: -4.5rem;
-  }
+<!--@media screen and (max-width: 800px) {-->
+<!--  ion-content::part(scroll) {-->
+<!--    &#45;&#45;offset-top: -4.5rem;-->
+<!--  }-->
 
-  *:has(ion-toolbar:first-child:nth-last-child(2) ~ *) ion-content::part(scroll) {
-    --offset-top: -8.5rem;
-  }
-}
-</style>
+<!--  *:has(ion-toolbar:first-child:nth-last-child(2) ~ *) ion-content::part(scroll) {-->
+<!--    &#45;&#45;offset-top: -8.5rem;-->
+<!--  }-->
+<!--}-->
+<!--</style>-->

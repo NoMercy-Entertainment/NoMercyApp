@@ -2,8 +2,8 @@ import { watch } from 'vue';
 
 import MusicPlayer from '@/lib/MusicPlayer';
 
-import currentServer from '@/store/currentServer';
-import user from '@/store/user';
+import {currentServer} from '@/store/currentServer';
+import {user} from '@/store/user';
 import audioPlayer, {setAudioPlayer} from '@/store/audioPlayer';
 
 const initializeAudioPlayer = (): Promise<void> => {
@@ -22,6 +22,22 @@ const initializeAudioPlayer = (): Promise<void> => {
 
 		audioPlayer.value?.setServerLocation(currentServer.value?.serverBaseUrl);
 		audioPlayer.value?.setAccessToken(user.value.accessToken);
+
+		const audioContext = new AudioContext();
+		// @ts-ignore
+		audioContext.onerror = () => {
+			localStorage.setItem('supports-audio-context', 'false');
+			audioContext.close().then();
+		}
+		audioContext.onstatechange = () => {
+			if(audioContext.state === 'running') {
+				localStorage.setItem('supports-audio-context', 'true');
+			} else {
+				localStorage.setItem('supports-audio-context', 'false');
+			}
+		}
+		// @ts-ignore
+		window.audioContext = audioContext;
 
 		resolve();
 

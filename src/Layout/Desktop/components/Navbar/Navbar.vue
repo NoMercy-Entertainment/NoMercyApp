@@ -5,7 +5,7 @@ import {isPlatform } from '@ionic/vue';
 
 import sidebar, { toggleSidebar} from '@/store/sidebar';
 import {shouldShowLibraryLinks} from '@/store/Libraries';
-import user from '@/store/user';
+import {user} from '@/store/user';
 
 import NotificationMenu from '@/Layout/Desktop/components/Menus/NotificationMenu.vue';
 import ProfileMenu from '@/Layout/Desktop/components/Menus/ProfileMenu.vue';
@@ -14,6 +14,7 @@ import MoooomIcon from '@/components/Images/icons/MoooomIcon.vue';
 import AppLogo from '@/components/Images/icons/AppLogo.vue';
 import NavbarButton from './NavbarButton.vue';
 import {isHomeRoute, isLibraryRoute, isMusicRoute, searchUrl} from '@/store/routeState';
+import {currentServer} from '@/store/currentServer';
 
 const {t} = useTranslation();
 
@@ -47,14 +48,14 @@ const {t} = useTranslation();
             class="relative flex flex-shrink-0 flex-grow-0 items-center justify-center gap-2 self-stretch px-1">
           <RouterLink
               aria-label="Home"
-              to="/home"
+              :to="`${currentServer ? '/home' : ''}`"
                 class="relative -mr-6 flex w-48 flex-shrink-0 flex-grow-0 items-center justify-center gap-2 self-stretch px-1 pl-4 md:w-56">
             <AppLogo class="h-10 w-auto"/>
           </RouterLink>
         </div>
         <div class="hidden flex-shrink-0 flex-grow-0 items-center justify-start gap-1 md:!flex">
 
-          <NavbarButton href="/home"
+          <NavbarButton :href="`${currentServer ? '/home' : ''}`"
                    v-if="shouldShowLibraryLinks"
                    :active="isHomeRoute" icon="home1">
             {{ t('Home') }}

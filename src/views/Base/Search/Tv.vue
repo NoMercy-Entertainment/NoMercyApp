@@ -6,7 +6,6 @@ import NavBar from '@/Layout/Mobile/components/NavBar.vue';
 
 <template>
   <ion-page>
-    <NavBar />
     <ion-content :fullscreen="true">
 
       <ExploreContainer name="Search Tv page" />

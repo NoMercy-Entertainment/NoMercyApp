@@ -1,16 +1,36 @@
 <script setup lang="ts">
-import {IonPage, IonContent, IonTitle, IonHeader, IonToolbar} from '@ionic/vue';
-import ExploreContainer from '@/components/ExploreContainer.vue';
-import NavBar from '@/Layout/Mobile/components/NavBar.vue';
+import { IonPage, IonContent } from '@ionic/vue';
+
+import type {HomeDataItem} from '@/types/api/music';
+import type {Component} from '@/lib/routerHelper';
+
+import useServerClient from '@/lib/clients/useServerClient';
+
+import {onMounted} from 'vue';
+import {setColorPalette} from '@/store/ui';
+
+const {data} = useServerClient<Component<HomeDataItem>[]>({
+  queryKey: ['music', 'home']
+});
+
+onMounted(() => {
+  setColorPalette(null);
+});
 
 </script>
 
 <template>
   <ion-page>
-    <NavBar />
     <ion-content :fullscreen="true">
-
-      <ExploreContainer name="Music Tv page" />
+      <template v-if="data">
+        <component
+            v-for="(render, index) in data ?? []"
+            :index="index"
+            :key="render.id"
+            :is="render.component"
+            v-bind="render.props"
+        />
+      </template>
     </ion-content>
   </ion-page>
 </template>

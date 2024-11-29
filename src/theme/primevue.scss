@@ -1,0 +1,45 @@
+
+.p-select,
+.p-multiselect,
+.p-inputtext {
+  @apply flex h-10 bg-slate-light-1 dark:bg-slate-dark-1 border-1 border-slate-light-10 dark:border-slate-dark-10 rounded-lg #{!important};
+  box-shadow: 0 1px 0 0 rgba(0, 0, 0, 0.16) inset, 0 -1px 0 0 rgba(255, 255, 255, 0.08) inset, 0 2px 2px 0 rgba(0, 0, 0, 0.16) inset;
+}
+.p-select:enabled:focus,
+.p-multiselect:enabled:focus,
+.p-multiselect:not(.p-disabled).p-focus,
+.p-inputtext:enabled:focus {
+  @apply border-focus dark:border-focus #{!important};
+}
+.p-card {
+    @apply relative flex items-start justify-start gap-2 self-stretch rounded-lg p-3 bg-auto-2/6 dark:bg-auto-alpha-3 p-0 #{!important};
+}
+
+.p-card-title {
+  @apply text-lg font-semibold text-slate-dark-1 dark:text-slate-light-1 #{!important};
+}
+
+.p-checkbox-checked .p-checkbox-box,
+.p-checkbox-checked:not(.p-disabled):has(.p-checkbox-input:hover) .p-checkbox-box {
+  @apply bg-focus dark:bg-focus border-slate-light-10 dark:border-slate-dark-10 #{!important};
+}
+.p-multiselect-header {
+  @apply mt-1 mx-1;
+}
+
+.p-select-option.p-select-option-selected {
+    @apply bg-focus/60 #{!important};
+}
+.p-select-option.p-select-option-selected.p-focus {
+    @apply bg-focus #{!important};
+}
+
+.p-floatlabel-on:has(input:focus) label,
+.p-floatlabel-on:has(input.p-filled) label,
+.p-floatlabel-on:has(input:-webkit-autofill) label,
+.p-floatlabel-on:has(textarea:focus) label,
+.p-floatlabel-on:has(textarea.p-filled) label,
+.p-floatlabel-on:has(.p-inputwrapper-focus) label,
+.p-floatlabel-on:has(.p-inputwrapper-filled) label {
+  @apply pl-2 text-3xs text-slate-light-12 dark:text-slate-dark-12 #{!important};
+}

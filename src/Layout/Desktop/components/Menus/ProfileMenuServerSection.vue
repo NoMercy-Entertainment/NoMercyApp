@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 
-import user from '@/store/user';
-import currentServer from '@/store/currentServer';
+import {user} from '@/store/user';
+import {currentServer} from '@/store/currentServer';
 
 import NoMercyAvatar from '@/components/Images/NoMercyAvatar.vue';
 import MoooomIcon from '@/components/Images/icons/MoooomIcon.vue';

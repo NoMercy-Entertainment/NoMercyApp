@@ -6,13 +6,12 @@ import {random_string} from '@/lib/stringArray';
 import {scrollCenter} from '@/lib/utils';
 import LyricItem from '@/Layout/Desktop/components/Overlays/LyricItem.vue';
 
-import user from '@/store/user';
-import currentServer from '@/store/currentServer';
+import {user} from '@/store/user';
+import {currentServer} from '@/store/currentServer';
 import audioPlayer, {currentSong, currentTime, lyricsMenuOpen, setHasLyrics} from '@/store/audioPlayer';
 
-
 const lyrics_container = ref<HTMLDivElement>();
-const lyrics = ref<Lyric[] | undefined>(currentSong.value?.lyrics);
+const lyrics = ref<Lyric[] | undefined| null>(currentSong.value?.lyrics);
 const id = ref(random_string(8));
 const index = ref<number>(0);
 const lastIndex = ref(-1);
@@ -188,7 +187,7 @@ watch(lyrics, (value) => {
        class="absolute inset-0 h-inherit w-inherit sm:left-auto sm:right-4 sm:top-4 sm:bottom-4 sm:w-2/3 sm:max-w-3xl flex items-center justify-center rounded-xl transition-all duration-300 sm:data-[open='false']:translate-x-[150%] sm:overflow-clip z-[9999]">
 
     <div
-        class="pointer-events-none absolute inset-0 z-0 flex items-center justify-center rounded-xl sm:bg-white/6 dark:sm:bg-black/15">
+        class="pointer-events-none absolute inset-0 z-0 flex items-center justify-center rounded-xl sm:bg-white/6 dark:sm:bg-black/30">
     </div>
 
     <div ref="lyrics_container" :id="`lyrics_container_${id}`"

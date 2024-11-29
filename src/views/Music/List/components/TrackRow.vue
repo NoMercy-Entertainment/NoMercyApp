@@ -1,10 +1,13 @@
 <script lang="ts" setup>
-import {PropType} from 'vue';
+import {computed, PropType} from 'vue';
+import {useRoute} from 'vue-router';
 import i18next from 'i18next';
 
-import type {Song} from '@/types/api/music/musicPlayer';
+import type {Song} from '@/types/musicPlayer';
+import {onTrackRowRightClick} from '@/store/contextMenuItems';
+
+import {isMobile} from '@/config/global';
 import {audioPlayer, currentSong, isPlaying, musicSize, setCurrentPlaylist} from '@/store/audioPlayer';
-import {useRoute} from 'vue-router';
 
 import EqSpinner from '@/components/Images/EqSpinner.vue';
 import MoooomIcon from '@/components/Images/icons/MoooomIcon.vue';
@@ -13,7 +16,6 @@ import TrackLinks from '@/views/Music/List/components/TrackLinks.vue';
 import MediaLikeButton from '@/components/Buttons/MediaLikeButton.vue';
 import DropdownMenu from '@/Layout/Desktop/components/Menus/DropdownMenu.vue';
 import BannerButton from '@/components/Buttons/BannerButton.vue';
-import {isAlbumRoute, isArtistRoute} from '@/store/routeState';
 
 const props = defineProps({
   data: {
@@ -30,10 +32,13 @@ const props = defineProps({
   },
 });
 
-const router = useRoute();
+const route = useRoute();
+
+const isAlbumRoute = computed(() => route.path.startsWith('/music/album'));
+const isArtistRoute = computed(() => route.path.startsWith('/music/artist'));
 
 const setCurrentList = () => {
-  setCurrentPlaylist(router.fullPath);
+  setCurrentPlaylist(route.fullPath);
 };
 
 const handleClick = () => {
@@ -44,102 +49,14 @@ const handleClick = () => {
   audioPlayer.value?.playTrack(props.data, props.displayList);
 };
 
-const handleKeyup = (e: KeyboardEvent) => {
-  e.preventDefault();
-  e.stopPropagation();
-
-  const currentTarget = e.target as HTMLElement;
-  const target = (document.activeElement as HTMLElement).closest('button')!;
-  const links = Array.from(target.querySelectorAll('a'));
-  const index = links.findIndex(link => link == currentTarget);
-
-
-  if (e.key == 'ArrowUp') {
-    const el = (target.previousElementSibling as HTMLElement);
-    if (el && el.nodeName == 'A') {
-      el.focus();
-    } else if ((e.currentTarget as HTMLElement).nodeName == 'BUTTON') {
-      const el = ((e.currentTarget as HTMLElement)
-          .previousElementSibling as HTMLElement)
-          ?.querySelector<HTMLButtonElement>(`[data-target="${currentTarget?.dataset?.target}"]`);
-      if (el) {
-        el?.focus();
-      } else {
-        ((e.currentTarget as HTMLElement)
-            .previousElementSibling as HTMLElement)?.focus();
-      }
-    } else {
-      const el = ((currentTarget.closest('button') as HTMLElement)
-          .previousElementSibling as HTMLElement)
-          ?.querySelector<HTMLButtonElement>(`[data-target="${currentTarget?.dataset?.target}"]`);
-      if (el) {
-        el?.focus();
-      } else {
-        document.querySelector<HTMLButtonElement>('#sortIndex')?.focus();
-      }
-    }
-  } else if (e.key == 'ArrowDown') {
-    const el = (target.nextElementSibling as HTMLElement);
-    if (el && el.nodeName == 'A') {
-      el.focus();
-    } else if ((e.currentTarget as HTMLElement).nodeName == 'BUTTON') {
-      const el = ((e.currentTarget as HTMLElement)
-          .nextElementSibling as HTMLElement)
-          ?.querySelector<HTMLButtonElement>(`[data-target="${currentTarget?.dataset?.target}"]`);
-      if (el) {
-        el?.focus();
-      } else {
-        ((e.currentTarget as HTMLElement)
-            .nextElementSibling as HTMLElement)?.focus();
-      }
-    } else {
-      const el = ((currentTarget.closest('button') as HTMLElement)
-          .nextElementSibling as HTMLElement)
-          ?.querySelector<HTMLButtonElement>(`[data-target="${currentTarget?.dataset?.target}"]`);
-      el?.focus();
-    }
-  } else if (e.key == 'ArrowLeft') {
-    if (links.length == 0) {
-      const els = [
-        ...Array.from(((currentTarget.parentElement as HTMLElement).parentElement as HTMLElement)
-            ?.querySelectorAll('a')),
-      ];
-
-      els.at(-1)?.focus();
-    } else if (index == -1) {
-      // TODO: go to sidebar
-    }
-    if (index == 0) {
-      target.closest('button')?.focus();
-    } else {
-      links[index - 1]?.focus();
-    }
-  } else if (e.key == 'ArrowRight') {
-    if (index == -1) {
-      target.querySelector('a')?.focus();
-    }
-    if (index == links.length - 1) {
-      target.querySelector<HTMLButtonElement>('[aria-label="Favorite"]')?.focus();
-    } else {
-      links[index + 1]?.focus();
-    }
-  }
-};
-
-// onMounted(() => {
-// 	// console.log(`[data-track-id="${props.data?.id}"]`);
-// 	if (props.index == 0) {
-// 		document.querySelector<HTMLButtonElement>(`[data-track-id="${props.data?.id}"]`)?.focus();
-// 	}
-// });
-
 </script>
 
 <template>
   <button
       :data-track-id="data?.id"
       :onclick="handleClick"
-      class="grid justify-start items-center self-stretch  text-auto-12 pr-3 sm:px-3 rounded-lg hover:bg-[#e2f0fd]/20 group/track text-sm font-medium py-2 z-10"
+      @contextmenu="onTrackRowRightClick($event, data)"
+      class="grid justify-start children:pointer-events-none items-center self-stretch text-auto-12 pr-3 sm:px-3 rounded-lg sm:hover:bg-slate-lightA-6 dark:sm:hover:bg-slate-darkA-6 group/track text-sm font-medium py-2 z-10"
       :class="{
           'album-grid': isAlbumRoute,
           'artist-grid': !isAlbumRoute
@@ -166,9 +83,8 @@ const handleKeyup = (e: KeyboardEvent) => {
     </span>
 
     <span class="flex h-12 items-center gap-2 overflow-hidden w-available sm:gap-4">
-<!--          v-if="!routeIs('app.music.album')"-->
             <CoverImage :data="data"
-
+                        v-if="isAlbumRoute"
                         :size="100"
                         :style="{
                             display: isAlbumRoute
@@ -179,11 +95,11 @@ const handleKeyup = (e: KeyboardEvent) => {
                         loading="eager"
             />
             <span class="flex h-full flex-col justify-evenly overflow-clip w-inherit">
-                <span class="flex h-5 flex-nowrap overflow-clip text-left font-bold line-clamp-1 w-inherit">
+                <span class="flex h-6 flex-nowrap overflow-clip text-left line-clamp-1 w-inherit tracking-wide leading-6">
                     {{ data.name }}
                 </span>
                 <span :data-size="musicSize"
-                      class="inline-flex w-available gap-1 overflow-hidden whitespace-nowrap text-auto-9 line-clamp-1 text-2xs hover:animate-pause ">
+                      class="inline-flex h-6 w-available gap-1 overflow-hidden whitespace-nowrap text-slate-light-3 dark:slate-dark-3 line-clamp-1 text-2xs hover:animate-pause leading-6">
 
                     <TrackLinks v-if="data && !isArtistRoute"
                                 :id="data.id"
@@ -203,25 +119,26 @@ const handleKeyup = (e: KeyboardEvent) => {
             </span>
         </span>
 
-    <span class="hidden max-w-sm items-center overflow-clip pr-2 line-clamp-2 h-inherit w-inherit sm:flex"
+    <template v-for="item in data.album_track" :key="item.id">
+      <span
+          class="hidden max-w-sm items-center overflow-clip pr-2 line-clamp-2 h-inherit w-inherit sm:flex"
           :class="{
               'opacity-0': !isAlbumRoute,
               'opacity-100': isAlbumRoute
           }"
-
           @click="e => e.stopPropagation()"
-          v-for="item in data.album_track">
+      >
              <RouterLink
-                 :to="`/music/albums/${item.id}`"
-                 :key="item.id"
+                 :to="item?.link"
                  tabindex="0"
                  data-target="album"
-                 class="flex items-center gap-1 whitespace-nowrap text-xs font-semibold line-clamp-1 hover:underline focus:underline dark:font-medium">
+                 class="flex items-center gap-1 whitespace-nowrap text-xs line-clamp-1 hover:underline focus:underline dark:font-medium text-slate-light-12/12 dark:text-slate-dark-12">
                <span class="flex whitespace-nowrap">
                    {{ item.name }}
                </span>
            </RouterLink>
        </span>
+    </template>
     <span class="hidden sm:flex invisible max-h-12 md:visible">
       {{
         new Date(data?.date).toLocaleDateString(i18next.language ?? 'en-US', {
@@ -232,7 +149,11 @@ const handleKeyup = (e: KeyboardEvent) => {
       }}
     </span>
 
-    <span class="flex items-center justify-end gap-2 text-end">
+    <span class="flex items-center justify-end gap-2 text-end"
+          :class="{
+            'mr-6': !isMobile,
+          }"
+    >
             <MediaLikeButton :key="data.id"
                              :data="data"
                              type="music/tracks"
@@ -242,7 +163,7 @@ const handleKeyup = (e: KeyboardEvent) => {
                 {{ data.duration }}
             </span>
 
-          <DropdownMenu direction="down">
+          <DropdownMenu direction="down" v-if="isMobile">
             <template v-slot:button>
               <BannerButton class="" title="">
                 <MoooomIcon className="relative h-5 w-5" icon="menuDotsVertical"/>

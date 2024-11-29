@@ -1,10 +1,12 @@
 <script setup lang="ts">
+import {onMounted, onUnmounted} from 'vue';
+import {useRoute, RouterLink} from 'vue-router';
+
 import {scrollToDiv} from '@/lib/scrollHandlers';
 import {alphaNumericRange} from '@/lib/stringArray';
 import {isNative} from '@/config/global';
 import indexer, {setIndexerOpen} from '@/store/indexer';
 import router from '@/router';
-import {onMounted, onUnmounted} from 'vue';
 
 const openPaths = [
   'Libraries',
@@ -14,28 +16,15 @@ const openPaths = [
   'Artists',
 ];
 
-const closedPaths = [
-  'Collection',
-]
-
 const queryPaths = [
   '/music/albums',
   '/music/artists',
 ];
 
-const indexerState = (route: string) => openPaths.some((path) => route == path);
-const isQueryPath = (route: string) => queryPaths.some((path) => route == path);
+const indexerState = (route: string) => openPaths.some((path) => route.startsWith(path));
+const isQueryPath = (route: string) => queryPaths.some((path) => route.startsWith(path));
 
-function handleScrollToDiv(letter: string) {
-  if (isQueryPath(router.currentRoute.value.fullPath)) {
-    if (letter == '#') {
-      letter = '_';
-    }
-    router.push(router.currentRoute.value.fullPath + `?letter=${letter}`);
-  } else {
-    scrollToDiv(letter);
-  }
-}
+const route = useRoute();
 
 const updateScrollableTargets = () => {
   setTimeout(() => {
@@ -44,14 +33,14 @@ const updateScrollableTargets = () => {
         .forEach((el) => {
           el.classList.add('opacity-20', '!cursor-not-allowed');
 
-          let target = null;
+          let target;
           if (el.dataset.indexer === '#') {
             target = document.querySelector?.('[data-scroll]');
           } else {
             target = document.querySelector?.(`[data-scroll='scroll_${el.dataset.indexer}']`);
           }
 
-          if (!!target || isQueryPath(router.currentRoute.value.fullPath)) {
+          if (!!target || isQueryPath(router.currentRoute.value.path)) {
             el.classList.remove('opacity-20', '!cursor-not-allowed');
           }
         });
@@ -67,23 +56,18 @@ const disableScrollableTargets = () => {
 };
 
 const triggerIndexer = (route: string) => {
-  console.log('triggerIndexer', route);
   setIndexerOpen(indexerState(route));
   updateScrollableTargets();
 };
 
 router.afterEach((to) => {
   setTimeout(() => {
-    triggerIndexer(to.name as string ?? to.fullPath);
+    triggerIndexer(to.name as string ?? to.path);
   }, 50);
 });
 
 router.beforeEach(() => {
   disableScrollableTargets();
-  // document.querySelectorAll?.('main > *')
-  //     .forEach((el) => {
-  //     el.remove();
-  // });
 });
 
 onMounted(() => {
@@ -104,19 +88,36 @@ onUnmounted(() => {
       :class="{
           'w-8': indexer,
           'w-0': !indexer,
-          'mb-24 mt-4' : isNative,
           'sm:ml-2': !isNative && indexer,
         }"
   >
-    <div v-for="letter in alphaNumericRange('#','Z')"
-         :key="letter"
-         :data-indexer="letter"
-         tabindex="-1"
-         @click="() => handleScrollToDiv(letter)"
-         class="pointer-events-auto relative flex h-6 w-6 flex-shrink-0 flex-grow-0 cursor-pointer flex-col items-center justify-center gap-2 rounded-sm hover:bg-auto-alpha-5">
-      <p class="flex-shrink-0 flex-grow-0 text-center text-xs font-semibold leading-4">
-        {{ letter }}
-      </p>
-    </div>
+    <template  v-for="letter in alphaNumericRange('#','Z')" :key="letter">
+      <template v-if="isQueryPath(route.path)">
+        <RouterLink :to="`${letter}`"
+              :data-indexer="letter"
+              tabindex="-1"
+              class="pointer-events-auto relative flex h-6 w-6 flex-shrink-0 flex-grow-0 cursor-pointer flex-col items-center justify-center gap-2 rounded-sm hover:bg-auto-alpha-5">
+            <p class="flex-shrink-0 flex-grow-0 text-center text-xs font-semibold leading-4">
+              {{ letter }}
+            </p>
+        </RouterLink>
+      </template>
+      <div v-else
+           :data-indexer="letter"
+           tabindex="-1"
+           @click="scrollToDiv(letter)"
+           class="pointer-events-auto relative flex h-6 w-6 flex-shrink-0 flex-grow-0 cursor-pointer flex-col items-center justify-center gap-2 rounded-sm hover:bg-auto-alpha-5">
+        <p class="flex-shrink-0 flex-grow-0 text-center text-xs font-semibold leading-4">
+          {{ letter }}
+        </p>
+      </div>
+    </template>
   </div>
 </template>
+
+<style scoped>
+
+html.plt-mobileweb:has(#miniPlayer) .indexer {
+  @apply pb-16;
+}
+</style>

@@ -104,6 +104,7 @@ export interface MusicCardPageResponseData {
 	type: string;
 	titleSort: string;
 	origin: string;
+	link: string;
 }
 
 export interface Song {
@@ -118,7 +119,7 @@ export interface Song {
 	quality: number;
 	path: string;
     media_type: string;
-	lyrics: Lyric[] | undefined;
+	lyrics?: Lyric[] | null;
 	color_palette: ColorPalettes;
 	blurHash: string;
 	folder_id: string;
@@ -132,6 +133,7 @@ export interface Song {
 	origin: string;
 	libraryId: string;
 	date: string;
+	link: string;
 }
 
 export interface Lyric {

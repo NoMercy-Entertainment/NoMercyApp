@@ -1,15 +1,13 @@
 import {ref, watch} from 'vue';
-import { Preferences } from '@capacitor/preferences';
-// import {StatusBar, Style} from '@capacitor/status-bar';
-import {NavigationBar} from '@hugotomazi/capacitor-navigation-bar';
 import {isPlatform} from '@ionic/vue';
-import twConfig from '../../tailwind.config';
+import { Preferences } from '@capacitor/preferences';
+import {SafeArea} from 'capacitor-plugin-safe-area';
+import {NavigationBar} from '@hugotomazi/capacitor-navigation-bar';
 
 import type {ColorScheme} from '@/types/config';
 
 import {isDarkMode} from '@/config/global';
-import {RGBString2hex} from '@/lib/colorHelper';
-import {SafeArea} from 'capacitor-plugin-safe-area';
+import {useMediaQuery} from '@vueuse/core';
 
 export const setColorScheme = async (value: ColorScheme) => {
 	document.body.classList.add('scheme-transition');
@@ -39,7 +37,10 @@ export const setColorScheme = async (value: ColorScheme) => {
 		const {StatusBar, Style} = (await import('@capacitor/status-bar'));
 
 		StatusBar.setOverlaysWebView({overlay: true}).then();
-		StatusBar.setBackgroundColor({color: '#00000080'}).then();
+
+		NavigationBar.setTransparency({
+			isTransparent: false,
+		}).then();
 
 		const safeAreaData = await SafeArea.getSafeAreaInsets();
 		const {insets} = safeAreaData;
@@ -52,11 +53,15 @@ export const setColorScheme = async (value: ColorScheme) => {
 
 		if (value === 'dark') {
 			darkMode.value = true;
-			await NavigationBar.setColor({color: '#00000080', darkButtons: true});
+			isDarkMode.value = true;
+			NavigationBar.setColor({color: '#000000', darkButtons: true}).then();
+			StatusBar.setBackgroundColor({color: '#00000080'}).then();
 			StatusBar.setStyle({style: Style.Dark}).then();
 		} else {
 			darkMode.value = false;
-			await NavigationBar.setColor({color: '#00000080', darkButtons: false});
+			isDarkMode.value = false;
+			NavigationBar.setColor({color: '#FFFFFF', darkButtons: true}).then();
+			StatusBar.setBackgroundColor({color: '#FFFFFF40'}).then();
 			StatusBar.setStyle({style: Style.Light}).then();
 		}
 	}
@@ -85,7 +90,7 @@ watch(darkMode, async (value) => {
 (async () => {
 	const colorScheme = await checkColorScheme();
 
-	await setColorScheme(darkMode.value ? 'dark' : 'light');
+	await setColorScheme(useMediaQuery('(prefers-color-scheme: dark)').value || colorScheme  ? 'dark' : 'light');
 
 	if (!colorScheme) {
 		return;
