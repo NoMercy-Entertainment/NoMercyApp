@@ -88,7 +88,7 @@ const toggleServerState = () => {
 
     <template v-slot:cta>
       <div
-          class="relative h-7 flex flex-shrink-0 flex-grow-0 items-center justify-center gap-2 overflow-hidden text-auto-alpha-10 border-1 border-slate-light-10 dark:border-slate-dark-10 rounded-lg pl-1 pr-2 py-1"
+          class="relative h-7 flex flex-shrink-0 flex-grow-0 items-center justify-center gap-2 overflow-hidden border-1 border-slate-light-10 dark:border-slate-dark-10 text-slate-light-12/80 dark:text-slate-dark-12/80 rounded-lg pl-1 pr-2 py-1"
       >
         <MoooomIcon icon="pause" class="w-4"/>
         <p class="flex-shrink-0 flex-grow-0 text-sm">
@@ -96,10 +96,10 @@ const toggleServerState = () => {
         </p>
       </div>
       <div
-          class="relative h-7 flex flex-shrink-0 flex-grow-0 items-center justify-center gap-2 overflow-hidden text-auto-alpha-10 border-1 border-slate-light-10 dark:border-slate-dark-10 rounded-lg pl-1 pr-2 py-1"
+          class="relative h-7 flex flex-shrink-0 flex-grow-0 items-center justify-center gap-2 overflow-hidden border-1 border-slate-light-10 dark:border-slate-dark-10 text-slate-light-12/80 dark:text-slate-dark-12/80 rounded-lg pl-1 pr-2 py-1"
       >
         <MoooomIcon icon="shutdown" class="w-4"/>
-        <p class="flex-shrink-0 flex-grow-0 text-sm text-auto-alpha-10">
+        <p class="flex-shrink-0 flex-grow-0 text-sm">
           {{ $t('Shutdown') }}
         </p>
       </div>
@@ -107,68 +107,74 @@ const toggleServerState = () => {
 
     <div
         class="relative flex flex-shrink-0 flex-grow-0 items-start justify-start gap-4 self-stretch overflow-clip w-available">
-      <p class="w-auto flex-grow whitespace-nowrap text-sm">
+      <p class="w-auto flex-grow whitespace-nowrap text-sm text-slate-light-12 dark:text-slate-dark-12">
         {{ $t('Server') }}
       </p>
-      <p class="flex-shrink-0 flex-grow-0 text-sm line-clamp-1 dark:text-auto-alpha-10">
+      <p class="flex-shrink-0 flex-grow-0 text-sm line-clamp-1 text-slate-light-10 dark:text-slate-dark-10">
         {{ serverInfo?.server }}
       </p>
     </div>
     <div
         class="relative flex flex-shrink-0 flex-grow-0 items-start justify-start gap-4 self-stretch overflow-clip w-available">
-      <p class="w-auto flex-grow whitespace-nowrap text-sm">
+      <p class="w-auto flex-grow whitespace-nowrap text-sm text-slate-light-12 dark:text-slate-dark-12">
         {{ $t('Server version') }}
       </p>
-      <p class="flex-shrink-0 flex-grow-0 text-sm line-clamp-1 dark:text-auto-alpha-10">
+      <p class="flex-shrink-0 flex-grow-0 text-sm line-clamp-1 text-slate-light-10 dark:text-slate-dark-10">
         {{ serverInfo?.version }}
       </p>
     </div>
     <div
         class="relative flex flex-shrink-0 flex-grow-0 items-start justify-start gap-4 self-stretch overflow-clip w-available">
-      <p class="w-auto flex-grow whitespace-nowrap text-sm">
+      <p class="w-auto flex-grow whitespace-nowrap text-sm text-slate-light-12 dark:text-slate-dark-12">
         {{ $t('Uptime') }}
       </p>
-      <p class="flex-shrink-0 flex-grow-0 text-sm line-clamp-1 dark:text-auto-alpha-10">
+      <p class="flex-shrink-0 flex-grow-0 text-sm line-clamp-1 text-slate-light-10 dark:text-slate-dark-10">
         <KeepCounting :startTime="serverInfo?.bootTime" :key="serverInfo?.bootTime"/>
       </p>
     </div>
     <div
         class="relative flex flex-shrink-0 flex-grow-0 items-start justify-start gap-4 self-stretch overflow-clip w-available">
-      <p class="w-auto flex-grow text-sm">
+      <p class="w-auto flex-grow whitespace-nowrap text-sm text-slate-light-12 dark:text-slate-dark-12">
         {{ $t('OS') }}
       </p>
-      <p class="flex-shrink-0 flex-grow-0 text-sm line-clamp-1 text-auto-alpha-10">
+      <p class="flex-shrink-0 flex-grow-0 text-sm line-clamp-1 text-slate-light-10 dark:text-slate-dark-10">
         {{ serverInfo?.os.toTitleCase() }}
       </p>
     </div>
     <div
         class="relative flex flex-shrink-0 flex-grow-0 items-start justify-start gap-4 self-stretch overflow-clip w-available">
-      <p class="w-auto flex-grow whitespace-nowrap text-sm">
+      <p class="w-auto flex-grow whitespace-nowrap text-sm text-slate-light-12 dark:text-slate-dark-12">
         {{ $t('Architecture') }}
       </p>
-      <p class="flex-shrink-0 flex-grow-0 text-sm line-clamp-1 dark:text-auto-alpha-10">
+      <p class="flex-shrink-0 flex-grow-0 text-sm line-clamp-1 text-slate-light-10 dark:text-slate-dark-10">
         {{ serverInfo?.arch }}
       </p>
     </div>
     <div
         class="relative flex flex-shrink-0 flex-grow-0 items-start justify-start gap-4 self-stretch overflow-clip w-available"
         v-for="(cpu, index) in serverInfo?.cpu">
-      <p class="w-auto flex-grow whitespace-nowrap text-sm">
+      <p class="w-auto flex-grow whitespace-nowrap text-sm text-slate-light-12 dark:text-slate-dark-12">
         {{ $t('CPU') }} #{{ index + 1 }}
       </p>
-      <p class="flex-shrink-0 flex-grow-0 text-sm line-clamp-1 dark:text-auto-alpha-10">
+      <p class="flex-shrink-0 flex-grow-0 text-sm line-clamp-1 text-slate-light-10 dark:text-slate-dark-10">
         {{ cpu }}
       </p>
     </div>
     <div
         class="relative flex flex-shrink-0 flex-grow-0 items-start justify-start gap-4 self-stretch overflow-clip w-available"
         v-for="(gpu, index) in serverInfo?.gpu">
-      <p class="w-auto flex-grow whitespace-nowrap text-sm">
+      <p class="w-auto flex-grow whitespace-nowrap text-sm text-slate-light-12 dark:text-slate-dark-12">
         {{ $t('GPU') }} #{{ index + 1 }}
       </p>
-      <p class="flex-shrink-0 flex-grow-0 text-sm line-clamp-1 dark:text-auto-alpha-10">
+      <p class="flex-shrink-0 flex-grow-0 text-sm line-clamp-1 text-slate-light-10 dark:text-slate-dark-10">
         {{ gpu }}
       </p>
     </div>
   </ServerSystemCard>
 </template>
+
+<style scoped lang="scss">
+:root {
+  --p-metergroup-label-marker-size: 0.5rem;
+}
+</style>

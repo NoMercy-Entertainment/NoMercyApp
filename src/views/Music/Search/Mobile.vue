@@ -7,6 +7,7 @@ import {musicSearchResult, musicSearchValue} from '@/store/search';
 import CosmosBg2 from '@/components/Images/CosmosBg2.vue';
 import {setColorPalette} from '@/store/ui';
 import {greetingValue} from '@/config/global';
+import {showScreensaver} from "@/store/imageModal";
 
 const { isOpen, keyboardHeight } = useKeyboard();
 
@@ -22,6 +23,12 @@ onMounted(() => {
   }, 100);
 });
 
+watch(showScreensaver, (value) => {
+  if (value) {
+    search.value.$el.sblur();
+  }
+});
+
 </script>
 
 <template>
@@ -35,7 +42,7 @@ onMounted(() => {
       >
         <CosmosBg2 v-if="greetingValue && musicSearchResult.length == 0"/>
         <div v-if="greetingValue && musicSearchResult.length == 0" class="relative z-10 mt-16 flex flex-shrink-0 flex-grow-0 flex-col items-center justify-end gap-3">
-          <p class="flex-grow-0 flex-shrink-0 text-5xl font-black text-left text-[#eeecec]">
+          <p class="flex-grow-0 flex-shrink-0 text-5xl font-black text-left  text-slate-light-11 dark:text-slate-dark-11">
             {{ $t('Good') }}
             <span class="" id="greeting">
               {{ greetingValue }}

@@ -91,12 +91,12 @@ const classes = computed(() => {
           ? ''
           : 'h-9',
       props.variant == 'default' || props.variant == 'contained'
-          ? '!bg-gradient-to-b from-[var(--color-7)] to-[var(--color-5)] hover:from-[var(--color-8)] hover:to-[var(--color-6)] active:from-[var(--color-7)] active:to-[var(--color-4)] button-filled '
+          ? '!bg-gradient-to-b dark:from-[var(--color-7)] dark:to-[var(--color-5)] dark:hover:from-[var(--color-8)] dark:hover:to-[var(--color-6)] dark:active:from-[var(--color-7)] dark:active:to-[var(--color-4)] button-filled'
           : '',
       props.variant == 'text'
           ? 'hover:outline-[rgba(var(--color-7),.1)] hover:outline-1 hover:outline text-[rgb(var(--background-auto-alpha-10))]'
           : `
-				 shadow-[0_1px_0_0_rgba(255,255,255,0.20)_inset,0_-1px_0_0_rgba(var(--background-auto-11)/60%)_inset,0_22px_30px_-4px_rgba(var(--background-auto-11)/70%)]
+				 shadow-[0_1px_0_0_rgba(255,255,255,0.20)_inset,0_-1px_0_0_rgba(var(--background-auto-2)/60%)_inset,0_22px_30px_-4px_rgba(var(--background-auto-2)/70%)]
 				 dark:shadow-[0_1px_0_0_rgba(255,255,255,0.20)_inset,0_-1px_0_0_rgba(var(--background-auto-1)/30%)_inset,0_22px_30px_-4px_rgba(var(--background-auto-1)/70%)]
 
 				 active:!shadow-none

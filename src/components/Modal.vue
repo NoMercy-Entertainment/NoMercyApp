@@ -52,7 +52,10 @@ watch(visible, (value) => {
 </script>
 
 <template>
-  <Dialog v-model:visible="visible" v-model:open="visible" modal :header="$t(title, params)" role="dialog">
+  <Dialog v-model:visible="visible" v-model:open="visible" modal :header="$t(title, params)" role="dialog" class="w-full"
+  :class="{
+    [maxWidth]: true,
+  }">
     <ScrollPanel
         class="w-available h-available"
         :dt="{

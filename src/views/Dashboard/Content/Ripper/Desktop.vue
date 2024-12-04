@@ -1,14 +1,21 @@
 <script setup lang="ts">
 import {IonPage, IonContent} from '@ionic/vue';
-import ExploreContainer from '@/components/ExploreContainer.vue';
-import router from '@/router';
+
+import Chromecast from "@/components/Buttons/Chromecast.vue";
+import DashboardLayout from "@/Layout/Desktop/DashboardLayout.vue";
 
 </script>
 
 <template>
   <ion-page>
     <ion-content :fullscreen="true">
-      <ExploreContainer :name="`${router.currentRoute.value.name as string} Desktop page`" />
+      <DashboardLayout title="Notifications" :gridStyle="2">
+        <template v-slot:cta>
+        </template>
+        <div class="grid place-content-center w-available h-available">
+          <Chromecast/>
+        </div>
+      </DashboardLayout>
     </ion-content>
   </ion-page>
 </template>

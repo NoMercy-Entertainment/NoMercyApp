@@ -6,7 +6,8 @@ import {user} from '@/store/user'
 
 export const storeUserDetails = (): Promise<void> => {
 	return new Promise((resolve, reject) => {
-		if (!isPlatform('capacitor') || user.value.accessToken) {
+
+		if (!isPlatform('capacitor') && user.value.accessToken) {
 			resolve();
 			return;
 		}
@@ -30,7 +31,7 @@ export const storeUserDetails = (): Promise<void> => {
 				};
 
 				if (keycloak.idTokenParsed) {
-					console.log(keycloak.idTokenParsed);
+
 					user.value = {
 						...user.value,
 						id: keycloak.idTokenParsed.sub as string,
@@ -53,6 +54,7 @@ export const storeUserDetails = (): Promise<void> => {
 			}
 
 		} catch (error) {
+			location.reload();
 			reject(new Error('Not authenticated'));
 		}
 	});

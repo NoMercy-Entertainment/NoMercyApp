@@ -61,9 +61,7 @@ defineProps({
       <RouterLink :to="carousel?.props.data.link" id="watch_now" ref="play"
                   tabindex="0"
                   class="text-black flex-grow-0 flex-shrink-0 px-4 py-2 rounded-3xl bg-slate-light-4 focus-visible:ring-[3px] ring-inset focus-visible:ring-focus">
-              <span class="">
-                {{ 'Watch Now' }}
-              </span>
+                {{ $t('Watch Now') }}
       </RouterLink>
     </div>
   </div>

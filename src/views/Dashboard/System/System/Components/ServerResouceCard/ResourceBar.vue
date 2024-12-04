@@ -27,7 +27,7 @@ const color = computed(() => {
 </script>
 
 <template>
-	<div class="flex flex-shrink-0 flex-grow-0 items-start justify-start gap-4 self-stretch">
+	<div class="flex flex-shrink-0 flex-grow-0 items-start justify-start gap-4 self-stretch text-slate-light-11/80 dark:text-slate-dark-11/80">
 		<div class="flex flex-grow flex-col items-start justify-start gap-1 text-left">
 			<div
 				class="relative flex flex-shrink-0 flex-grow-0 items-center justify-start self-stretch"

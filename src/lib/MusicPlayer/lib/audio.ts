@@ -1,7 +1,7 @@
 import { Helpers } from './helpers';
-import { type AudioOptions, PlayerState } from './types';
+import {type AudioOptions, EQBand, PlayerState} from './types';
 import { isPlatform} from '@ionic/vue';
-import {Band, bands, loadEqualizerSettings} from "@/store/audioPlayer";
+import {bands, loadEqualizerSettings} from "@/store/audioPlayer";
 
 export class PlayerAudio {
     public state: PlayerState = PlayerState.STOPPED;
@@ -21,8 +21,9 @@ export class PlayerAudio {
     preGain: GainNode | null = null;
     filters: BiquadFilterNode[] = [];
     panner: StereoPannerNode | null = null;
+    bands: EQBand[] = [];
 
-    private isFading: boolean = false;
+    isFading: boolean = false;
     protected hasNextQueued: boolean = false;
     protected repeat: 'off'|'one'|'all' = 'off';
 
@@ -31,6 +32,7 @@ export class PlayerAudio {
         this.parent = parent;
         this._prefetchLeeway = options.prefetchLeeway ?? 10;
         this.fadeDuration = options.fadeDuration ?? 3;
+        this.bands = options.bands;
 
         this._initialize();
     }
@@ -147,13 +149,13 @@ export class PlayerAudio {
         this.fadeOutVolume = volume;
     }
 
-    public setCrossfadeSteps(steps: number) {
+    public setCrossFadeSteps(steps: number) {
         this.crossFadeSteps = steps;
     }
 
     public _fadeIn(firstRun: boolean = false) {
         if (firstRun) {
-            // console.log('first-in', this._audioElement.id, this.fadeInVolume, this.volume, this.crossfadeSteps);
+            // console.log('first-in', this._audioElement.id, this.fadeInVolume, this.volume, this.crossFadeSteps);
             this.fadeVolume(0);
             this.fadeInVolume = 0;
         }
@@ -173,7 +175,7 @@ export class PlayerAudio {
             this.fadeInVolume = 100;
         }
 
-        // console.log('in', this._audioElement.id, this.fadeInVolume, this.volume, this.crossfadeSteps);
+        // console.log('in', this._audioElement.id, this.fadeInVolume, this.volume, this.crossFadeSteps);
         this.fadeVolume(this.fadeInVolume);
 
         if (this.fadeInVolume >= this.volume - this.crossFadeSteps * 12) {
@@ -182,8 +184,9 @@ export class PlayerAudio {
     }
 
     public _fadeOut(firstRun: boolean = false) {
+        this.isFading = true;
         if (firstRun) {
-            // console.log('first-out', this._audioElement.id, this.fadeOutVolume, this.volume, this.crossfadeSteps);
+            // console.log('first-out', this._audioElement.id, this.fadeOutVolume, this.volume, this.crossFadeSteps);
             this.fadeOutVolume = this.volume;
         }
 
@@ -198,7 +201,7 @@ export class PlayerAudio {
             this.fadeOutVolume = 0;
         }
 
-        // console.log('out', this._audioElement.id, this.fadeOutVolume, this.volume, this.crossfadeSteps);
+        // console.log('out', this._audioElement.id, this.fadeOutVolume, this.volume, this.crossFadeSteps);
 
         this.fadeVolume(this.fadeOutVolume);
 
@@ -318,12 +321,10 @@ export class PlayerAudio {
         }
 
         if (
-            !this.isFading &&
             this.repeat !== 'one' &&
             this._audioElement.currentTime >=
-                this._audioElement.duration - this.fadeDuration * 2
+                this._audioElement.duration - (this.fadeDuration * 4)
         ) {
-            this.isFading = true;
             this.parent.emit('startFadeOut');
         }
     }
@@ -456,13 +457,22 @@ export class PlayerAudio {
     }
 
     private _initializeContext(): void {
+        if (localStorage.getItem('supports-audio-context') === 'false') return;
 
-        if (!this.context && localStorage.getItem('supports-audio-context') === 'true') {
+        if (!this.context) {
             try {
                 // @ts-ignore
                 this.context = new (window.AudioContext || window.webkitAudioContext)();
+
+                // @ts-ignore
+                this.context.onerror = () => {
+                    localStorage.setItem('supports-audio-context', 'false');
+                    this.context!.close().then();
+                    location.reload();
+                }
+
                 this.preGain = this.context.createGain();
-                this.filters = bands.value
+                this.filters = this.bands
                     .slice(1)
                     .map(band =>
                         this.createFilter(band.frequency as number, 'peaking'));
@@ -488,7 +498,7 @@ export class PlayerAudio {
                 });
 
                 // @ts-ignore internal event
-                this.parent.on('setFilter', (band: Band) => {
+                this.parent.on('setFilter', (band: EQBand) => {
                     const index = bands.value.findIndex(b => b.frequency === band.frequency);
                     this.filters[index - 1].gain.value = band.gain;
                 });

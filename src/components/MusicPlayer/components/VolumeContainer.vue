@@ -6,7 +6,7 @@ import VolumeSlider from '@/components/MusicPlayer/components/VolumeSlider.vue';
 </script>
 
 <template>
-    <div class="mr-2 flex w-32 items-center gap-2"
+    <div class="mr-2 flex w-32 min-w-28 items-center gap-2"
          :data-size="musicSize">
 
         <VolumeButton />

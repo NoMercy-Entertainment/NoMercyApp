@@ -4,6 +4,7 @@ import {type PropType, ref} from 'vue';
 import {onClickOutside} from '@vueuse/core';
 import {twMerge} from 'tailwind-merge';
 import router from '@/router';
+import {deviceMenuOpen, equalizerMenuOpen, lyricsMenuOpen, queueMenuOpen} from "@/store/audioPlayer";
 
 defineProps({
   className: {
@@ -30,6 +31,10 @@ onClickOutside(menu, () => open.value = false);
 const id = ref('');
 
 const handleClick = (e: MouseEvent) => {
+  equalizerMenuOpen.value = false;
+  lyricsMenuOpen.value = false;
+  queueMenuOpen.value = false;
+  deviceMenuOpen.value = false;
   e.stopPropagation();
   open.value = !open.value;
 };

@@ -1,5 +1,6 @@
 import {SliderBar} from '@/lib/MusicPlayer/lib/sliderBar';
 import {LogoResponse} from '@/types/server';
+import {ClickEventHandler} from "@/lib/utils";
 
 HTMLElement.prototype.sliderBar = function (player: any, callbackFn: string, getSizeFn?: string) {
     if (!(this instanceof HTMLElement) || this.dataset.type != 'slider-bar')

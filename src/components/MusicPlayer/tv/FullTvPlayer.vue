@@ -209,7 +209,6 @@ const toggleDarkMode = (e?: MouseEvent) => {
         <div id="controls"
              class="fixed bottom-0 left-0 flex flex-col w-available h-40 items-center px-16 pt-4 mt-4 gap-4 transition-transform duration-500 bg-black/10
              xl:hover:![translate:0px_0%]"
-             :class="lyricsMenuOpen && hasLyrics ? 'backdrop-blur-sm' : 'backdrop-blur-0'">
 
             <ProgressBarContainer v-if="musicSize == SizeState.full"
                                   class="children:!mx-0 gap-4 children:!pointer-events-none !pointer-events-none"

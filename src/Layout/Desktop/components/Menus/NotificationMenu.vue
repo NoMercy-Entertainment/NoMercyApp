@@ -6,6 +6,7 @@ import messagesState, {markAllMessagesRead} from '@/store/messages';
 import DropdownMenu from '@/Layout/Desktop/components/Menus/DropdownMenu.vue';
 import NotificationItem from '@/Layout/Desktop/components/Menus/NotificationItem.vue';
 import MoooomIcon from '@/components/Images/icons/MoooomIcon.vue';
+import {deviceMenuOpen, equalizerMenuOpen, lyricsMenuOpen, queueMenuOpen} from "@/store/audioPlayer";
 
 const hasRang = ref(false);
 const ringing = ref(false);

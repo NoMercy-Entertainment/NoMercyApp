@@ -53,7 +53,7 @@ const image = computed(() => {
         v-if="data?.link"
         :data-scroll="scrollLetter"
         :to="data?.link"
-        class="group/card flex flex-col h-full items-center focus-outline overflow-clip relative rounded-lg select-none shadow-[0px_0px_0_1px_rgb(var(--color-focus,var(--color-theme-6))/70%)] w-full z-0 bg-auto-50/70 flex-grow-0"
+        class="group/card flex flex-col h-full items-center contain-paint focus-outline overflow-hidden relative rounded-lg select-none shadow-[0px_0px_0_1px_rgb(var(--color-focus,var(--color-theme-6))/70%)] w-full z-0 bg-auto-50/70 flex-grow-0"
         :class="backdropStyle ? 'aspect-backdrop' : 'aspect-poster'"
         :style="`
             --color-focus: ${data?.color_palette?.[backdropStyle ? 'backdrop' : 'poster']
@@ -110,8 +110,8 @@ const image = computed(() => {
 
         </template>
         <div v-else
-            :class="`flex flex-col justify-start items-start w-full h-12 z-0 absolute left-0 transition-all duration-300 px-2 py-1 group-hover/card:-bottom-0 text-left ${image ? '-bottom-20' : 'bottom-0'}`">
-            <div class="absolute inset-0 z-0 opacity-0 group-hover/card:opacity-100 transition-all duration-300 bg-auto-1/60"></div>
+            :class="`flex flex-col justify-start items-start w-full contain-strict will-change-transform h-12 z-0 absolute overflow-clip rounded-b-lg left-0 transition-all duration-300 px-2 py-1 group-hover/card:-bottom-0 text-left ${image ? '-bottom-20' : 'bottom-0'}`">
+            <div class="absolute inset-0 z-0 opacity-0 group-hover/card:opacity-100 transition-all duration-300 bg-auto-1/60 overflow-clip rounded-b-lg"></div>
             <p class="z-10 w-auto flex-shrink-0 flex-grow-0 self-stretch text-xs font-semibold line-clamp-2 leading-[1.2] text-auto-12 empty:hidden dark:font-medium">
                 {{ data?.title }}
             </p>

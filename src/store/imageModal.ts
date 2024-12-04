@@ -10,12 +10,6 @@ export const setImageModalOpen = (open: boolean) => {
 	sim.value = open;
 }
 
-const ssd = ref<number>(5);
-export const screensaverDelay = computed(() => ssd.value);
-export const setScreensaverDelay = (delay: number) => {
-	ssd.value = delay;
-}
-
 const sss = ref<boolean>();
 export const showScreensaver = computed(() => sss.value);
 export const toggleScreensaver = () => {

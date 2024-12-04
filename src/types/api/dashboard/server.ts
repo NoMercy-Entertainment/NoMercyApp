@@ -61,7 +61,7 @@ export interface ServerInfo {
 	server: string;
 	os: string;
 	arch: string;
-	cpu: string;
+	cpu: string[];
 	gpu: string[];
 	version: string;
 	bootTime: number;

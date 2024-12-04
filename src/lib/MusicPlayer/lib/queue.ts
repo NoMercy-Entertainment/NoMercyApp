@@ -195,17 +195,18 @@ export class Queue extends Helpers {
 
             this.getNewSource(this._queue[0])
                 .then((src) => {
+                    this._currentAudio.isFading = true;
                     this._nextAudio.setSource(src);
                     this._nextAudio.fadeVolume(0);
                     this.once('startFadeOut', () => {
                         if (this._repeat === 'one') return;
 
-                        this._currentAudio.setCrossfadeSteps(
+                        this._currentAudio.setCrossFadeSteps(
                             currentVolume / this.fadeDuration / 5
                         );
                         this._currentAudio._fadeOut(true);
 
-                        this._nextAudio.setCrossfadeSteps(
+                        this._nextAudio.setCrossFadeSteps(
                             currentVolume / this.fadeDuration / 5
                         );
                         this._nextAudio._fadeIn(true);
@@ -225,6 +226,7 @@ export class Queue extends Helpers {
 
                             this.once('setCurrentAudio', () => {
                                 if (this._repeat == 'one') return;
+                                this._currentAudio.isFading = false;
 
                                 this._currentAudio = this._nextAudio;
 

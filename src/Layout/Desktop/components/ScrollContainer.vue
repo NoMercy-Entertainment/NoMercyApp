@@ -1,8 +1,9 @@
 <script lang="ts" setup>
 import {onMounted, ref} from 'vue';
+import {VueScrollEvent} from '@/vite-env';
+
 import router from '@/router';
 import {musicVisibility} from '@/store/audioPlayer';
-import {VueScrollEvent} from '@/vite-env';
 
 const refHandle = ref<HTMLSpanElement>();
 const refBar = ref<HTMLDivElement>();
@@ -46,8 +47,8 @@ const enable = () => {
 
     const scroll = container.scrollTop / container.scrollHeight;
     handle.style.top = `${scroll * 100}%`;
-
-    if ((container.firstElementChild as HTMLDivElement)?.scrollHeight >= height || container.scrollHeight >= height) {
+    
+    if ((container.firstElementChild as HTMLDivElement)?.scrollHeight > height || container.scrollHeight > height) {
       show.value = true;
     } else {
       show.value = false;

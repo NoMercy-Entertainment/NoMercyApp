@@ -440,7 +440,7 @@ const toggleWatched = () => {
           </RouterLink>
           <button
               @click="toggleWatched"
-              class="flex justify-center items-center flex-grow h-10 relative overflow-hidden gap-3 px-6 py-4 rounded-lg bg-black/5   backdrop-blur-[50px] mix-blend-screen"
+              class="flex justify-center items-center flex-grow h-10 relative overflow-hidden gap-3 px-6 py-4 rounded-lg bg-black/5 mix-blend-screen"
           >
             <MoooomIcon icon="addCircle" className="w-6"/>
             <p class="flex-shrink-0 flex-grow-0 text-center font-medium text-[15px]">

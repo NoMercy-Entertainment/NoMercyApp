@@ -113,7 +113,7 @@ const loadMore = ref(null);
 		<div v-if="greeting"
 			class="relative flex w-full flex-shrink-0 flex-grow-0 flex-col items-center justify-end gap-3"
 		>
-			<p class="flex-grow-0 flex-shrink-0 text-5xl font-black text-left text-[#eeecec]">
+			<p class="flex-grow-0 flex-shrink-0 text-5xl font-black text-left  text-slate-light-11 dark:text-slate-dark-11">
 				{{ $t('Good') }}
 				<span class="" id="greeting">
 						{{ greetingValue }}

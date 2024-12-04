@@ -18,6 +18,7 @@ import BannerButton from '@/components/Buttons/BannerButton.vue';
 import MoooomIcon from '@/components/Images/icons/MoooomIcon.vue';
 import {DisplayList} from '@/types/api/music/musicPlayer';
 import {queryKey} from "@/lib/routerHelper";
+import MusicButton from "@/components/MusicPlayer/components/MusicButton.vue";
 
 
 const props = defineProps({
@@ -44,8 +45,8 @@ const query = useQueryClient();
 
 const liked = ref(props.data?.favorite);
 
-const handleLike = (e: Event) => {
-	e.stopPropagation();
+const handleLike = (e?: MouseEvent) => {
+	e?.stopPropagation();
 	serverClient()
 		.post<StatusResponse<string>>(`/${props.data?.media_type ?? props.type}/${props.data?.id}/like`, {
 			value: !liked.value,
@@ -70,9 +71,9 @@ const handleLike = (e: Event) => {
 </script>
 
 <template>
-	<BannerButton :onclick="handleLike" title="Favorite">
+	<MusicButton :onclick="handleLike" label="Favorite">
 		<MoooomIcon v-if="liked" icon="heart" :class="className"
 								:style="`--fill-color: rgb(var(--color-focus, var(--color-red-8))); color: rgb(var(--color-focus, var(--color-red-8)));`"/>
 		<MoooomIcon v-else icon="heart" :class="className"/>
-	</BannerButton>
+	</MusicButton>
 </template>

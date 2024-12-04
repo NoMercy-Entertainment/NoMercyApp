@@ -1,5 +1,7 @@
 <script setup lang="ts">
 
+import {dashboardSocketIsConnected} from "@/lib/clients/dashboardSocket";
+
 defineProps({
     title: {
         type: String,
@@ -15,11 +17,11 @@ defineProps({
 </script>
 
 <template>
-    <div
-        class="flex flex-shrink-0 flex-grow-0 flex-col items-start justify-start gap-2 self-stretch"
+    <div v-if="dashboardSocketIsConnected"
+        class="flex flex-shrink-0 flex-grow-0 flex-col items-start justify-start gap-3 self-stretch"
     >
         <div
-            class="relative flex flex-shrink-0 flex-grow-0 items-center justify-start gap-6 self-stretch"
+            class="relative flex flex-shrink-0 flex-grow-0 items-center justify-start gap-4 self-stretch text-slate-light-12 dark:text-slate-dark-12"
         >
             <p class="flex-grow text-xl font-medium">
                 {{ $t(title) }}
@@ -32,7 +34,7 @@ defineProps({
         <div
             class="flex flex-shrink-0 flex-grow-0 flex-col items-start justify-start gap-4 self-stretch rounded-xl"
             :class="{
-              'bg-auto-2/6 dark:bg-auto-alpha-3 p-4' : background
+              'bg-slate-lightA-3 dark:bg-slate-darkA-3 p-4' : background
             }"
         >
             <slot />

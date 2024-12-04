@@ -21,6 +21,9 @@ export interface LibrariesResponse {
 	color_palette: null;
 	created_at: string;
 	poster: string;
+	overview: string;
+	backdrop: string;
+	logo: string;
 	updated_at: string;
 	folder_library: FolderLibrary[];
 	subtitles: string[];

@@ -24,13 +24,13 @@ export class SocketClient {
         this.connection = this.connectionBuilder();
     }
 
-		public dispose = async () => {
-			if (!this.connection) return;
+    dispose = async () => {
+        if (!this.connection) return;
 
-			await this.connection.stop();
-		}
+        await this.connection.stop();
+    }
 
-    public setup = async () => {
+    setup = async () => {
 			if (!this.connection) return;
 
         try {

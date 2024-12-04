@@ -3,6 +3,7 @@ import {PaletteColors, pickPaletteColor} from '@/lib/colorHelper';
 import {isPlatform} from '@ionic/vue';
 import {SortOrder, SortType} from '@/types/musicPlayer';
 import {useAutoThemeColors} from '@/store/preferences';
+import {Preferences} from "@capacitor/preferences";
 
 export const setupComplete = ref(false);
 
@@ -42,6 +43,12 @@ const l = ref<string|null>();
 export const logo = computed(() => l.value);
 export function setLogo(value?: string | null) {
   l.value = value;
+}
+
+export const displayLanguage = ref(window.navigator.language);
+export function setDisplayLanguage(value: string) {
+    displayLanguage.value = value;
+    Preferences.set({key: 'display_language', value: value}).then();
 }
 
 interface StatusBarPlugin {

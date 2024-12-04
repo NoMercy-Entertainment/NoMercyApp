@@ -6,6 +6,7 @@ import useServerClient from '@/lib/clients/useServerClient';
 
 import SystemCard from '../ServerSystemCard.vue';
 import ActivityCard from './ActivityCard.vue';
+import {dashboardSocketIsConnected} from "@/lib/clients/dashboardSocket";
 
 const {data: serverActivity} = useServerClient<ActivityLog[]>({
   path: 'dashboard/activity',
@@ -23,7 +24,7 @@ const {data: devices} = useServerClient<Device[]>({
 </script>
 
 <template>
-  <SystemCard title="Activity" :background="false">
+  <SystemCard v-if="dashboardSocketIsConnected" title="Activity" :background="false">
 
     <template v-slot:cta>
 

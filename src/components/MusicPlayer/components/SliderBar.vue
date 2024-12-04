@@ -46,7 +46,12 @@ const computedPercentage = computed(() => {
       :step="step"
       :min="min"
       :max="max"
-      class="relative flex h-2 w-full cursor-pointer appearance-none rounded-full accent-focus [&::-webkit-slider-runnable-track]:rounded-full [&::-webkit-slider-thumb]:opacity-0 [&::-moz-slider-thumb]:opacity-0 group-hover:[&::-webkit-slider-thumb]:opacity-100 group-hover:[&::-moz-slider-thumb]:opacity-100 [&::-webkit-slider-thumb]:transition-all [&::-moz-slider-thumb]:transition-all [&::-webkit-slider-thumb]:duration-100 [&::-moz-slider-thumb]:duration-100 [background-image:_-webkit-gradient(linear,_left_top,_right_top,_color-stop(var(--left),_rgb(var(--color-focus,_var(--color-theme-7)))),_color-stop(var(--left),_#00000080))] dark:[background-image:_-webkit-gradient(linear,_left_top,_right_top,_color-stop(var(--left),_rgb(var(--color-focus,_var(--color-theme-9)))),_color-stop(var(--left),_#ffffff80))] bg-focus"
+      class="relative w-full
+        [&::-webkit-slider-thumb]:opacity-0
+        [&::-moz-slider-thumb]:opacity-0
+        group-hover:[&::-webkit-slider-thumb]:opacity-100
+        group-hover:[&::-moz-slider-thumb]:opacity-100
+      "
       :value="position"
       :style="{ '--left': `${computedPercentage}%` }"
       @input="$emit('update:modelValue', ($event.target as HTMLInputElement).value)"

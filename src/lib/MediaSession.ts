@@ -147,7 +147,7 @@ export class MediaSession {
 							`${artwork}?width=96&type=png&aspect_ratio=1`
 						),
 						sizes: '96x96',
-						type: artwork.endsWith('.png')
+						type: artwork.endsWith('.png') || artwork.includes('type=png')
 							? 'image/png'
 							: 'image/jpeg',
 					},
@@ -156,7 +156,7 @@ export class MediaSession {
 							`${artwork}?width=128&type=png&aspect_ratio=1`
 						),
 						sizes: '128x128',
-						type: artwork.endsWith('.png')
+						type: artwork.endsWith('.png') || artwork.includes('type=png')
 							? 'image/png'
 							: 'image/jpeg',
 					},
@@ -165,7 +165,7 @@ export class MediaSession {
 							`${artwork}?width=192&type=png&aspect_ratio=1`
 						),
 						sizes: '192x192',
-						type: artwork.endsWith('.png')
+						type: artwork.endsWith('.png') || artwork.includes('type=png')
 							? 'image/png'
 							: 'image/jpeg',
 					},
@@ -174,7 +174,7 @@ export class MediaSession {
 							`${artwork}?width=256&type=png&aspect_ratio=1`
 						),
 						sizes: '256x256',
-						type: artwork.endsWith('.png')
+						type: artwork.endsWith('.png') || artwork.includes('type=png')
 							? 'image/png'
 							: 'image/jpeg',
 					},
@@ -183,7 +183,7 @@ export class MediaSession {
 							`${artwork}?width=384&type=png&aspect_ratio=1`
 						),
 						sizes: '384x384',
-						type: artwork.endsWith('.png')
+						type: artwork.endsWith('.png') || artwork.includes('type=png')
 							? 'image/png'
 							: 'image/jpeg',
 					},
@@ -192,7 +192,7 @@ export class MediaSession {
 							`${artwork}?width=512&type=png&aspect_ratio=1`
 						),
 						sizes: '512x512',
-						type: artwork.endsWith('.png')
+						type: artwork.endsWith('.png') || artwork.includes('type=png')
 							? 'image/png'
 							: 'image/jpg',
 					},

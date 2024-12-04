@@ -113,7 +113,7 @@ export default {
       animation: {
         'accordion-down': 'accordion-down 0.2s ease-out',
         'accordion-up': 'accordion-up 0.2s ease-out',
-        marquee: 'backAndForth 15s linear infinite',
+        marquee: 'backAndForth 5s linear infinite',
         pause: 'animation-play-state: paused',
         swing: 'swing 0.5s infinite'
       },

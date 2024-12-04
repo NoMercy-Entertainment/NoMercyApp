@@ -40,7 +40,7 @@ defineProps({
         style="background: linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0.24) 25.86%, rgba(0,0,0,0.9) 77.75%);"
     >
       <p
-          class="self-stretch flex-grow-0 flex-shrink-0 w-full text-3xs font-bold text-left text-[#eeecec]"
+          class="self-stretch flex-grow-0 flex-shrink-0 w-full text-3xs font-bold text-left  text-slate-light-11 dark:text-slate-dark-11"
       >
         {{ item.props.data.title }}
       </p>

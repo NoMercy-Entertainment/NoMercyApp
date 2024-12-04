@@ -13,6 +13,17 @@ import gzipPlugin from "rollup-plugin-gzip";
 export default defineConfig({
 	plugins: [
 		vue({
+			template: {
+				compilerOptions: {
+					isCustomElement: (tag) => [
+						// 'google-cast-launcher',
+					].includes(tag),
+				},
+				transformAssetUrls: {
+					// ...
+				},
+
+			},
 		}),
 		// legacy({
 		// 	targets: ['chrome 100', 'firefox 100', 'safari 14', 'edge 100', 'not IE 11'],
@@ -151,16 +162,16 @@ export default defineConfig({
 				'https://vscode.nomercy.tv',
 				'https://trailer.nomercy.tv',
 				'https://*.nomercy.tv:*',
-				'https://ssl.p.jwpcdn.com/player/v/8.28.1/jwplayer.js',
+				'https://cdn.jsdelivr.net/npm/webvtt-parser@2.2.0/parser.min.js',
+				'https://www.gstatic.com',
+
+				// 'https://ssl.p.jwpcdn.com/player/v/8.28.1/jwplayer.js',
 				// 'https://www.gstatic.com/cv/js/sender/v1/cast_sender.js',
 				// 'https://www.gstatic.com/cast/sdk/libs/sender/1.0/cast_framework.js',
-				'https://cdn.jsdelivr.net/npm/webvtt-parser@2.2.0/parser.min.js',
-				'https://ssl.p.jwpcdn.com',
-				'https://vjs.zencdn.net',
-				'https://cdn.jsdelivr.net',
+				// 'https://ssl.p.jwpcdn.com',
+				// 'https://vjs.zencdn.net',
+				// 'https://cdn.jsdelivr.net',
 				// 'https://content.jwplatform.com',
-				// 'https://www.gstatic.com',
-
 				// 'https://unpkg.com/codepage@1.15.0/cptable.js',
 				// 'https://unpkg.com/codepage@1.15.0/cputils.js',
 				// 'https://storage.nomercy.tv/laravel/player/js/opentype.min.js',

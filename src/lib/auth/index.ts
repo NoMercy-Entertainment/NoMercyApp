@@ -3,7 +3,7 @@ import {generatePKCE, parseToken} from './helpers';
 import apiClient from '@/lib/clients/apiClient';
 import cdnClient from '../clients/cdnClient';
 
-import {user, setUser} from '@/store/user';
+import {user} from '@/store/user';
 import {isPlatform} from '@ionic/vue';
 import {authBaseUrl} from '@/config/config';
 
@@ -64,7 +64,7 @@ async function redirectToOAuth(prompt = false) {
 
 		let redirect = `${originalLocation}/#/oauth/callback`;
 		if (isPlatform('capacitor')) {
-			redirect = 'nomercy://logout';
+			redirect = 'nomercy:///logout';
 		}
 
 		const queryParams = new URLSearchParams({
@@ -101,36 +101,44 @@ function requestToken() {
 		});
 }
 
-export async function refreshToken() {
-	const refreshToken = localStorage.getItem('refresh_token') as string;
+export function refreshToken() {
+	return new Promise((resolve, reject) => {
+		setTimeout(async () => {
+			const refreshToken = location.search.split('refreshToken=')?.[1]?.split('&')?.[0]
+				?? localStorage.getItem('refresh_token')
+				?? undefined;
 
-	if (!refreshToken) {
-		throw new Error('refreshToken: No refresh token');
-	}
+			if (!refreshToken) {
+				document.body.innerHTML = 'Error: No refresh token';
+				throw new Error('refreshToken: No refresh token');
+			}
 
-	return await cdnClient()
-		.post<TokenResponse, RefreshTokenRequestData>(`${authBaseUrl}token`, {
-			grant_type: 'refresh_token',
-			client_id: clientId,
-			client_secret: clientSecret,
-			refresh_token: refreshToken,
-		}, {
-			headers: {
-				'Accept': 'application/json',
-				'Content-Type': 'application/x-www-form-urlencoded',
-			},
-		})
-		.then((response) => {
-			storeTokens(response.data);
-			return response;
-		})
-		.catch((error) => {
-			console.error(error);
-			clearTokens();
-			sessionStorage.clear();
-			localStorage.clear();
-			location.reload();
-		});
+			cdnClient()
+				.post<TokenResponse, RefreshTokenRequestData>(`${authBaseUrl}token`, {
+					grant_type: 'refresh_token',
+					client_id: clientId,
+					client_secret: clientSecret,
+					refresh_token: refreshToken,
+				}, {
+					headers: {
+						'Accept': 'application/json',
+						'Content-Type': 'application/x-www-form-urlencoded',
+					},
+				})
+				.then((response) => {
+					storeTokens(response.data);
+					return resolve(response);
+				})
+				.catch((error) => {
+					console.error(error);
+					clearTokens();
+					sessionStorage.clear();
+					localStorage.clear();
+					location.reload();
+					return reject(error);
+				});
+		}, 1500);
+	});
 }
 
 let refreshInterval: NodeJS.Timeout = <NodeJS.Timeout>{};
@@ -155,14 +163,14 @@ function hasValidToken() {
 }
 
 export function storeTokens(data: TokenResponse) {
-	setUser({
+	user.value = {
 		...user.value,
 		refreshIn: new Date(Date.now() + (data.expires_in * 1000)).getTime(),
 		accessToken: data.access_token,
 		refreshToken: data.refresh_token,
 		idToken: data.id_token,
 		expiresIn: data.expires_in,
-	});
+	};
 
 	localStorage.setItem('access_token', data.access_token);
 	localStorage.setItem('refresh_token', data.refresh_token);
@@ -171,13 +179,13 @@ export function storeTokens(data: TokenResponse) {
 	try {
 		const decodedToken = parseToken<IDToken>(data.id_token!);
 
-		setUser({
+		user.value = {
 			...user.value,
 			name: decodedToken.display_name,
 			email: decodedToken.email,
 			id: decodedToken.sub,
 			locale: decodedToken.locale,
-		});
+		};
 
 	} catch (error) {
 		console.error(error);

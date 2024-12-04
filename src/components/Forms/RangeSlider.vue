@@ -17,7 +17,6 @@ const props = defineProps({
     default: 0.1
   },
   value: {
-    type: Number,
     required: true,
   },
   vertical: {
@@ -25,6 +24,11 @@ const props = defineProps({
     required: false,
     default: false
   },
+  markers: {
+    type: Boolean,
+    required: false,
+    default: false
+  }
 });
 
 const rangeMarkers = ref<HTMLElement | null>(null);
@@ -43,10 +47,10 @@ const markers = computed(() => {
     }
     markerArray.push({ value: i, position });
   }
-  return markerArray;
+  return markerArray.filter((marker) => marker.value == props.min || marker.value == props.max || marker.value % 50 === 0);
 });
 
-const left = computed(() => `${convertToPercentage(props.value, props.min, props.max)}%`);
+const left = computed(() => `${convertToPercentage(props.value as number, props.min, props.max)}%`);
 
 const updateMarkers = () => {
   if (rangeMarkers.value) {
@@ -68,50 +72,52 @@ const updateMarkers = () => {
 };
 
 onMounted(() => {
-  updateMarkers();
+  if (props.markers) {
+    updateMarkers();
+  }
 });
 
 </script>
 
 <template>
-  <div class="range-container relative"
-       :class="{
-          'w-4': vertical ,
-          'h-4': !vertical
-       }">
-    <slot
-        :min="min"
-        :max="max"
-        :step="step"
-        :left="left"
-    />
-    <div ref="rangeMarkers"
-         class="range-markers flex"
+  <div class="flex justify-start items-center gap-1 range-container relative"
+    :class="{
+      'flex-col w-full': !vertical,
+      'h-min' : vertical
+    }"
+  >
+    <div class="flex justify-between items-start self-stretch relative"
          :class="{
-            'flex-col h-available py-2 -ml-[1.1rem] w-4 bottom-1.5 top-6 left-0 text-end': vertical,
-            'flex-row w-available px-4 -mt-1 h-4 -top-3 left-0 right-7 text-center': !vertical
+            'flex-col-reverse py-1' : vertical
          }"
-    ></div>
+    >
+      <template v-for="marker in markers" :key="marker.value">
+        <p class="text-2xs leading-none font-medium text-right text-slate-light-9 dark:text-slate-dark-9 w-0 whitespace-nowrap mr-1"
+           :class="{
+              'first:opacity-0 last:opacity-0 self-center' : !vertical,
+              '-ml-1 mb-1' : !vertical,
+              'flex-col-reverse w-4' : vertical,
+              '-ml-1 mt-0.5 mr-1.5' : vertical,
+           }"
+        >
+          {{marker.value}}
+        </p>
+      </template>
+    </div>
+    <div
+        class="flex flex-col justify-start items-start relative"
+        :class="{
+          'w-full': !vertical,
+          'h-min' : vertical
+        }"
+    >
+      <slot
+          :min="min"
+          :max="max"
+          :step="step"
+          :left="left"
+      />
+    </div>
   </div>
+
 </template>
-
-<style>
-.range-markers {
-  position: absolute;
-  display: flex;
-  pointer-events: none;
-  left: 50%;
-  width: 1rem;
-}
-
-.range-marker {
-  position: absolute;
-  width: 1rem;
-}
-
-.range-marker-label {
-  bottom: 0;
-  font-size: 10px;
-  text-align: end;
-}
-</style>

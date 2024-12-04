@@ -1,51 +1,58 @@
-import {computed, ref, watch} from 'vue';
+import {computed, ref} from 'vue';
 import {Preferences} from '@capacitor/preferences';
 
 const autoThemeColors = ref<boolean>(true);
 export const useAutoThemeColors = computed(() => autoThemeColors.value);
-watch(autoThemeColors, async (value) => {
-	await Preferences.set({
-		key: 'autoThemeColors',
-		value: value.toString(),
-	});
-});
 (async () => {
 	const { value } = await Preferences.get({ key: 'autoThemeColors' });
-	autoThemeColors.value = (value ?? true) == true;
+	autoThemeColors.value = !!value;
 })();
 export const setUseAutoThemeColors = (value: boolean) => {
 	autoThemeColors.value = value;
+	Preferences.set({
+		key: 'autoThemeColors',
+		value: value.toString(),
+	}).then();
 }
-
 
 const backdrops = ref<boolean>(false);
 export const showBackdrops = computed(() => backdrops.value);
-watch(backdrops, async (value) => {
-	await Preferences.set({
-		key: 'showBackdrops',
-		value: value.toString(),
-	});
-});
 (async () => {
 	const { value } = await Preferences.get({ key: 'showBackdrops' });
 	backdrops.value = (value ?? false) == 'true';
 })();
 export const setShowBackdrops = (value: boolean) => {
 	backdrops.value = value;
+	Preferences.set({
+		key: 'showBackdrops',
+		value: value.toString(),
+	}).then();
 }
 
 const percentageColors = ref<boolean>(true);
 export const usePercentageColors = computed(() => percentageColors.value);
-watch(percentageColors, async (value) => {
-	await Preferences.set({
-		key: 'percentageColors',
-		value: value.toString(),
-	});
-});
 (async () => {
 	const { value } = await Preferences.get({ key: 'percentageColors' });
 	percentageColors.value = (value ?? true) == 'true';
 })();
 export const setUsePercentageColors = (value: boolean) => {
 	percentageColors.value = value;
+	Preferences.set({
+		key: 'percentageColors',
+		value: value.toString(),
+	}).then();
+}
+
+const ssd = ref<number>(5);
+export const screensaverDelay = computed(() => ssd.value);
+(async () => {
+	const { value } = await Preferences.get({ key: 'screensaverDelay' });
+	ssd.value = parseInt(value ?? '5');
+})();
+export const setScreensaverDelay = (delay: number) => {
+	ssd.value = delay;
+	Preferences.set({
+		key: 'screensaverDelay',
+		value: delay.toString(),
+	}).then();
 }

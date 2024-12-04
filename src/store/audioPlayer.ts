@@ -1,12 +1,12 @@
-import {computed, ref, toRaw, UnwrapRef, VNodeRef, watch} from 'vue';
+import {computed, ref, toRaw, UnwrapRef, watch} from 'vue';
 import {createAnimation, modalController} from '@ionic/vue';
 
 import {SizeState, Song, VisibilityState} from '@/types/musicPlayer';
 
 import type MusicPlayer from '@/lib/MusicPlayer';
 import type PlayerCore from '@/lib/MusicPlayer';
-import {RepeatState} from '@/lib/MusicPlayer/lib/types';
-import {equalizerBands, equalizerSliderValues} from "@/config/config";
+import {EQBand, RepeatState, EqualizerPreset, EQSliderValues} from '@/lib/MusicPlayer/lib/types';
+import {onDoubleClick} from "@/lib/utils";
 
 const ap = ref<MusicPlayer>();
 export const audioPlayer = computed(() => ap.value);
@@ -23,12 +23,14 @@ export const lyricsMenuOpen = ref<boolean>(false);
 export const setLyricsMenuOpen = (value: boolean): void => {
 	lyricsMenuOpen.value = value;
 	queueMenuOpen.value = false;
-	eqMenuOpen.value = false;
+	deviceMenuOpen.value = false;
+	equalizerMenuOpen.value = false;
 };
 export const toggleLyricsMenuOpen = (): void => {
 	lyricsMenuOpen.value = !lyricsMenuOpen.value;
 	queueMenuOpen.value = false;
-	eqMenuOpen.value = false;
+	deviceMenuOpen.value = false;
+	equalizerMenuOpen.value = false;
 };
 
 export const hasLyrics = ref<boolean>(false);
@@ -39,11 +41,15 @@ export const setHasLyrics = (value: boolean): void => {
 export const deviceMenuOpen = ref<boolean>(false);
 export const setDeviceMenuOpen = (value: boolean): void => {
 	deviceMenuOpen.value = value;
-	eqMenuOpen.value = false;
+	lyricsMenuOpen.value = false;
+	queueMenuOpen.value = false;
+	equalizerMenuOpen.value = false;
 };
 export const toggleDeviceMenuOpen = (): void => {
 	deviceMenuOpen.value = !deviceMenuOpen.value;
-	eqMenuOpen.value = false;
+	lyricsMenuOpen.value = false;
+	queueMenuOpen.value = false;
+	equalizerMenuOpen.value = false;
 };
 
 const fpmo = ref<boolean>(false);
@@ -75,12 +81,27 @@ export const isShuffling = ref<boolean>(false);
 export const isRepeating = ref<RepeatState>('off');
 export const volume = ref<number>(0);
 
+export const panning = ref(0);
+export const bands = ref<EQBand[]>([]);
+export const equalizerPresets = ref<EqualizerPreset[]>([]);
+export const equalizerSliderValues = ref<EQSliderValues>(<EQSliderValues>{});
+
+export const equalizerPreset = ref<EqualizerPreset>(<EqualizerPreset>{});
+
+
 export const setCurrentPlaylist = (value: string): void => {
 	currentPlaylist.value = value;
 };
 
 watch(ap, (value) => {
 	if (!value) return;
+
+	panning.value = value.equalizerPanning;
+	bands.value = value.equalizerBands;
+	equalizerPresets.value = value.equalizerPresets;
+	equalizerSliderValues.value = value.equalizerSliderValues;
+
+	equalizerPreset.value = equalizerPresets.value.find(preset => preset.name == 'Flat') ?? equalizerPresets.value[0];
 
 	value?.on('time', (timeState) => {
 		currentTime.value = timeState.position;
@@ -136,12 +157,14 @@ export const queueMenuOpen = ref<boolean>(false);
 export const setQueueMenuOpen = (value: boolean): void => {
 	queueMenuOpen.value = value;
 	lyricsMenuOpen.value = false;
-	eqMenuOpen.value = false;
+	deviceMenuOpen.value = false;
+	equalizerMenuOpen.value = false;
 };
 export const toggleQueueMenuOpen = (): void => {
 	queueMenuOpen.value = !queueMenuOpen.value;
 	lyricsMenuOpen.value = false;
-	eqMenuOpen.value = false;
+	deviceMenuOpen.value = false;
+	equalizerMenuOpen.value = false;
 };
 
 export const musicVisibility = ref<VisibilityState>(VisibilityState.hidden);
@@ -153,7 +176,6 @@ export const musicSize = ref<SizeState>(SizeState.compact);
 export const setMusicSize = (value: SizeState): void => {
 	musicSize.value = value;
 };
-
 
 export const enterAnimation = (baseEl: HTMLElement) => {
 	const root = baseEl.shadowRoot as ShadowRoot;
@@ -205,34 +227,25 @@ export const openModal = async (component: Function | HTMLElement | string | nul
 	await modal.present();
 };
 
-export const panning = ref(equalizerSliderValues.pan.default);
-
-export interface Band {
-	frequency: number|'Pre';
-	gain: number;
-}
-export const bands = ref<Band[]>([
-	{ frequency: 'Pre', gain: equalizerSliderValues.pre.default },
-	...equalizerBands
-]);
-
-const eqMenuOpen = ref<boolean>(false);
-export const equalizerMenuOpen = computed(() => eqMenuOpen.value);
+export const equalizerMenuOpen = ref<boolean>(false);
 export const setEqualizerMenuOpen = (value: boolean): void => {
-	eqMenuOpen.value = value;
+	equalizerMenuOpen.value = value;
 	lyricsMenuOpen.value = false;
 	queueMenuOpen.value = false;
+	deviceMenuOpen.value = false;
 };
 export const toggleEqualizerMenuOpen = (): void => {
-	eqMenuOpen.value = !eqMenuOpen.value;
+	equalizerMenuOpen.value = !equalizerMenuOpen.value;
 	lyricsMenuOpen.value = false;
 	queueMenuOpen.value = false;
+	deviceMenuOpen.value = false;
 };
 
 export const closeEqualizerMenu = (): void => {
-	eqMenuOpen.value = false;
+	equalizerMenuOpen.value = false;
 	lyricsMenuOpen.value = false;
 	queueMenuOpen.value = false;
+	deviceMenuOpen.value = false;
 }
 
 export const saveEqualizerSettings = () => {
@@ -265,53 +278,33 @@ export const abbreviateFrequency = (frequency: number) => {
 export const convertToPercentage = (value: number, min: number, max: number): number => {
 	let percentage = ((value - min) / (max - min)) * 100;
 
-	if (percentage <= 25) {
-		percentage += (5 / 25) * percentage;
+	if (percentage <= 20) {
+		percentage += (5 / 20) * percentage;
 	}
-	else if (percentage >= 75) {
-		percentage -= (5 / 25) * (100 - percentage);
+	else if (percentage >= 80) {
+		percentage -= (5 / 20) * (100 - percentage);
 	}
 
 	return Math.max(0, Math.min(100, percentage));
 }
 
-export const handleReset = () => {
+export const handleFullReset = () => {
 	panning.value = 0;
-
-	bands.value = [...bands.value.map((band) => {
-		if (band.frequency == 'Pre') {
-			return {
-				...band,
-				gain: 1,
-			};
-		}
-
-		return {
-			...band,
-			gain: 0,
-		};
-	})];
-
-	audioPlayer.value?.setPreGain(1);
-	audioPlayer.value?.setPanner(0);
-	for (let i = 1; i < bands.value.length; i++) {
-		audioPlayer.value?.setFilter(bands.value[i]);
-	}
+	setEqualizerPreset(equalizerPresets.value.find(preset => preset.name == 'Flat'));
 };
 
-export const handleChange = (type: string, event: Event, band?: Band) => {
+export const handleChange = (type: string, event: Event, band?: EQBand) => {
 	const value = parseFloat((event.target as HTMLInputElement).value);
 
 	if (type === 'panning') {
 		panning.value = value;
-		audioPlayer.value?.setPanner(panning.value);
+		audioPlayer.value?.setPanner(value);
 		saveEqualizerSettings();
 		return;
 	}
 
 	if (!band?.gain) return;
 
-	console.log('handleChange', type, band?.frequency, band?.gain, value);
 	band.gain = value;
 
 	if (band.frequency === 'Pre') {
@@ -328,5 +321,57 @@ export const handleChange = (type: string, event: Event, band?: Band) => {
 		return b;
 	})];
 
+	audioPlayer.value!.equalizerBands = bands.value;
+
 	saveEqualizerSettings();
 };
+
+export const handleReset = (type: string, event: MouseEvent, band?: EQBand) => {
+	onDoubleClick(event, () => {}, () => {
+		if (type === 'panning') {
+			panning.value = 0;
+			audioPlayer.value?.setPanner(0);
+			saveEqualizerSettings();
+			return;
+		}
+
+		if (!band?.gain) return;
+
+		band.gain = 0;
+
+		if (band.frequency === 'Pre') {
+			audioPlayer.value?.setPreGain(0);
+			saveEqualizerSettings();
+			return;
+		}
+
+		bands.value = [...bands.value.map((b) => {
+			if (b.frequency === band.frequency) {
+				audioPlayer.value?.setFilter(band);
+				return band;
+			}
+			return b;
+		})];
+
+		audioPlayer.value!.equalizerBands = bands.value;
+
+		saveEqualizerSettings();
+	});
+}
+
+export const setEqualizerPreset = (value?: EqualizerPreset) => {
+	equalizerPreset.value = equalizerPresets.value.find((p) => p.name === (value?.name ?? 'Flat')) ?? equalizerPresets.value[0];
+
+	bands.value = [
+		{ frequency: 'Pre', gain: equalizerSliderValues.value.pre.default },
+		...equalizerPreset.value.values
+	];
+
+	audioPlayer.value!.equalizerBands = bands.value;
+
+	for (let i = 1; i < bands.value.length; i++) {
+		audioPlayer.value?.setFilter(bands.value[i]);
+	}
+
+	saveEqualizerSettings();
+}

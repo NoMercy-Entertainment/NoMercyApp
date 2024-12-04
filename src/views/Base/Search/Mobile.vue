@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import {onMounted, ref} from 'vue';
+import {onMounted, ref, watch} from 'vue';
 import {IonPage, IonContent, onIonViewWillEnter, IonInput, useKeyboard} from '@ionic/vue';
 
 import {parseYear} from '@/lib/dateTime';
@@ -10,6 +10,7 @@ import MoooomIcon from '@/components/Images/icons/MoooomIcon.vue';
 import AppLogoSquare from '@/components/Images/icons/AppLogoSquare.vue';
 import CosmosBg2 from '@/components/Images/CosmosBg2.vue';
 import {greetingValue} from '@/config/global';
+import {showScreensaver} from "@/store/imageModal";
 
 const { isOpen, keyboardHeight } = useKeyboard();
 
@@ -25,6 +26,12 @@ onMounted(() => {
   }, 100);
 });
 
+watch(showScreensaver, (value) => {
+  if (value) {
+    search.value.$el.blur();
+  }
+});
+
 </script>
 
 <template>
@@ -38,7 +45,7 @@ onMounted(() => {
       >
         <CosmosBg2 v-if="greetingValue && videoSearchResult.length == 0"/>
         <div v-if="greetingValue && videoSearchResult.length == 0" class="relative z-10 mt-16 flex flex-shrink-0 flex-grow-0 flex-col items-center justify-end gap-3">
-          <p class="flex-grow-0 flex-shrink-0 text-5xl font-black text-left text-[#eeecec]">
+          <p class="flex-grow-0 flex-shrink-0 text-5xl font-black text-left  text-slate-light-11 dark:text-slate-dark-11">
             {{ $t('Good') }}
             <span class="" id="greeting">
               {{ greetingValue }}

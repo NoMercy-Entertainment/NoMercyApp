@@ -1,13 +1,13 @@
 import {ref, watch} from 'vue';
 import {isPlatform} from '@ionic/vue';
-import { Preferences } from '@capacitor/preferences';
+import {Preferences} from '@capacitor/preferences';
 import {SafeArea} from 'capacitor-plugin-safe-area';
-import {NavigationBar} from '@hugotomazi/capacitor-navigation-bar';
+import {useMediaQuery} from '@vueuse/core';
+import {NavigationBar} from "@hugotomazi/capacitor-navigation-bar";
 
 import type {ColorScheme} from '@/types/config';
 
 import {isDarkMode} from '@/config/global';
-import {useMediaQuery} from '@vueuse/core';
 
 export const setColorScheme = async (value: ColorScheme) => {
 	document.body.classList.add('scheme-transition');
@@ -36,8 +36,6 @@ export const setColorScheme = async (value: ColorScheme) => {
 	if (isPlatform('capacitor') && isPlatform('android')) {
 		const {StatusBar, Style} = (await import('@capacitor/status-bar'));
 
-		StatusBar.setOverlaysWebView({overlay: true}).then();
-
 		NavigationBar.setTransparency({
 			isTransparent: false,
 		}).then();
@@ -64,6 +62,8 @@ export const setColorScheme = async (value: ColorScheme) => {
 			StatusBar.setBackgroundColor({color: '#FFFFFF40'}).then();
 			StatusBar.setStyle({style: Style.Light}).then();
 		}
+
+		StatusBar.setOverlaysWebView({overlay: true}).then();
 	}
 
 	await Preferences.set({
@@ -73,12 +73,12 @@ export const setColorScheme = async (value: ColorScheme) => {
 };
 
 export const checkColorScheme = async () => {
-	const { value } = await Preferences.get({ key: 'colorScheme' });
+	const {value} = await Preferences.get({key: 'colorScheme'});
 	return value as ColorScheme;
 };
 
 export const removeColorScheme = async () => {
-	await Preferences.remove({ key: 'colorScheme' });
+	await Preferences.remove({key: 'colorScheme'});
 };
 
 export const darkMode = ref(isDarkMode.value);
@@ -88,13 +88,15 @@ watch(darkMode, async (value) => {
 });
 
 (async () => {
-	const colorScheme = await checkColorScheme();
+	setTimeout(async () => {
+		const colorScheme = await checkColorScheme();
 
-	await setColorScheme(useMediaQuery('(prefers-color-scheme: dark)').value || colorScheme  ? 'dark' : 'light');
+		await setColorScheme(useMediaQuery('(prefers-color-scheme: dark)').value || colorScheme ? 'dark' : 'light');
 
-	if (!colorScheme) {
-		return;
-	}
+		if (!colorScheme) {
+			return;
+		}
 
-	darkMode.value = colorScheme === 'dark';
+		darkMode.value = colorScheme === 'dark';
+	}, 1000);
 })();

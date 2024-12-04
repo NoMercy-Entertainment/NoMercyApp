@@ -27,7 +27,7 @@ const updateState = <T>(configuration: Ref<T, T> | Ref<undefined, undefined>, ne
   };
 };
 
-const {data: configuration, refetch: invalidate} = useServerClient<ConfigurationResponse>({
+const {data: configuration, refetch: invalidate, error} = useServerClient<ConfigurationResponse>({
   path: '/dashboard/configuration',
 });
 
@@ -135,7 +135,7 @@ const save = (value: ConfigurationResponse) => {
 <template>
   <ion-page>
     <ion-content :fullscreen="true">
-      <DashboardLayout :gridStyle="2" title="General" description="">
+      <DashboardLayout :error="error" :gridStyle="2" title="General" description="">
         <template v-slot:cta>
 
         </template>

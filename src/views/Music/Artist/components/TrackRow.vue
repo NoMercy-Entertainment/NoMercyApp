@@ -16,6 +16,7 @@ import BannerButton from '@/components/Buttons/BannerButton.vue';
 import TrackLinks from '@/views/Music/List/components/TrackLinks.vue';
 import {isAlbumRoute} from '@/store/routeState';
 import {onTrackRowRightClick} from '@/store/contextMenuItems';
+import PlayerIcon from "@/components/Images/icons/PlayerIcon.vue";
 
 const props = defineProps({
   data: {
@@ -67,11 +68,11 @@ const handleClick = () => {
                        class="hidden group-focus-visible/track:sm:!hidden group-hover/track:sm:!hidden"
                        color="rgb(var(--color-focus))"/>
 
-            <MoooomIcon v-if="currentSong?.id == data.id && isPlaying"
+            <PlayerIcon v-if="currentSong?.id == data.id && isPlaying"
                         class="hidden h-6 w-6 group-focus-visible/track:sm:block group-hover/track:sm:block"
-                        icon="pause"/>
-            <MoooomIcon v-else class="hidden h-6 w-6 group-focus-visible/track:sm:block group-hover/track:sm:block"
-                        icon="play"/>
+                        icon="nmPause"/>
+            <PlayerIcon v-else class="hidden h-6 w-6 group-focus-visible/track:sm:block group-hover/track:sm:block"
+                        icon="nmPlay"/>
 
         </span>
 

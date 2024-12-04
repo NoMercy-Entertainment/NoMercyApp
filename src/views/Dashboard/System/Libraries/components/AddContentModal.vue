@@ -17,7 +17,7 @@ import FolderBrowser from '@/components/FolderBrowser.vue';
 
 import FolderItem from './FolderItem.vue';
 import ScrollContainer from '@/Layout/Desktop/components/ScrollContainer.vue';
-import Select from '@/components/Forms/Select.vue';
+// import Select from '@/components/Forms/Select.vue';
 
 interface DestinationFolder {
   id: string;
@@ -178,12 +178,12 @@ const continueAvailable = computed(() => {
 
     <div class="flex w-full flex-col overflow-clip h-[65vh]">
       <div class="mt-4 flex h-auto w-full flex-col items-start gap-4 sm:flex-row">
-        <div class="flex w-full flex-auto sm:w-64">
-          <div class="flex flex-col gap-2">
+        <div class="flex w-full flex-auto sm:w-64 gap-2">
+          <div class="flex flex-col gap-2 flex-1 ">
             <label for="source_folder">Source folder</label>
             <InputText id='source_folder'
-                   @change-folderName='folder = $event'
                    class='w-full'
+                   variant="filled"
                    :onclick="openModal"
                    v-model="folder">
             </InputText>
@@ -200,7 +200,7 @@ const continueAvailable = computed(() => {
                   id: fl.folder_id,
                   name: fl.folder.path,
               })) as DestinationFolder[]) ?? []"
-                optionLabel="title"
+                optionLabel="name"
                 v-model="destinationFolder"
             />
           </div>

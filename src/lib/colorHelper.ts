@@ -1,5 +1,6 @@
 import {hexToRgba, hsvaToHex} from '@uiw/color-convert';
 import {chunk} from '@/lib/stringArray';
+import {blue, brown, gray, green, red} from "@/config/global";
 
 export const greenToRed = [
 	{
@@ -548,3 +549,22 @@ export const hexDarker = (hex: string, luminosity?: number): string => {
 
 	return hsvaToHex({h:hsl.h, s:hsl.s, v:hsl.l, a:1});
 }
+
+export const hexOpacity = (hex: string, opacity: number): string => {
+	const rgb = hexToRgba(hex);
+	return `rgba(${rgb.r} ${rgb.g} ${rgb.b}/ ${opacity}%)`;
+}
+
+export const getGpuColor = (gpu: string) => {
+	if (gpu.toLowerCase().includes('nvidia')) return green;
+	if (gpu.toLowerCase().includes('amd')) return red;
+	if (gpu.toLowerCase().includes('intel')) return blue;
+	return gray;
+};
+
+export const getCpuColor = (cpu: string) => {
+	if (cpu.toLowerCase().includes('amd')) return red;
+	if (cpu.toLowerCase().includes('intel')) return blue;
+	if (cpu.toLowerCase().includes('arm')) return brown;
+	return gray;
+};

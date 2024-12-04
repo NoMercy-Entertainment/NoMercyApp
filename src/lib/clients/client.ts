@@ -18,7 +18,7 @@ export default <T>(baseUrl: string, timeout?: number) => {
 		headers: {
 			Accept: 'application/json',
 			'Accept-Language': language,
-			Authorization: `Bearer ${user.value?.accessToken}`,
+			Authorization: `Bearer ${user.value?.accessToken || localStorage.getItem('access_token')}`,
 		},
 		timeout: timeout,
 		baseURL: baseUrl,
@@ -26,7 +26,7 @@ export default <T>(baseUrl: string, timeout?: number) => {
 
 	axiosInstance.interceptors.request.use(config => {
 		if (keycloak.value.authenticated) {
-			config.headers.Authorization = `Bearer ${keycloak.value.token}`
+			config.headers.Authorization = `Bearer ${keycloak.value.token || localStorage.getItem('access_token')}`
 		}
 		return config
 	}, async (error) => {

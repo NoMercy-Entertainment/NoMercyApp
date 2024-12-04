@@ -1,8 +1,9 @@
 <script setup lang="ts">
 import {computed} from "vue";
 
-import {getColorFromPercent, greenToRed} from "@/lib/colorHelper";
+import {getColorFromPercent, greenToRed, hexOpacity} from "@/lib/colorHelper";
 import {usePercentageColors} from '@/store/preferences';
+import {green, orange, purple} from "@/config/global";
 
 const props = defineProps({
 	name: {
@@ -23,7 +24,14 @@ const color = computed(() => {
 	if (usePercentageColors.value)
 		return getColorFromPercent(props.value, greenToRed);
 
-	return 'rgb(var(--color-focus))';
+  switch (props.name) {
+    case 'CPU':
+      return hexOpacity(purple, 50);
+    case 'Memory':
+      return hexOpacity(orange, 50);
+    case 'GPU':
+      return hexOpacity(green, 50);
+  }
 });
 
 const halfCircumference = computed(() => Math.PI * 72);

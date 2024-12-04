@@ -2,8 +2,7 @@ import {setTitle} from '@/lib/stringArray';
 import type {Song} from '@/types/musicPlayer';
 import {MediaSession} from '@/lib/MediaSession';
 import {Queue} from '@/lib/MusicPlayer/lib/queue';
-import {PlayerState, TimeState, VolumeState} from '@/lib/MusicPlayer/lib/types';
-import {Band} from "@/store/audioPlayer";
+import {EQBand, EQSliderValues, EqualizerPreset, PlayerState, TimeState, VolumeState} from '@/lib/MusicPlayer/lib/types';
 
 export class PlayerCore extends Queue {
 	mediaSession:MediaSession;
@@ -236,11 +235,12 @@ export class PlayerCore extends Queue {
 	}
 
 	public setPanner(pan: number): void {
+		this.equalizerPanning = pan;
 		// @ts-ignore internal event
 		this.emit('setPanner', pan);
 	}
 
-	public setFilter(filter: Band): void {
+	public setFilter(filter: EQBand): void {
 		// @ts-ignore internal event
 		this.emit('setFilter', filter);
 	}

@@ -93,7 +93,6 @@ temp/
 .sourcemaps/
 .sass-cache/
 .tmp/
-hooks/
 
 # Ionic 3 plugins files
 platforms/
@@ -117,3 +116,5 @@ yarn-error.log
 
 # End of https://www.toptal.com/developers/gitignore/api/ionic3,vuejs,android
 .yarn
+
+!src/**/Plugins/

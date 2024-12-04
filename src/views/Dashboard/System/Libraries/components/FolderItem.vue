@@ -55,7 +55,7 @@ watch(props, (value) => {
 <template>
   <div class="flex items-center justify-start gap-4 self-stretch text-left">
     <div
-        class="flex flex-grow flex-col items-start justify-start gap-2 rounded-xl p-2 bg-auto-2/6 dark:bg-auto-alpha-3"
+        class="flex flex-grow flex-col items-start justify-start gap-2 rounded-xl p-2 bg-slate-lightA-3 dark:bg-slate-darkA-3"
     >
       <div
           class="relative flex items-start justify-start gap-2 self-stretch"

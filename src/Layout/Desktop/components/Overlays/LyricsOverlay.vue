@@ -69,8 +69,6 @@ onMounted(() => {
 
     const elements = Array.from(lyrics_container.value?.querySelectorAll<HTMLDivElement>('[data-lyric]') ?? []);
 
-    console.log(newIndex, elements.length);
-
     if (newIndex === -1) {
 
       elements
@@ -184,7 +182,7 @@ watch(lyrics, (value) => {
 <template>
   <div :data-open="lyricsMenuOpen"
        id="lyricsContainer"
-       class="absolute inset-0 h-inherit w-inherit sm:left-auto sm:right-4 sm:top-4 sm:bottom-4 sm:w-2/3 sm:max-w-3xl flex items-center justify-center rounded-xl transition-all duration-300 sm:data-[open='false']:translate-x-[150%] sm:overflow-clip z-[9999]">
+       class="absolute inset-0 h-inherit w-inherit sm:left-auto sm:right-4 sm:top-4 sm:bottom-4 sm:w-2/3 sm:max-w-3xl flex items-center justify-center rounded-xl transition-all duration-500 sm:data-[open='false']:translate-x-[150%] sm:overflow-clip z-[9999]">
 
     <div
         class="pointer-events-none absolute inset-0 z-0 flex items-center justify-center rounded-xl sm:bg-white/6 dark:sm:bg-black/30">

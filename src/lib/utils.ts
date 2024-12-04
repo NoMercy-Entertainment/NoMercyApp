@@ -281,3 +281,59 @@ const listener = () => {
 	}, 3000);
 };
 
+const clicks = ref(0);
+const timer = ref<NodeJS.Timeout>();
+const delay = 300;
+
+export const onDoubleClick = (event: MouseEvent, click: (event: MouseEvent) => void, double: (event: MouseEvent) => void) => {
+	clicks.value++;
+	if (clicks.value === 1) {
+		timer.value = setTimeout( () => {
+			clicks.value = 0
+			click(event);
+		}, delay);
+	} else {
+		clearTimeout(timer.value);
+
+		double?.(event);
+		clicks.value = 0;
+	}
+}
+
+export class ClickEventHandler {
+	private clicked = 0;
+	private doubleClickLength = 350;
+	private pendingClick: NodeJS.Timeout = <NodeJS.Timeout>{};
+	private readonly singleClickEvtCallback;
+	private readonly doubleClickEvtCallback;
+
+	constructor(
+		el: HTMLElement,
+		singleClickEvtCallback: (event: MouseEvent) => void,
+		doubleClickEvtCallback: (event: MouseEvent) => void,
+		doubleClickLength: number = 350
+	) {
+		this.singleClickEvtCallback = singleClickEvtCallback;
+		this.doubleClickEvtCallback = doubleClickEvtCallback;
+		this.doubleClickLength = doubleClickLength;
+		el.removeEventListener("click", this.leftClickHandler);
+		el.addEventListener("click", this.leftClickHandler);
+	}
+	leftClickHandler(e: MouseEvent) {
+		console.log('leftClickHandler', e);
+		if (e.button != 0) return; // only left clicks shall be handled;
+		this.clicked++;
+		if (this.clicked >= 2) {
+			this.doubleClickEvtCallback(e);
+			clearTimeout(this.pendingClick);
+			this.clicked = 0;
+			return;
+		}
+		clearTimeout(this.pendingClick);
+		this.pendingClick = setTimeout(() => {
+			this.singleClickEvtCallback(e);
+			this.clicked = 0;
+		}, this.doubleClickLength);
+	}
+}
+

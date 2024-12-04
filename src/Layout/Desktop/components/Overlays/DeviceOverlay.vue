@@ -1,18 +1,34 @@
 <script setup lang="ts">
+import {ref, watch} from 'vue';
+import {currentSong, deviceMenuOpen, musicSize} from "@/store/audioPlayer";
 
+const emotes = [
+  '😲', '😂', '😜', '🤪', '😎', '😆', '😅',
+  '🤣', '😁', '😋', '😛', '😝', '😜', '🤓',
+  '😇', '🥳', '🤯', '😬', '🤤', '😵', '🤠',
+];
+const currentEmote = ref(emotes[Math.floor(Math.random() * emotes.length)]);
+
+watch(deviceMenuOpen, (newVal) => {
+  if (newVal) {
+    currentEmote.value = emotes[Math.floor(Math.random() * emotes.length)];
+  }
+});
 </script>
 
 <template>
-<!--    <div :data-open="deviceMenuOpen"-->
-<!--         :data-size="musicSize"-->
-<!--         v-if="currentSong?.id"-->
-<!--         class="absolute right-4 top-auto bottom-0 data-[open='true']:full:bottom-8 data-[open='true']:compact:bottom-20 sm:data-[open='true']:full:bottom-4 sm:data-[open='true']:compact:bottom-4 sm:bottom-4 ml-4 sm:w-1/4 sm:h-1/2 bg-black flex items-center justify-center rounded-lg transition-all duration-300 border-2 border-focus data-[open='false']:translate-y-[150%] z-[9999]">-->
-<!--        <div-->
-<!--            class="pointer-events-none absolute inset-0 flex items-center justify-center rounded-lg opacity-60 bg-auto-3/40">-->
-<!--        </div>-->
+    <div :data-open="deviceMenuOpen"
+         :data-size="musicSize"
+         v-if="currentSong?.id"
+         class="absolute right-4 top-auto bottom-0 data-[open='true']:full:bottom-8 data-[open='true']:compact:bottom-20 sm:data-[open='true']:full:bottom-4 sm:data-[open='true']:compact:bottom-4 sm:bottom-4 ml-4 sm:w-1/4 sm:h-1/2 bg-slate-light-3 dark:bg-slate-dark-1 flex items-center justify-center rounded-lg transition-all duration-500 border-2 border-focus data-[open='false']:translate-y-[150%] z-[9999]">
+        <div
+            class="pointer-events-none absolute inset-0 flex items-center justify-center rounded-lg opacity-60 bg-auto-3/40">
+        </div>
 
-<!--        <div id="devices_container"-->
-<!--             class="flex h-full w-full flex-col gap-4 overflow-auto tv:overflow-clip p-6 scrollbar-none">-->
+        <div id="devices_container"
+             class="flex h-full w-full flex-col justify-center gap-4 overflow-auto tv:overflow-clip p-6 scrollbar-none">
+
+          <span class="text-8xl text-center">{{ currentEmote }}</span>
 
 <!--            <template v-if="currentDevice" :key="currentDevice.device_id">-->
 <!--                <div class="flex w-full items-center justify-between gap-2">-->
@@ -88,6 +104,6 @@
 <!--                    </div>-->
 <!--                </template>-->
 <!--            </div>-->
-<!--        </div>-->
-<!--    </div>-->
+        </div>
+    </div>
 </template>

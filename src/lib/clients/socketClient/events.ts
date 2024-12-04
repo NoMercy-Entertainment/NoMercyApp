@@ -4,6 +4,7 @@ import { HubConnection } from '@microsoft/signalr';
 import {ActivityLog} from '@/types/server';
 import {queryClient} from "@/config/tanstack-query";
 import {useSocket} from '@/store/socket';
+import {connection, dashboardSocketIsConnected} from "@/lib/clients/dashboardSocket";
 
 export const connect = (socket?: HubConnection) => {
     if (!socket) return
@@ -31,8 +32,6 @@ export const disconnect = (socket?: HubConnection) => {
     socket.off('addActivityLog', onAddActivityLog);
     socket.off('setActivityLog', onSetActivityLog);
     socket.off('pingEvent', pingEvent);
-
-    socket.stop().then();
 };
 
 // // @ts-ignore
@@ -80,7 +79,7 @@ const onNotify = (data: any) => {
 };
 
 const onUpdateContent = (data: any) => {
-    // queryClient.invalidateQueries(data.queryKey);
+    queryClient.invalidateQueries(data.queryKey);
 
     // const currentSong = useStore(store, state => state.music.currentSong);
     // if (data?.id === currentSong.value?.id) {

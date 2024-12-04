@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import {onMounted, onUnmounted, ref, watch} from 'vue';
 import {useRoute} from 'vue-router';
-import {IonContent, IonPage, onIonViewWillEnter, onIonViewWillLeave} from '@ionic/vue';
+import {IonContent, IonPage} from '@ionic/vue';
 
 import type {DisplayList} from '@/types/api/music/musicPlayer';
 import type {Song, SortOrder, SortType} from '@/types/musicPlayer';
@@ -10,7 +10,7 @@ import {isNative} from '@/config/global';
 import useServerClient from '@/lib/clients/useServerClient';
 import {setTitle, sortByType} from '@/lib/stringArray';
 import {setColorPalette, setSortOrder, sortOrder, sortType} from '@/store/ui';
-import {audioPlayer, currentSong} from '@/store/audioPlayer';
+import {currentSong} from '@/store/audioPlayer';
 
 import ControlHeader from '@/views/Music/List/components/ControlHeader.vue';
 import ArtistHeader from '@/views/Music/List/components/ArtistHeader.vue';
@@ -35,7 +35,9 @@ watch(data, (value) => {
 
   sort(value?.tracks ?? [], sortType.value, sortOrder.value, filter.value);
 
-  setColorPalette(value?.color_palette?.cover);
+  if(value?.color_palette?.cover) {
+    setColorPalette(value?.color_palette?.cover);
+  }
 });
 
 watch(sortOrder, (value) => {
@@ -63,19 +65,20 @@ const sort = (songs: Song[], sortType: SortType, sortOrder: SortOrder, value: st
   }
 };
 
-onIonViewWillEnter(() => {
+onMounted(() => {
   if (data?.value?.tracks) {
     sort(data?.value?.tracks ?? [], sortType.value, sortOrder.value, filter.value);
   }
 
+  console.log(data.value?.color_palette?.cover);
   setColorPalette(data.value?.color_palette?.cover);
 });
 
-onIonViewWillLeave(() => {
+onUnmounted(() => {
   if (document.getElementById('navbar')) {
     document.getElementById('navbar')!.style.display = 'flex';
   }
-  setColorPalette(null);
+  // setColorPalette(null);
 });
 
 const sortHeader = ref<VueDivElement>();

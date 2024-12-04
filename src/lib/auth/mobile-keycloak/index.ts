@@ -15,7 +15,6 @@ const KeycloakSymbol = Symbol('keycloak');
 import * as vue from 'vue';
 
 export default {
-  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
   install: async function (app: Vue2Vue3App, params: VueKeycloakOptions = {}) {
     if (installed) return;
     installed = true;
@@ -42,6 +41,9 @@ export default {
       });
   },
   KeycloakSymbol,
+} as vue.Plugin & {
+  install: (app: Vue2Vue3App, params?: VueKeycloakOptions) => Promise<void>;
+  KeycloakSymbol: symbol;
 };
 
 function defaultEmptyVueKeycloakInstance(): VueKeycloakInstance {

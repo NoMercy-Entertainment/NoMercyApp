@@ -7,6 +7,7 @@ export interface AudioOptions {
     volume?: number;
     prefetchLeeway?: number;
     fadeDuration?: number;
+    bands: EQBand[];
 }
 
 export enum PlayerState {
@@ -42,4 +43,34 @@ export type IsMuted = boolean;
 export type IsShuffling = boolean;
 export type IsRepeating = boolean;
 
+export interface EQSliderValues {
+    pan: {
+        min: number;
+        max: number;
+        step: number;
+        default: number;
+    }
+    pre: {
+        min: number;
+        max: number;
+        step: number;
+        default: number;
+    }
+    band: {
+        min: number;
+        max: number;
+        step: number;
+        default: number;
+    }
+}
+
+export interface EQBand {
+    frequency: number | 'Pre';
+    gain: number;
+}
+
+export interface EqualizerPreset {
+    name: string;
+    values: { frequency: number, gain: number }[];
+}
 

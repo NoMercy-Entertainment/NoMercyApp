@@ -31,6 +31,7 @@ import DashboardSchedule from '@/views/Dashboard/Advanced/Schedule';
 import DashboardMetadata from '@/views/Dashboard/Content/Metadata';
 import DashboardRipper from '@/views/Dashboard/Content/Ripper';
 import DashboardSpecials from '@/views/Dashboard/Content/Specials';
+import DashboardSpecialsEdit from '@/views/Dashboard/Content/Specials/Edit.vue';
 
 import DashboardActivity from '@/views/Dashboard/Devices/Activity';
 import DashboardDevices from '@/views/Dashboard/Devices/Devices';
@@ -58,6 +59,7 @@ import PreferencesSubtitles from '@/views/Preferences/Subtitles';
 // import SetupPostInstall from '@/views/Setup/PostInstall';
 import SetupSelectServer from '@/views/Setup/SelectServers';
 import SetupNoServer from '@/views/Setup/NoServers';
+import SetupServerOffline from '@/views/Setup/ServerOffline';
 
 import NotFound from '@/views/NotFound';
 import libraries from '@/store/Libraries';
@@ -327,7 +329,7 @@ export const routes: Array<RouteRecordRaw> = [
 			{
 				path: 'specials/:id',
 				name: 'Dashboard Special',
-				component: DashboardSpecials
+				component: DashboardSpecialsEdit
 			},
 			{
 				path: 'devices',
@@ -450,6 +452,11 @@ export const routes: Array<RouteRecordRaw> = [
 				name: 'No Servers',
 				component: SetupNoServer,
 			},
+			{
+				path: 'server-offline',
+				name: 'Server offline',
+				component: SetupServerOffline,
+			}
 		],
 	},
 	{

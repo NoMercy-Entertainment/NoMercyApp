@@ -23,21 +23,31 @@ const initializeAudioPlayer = (): Promise<void> => {
 		audioPlayer.value?.setServerLocation(currentServer.value?.serverBaseUrl);
 		audioPlayer.value?.setAccessToken(user.value.accessToken);
 
-		const audioContext = new AudioContext();
-		// @ts-ignore
-		audioContext.onerror = () => {
-			localStorage.setItem('supports-audio-context', 'false');
-			audioContext.close().then();
-		}
-		audioContext.onstatechange = () => {
-			if(audioContext.state === 'running') {
-				localStorage.setItem('supports-audio-context', 'true');
-			} else {
+		document.addEventListener('click', () => {
+			if (localStorage.getItem('supports-audio-context')) return;
+
+			const audioContext = new AudioContext();
+			// @ts-ignore
+			audioContext.onerror = () => {
 				localStorage.setItem('supports-audio-context', 'false');
+				audioContext.close().then();
+				location.reload();
 			}
-		}
-		// @ts-ignore
-		window.audioContext = audioContext;
+			audioContext.onstatechange = () => {
+				console.log(audioContext.state);
+				if(audioContext.state === 'running') {
+					localStorage.setItem('supports-audio-context', 'true');
+				} else if(audioContext.state === 'suspended') {
+					audioContext.close().then();
+					localStorage.setItem('supports-audio-context', 'false');
+				}
+			}
+			audioContext.getOutputTimestamp()
+
+			setTimeout(() => {
+				audioContext.close().then();
+			}, 100);
+		});
 
 		resolve();
 

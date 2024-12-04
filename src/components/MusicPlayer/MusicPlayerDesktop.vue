@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import {onMounted, ref, watch} from 'vue';
+import {computed, onMounted, ref, watch} from 'vue';
 
 import type {Song} from '@/types/musicPlayer';
 
@@ -24,7 +24,6 @@ import StopButton from './components/StopButton.vue';
 import TrackLinks from './components/TrackLinks.vue';
 import VolumeContainer from './components/VolumeContainer.vue';
 import LyricsButton from './components/LyricsButton.vue';
-import {shouldMarquee} from '@/lib/utils';
 import Marquee from '@/components/Marquee.vue';
 import EqButton from "@/components/MusicPlayer/components/EqButton.vue";
 const dataAttribute = ref<any>();
@@ -108,17 +107,42 @@ const submitPlayback = async () => {
       .post<Song>(`music/tracks/${currentSong.value?.id}/playback`);
 };
 
+const leftSize = computed(() => {
+  if (sidebar.value == 'open') {
+    return 100/4;
+  }
+  else if (sidebar.value == 'closed') {
+    return 100/3.2;
+  }
+  return 100/3;
+});
+const centerSize = computed(() => {
+  return 100/3;
+});
+const rightSize = computed(() => {
+  if (sidebar.value == 'open') {
+    return 100/2.9;
+  }
+  else if (sidebar.value == 'closed') {
+    return 100/3;
+  }
+  return 100/3;
+});
+
 </script>
 
 <template>
   <div id="fullPlayer"
-       class="bg-slate-lightA-4 dark:bg-slate-darkA-4 hidden h-0 music-showing:h-20 flex-shrink-0 flex-grow-0 flex-row items-center justify-start gap-12 self-stretch pr-6 sidebar-open:ml-64 rounded-lg m-2 mt-1 pl-4 mx-5 transition-all duration-300 sm:flex 2xl:sidebar-open:ml-[16.3rem]"
+       class="bg-slate-lightA-4 dark:bg-slate-darkA-4 hidden h-0 music-showing:h-20 flex-shrink-0 flex-grow-0 flex-row items-center justify-start gap-12 self-stretch pr-6 sidebar-closed:ml-20 sidebar-open:ml-64 rounded-lg m-2 mt-2 mb-4 pl-4 mx-5 transition-all duration-300 sm:flex 2xl:sidebar-open:ml-[16.3rem]"
        :data-music="musicVisibility"
        :data-sidebar="sidebar">
     <div v-if="currentSong"
-         class="flex h-full w-full items-center gap-8 music-showing:transition-transform music-showing:delay-75 music-showing:duration-75">
+         class="flex h-full w-full items-center gap-8 music-showing:transition-all music-showing:duration-75">
       <div id="left"
-           class="flex flex-grow items-center justify-start gap-2 min-w-[30%] max-w-[30%]"
+           class="flex flex-grow items-center justify-start transition-width duration-300 gap-2"
+           :style="{
+              width: `${leftSize}%`
+            }"
            data-target="track">
 
         <CoverImage v-if="currentSong"
@@ -155,7 +179,11 @@ const submitPlayback = async () => {
                          data-target="favorite"/>
       </div>
       <div id="center"
-           class="flex w-full flex-grow flex-col items-center justify-start">
+           class="flex w-full flex-grow flex-col items-center justify-start transition-width duration-300"
+            :style="{
+              width: `${centerSize}%`
+            }"
+      >
         <div class="flex justify-center">
           <div class="flex flex-shrink-0 flex-grow-0 items-center justify-center gap-2">
             <ShuffleButton/>
@@ -168,16 +196,17 @@ const submitPlayback = async () => {
         <ProgressBarContainer />
       </div>
       <div id="right"
-           class="relative flex flex-grow items-center justify-end gap-2 min-w-[30%] max-w-[30%]"
+           class="relative flex flex-grow items-center justify-end gap-2 transition-width duration-300"
+           :style="{
+              width: `${rightSize}%`
+           }"
            :data-size="musicSize">
 
         <StopButton/>
 
-        <EqButton />
-
         <LyricsButton/>
-
         <QueueButton/>
+        <EqButton />
         <DeviceButton/>
 
         <VolumeContainer/>

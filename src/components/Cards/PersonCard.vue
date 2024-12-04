@@ -53,7 +53,7 @@ const color = computed(() => {
             className="h-full overflow-clip children:overflow-clip rounded-lg children:rounded-lg"/>
         <div
             class="absolute bottom-0 left-0 z-0 grid h-16 w-full items-stretch rounded-b-lg px-2 pt-2 pb-1 text-left overflow-clip">
-            <div class="absolute inset-0 z-0 rounded-b-lg bg-auto-1/60 backdrop-blur-lg"></div>
+            <div class="absolute inset-0 z-0 rounded-b-lg bg-auto-1/60"></div>
             <p class="z-10 text-2xs sm:text-sm font-bold leading-none sm:leading-4 h-7 sm:h-5 line-clamp-2 w-available text-slate-lightA-12/70  dark:text-slate-darkA-12/80">
                 {{ data?.name }}
 							<span v-if="data.deathday"

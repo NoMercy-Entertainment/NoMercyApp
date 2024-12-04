@@ -26,7 +26,7 @@ defineProps({
     >
         <template v-slot:image >
             <div
-                class="relative flex aspect-video flex-shrink-0 flex-grow-0 flex-col items-center justify-center self-stretch overflow-clip rounded-lg bg-theme-8"
+                class="relative flex aspect-video flex-shrink-0 flex-grow-0 flex-col items-center justify-center self-stretch overflow-clip rounded-lg bg-theme-11 dark:bg-theme-8  text-slate-light-12/80 dark:text-slate-dark-12/80"
             >
                 <div class="backdropCard-overlay"></div>
                 <TMDBImage v-if="data.image" :path="data.image" class="z-0"/>

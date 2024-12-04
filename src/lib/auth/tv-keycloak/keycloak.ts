@@ -78,8 +78,8 @@ export async function initKeycloak(initConfig: Keycloak.KeycloakInitOptions): Pr
 		}
 	} catch (error : any) {
 		hasFailed(true);
-		// isAuthenticated(false);
-		// throw new Error(error);
+		isAuthenticated(false);
+		throw new Error(error);
 	} finally {
 		isPending(false);
 	}

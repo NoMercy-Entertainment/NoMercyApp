@@ -363,7 +363,7 @@ router.afterEach(() => {
 
               <RouterLink
                   :to="`/${data?.media_type}/${data?.id}/watch`"
-                  class="flex justify-start items-center flex-grow h-10 relative overflow-hidden gap-2 px-2 py-4 rounded-[30px] bg-white/80 backdrop-blur-lg"
+                  class="flex justify-start items-center flex-grow h-10 relative overflow-hidden gap-2 px-2 py-4 rounded-[30px] bg-white/80"
                   :disabled="!hasItem?.available"
                   :class="{ 'opacity-70': !hasItem?.available }"
               >
@@ -374,7 +374,7 @@ router.afterEach(() => {
 
               <button
                   @click="trailerOpen = !trailerOpen"
-                  class="flex justify-start items-center flex-grow h-10 relative overflow-hidden gap-2 px-2 py-4 rounded-[30px] bg-black/5  0 border border-solid border-slate-lightA-9 dark:border-slate-darkA-9 backdrop-blur-lg"
+                  class="flex justify-start items-center flex-grow h-10 relative overflow-hidden gap-2 px-2 py-4 rounded-[30px] bg-black/5  0 border border-solid border-slate-lightA-9 dark:border-slate-darkA-9"
               >
                 <p class="flex-grow w-[100px] text-[15px] font-semibold text-center">
                   {{ $t(!data ? 'loading' : 'Trailer') }}
@@ -385,12 +385,12 @@ router.afterEach(() => {
 
             <div class="flex justify-end items-start w-[280px] absolute left-0 top-0 gap-2 p-4">
               <div
-                  class="flex justify-start items-center flex-grow-0 flex-shrink-0 relative overflow-hidden gap-2 p-2 rounded-[30px] bg-black/[0.48] border border-black/2 backdrop-blur-lg"
+                  class="flex justify-start items-center flex-grow-0 flex-shrink-0 relative overflow-hidden gap-2 p-2 rounded-[30px] bg-black/[0.48] border border-black/2"
               >
                 <MoooomIcon icon="check" className="w-5"/>
               </div>
               <div
-                  class="flex justify-start items-center flex-grow-0 flex-shrink-0 relative overflow-hidden gap-2 p-2 rounded-[30px] bg-black/[0.48] border border-black/2 backdrop-blur-lg"
+                  class="flex justify-start items-center flex-grow-0 flex-shrink-0 relative overflow-hidden gap-2 p-2 rounded-[30px] bg-black/[0.48] border border-black/2"
               >
                 <MoooomIcon icon="heartFilled" className="w-5"/>
               </div>

@@ -1,6 +1,7 @@
 import {createRouter, createWebHashHistory, createWebHistory} from '@ionic/vue-router';
 import {isPlatform} from '@ionic/vue';
 
+import {isTv} from '@/config/global';
 import {useKeycloak} from '@/lib/auth/tv-keycloak';
 import {user} from '@/store/user';
 import {routes} from '@/router/routes';
@@ -8,7 +9,6 @@ import beforeEach from '@/router/middleware/beforeEach';
 import afterEach from '@/router/middleware/afterEach';
 import promises from '@/router/middleware/beforeResolve';
 import {handlePromises} from '@/router/middleware/handlePromises';
-import {isTv} from '@/config/global';
 
 const router = createRouter({
 	history: isPlatform('capacitor')

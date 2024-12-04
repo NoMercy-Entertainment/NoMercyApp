@@ -14,11 +14,14 @@ import SidebarButton from './SidebarButton.vue';
 import MoooomIcon from '@/components/Images/icons/MoooomIcon.vue';
 import libraries from '@/store/Libraries';
 import {setMusicPlaylists} from '@/store/musicPlaylists';
+import {useRoute} from "vue-router";
 
 // const {data: libraries, refetch} = useServerClient<ServerLibrary[]>({
 //   path: '/dashboard/libraries',
 //   queryKey: ['libraries'],
 // });
+
+const route = useRoute();
 
 const {data: playlists} = useServerClient<Playlist[]>({
   path: '/music/playlists',
@@ -31,40 +34,42 @@ watch(playlists, (value) => {
 });
 
 const isHomeRoute = computed(() => {
-  return router.currentRoute.value.fullPath === '/home';
+  return route.path === '/home'
+  || route.path.includes('watch')
 });
 
 const isLibraryRoute = computed(() => {
-  return router.currentRoute.value.fullPath.startsWith('/libraries')
-      || router.currentRoute.value.fullPath?.startsWith('/collection')
-      || router.currentRoute.value.fullPath?.startsWith('/specials')
-      || router.currentRoute.value.fullPath?.startsWith('/genres')
-      || router.currentRoute.value.fullPath?.startsWith('/movie')
-      || router.currentRoute.value.fullPath?.startsWith('/tv')
-      || router.currentRoute.value.fullPath?.startsWith('/person');
+  return route.path.startsWith('/libraries')
+      || route.path.startsWith('/genres')
+      || route.path.startsWith('/collection')
+      || route.path.startsWith('/specials')
+      || route.path.startsWith('/movie')
+      || route.path.startsWith('/tv')
+      || route.path.startsWith('/person');
 });
 
 const isMusicRoute = computed(() => {
-  return router.currentRoute.value.fullPath?.startsWith('/music');
+  return route.path.startsWith('/music');
 });
 
 const isDashboardRoute = computed(() => {
-  return router.currentRoute.value.fullPath?.startsWith('/dashboard');
+  return route.path.startsWith('/dashboard');
 });
 
 const isSetupRoute = computed(() => {
-  return router.currentRoute.value.fullPath?.startsWith('/setup') || router.currentRoute.value.fullPath?.includes('search');
+  return route.path.startsWith('/setup')
+      || route.path.includes('search');
 });
 
 const isPreferencesRoute = computed(() => {
-  return router.currentRoute.value.fullPath?.startsWith('/preferences');
+  return route.path.startsWith('/preferences');
 });
 
 const handleSidebar = () => {
-  if (isLibraryRoute.value || isMusicRoute.value || isDashboardRoute.value || isPreferencesRoute.value) {
-    openSidebar();
-  } else if (isHomeRoute.value || isSetupRoute.value) {
+  if (isHomeRoute.value || isSetupRoute.value) {
     hideSidebar();
+  } else if (isLibraryRoute.value || isMusicRoute.value || isDashboardRoute.value || isPreferencesRoute.value) {
+    openSidebar();
   } else {
     closeSidebar();
   }
@@ -73,14 +78,11 @@ const handleSidebar = () => {
 router.afterEach(() => {
   setTimeout(() => {
     handleSidebar();
-  }, 50);
+  }, 250);
 });
 
 onMounted(() => {
   handleSidebar();
-});
-
-router.beforeEach(() => {
 });
 
 const libraryIconName = (type: string) => {
@@ -197,8 +199,8 @@ const libraryIconName = (type: string) => {
                               title="Content"
           >
 
-            <SidebarButton href="/dashboard/metadata"
-                           icon="edit" name="Metadata"/>
+<!--            <SidebarButton href="/dashboard/metadata"-->
+<!--                           icon="edit" name="Metadata"/>-->
             <SidebarButton href="/dashboard/specials"
                            icon="sparkles" name="Specials"/>
             <SidebarButton href="/dashboard/ripper"
@@ -213,8 +215,8 @@ const libraryIconName = (type: string) => {
                            icon="monitor" name="Devices"/>
             <SidebarButton href="/dashboard/activity"
                            icon="tag" name="Activity"/>
-            <SidebarButton href="/dashboard/dlna"
-                           icon="airPlay" name="DLNA"/>
+<!--            <SidebarButton href="/dashboard/dlna"-->
+<!--                           icon="airPlay" name="DLNA"/>-->
 
           </SidebarButtonGroup>
           <SidebarButtonGroup :show="isDashboardRoute"
@@ -224,12 +226,12 @@ const libraryIconName = (type: string) => {
             <SidebarButton href="/dashboard/logs"
                            icon="terminalBox"
                            name="Logs"/>
-            <SidebarButton href="/dashboard/plugins"
-                           icon="shoppingCart"
-                           name="Plugins"/>
-            <SidebarButton href="/dashboard/schedule"
-                           icon="timeFast1"
-                           name="Scheduled Tasks"/>
+<!--            <SidebarButton href="/dashboard/plugins"-->
+<!--                           icon="shoppingCart"-->
+<!--                           name="Plugins"/>-->
+<!--            <SidebarButton href="/dashboard/schedule"-->
+<!--                           icon="timeFast1"-->
+<!--                           name="Scheduled Tasks"/>-->
 
           </SidebarButtonGroup>
           <!--                    End Dashboard pages-->
@@ -243,14 +245,14 @@ const libraryIconName = (type: string) => {
                          icon="userEdit"
                          :show="isPreferencesRoute"
                          name="Profile"/>
-          <SidebarButton href="/preferences/subtitles"
-                         icon="closedCaption"
-                         :show="isPreferencesRoute"
-                         name="Subtitles"/>
-          <SidebarButton href="/preferences/controls"
-                         icon="keyboard"
-                         :show="isPreferencesRoute"
-                         name="Controls"/>
+<!--          <SidebarButton href="/preferences/subtitles"-->
+<!--                         icon="closedCaption"-->
+<!--                         :show="isPreferencesRoute"-->
+<!--                         name="Subtitles"/>-->
+<!--          <SidebarButton href="/preferences/controls"-->
+<!--                         icon="keyboard"-->
+<!--                         :show="isPreferencesRoute"-->
+<!--                         name="Controls"/>-->
           <!--                    end Preferences pages-->
         </div>
       </ScrollPanel>

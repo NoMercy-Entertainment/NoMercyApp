@@ -1,29 +1,52 @@
 <script setup lang="ts">
-import {computed, onMounted, ref} from 'vue';
+import {computed, onMounted, ref, watch} from 'vue';
+import Chart from 'primevue/chart';
 
 import type {Resource} from '@/types/api/dashboard/resource';
+import type {ServerInfo} from "@/types/api/dashboard/server";
 
 import useMounted from '@/hooks/useMounted';
 import useHubListener from '@/hooks/useHubListener';
 import {connection} from '@/lib/clients/dashboardSocket';
 import {useSocket} from '@/store/socket';
-
-import MoooomIcon from '@/components/Images/icons/MoooomIcon.vue';
+import {getCpuColor, getGpuColor, hexOpacity} from "@/lib/colorHelper";
+import {orange, purple} from "@/config/global";
+import useServerClient from "@/lib/clients/useServerClient";
+import {currentServer} from "@/store/currentServer";
 
 import SystemCard from '../ServerSystemCard.vue';
 import ResourceBar from './ResourceBar.vue';
 import ResourceCircle from './ResourceCircle.vue';
+import {darkMode} from "@/store/colorScheme";
+
+const {data: serverInfo} = useServerClient<ServerInfo>({
+  path: 'dashboard/server/info',
+  queryKey: ['serverInfo', currentServer.value?.serverBaseUrl],
+});
 
 const resources = ref<Resource>();
+
+const display = ref<'bar' | 'graph'>('graph');
+
+const MAX_DATA_POINTS = 20;
+const lableGraph = ref<string[]>(Array(MAX_DATA_POINTS).fill(''));
+const cpuGraph = ref<number[]>(Array(MAX_DATA_POINTS).fill(null));
+const memoryGraph = ref<number[]>(Array(MAX_DATA_POINTS).fill(null));
+const gpuGraph = ref<number[][]>(Array(MAX_DATA_POINTS).fill([null]));
 
 const handleResourceUpdate = (data: Resource) => {
   if (!data) return;
   resources.value = data;
+
+  // lableGraph.value = [...lableGraph.value.slice(-MAX_DATA_POINTS), new Date().toLocaleTimeString()];
+  cpuGraph.value = [...cpuGraph.value.slice(-MAX_DATA_POINTS), cpuUsage.value];
+  memoryGraph.value = [...memoryGraph.value.slice(-MAX_DATA_POINTS), memoryUsage.value];
+  gpuGraph.value = [...gpuGraph.value.slice(-MAX_DATA_POINTS), gpuCores.value];
 };
 
 useMounted(
     () => connection.value?.invoke('StartResources'),
-    () => connection.value?.invoke('StopResources')
+    () => connection.value?.invoke('StopResources').catch(),
 );
 
 useHubListener(connection, 'ResourceUpdate', handleResourceUpdate);
@@ -36,8 +59,6 @@ onMounted(() => {
   const socket = useSocket();
   socket?.onreconnected(connected);
 });
-
-const display = ref<'bar' | 'graph'>('bar');
 
 const cpuCores = computed(() => {
   return resources.value?.cpu?.core
@@ -78,6 +99,125 @@ const size = computed(() => {
   return (window.innerWidth - 5000) / 3;
 });
 
+const generateOpacityValues = (gpus: string[]) => {
+  const minOpacity = 25;
+  const maxOpacity = 75;
+  const maxOpacitiesPerColor = 3;
+
+  if (gpus.length === 1) {
+    return [{ color: getGpuColor(gpus[0]), opacity: 50 }];
+  }
+
+  const step = (maxOpacity - minOpacity) / (maxOpacitiesPerColor - 1);
+  const opacityValues = [];
+
+  for (let i = 0; i < gpus.length; i++) {
+    const opacity = minOpacity + (i % maxOpacitiesPerColor) * step;
+    opacityValues.push({ color: getGpuColor(gpus[i]), opacity });
+  }
+
+  return opacityValues;
+};
+
+const chartData = computed(() => {
+
+  return {
+    labels: lableGraph.value,
+    datasets: [
+      ...serverInfo.value?.cpu?.map((core, index) => {
+        const color = purple ?? getCpuColor(core);
+        return {
+          label: `CPU ${index}`,
+          data: cpuGraph.value.map(c => c),
+          fill: false,
+          tension: 0.4,
+          yAxisID: 'y',
+          borderColor: hexOpacity(color, 50),
+          backgroundColor: hexOpacity(color, 50),
+        };
+      }) ?? [],
+      {
+        label: 'Memory (%)',
+        data: memoryGraph.value,
+        fill: false,
+        tension: 0.4,
+        yAxisID: 'y',
+        borderColor: hexOpacity(orange, 50),
+        backgroundColor: hexOpacity(orange, 50),
+      },
+      ...serverInfo.value?.gpu?.map((core, index) => {
+
+        const c = generateOpacityValues(serverInfo.value?.gpu)[index]
+        const color = hexOpacity(c.color, c.opacity);
+
+        return {
+          label: `GPU ${index}`,
+          data: gpuGraph.value.map(g => g[index]),
+          fill: false,
+          tension: 0.4,
+          yAxisID: 'y',
+          borderColor: color,
+          backgroundColor: color,
+        };
+      }) ?? [],
+    ],
+  };
+});
+
+const chartOptions = computed(() => {
+  const documentStyle = getComputedStyle(document.documentElement);
+  const textColor = darkMode.value
+      ? `rgb(${documentStyle.getPropertyValue('--color-slate-12')})`
+      : `rgb(${documentStyle.getPropertyValue('--color-slate-1')})`;
+  const textColorSecondary = textColor;
+
+  const surfaceBorder = documentStyle.getPropertyValue('--p-content-border-color');
+
+  return {
+    stacked: false,
+    indexAxis: 'x',
+    maintainAspectRatio: false,
+    aspectRatio: 0.8,
+    animation: false,
+    plugins: {
+      legend: {
+        labels: {
+          color: textColor
+        },
+      }
+    },
+    scales: {
+      x: {
+        ticks: {
+          color: textColorSecondary
+        },
+        grid: {
+          color: surfaceBorder
+        },
+      },
+      y: {
+        display: true,
+        min: 0,
+        max: 100,
+        ticks: {
+          color: textColorSecondary
+        },
+        grid: {
+          color: surfaceBorder
+        },
+      }
+    }
+  };
+});
+
+const chartHeight = computed(() => {
+  const number = serverInfo.value?.gpu?.length ?? 0;
+  const baseHeight = 136;
+  const additionalHeightPerGpu = 40;
+  const additionalHeight = ((number * additionalHeightPerGpu) + baseHeight);
+  return `${additionalHeight}px`;
+});
+
 </script>
 
 <template>
@@ -88,7 +228,7 @@ const size = computed(() => {
     </template>
 
     <div
-        class="flex items-start justify-between gap-2 overflow-clip w-available"
+        class="flex items-start justify-between gap-2 overflow-clip w-available text-slate-light-12/80 dark:text-slate-dark-12/80"
     >
       <ResourceCircle name="CPU"
                       :value="cpuUsage"
@@ -109,23 +249,23 @@ const size = computed(() => {
     <div
         class="flex flex-shrink-0 flex-grow-0 flex-col items-start justify-start self-stretch"
     >
-      <div class="relative flex flex-shrink-0 flex-grow-0 items-center justify-start gap-6 self-stretch pb-2">
-        <div
-            class="ml-auto flex items-start justify-start overflow-hidden rounded-lg border-2 border-auto-alpha-8">
-          <button @click="display = 'bar'"
-                  :class="display == 'bar' ? 'bg-auto-alpha-5 text-theme-8' : 'bg-auto-alpha-2'"
-                  class="relative flex flex-shrink-0 flex-grow-0 items-center justify-center border-r-2 transition-transform duration-300 p-2.5 border-auto-alpha-8"
-          >
-            <MoooomIcon icon="bulletList" className="w-5"/>
-          </button>
-          <button @click="display = 'graph'"
-                  :class="display == 'graph' ? 'bg-auto-alpha-5 text-theme-8' : 'bg-auto-alpha-2'"
-                  class="relative flex flex-shrink-0 flex-grow-0 items-center justify-center transition-transform duration-300 p-2.5"
-          >
-            <MoooomIcon icon="barChart" className="w-5"/>
-          </button>
-        </div>
-      </div>
+<!--      <div class="relative flex flex-shrink-0 flex-grow-0 items-center justify-start gap-6 self-stretch pb-2">-->
+<!--        <div-->
+<!--            class="ml-auto flex items-start justify-start overflow-hidden rounded-lg border-2 border-auto-alpha-8">-->
+<!--          <button @click="display = 'bar'"-->
+<!--                  :class="display == 'bar' ? 'bg-auto-alpha-5 text-theme-8' : 'bg-auto-alpha-2'"-->
+<!--                  class="relative flex flex-shrink-0 flex-grow-0 items-center justify-center border-r-2 transition-transform duration-300 p-2.5 border-auto-alpha-8"-->
+<!--          >-->
+<!--            <MoooomIcon icon="bulletList" className="w-5 text-slate-light-12/80 dark:text-slate-dark-12/80"/>-->
+<!--          </button>-->
+<!--          <button @click="display = 'graph'"-->
+<!--                  :class="display == 'graph' ? 'bg-auto-alpha-5 text-theme-8' : 'bg-auto-alpha-2'"-->
+<!--                  class="relative flex flex-shrink-0 flex-grow-0 items-center justify-center transition-transform duration-300 p-2.5"-->
+<!--          >-->
+<!--            <MoooomIcon icon="barChart" className="w-5 text-slate-light-11/80 dark:text-slate-dark-11/80"/>-->
+<!--          </button>-->
+<!--        </div>-->
+<!--      </div>-->
 
       <template v-if="display == 'bar'">
         <template v-for="(core, index) in resources?.cpu?.core ?? []" :key="core.index">
@@ -134,7 +274,9 @@ const size = computed(() => {
       </template>
 
       <template v-if="display == 'graph'">
-
+        <Chart type="line" :data="chartData" :options="chartOptions" :style="`height: ${chartHeight}`"
+               class="w-available"
+        />
       </template>
     </div>
   </SystemCard>

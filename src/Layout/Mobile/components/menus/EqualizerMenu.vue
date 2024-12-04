@@ -1,7 +1,7 @@
 <script setup lang="ts">
 
 import {
-  equalizerMenuOpen, handleReset,
+  equalizerMenuOpen,
   closeEqualizerMenu, setEqualizerMenuOpen,
 } from '@/store/audioPlayer';
 

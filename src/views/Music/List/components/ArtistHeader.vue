@@ -45,7 +45,7 @@ onMounted(() => {
 });
 
 onUnmounted(() => {
-    // setColorPalette(null);
+    setColorPalette(null);
 })
 
 function processImage(data: Event & { target: HTMLImageElement; }) {
@@ -53,10 +53,6 @@ function processImage(data: Event & { target: HTMLImageElement; }) {
 //     const colors = getDominantColor(data.target);
 //     setColorPalette(colors);
 }
-
-const isArtist = computed(() => {
-  return ((props.data?.tracks?.length ?? 0) / (props.data?.artists?.length ?? 0) ) * 100 < 40;
-})
 
 </script>
 
@@ -80,11 +76,14 @@ const isArtist = computed(() => {
                 loading="eager"/>
         </div>
 
-        <div
+        <div v-if="data?.name"
             class="relative mb-4 flex w-full flex-1 flex-shrink-0 flex-col items-start justify-start gap-4 flex-grow-1 sm:hidden">
-            <div class="w-full text-3xl font-semibold line-clamp-1 leading-[130%] whitespace-pre"
+            <div v-if="data.name.length > 50" class="w-full text-3xl font-semibold line-clamp-1 leading-[130%] whitespace-pre"
                v-html="breakTitle2(data?.name ?? 'Songs you like', 'text-2xl line-clamp-1')">
             </div>
+            <p v-else class="w-full text-3xl font-semibold line-clamp-1 leading-[130%] whitespace-pre">
+                {{ data?.name }}
+            </p>
             <p class="text-left font-semibold uppercase text-white">
                 {{ data?.type?.replace(/s$/u, '') }}
             </p>
@@ -95,10 +94,13 @@ const isArtist = computed(() => {
             <p class="text-left font-semibold uppercase text-white">
                 {{ data?.type?.replace(/s$/u, '') }}
             </p>
-            <div class="w-full text-5xl font-semibold line-clamp-2 leading-[130%] whitespace-pre"
+            <div v-if="data.name.length > 50"
+                class="w-full text-5xl font-semibold line-clamp-2 leading-[130%] whitespace-pre"
                v-html="breakTitle2(data?.name ?? 'Songs you like', 'text-2xl line-clamp-1')">
-
             </div>
+            <p v-else class="w-full text-5xl font-semibold line-clamp-2 leading-[130%] whitespace-pre">
+                {{ data?.name }}
+            </p>
 
             <div class="relative flex items-center justify-start gap-2">
                 <div v-if="isArtistRoute"

@@ -69,7 +69,7 @@ const toggleRunning = () => {
 
 <template>
   <div v-if="data"
-       class="relative flex w-full flex-col items-start justify-start overflow-clip rounded-lg pt-2 group/encoderCard gap-1.5 px-2.5 pb-3.5 bg-auto-2/6 dark:bg-auto-alpha-3"
+       class="relative flex w-full flex-col items-start justify-start overflow-clip rounded-lg pt-2 group/encoderCard gap-1.5 px-2.5 pb-3.5 bg-slate-lightA-3 dark:bg-slate-darkA-3"
   >
     <div
         class="relative flex w-full items-center justify-center gap-0.5"
@@ -147,7 +147,7 @@ const toggleRunning = () => {
         <div
             class="relative flex h-4 items-center justify-center overflow-clip"
         >
-          <MoooomIcon icon="stickyNote" className="relative w-4"/>
+          <MoooomIcon icon="stickyNote" className="relative w-4 text-auto-12"/>
           <p class="ml-2 w-full font-medium text-2xs text-auto-12">
             {{ data?.message }}
           </p>
@@ -158,7 +158,7 @@ const toggleRunning = () => {
           <div v-if="data?.speed"
                class="relative flex h-4 items-center justify-center overflow-clip"
           >
-            <MoooomIcon icon="dashboard" className="relative w-4"/>
+            <MoooomIcon icon="dashboard" className="relative w-4 text-auto-12"/>
             <p class="ml-2 w-full font-medium text-2xs text-auto-12">
               {{ data?.speed }}X
             </p>
@@ -170,7 +170,7 @@ const toggleRunning = () => {
           <div v-if="data?.remaining_split"
                class="relative flex h-4 items-center justify-center overflow-clip"
           >
-            <MoooomIcon icon="hourglass" className="relative w-4"/>
+            <MoooomIcon icon="hourglass" className="relative w-4 text-auto-12"/>
             <p class="ml-1 font-medium text-2xs text-auto-12">
               {{
                 data?.remaining_split?.[0] && data?.remaining_split[0] > 0

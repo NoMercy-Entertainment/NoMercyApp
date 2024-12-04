@@ -5,8 +5,9 @@ import { useIdle } from '@vueuse/core';
 import type {LogoResponse} from "@/types/server";
 
 import useServerClient from "@/lib/clients/useServerClient";
+import {screensaverDelay} from "@/store/preferences";
 import {
-  disableScreensaver, screensaverDelay,
+  disableScreensaver,
   setImageModalData, setShowScreensaver,
   showImageModal,
   showScreensaver

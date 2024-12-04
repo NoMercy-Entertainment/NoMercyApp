@@ -1,4 +1,4 @@
-import {computed, ref} from 'vue';
+import {computed, ref, toRaw} from 'vue';
 import {isPlatform} from '@ionic/vue';
 import {useLocalStorage, useMediaQuery} from '@vueuse/core';
 import {MoooomIcons} from '@Icons/icons';
@@ -16,17 +16,15 @@ export const dashboardCardGrid = ref('grid grid-cols-2 md:grid-cols-3 lg:grid-co
 export const dashboardBigCardGrid = ref('grid grid-cols-1 xl:grid-cols-3');
 export const dashboardColumnGrid = ref('grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4 2xl:grid-cols-6 5xl:grid-cols-10');
 
-export const isDarkMode = ref((document.body.parentElement as HTMLElement).classList.contains('scheme-dark'));
+export const purple = "#94f"
+export const blue = "#39f"
+export const green = "#4b4"
+export const orange = "#f90"
+export const red = "#f44"
+export const brown = "#963"
+export const gray = "#999"
 
-// export const isDarkMode = computed(() => {
-// 	const classList = (document.body.parentElement as HTMLElement).classList;
-// 	if (!classList.contains('scheme-dark') && !classList.contains('scheme-light')) {
-// 		console.log('isDarkMode');
-// 		return useMediaQuery('(prefers-color-scheme: dark)').value;
-// 	}
-// 	console.log('classList', classList.contains('scheme-dark'));
-// 	return classList.contains('scheme-dark');
-// });
+export const isDarkMode = ref((document.body.parentElement as HTMLElement).classList.contains('scheme-dark'));
 
 export const genreColors = (title: string) => {
 	let bg;
@@ -218,3 +216,18 @@ export const greetingValue = computed(() => {
 	}
 	return 'Day!';
 });
+
+console.raw = (...arg: any[]) => {
+	console.log(...arg.map(a => toRaw(a)));
+};
+
+console.raw({
+	isTv: isTv.value,
+	isMobile: isMobile.value,
+	isNativeMobile: isPlatform('mobile'),
+	isWebMobile: isPlatform('mobileweb'),
+	isNative : isNative.value,
+	nativeOverride: nativeOverride.value,
+	isDarkMode: isDarkMode.value,
+	greetingValue: greetingValue.value,
+})

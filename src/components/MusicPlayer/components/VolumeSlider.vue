@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import {ref, watch} from 'vue';
 
-import audioPlayer from '@/store/audioPlayer';
+import audioPlayer, {currentTime, duration, percentage} from '@/store/audioPlayer';
 
 import SliderBar from '@/components/MusicPlayer/components/SliderBar.vue';
 
@@ -25,9 +25,9 @@ watch(volumePercentage, (value) => {
 
 <template>
   <SliderBar
-      v-model="volumePercentage"
       :percentage="volumePercentage"
       :position="volumePercentage"
+      @input="volumePercentage = Number(($event.target as HTMLInputElement).value)"
       :min="0"
       :step="1"
       :max="100"

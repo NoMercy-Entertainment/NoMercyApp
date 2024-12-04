@@ -1,6 +1,6 @@
 import {Plugin} from 'vue';
 import {defaultInitConfig} from './const';
-import {initKeycloak} from './keycloak';
+import {createKeycloak, initKeycloak} from './keycloak';
 import {isFunction, isNil, isPromise, isString} from './utils';
 import {loadJsonConfig} from './config';
 
@@ -29,12 +29,15 @@ export const vueKeycloak: Plugin = {
 			keycloakPluginConfig = options as KeycloakPluginConfig;
 		}
 
-		// const keycloakConfig = keycloakPluginConfig.config;
+		const keycloakConfig = keycloakPluginConfig.config;
 		const keycloakInitOptions: Keycloak.KeycloakInitOptions = isNil(keycloakPluginConfig.initOptions)
 			? defaultInitConfig
 			: { ...defaultInitConfig, ...keycloakPluginConfig.initOptions };
 
-		// app.config.globalProperties.$keycloak = createKeycloak(keycloakConfig);
+		if (!app.config.globalProperties.$keycloak) {
+			// @ts-ignore
+			app.config.globalProperties.$keycloak = createKeycloak(keycloakConfig);
+		}
 
 		await initKeycloak(keycloakInitOptions);
 	},

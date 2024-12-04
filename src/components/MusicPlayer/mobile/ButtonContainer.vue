@@ -12,6 +12,8 @@ import ShuffleButton from '../components/ShuffleButton.vue';
 import StopButton from '../components/StopButton.vue';
 import EqButton from "@/components/MusicPlayer/components/EqButton.vue";
 
+const supportsAudioContext = localStorage.getItem('supports-audio-context') === 'true';
+
 </script>
 
 <template>
@@ -29,11 +31,11 @@ import EqButton from "@/components/MusicPlayer/components/EqButton.vue";
         <NextButton />
         <RepeatButton />
     </div>
-    <div class="z-0 mb-12 flex h-12 w-full justify-between px-6"
+    <div class="z-0 mb-12 flex h-12 w-full justify-between px-6 gap-2"
          :data-size="musicSize">
         <DeviceButton />
         <StopButton class="ml-auto" />
-        <EqButton />
+        <EqButton v-if="supportsAudioContext" />
         <QueueButton />
     </div>
 </template>

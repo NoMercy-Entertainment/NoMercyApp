@@ -59,7 +59,7 @@ const handleAdd = () => {
                          :data="data"
                          color="var(--color-focus)"
                          :type="'music/' + data?.type?.replace(/s$/u, '')"
-                         class=" sm:ml-auto -mt-4 sm:mt-0"
+                         class=" sm:ml-auto"
                          className="!w-8 !h-8"/>
 
       <MusicButton

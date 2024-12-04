@@ -11,6 +11,7 @@ import {socketInstance} from '@/store/socket';
 import SystemCard from '../ServerSystemCard.vue';
 import ServerEncoderTaskCard from './ServerEncoderTaskCard.vue';
 import ServerQueueTaskCard from './ServerQueueTaskCard.vue';
+import {connection} from "@/lib/clients/dashboardSocket";
 
 onMounted(() => {
   encoderData.value = [];
@@ -21,7 +22,7 @@ const encoderData = ref<ServerEncoderProgress[]>([]);
 const {data: queueData, refetch} = useServerClient<QueueResponse[]>({
   path: 'dashboard/tasks/queue',
   queryKey: ['queue'],
-  refetchInterval: 10000,
+  // refetchInterval: 30000,
 });
 
 const handleProgress = (data: ServerEncoderProgress) => {
@@ -46,10 +47,10 @@ const handleClear = () => {
   refetch();
 };
 
-useHubListener(socketInstance, 'encoder-progress', handleProgress);
-useHubListener(socketInstance, 'encoder-queue', handleQueue);
-useHubListener(socketInstance, 'encoder-clear', handleClear);
-useHubListener(socketInstance, 'disconnected', handleClear);
+useHubListener(connection, 'encoder-progress', handleProgress);
+useHubListener(connection, 'encoder-queue', handleQueue);
+useHubListener(connection, 'encoder-clear', handleClear);
+useHubListener(connection, 'disconnected', handleClear);
 
 </script>
 
@@ -71,7 +72,7 @@ useHubListener(socketInstance, 'disconnected', handleClear);
 
   <SystemCard v-else title="Running tasks" :background="false">
     <div
-        class="relative flex items-start justify-start gap-2 self-stretch rounded-lg p-4 bg-auto-2/6 dark:bg-auto-alpha-3">
+        class="relative flex items-start justify-start gap-2 self-stretch rounded-lg p-4 bg-slate-lightA-3 dark:bg-slate-darkA-3 text-slate-light-12/80 dark:text-slate-dark-12/80">
         <span class="flex-shrink-0 flex-grow-0 self-stretch text-sm font-semibold">
           {{ $t('No tasks are currently running') }}
         </span>
