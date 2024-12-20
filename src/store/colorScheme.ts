@@ -59,8 +59,8 @@ export const setColorScheme = async (value: ColorScheme) => {
 			darkMode.value = false;
 			isDarkMode.value = false;
 			NavigationBar.setColor({color: '#FFFFFF', darkButtons: true}).then();
-			StatusBar.setBackgroundColor({color: '#FFFFFF40'}).then();
-			StatusBar.setStyle({style: Style.Light}).then();
+			StatusBar.setBackgroundColor({color: '#FFFFFFA0'}).then();
+			StatusBar.setStyle({style: Style.Dark}).then();
 		}
 
 		StatusBar.setOverlaysWebView({overlay: true}).then();
@@ -98,5 +98,5 @@ watch(darkMode, async (value) => {
 		}
 
 		darkMode.value = colorScheme === 'dark';
-	}, 1000);
+	}, 100);
 })();

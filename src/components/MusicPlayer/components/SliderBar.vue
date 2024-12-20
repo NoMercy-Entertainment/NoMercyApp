@@ -1,6 +1,6 @@
 <script setup lang="ts">
 
-import {computed} from 'vue';
+import {computed, PropType} from 'vue';
 
 const props = defineProps({
   position: {
@@ -25,6 +25,14 @@ const props = defineProps({
     required: false,
     default: 1,
   },
+  onKeyDown: {
+    type: Function as PropType<(event: KeyboardEvent) => void>,
+    required: false,
+  },
+  onKeyUp: {
+    type: Function as PropType<(event: KeyboardEvent) => void>,
+    required: false,
+  },
 });
 
 defineEmits(['update:modelValue']);
@@ -37,7 +45,7 @@ const computedPercentage = computed(() => {
 </script>
 
 <template>
-  <span class="h-2 w-full rounded-full group"
+  <span class="sliderBar h-2 w-full rounded-full group relative"
         style="box-shadow: 0 1px 0 0 rgba(0, 0, 0, 0.24) inset, 0 -1px 0 0 rgba(255, 255, 255, 0.12) inset, 0 4px 4px 0 rgba(0, 0, 0, 0.08) inset;"
         >
   <input
@@ -46,7 +54,11 @@ const computedPercentage = computed(() => {
       :step="step"
       :min="min"
       :max="max"
+      @keydown="onKeyDown && onKeyDown($event)"
+      @keyup="onKeyUp && onKeyUp($event)"
       class="relative w-full
+        [&::-webkit-slider-runnable-track]:transition-all 
+        [&::-webkit-slider-runnable-track]:duration-100
         [&::-webkit-slider-thumb]:opacity-0
         [&::-moz-slider-thumb]:opacity-0
         group-hover:[&::-webkit-slider-thumb]:opacity-100

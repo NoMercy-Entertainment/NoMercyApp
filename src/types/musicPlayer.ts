@@ -200,4 +200,5 @@ export interface DisplayList {
 	artist: Artist;
 	type: 'track' | 'album' | 'artist';
 	favorite: boolean;
+	link: string;
 }

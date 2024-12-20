@@ -38,12 +38,12 @@ const route = useRoute();
 const {data, isError, error, refetch} = useServerClient<InfoResponse>({
   keepForever: true,
   queryKey: ['base', 'info', route.params.id],
-  path: `${route?.fullPath}`,
+  path: `${route.fullPath}`,
 });
 
 const {data: hasItem} = useServerClient<{ available: boolean; server: string; }>({
-  queryKey: ['base', 'info', route?.params.id, 'available'],
-  path: `${route?.fullPath}/available`,
+  queryKey: ['base', 'info', route.params.id, 'available'],
+  path: `${route.fullPath}/available`,
 });
 
 const trailerOpen = ref(false);
@@ -156,7 +156,7 @@ const handleRescan = () => {
         message: string,
         status: string,
         args: string[];
-      }>(`${route?.fullPath}/rescan`)
+      }>(`${route.fullPath}/rescan`)
       .then(({data}) => {
         // showNotification({
         // 	title: translate(data.message, ...data.args),
@@ -183,7 +183,7 @@ const handleRefresh = () => {
         message: string,
         status: string,
         args: string[];
-      }>(`${route?.fullPath}/refresh`)
+      }>(`${route.fullPath}/refresh`)
       .then(({data}) => {
         // showNotification({
         // 	title: translate(data.message, ...data.args),
@@ -210,7 +210,34 @@ const handleDelete = () => {
         message: string,
         status: string,
         args: string[];
-      }>(`${route?.fullPath}`)
+      }>(`${route.fullPath}`)
+      .then(({data}) => {
+        // showNotification({
+        // 	title: translate(data.message, ...data.args),
+        // 	type: data.status == 'ok'
+        // 		? TYPE.SUCCESS
+        // 		: TYPE.ERROR,
+        // 	visibleOnly: true,
+        // 	duration: 2000,
+        // });
+      })
+      .catch(() => {
+        // showNotification({
+        // 	title: translate('An error occurred while rescanning the library folders'),
+        // 	type: TYPE.ERROR,
+        // 	visibleOnly: true,
+        // 	duration: 2000,
+        // });
+      });
+};
+
+const handleAdd = () => {
+  serverClient()
+      .post<{
+        message: string,
+        status: string,
+        args: string[];
+      }>(`${route.fullPath}/add`)
       .then(({data}) => {
         // showNotification({
         // 	title: translate(data.message, ...data.args),
@@ -247,6 +274,11 @@ const menuItems: IMenuItem[] = [
     icon: 'arrowRefreshHorizontal',
     onclick: handleRefresh,
     title: 'Refresh data',
+  },
+  {
+    icon: 'folderAdd',
+    onclick: handleAdd,
+    title: `Add ${data?.value?.media_type == 'movie' ? 'movie' : 'TV show'}`,
   },
   {
     icon: 'folderRemove',
@@ -314,8 +346,8 @@ const menuItems: IMenuItem[] = [
                           priority="high"
                           :title="data?.title"
                           aspect="poster"
-                          className="pointer-events-none absolute -inset-1 z-20 flex aspect-poster scale-100 select-none items-center place-self-start overflow-hidden rounded-2xl !w-auto h-full max-h-available"
-                          class="m-auto children:w-auto scale-100 rounded-2xl aspect-poster max-h-available 5xl:w-inherit"
+                          className="pointer-events-none absolute -inset-1 z-20 flex aspect-poster scale-100 select-none items-center place-self-start overflow-hidden rounded-2xl !w-auto !h-auto max-h-available"
+                          class="m-auto !w-auto !h-auto children:w-auto scale-100 rounded-2xl aspect-poster 5xl:w-inherit"
                           type="image"/>
 
                       <span
@@ -436,13 +468,13 @@ const menuItems: IMenuItem[] = [
                         class="relative flex flex-shrink-0 flex-grow-0 flex-col items-start justify-start gap-2 self-stretch"
                         v-if="data">
                       <div class="h-px flex-shrink-0 flex-grow-0 self-stretch bg-auto-12/10"></div>
-                      <div class="w-full flex-shrink-0 flex-grow-0 self-stretch text-lg font-medium text-auto-12">
+                      <div class="w-full flex-shrink-0 flex-grow-0 self-stretch text-lg font-medium text-auto-12 mb-4">
                         <div v-if="!data?.overview" class="">
                         <span class="">
                             {{ $t('We don\'t have an overview for ') }} {{ data.name }}.
                             {{ $t('Feel free to contribute!') }}
                         </span>
-                          <a :href="`https://www.themoviedb.org/${route?.params?.type}/${ route?.params?.id }/edit`"
+                          <a :href="`https://www.themoviedb.org/${route.params?.type}/${ route.params?.id }/edit`"
                              class="underline underline-offset-4">
                             {{ $t('Contribute to TMDb') }}
                           </a>
@@ -559,7 +591,7 @@ const menuItems: IMenuItem[] = [
                    :title="data?.title ?? data?.name"
                    :toggle="toggleTrailer"
                    :videos="data?.videos"
-                   class="absolute inset-0 h-full w-full z-999"/>
+                   class="inset-0 h-full w-full z-999"/>
 
         </div>
       </ScrollContainer>

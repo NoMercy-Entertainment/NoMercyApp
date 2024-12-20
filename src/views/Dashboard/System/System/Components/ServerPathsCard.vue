@@ -1,15 +1,11 @@
 <script setup lang="ts">
-
-import type {SystemPath} from '@/types/api/dashboard/server';
+import {onMounted, ref, watch} from "vue";
+import {MoooomIcons} from "@Icons/icons";
+import MeterGroup from "primevue/metergroup";
 
 import useServerClient from '@/lib/clients/useServerClient';
-import {currentServer} from '@/store/currentServer';
 
 import SystemCard from './ServerSystemCard.vue';
-import {MoooomIcons} from "@Icons/icons";
-import {onMounted, ref, watch} from "vue";
-import MeterGroup from "primevue/metergroup";
-import type {LibrariesResponse} from "@/types/api/base/library";
 import {green, purple, orange, blue, gray} from "@/config/global";
 import {hexOpacity} from "@/lib/colorHelper";
 import {dashboardSocketIsConnected} from "@/lib/clients/dashboardSocket";
@@ -19,10 +15,24 @@ import {dashboardSocketIsConnected} from "@/lib/clients/dashboardSocket";
 //   queryKey: ['serverpaths', currentServer.value?.serverBaseUrl],
 // });
 
-const {data: libraries} = useServerClient<LibrariesResponse[]>({
-  path: 'dashboard/libraries',
-  queryKey: ['dashboard', 'libraries', currentServer.value?.serverBaseUrl],
+interface StorageItem {
+  path: string;
+  data: {
+    movies: number;
+    shows: number;
+    music: number;
+    other: number;
+    free: number;
+    used: number;
+  }
+}
+
+const {data: storage} = useServerClient<StorageItem[]>({
+  path: 'dashboard/server/storage',
+  refetchInterval: 10000,
 });
+
+const drives = ref<Drive[]>([]);
 
 interface Drive {
   name: string;
@@ -34,69 +44,42 @@ interface Drive {
   }[]
 }
 
-const generateRandomValues = (type: 'anime'|'movies'|'shows'|'music') => {
-  let movies = 0, shows = 0, music = 0, other = 0;
-
-  switch (type) {
-    case 'movies':
-      movies = Math.random() * 75;
-      other = Math.random() * (100 - movies);
-      break;
-    case 'shows':
-      shows = Math.random() * 75;
-      other = Math.random() * (100 - shows);
-      break;
-    case 'music':
-      music = Math.random() * 75;
-      other = Math.random() * (100 - music);
-      break;
-    default:
-      movies = Math.random() * 50;
-      shows = Math.random() * (100 - movies);
-      other = Math.random() * (100 - movies - shows);
-      break;
-  }
-
-  const free = 100 - movies - shows - music - other;
-  return { movies, shows, music, other, free };
-};
-
-const drives = ref<Drive[]>([]);
-
-watch(libraries, (value) => {
+watch(storage, (value) => {
   if (!value) return;
-  drives.value = value.map(l => l.folder_library.map(lib => {
-    const {movies, shows, music, other, free} = generateRandomValues(l.type);
+
+  drives.value = value.map(l => {
+    const {movies, shows, music, other, free} = l.data;
     return {
-      name: lib.folder.path,
+      name: l.path,
       data: [
-        {label: 'Movies', color: hexOpacity(green, 50), value: movies},
-        {label: 'TV Shows', color: hexOpacity(orange, 50), value: shows},
-        {label: 'Music', color: hexOpacity(purple, 50), value: music},
-        {label: 'Other', color: hexOpacity(blue, 50), value: other},
-        // {label: 'Free', color: hexOpacity(gray, 1), value: free ?? 1}
+        {label: 'Movies', color: hexOpacity(green, 50), value: movies, icon: 'mooooom-movie'},
+        {label: 'TV Shows', color: hexOpacity(orange, 50), value: shows, icon: 'mooooom-tv'},
+        {label: 'Music', color: hexOpacity(purple, 50), value: music, icon: 'mooooom-music'},
+        {label: 'Other', color: hexOpacity(blue, 50), value: other, icon: 'mooooom-folder'},
+        // {label: 'Free', color: hexOpacity(gray, 1), value: free ?? 1, icon: 'mooooom-folder'}
       ].filter(d => d.value > 0)
     } as Drive
-  })).flat().sort((a, b) => a.name.localeCompare(b.name));
+  }).sort((a, b) => a.name.localeCompare(b.name));
 });
 
 onMounted(() => {
-  if (!libraries.value) return;
-  drives.value = libraries.value.map(l => l.folder_library.map(lib => {
-    const {movies, shows, music, other, free} = generateRandomValues(l.type);
+  if (!storage.value) return;
+
+  drives.value = storage.value.map(l => {
+    const {movies, shows, music, other, free} = l.data;
     return {
-      name: lib.folder.path,
+      name: l.path,
       data: [
-        {label: 'Movies', color: hexOpacity(green, 50), value: movies},
-        {label: 'TV Shows', color: hexOpacity(orange, 50), value: shows},
-        {label: 'Music', color: hexOpacity(purple, 50), value: music},
-        {label: 'Other', color: hexOpacity(blue, 50), value: other},
-        // {label: 'Free', color: hexOpacity(gray, 1), value: free ?? 1}
+        {label: 'Movies', color: hexOpacity(green, 50), value: movies, icon: 'mooooom-movie'},
+        {label: 'TV Shows', color: hexOpacity(orange, 50), value: shows, icon: 'mooooom-tv'},
+        {label: 'Music', color: hexOpacity(purple, 50), value: music, icon: 'mooooom-music'},
+        {label: 'Other', color: hexOpacity(blue, 50), value: other, icon: 'mooooom-folder'},
+        // {label: 'Free', color: hexOpacity(gray, 1), value: free ?? 1, icon: 'mooooom-folder'}
       ].filter(d => d.value > 0)
     } as Drive
-  })).flat().flat().sort((a, b) => a.name.localeCompare(b.name));
-});
+  }).sort((a, b) => a.name.localeCompare(b.name));
 
+});
 
 </script>
 

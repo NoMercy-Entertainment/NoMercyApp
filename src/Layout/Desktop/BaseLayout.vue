@@ -33,7 +33,7 @@ import DeviceOverlay from './components/Overlays/DeviceOverlay.vue';
 
 import MusicPlayerDesktop from '@/components/MusicPlayer/MusicPlayerDesktop.vue';
 import EqualizerOverlay from "@/Layout/Desktop/components/Overlays/EqualizerOverlay.vue";
-
+import ChristmasSnow from "@/components/Seasonal/Christmas/ChristmasSnow.vue";
 
 const backgroundUrl = computed(() => {
   return `${currentServer.value?.serverBaseUrl}/images/original${background.value}`;
@@ -50,8 +50,9 @@ const route = useRoute();
     >
       <Navbar/>
       <div
-          class=" bg-slate-light-1 dark:bg-slate-dark-1 relative z-0 flex h-px flex-1 flex-grow items-start justify-start self-stretch overflow-auto w-available h-available scrollbar-none group">
+          class=" bg-slate-light-1 dark:bg-slate-dark-1 relative z-0 flex h-px flex-1 flex-grow items-start justify-start self-stretch overflow-clip w-available h-available scrollbar-none group">
 
+        <ChristmasSnow />
         <Sidebar/>
 
         <GradientBorder :hideBorder="false">
@@ -71,7 +72,7 @@ const route = useRoute();
             <div
                 class="flex flex-col relative overflow-auto justify-start items-start w-available h-available sm:rounded-2xl flex-1 border-auto-alpha-2 !bg-cover children:scrollbar-none sm:border-3">
                 <main id="main"
-                      class="flex h-auto flex-1 flex-grow flex-col items-start justify-start self-stretch bg-cover bg-center bg-no-repeat will-change-auto min-h-available w-available scrollbar-none sm:child:border-2 sm:rounded-2xl"
+                      class="flex h-auto flex-1 flex-grow flex-col items-start justify-start self-stretch bg-cover bg-center bg-no-repeat min-h-available w-available scrollbar-none sm:child:border-2 sm:rounded-2xl"
                       style=" box-shadow: 0 1px 3px 0 rgba(16,24,40,0.1), 0 1px 2px 0 rgba(16,24,40,0.06); ">
                   <slot v-if="$slots.default"/>
                   <ion-tabs v-else>
@@ -83,7 +84,7 @@ const route = useRoute();
             <div class="contents" id="slide-container"></div>
           </div>
 
-          <LyricsOverlay class="hidden sm:block bg-focus"/>
+          <LyricsOverlay class="hidden sm:block bg-focus [transform:translateZ(0)]"/>
           <QueueOverlay />
           <DeviceOverlay />
           <EqualizerOverlay />

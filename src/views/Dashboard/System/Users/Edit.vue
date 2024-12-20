@@ -17,9 +17,9 @@ import Toggle from '@/components/Forms/Toggle.vue';
 import useApiClient from '@/lib/clients/useApiClient';
 import {ServerUser} from '@/types/auth';
 import Select from '@/components/Forms/Select.vue';
+import {currentServer} from "@/store/currentServer";
 
 const query = useQueryClient();
-const {t} = useTranslation();
 
 const route = useRoute();
 
@@ -29,6 +29,9 @@ const {data: libraries} = useServerClient<ServerLibrary[]>({
 
 const {data: serverUsers} = useApiClient<ServerUser[]>({
   path: 'server_users',
+  params: {
+    server_id: currentServer.value?.id,
+  },
   queryKey: ['server_users'],
 });
 

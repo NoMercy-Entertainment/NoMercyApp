@@ -86,7 +86,7 @@ const handleInvite = () => {
         libraries: allowedLibraries.value?.map(l => l.id),
       })
       .then(() => {
-        queryClient.invalidateQueries({queryKey: ['users']});
+        queryClient.invalidateQueries({queryKey: ['server_users']});
 
         email.value = '';
 

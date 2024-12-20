@@ -1,4 +1,3 @@
-import type {PropType} from 'vue';
 import {DeviceIcons} from '@Icons/icons';
 
 export interface User {

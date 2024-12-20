@@ -28,6 +28,11 @@ const props = defineProps({
     type: Boolean,
     required: false,
     default: false
+  },
+  index: {
+    type: Number,
+    required: true,
+    default: 0
   }
 });
 
@@ -88,7 +93,8 @@ onMounted(() => {
   >
     <div class="flex justify-between items-start self-stretch relative"
          :class="{
-            'flex-col-reverse py-1' : vertical
+            'flex-col-reverse py-1' : vertical,
+            'hidden': index > 1
          }"
     >
       <template v-for="marker in markers" :key="marker.value">

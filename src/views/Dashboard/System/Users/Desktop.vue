@@ -9,11 +9,15 @@ import DashboardLayout from '@/Layout/Desktop/DashboardLayout.vue';
 import Button from '@/components/Buttons/Button.vue';
 import UserCard from './components/UserCard.vue';
 import InviteUserModal from './components/InviteUserModal.vue';
+import {currentServer} from "@/store/currentServer";
 
 const inviteModalOpen = ref(false);
 
 const {data: serverUsers} = useApiClient({
   path: 'server_users',
+  params: {
+    server_id: currentServer.value?.id,
+  },
   queryKey: ['server_users'],
 });
 

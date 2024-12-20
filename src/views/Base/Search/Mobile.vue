@@ -28,7 +28,7 @@ onMounted(() => {
 
 watch(showScreensaver, (value) => {
   if (value) {
-    search.value.$el.blur();
+    document.body.focus();
   }
 });
 
@@ -39,7 +39,7 @@ watch(showScreensaver, (value) => {
     <ion-content :fullscreen="true">
       <div
           :class="{
-              'relative flex flex-grow flex-col items-center justify-start gap-12 self-stretch overflow-hidden px-4 pt-8 rounded-2xl h-full will-change-auto': true,
+              'relative flex flex-grow flex-col items-center justify-start gap-12 self-stretch overflow-hidden px-4 pt-8 h-full will-change-auto': true,
                'mb-24': isOpen && videoSearchResult.length == 0,
              }"
       >
@@ -61,7 +61,7 @@ watch(showScreensaver, (value) => {
                 height: isOpen && videoSearchResult.length == 0
                   ? `calc(100vh - ${keyboardHeight + 100}px)`
                   : isOpen && videoSearchResult.length > 0
-                    ? `calc(100vh - ${keyboardHeight + 90}px)`
+                    ? `calc(100vh - ${keyboardHeight + 70}px)`
                     : '87%',
              }"
              :class="videoSearchResult.length > 0 ? '' : ''">
@@ -126,12 +126,12 @@ watch(showScreensaver, (value) => {
         <div class="absolute flex flex-shrink-0 flex-grow-0 items-center justify-start overflow-hidden rounded-2xl border-2 mb-4 mx-4 bg-black transition-all duration-0 gap-5r border-auto-10 w-available"
              :style="{
                 bottom: isOpen && videoSearchResult.length == 0
-                  ? `${keyboardHeight - 40}px`
+                  ? `${keyboardHeight - 50}px`
                   : isOpen && videoSearchResult.length > 0
-                    ? `${keyboardHeight - 20}px`
+                    ? `${keyboardHeight - 50}px`
                     :  !isOpen && videoSearchResult.length > 0
                       ? '0vh'
-                      :'40vh',
+                      : '50vh',
              }"
              :class="{
                 'mx-6': !isOpen,

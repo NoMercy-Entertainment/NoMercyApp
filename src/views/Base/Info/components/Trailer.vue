@@ -8,6 +8,8 @@ import {DesktopUIPlugin, KeyHandlerPlugin, nmplayer,} from '@/lib/VideoPlayer';
 import {closeSidebar, setSidebar, sidebar} from '@/store/sidebar';
 import {setDisableScreensaver} from '@/store/imageModal';
 import {musicVisibility} from '@/store/audioPlayer';
+import {App} from "@capacitor/app";
+import {isNative} from "@/config/global";
 
 const props = defineProps({
   videos: {
@@ -58,7 +60,7 @@ onMounted(() => {
 
   setDisableScreensaver(true);
 
-  if (!props.videos[props.index].src) return;
+  if (!props.videos[props.index]?.src) return;
 
   const config: SetupConfig = {
     muted: false,
@@ -108,6 +110,12 @@ onMounted(() => {
   // @ts-ignore
   window.trailer = toRaw(trailer.value);
 
+  trailer.value?.once('ready', () => {
+    if (isNative.value) {
+      trailer.value?.enterFullscreen();
+    }
+  });
+
   trailer.value?.on('ended', () => {
 
     setSidebar(sidebarState.value);
@@ -139,6 +147,9 @@ onMounted(() => {
       trailer.value?.setCurrentCaption(parseInt(localStorage.getItem('trailerSubtitles') ?? '-1', 10));
     }
   });
+
+  App.addListener('backButton', props.toggle);
+
 });
 
 onUnmounted(() => {
@@ -160,17 +171,17 @@ onUnmounted(() => {
 </style>
 
 <template>
-  <div @click="toggle" class="fixed h-full w-full overflow-hidden rounded-lg bg-black/5 0">
+  <div @click="toggle" class="fixed h-full w-full overflow-hidden rounded-lg bg-black/50">
     <div :data-music="musicVisibility"
          :data-sidebar="sidebar"
-         class="absolute w-auto overflow-hidden inset-1/2 aspect-video transition-transform duration-300 -translate-y-[50%]  music-showing:-translate-y-[52%]
-              sidebar-closed:h-[93%]
+         class="absolute w-screen h-available sm:w-auto sm:overflow-hidden sm:inset-1/2 sm:aspect-video sm:-translate-y-[50%]
+              sidebar-closed:sm:h-[93%]
               sidebar-closed:px-4
               sidebar-closed:py-2
               sidebar-closed:xl:px-[1.8rem]
               sidebar-closed:xl:py-4
 
-              -translate-x-[50%]
+              sm:-translate-x-[50%]
               sidebar-open:h-5/6
               sidebar-open:px-10
               sidebar-open:py-6

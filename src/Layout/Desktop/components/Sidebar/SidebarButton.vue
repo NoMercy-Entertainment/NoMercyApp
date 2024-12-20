@@ -51,7 +51,7 @@ onMounted(() => {
 
 const classes = computed(() =>
     (isCurrentRoute.value
-        ? 'bg-focus/12 border-focus/4 text-auto-12'
+        ? 'current-route bg-focus/12 border-focus/4 text-auto-12'
         : ''));
 
 const styles = computed(() =>
@@ -67,7 +67,7 @@ const styles = computed(() =>
 <template>
   <RouterLink
       :to="href"
-      class="flex justify-start items-center overflow-clip self-stretch h-11 relative gap-2 px-2.5 py-2 rounded-md border border-transparent hover:border-focus/4 active:!bg-focus/11 dark:active:!bg-focus/8 active:border-focus/4 active:hover:border-focus/4 focus:bg-focus-9 hover:!bg-focus/10 disabled:!bg-focus/2 disabled:!border-focus/2 transition-colors duration-300 hover:text-auto-12"
+      class="flex justify-start items-center self-stretch h-11 relative gap-2 px-2.5 py-2 rounded-md border border-transparent hover:border-focus/4 active:!bg-focus/11 dark:active:!bg-focus/8 active:border-focus/4 active:hover:border-focus/4 focus:bg-focus-9 hover:!bg-focus/10 disabled:!bg-focus/2 disabled:!border-focus/2 transition-colors duration-300 hover:text-auto-12"
       :title="t(name)"
       :style="styles"
       :class="classes"

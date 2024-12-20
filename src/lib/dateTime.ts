@@ -197,7 +197,6 @@ export const timeAgoShort = (epoch: Date|number)=>  {
 
     if (secondsAgo < 60) {
         return t('just now');
-        // return rtf.format(-secondsAgo, 'second');
     }
 
     const minutesAgo = Math.floor(secondsAgo / 60);
@@ -240,4 +239,22 @@ export const userTime = (time: Date|number) => {
 			minute: 'numeric',
 			second: 'numeric'
 		});
+}
+
+export const isXmasTime = (): boolean => {
+	const today = new Date();
+	const currentYear = today.getFullYear();
+
+	let xmasBeginDate: Date;
+	let xmasEndDate: Date;
+
+	if (today >= new Date(currentYear, 5, 1)) {
+		xmasBeginDate = new Date(currentYear, 11, 7);
+		xmasEndDate = new Date(currentYear + 1, 0, 5);
+	} else {
+		xmasBeginDate = new Date(currentYear - 1, 11, 7);
+		xmasEndDate = new Date(currentYear, 0, 5);
+	}
+
+	return today >= xmasBeginDate && today <= xmasEndDate;
 }

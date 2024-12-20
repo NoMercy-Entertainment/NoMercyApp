@@ -22,6 +22,7 @@ export interface CollectionResponse {
 	score: number;
     favorite: boolean;
 	genres: CollectionGenre[];
+	link: string;
 
 	backdrops: MediaItem[];
 	posters: MediaItem[];

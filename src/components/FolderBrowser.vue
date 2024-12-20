@@ -105,7 +105,7 @@ onMounted(() => {
           <span class="mr-auto !ml-7">...</span>
         </div>
         <div
-            class="relative w-full h-available">
+            class="relative w-full h-auto">
           <div v-for="folder in showFolders"
                :key="folder.full_path"
                @click="() => handleClick(folder)"

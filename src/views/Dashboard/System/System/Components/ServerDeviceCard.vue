@@ -11,7 +11,12 @@ const props = defineProps({
     server: {
         type: Object as PropType<Device>,
         required: true,
-    }
+    },
+    basePath: {
+        type: String,
+        required: false,
+        default: 'server',
+    },
 });
 
 let icon: keyof typeof DeviceIcons;
@@ -132,7 +137,7 @@ switch (props.server.browser) {
         :line2="server.ip?.startsWith('192') || server.ip?.startsWith('10.') || server.ip?.startsWith('172')
             ? server.ip
             : server.ip?.replace(/\d/gu, '*')"
-        :route="`/dashboard/server/${server.id}`"
+        :route="`/dashboard/${basePath}/${server.id}`"
     >
         <template v-slot:image >
             <div

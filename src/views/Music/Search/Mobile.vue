@@ -25,7 +25,7 @@ onMounted(() => {
 
 watch(showScreensaver, (value) => {
   if (value) {
-    search.value.$el.sblur();
+    document.body.focus();
   }
 });
 
@@ -34,14 +34,14 @@ watch(showScreensaver, (value) => {
 <template>
   <ion-page>
     <ion-content :fullscreen="true">
-      <div v-if="musicSearchResult"
+      <div
           :class="{
-              'relative flex flex-grow flex-col items-center justify-start gap-12 self-stretch overflow-hidden px-4 pt-8 rounded-2xl h-full will-change-auto': true,
-               'mb-24': isOpen && musicSearchResult.length == 0,
+              'relative flex flex-grow flex-col items-center justify-start gap-12 self-stretch overflow-hidden px-4 pt-8 h-full will-change-auto': true,
+               'mb-24': isOpen && musicSearchResult?.length == 0,
              }"
       >
-        <CosmosBg2 v-if="greetingValue && musicSearchResult.length == 0"/>
-        <div v-if="greetingValue && musicSearchResult.length == 0" class="relative z-10 mt-16 flex flex-shrink-0 flex-grow-0 flex-col items-center justify-end gap-3">
+        <CosmosBg2 v-if="greetingValue && !musicSearchResult?.length"/>
+        <div v-if="greetingValue && musicSearchResult?.length == 0" class="relative z-10 mt-16 flex flex-shrink-0 flex-grow-0 flex-col items-center justify-end gap-3">
           <p class="flex-grow-0 flex-shrink-0 text-5xl font-black text-left  text-slate-light-11 dark:text-slate-dark-11">
             {{ $t('Good') }}
             <span class="" id="greeting">
@@ -55,13 +55,13 @@ watch(showScreensaver, (value) => {
 
         <div class="absolute top-0 flex w-full flex-col gap-4 px-2 pt-2 h-full overflow-clip"
              :style="{
-                height: isOpen && musicSearchResult.length == 0
+                height: isOpen && musicSearchResult?.length == 0
                   ? `calc(100vh - ${keyboardHeight + 100}px)`
-                  : isOpen && musicSearchResult.length > 0
-                    ? `calc(100vh - ${keyboardHeight + 90}px)`
+                  : isOpen && musicSearchResult?.length > 0
+                    ? `calc(100vh - ${keyboardHeight + 70}px)`
                     : '87%',
              }"
-             :class="musicSearchResult.length > 0 ? '' : ''">
+             :class="musicSearchResult?.length > 0 ? '' : ''">
           <div class="flex flex-col overflow-auto">
 
             <template v-if="musicSearchResult">
@@ -78,13 +78,13 @@ watch(showScreensaver, (value) => {
 
         <div class="absolute flex flex-shrink-0 flex-grow-0 items-center justify-start overflow-hidden rounded-2xl border-2 mb-4 mx-4 bg-black transition-all duration-0 gap-5r border-auto-10 w-available"
              :style="{
-                bottom: isOpen && musicSearchResult.length == 0
-                  ? `${keyboardHeight - 20}px`
-                  : isOpen && musicSearchResult.length > 0
-                    ? `${keyboardHeight - 20}px`
-                    :  !isOpen && musicSearchResult.length > 0
+                bottom: isOpen && musicSearchResult?.length == 0
+                  ? `${keyboardHeight - 50}px`
+                  : isOpen && musicSearchResult?.length > 0
+                    ? `${keyboardHeight - 50}px`
+                    :  !isOpen && musicSearchResult?.length > 0
                       ? '0vh'
-                      :'50vh',
+                      : '50vh',
              }"
              :class="{
                 'mx-6': !isOpen,

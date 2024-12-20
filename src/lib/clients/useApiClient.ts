@@ -10,6 +10,7 @@ import router from '@/router';
 export interface ServerClientProps {
 	path?: string;
 	data?: any;
+	params?: any;
 	cacheKey?: string;
 	keepForever?: boolean;
 	enabled?: Ref<boolean> | ComputedRef<boolean> | boolean;
@@ -87,6 +88,7 @@ const useApiClient = <T, >(options?: ServerClientProps): Return<T> => {
 								{
 									params: {
 										letter: letter.value,
+										...options?.params,
 										...getDataValues(),
 									},
 									signal: controller.signal,
@@ -105,6 +107,7 @@ const useApiClient = <T, >(options?: ServerClientProps): Return<T> => {
 							.post<T>(options?.path ?? router.currentRoute.value.fullPath,
 								{
 									letter: router.currentRoute.value.params.letter ?? undefined,
+									...options?.data,
 									...getDataValues(),
 								},
 								{
@@ -122,6 +125,7 @@ const useApiClient = <T, >(options?: ServerClientProps): Return<T> => {
 							.put<T>(options?.path ?? router.currentRoute.value.fullPath,
 								{
 									letter: router.currentRoute.value.params.letter ?? undefined,
+									...options?.data,
 									...getDataValues(),
 								},
 								{
@@ -138,6 +142,7 @@ const useApiClient = <T, >(options?: ServerClientProps): Return<T> => {
 							.patch<T>(options?.path ?? router.currentRoute.value.fullPath,
 								{
 									letter: router.currentRoute.value.params.letter ?? undefined,
+									...options?.data,
 									...getDataValues(),
 								},
 								{
@@ -154,6 +159,7 @@ const useApiClient = <T, >(options?: ServerClientProps): Return<T> => {
 							.delete<T>(options?.path ?? router.currentRoute.value.fullPath,
 								{
 									letter: router.currentRoute.value.params.letter ?? undefined,
+									...options?.data,
 									...getDataValues(),
 								},
 								{

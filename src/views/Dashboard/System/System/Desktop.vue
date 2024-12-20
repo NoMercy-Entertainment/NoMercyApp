@@ -54,24 +54,24 @@ onMounted(() => {
         <div class="col-span-3 col-start-1 flex flex-col gap-4 lg:col-span-2 xl:col-span-2 xl:col-start-1 xl:row-start-1">
           <ServerSystemInfoCard />
 
-          <ServerTasksCard />
-          <ServerPathsCard  class="hidden lg:flex xl:hidden"/>
-        </div>
-
-        <div class="col-span-3 col-start-1 flex flex-col gap-4 lg:col-span-2 xl:col-span-2 xl:col-start-3 xl:row-start-1">
           <ServerResourceCard v-if="dashboardSocketIsConnected" />
           <ServerSystemCard title="Resources monitor" v-else class="animate-pulse">
             <template v-slot:cta>
             </template>
             <div class="min-h-80"></div>
           </ServerSystemCard>
-          <ServerActivityCard />
+<!--          <ServerPathsCard  class="flex lg:hidden xl:flex"/>-->
+        </div>
+
+        <div class="col-span-3 col-start-1 flex flex-col gap-4 lg:col-span-2 xl:col-span-2 xl:col-start-3 xl:row-start-1">
+          <ServerTasksCard />
         </div>
 
         <div
             class="col-span-3 col-start-1 flex flex-col gap-4 lg:col-span-2 lg:col-start-1 lg:row-start-2 2xl:col-span-2 2xl:col-start-5 2xl:row-start-1 2xl:flex">
 
-          <ServerPathsCard  class="flex lg:hidden xl:flex"/>
+          <ServerActivityCard />
+<!--          <ServerPathsCard  class="hidden lg:flex xl:hidden"/>-->
         </div>
       </DashboardLayout>
     </ion-content>

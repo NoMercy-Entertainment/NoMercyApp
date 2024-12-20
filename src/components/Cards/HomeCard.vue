@@ -54,7 +54,7 @@ const toggleWatched = () => {
 
 <template>
   <div data-scroll v-if="!isMobile"
-       class="scheme-dark relative m-4 mt-0 sm:mt-4 flex flex-shrink-0 flex-grow-0 items-end justify-start gap-4 self-stretch overflow-clip rounded-2xl bg-black/5   p-4 text-auto-12 h-[65vh] sm:flex-col">
+       class="scheme-dark relative m-4 mt-0 sm:mt-4 flex flex-shrink-0 flex-grow-0 items-end justify-start gap-4 self-stretch overflow-clip rounded-2xl bg-black/50   p-4 text-auto-12 h-[65vh] sm:flex-col">
 
     <TMDBImage
         v-if="homeItem && !isMobile"
@@ -440,7 +440,7 @@ const toggleWatched = () => {
           </RouterLink>
           <button
               @click="toggleWatched"
-              class="flex justify-center items-center flex-grow h-10 relative overflow-hidden gap-3 px-6 py-4 rounded-lg bg-black/5 mix-blend-screen"
+              class="flex justify-center items-center flex-grow h-10 relative overflow-hidden gap-3 px-6 py-4 rounded-lg bg-black/50 mix-blend-screen"
           >
             <MoooomIcon icon="addCircle" className="w-6"/>
             <p class="flex-shrink-0 flex-grow-0 text-center font-medium text-[15px]">

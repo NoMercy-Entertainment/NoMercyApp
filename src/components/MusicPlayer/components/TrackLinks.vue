@@ -5,7 +5,6 @@ import {Artist} from '@/types/api/music/artist';
 import {Album} from '@/types/api/music/album';
 import {closeFullPlayer, musicSize} from '@/store/audioPlayer';
 import {shouldMarquee} from '@/lib/utils';
-import router from '@/router';
 
 const props = defineProps({
   data: {
@@ -35,6 +34,11 @@ const props = defineProps({
   suffix: {
     type: String,
     required: false,
+  },
+  noLink: {
+    type: Boolean,
+    required: false,
+    default: false,
   },
 });
 
@@ -72,14 +76,22 @@ const handleClick = (e: Event) => {
 				</span>
 
       <span class="flex w-fit flex-wrap gap-1 whitespace-wrap line-clamp-2 h-inherit"
-            v-for="(item, index) in data">
+            v-for="(item, index) in data" :key="item.id">
+        <span v-if="noLink"
+              data-target="album"
+              @click="handleClick($event)"
+              class="pointer-events-auto flex gap-1 whitespace-nowrap text-xs font-semibold line-clamp-2 h-inherit hover:underline focus:underline dark:font-medium">
+            <span class="flex whitespace-nowrap leading-5">
+              {{ item.name }}{{ index < data.length - 1 ? ',' : '' }}
+            </span>
+          </span>
         <RouterLink :to="item.link"
-               :onkeyup="onkeyup"
-               :key="item.id"
-               tabindex="0"
-               data-target="album"
-               @click="handleClick($event)"
-               class="pointer-events-auto flex gap-1 whitespace-nowrap text-xs font-semibold line-clamp-2 h-inherit hover:underline focus:underline dark:font-medium">
+                    v-else
+                    :onkeyup="onkeyup"
+                    tabindex="1"
+                    data-target="album"
+                    @click="handleClick($event)"
+                    class="pointer-events-auto flex gap-1 whitespace-nowrap text-xs font-semibold line-clamp-2 h-inherit hover:underline focus:underline dark:font-medium">
             <span class="flex whitespace-nowrap leading-5">
               {{ item.name }}{{ index < data.length - 1 ? ',' : '' }}
             </span>

@@ -10,6 +10,7 @@ import type {Song} from '@/types/musicPlayer';
 import {currentServer} from '@/store/currentServer';
 
 import AppLogoSquare from '@/components/Images/icons/AppLogoSquare.vue';
+import {IonCol} from "@ionic/vue";
 
 const props = defineProps({
   data: {
@@ -101,30 +102,29 @@ const onClick = () => {
 <template>
   <div v-if="data" :class="`${className} aspect-square relative z-0 overflow-clip`"
        :style="{
-                 backgroundImage: `
-                        radial-gradient(
-                            farthest-corner at top left,
-                                ${data.color_palette?.cover?.lightVibrant},
-                                hsl(0 0% 100% / 4%) 300px
-                            ),
-                            radial-gradient(
-                                farthest-corner at top right,
-                                ${data.color_palette?.cover?.lightMuted},
-                                hsl(0 0% 100% / 4%) 300px
-                            ),
-                            radial-gradient(
-                                farthest-corner at bottom left,
-                                ${data.color_palette?.cover?.primary},
-                                hsl(0 0% 100% / 4%)
-                            ),
-                            radial-gradient(
-                                farthest-corner at bottom right,
-                                ${data.color_palette?.cover?.darkMuted},
-                            hsl(0 0% 100% / 4%) 300px
-                        )
-                    `,
-                ...style,
-             }">
+         backgroundImage: `
+            radial-gradient(
+                farthest-corner at top left,
+                    ${data.color_palette?.cover?.lightVibrant},
+                    hsl(0 0% 100% / 4%) 300px
+                ),
+                radial-gradient(
+                    farthest-corner at top right,
+                    ${data.color_palette?.cover?.lightMuted},
+                    hsl(0 0% 100% / 4%) 300px
+                ),
+                radial-gradient(
+                    farthest-corner at bottom left,
+                    ${data.color_palette?.cover?.primary},
+                    hsl(0 0% 100% / 4%)
+                ),
+                radial-gradient(
+                    farthest-corner at bottom right,
+                    ${data.color_palette?.cover?.darkMuted},
+                hsl(0 0% 100% / 4%) 300px
+            )`,
+          ...style,
+       }">
 
     <picture v-if="source"
              class="aspect-square !absolute inset-0 overflow-clip z-10 h-available w-available object-cover">
@@ -147,6 +147,7 @@ const onClick = () => {
            :id="id"
            class="aspect-square !absolute inset-0 overflow-clip z-10 h-available w-available object-cover"
            :loading="loading"
+           tabindex="-1"
            crossorigin="anonymous"
            :data-id="data?.id"
            :onclick="onClick"

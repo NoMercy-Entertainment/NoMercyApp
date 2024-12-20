@@ -47,7 +47,7 @@ ion-content::part(scroll) *,
 }
 
 :root {
-  --color-background:  rgb(var(--background-light-slate-3));
+  --color-background: rgb(var(--background-light-slate-3));
   --background-auto: var(--background-light-slate-1);
   --color-text: rgb(var(--background-auto-12));
 }
@@ -55,7 +55,7 @@ ion-content::part(scroll) *,
 html.scheme-dark {
   --color-background: rgb(var(--background-dark-slate-1));
   --background-auto: var(--background-dark-slate-2);
-  --color-text:  rgb(var(--background-auto-1));
+  --color-text: rgb(var(--background-auto-1));
 }
 
 body {
@@ -77,7 +77,6 @@ ion-content::part(background) {
 
 ion-content::part(scroll) {
   scroll-behavior: smooth;
-  will-change: auto;
   margin-top: var(--ion-safe-area-top);
 }
 
@@ -113,45 +112,45 @@ ion-content::part(scroll) {
   width: 100% !important;
   width: -webkit-fill-available !important;
   width: stretch !important;
- }
+}
 
 .monospace {
-font-feature-settings: 'tnum' on, 'lnum' on !important;
+  font-feature-settings: 'tnum' on, 'lnum' on !important;
 }
 
 .shadow {
-@apply
-shadow-[0_1px_0_0_rgba(255,255,255,0.20)_inset,0_-1px_0_0_rgba(var(--color-slate-9)/60%)_inset,0_22px_30px_-4px_rgba(var(--color-slate-9)/70%)]
-dark:shadow-[0_1px_0_0_rgba(255,255,255,0.20)_inset,0_-1px_0_0_rgba(var(--color-slate-1)/30%)_inset,0_22px_30px_-4px_rgba(var(--color-slate-1)/70%)]
-hover:shadow-[0_1px_0_0_rgba(255,255,255,0.20)_inset,0_-1px_0_0_rgba(var(--color-slate-11)/60%)_inset,0_22px_30px_-4px_rgba(var(--color-slate-11)/70%)]
-dark:hover:shadow-[0_1px_0_0_rgba(255,255,255,0.20)_inset,0_-1px_0_0_rgba(var(--color-slate-1)/30%)_inset,0_22px_30px_-4px_rgba(var(--color-slate-1)/70%)]
-active:shadow-none duration-100 delay-0
-active:dark:shadow-none;
+  @apply
+  shadow-[0_1px_0_0_rgba(255,255,255,0.20)_inset,0_-1px_0_0_rgba(var(--color-slate-9)/60%)_inset,0_22px_30px_-4px_rgba(var(--color-slate-9)/70%)]
+  dark:shadow-[0_1px_0_0_rgba(255,255,255,0.20)_inset,0_-1px_0_0_rgba(var(--color-slate-1)/30%)_inset,0_22px_30px_-4px_rgba(var(--color-slate-1)/70%)]
+  hover:shadow-[0_1px_0_0_rgba(255,255,255,0.20)_inset,0_-1px_0_0_rgba(var(--color-slate-11)/60%)_inset,0_22px_30px_-4px_rgba(var(--color-slate-11)/70%)]
+  dark:hover:shadow-[0_1px_0_0_rgba(255,255,255,0.20)_inset,0_-1px_0_0_rgba(var(--color-slate-1)/30%)_inset,0_22px_30px_-4px_rgba(var(--color-slate-1)/70%)]
+  active:shadow-none duration-100 delay-0
+  active:dark:shadow-none;
 }
 
 @media screen and (max-width: 800px) {
   ion-content::part(scroll) {
-  @apply bg-slate-light-1 dark:bg-slate-dark-1;
+    @apply bg-slate-light-1 dark:bg-slate-dark-1;
   }
   html.plt-cordova ion-content::part(scroll) {
-  @apply pt-safe ;
+    @apply pt-safe ;
   }
   html.plt-cordova:has(#miniPlayer) ion-content::part(scroll) {
-  @apply pb-safe-offset-12;
+    @apply pb-safe-offset-12;
   }
 
   html.plt-mobileweb:has(#miniPlayer) ion-content::part(scroll) {
-  --offset-bottom: -3rem;
+    --offset-bottom: -3rem;
   }
 
   html.plt-mobileweb ion-content::part(scroll) {
-  --offset-top: -3rem;
+    --offset-top: -3rem;
   }
 
   html.plt-mobileweb:has(ion-toolbar:first-child:nth-last-child(2) ~ *) ion-content::part(scroll) {
-  --offset-top: -8rem;
+    --offset-top: -8rem;
   }
   html.plt-mobileweb:has(#fullPlayer:not(.overlay-hidden)) ion-content::part(scroll) {
-  --offset-top: 0.5rem;
+    --offset-top: 0.5rem;
   }
 }

@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import {computed, type PropType, ref} from 'vue';
+import {computed, onMounted, type PropType, ref} from 'vue';
 
 import type {HomeItem} from '@/types/api/base/home';
 
@@ -13,6 +13,7 @@ import MediaLikeButton from '@/components/Buttons/MediaLikeButton.vue';
 import MoooomIcon from '@/components/Images/icons/MoooomIcon.vue';
 import BannerButton from '@/components/Buttons/BannerButton.vue';
 import {setColorPalette} from '@/store/ui';
+import {onIonViewWillEnter, onIonViewWillLeave} from "@ionic/vue";
 
 const props = defineProps({
   data: {
@@ -44,15 +45,27 @@ const toggleWatched = () => {
   // if (!props.data) return;
 };
 
-if (props.data?.color_palette) {
-  setColorPalette(props.data?.color_palette?.poster);
-}
+onMounted(() => {
+  if (props.data?.color_palette) {
+    setColorPalette(props.data?.color_palette?.poster);
+  }
+});
+
+onIonViewWillEnter(() => {
+  if (props.data?.color_palette) {
+    setColorPalette(props.data?.color_palette?.poster);
+  }
+});
+
+onIonViewWillLeave(() => {
+  setColorPalette(null);
+});
 
 </script>
 
 <template>
   <div data-scroll v-if="!isMobile"
-       class="scheme-dark relative m-4 mt-0 sm:mt-4 flex flex-shrink-0 flex-grow-0 items-end justify-start gap-4 self-stretch overflow-clip rounded-2xl bg-black/5  p-4 text-auto-12 h-[65vh] sm:flex-col">
+       class="card scheme-dark relative m-4 mt-0 sm:mt-4 flex flex-shrink-0 flex-grow-0 items-end justify-start gap-4 self-stretch rounded-2xl bg-black/50 p-4 text-auto-12 h-[65vh] sm:flex-col">
 
     <TMDBImage
         v-if="data && !isMobile"
@@ -171,10 +184,10 @@ if (props.data?.color_palette) {
     </div>
   </div>
   <div v-else
-       class="flex h-auto w-full flex-shrink-0 flex-grow-0 items-start justify-start gap-2 self-stretch overflow-hidden p-6 pb-0 aspect-poster -mb-6"
+       class="flex h-auto w-full flex-shrink-0 flex-grow-0 items-start justify-start gap-2 self-stretch p-6 pb-0 aspect-poster -mb-6"
   >
     <div
-        class="relative flex h-auto w-full flex-grow flex-col items-center justify-end overflow-hidden rounded-lg bg-cover bg-center bg-no-repeat aspect-poster bg-focus"
+        class="frosting relative flex h-auto w-full flex-grow flex-col items-center justify-end overflow-hidden rounded-lg bg-cover bg-center bg-no-repeat aspect-poster bg-focus"
         style="box-shadow: 0 8px 24px 0 rgba(0,0,0,0.08);"
     >
 
@@ -195,7 +208,7 @@ if (props.data?.color_palette) {
           viewBox="0 0 343 178"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
-          class="absolute inset-0 top-auto bottom-0 z-0 h-2/5 w-full flex-shrink-0 flex-grow-0 blur-xl"
+          class="absolute -inset-4 top-auto bottom-0 h-2/5 w-available blur-lg z-10"
           preserveAspectRatio="none"
       >
         <g filter="url(#filter0_bf_5147_33391)">
@@ -204,7 +217,7 @@ if (props.data?.color_palette) {
               height="177"
               transform="matrix(1 0 0 -1 0 178)"
               fill="#1B1B1B"
-              fill-opacity="0.2"
+              fill-opacity="0.3"
           ></rect>
         </g>
         <g filter="url(#filter1_bf_5147_33391)">
@@ -213,7 +226,7 @@ if (props.data?.color_palette) {
               height="161"
               transform="matrix(1 0 0 -1 0 178)"
               fill="#1B1B1B"
-              fill-opacity="0.2"
+              fill-opacity="0.3"
           ></rect>
         </g>
         <g filter="url(#filter2_bf_5147_33391)">
@@ -222,7 +235,7 @@ if (props.data?.color_palette) {
               height="145"
               transform="matrix(1 0 0 -1 0 178)"
               fill="#1B1B1B"
-              fill-opacity="0.2"
+              fill-opacity="0.3"
           ></rect>
         </g>
         <g filter="url(#filter3_bf_5147_33391)">
@@ -231,7 +244,7 @@ if (props.data?.color_palette) {
               height="129"
               transform="matrix(1 0 0 -1 0 178)"
               fill="#1B1B1B"
-              fill-opacity="0.2"
+              fill-opacity="0.3"
           ></rect>
         </g>
         <g filter="url(#filter4_bf_5147_33391)">
@@ -240,7 +253,7 @@ if (props.data?.color_palette) {
               height="113"
               transform="matrix(1 0 0 -1 0 178)"
               fill="#1B1B1B"
-              fill-opacity="0.2"
+              fill-opacity="0.3"
           ></rect>
         </g>
         <g filter="url(#filter5_bf_5147_33391)">
@@ -249,7 +262,7 @@ if (props.data?.color_palette) {
               height="97"
               transform="matrix(1 0 0 -1 0 178)"
               fill="#1B1B1B"
-              fill-opacity="0.2"
+              fill-opacity="0.3"
           ></rect>
         </g>
         <defs>
@@ -419,7 +432,7 @@ if (props.data?.color_palette) {
       </svg>
 
       <div
-          class="flex flex-col justify-end items-center self-stretch flex-grow-0 flex-shrink-0 pt-10 bg-gradient-to-b from-[#0d0402]/0 to-[#0d0402]/60"
+          class="flex flex-col justify-end items-center self-stretch z-10 pt-10 bg-gradient-to-b from-[#0d0402]/0 to-[#0d0402]/60"
       >
         <div
             class="relative flex flex-shrink-0 flex-grow-0 flex-col items-center justify-start gap-3 p-3"
@@ -449,11 +462,13 @@ if (props.data?.color_palette) {
           </RouterLink>
           <button
               @click="toggleWatched"
-              class="flex justify-center items-center flex-grow h-10 relative overflow-hidden gap-3 px-6 py-4 rounded-lg bg-black/5 mix-blend-screen"
+              class="frosting flex justify-center items-center flex-grow h-10 relative gap-3 px-6 py-4 rounded-lg bg-black/50"
           >
-            <MoooomIcon icon="addCircle" className="w-6"/>
+            <MoooomIcon v-if="data?.watched" icon="removeCircle" className="w-6"/>
+            <MoooomIcon v-else icon="addCircle" className="w-6"/>
             <p class="flex-shrink-0 flex-grow-0 text-center font-medium text-[15px]">
-              {{ $t('My List') }}
+              <span v-if="data?.watched">{{ $t('Remove from my List') }}</span>
+              <span v-else>{{ $t('Add to my List') }}</span>
             </p>
           </button>
         </div>

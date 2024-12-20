@@ -1,233 +1,278 @@
 <script setup lang="ts">
-import { PropType, onMounted, onUnmounted, ref, watch } from 'vue';
+import {PropType, onMounted, onUnmounted, ref, watch, nextTick} from 'vue';
 
-import type { DisplayList } from '@/types/api/music/musicPlayer';
+import type {DisplayList} from '@/types/api/music/musicPlayer';
 import audioPlayer, {
-  currentSong,
+  currentSong, fullPlayerModalOpen,
   hasLyrics,
   lyricsMenuOpen,
   musicSize,
-  musicVisibility,
   setMusicSize
 } from '@/store/audioPlayer';
 import {SizeState} from '@/types/musicPlayer';
-import sidebar from '@/store/sidebar';
+
 import TrackLinks from '@/components/MusicPlayer/components/TrackLinks.vue';
 import ProgressBarContainer from '@/components/MusicPlayer/components/ProgressBarContainer.vue';
-import ButtonContainer from '@/components/MusicPlayer/mobile/ButtonContainer.vue';
 import CoverImage from '@/components/MusicPlayer/components/CoverImage.vue';
 
+import ButtonContainer from './ButtonContainer.vue';
+import LyricsOverlay from "@/Layout/Desktop/components/Overlays/LyricsOverlay.vue";
 
 defineProps({
-	data: {
-		type: Object as PropType<DisplayList>,
-		required: false,
-	},
+  data: {
+    type: Object as PropType<DisplayList>,
+    required: false,
+  },
 });
 
 // const margin = ref(2.2);
 
 const togglePlayerSize = () => {
-	if (musicSize.value === SizeState.compact) {
-		setMusicSize(SizeState.full);
-	} else {
-		setMusicSize(SizeState.compact);
-	}
+  if (musicSize.value === SizeState.compact) {
+    setMusicSize(SizeState.full);
+  } else {
+    setMusicSize(SizeState.compact);
+  }
 };
 
 watch(hasLyrics, () => {
-	setTimeout(() => {
-		document.querySelector<HTMLDivElement>('#lyricsContainer')?.scrollTo({
-			top: 140,
-			behavior: 'smooth',
-		});
-	}, 500);
+  setTimeout(() => {
+    document.querySelector<HTMLDivElement>('#lyricsContainer')?.scrollTo({
+      top: 140,
+      behavior: 'smooth',
+    });
+  }, 500);
 });
 
 const timeout = ref<NodeJS.Timeout>();
+const controls = ref<HTMLDivElement>();
+const item = ref<HTMLDivElement>();
+const backdrop = ref<HTMLDivElement>();
 
 const showControls = () => {
+  if (!item.value || !controls.value || !backdrop.value || !fullPlayerModalOpen.value) return;
 
-	const controls = document.querySelector<HTMLDivElement>('#controls');
-	const item = document.querySelector<HTMLDivElement>('#item');
-	const backdrop = document.querySelector<HTMLDivElement>('#backdrop');
+  controls.value.classList.add('delay-300');
 
-	if (!item || !controls || !backdrop) return;
+  setTimeout(() => {
+    if (!controls.value) return;
+    controls.value.style.translate = '0 0';
+  }, 50);
 
-	if (getComputedStyle(item).translate !== '0px') {
-		setTimeout(() => {
+  backdrop.value.style.setProperty('--backdrop-opacity', '0.6');
 
-			const btn = document.querySelector<HTMLDivElement>('#playback-button');
-
-			btn?.focus();
-
-			backdrop.style.setProperty('--backdrop-opacity', '0.6');
-
-		}, 100);
-	}
-
-	controls.style.translate = '0 0';
-	item.style.translate = '0 0';
+  item.value.style.translate = '0 0';
 };
 
 const hideControls = () => {
-	const controls = document.querySelector<HTMLDivElement>('#controls')!;
-	const backdrop = document.querySelector<HTMLDivElement>('#backdrop')!;
-	const item = document.querySelector<HTMLDivElement>('#item')!;
-	if (!controls || !backdrop || !item) return;
+  if (!controls.value || !backdrop.value || !item.value) return;
 
-	controls.style.translate = '0 100%';
+  controls.value.classList.remove('delay-300');
+  setTimeout(() => {
+    if (!controls.value) return;
+    controls.value.style.translate = '0 100%';
+  }, 50);
 
-	backdrop.style.setProperty('--backdrop-opacity', '0.4');
+  backdrop.value.style.setProperty('--backdrop-opacity', '0.4');
 
-	item.style.translate = lyricsMenuOpen.value && hasLyrics.value
-		? '0 0'
-		: '0 115%';
+  item.value.style.translate = lyricsMenuOpen.value
+      ? '0 0'
+      : '0 115%';
 };
 
 const dynamicControls = () => {
-	clearTimeout(timeout.value);
-	showControls();
+  clearTimeout(timeout.value);
+  showControls();
 
-	timeout.value = setTimeout(() => {
-		if (!audioPlayer.value?.isPlaying) return;
-		hideControls();
-	}, 10000);
+  timeout.value = setTimeout(() => {
+    if (!audioPlayer.value?.isPlaying) return;
+    hideControls();
+  }, 10000);
 };
 
 const backButton = () => {
-	if (musicSize.value === SizeState.full) {
-		setMusicSize(SizeState.compact);
-	} else {
-		window.history.back();
-	}
+  if (musicSize.value === SizeState.full) {
+    setMusicSize(SizeState.compact);
+  } else {
+    window.history.back();
+  }
 };
 
 onMounted(() => {
-	dynamicControls();
+  dynamicControls();
 
-	document.addEventListener('keydown', dynamicControls);
-	document.addEventListener('mousemove', dynamicControls);
-	document.addEventListener('backbutton', backButton);
+  document.addEventListener('keydown', dynamicControls);
+  document.addEventListener('mousemove', dynamicControls);
+  document.addEventListener('backbutton', backButton);
 
-	audioPlayer.value?.on('pause', () => {
-		showControls();
-	});
-	audioPlayer.value?.on('play', () => {
-		dynamicControls();
-	});
-	audioPlayer.value?.on('song', () => {
-		dynamicControls();
-	});
+  audioPlayer.value?.on('pause', () => {
+    showControls();
+  });
+  audioPlayer.value?.on('play', () => {
+    dynamicControls();
+  });
+  audioPlayer.value?.on('song', () => {
+    dynamicControls();
+  });
 });
 
 onUnmounted(() => {
-	document.removeEventListener('keydown', dynamicControls);
-	document.removeEventListener('mousemove', dynamicControls);
-	document.removeEventListener('backbutton', backButton);
+  document.removeEventListener('keydown', dynamicControls);
+  document.removeEventListener('mousemove', dynamicControls);
+  document.removeEventListener('backbutton', backButton);
 });
 
 const isDarkMode = ref(false);
 
 const toggleDarkMode = (e?: MouseEvent) => {
-	e?.stopPropagation();
-	isDarkMode.value = !isDarkMode.value;
+  e?.stopPropagation();
+  isDarkMode.value = !isDarkMode.value;
 };
+
+const onKeyDown = (e: KeyboardEvent) => {
+  if (e.key === 'ArrowUp') {
+    e.preventDefault();
+  }
+  if (e.key === 'ArrowDown') {
+    e.preventDefault();
+
+    const el = document.querySelector<HTMLDivElement>('#FullTvPlayer #playback-button');
+    if (el) {
+      el.focus();
+    }
+  }
+};
+
+const ontransitionend = (e: TransitionEvent) => {
+  if (e.propertyName === 'translate') {
+    const btn = document.querySelector<HTMLDivElement>('#FullTvPlayer #playback-button');
+    btn?.focus();
+  }
+};
+
 
 </script>
 
 <template>
-    <div v-if="!!currentSong"
-            id="FullTvPlayer"
-         class="fixed top-0 left-0 flex h-screen w-screen compact:translate-y-full flex-col gap-2 overflow-hidden p-12 pb-0 transition-transform compact:duration-500 duration-500 z-[1299] bg-auto-50"
-         :data-size="musicSize"
-         :data-music="musicVisibility"
-         :onclick="togglePlayerSize"
-         :data-sidebar="sidebar">
-        <img v-if="data?.backdrop"
-             :src="data?.backdrop"
-             :class="isDarkMode ? 'opacity-0' : 'opacity-100'"
-             alt=""
-             class="pointer-events-none absolute inset-0 h-full w-full transition-transform">
+  <div v-if="!!currentSong"
+       id="FullTvPlayer"
+       class="top-0 grid grid-cols-1 transform-gpu grid-rows-1 left-0 h-screen w-screen overflow-hidden transition-transform will-change-transform duration-500 z-[1299] bg-slate-dark-1"
+       :class="{
+          'translate-y-0 duration-500': fullPlayerModalOpen,
+          'translate-y-full': !fullPlayerModalOpen,
+       }"
+       @click="togglePlayerSize"
+  >
+    <img v-if="data?.backdrop"
+         :src="data?.backdrop"
+         alt=""
+         class="transform-gpu pointer-events-none inset-0 h-full w-screen transition-opacity col-span-1 row-span-1"
+         :class="{
+            'opacity-0': isDarkMode,
+            'opacity-100': !isDarkMode,
+         }"
+    >
 
-        <div id="backdrop"
-             class="absolute inset-0 w-screen h-screen pointer-events-none bg-[var(--background)] opacity-[var(--backdrop-opacity)] transition-transform duration-1000"
-             :class="lyricsMenuOpen && hasLyrics ? '!opacity-70' : ''"
-             :style="`
+    <div id="backdrop" ref="backdrop"
+         class="transform-gpu col-span-1 row-span-1 inset-0 w-full h-screen pointer-events-none bg-[var(--background)] opacity-[var(--backdrop-opacity)] transition-colors duration-1000"
+         :class="{
+            '!opacity-70': lyricsMenuOpen,
+         }"
+         :style="`
                 --backdrop-opacity: 0.6;
-                --select-background: ${(currentSong?.color_palette?.cover?.lightMuted)};
+                --select-background: rgb(var(--color-focus));
                 --select-background2: black;
-                --background: ${isDarkMode ? 'var(--select-background2)' : 'var(--select-background)'};
+                --background: ${isDarkMode
+                  ? 'var(--select-background2)'
+                  : 'var(--select-background)'
+                };
             `">
-        </div>
-
-        <div :data-show-lyrics="lyricsMenuOpen && hasLyrics"
-             class="flex-col absolute inset-0 w-screen flex px-24 pt-28 pb-16 transition-transform duration-300 children:transition-opacity h-available overflow-clip opacity-0 data-[show-lyrics='true']:opacity-100 pointer-events-none data-[show-lyrics='true']:delay-500">
-
-            <div :data-show-lyrics="true"
-                 class="w-full px-12 h-full overflow-hidden sm:items-start translate-y-[200%] data-[show-lyrics='true']:translate-y-0 data-[show-lyrics='true']:delay-500 transition-transform !duration-500">
-                <div id="lyricsContainer"
-                     class="z-0 flex h-full w-full flex-col overflow-y-auto overflow-x-hidden scroll-smooth transition-transform children:transition-transform duration-500 children:duration-500 scrollbar-none font-bbc">
-                    <div class="relative mt-6 whitespace-pre-wrap font-bold text-contrast">
-<!--                        <LyricsOverlay :key="currentSong?.id"-->
-<!--                                :margin="margin" />-->
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div id="item"
-             class="fixed flex items-end gap-4 transition-transform duration-500"
-             :class="lyricsMenuOpen && hasLyrics ? 'top-12' : 'top-64'">
-            <div class="transition-transform duration-500"
-                 :class="lyricsMenuOpen && hasLyrics ? 'w-14' : 'w-28'"
-                 :data-size="musicSize">
-                <CoverImage :data="currentSong"
-							:size="320"
-							className="pointer-events-none relative aspect-square h-auto rounded-md w-inherit" />
-            </div>
-
-            <div class="pointer-events-none relative flex flex-col gap-1 font-bold transition-transform duration-500">
-                <span class="transition-transform duration-500"
-                      :class="lyricsMenuOpen && hasLyrics
-                          ? 'text-xl'
-                          : 'text-3xl'
-                          ">
-                    {{ currentSong?.name }}
-                </span>
-                <TrackLinks v-if="currentSong"
-                            :id="currentSong.id"
-                            :data="currentSong.artist_track"
-                            :class="lyricsMenuOpen && hasLyrics
-                                ? 'children:children:children:text-md'
-                                : 'children:children:children:text-lg'"
-                            class="children:children:children:font-bold transition-transform duration-500"
-                            type="artists" />
-            </div>
-        </div>
-
-        <div id="controls"
-             class="fixed bottom-0 left-0 flex flex-col w-available h-40 items-center px-16 pt-4 mt-4 gap-4 transition-transform duration-500 bg-black/10
-             xl:hover:![translate:0px_0%]"
-
-            <ProgressBarContainer v-if="musicSize == SizeState.full"
-                                  class="children:!mx-0 gap-4 children:!pointer-events-none !pointer-events-none"
-                                  color="white"
-                                  variant="stacked" />
-
-            <ButtonContainer color="white"
-                             :data="currentSong"
-                             :toggleDarkMode="toggleDarkMode"
-                             :isDarkMode="isDarkMode" />
-        </div>
     </div>
+
+    <div class="container flex w-full h-full inset-0 col-span-1 row-span-1 p-12 pb-0">
+
+      <div :data-show-lyrics="lyricsMenuOpen"
+           class="flex-col absolute inset-0 w-screen flex pb-16 duration-300 delay:500 h-available overflow-clip pointer-events-none z-0">
+
+        <div :data-show-lyrics="true"
+             class="w-full px-12 pb-12 h-full overflow-hidden">
+          <div id="lyricsContainer"
+               class="z-0 flex h-full w-full flex-col overflow-y-auto overflow-x-hidden scroll-smooth scrollbar-none font-bbc">
+            <div class="relative mt-6 whitespace-pre-wrap font-bold text-contrast h-available">
+              <LyricsOverlay :key="currentSong?.id"/>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="item" ref="item"
+           class="absolute flex items-end gap-4 z-10 transform-gpu transition-all duration-500"
+           :class="{
+              'top-12' : lyricsMenuOpen,
+              'top-64 delay-300': !lyricsMenuOpen
+           }"
+      >
+        <div :data-size="musicSize"
+             class=""
+             :class="{
+                'w-14' : lyricsMenuOpen,
+                'w-28 delay-300': !lyricsMenuOpen
+             }"
+        >
+          <CoverImage :data="currentSong"
+                      :size="320"
+                      className="pointer-events-none relative aspect-square h-auto rounded-md w-inherit"/>
+        </div>
+
+        <div class="pointer-events-none relative flex flex-col gap-1 font-bold">
+          <span class=""
+                :class="{
+                  'text-xl' : lyricsMenuOpen,
+                  'text-3xl delay-300': !lyricsMenuOpen
+                 }"
+          >
+              {{ currentSong?.name }}
+          </span>
+          <TrackLinks v-if="currentSong"
+                      :id="currentSong.id"
+                      :data="currentSong.artist_track"
+                      tabindex="-1"
+                      noLink
+                      :class="{
+                          'children:children:children:text-md' : lyricsMenuOpen,
+                          'children:children:children:text-lg children:children:children:delay-500': !lyricsMenuOpen,
+                           'children:children:children:!no-underline': true
+                         }"
+                      class="children:children:children:font-bold"
+                      type="artists"/>
+        </div>
+      </div>
+
+      <div id="controls" ref="controls"
+           :ontransitionend="ontransitionend"
+           class="absolute bottom-0 left-0 flex flex-col w-available h-40 items-center px-16 pt-4 mt-4 gap-4 delay-300 transform-gpu transition-all duration-500">
+
+        <ProgressBarContainer v-if="fullPlayerModalOpen"
+                              class="children:!mx-0 gap-4 children:!pointer-events-none !pointer-events-none"
+                              color="white"
+                              :onKeyDown="onKeyDown"
+                              variant="stacked"/>
+
+        <ButtonContainer color="white"
+                         :data="currentSong"
+                         :toggleDarkMode="toggleDarkMode"
+                         :isDarkMode="isDarkMode"/>
+
+      </div>
+    </div>
+  </div>
 </template>
 
 <style>
 @media screen and (min-width: 1024px) {
-    #item:has(+ #controls:hover),
-    #item:has(+ #controls:focus) {
-      translate: 0 0 !important;
-    }
+  #item:has(+ #controls:hover),
+  #item:has(+ #controls:focus) {
+    translate: 0 0 !important;
+  }
 }
 </style>

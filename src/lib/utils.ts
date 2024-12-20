@@ -173,6 +173,7 @@ export const shouldMarquee = (el: HTMLElement) => {
 	setTimeout(() => {
 		const containerWidth = el.getBoundingClientRect()?.width ?? 0;
 		const scrollerWidth = scroller.getBoundingClientRect()?.width ?? 0;
+		console.log('shouldMarquee', containerWidth, scrollerWidth, el);
 
 		if (containerWidth < scrollerWidth) {
 			scroller.style.setProperty('--marquee-width', `${containerWidth}px`);
@@ -181,7 +182,7 @@ export const shouldMarquee = (el: HTMLElement) => {
 			scroller.style.removeProperty('--marquee-width');
 			scroller.classList.remove('animate-marquee');
 		}
-	}, 400);
+	}, 1000);
 };
 
 export const stopPropagation = (e: Event) => e.stopPropagation();

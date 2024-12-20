@@ -19,6 +19,7 @@ import SideFlyout from './components/SideFlyout.vue';
 import NavBar from './components/NavBar.vue';
 import {currentSong} from '@/store/audioPlayer';
 import EqualizerMenu from "@/Layout/Mobile/components/menus/EqualizerMenu.vue";
+import ChristmasSnow from "@/components/Seasonal/Christmas/ChristmasSnow.vue";
 
 onMounted(() => {
   lockPortrait();
@@ -37,6 +38,7 @@ onUnmounted(() => {
   <ion-page id="main-content">
     <ion-tabs>
       <NavBar/>
+      <ChristmasSnow />
 
       <ion-router-outlet animated="false" class="pointer-events-none children:pointer-events-auto">
       </ion-router-outlet>

@@ -1,19 +1,21 @@
 <script setup lang="ts">
+import {RouterLink} from 'vue-router';
 
 import {
-  IonHeader, IonModal,
+  IonHeader,
   IonProgressBar,
   IonToolbar,
   isPlatform,
 } from '@ionic/vue';
 import {useIsFetching} from '@tanstack/vue-query';
 
+import {closeSidebar, sidebar, toggleSidebar} from '@/store/sidebar';
+import {isTv} from "@/config/global";
+import {searchUrl} from '@/store/routeState';
+
+import MobileLibraryHeader from '@/views/Base/Library/components/MobileLibraryHeader.vue';
 import AppLogo from '@/components/Images/icons/AppLogo.vue';
 import MoooomIcon from '@/components/Images/icons/MoooomIcon.vue';
-import {closeSidebar, sidebar, toggleSidebar} from '@/store/sidebar';
-import {RouterLink} from 'vue-router';
-import {searchUrl} from '@/store/routeState';
-import MobileLibraryHeader from '@/views/Base/Library/components/MobileLibraryHeader.vue';
 
 const isFetching = useIsFetching();
 
@@ -21,11 +23,11 @@ const isFetching = useIsFetching();
 
 <template>
   <ion-header
-      class="pt- safe transition-all duration-300"
+      class="pt-safe transition-all duration-300"
   >
-    <ion-toolbar v-if="!isPlatform('capacitor')" >
+    <ion-toolbar v-if="!isPlatform('capacitor') && !isTv" >
       <div
-          class="pt- safe flex justify-between items-center self-stretch flex-grow-0 flex-shrink-0 h-[50px] overflow-hidden px-1 py-1.5"
+          class="pt-safe flex justify-between items-center self-stretch flex-grow-0 flex-shrink-0 h-[50px] overflow-hidden px-1 py-1.5"
       >
         <button  @click="toggleSidebar"
                  aria-label="menu"

@@ -18,6 +18,8 @@ import {IonicVue, useBackButton} from '@ionic/vue';
 import {VueQueryPlugin} from '@tanstack/vue-query';
 import Aura from '@primevue/themes/aura';
 
+import MasonryWall from '@yeger/vue-masonry-wall'
+
 import '@/lib/scrollHandlers';
 import '@/store/deviceInfo';
 
@@ -110,6 +112,8 @@ export async function setupApp(app: AppContext['app']) {
             konamiEnabled.value = !konamiEnabled.value;
         },
     });
+
+    app.use(MasonryWall);
 
     app.component('NMCard', NMCard);
     app.component('NMCarousel', NMCarousel);

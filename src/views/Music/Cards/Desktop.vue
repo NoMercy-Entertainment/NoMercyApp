@@ -40,7 +40,6 @@ onMounted(() => {
       <ScrollContainer :autoHide="true" :static="true">
         <div
             v-if="show"
-            data-scroll
             :class="{
          'pb-24' : isNative &&  !currentSong,
          'pb-40' : isNative &&  currentSong,

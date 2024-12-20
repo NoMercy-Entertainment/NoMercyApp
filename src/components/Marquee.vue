@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import {onMounted, watch} from 'vue';
+import {onMounted, ref, watch} from 'vue';
 
 import {shouldMarquee} from '@/lib/utils';
 
@@ -8,26 +8,33 @@ const props = defineProps({
     type: String,
     required: true,
   },
+  playing: {
+    type: Boolean,
+    required: false,
+    default: false,
+  },
 });
 
+const marquee = ref<HTMLElement | null>();
+
 watch(props, () => {
-  const el = document.querySelector<HTMLElement>(`#fullPlayer [data-marquee="container"]`);
-  if (el) {
-    shouldMarquee(el);
-  }
+  setTimeout(() => {
+    if (!marquee.value) return;
+    shouldMarquee(marquee.value);
+  }, 500);
 });
 
 onMounted(() => {
-  const el = document.querySelector<HTMLElement>(`#fullPlayer [data-marquee="container"]`);
-  if (el) {
-    shouldMarquee(el);
-  }
+  setTimeout(() => {
+    if (!marquee.value) return;
+    shouldMarquee(marquee.value);
+  }, 500);
 });
 </script>
 
 <template>
-  <div class="relative flex flex-grow flex-col items-start justify-start gap-2" data-marquee="container">
-    <div class="flex-shrink-0 flex-grow-0 self-stretch font-semibold line-clamp-1 w-fit whitespace-nowrap"
+  <div ref="marquee" class="w-available relative flex flex-grow flex-col items-start justify-start gap-2" data-marquee="container">
+    <div class="flex-shrink-0 flex-grow-0 self-stretch font-semibold line-clamp-1 w-fit whitespace-nowrap leading-none"
          data-marquee="scroller">
       {{ text }}
     </div>

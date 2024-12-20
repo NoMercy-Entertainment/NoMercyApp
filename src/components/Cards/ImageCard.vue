@@ -42,7 +42,7 @@ const ringColor = ref(pickPaletteColor(props.data?.color_palette?.image)
           @click="setData(data)"
           :style="`--color-focus: ${ringColor};`"
           data-card="true"
-          class="border-0 border-[rgb(var(--color-focus))] flex flex-col h-auto items-center focus-shift focus-outline transition-all duration-300 overflow-clip relative !rounded-lg select-none shadow-[0px_0px_0_1px_rgb(var(--color-focus,var(--color-theme-6))/70%)] w-full z-0 bg-auto-1/8">
+          class="frosting border-0 border-[rgb(var(--color-focus))] flex flex-col h-auto items-center focus-shift focus-outline transition-all duration-300 relative !rounded-lg select-none shadow-[0px_0px_0_1px_rgb(var(--color-focus,var(--color-theme-6))/70%)] w-full z-0 bg-auto-1/8">
             <span class="relative h-auto w-full cursor-pointer overflow-clip rounded-lg"
                   :class="aspect == 'poster' ? ' aspect-poster' : 'aspect-backdrop'">
                 <TMDBImage className="inset-0 h-full w-full overflow-clip rounded-lg"

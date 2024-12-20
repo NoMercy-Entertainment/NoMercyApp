@@ -23,7 +23,7 @@ const props = defineProps({
 
 const classes = computed(() =>
     (props.active
-        ? ' bg-slate-light-3 text-slate-dark-4 hover:text-slate-dark-4 dark:bg-slate-light-3 dark:text-slate-light-4 dark:hover:text-slate-light-4 ' +
+        ? 'current-route bg-slate-light-3 text-slate-dark-4 hover:text-slate-dark-4 dark:bg-slate-light-3 dark:text-slate-light-4 dark:hover:text-slate-light-4 ' +
         'shadow-[0_1px_0_0_rgba(0,0,0,0.20)_inset,0_-1px_0_0_rgba(var(--background-auto-2)/30%)_inset,0_22px_30px_-4px_rgba(var(--background-auto-2)/60%)]  ' +
         'hover:!shadow-[0_1px_0_0_rgba(0,0,0,0.20)_inset,0_-1px_0_0_rgba(var(--background-auto-2)/30%)_inset,0_22px_30px_-4px_rgba(var(--background-auto-2)/60%)] ' +
         'dark:shadow-[0_1px_0_0_rgba(255,255,255,0.20)_inset,0_-1px_0_0_rgba(var(--background-auto-1)/70%)_inset,0_22px_30px_-4px_rgba(var(--background-auto-1)/30%)] ' +
@@ -42,7 +42,7 @@ const styles = computed(() =>
 <template>
   <RouterLink
       :to="href"
-      class="flex justify-start items-center overflow-hidden rounded-md focus:bg-auto-12/4 hover:bg-focus/10 hover:text-auto-12 transition-colors duration-300 h-9 gap-1 px-2.5 py-1 lg:h-11 lg:gap-2 lg:px-3 lg:py-1.5 ripple-box"
+      class="flex relative justify-start items-center overflow-hidden rounded-md focus:bg-auto-12/4 hover:bg-focus/10 hover:text-auto-12 transition-colors duration-300 h-9 gap-1 px-2.5 py-1 lg:h-11 lg:gap-2 lg:px-3 lg:py-1.5 ripple-box"
       :class="classes"
       :style="styles"
   >

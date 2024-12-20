@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import {watch} from "vue";
+import {onMounted, watch} from "vue";
 import {IonPage, IonContent} from '@ionic/vue';
 
 import type {LibrariesResponse} from "@/types/api/base/library";
@@ -36,18 +36,23 @@ watch(libraries, (value) => {
   refetchScreensaver();
 
   setLibraries(value);
-});
-
-watch(playlists, (value) => {
-  if (!value) return;
-  setMusicPlaylists(value);
 
   if (value.length > 0) {
     router.push({name: 'Home'});
   }
 });
 
+watch(playlists, (value) => {
+  if (!value) return;
+  setMusicPlaylists(value);
+});
 
+onMounted(() => {
+  if (!libraries.value) return;
+  if (libraries.value.length > 0) {
+    router.push({name: 'Home'});
+  }
+});
 
 </script>
 

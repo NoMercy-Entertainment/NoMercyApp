@@ -101,6 +101,7 @@ onUnmounted(() => {
                        dark:shadow-[0_1px_0_0_rgba(255,255,255,0.20)_inset,0_-1px_0_0_rgba(var(--color-slate-1)/30%)_inset,0_22px_30px_-4px_rgba(var(--color-slate-1)/70%)]
                        hover:shadow-[0_1px_0_0_rgba(255,255,255,0.20)_inset,0_-1px_0_0_rgba(var(--color-slate-11)/60%)_inset,0_22px_30px_-4px_rgba(var(--color-slate-11)/70%)]
                        dark:hover:shadow-[0_1px_0_0_rgba(255,255,255,0.20)_inset,0_-1px_0_0_rgba(var(--color-slate-1)/30%)_inset,0_22px_30px_-4px_rgba(var(--color-slate-1)/70%)]
+                       active:!bg-focus focus-visible:!bg-focus hover:!bg-focus dark:active:!bg-focus dark:focus-visible:!bg-focus dark:sm:hover:!bg-focus
                        active:!shadow-none
                        active:!dark:shadow-none">
     <PlayerIcon icon="nmPause" v-if="(isPlaying && isCurrentPlaylist)" class="h-8 w-8 text-white"/>

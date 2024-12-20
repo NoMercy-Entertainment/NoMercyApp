@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import {onMounted, onUnmounted, ref, watch} from 'vue';
 import {useRoute} from 'vue-router';
-import {IonContent, IonPage} from '@ionic/vue';
+import {IonContent, IonPage, onIonViewWillEnter, onIonViewWillLeave} from '@ionic/vue';
 
 import type {DisplayList} from '@/types/api/music/musicPlayer';
 import type {Song, SortOrder, SortType} from '@/types/musicPlayer';
@@ -31,6 +31,8 @@ const displayList = ref<Song[]>();
 const filter = ref('');
 
 watch(data, (value) => {
+  if (!value) return;
+
   setTitle(value?.name ?? null);
 
   sort(value?.tracks ?? [], sortType.value, sortOrder.value, filter.value);
@@ -65,20 +67,21 @@ const sort = (songs: Song[], sortType: SortType, sortOrder: SortOrder, value: st
   }
 };
 
-onMounted(() => {
+onIonViewWillEnter(() => {
   if (data?.value?.tracks) {
     sort(data?.value?.tracks ?? [], sortType.value, sortOrder.value, filter.value);
   }
 
-  console.log(data.value?.color_palette?.cover);
-  setColorPalette(data.value?.color_palette?.cover);
+  if(data.value?.color_palette?.cover) {
+    setColorPalette(data.value?.color_palette?.cover);
+  }
 });
 
-onUnmounted(() => {
+onIonViewWillLeave(() => {
   if (document.getElementById('navbar')) {
     document.getElementById('navbar')!.style.display = 'flex';
   }
-  // setColorPalette(null);
+  setColorPalette(null);
 });
 
 const sortHeader = ref<VueDivElement>();

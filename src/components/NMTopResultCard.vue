@@ -35,7 +35,7 @@ const handleClick = () => {
 
 <template>
   <div v-if="data"
-       class="mt-4 mb-3 flex flex-col w-auto flex-shrink-0 flex-grow-1 items-start justify-start gap-2 self-stretch will-change-auto text-left"
+       class="frosting mt-4 mb-3 flex flex-col w-auto flex-shrink-0 flex-grow-1 items-start justify-start gap-2 self-stretch will-change-auto text-left"
        :style="{
           'width': data.width ??  '33.3333%',
       }"

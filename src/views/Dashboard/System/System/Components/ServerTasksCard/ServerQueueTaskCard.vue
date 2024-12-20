@@ -28,12 +28,12 @@ defineProps({
 
     <div class="relative flex w-0 flex-1 flex-grow flex-col items-start space-y-[-2px]">
       <p
-          class="flex-shrink-0 flex-grow-0 self-stretch text-base font-semibold w-available leading-none text-slate-light-12/80 dark:text-slate-dark-12/70"
+          class="flex-shrink-0 flex-grow-0 self-stretch text-base font-semibold w-available leading-none line-clamp-1 text-slate-light-12/80 dark:text-slate-dark-12/70"
       >
         {{ data.title.replace(' NoMercy', '') }}
       </p>
       <p
-          class="flex-shrink-0 flex-grow-0 self-stretch text-xs w-available !mt-4 text-slate-light-12/80 dark:text-slate-dark-12/80"
+          class="flex-shrink-0 flex-grow-0 self-stretch text-xs w-available !mt-3 text-slate-light-12/80 dark:text-slate-dark-12/80"
       >
         {{ $t('Id') }}:
         <span class="text-slate-light-11 dark:text-slate-dark-11">

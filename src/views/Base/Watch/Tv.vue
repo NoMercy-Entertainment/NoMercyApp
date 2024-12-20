@@ -6,7 +6,6 @@ import {IonContent, IonPage, isPlatform} from '@ionic/vue';
 import {App} from '@capacitor/app';
 
 import MediaSession from '@/lib/MediaSession';
-import {disableImmersiveMode, enableImmersiveMode, lockLandscape, lockPortrait} from '@/lib/utils';
 import {isNative} from '@/config/global';
 import {currentServer} from '@/store/currentServer';
 import {user} from '@/store/user';
@@ -25,7 +24,7 @@ import {pad} from '@/lib/stringArray';
 
 import audioPlayer from '@/store/audioPlayer';
 import router from "@/router";
-import {hideNavBar, showNavBar} from "@/store/ui";
+import {hideNavBar, navBarVisible, setNavBarVisible, showNavBar} from "@/store/ui";
 
 const {t} = useTranslation();
 const route = useRoute();
@@ -50,7 +49,7 @@ const config: SetupConfig = {
     1.75,
     2,
   ],
-  accessToken: user.value?.accessToken,
+  accessToken: user.value?.accessToken || localStorage.getItem('access_token'),
   basePath: currentServer.value?.serverBaseUrl,
   forceTvMode: (isPlatform('android') || isPlatform('ios')) && !isPlatform('mobile'),
   disableTouchControls: false,
@@ -76,8 +75,8 @@ const goBack =  () => {
 }
 
 onMounted(() => {
-  lockLandscape();
-  enableImmersiveMode();
+  setNavBarVisible(false);
+
   // @ts-ignore
   player.value ??= nmplayer('player1')
       .setup(config);
@@ -114,7 +113,7 @@ onMounted(() => {
   });
 
   player.value?.on('playlistComplete', () => {
-    //
+    player.value?.dispose();
   });
 
   player.value?.on('play', () => {
@@ -193,13 +192,9 @@ onMounted(() => {
 
 });
 
-onBeforeUnmount(() => {
-  lockPortrait();
-  disableImmersiveMode();
-});
-
 onUnmounted(() => {
   setDisableScreensaver(false);
+  setNavBarVisible(true);
   player.value?.dispose();
 });
 
@@ -227,5 +222,11 @@ onUnmounted(() => {
 }
 .nomercyplayer .seek-container {
   @apply mb-28;
+}
+.nomercyplayer .-mb-28 {
+  margin-bottom: 7rem !important;
+}
+.nomercyplayer #thumbnail-clone-1 {
+  display: none !important;
 }
 </style>

@@ -4,13 +4,20 @@ import {isPlatform} from '@ionic/vue';
 import {SortOrder, SortType} from '@/types/musicPlayer';
 import {useAutoThemeColors} from '@/store/preferences';
 import {Preferences} from "@capacitor/preferences";
+import {isXmasTime} from "@/lib/dateTime";
 
 export const setupComplete = ref(false);
 
 const p = ref<string|null>();
 export const poster = computed(() => p.value);
 export function setPoster(value?: string | null) {
-  p.value = value;
+    p.value = value;
+}
+
+const t = ref<string|null>();
+export const title = computed(() => t.value);
+export function setTitle(value?: string | null) {
+    p.value = value;
 }
 
 const b = ref<string|null>();
@@ -25,13 +32,13 @@ export const focusColor = computed(() => fc.value);
 const c = ref<PaletteColors|null>();
 export const colorPalette = computed(() => c.value);
 export function setColorPalette(value?: PaletteColors|null) {
-  c.value = value;
+    c.value = value;
 
     if (!useAutoThemeColors.value) {
         fc.value = 'var(--color-theme-7)';
     }
     else {
-        fc.value = pickPaletteColor(value, 30, 160)
+        fc.value = pickPaletteColor(value, 20, 160)
             .replace(/,/gu, ' ')
             .replace('rgb(', '');
 
@@ -105,3 +112,10 @@ export const showNavBar = () => {
 export const hideNavBar = () => {
     nav.value = false;
 }
+
+
+(() => {
+    if (isXmasTime()) {
+        document.documentElement.classList.add('xmas');
+    }
+})()

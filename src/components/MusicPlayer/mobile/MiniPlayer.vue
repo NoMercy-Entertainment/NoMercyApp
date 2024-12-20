@@ -80,7 +80,7 @@ const {isSwiping, lengthX} = useSwipe(
     <div class="absolute inset-0 h-full w-full bg-gradient-to-b to-black/40 from-focus/40"></div>
     <div class="flex flex-grow items-center justify-start gap-2.5">
       <div
-          class="relative flex w-10 items-start justify-start gap-2 overflow-hidden rounded"
+          class="frosting relative flex w-10 items-start justify-start gap-2 overflow-hidden rounded"
       >
         <CoverImage v-if="currentSong"
                     :size="100"

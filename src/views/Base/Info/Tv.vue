@@ -103,11 +103,11 @@ router.afterEach(() => {
           style="box-shadow: 0 2px 2px 0 rgba(0,0,0,0.16);"
       >
         <div
-            class="flex justify-start items-end flex-grow-0 flex-shrink-0 w-[375px] h-[404px] relative gap-2 bg-black/5  0">
+            class="flex justify-start items-end flex-grow-0 flex-shrink-0 w-[375px] h-[404px] relative gap-2 bg-black/50 ">
           <div
               class="absolute flex flex-col justify-start items-end flex-grow w-available -mx-8 h-[450px] gap-2 pt-[380px] bg-cover [background-image:var(--background-image)] bg-top"></div>
           <div
-              class="absolute flex flex-col justify-start items-end flex-grow w-available -mx-8 h-[450px] gap-2 pt-[380px] bg-cover bg-black/5  0"></div>
+              class="absolute flex flex-col justify-start items-end flex-grow w-available -mx-8 h-[450px] gap-2 pt-[380px] bg-cover bg-black/50 "></div>
 
           <div
               class="flex-grow-0 flex-shrink-0 w-[280px] h-[420px] absolute left-10 top-10 overflow-hidden rounded-2xl">
@@ -374,7 +374,7 @@ router.afterEach(() => {
 
               <button
                   @click="trailerOpen = !trailerOpen"
-                  class="flex justify-start items-center flex-grow h-10 relative overflow-hidden gap-2 px-2 py-4 rounded-[30px] bg-black/5  0 border border-solid border-slate-lightA-9 dark:border-slate-darkA-9"
+                  class="flex justify-start items-center flex-grow h-10 relative overflow-hidden gap-2 px-2 py-4 rounded-[30px] bg-black/50  border border-solid border-slate-lightA-9 dark:border-slate-darkA-9"
               >
                 <p class="flex-grow w-[100px] text-[15px] font-semibold text-center">
                   {{ $t(!data ? 'loading' : 'Trailer') }}

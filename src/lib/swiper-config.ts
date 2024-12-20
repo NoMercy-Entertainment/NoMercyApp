@@ -89,8 +89,8 @@ export const swiperConfig = (isBackdrop: boolean) => {
 		spaceBefore: 12,
 		slidesOffsetAfter: 8,
 		spaceBetween: 12,
-		keyboard: false,
-		mousewheel: false,
+		keyboard: true,
+		// mousewheel: true,
 		mouseWheelOptions: {
 			enabled: true,
 			forceToAxis: true,

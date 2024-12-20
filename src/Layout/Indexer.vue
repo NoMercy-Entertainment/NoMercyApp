@@ -83,7 +83,7 @@ onUnmounted(() => {
 <template>
   <div
       id="indexer"
-      class="pointer-events-none z-0 mt-2 flex flex-col items-center justify-between self-stretch overflow-clip transition-width duration-300 text-slate-dark-1 dark:text-slate-light-1 sm:-translate-x-3"
+      class="pointer-events-none z-0 mt-safe h-screen sm:h-available pb-safe-offset-32 flex flex-col items-center justify-between self-stretch overflow-clip transition-width duration-300 text-slate-dark-1 dark:text-slate-light-1 sm:-translate-x-3 pt-2"
 
       :class="{
           'w-8': indexer,
@@ -96,8 +96,8 @@ onUnmounted(() => {
         <RouterLink :to="`${letter}`"
               :data-indexer="letter"
               tabindex="-1"
-              class="pointer-events-auto relative flex h-6 w-6 flex-shrink-0 flex-grow-0 cursor-pointer flex-col items-center justify-center gap-2 rounded-sm hover:bg-auto-alpha-5">
-            <p class="flex-shrink-0 flex-grow-0 text-center text-xs font-semibold leading-4">
+              class="pointer-events-auto relative flex size-4 sm:size-6 cursor-pointer flex-col items-center justify-center rounded-sm hover:bg-auto-alpha-5">
+            <p class="flex-shrink-0 flex-grow-0 text-center text-xs font-semibold leading-none">
               {{ letter }}
             </p>
         </RouterLink>
@@ -106,8 +106,8 @@ onUnmounted(() => {
            :data-indexer="letter"
            tabindex="-1"
            @click="scrollToDiv(letter)"
-           class="pointer-events-auto relative flex h-6 w-6 flex-shrink-0 flex-grow-0 cursor-pointer flex-col items-center justify-center gap-2 rounded-sm hover:bg-auto-alpha-5">
-        <p class="flex-shrink-0 flex-grow-0 text-center text-xs font-semibold leading-4">
+           class="pointer-events-auto relative flex size-4 sm:size-6 cursor-pointer flex-col items-center justify-center rounded-sm hover:bg-auto-alpha-5">
+        <p class="flex-shrink-0 flex-grow-0 text-center text-xs font-semibold leading-none">
           {{ letter }}
         </p>
       </div>

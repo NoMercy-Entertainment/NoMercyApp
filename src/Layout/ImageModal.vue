@@ -10,10 +10,15 @@ import {
   showScreensaver
 } from '@/store/imageModal';
 import {currentServer} from '@/store/currentServer';
-import {pickPaletteColor} from '@/lib/colorHelper';
+import {pickPaletteColor, RGBString2hex} from '@/lib/colorHelper';
 import AppLogoSquare from '@/components/Images/icons/AppLogoSquare.vue';
 import MoooomIcon from '@/components/Images/icons/MoooomIcon.vue';
 import TMDBImage from '@/components/Images/TMDBImage.vue';
+import {cardMenu, trackContextMenuItems} from "@/store/contextMenuItems";
+import type {MenuItem} from "primevue/menuitem";
+import ContextMenu from "primevue/contextmenu";
+import serverClient from "@/lib/clients/serverClient";
+import axios from "axios";
 
 const showButton = ref(false);
 const src = ref<string | null>();
@@ -108,6 +113,7 @@ const handleClick = (e: MouseEvent | TouchEvent) => {
   handleClose();
   e.stopPropagation();
   e.preventDefault();
+  cardMenu.value.hide(e);
 };
 
 onMounted(() => {
@@ -119,6 +125,145 @@ onMounted(() => {
     clearTimeout(timeout.value);
   };
 });
+
+enum WallpaperStyle
+{
+  Fill,
+  Fit,
+  Stretch,
+  Tile,
+  Center,
+  Span
+}
+
+const wallpaperStyle = ref<WallpaperStyle>(WallpaperStyle.Fill);
+
+const setAsWallpaper = () => {
+  serverClient()
+      .post('dashboard/server/wallpaper', {
+        path: imageModalData.value?.src,
+        color: logoColor.value
+            ?  RGBString2hex(`rgb(${logoColor.value})`)
+            : imageModalData.value?.color_palette?.image?.darkVibrant ?? '',
+        style: wallpaperStyle.value,
+      });
+}
+
+const downloadImage = async (url: string, name: string) => {
+  let imageDataUrl;
+  try {
+    const response = await axios.get(url, {
+      responseType: "blob", // Get the image as binary data
+    });
+
+    // Create a URL for displaying the image (optional)
+    const blob = new Blob([response.data]);
+    imageDataUrl = URL.createObjectURL(blob);
+
+    // Save the image (in browser)
+    const a = document.createElement("a");
+    a.href = imageDataUrl;
+    a.download = name;
+    a.click();
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+async function copyImageToClipboard(imageUrl: string): Promise<void> {
+  try {
+    const response = await fetch(imageUrl);
+    if (!response.ok) {
+      throw new Error("Failed to fetch the image");
+    }
+    const blob = await response.blob();
+
+    const clipboardItem = new window.ClipboardItem({
+      [blob.type]: new Promise((resolve) => resolve(blob)),
+    });
+
+    await navigator.clipboard.write([clipboardItem]);
+    console.log("Image copied to clipboard successfully!");
+  } catch (error) {
+    console.error("Failed to copy image to clipboard:", error);
+  }
+}
+
+const onRightClick = (e: MouseEvent) => {
+  e.preventDefault();
+  e.stopPropagation();
+  trackContextMenuItems.value = [
+    {
+      label: 'Save image as...',
+      icon: 'mooooom-download',
+      command: () => {
+        downloadImage(imageModalData.value?.src ?? '', imageModalData.value?.src ?? 'image');
+      },
+    },
+    {
+      label: 'Copy image',
+      icon: 'mooooom-fileCopy',
+      command: () => {
+        copyImageToClipboard(src.value ?? '');
+      },
+    },
+    {
+      label: 'Open image in new tab',
+      icon: 'mooooom-bookOpenBookmark',
+      command: () => {
+        window.open(src.value ?? '');
+      },
+    },
+    {
+      label: 'Set as desktop wallpaper (Windows only)',
+      icon: 'mooooom-monitor',
+      items: [
+        {
+          label: 'Fill',
+          icon: 'mooooom-monitor',
+          command: () => {
+            wallpaperStyle.value = WallpaperStyle.Fill;
+            setAsWallpaper();
+          },
+        },
+        {
+          label: 'Fit',
+          icon: 'mooooom-monitor',
+          command: () => {
+            wallpaperStyle.value = WallpaperStyle.Fit;
+            setAsWallpaper();
+          },
+        },
+        {
+          label: 'Stretch',
+          icon: 'mooooom-monitor',
+          command: () => {
+            wallpaperStyle.value = WallpaperStyle.Stretch;
+            setAsWallpaper();
+          },
+        },
+        {
+          label: 'Center',
+          icon: 'mooooom-monitor',
+          command: () => {
+            wallpaperStyle.value = WallpaperStyle.Center;
+            setAsWallpaper();
+          },
+        },
+        {
+          label: 'Span',
+          icon: 'mooooom-monitor',
+          command: () => {
+            wallpaperStyle.value = WallpaperStyle.Span;
+            setAsWallpaper();
+          },
+        },
+      ],
+    },
+  ];
+
+  cardMenu.value.show(e);
+};
 
 </script>
 
@@ -149,12 +294,15 @@ onMounted(() => {
           <MoooomIcon icon="cross" class="h-5 w-5"/>
         </button>
 
+        <ContextMenu ref="cardMenu" :model="trackContextMenuItems as MenuItem[]" class="!z-[999999999999999999999]"/>
         <div
             class="absolute inset-2 tv:inset-2 z-0 m-auto h-auto overflow-clip rounded-xl bg-cover bg-center bg-no-repeat opacity-90 shadow-img max-w-[82vw] max-h-[83vh] bg-image-blur md:inset-16"
+            @contextmenu="onRightClick($event)"
             :style="`background-image: url(${src}); aspect-ratio: ${imageModalData?.aspectRatio}`"></div>
 
         <div
-            class="absolute inset-2 tv:inset-20 z-0 m-auto h-auto overflow-clip rounded-xl bg-cover bg-center bg-no-repeat shadow-img max-w-[82vw] max-h-[83vh] md:inset-24"
+            class="absolute inset-2 tv:inset-20 z-0 m-auto h-auto overflow-clip rounded-xl bg-cover bg-center bg-no-repeat shadow-img max-w-[82vw] max-h-[83vh] md:inset-24 pointer-events-none"
+            @contextmenu="onRightClick($event)"
             :style="`background-image: url(${src}); aspect-ratio: ${imageModalData?.aspectRatio}; box-shadow: 0 0 800px 80px rgba(0,0,0,.2) inset;`">
           <div class="absolute left-0 z-0 p-4 bottom:2 sm:bottom-6 sm:left-8 tv:bottom-4 tv:left-6">
             <div

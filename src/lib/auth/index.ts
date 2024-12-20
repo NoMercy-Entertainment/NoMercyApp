@@ -109,8 +109,8 @@ export function refreshToken() {
 				?? undefined;
 
 			if (!refreshToken) {
-				document.body.innerHTML = 'Error: No refresh token';
-				throw new Error('refreshToken: No refresh token');
+				reject('refreshToken: No refresh token');
+				return;
 			}
 
 			cdnClient()
@@ -163,6 +163,8 @@ function hasValidToken() {
 }
 
 export function storeTokens(data: TokenResponse) {
+
+	console.log('storeTokens');
 	user.value = {
 		...user.value,
 		refreshIn: new Date(Date.now() + (data.expires_in * 1000)).getTime(),
@@ -179,6 +181,7 @@ export function storeTokens(data: TokenResponse) {
 	try {
 		const decodedToken = parseToken<IDToken>(data.id_token!);
 
+		console.log('decodedToken');
 		user.value = {
 			...user.value,
 			name: decodedToken.display_name,

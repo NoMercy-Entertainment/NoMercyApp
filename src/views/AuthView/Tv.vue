@@ -25,13 +25,12 @@ const deviceResponse = ref<DeviceResponse>();
 
 onMounted(async () => {
 
-  const {isAuthenticated} = useKeycloak();
-
   try {
     await refreshToken();
 
     keepTokenFresh();
 
+    const {isAuthenticated} = useKeycloak();
     isAuthenticated.value = true;
 
   } catch (error) {

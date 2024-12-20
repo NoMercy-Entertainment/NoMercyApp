@@ -10,8 +10,7 @@ import type {LibraryResponse} from '@/types/api/base/library';
 import type {ColorPalettes} from '@/types/api/shared';
 import type {MenuItem} from 'primevue/menuitem';
 
-import {setTitle} from '@/lib/stringArray';
-import {setBackground, setColorPalette, setPoster} from '@/store/ui';
+import {setBackground, setColorPalette, setPoster, setTitle} from '@/store/ui';
 
 import Carousel from '@/components/Carousel/Carousel.vue';
 import MediaCard from '@/components/Cards/MediaCard.vue';
@@ -74,7 +73,6 @@ const props = defineProps({
 });
 
 const handleClick = (item: any) => {
-  setTimeout(() => {
     if (item?.backdrop) {
       setBackground(item?.backdrop);
     }
@@ -86,10 +84,7 @@ const handleClick = (item: any) => {
     }
     if (item.color_palette) {
       setColorPalette(item.color_palette.poster);
-    } else {
-      setColorPalette(null);
     }
-  }, 50);
 };
 
 const backdropCards = computed(() => {

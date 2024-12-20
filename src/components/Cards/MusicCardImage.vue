@@ -20,7 +20,7 @@ defineProps({
 <template>
     <template v-if="data?.type == 'albums' || data?.type == 'release_groups'">
         <div
-            class="relative z-0 flex aspect-square h-auto w-full flex-col items-start justify-start self-stretch overflow-clip group-hover/musicCard:rounded-md rounded-lg bg-cover bg-center bg-no-repeat transition-all duration-200 bg-auto-2/7"
+            class="frosting relative z-0 flex aspect-square h-auto w-full flex-col items-start justify-start self-stretch overflow-clip group-hover/musicCard:rounded-md rounded-lg bg-cover bg-center bg-no-repeat transition-all duration-200 bg-auto-2/7"
         >
             <div
                 class="absolute -inset-0.5 z-10 !rounded-xl group-hover/musicCard:rounded-lg group-hover/musicCard:border-0 border-8 transition-all duration-200 border-auto-2/9"></div>
@@ -36,20 +36,20 @@ defineProps({
 
     <template v-else-if="data?.type == 'artists'">
         <div
-            class="relative flex aspect-square h-auto w-full items-center justify-end gap-2 self-stretch overflow-clip rounded-2xl group-hover/musicCard:p-1 p-1.5 transition-all duration-200 bg-auto-2/7"
+            class="relative flex aspect-square h-auto w-full items-center justify-end gap-2 self-stretch overflow-clip rounded-2xl group-hover/musicCard:p-1 p-1.5 transition-all duration-200 bg-auto-3/7"
         >
             <div class="backdropCard-overlay !rounded-2xl"></div>
             <FavoriteImage v-if="data?.id == 'favorite'" class=""/>
             <CoverImage v-else :data="data"
                         :size="180"
-                        class="absolute top-1/2 left-1/2 h-full -translate-x-1/2 -translate-y-1/2 overflow-clip group-hover/musicCard:rounded-xl transition-all duration-200 rounded-[0.65rem]"
+                        class="frosting absolute top-1/2 left-1/2 h-full -translate-x-1/2 -translate-y-1/2 group-hover/musicCard:rounded-xl transition-all duration-200 rounded-[0.65rem]"
                         type="image"/>
         </div>
     </template>
 
     <template v-else-if="data?.type == 'playlists'">
         <div
-            class="absolute -top-1 group-hover/musicCard:-top-3 left-1/2 flex aspect-square h-auto -translate-x-1/2 flex-col items-start justify-start rounded-lg opacity-60 transition-all delay-150 duration-200 w-[75%] bg-focus/10"
+            class="frosting absolute -top-1 group-hover/musicCard:-top-3 left-1/2 flex aspect-square h-auto -translate-x-1/2 flex-col items-start justify-start rounded-lg opacity-60 transition-all delay-150 duration-200 w-[75%] bg-focus/10"
         >
             <div class="flex h-full items-start justify-start self-stretch">
                 <div class="relative flex items-center justify-start self-stretch">

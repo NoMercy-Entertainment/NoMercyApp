@@ -108,7 +108,7 @@ onMounted(() => {
   });
 
   player.value?.on('playlistComplete', () => {
-    router.back();
+    player.value?.dispose();
   });
 
   player.value?.once('back', () => {

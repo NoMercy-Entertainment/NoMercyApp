@@ -22,13 +22,13 @@ const encoderData = ref<ServerEncoderProgress[]>([]);
 const {data: queueData, refetch} = useServerClient<QueueResponse[]>({
   path: 'dashboard/tasks/queue',
   queryKey: ['queue'],
-  // refetchInterval: 30000,
+  refetchInterval: 30000,
 });
 
 const handleProgress = (data: ServerEncoderProgress) => {
   if (data.status == 'running' || data.status == 'paused') {
     encoderData.value = sortBy([...encoderData.value.filter(item => item?.id !== data?.id), data], 'id');
-  } else if (data.status == 'completed') {
+  } else {
     encoderData.value = sortBy([...encoderData.value.filter(item => item?.id !== data?.id)], 'id');
     refetch();
   }

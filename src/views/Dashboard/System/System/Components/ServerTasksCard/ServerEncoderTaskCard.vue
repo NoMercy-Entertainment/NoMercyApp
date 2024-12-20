@@ -30,6 +30,8 @@ const status = computed(() => {
 });
 
 const thumbnail = computed(() => {
+  if(!props.data.thumbnails) return null;
+
   const baseUrl = currentServer.value?.serverBaseUrl + '\\' + props.data.thumbnails;
   return baseUrl.replace(/\\+/gu, '/')
       .replace(/\/\/images/u, '/images') + '?token=' + user.value.accessToken
@@ -88,7 +90,7 @@ const toggleRunning = () => {
     <div
         class="relative flex items-start justify-start gap-2"
     >
-      <div
+      <div v-if="data?.message == 'Encoding video'"
           class="relative aspect-video h-auto w-1/3 flex-shrink-0 flex-grow-0 overflow-hidden rounded-sm min-w-36"
           style="
                     background: linear-gradient(
@@ -106,6 +108,7 @@ const toggleRunning = () => {
           <div
               class="pointer-events-none absolute inset-0 z-10 mt-auto h-4/5 bg-gradient-to-t from-black via-black/60"></div>
           <img
+              v-if="thumbnail"
               :src="thumbnail"
               class="absolute z-0 h-full w-full" alt=""/>
         </div>
@@ -152,7 +155,7 @@ const toggleRunning = () => {
             {{ data?.message }}
           </p>
         </div>
-        <div
+        <div v-if="data?.message == 'Encoding video'"
             class="relative flex h-4 w-full items-start justify-start gap-2"
         >
           <div v-if="data?.speed"
@@ -164,7 +167,7 @@ const toggleRunning = () => {
             </p>
           </div>
         </div>
-        <div
+        <div v-if="data?.message == 'Encoding video'"
             class="relative flex h-4 w-full items-start justify-start gap-2"
         >
           <div v-if="data?.remaining_split"
@@ -195,7 +198,7 @@ const toggleRunning = () => {
             </p>
           </div>
         </div>
-        <div v-if="data?.video_streams"
+        <div v-if="data?.video_streams && data?.message == 'Encoding video'"
              class="relative flex h-4 items-center justify-center gap-2 overflow-clip"
         >
           <div
@@ -228,7 +231,8 @@ const toggleRunning = () => {
         </div>
       </div>
     </div>
-    <div class="absolute -bottom-0.5 left-0 h-1 w-full blur-[1px]">
+    <div v-if="data?.message == 'Encoding video'"
+        class="absolute -bottom-0.5 left-0 h-1 w-full blur-[1px]">
       <div class="absolute w-full h-1 left-[-1px] top-[-1px] bg-black/[0.22]"></div>
       <div
           class="w-0 h-1 absolute left-[-1px] top-[-1px] rounded-sm bg-gradient-to-r from-black/5 to-[rgb(var(--color-focus))] z-10"

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { IonPage, IonContent } from '@ionic/vue';
+import {IonPage, IonContent, onIonViewWillEnter} from '@ionic/vue';
 
 import type {HomeDataItem} from '@/types/api/music';
 import type {Component} from '@/lib/routerHelper';
@@ -14,6 +14,9 @@ const {data} = useServerClient<Component<HomeDataItem>[]>({
 });
 
 onMounted(() => {
+  setColorPalette(null);
+});
+onIonViewWillEnter(() => {
   setColorPalette(null);
 });
 

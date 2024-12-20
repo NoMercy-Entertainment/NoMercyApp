@@ -60,6 +60,10 @@ const props = defineProps({
     required: false,
     default: 'white',
   },
+  onload: {
+    type: Function as PropType<(data: Event & { target: HTMLImageElement }) => void>,
+    required: false,
+  },
 });
 
 const opacity = ref(0);
@@ -67,12 +71,6 @@ const error = ref(false);
 const shouldLighten = ref(false);
 const shouldDarken = ref(false);
 const brightness = ref(0);
-
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const onError = (e: Event) => {
-  (e.target as HTMLImageElement).onerror = null;
-  error.value = true;
-};
 
 const serverImageUrl = computed(() => {
   if (!props.path) return;
@@ -108,8 +106,9 @@ watch(serverImageUrl, (value) => {
   error.value = false;
 });
 
-const onLoad = () => {
+const onLoaded = (e: Event) => {
   opacity.value = 1;
+  props.onload?.(e as Event & { target: HTMLImageElement });
 };
 
 const onLoadStart = () => {
@@ -177,6 +176,13 @@ const style = computed(() => {
   };
 });
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const onError = (e: Event) => {
+  (e.target as HTMLImageElement).onerror = null;
+  error.value = true;
+  opacity.value = 1;
+};
+
 const remove = (e: ErrorEvent) => {
   if ((e.target as HTMLImageElement)?.parentNode?.children?.length ?? 0 > 1) {
     (e.target as HTMLImageElement)?.parentNode?.children[0].remove();
@@ -212,7 +218,7 @@ const height = computed(() => {
         'w-auto h-available': aspect == null,
        }"
        :style="style">
-    <div class="absolute inset-0 h-full w-full bg-black/5  0 shadow"
+    <div class="absolute inset-0 h-full w-full bg-black/50  shadow"
          v-if="opacity == 0 && type == 'image'"></div>
     <picture v-if="!error && path && !path?.includes?.('undefined')"
              class="pointer-events-none absolute inset-0 flex select-none flex-col items-end justify-end self-end transition-all duration-500"
@@ -257,13 +263,13 @@ const height = computed(() => {
               ? `drop-shadow(0px 0px 6px rgb(${shadow})) drop-shadow(0px 0px 6px rgb(${shadow}))`
               : ''
             }`"
-           :onload="onLoad"
+           :onload="onLoaded"
            :onloadstart="onLoadStart"
-           :onerror="remove"
+           :onerror="onError"
            crossorigin="anonymous"/>
     </picture>
-    <div v-if="error || (!path && type == 'image')"
-         class="inset-0 grid aspect-video h-full w-full place-items-center p-2 place-center"
+    <div v-else-if="type == 'image'"
+         class="inset-0 grid aspect-video h-full w-full place-items-center place-center"
          :class="type == 'image' ? 'bg-auto-1' : ''">
       <div
           class="w-full h-full inset-0 grid place-items-center place-center bg-[rgb(var(--color-logo-dark)/20%)]">

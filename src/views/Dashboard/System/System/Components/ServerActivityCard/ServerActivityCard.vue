@@ -11,7 +11,10 @@ import {dashboardSocketIsConnected} from "@/lib/clients/dashboardSocket";
 const {data: serverActivity} = useServerClient<ActivityLog[]>({
   path: 'dashboard/activity',
   refetchInterval: 10000,
-  queryKey: ['serveractivity'],
+  data: {
+    take: 999,
+  },
+  queryKey: ['server', 'activity'],
 });
 
 const {data: devices} = useServerClient<Device[]>({
@@ -31,7 +34,7 @@ const {data: devices} = useServerClient<Device[]>({
     </template>
 
     <ActivityCard
-        v-for="activity in serverActivity ?? []"
+        v-for="activity in serverActivity?.slice(0, 5) ?? []"
         :devices="devices ?? []"
         :key="activity?.id"
         :activity="activity"

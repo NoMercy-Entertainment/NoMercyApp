@@ -64,9 +64,9 @@ function processImage(data: Event & { target: HTMLImageElement; }) {
       }"
     >
         <div class="absolute top-0 left-0 h-full w-full overflow-clip bg-focus"></div>
-        <div class="absolute top-0 left-0 h-full w-full overflow-clip bg-black/5  "></div>
+        <div class="absolute top-0 left-0 h-full w-full overflow-clip bg-black/50  "></div>
         <div
-            class="relative mx-auto flex aspect-square -mt-4 h-amin-w-80 flex-col items-center justify-center overflow-clip rounded-xl bg-gradient-to-br min-w-64 bg-theme-7 from-theme-5 via-theme-7 to-theme-11 shadow">
+            class="frosting relative mx-auto flex aspect-square -mt-4 h-amin-w-80 flex-col items-center justify-center overflow-clip rounded-xl bg-gradient-to-br min-w-64 bg-theme-7 from-theme-5 via-theme-7 to-theme-11 shadow">
             <CoverImage
                 id="image"
                 :data="data"
@@ -94,7 +94,7 @@ function processImage(data: Event & { target: HTMLImageElement; }) {
             <p class="text-left font-semibold uppercase text-white">
                 {{ data?.type?.replace(/s$/u, '') }}
             </p>
-            <div v-if="data.name.length > 50"
+            <div v-if="data?.name && data.name.length > 50"
                 class="w-full text-5xl font-semibold line-clamp-2 leading-[130%] whitespace-pre"
                v-html="breakTitle2(data?.name ?? 'Songs you like', 'text-2xl line-clamp-1')">
             </div>

@@ -2,6 +2,7 @@
 import {computed, onMounted, PropType, ref, watch} from 'vue';
 import {useTranslation} from 'i18next-vue';
 import {useRoute} from 'vue-router';
+
 import type {FileItem, FileList} from '@/types/api/dashboard/newContent';
 import type {LibrariesResponse} from '@/types/api/base/library';
 
@@ -17,7 +18,7 @@ import FolderBrowser from '@/components/FolderBrowser.vue';
 
 import FolderItem from './FolderItem.vue';
 import ScrollContainer from '@/Layout/Desktop/components/ScrollContainer.vue';
-// import Select from '@/components/Forms/Select.vue';
+import Checkbox from '@/components/Forms/Checkbox.vue';
 
 interface DestinationFolder {
   id: string;
@@ -189,12 +190,12 @@ const continueAvailable = computed(() => {
             </InputText>
           </div>
 
-          <div class="flex flex-col gap-2">
+          <div class="flex flex-col gap-2 ml-4 w-1/3">
             <label for="destination_folder">Destination folder</label>
             <Select
                 id="destination_folder"
                 placeholder="Select a destination folder"
-                className="ml-4 w-1/3"
+                vairant="filled"
                 v-if="destinationFolder"
                 :options="(currentLibrary?.folder_library?.map((fl) => ({
                   id: fl.folder_id,

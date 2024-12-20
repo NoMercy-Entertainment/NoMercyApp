@@ -91,10 +91,10 @@ const onRightClick = (event: Event, data: LibraryResponse | GenreResponse | Peop
       <div
            class="z-0 flex flex-col gap-4 rounded-3xl border-0 p-4 w-available scrollbar-none border-auto-3"
            :class="{
-           'pb-24' : isNative &&  !currentSong,
-           'pb-40' : isNative &&  currentSong,
-           'children:pb-4 sm:children:pb-3' : !isNative &&  currentSong
-        }"
+             'pb-24' : isNative &&  !currentSong,
+             'pb-40' : isNative &&  currentSong,
+             'children:pb-4 sm:children:pb-3' : !isNative &&  currentSong
+          }"
            :key="router.currentRoute.value.params?.id as string">
 
         <div

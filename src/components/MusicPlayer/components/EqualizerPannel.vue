@@ -20,6 +20,7 @@ import RangeSlider from "@/components/Forms/RangeSlider.vue"
     <div class="flex items-center self-stretch relative gap-2">
       <p class="leading-none text-xs">L</p>
       <RangeSlider :value="panning"
+                   :index="0"
                    :min="equalizerSliderValues.pan.min"
                    :max="equalizerSliderValues.pan.max"
                    :step="equalizerSliderValues.pan.step"
@@ -37,13 +38,14 @@ import RangeSlider from "@/components/Forms/RangeSlider.vue"
       <p class="leading-none text-xs">R</p>
     </div>
 
-    <div class="flex justify-evenly items-center w-full sm:gap-3 flex-1">
+    <div class="flex justify-evenly items-center w-full sm:gap-6 flex-1">
 
       <template v-for="(band, index) in bands" :key="index">
 
         <template v-if="band.frequency === 'Pre'">
-          <div class="flex justify-start items-center h-full -ml-3 sm:first:mr-10">
+          <div class="flex justify-start items-center h-full -ml-3 sm:first:mr-4">
             <RangeSlider vertical markers :value="band.gain"
+                         :index="index"
                          :min="equalizerSliderValues.pre.min"
                          :max="equalizerSliderValues.pre.max"
                          :step="equalizerSliderValues.pre.step"
@@ -61,8 +63,9 @@ import RangeSlider from "@/components/Forms/RangeSlider.vue"
         </template>
 
         <template v-else>
-          <div class="flex justify-start items-center h-full">
+          <div class="flex justify-start items-center h-full" >
             <RangeSlider vertical markers :value="band.gain"
+                         :index="index"
                          :min="equalizerSliderValues.band.min"
                          :max="equalizerSliderValues.band.max"
                          :step="equalizerSliderValues.band.step"
@@ -90,6 +93,10 @@ import RangeSlider from "@/components/Forms/RangeSlider.vue"
         <Select :options="equalizerPresets"
                 :model-value="equalizerPreset"
                 @update:modelValue="setEqualizerPreset($event)"
+                autocomplete="off"
+                checkmark
+                id="equalizer_preset"
+                label="equalizer preset"
                 optionLabel="name"
                 size="small"
                 variant="filled"

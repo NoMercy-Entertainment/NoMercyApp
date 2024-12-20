@@ -39,11 +39,12 @@ const color = computed(() => {
         :data-scroll="scrollLetter"
         v-if="data?.link"
         :to="data?.link"
-        class="group/card border-0 border-focus focus-shift focus-outline transition-all duration-300 flex flex-col h-full items-center overflow-clip relative rounded-lg select-none shadow-[0px_0px_0_1px_rgb(var(--color-focus,var(--color-theme-6))/70%)] w-full z-0 bg-auto-50/70 aspect-poster flex-grow-0 [flex:1_1_162px]"
+        class="frosting group/card border-0 border-focus focus-shift focus-outline transition-all duration-300 flex flex-col h-full items-center relative rounded-lg select-none shadow-[0px_0px_0_1px_rgb(var(--color-focus,var(--color-theme-6))/70%)] w-full z-0 bg-auto-50/70 aspect-poster flex-grow-0 [flex:1_1_162px]"
         :style="`
             --color-focus: ${color};
          `">
 
+      <div class="w-full h-full overflow-clip rounded-lg inset-0 absolute">
         <TMDBImage
             :path="(data as any)?.profile"
             :title="data?.name"
@@ -64,5 +65,6 @@ const color = computed(() => {
                 {{ data?.character ?? data?.job }}
             </p>
         </div>
+      </div>
     </RouterLink>
 </template>

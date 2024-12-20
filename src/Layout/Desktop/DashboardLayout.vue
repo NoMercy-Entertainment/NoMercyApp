@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import {computed, onMounted, type PropType} from 'vue';
+import {computed, onMounted, type PropType, watch} from 'vue';
 import {type AxiosError} from 'axios';
 
 import {ErrorResponse} from '@/types/server';
@@ -13,6 +13,11 @@ import {setColorPalette} from '@/store/ui';
 import FloatingBackButton from '@/components/Buttons/FloatingBackButton.vue';
 import HelpButton from '@/components/Buttons/HelpButton.vue';
 import ScrollContainer from '@/Layout/Desktop/components/ScrollContainer.vue';
+
+const addModalOpen = defineModel({
+  required: false,
+  type: Boolean,
+});
 
 const props = defineProps({
   title: {
@@ -51,6 +56,7 @@ const props = defineProps({
 const {error: permissionsError, isPending} = useServerClient({
   path: 'dashboard/server',
   enabled: !props.allowAnyone,
+  refetchInterval: 10000,
   queryKey: ['dashboard', 'server'],
 });
 
@@ -96,11 +102,21 @@ onMounted(() => {
 
 useMounted(startDashboardSocket, stopDashboardSocket, 1);
 
+const showError = computed(() => {
+  return (accessError.value?.code || isPending.value || !dashboardSocketIsConnected.value) && !props.allowAnyone;
+});
+
+watch(showError, (value) => {
+  if (value && addModalOpen.value != undefined) {
+    addModalOpen.value = false;
+  }
+});
+
 </script>
 
 <template>
   <KeepAlive>
-    <div v-if="(accessError?.code || isPending || !dashboardSocketIsConnected) && !allowAnyone" class="grid h-full w-full place-items-center">
+    <div v-if="showError" class="grid h-full w-full place-items-center">
       <div class="relative flex items-center justify-start gap-8 overflow-hidden">
         <div class="relative flex w-full flex-col gap-4">
           <p class="text-7xl font-bold text-center text-slate-light-12/80 dark:text-slate-dark-12/80">
@@ -114,7 +130,7 @@ useMounted(startDashboardSocket, stopDashboardSocket, 1);
     </div>
 
     <div v-else
-         class="relative z-0 h-inherit flex flex-shrink-0 flex-grow flex-col overflow-clip items-start justify-start self-stretch w-available min-h-available bg-slate-light-3 dark:bg-slate-dark-2">
+         class="relative z-0 h-available flex flex-shrink-0 flex-grow flex-col overflow-clip items-start justify-start self-stretch w-available min-h-available bg-slate-light-3 dark:bg-slate-dark-2">
       <div
           class="sticky top-0 z-10 flex flex-shrink-0 flex-grow-0 flex-col items-start justify-start gap-5 self-stretch"
       >

@@ -85,6 +85,24 @@ export interface LogoResponse {
 	} | null;
 }
 
+
+export interface Device {
+	id: string;
+	device_id: string;
+	browser: string;
+	os: string;
+	device?: string;
+	type: string;
+	name: string;
+	custom_name?: string;
+	version: string;
+	ip: string;
+	activity_logs: ActivityLog[];
+
+	created_at?: number;
+	updated_at?: number;
+}
+
 export interface ActivityLog {
 	id: string;
 	user_id: string;
@@ -96,4 +114,20 @@ export interface ActivityLog {
 	from: string;
 	created_at?: number;
 	updated_at?: number;
+}
+
+export interface LogType {
+	name: string;
+	display_name: string;
+	color: string;
+	type: string;
+}
+
+export interface LogEntry {
+	level: string;
+	type: string;
+	message: string;
+	color: string;
+	thread_id: number;
+	time: Date;
 }

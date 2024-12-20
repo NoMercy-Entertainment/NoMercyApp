@@ -28,17 +28,17 @@ type Return<T> = UseQueryReturnType<T, AxiosError<ErrorResponse>> extends {
 	setLetter?: (value: string) => void;
 };
 
+const getDataValues = (options?: ServerClientProps) => {
+	return Object.keys(options?.data ?? {})
+		.reduce((acc, key) => {
+			acc[key] = toRaw(options?.data![key].value) ?? options?.data![key];
+			return acc;
+		}, {} as Record<string | number, any>);
+}
+
 const useServerClient = <T, >(options?: ServerClientProps): Return<T> => {
 
 	const route = useRoute();
-
-	const getDataValues = () => {
-		return Object.keys(options?.data ?? {})
-			.reduce((acc, key) => {
-				acc[key] = toRaw(options?.data![key].value);
-				return acc;
-			}, {} as Record<string | number, any>);
-	}
 
 	const type = ref<'get' | 'post' | 'put' | 'patch' | 'delete' | 'head'>(options?.type ?? 'get');
 
@@ -68,7 +68,7 @@ const useServerClient = <T, >(options?: ServerClientProps): Return<T> => {
 								{
 									params: {
 										letter: route.query?.letter,
-										...getDataValues(),
+										...getDataValues(options),
 									},
 									signal: signal,
 								}
@@ -85,7 +85,7 @@ const useServerClient = <T, >(options?: ServerClientProps): Return<T> => {
 							.post<T>(options?.path ?? route.fullPath,
 								{
 									letter: route.query?.letter ?? undefined,
-									...getDataValues(),
+									...getDataValues(options),
 								},
 								{
 									signal: signal,
@@ -101,7 +101,7 @@ const useServerClient = <T, >(options?: ServerClientProps): Return<T> => {
 							.put<T>(options?.path ?? route.fullPath,
 								{
 									letter: route.query?.letter ?? undefined,
-									...getDataValues(),
+									...getDataValues(options),
 								},
 								{
 									signal: signal,
@@ -116,7 +116,7 @@ const useServerClient = <T, >(options?: ServerClientProps): Return<T> => {
 							.patch<T>(options?.path ?? route.fullPath,
 								{
 									letter: route.query?.letter ?? undefined,
-									...getDataValues(),
+									...getDataValues(options),
 								},
 								{
 									signal: signal,
@@ -131,7 +131,7 @@ const useServerClient = <T, >(options?: ServerClientProps): Return<T> => {
 							.delete<T>(options?.path ?? route.fullPath,
 								{
 									letter: route.query?.letter ?? undefined,
-									...getDataValues(),
+									...getDataValues(options),
 								},
 								{
 									signal: signal,

@@ -58,7 +58,7 @@ const {isSwiping, lengthY} = useSwipe(
 <template>
   <div class="h-screen absolute w-available flex-shrink-0 flex-grow-0 transition-colors duration-300"
        :class="{
-          'bg-black/25 dark:bg-black/5  0': menuOpen,
+          'bg-black/25 dark:bg-black/50 ': menuOpen,
           'pointer-events-none': !menuOpen,
        }"
   ></div>

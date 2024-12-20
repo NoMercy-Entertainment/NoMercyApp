@@ -10,7 +10,7 @@ import i18next from '@/config/i18next';
 import useServerClient from '@/lib/clients/useServerClient';
 import {setBackground, setColorPalette} from '@/store/ui';
 import {setTitle, sortByPosterAlphabetized, unique} from '@/lib/stringArray';
-import {convertToHumanReact, humanTimeExtended} from '@/lib/dateTime';
+import {convertToHumanReact} from '@/lib/dateTime';
 
 import ScrollContainer from '@/Layout/Desktop/components/ScrollContainer.vue';
 import FloatingBackButton from '@/components/Buttons/FloatingBackButton.vue';
@@ -106,7 +106,7 @@ onUnmounted(() => {
                   </div>
                   <div class="relative flex flex-shrink-0 flex-grow-0 flex-col items-start justify-center gap-1">
                     <p class="flex-shrink-0 flex-grow-0 text-xs font-bold uppercase text-auto-alpha-10">
-                      {{ $t('Contains') }}
+                      {{ $t('Availability') }}
                     </p>
                     <p class="flex-shrink-0 flex-grow-0 font-medium">
                       {{ data?.have_items }} / {{ data?.number_of_items }}

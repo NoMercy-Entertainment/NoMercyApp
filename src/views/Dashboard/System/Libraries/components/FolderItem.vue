@@ -4,8 +4,10 @@ import {nextTick, PropType, ref, watch} from 'vue';
 import type {Episode, FileItem} from '@/types/api/dashboard/newContent';
 
 import {humanFileSize, pad} from '@/lib/stringArray';
-import MoooomIcon from '@/components/Images/icons/MoooomIcon.vue';
 import {tmdbImageBaseUrl} from '@/config/config';
+
+import Checkbox from '@/components/Forms/Checkbox.vue';
+import MoooomIcon from '@/components/Images/icons/MoooomIcon.vue';
 
 const props = defineProps({
   manage: {
@@ -60,7 +62,8 @@ watch(props, (value) => {
       <div
           class="relative flex items-start justify-start gap-2 self-stretch"
       >
-        <div class="relative aspect-video h-auto w-52 select-none overflow-clip">
+        <div
+            class="relative aspect-video h-auto w-60 min-w-60 select-none overflow-clip">
           <Checkbox
               id="checked"
               class="absolute top-2 left-2 z-10"
@@ -78,7 +81,7 @@ watch(props, (value) => {
 						<span class="self-stretch text-base font-semibold line-clamp-1 monospace w-[697px]">
 							{{ data?.parsed?.title }}
 							<template
-                  v-if="(data.match as Episode)?.season_number != null && (data.match as Episode)?.season_number != 0 && (data.match as Episode)?.episode_number != 0"
+                  v-if="(data.match as Episode)?.season_number != null"
               >
 								S{{ pad((data.match as Episode)?.season_number) }}E{{
                   pad((data.match as Episode)?.episode_number)
@@ -89,13 +92,13 @@ watch(props, (value) => {
               </template>
 						</span>
             <p
-                class="w-full self-stretch text-xs font-light leading-none text-auto-5"
+                class="w-full self-stretch text-xs font-light leading-none text-slate-light-11 dark:text-slate-dark-11"
             >
-              {{ data.name }}
+              {{ data.file }}
             </p>
           </div>
           <div
-              class="relative flex items-center justify-start self-stretch gap-0.5 text-auto-5"
+              class="relative flex items-center justify-start self-stretch gap-0.5 text-slate-light-11 dark:text-slate-dark-11"
           >
             <MoooomIcon icon="server" className="w-3.5"/>
             <p class="w-full flex-grow text-xs leading-none">
@@ -103,7 +106,7 @@ watch(props, (value) => {
             </p>
           </div>
           <div
-              class="relative flex items-center justify-start self-stretch gap-0.5 text-auto-5"
+              class="relative flex items-center justify-start self-stretch gap-0.5 text-slate-light-11 dark:text-slate-dark-11"
           >
             <MoooomIcon icon="film" className="w-3.5"/>
             <p class="w-full flex-grow text-xs leading-none">
@@ -113,7 +116,7 @@ watch(props, (value) => {
             </p>
           </div>
           <div
-              class="relative flex items-center justify-start self-stretch gap-0.5 text-auto-5"
+              class="relative flex items-center justify-start self-stretch gap-0.5 text-slate-light-11 dark:text-slate-dark-11"
           >
             <MoooomIcon icon="audioFile" className="w-3.5"/>
             <p class="w-full flex-grow text-xs leading-none">
@@ -123,7 +126,7 @@ watch(props, (value) => {
             </p>
           </div>
           <div
-              class="relative flex items-center justify-start self-stretch gap-0.5 text-auto-5"
+              class="relative flex items-center justify-start self-stretch gap-0.5 text-slate-light-11 dark:text-slate-dark-11"
           >
             <MoooomIcon icon="chatBubble" className="w-3.5"/>
             <p class="w-full flex-grow text-xs leading-none">

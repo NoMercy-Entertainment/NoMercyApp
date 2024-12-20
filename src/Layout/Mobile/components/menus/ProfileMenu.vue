@@ -90,7 +90,7 @@ const reload = () => window.location.reload();
 
       <ion-item lines="inset" >
         <button @click="darkMode = !darkMode"
-                class="flex justify-center items-center self-stretch w-available h-full flex-grow-0 flex-shrink-0 relative pl-1 py-2.5 rounded-md bg-transparent border border-transparent"
+                class="flex justify-center items-center self-stretch w-available h-full flex-grow-0 flex-shrink-0 relative pl-2 py-2.5 rounded-md bg-transparent border border-transparent"
         >
           <ion-icon aria-hidden="true" :icon="moonDiagonal" class="w-6 h-6"/>
 

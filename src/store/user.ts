@@ -1,4 +1,4 @@
-import {ref} from 'vue';
+import {ref, watch} from 'vue';
 
 import type {User} from '@/types/auth';
 import Keycloak from '@/types/keycloak';
@@ -7,6 +7,9 @@ export const user = ref<User>(<User>{
 	accessToken: localStorage.getItem('access_token') || '',
 	refreshToken: localStorage.getItem('refresh_token') || '',
 	idToken: localStorage.getItem('id_token') || '',
+});
+watch(user, (newUser) => {
+	console.log('User changed:', newUser);
 });
 // export const user = computed(() => user.value);
 
@@ -23,6 +26,7 @@ export const getUser = (): User => {
 }
 
 export const setUserFromKeycloak = (keycloakUser: Keycloak): void => {
+	console.log('setUserFromKeycloak');
 	if (!keycloakUser) {
 		alert('No user found');
 		return;
@@ -50,6 +54,7 @@ export const setUserFromKeycloak = (keycloakUser: Keycloak): void => {
 }
 
 export const updateUserFromApi = (newUser: User): void => {
+	console.log('updateUserFromApi');
 	user.value = {
 		...user.value,
 		avatar: newUser.avatar,

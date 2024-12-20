@@ -52,11 +52,11 @@ html.scheme-dark .bars {
   }
 }
 
-.bar:nth-child(1)  { --left: 1; animation-duration: 400ms; animation-delay: -600ms; filter: brightness(calc(var(--brightness) * 1.5)) saturate(1.2); }
-.bar:nth-child(2)  { --left: 2; animation-duration: 400ms; animation-delay: -800ms; filter: brightness(calc(var(--brightness) * 1.2)) saturate(0.8); }
-.bar:nth-child(3)  { --left: 3; animation-duration: 400ms; animation-delay: -200ms; filter: brightness(calc(var(--brightness) * 2)) saturate(2.7);}
-.bar:nth-child(4)  { --left: 4; animation-duration: 400ms; animation-delay: 0ms; filter: brightness(calc(var(--brightness) * 1.2)) saturate(0.8);}
-.bar:nth-child(5)  { --left: 5; animation-duration: 400ms; animation-delay: 400ms; filter: brightness(calc(var(--brightness) * 1.5)) saturate(0.8);}
+.bar:nth-child(1)  { --left: 1; animation-duration: 400ms; animation-delay: -600ms; filter: brightness(calc(var(--brightness) * 1.3)) saturate(1.2); }
+.bar:nth-child(2)  { --left: 2; animation-duration: 400ms; animation-delay: -800ms; filter: brightness(calc(var(--brightness) * 0.7)) saturate(0.8); }
+.bar:nth-child(3)  { --left: 3; animation-duration: 400ms; animation-delay: -200ms; filter: brightness(calc(var(--brightness) * 1.2)) saturate(2.4);}
+.bar:nth-child(4)  { --left: 4; animation-duration: 400ms; animation-delay: 0ms; filter: brightness(calc(var(--brightness) * 0.5)) saturate(0.8);}
+.bar:nth-child(5)  { --left: 5; animation-duration: 400ms; animation-delay: 400ms; filter: brightness(calc(var(--brightness) * 1.3)) saturate(0.8);}
 
 .bars.paused .bar {
   animation: none;

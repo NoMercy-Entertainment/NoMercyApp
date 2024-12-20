@@ -68,10 +68,6 @@ onIonViewWillEnter(() => {
   setColorPalette(data.value?.color_palette?.cover);
 });
 
-onIonViewWillLeave(() => {
-  setColorPalette(null);
-});
-
 const handleBack = () => {
   window.history.back();
 };

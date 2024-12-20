@@ -15,6 +15,7 @@ import MoooomIcon from '@/components/Images/icons/MoooomIcon.vue';
 import libraries from '@/store/Libraries';
 import {setMusicPlaylists} from '@/store/musicPlaylists';
 import {useRoute} from "vue-router";
+import ChristmasTree from "@/components/Seasonal/Christmas/ChristmasTree.vue";
 
 // const {data: libraries, refetch} = useServerClient<ServerLibrary[]>({
 //   path: '/dashboard/libraries',
@@ -111,7 +112,7 @@ const libraryIconName = (type: string) => {
                       }
                   }"
       >
-        <div class="flex flex-col items-start justify-start gap-1 self-stretch px-4">
+        <div class="flex flex-col items-start justify-start gap-1 self-stretch px-4 py-1">
 
           <!--                    Base pages-->
           <template v-for="library in libraries?.filter?.(l => l.type !== 'music')" :key="library.id">
@@ -161,10 +162,12 @@ const libraryIconName = (type: string) => {
 
           <SidebarButtonGroup :show="isMusicRoute"
                               icon="playlist1Add"
+                              v-if="playlists?.length ?? 0 > 0"
                               title="Playlists"
           >
 
             <SidebarButton href="/music/playlists"
+                           v-if="playlists?.length ?? 0 > 0"
                            name="Show all"/>
 
             <template v-for="playlist in playlists ?? []" :key="playlist.id">
@@ -256,6 +259,9 @@ const libraryIconName = (type: string) => {
           <!--                    end Preferences pages-->
         </div>
       </ScrollPanel>
+
+      <ChristmasTree />
+
     </div>
     <button @click="toggleSidebar()"
             :data-sidebar="sidebar"

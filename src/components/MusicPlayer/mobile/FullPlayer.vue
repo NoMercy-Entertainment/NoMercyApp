@@ -22,6 +22,8 @@ import {colorPalette, setColorPalette} from '@/store/ui';
 import {Swiper} from 'swiper';
 import {Swiper as SwiperComponent} from 'swiper/vue';
 import {Song} from '@/types/musicPlayer';
+import ChristmasSnow from "@/components/Seasonal/Christmas/ChristmasSnow.vue";
+import NavBar from "@/Layout/Mobile/components/NavBar.vue";
 
 const {t} = useTranslation();
 
@@ -130,6 +132,7 @@ const onWillDismiss = async () => {
       id="fullPlayer"
   >
     <ion-content ref="content" :fullscreen="true" :style="`--color-focus: ${focusColor}`">
+      <ChristmasSnow />
 
       <div
           class="relative z-0 pt-safe flex h-screen min-h-screen flex-col items-center justify-between gap-2 w-inherit scrollbar-none text-slate-light-12 dark:text-slate-dark-12">
@@ -147,7 +150,7 @@ const onWillDismiss = async () => {
           >
             <template v-for="(item, index) in fullPlaylist ?? []" :key="item.id">
               <swiper-slide class="h-full" :data-index="index" :data-id="item.id">
-                <div class="w-available max-w-2xl h-auto aspect-square shadow mx-6 relative items-center flex">
+                <div class="frosting w-available max-w-2xl h-auto aspect-square shadow mx-6 relative items-center flex">
                 <CoverImage
                     :data="item"
                     :loading="index == currentFullPlaylistItem ? 'eager' : loading"
@@ -173,7 +176,7 @@ const onWillDismiss = async () => {
         <ButtonContainer />
       </div>
 
-      <div class="relative mx-3 -mt-10 mb-3 rounded-2xl pt-10 pb-4 w-available bg-focus/60 shadow" >
+      <div class="frosting relative mx-3 -mt-10 mb-3 rounded-2xl pt-10 pb-4 w-available bg-focus/60 shadow" >
         <div class="absolute top-0 z-10 flex w-full items-center rounded-t-2xl pr-2 pl-4 font-semibold">
           <span>{{ t('Lyrics') }}</span>
           <MusicButton label="expand"

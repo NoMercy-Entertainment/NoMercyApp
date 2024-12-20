@@ -19,7 +19,7 @@ export class SocketClient {
     constructor(baseUrl: string, accessToken: string, endpoint: string = 'socket') {
         this.baseUrl = baseUrl;
         this.accessToken = accessToken;
-				this.endpoint = endpoint;
+		this.endpoint = endpoint;
 
         this.connection = this.connectionBuilder();
     }
@@ -27,7 +27,7 @@ export class SocketClient {
     dispose = async () => {
         if (!this.connection) return;
 
-        await this.connection.stop();
+        // await this.connection.stop();
     }
 
     setup = async () => {
@@ -42,14 +42,19 @@ export class SocketClient {
                 console.log('SignalR Reconnected.');
                 onConnect(this.connection!);
             });
-            this.connection.onclose(() => {
+            this.connection.onclose(async () => {
                 console.log('SignalR Closed.');
                 onDisconnect(this.connection!);
+
+                if (!this.connection) return;
+
+                await this.connection.start();
+                onConnect(this.connection);
+                connect(this.connection);
             });
 
             await this.connection.start();
             onConnect(this.connection);
-
             connect(this.connection);
         } catch (err) {
             // console.log(err);

@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import {type PropType} from 'vue';
 import {useTranslation} from 'i18next-vue';
+import {IonList, IonItem} from '@ionic/vue';
 
 import type {KnownFor} from "@/types/api/base/person";
 import type {Crew} from "@/types/api/shared";
@@ -24,51 +25,73 @@ const {t} = useTranslation();
 
 <template>
   <div v-if="items && items?.length > 0"
-       class="relative flex w-full flex-col items-start justify-start gap-2">
-    <p class="text-left text-xl font-bold text-contrast">
+       class="relative flex w-available flex-col items-start justify-start gap-2 -mx-3">
+    <p class="text-left text-xl font-bold text-contrast ml-4">
       {{ t(title) }}
     </p>
-    <div class="flex w-full flex-col items-start justify-start">
-      <div v-for="item in items"
-           :key="item?.id"
-           class="grid w-available relative gap-4 py-4 border-t-0 border-r-0 border-b border-l-0 border-white/4 overflow-hidden grid-cols-[[year]_5ch_[title]_minmax(auto,max-content)_[buttons]_11ch] group/credit">
-        <p class="w-10 text-sm font-bold text-auto">
-          {{ item.year == 0 ? '—' : item.year }}
-        </p>
-        <div class="relative flex w-fit flex-wrap items-center justify-start gap-2">
-          <RouterLink :to="item.link"
-                class="text-left text-sm font-bold text-contrast hover:underline">
-            {{ item.title ?? item.name }}
-          </RouterLink>
-          <p v-if="(item as KnownFor)?.episode_count"
-             class="text-left text-sm text-contrast/60">
-            ({{ (item as KnownFor)?.episode_count }} {{
-              (item as KnownFor).episode_count! > 2
-                  ? t('episodes')
-                  : t('episode')
-            }})
+
+    <ion-list lines="inset" class="w-available">
+      <ion-item v-for="item in items" :key="item?.id">
+        <div class="grid w-available py-1 items-center relative gap-4 overflow-clip group/credit"
+             :class="{
+               'grid-cols-[[year]_5ch_[title]_minmax(auto,100%)_[buttons]_5ch]': (item as KnownFor)?.hasItem,
+               'grid-cols-[[year]_5ch_[title]_minmax(auto,100%)]': !(item as KnownFor)?.hasItem,
+             }"
+        >
+
+          <p class="w-10 text-base font-bold text-auto self-start">
+
+            {{ item.year == 0 ? '—' : item.year }}
           </p>
-          <div v-if="(item.character ?? item.job)"
-               class="flex w-fit flex-nowrap gap-2">
-            <p class="text-left text-sm text-contrast/60">
-              {{ t('as') }}
-            </p>
-            <p class="flex w-fit flex-wrap gap-1 text-sm text-contrast">
-              <span v-for="(role, index) in (item.character ?? item.job)?.split(' / ')">
-                {{ role.replace('(voice)', '') }}{{ index < (item.character ?? item.job ?? '')?.split(' / ').length - 1 ? ', ' : '' }}
-              </span>
-            </p>
+
+          <div
+              class="relative flex flex-col sm:w-fit flex-wrap items-start justify-between gap-1 w-inherit overflow-clip">
+            <RouterLink :to="item.link"
+                        class="text-left text-base font-semibold text-contrast hover:underline line-clamp-2">
+              {{ item.title ?? item.name }}
+            </RouterLink>
+
+            <div v-if="(item.character ?? item.job)"
+                 class="flex w-auto sm:w-fit flex-nowrap gap-1 font-normal text-left text-xs">
+
+              <p v-if="(item as KnownFor)?.episode_count"
+                 class="text-contrast/60 whitespace-nowrap">
+                ({{ (item as KnownFor)?.episode_count }} {{
+                  (item as KnownFor).episode_count! > 2
+                      ? t('ep')
+                      : t('ep')
+                }})
+              </p>
+
+              <p class="text-contrast/60">
+                {{ t('as') }}
+              </p>
+
+              <p class="flex w-fit flex-wrap gap-1 text-sm text-contrast whitespace-nowrap font-medium">
+                <template v-for="(role, index) in (item.character ?? item.job)?.split(' / ')">
+                  {{
+                    role.replace('(voice)', '')
+                  }}{{ index < (item.character ?? item.job ?? '')?.split(' / ').length - 1 ? ', ' : '' }}
+                </template>
+              </p>
+            </div>
           </div>
-        </div>
-        <div v-if="(item as KnownFor)?.hasItem"
-             class="relative flex h-7 w-max cursor-pointer items-center justify-center gap-1 rounded-2xl p-2 pr-3 bg-auto-6/5 transition-transform duration-300 group-hover/credit:bg-auto-6/9 hover:!bg-auto-6/12">
-          <MoooomIcon icon="playCircle" className="h-4 w-4"/>
-          <RouterLink :to="item.link"
-                class="text-center text-xs font-medium text-theme-11 translate-y-[1px] group-hover/credit:text-theme-400">
-            {{ t('Watch now') }}
+
+          <RouterLink :to="item.link" v-if="(item as KnownFor)?.hasItem"
+                      class="relative flex items-center justify-center gap-2 rounded-lg p-2 aspect-square transition-colors duration-300 group/play hover:bg-auto-5/6">
+            <MoooomIcon icon="play" className="h-5 w-5"/>
           </RouterLink>
         </div>
-      </div>
-    </div>
+      </ion-item>
+    </ion-list>
   </div>
 </template>
+
+<style scoped>
+ion-list {
+  --ion-item-background: transparent;
+}
+ion-item::part(native) {
+  --background: transparent;
+}
+</style>

@@ -1,11 +1,10 @@
 <script setup lang="ts">
-import {computed, type PropType} from 'vue';
+import {type PropType} from 'vue';
 import type {MoooomIcons} from '@Icons/icons';
 
 import MoooomIcon from '@/components/Images/icons/MoooomIcon.vue';
-import {useRoute} from 'vue-router';
 
-const props = defineProps({
+defineProps({
   icon: {
     type: String as PropType<keyof typeof MoooomIcons>,
     required: true,
@@ -32,9 +31,9 @@ const props = defineProps({
 <template>
   <RouterLink
       :to="href"
-      class="flex justify-center items-center flex-grow-0 flex-shrink-0 relative gap-2 pl-1.5 pr-4 py-1 rounded-3xl focus-visible:ring-2 ring-inset focus-visible:ring-white pointer-events-auto"
+      class="flex justify-center items-center flex-grow-0 flex-shrink-0 relative gap-2 pl-1.5 pr-4 py-1 rounded-3xl pointer-events-auto focus:outline-none focus-visible:outline-2 focus-visible:outline-focus focus-visible:outline"
       :class="{
-        'bg-focus/40': active,
+        'bg-focus/80': active,
         'bg-white/10': !active,
       }"
   >

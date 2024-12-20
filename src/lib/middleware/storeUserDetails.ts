@@ -5,9 +5,10 @@ import {refreshToken} from '@/lib/auth/index';
 import {user} from '@/store/user'
 
 export const storeUserDetails = (): Promise<void> => {
+
 	return new Promise((resolve, reject) => {
 
-		if (!isPlatform('capacitor') && user.value.accessToken) {
+		if (user.value?.id) {
 			resolve();
 			return;
 		}
@@ -16,6 +17,7 @@ export const storeUserDetails = (): Promise<void> => {
 			const {isAuthenticated} = useKeycloak();
 
 			if (isAuthenticated.value) {
+				console.log('isAuthenticated');
 
 				const {
 					keycloak,
@@ -54,7 +56,7 @@ export const storeUserDetails = (): Promise<void> => {
 			}
 
 		} catch (error) {
-			location.reload();
+			// location.reload();
 			reject(new Error('Not authenticated'));
 		}
 	});

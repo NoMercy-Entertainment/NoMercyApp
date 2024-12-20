@@ -245,8 +245,11 @@ const handleDeleteFolder = (folder: FolderLibrary) => {
 <template>
   <ion-page>
     <ion-content :fullscreen="true">
-      <DashboardLayout :error="error" :title="`Library: {{title}}`" :params="{title: settings?.title}"
-                       :back="true">
+      <DashboardLayout :error="error" :title="`Library: {{title}}`"
+                       :params="{title: settings?.title}"
+                       :back="true"
+                       v-model="addModalOpen"
+      >
         <template v-slot:cta>
         </template>
 

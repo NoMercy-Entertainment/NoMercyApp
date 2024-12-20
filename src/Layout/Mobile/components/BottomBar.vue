@@ -26,7 +26,7 @@ const searchUrl = computed(() => {
       mode="ios"
       selected-tab="home"
       :class="{
-        ' bg-sand-light-1 dark:bg-slate-dark-3 hide-bg pl-4': menuOpen,
+        'bg-sand-light-1 dark:bg-slate-dark-3 hide-bg pl-4': menuOpen,
         'bg-sand-light-1 dark:bg-slate-dark-3 pl-4': !menuOpen
      }"
   >

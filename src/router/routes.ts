@@ -35,6 +35,7 @@ import DashboardSpecialsEdit from '@/views/Dashboard/Content/Specials/Edit.vue';
 
 import DashboardActivity from '@/views/Dashboard/Devices/Activity';
 import DashboardDevices from '@/views/Dashboard/Devices/Devices';
+import DashboardDeviceShow from '@/views/Dashboard/Devices/Devices/Show.vue';
 import DashboardDlna from '@/views/Dashboard/Devices/Dlna';
 
 import DashboardEncoderProfiles from '@/views/Dashboard/System/EncoderProfiles';
@@ -339,7 +340,7 @@ export const routes: Array<RouteRecordRaw> = [
 			{
 				path: 'devices/:id',
 				name: 'Device',
-				component: DashboardDevices
+				component: DashboardDeviceShow
 			},
 			{
 				path: 'ripper',

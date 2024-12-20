@@ -49,7 +49,7 @@ const config: SetupConfig = {
     1.75,
     2,
   ],
-  accessToken: user.value?.accessToken,
+  accessToken: user.value?.accessToken || localStorage.getItem('access_token'),
   basePath: currentServer.value?.serverBaseUrl,
   forceTvMode: (isPlatform('android') || isPlatform('ios')) && !isPlatform('mobile'),
   disableTouchControls: false,
@@ -107,7 +107,7 @@ onMounted(() => {
   });
 
   player.value?.on('playlistComplete', () => {
-    router.back();
+    player.value?.dispose();
   });
 
   player.value?.on('back', () => {

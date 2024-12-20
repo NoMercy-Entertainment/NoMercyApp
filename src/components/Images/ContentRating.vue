@@ -52,7 +52,7 @@ onMounted(() => {
          class="flex w-auto whitespace-nowrap text-base font-medium text-white">
       <img
           :alt="rating?.iso_3166_1"
-          :src="`https://storage.nomercy.tv/laravel/kijkwijzer/${rating?.iso_3166_1}/${rating?.iso_3166_1}_${rating?.rating}.svg`"
+          :src="`https://pub-a68768bb5b1045f296df9ea56bd53a7f.r2.dev/kijkwijzer/${rating?.iso_3166_1}/${rating?.iso_3166_1}_${rating?.rating}.svg`"
           class="dark:invert"/>
     </div>
   </div>

@@ -101,13 +101,13 @@ const onRightClick = (event: Event, data: LibraryResponse | GenreResponse | Peop
   <ion-page>
     <ion-content :fullscreen="true" class="ion-padding ">
       <div class="fixed top-0 pt-safe w-full bg-slate-light-1 dark:bg-slate-dark-3 z-1199" ></div>
-      <div ref="lib" class="pt-safe-offset-16 flex w-full pr-9 h-available overflow-auto py-0 scroll-container">
+      <div ref="lib" class="pt-safe-offset-10 flex h-auto w-full pr-8 overflow-auto py-0 scroll-container">
         <div
             class="z-0 flex flex-col gap-4 rounded-3xl border-0 w-available scrollbar-none border-auto-3 pt-2"
             :class="{
-           'pb-2' : isNative &&  currentSong,
-           'children:pb-4 sm:children:pb-3' : !isNative &&  currentSong
-        }"
+               'pb-2' : isNative && currentSong,
+               'children:pb-4 sm:children:pb-3' : !isNative && currentSong
+            }"
             :key="router.currentRoute.value.params?.id as string">
 
           <div
