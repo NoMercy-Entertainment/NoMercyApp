@@ -11,6 +11,7 @@ import CoverImage from '@/components/MusicPlayer/components/CoverImage.vue';
 import {isPlatform} from '@ionic/vue';
 import {isArtistRoute} from '@/store/routeState';
 import {breakTitle2} from "@/lib/stringArray";
+import FavoriteImage from "@/components/Images/FavoriteImage.vue";
 
 const props = defineProps({
     data: {
@@ -69,11 +70,18 @@ function processImage(data: Event & { target: HTMLImageElement; }) {
             class="frosting relative mx-auto flex aspect-square -mt-4 h-amin-w-80 flex-col items-center justify-center overflow-clip rounded-xl bg-gradient-to-br min-w-64 bg-theme-7 from-theme-5 via-theme-7 to-theme-11 shadow">
             <CoverImage
                 id="image"
+                v-if="data?.cover"
                 :data="data"
                 :onload="processImage"
                 :size="250"
                 className="aspect-square h-amin-w-80 rounded-xl min-w-80"
                 loading="eager"/>
+          <FavoriteImage
+              v-else-if="data?.id"
+              :id="data.id"
+              :type="data.type"
+              class="aspect-square h-amin-w-80 rounded-xl min-w-80"
+          />
         </div>
 
         <div v-if="data?.name"
@@ -82,7 +90,7 @@ function processImage(data: Event & { target: HTMLImageElement; }) {
                v-html="breakTitle2(data?.name ?? 'Songs you like', 'text-2xl line-clamp-1')">
             </div>
             <p v-else class="w-full text-3xl font-semibold line-clamp-1 leading-[130%] whitespace-pre">
-                {{ data?.name }}
+                {{ data?.name ?? 'Songs you like' }}
             </p>
             <p class="text-left font-semibold uppercase text-white">
                 {{ data?.type?.replace(/s$/u, '') }}
@@ -94,13 +102,10 @@ function processImage(data: Event & { target: HTMLImageElement; }) {
             <p class="text-left font-semibold uppercase text-white">
                 {{ data?.type?.replace(/s$/u, '') }}
             </p>
-            <div v-if="data?.name && data.name.length > 50"
+            <div
                 class="w-full text-5xl font-semibold line-clamp-2 leading-[130%] whitespace-pre"
-               v-html="breakTitle2(data?.name ?? 'Songs you like', 'text-2xl line-clamp-1')">
+               v-html="breakTitle2(data?.name ?? 'Songs you like', 'ml-2 text-2xl line-clamp-1')">
             </div>
-            <p v-else class="w-full text-5xl font-semibold line-clamp-2 leading-[130%] whitespace-pre">
-                {{ data?.name }}
-            </p>
 
             <div class="relative flex items-center justify-start gap-2">
                 <div v-if="isArtistRoute"
@@ -114,7 +119,6 @@ function processImage(data: Event & { target: HTMLImageElement; }) {
                             :size="250"
                             className="h-full w-full"
                             loading="eager"/>
-
                     </div>
                     <RouterLink :to="data?.artists?.[0].link ?? '#'"
                           class="text-sm empty:hidden">

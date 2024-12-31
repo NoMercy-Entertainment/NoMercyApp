@@ -223,7 +223,6 @@ watch(allowedLibraries, value => {
       </Button>
       <Button type="button"
               id="save"
-              variant="default"
               color="theme"
               @click="handleSave">
         {{ $t('Save') }}

@@ -102,7 +102,7 @@ const onScroll = () => {
 
 <template>
   <ion-page>
-    <ion-content :fullscreen="true">
+    <ion-content :fullscreen="true" class="flex">
       <ScrollContainer :autoHide="true" :static="true" @scroll="onScroll">
         <div
             v-if="!route.params.id || (route.params.id && data?.id == route.params.id)"

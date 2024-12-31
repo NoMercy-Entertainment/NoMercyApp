@@ -1,8 +1,6 @@
 import {Country, Language} from '@/types/api/shared';
 import {InfoResponse} from '@/types/api/base/info';
 
-
-
 export interface NameVal {
 	title: string;
 	value: string;
@@ -255,6 +253,7 @@ export interface AvailableVideoCodec {
 	color_spaces:   LabelValue[];
 	profiles:       LabelValue[];
 	tunes:          LabelValue[];
+	presets:        LabelValue[];
 }
 
 export interface AvailableAudioCodec {
@@ -265,7 +264,7 @@ export interface AvailableAudioCodec {
 	requiresStrict: boolean;
 	type:           string;
 	label:          string;
-	available_languages: string[];
+	available_languages: LabelValue[];
 	profiles:       LabelValue[];
 	tunes:          LabelValue[];
 }
@@ -278,7 +277,7 @@ export interface AvailableSubtitleCodec {
 	requiresStrict: boolean;
 	type:           string;
 	label:          string;
-	available_languages: string[];
+	available_languages: LabelValue[];
 	profiles:       LabelValue[];
 	tunes:          LabelValue[];
 }

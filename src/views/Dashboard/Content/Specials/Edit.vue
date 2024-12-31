@@ -101,7 +101,6 @@ const handleSave = () => {
       </Button>
       <Button type="button"
               id="save"
-              variant="default"
               class="ml-auto"
               color="theme"
               @click="handleSave">

@@ -260,8 +260,6 @@ const libraryIconName = (type: string) => {
         </div>
       </ScrollPanel>
 
-      <ChristmasTree />
-
     </div>
     <button @click="toggleSidebar()"
             :data-sidebar="sidebar"

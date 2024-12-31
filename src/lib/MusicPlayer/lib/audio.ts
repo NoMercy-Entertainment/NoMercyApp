@@ -2,6 +2,7 @@ import { Helpers } from './helpers';
 import {type AudioOptions, EQBand, PlayerState} from './types';
 import { isPlatform} from '@ionic/vue';
 import {bands, loadEqualizerSettings} from "@/store/audioPlayer";
+import {isTv} from "@/config/global";
 
 export class PlayerAudio {
     public state: PlayerState = PlayerState.STOPPED;
@@ -457,7 +458,7 @@ export class PlayerAudio {
     }
 
     private _initializeContext(): void {
-        if (localStorage.getItem('supports-audio-context') === 'false') return;
+        if (isTv.value || localStorage.getItem('supports-audio-context') === 'false') return;
 
         if (!this.context) {
             try {

@@ -7,8 +7,8 @@ import {isDarkMode} from '@/config/global';
 import {getImageBrightness, hexLighter} from '@/lib/colorHelper';
 import {currentServer} from '@/store/currentServer';
 import {useAutoThemeColors} from '@/store/preferences';
-import AppLogoSquare from '@/components/Images/icons/AppLogoSquare.vue';
 import {tmdbImageBaseUrl} from '@/config/config';
+import AppLogoSquare from "@/components/Images/icons/AppLogoSquare.vue";
 
 const props = defineProps({
   path: {
@@ -211,7 +211,7 @@ const height = computed(() => {
 
 </script>
 <template>
-  <div class="pointer-events-none bottom-0 mx-auto flex w-full select-none place-self-start h-available"
+  <div class="pointer-events-none bottom-0 mx-auto flex w-full select-none place-self-start h-available overflow-clip"
        :class="{
         'aspect-poster  w-available h-auto': aspect == 'poster',
         'aspect-backdrop  w-available h-auto': aspect == 'backdrop',

@@ -6,7 +6,7 @@ import {shouldMarquee} from '@/lib/utils';
 const props = defineProps({
   text: {
     type: String,
-    required: true,
+    required: false,
   },
   playing: {
     type: Boolean,
@@ -37,6 +37,7 @@ onMounted(() => {
     <div class="flex-shrink-0 flex-grow-0 self-stretch font-semibold line-clamp-1 w-fit whitespace-nowrap leading-none"
          data-marquee="scroller">
       {{ text }}
+      <slot />
     </div>
   </div>
 </template>

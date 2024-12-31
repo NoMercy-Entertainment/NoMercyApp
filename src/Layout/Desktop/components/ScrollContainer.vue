@@ -106,11 +106,7 @@ const mouseLeave = () => {
 </script>
 
 <template>
-    <div class="h-inherit min-h-inherit max-h-available overflow-auto will-change-scroll w-full flex-col scrollbar-none group/scrollContainer scroll-container"
-         :class="{
-             'flex': !static,
-             'flex ': static,
-         }"
+    <div class="flex flex-1 h-inherit min-h-inherit max-h-available overflow-auto will-change-scroll w-full flex-col scrollbar-none group/scrollContainer transform-gpu"
          ref="element"
          @scroll="$emit('scroll', $event as unknown as VueScrollEvent)"
          @mousemove="mouseEnter"
@@ -147,13 +143,7 @@ const mouseLeave = () => {
       <div ref="refBar"
            v-else
            data-scrollbar
-           :style="`position: ${static ? 'fixed' : 'absolute'}`"
-           :class="{
-                 'top-16 mr-1': static,
-                 'top-0 mr-1 bottom-0 h-[96%]': !static,
-                 className,
-             }"
-           class="right-0 bottom-0 mt-2 mb-2 hidden rounded-full border-r-2 border-l-4 border-transparent w-3.5 group-active/scrollContainer:bg-auto-2/9 hover:bg-auto-2/9 sm:flex">
+           class="absolute top-0 mr-1 h-[96%] right-0 bottom-0 mt-2 mb-2 hidden rounded-full border-r-2 border-l-4 border-transparent w-3.5 group-active/scrollContainer:bg-auto-2/9 hover:bg-auto-2/9 sm:flex">
             <span draggable="true"
                   data-scrollbar
                   ref="refHandle"

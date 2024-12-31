@@ -16,15 +16,6 @@ const {data} = useServerClient<Component<Component<HomeDataItem>>[]>({
 
 const selected = ref<HomeDataItem | null | undefined>();
 
-onMounted(() => {
-  setTimeout(() => {
-    const target = document.querySelector(`[data-card="${selected.value?.id}"]`) as HTMLAnchorElement;
-    if (target) {
-      target.focus();
-    }
-  }, 500);
-});
-
 const scrollContainer = ref<HTMLDivElement>();
 const locked = ref(false);
 const timeout = ref<NodeJS.Timeout>();
@@ -42,6 +33,22 @@ onIonViewDidEnter(() => {
   const carousels = data.value?.filter((item) => item.component == 'NMCarousel');
   if (!carousels) return;
   selected.value = carousels.find((item) => item.props.items.length > 0)?.props?.items?.[0]?.props?.data;
+
+  setTimeout(() => {
+    const target = document.querySelector(`[data-card="${selected.value?.id}"]`) as HTMLAnchorElement;
+    if (target) {
+      target.focus();
+    }
+  }, 100);
+});
+
+watch(selected, (value) => {
+  setTimeout(() => {
+    const target = document.querySelector(`[data-card="${value?.id}"]`) as HTMLAnchorElement;
+    if (target) {
+      target.focus();
+    }
+  }, 100);
 });
 
 const handleFocus = (event: FocusEvent, item?: HomeDataItem) => {
@@ -127,7 +134,7 @@ const handleUp = (event: KeyboardEvent) => {
           <template v-if="data">
 
             <TvCarousel2
-                v-for="(render, index) in data?.filter((item) => item.component == 'NMCarousel') ?? []"
+                v-for="(render, index) in data?.filter?.((item) => item.component == 'NMCarousel') ?? []"
                 :key="render.id"
                 :title="render.props.title"
                 :data="render.props.items ?? []"

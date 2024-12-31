@@ -6,7 +6,7 @@ import {disableScreensaver} from "@/store/imageModal";
 
 <template>
   <div v-if="isXmasTime() && !disableScreensaver"
-       class="z-[999999999999] absolute pointer-events-none opacity-4">
+       class="z-[999999999999] absolute pointer-events-none opacity-6">
     <template v-for="i in Array.from(Array(30).keys())" :key="i">
       <div class="snowflake"></div>
     </template>

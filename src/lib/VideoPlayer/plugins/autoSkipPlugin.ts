@@ -29,6 +29,9 @@ export class AutoSkipPlugin extends Plugin {
 		/^Prologue$/ui,
 		/^Epilogue$/ui,
 		/^ED+Cast$/ui,
+
+		/^Avant$/ui,
+		/^Yokoku$/ui,
 	];
 
 

@@ -144,7 +144,7 @@ ion-content::part(scroll) {
   }
 
   html.plt-mobileweb ion-content::part(scroll) {
-    --offset-top: -3rem;
+    --offset-top: -0rem;
   }
 
   html.plt-mobileweb:has(ion-toolbar:first-child:nth-last-child(2) ~ *) ion-content::part(scroll) {

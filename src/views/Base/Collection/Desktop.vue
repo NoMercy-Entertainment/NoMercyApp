@@ -24,6 +24,8 @@ import PersonCarousel from '@/components/Carousel/PersonCarousel.vue';
 import ImageCarousel from '@/components/Carousel/ImageCarousel.vue';
 import ContentRating from '@/components/Images/ContentRating.vue';
 import {useTranslation} from 'i18next-vue';
+import InfoHeaderItem from "@/views/Base/Info/components/InfoHeaderItem.vue";
+import HeaderItem from "@/views/Base/Person/components/HeaderItem.vue";
 
 const {t} = useTranslation();
 const router = useRouter();
@@ -102,32 +104,41 @@ onUnmounted(() => {
                 <div class="self-stretch h-px bg-[#e2f0fd]/4"></div>
                 <div class="flex flex-shrink-0 flex-grow-0 items-start justify-start gap-8 self-stretch pl-4">
                   <div class="relative flex h-14 items-center justify-center gap-2">
-                    <ContentRating :size="8" class="h-full min-!h-[1rem] object-scale-down" :ratings="data?.content_ratings" />
+                      <ContentRating :size="6" v-if="data?.content_ratings"
+                                     class="h-full min-!h-[1rem] object-scale-down rounded-lg overflow-clip children:-m-0.5"
+                                     :ratings="data?.content_ratings"/>
                   </div>
                   <div class="relative flex flex-shrink-0 flex-grow-0 flex-col items-start justify-center gap-1">
                     <p class="flex-shrink-0 flex-grow-0 text-xs font-bold uppercase text-auto-alpha-10">
                       {{ $t('Availability') }}
                     </p>
-                    <p class="flex-shrink-0 flex-grow-0 font-medium">
-                      {{ data?.have_items }} / {{ data?.number_of_items }}
-                    </p>
+
+                    <InfoHeaderItem>
+                      <p class="flex-shrink-0 flex-grow-0 text-sm font-bold text-auto-12 -ml-0.5">
+                        {{ data?.have_items }} / {{ data?.number_of_items }}
+                      </p>
+                    </InfoHeaderItem>
                   </div>
                   <div class="relative flex flex-shrink-0 flex-grow-0 flex-col items-start justify-center gap-1">
                     <p class="flex-shrink-0 flex-grow-0 text-xs font-bold uppercase text-auto-alpha-10">
                       {{ $t('Timespan') }}
                     </p>
-                    <p class="flex-shrink-0 flex-grow-0 font-medium">
-                      {{ collect(data?.collection).min('year') }}
-                      - {{ collect(data?.collection).max('year') }}
-                    </p>
+                    <InfoHeaderItem>
+                      <p class="flex-shrink-0 flex-grow-0 text-sm font-bold text-auto-12 -ml-0.5">
+                        {{ collect(data?.collection).min('year') }}
+                        - {{ collect(data?.collection).max('year') }}
+                      </p>
+                    </InfoHeaderItem>
                   </div>
                   <div class="relative flex flex-shrink-0 flex-grow-0 flex-col items-start justify-center gap-1">
                     <p class="flex-shrink-0 flex-grow-0 text-xs font-bold uppercase text-auto-alpha-10">
                       {{ $t('Total duration') }}
                     </p>
-                    <p class="flex-shrink-0 flex-grow-0 font-medium">
-                      {{ convertToHumanReact(t, data?.total_duration) }}
-                    </p>
+                    <InfoHeaderItem v-if="data?.total_duration">
+                      <p class="flex-shrink-0 flex-grow-0 text-sm font-bold text-auto-12 -ml-0.5">
+                        {{ convertToHumanReact(t, data?.total_duration, true) }}
+                      </p>
+                    </InfoHeaderItem>
                   </div>
                   <div class="relative flex flex-grow flex-col items-start justify-center text-left gap-1">
                     <p class="flex-shrink-0 flex-grow-0 text-xs font-bold uppercase text-auto-alpha-10">

@@ -2,7 +2,7 @@ import {setTitle} from '@/lib/stringArray';
 import type {Song} from '@/types/musicPlayer';
 import {MediaSession} from '@/lib/MediaSession';
 import {Queue} from '@/lib/MusicPlayer/lib/queue';
-import {EQBand, EQSliderValues, EqualizerPreset, PlayerState, TimeState, VolumeState} from '@/lib/MusicPlayer/lib/types';
+import {EQBand, PlayerState, TimeState, VolumeState} from '@/lib/MusicPlayer/lib/types';
 
 export class PlayerCore extends Queue {
 	mediaSession:MediaSession;

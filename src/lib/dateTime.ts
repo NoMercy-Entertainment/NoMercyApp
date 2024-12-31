@@ -16,28 +16,28 @@ export const convertToHumanReact = (t: (arg: string) => string, time: number, sh
 	if(days === 0) {
 		days = '';
 	} else if(days > 0 && days < 2) {
-		days = days + ' ' + t('day');
+		days = days + ' ' + (short ? t('d') : t('day'));
 	} else if(days > 0) {
-		days = days + ' ' + t('days');
+		days = days + ' ' + (short ? t('d') : t('days'));
 	}
 
 	if(hours === 0) {
 		hours = '';
 	} else if(hours > 0 && hours < 2) {
-		hours = hours + ' ' + t('hour');
+		hours = hours + ' ' + (short ? t('hr') : t('hour'));
 	} else if(hours > 0) {
-		hours = hours + ' ' + t('hours');
+		hours = hours + ' ' + (short ? t('hrs') : t('hours'));
 	}
 	if(minutes === 0) {
 		minutes = '';
 	} else if(minutes > 0 && minutes < 2) {
-		minutes = minutes + ' ' + t('minute');
+		minutes = minutes + ' ' + (short ? t('min') : t('minute'));
 	} else if(minutes > 0) {
-		minutes = minutes + ' ' + t('minutes');
+		minutes = minutes + ' ' + (short ? t('min') : t('minutes'));
 	}
 
 	if(seconds > 0 && !short) {
-		seconds = seconds + ' ' + t('seconds');
+		seconds = seconds + ' ' + (short ? t('sec') : t('seconds'));
 	} else {
 		seconds = '';
 	}

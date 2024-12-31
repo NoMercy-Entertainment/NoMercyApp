@@ -49,6 +49,18 @@
   outline-offset: var(--p-select-focus-ring-offset);
 }
 
+.p-checkbox-checked .p-checkbox-box {
+  --p-checkbox-checked-border-color: rgb(var(--color-focus));
+  --p-checkbox-checked-background: rgb(var(--color-focus));
+}
+.p-checkbox-checked:not(.p-disabled):has(.p-checkbox-input:hover) .p-checkbox-box {
+  --p-checkbox-checked-hover-background: rgb(var(--color-focus));
+  --p-checkbox-checked-hover-border-color: rgb(var(--color-focus));
+}
+.p-multiselect:not(.p-disabled).p-focus {
+  --p-multiselect-focus-border-color: rgb(var(--color-focus));
+}
+
 html.scheme-dark {
   .p-inputtext {
     --p-inputtext-color: rgb(251 252 253) !important;

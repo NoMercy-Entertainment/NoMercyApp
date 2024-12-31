@@ -13,7 +13,6 @@ import {showBackdrops} from '@/store/preferences';
 
 import TMDBImage from '@/components/Images/TMDBImage.vue';
 import CardIndicator from '@/components/Cards/CardIndicator.vue';
-import ChristmasSnowDrip from "@/components/Seasonal/Christmas/ChristmasSnowDrip.vue";
 
 const props = defineProps({
     data: {
@@ -64,7 +63,6 @@ const image = computed(() => {
                     .replace('rgb(', '')
                 : ''};
          `">
-<!--        <ChristmasSnowDrip />-->
         <div class="w-full h-full overflow-clip rounded-lg inset-0 absolute">
           <div class="backdropCard-overlay"></div>
 

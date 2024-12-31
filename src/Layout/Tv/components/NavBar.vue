@@ -23,7 +23,7 @@ import PlayerIcon from "@/components/Images/icons/PlayerIcon.vue";
               class="pt-safe transition-all duration-300 !h-[104px]"
   >
     <ion-toolbar mode="md">
-      <div class="flex justify-between items-center w-full relative px-16 h-14">
+      <div class="flex justify-between items-center w-full relative px-14 h-14">
 
         <button
             v-if="currentSong"
@@ -83,7 +83,7 @@ ion-header {
 
 ion-toolbar {
   --min-height: 80px;
-  --padding-top: 2rem;
+  --padding-top: 1.5rem;
   --padding-bottom: 16px;
   --background: transparent !important;
 }

@@ -4,11 +4,9 @@ import path from 'path';
 import {defineConfig} from 'vite';
 import {VitePWA} from 'vite-plugin-pwa';
 import {ViteCspPlugin} from 'vite-plugin-csp';
-// import legacy from '@vitejs/plugin-legacy';
 import { ViteMinifyPlugin } from 'vite-plugin-minify'
 import vue from '@vitejs/plugin-vue';
 import * as fs from 'node:fs';
-import gzipPlugin from "rollup-plugin-gzip";
 
 export default defineConfig({
 	plugins: [
@@ -269,7 +267,7 @@ export default defineConfig({
 		// gzipPlugin(),
 	],
 	server: {
-		port: 5501,
+		port: 5502,
 		host: true,
 	},
 	preview: {

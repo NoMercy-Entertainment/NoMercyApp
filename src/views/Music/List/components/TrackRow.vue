@@ -17,6 +17,7 @@ import MediaLikeButton from '@/components/Buttons/MediaLikeButton.vue';
 import DropdownMenu from '@/Layout/Desktop/components/Menus/DropdownMenu.vue';
 import BannerButton from '@/components/Buttons/BannerButton.vue';
 import PlayerIcon from "@/components/Images/icons/PlayerIcon.vue";
+import Marquee from "@/components/Marquee.vue";
 
 const props = defineProps({
   data: {
@@ -102,6 +103,8 @@ const handleClick = () => {
                 <span :data-size="musicSize"
                       class="inline-flex h-6 w-available gap-1 overflow-hidden whitespace-nowrap text-slate-light-3 dark:slate-dark-3 line-clamp-1 text-2xs hover:animate-pause leading-6">
 
+                  <Marquee >
+
                     <TrackLinks v-if="data && !isArtistRoute"
                                 :id="data.id"
                                 :data="data.artist_track"
@@ -116,13 +119,15 @@ const handleClick = () => {
                                 data-target="album"
                                 type="albums"
                     />
+
+                  </Marquee>
                 </span>
             </span>
         </span>
 
     <template v-for="item in data.album_track" :key="item.id">
       <span
-          class="hidden max-w-sm items-center overflow-clip pr-2 line-clamp-2 h-inherit w-inherit sm:flex"
+          class="hidden items-center overflow-clip pr-2 line-clamp-2 h-inherit w-inherit sm:flex"
           :class="{
               'opacity-0': !isAlbumRoute,
               'opacity-100': isAlbumRoute
@@ -135,7 +140,7 @@ const handleClick = () => {
                  data-target="album"
                  class="flex items-center gap-1 whitespace-nowrap text-xs line-clamp-1 hover:underline focus:underline dark:font-medium text-slate-light-12/12 dark:text-slate-dark-12">
                <span class="flex whitespace-nowrap">
-                   {{ item.name }}
+                  <Marquee :text="item.name" />
                </span>
            </RouterLink>
        </span>

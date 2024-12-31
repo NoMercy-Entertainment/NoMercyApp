@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import {onMounted, ref, watch} from 'vue';
-import {IonPage, IonContent} from '@ionic/vue';
+import {IonPage, IonContent, onIonViewDidEnter} from '@ionic/vue';
 
 // import type {HomeDataItem} from '@/types/api/music';
 // import type {Component} from '@/lib/routerHelper';
@@ -38,14 +38,14 @@ const selected = ref<ContinueWatching | HomeItem | null>();
 watch(continueWatching, (value) => {
   if (!value) return;
   selected.value = value?.filter(item => item.id)?.at(0);
-
-  const target = document.querySelector(`[data-card="${selected.value?.id}"]`) as HTMLAnchorElement;
-  if (target) {
-    target.focus();
-  }
 });
 
 onMounted(() => {
+  selected.value = continueWatching.value?.filter(item => item.id)?.at(0);
+});
+
+
+onIonViewDidEnter(() => {
   selected.value = continueWatching.value?.filter(item => item.id)?.at(0);
 
   setTimeout(() => {
@@ -53,7 +53,16 @@ onMounted(() => {
     if (target) {
       target.focus();
     }
-  }, 500);
+  }, 100);
+});
+
+watch(selected, (value) => {
+  setTimeout(() => {
+    const target = document.querySelector(`[data-card="${value?.id}"]`) as HTMLAnchorElement;
+    if (target) {
+      target.focus();
+    }
+  }, 100);
 });
 
 const scrollContainer = ref<HTMLDivElement>();

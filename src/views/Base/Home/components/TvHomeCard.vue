@@ -58,7 +58,7 @@ defineProps({
     <div
         class="flex justify-center items-center flex-grow-0 flex-shrink-0 relative">
 
-      <RouterLink :to="carousel?.props.data.link" id="watch_now" ref="play"
+      <RouterLink v-if="carousel.props?.data?.link" :to="carousel.props?.data?.link" id="watch_now" ref="play"
                   tabindex="0"
                   class="text-black flex-grow-0 flex-shrink-0 px-4 py-2 rounded-3xl bg-slate-light-4 focus-visible:ring-[3px] ring-inset focus-visible:ring-focus">
                 {{ $t('Watch Now') }}

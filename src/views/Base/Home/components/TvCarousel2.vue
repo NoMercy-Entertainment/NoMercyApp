@@ -40,7 +40,7 @@ defineProps({
     </h3>
     <template v-for="(item, index) in data.slice(0,7)" :key="item.id">
       <RouterLink :to="`${item.link}${suffix}`" :data-card="item.id" :data-index="index"
-                  class="row-start-2 w-full h-auto rounded-xl bg-cover aspect-poster focus-visible:scale-105 focus-visible:outline outline-[2.2px] outline-white transition-transform duration-200 scroll-mb-20 scroll-mt-12 snap-center snap-mandatory"
+                  class="row-start-2 w-full h-auto rounded-xl bg-cover aspect-poster focus:scale-105 focus:outline outline-[2.2px] outline-white transition-transform duration-200 scroll-mb-20 scroll-mt-12 snap-center snap-mandatory"
                   @focus="handleFocus($event, item)"
                   @keydown="handleDown($event)"
                   @keyup="handleUp($event)"

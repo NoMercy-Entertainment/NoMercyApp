@@ -65,7 +65,7 @@ onIonViewWillLeave(() => {
 
 <template>
   <div data-scroll v-if="!isMobile"
-       class="card scheme-dark relative m-4 mt-0 sm:mt-4 flex flex-shrink-0 flex-grow-0 items-end justify-start gap-4 self-stretch rounded-2xl bg-black/50 p-4 text-auto-12 h-[65vh] sm:flex-col">
+       class="card scheme-dark relative m-4 mt-0 sm:mt-4 flex flex-shrink-0 flex-grow-0 items-end justify-start gap-4 self-stretch rounded-2xl bg-black/50 p-4 text-auto-12 h-[65vh] sm:flex-col overflow-clip">
 
     <TMDBImage
         v-if="data && !isMobile"
@@ -93,7 +93,7 @@ onIonViewWillLeave(() => {
     </TMDBImage>
 
     <div
-        class="pointer-events-none absolute inset-0 z-0 mt-auto h-4/5 bg-gradient-to-t from-auto-1 via-auto-1/60"></div>
+        class="pointer-events-none absolute inset-0 z-0 mt-auto h-4/5 bg-gradient-to-t from-auto-1 via-auto-1/60 bottom-0"></div>
 
     <div class="flex w-full flex-grow flex-col items-end justify-end gap-2">
       <div class="flex flex-shrink-0 flex-grow-0 items-start justify-start self-stretch rounded-3xl p-4">

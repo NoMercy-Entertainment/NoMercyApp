@@ -34,6 +34,7 @@ import DeviceOverlay from './components/Overlays/DeviceOverlay.vue';
 import MusicPlayerDesktop from '@/components/MusicPlayer/MusicPlayerDesktop.vue';
 import EqualizerOverlay from "@/Layout/Desktop/components/Overlays/EqualizerOverlay.vue";
 import ChristmasSnow from "@/components/Seasonal/Christmas/ChristmasSnow.vue";
+import ImageKnittedOverlay from "@/components/Seasonal/Christmas/ImageKnittedOverlay.vue";
 
 const backgroundUrl = computed(() => {
   return `${currentServer.value?.serverBaseUrl}/images/original${background.value}`;
@@ -45,7 +46,7 @@ const route = useRoute();
 
 <template>
   <ion-page>
-    <div class="contents tv:hidden text-auto-12"
+    <div class="contents text-auto-12"
          :style="focusColor ? `--color-focus: ${focusColor}` : ''"
     >
       <Navbar/>
@@ -63,7 +64,6 @@ const route = useRoute();
                   background-image: ${backgroundUrl && !backgroundUrl.includes('null') ? `url(${backgroundUrl})` : ''};
                `"
           >
-            <!--									<Shadow/>-->
             <div id="overlay" class="pointer-events-none absolute inset-0 hidden dark:flex"
                  :style="`
                     background: ${background ? 'rgba(0, 0, 0, 0.7)' : 'rgba(0, 0, 0, 0)'};

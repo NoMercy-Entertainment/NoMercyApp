@@ -24,6 +24,7 @@ import Collapsible from "@/views/Base/Person/components/Collapsible.vue";
 import MobileInfoCard from "@/views/Base/Info/components/MobileInfoCard.vue";
 import InfoHeaderItem from "@/views/Base/Info/components/InfoHeaderItem.vue";
 import {t} from "i18next";
+import {convertToHumanReact} from "../../../lib/dateTime";
 
 const route = useRoute();
 const enabled = ref(false);
@@ -212,7 +213,9 @@ const processTrailer = (value: InfoResponse | undefined) => {
                         :data="`${ data?.have_items }/${ data?.number_of_items }`"/>
 
             <HeaderItem v-if="data?.duration" title="">
-                <span class="whitespace-nowrap">{{ data?.duration?.toFixed(0) }} {{ $t('min') }}</span>
+                <span class="whitespace-nowrap">
+                  {{ convertToHumanReact(t, data?.duration, true) }}
+                </span>
             </HeaderItem>
 
             <HeaderItem v-if="data?.voteAverage" title="">

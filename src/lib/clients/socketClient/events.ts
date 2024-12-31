@@ -79,7 +79,7 @@ const onNotify = (data: any) => {
 };
 
 const onUpdateContent = (data: any) => {
-    queryClient.invalidateQueries(data.queryKey);
+    queryClient.invalidateQueries(data);
 
     // const currentSong = useStore(store, state => state.music.currentSong);
     // if (data?.id === currentSong.value?.id) {

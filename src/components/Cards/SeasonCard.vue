@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import {computed, PropType} from 'vue';
+import {PropType} from 'vue';
 
 import type {Episode} from '@/types/api/base/info';
 
@@ -25,7 +25,7 @@ const props = defineProps({
 
 <template>
   <RouterLink v-if="data?.id && data?.available"
-        :class="`border-0 border-[rgb(var(--color-focus))] flex flex-col h-auto items-center group/season focus-shift focus-outline transition-all duration-300 overflow-clip relative !rounded-lg select-none shadow-[0px_0px_0_1px_rgb(var(--color-focus,var(--color-theme-6))/70%)] w-full z-0 bg-auto-1/12  text-slate-lightA-12/70  dark:text-slate-darkA-12/80 ${data?.available ? 'cursor-pointer' : 'cursor-not-allowed'}`"
+        :class="`frosting border-0 border-[rgb(var(--color-focus))] flex flex-col h-auto items-center group/season focus-shift focus-outline transition-all duration-300 overflow-clip relative !rounded-lg select-none shadow-[0px_0px_0_1px_rgb(var(--color-focus,var(--color-theme-6))/70%)] w-full z-0 bg-auto-1/12  text-slate-lightA-12/70  dark:text-slate-darkA-12/80 ${data?.available ? 'cursor-pointer' : 'cursor-not-allowed'}`"
         :id="data?.id"
         :onfocus="scrollIntoView()"
         :style="`--color-focus: ${pickPaletteColor(props.data?.color_palette?.still)

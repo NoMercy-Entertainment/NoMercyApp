@@ -21,9 +21,9 @@ const connected = () => {
 	}
 };
 
-const disconnected = () => {
+const disconnected = (err?: Event|void) => {
 	dashboardSocketIsConnected.value = false;
-	console.log('Disconnected from Dashboard SignalR');
+	console.log('Disconnected from Dashboard SignalR', err);
 	document.dispatchEvent(new Event('dashboardHub-disconnected'));
 };
 
@@ -61,10 +61,11 @@ export const stopDashboardSocket = async () => {
 
 		return socket.value?.connection?.stop()
 			.then(disconnected)
-			.catch();
+			.catch(disconnected);
 
 	} catch (err) {
-		//
+		console.error('Error stopping Dashboard SignalR:', err);
+		disconnected();
 	}
 }
 

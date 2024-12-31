@@ -33,14 +33,14 @@ const {t} = useTranslation();
   <nav id="navbar"
        :class="`relative flex w-available h-16 justify-start items-center bg-slate-light-2 dark:bg-slate-dark-1 self-stretch z-10 sm:z-10 sm:!h-16 ${isPlatform('android') ? 'mt-0' : ''}`">
 
-    <button
-        id="toggleSidebar"
-        v-if="sidebar != 'hidden'"
-        @click="toggleSidebar"
-        class="ml-2 flex h-12 w-12 items-center justify-center rounded-md transition-transform duration-300 border-1 border-auto-alpha-5 text-auto-alpha-11 sm:hidden">
-      <MoooomIcon v-if="sidebar == 'open'" icon="cross" class="w-6"/>
-      <MoooomIcon v-else-if="sidebar == 'closed'" icon="menuBurger" class="w-6"/>
-    </button>
+<!--    <button-->
+<!--        id="toggleSidebar"-->
+<!--        v-if="sidebar != 'hidden'"-->
+<!--        @click="toggleSidebar"-->
+<!--        class="ml-2 flex h-12 w-12 items-center justify-center rounded-md transition-transform duration-300 border-1 border-auto-alpha-5 text-auto-alpha-11 sm:hidden">-->
+<!--      <MoooomIcon v-if="sidebar == 'open'" icon="cross" class="w-6"/>-->
+<!--      <MoooomIcon v-else-if="sidebar == 'closed'" icon="menuBurger" class="w-6"/>-->
+<!--    </button>-->
 
     <div class="flex h-16 flex-1 flex-shrink-0 items-center justify-between self-stretch pr-6">
       <div class="flex flex-shrink-0 flex-grow items-center justify-start gap-12 overflow-clip h-full">

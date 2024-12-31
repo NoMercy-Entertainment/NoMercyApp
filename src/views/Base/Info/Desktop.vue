@@ -32,6 +32,9 @@ import ContentRating from '@/components/Images/ContentRating.vue';
 import InfoItem from '@/views/Base/Info/components/InfoItem.vue';
 import Trailer from '@/views/Base/Info/components/Trailer.vue';
 import ScrollContainer from '@/Layout/Desktop/components/ScrollContainer.vue';
+import {convertToHumanReact} from "../../../lib/dateTime";
+import {useTranslation} from "i18next-vue";
+import HeaderItem from "@/views/Base/Person/components/HeaderItem.vue";
 
 const route = useRoute();
 
@@ -51,6 +54,7 @@ const trailerState = ref<true | false | 'loading'>('loading');
 const trailerIndex = ref(-1);
 const endTime = ref<string | 0 | null | undefined>(null);
 const interval = ref<NodeJS.Timeout | null>(null);
+const {t} = useTranslation();
 
 const processTrailer = (value: InfoResponse | undefined) => {
 
@@ -304,7 +308,7 @@ const menuItems: IMenuItem[] = [
             <p>{{ error }}</p>
           </div>
           <div
-              class="flex flex-col gap-4 overflow-auto tv:overflow-clip overflow-x-clip rounded-3xl border-0 pb-2 w-available h-available scrollbar-none border-auto-3">
+              class="flex flex-col gap-4 overflow-clip rounded-3xl border-0 pb-2 w-available scrollbar-none border-auto-3">
             <FloatingBackButton/>
 
             <div class="relative mx-auto w-full gap-4 rounded-lg p-4 max-w-screen-5xl">
@@ -312,7 +316,7 @@ const menuItems: IMenuItem[] = [
               <div class="z-0 flex w-full flex-grow flex-col items-end justify-start gap-2 pt-[290px]">
 
                 <div
-                    class="children:absolute relative right-1 bottom-0 col-start-1 col-end-2 flex h-auto w-auto select-none justify-end pb-2 max-w-[20vw] w-available translate-x-[4px] sm:h-40 lg:max-w-[30vw]">
+                    class="children:absolute relative right-1 bottom-0 col-start-1 col-end-2 flex h-auto w-auto select-none justify-end pb-2 max-w-[20vw] w-available translate-x-[4px] sm:h-40 lg:max-w-[30vw] aspect-[32/9]">
 
                   <TMDBImage
                       v-if="data?.logo"
@@ -322,7 +326,7 @@ const menuItems: IMenuItem[] = [
                       :size="500"
                       :shadow="pickPaletteColor(data?.color_palette?.poster)"
                       :title="data?.title"
-                      class="pointer-events-none relative mx-auto flex h-auto w-auto select-none place-self-start overflow-hidden p-4 h-available"
+                      class="pointer-events-none relative mx-auto flex h-full w-auto select-none place-self-start overflow-hidden p-4"
                       className="relative bottom-0 h-auto w-auto p-4"
                       type="logo"/>
                 </div>
@@ -447,7 +451,7 @@ const menuItems: IMenuItem[] = [
                       </InfoHeaderItem>
                       <InfoHeaderItem v-if="data?.duration">
                         <p class="flex-shrink-0 flex-grow-0 text-sm font-bold uppercase text-auto-12">
-                          {{ data?.duration?.toFixed(0) }} {{ $t('min') }}
+                          {{ convertToHumanReact(t, data?.duration, true) }}
                         </p>
                       </InfoHeaderItem>
                       <InfoHeaderItem v-if="data?.voteAverage">

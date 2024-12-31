@@ -19,7 +19,7 @@ import {Nullable} from 'vitest';
 
 const route = useRoute();
 
-const {data: encoderProfiles, error, refetch} = useServerClient<EncoderProfile[]>({
+const {data: encoderProfiles, error} = useServerClient<EncoderProfile[]>({
   path: 'dashboard/encoderProfiles',
   queryKey: ['dashboard', 'encoderProfiles'],
 });
@@ -55,73 +55,9 @@ const handleCancel = () => {
 const handleSave = () => {
 };
 
-const submitHandler = (e: any) => {
-  console.log(e);
-};
-
-const classes = {
-  outer: ' ',
-  inner: 'focus-within:!shadow-none',
-  input: 'relative w-full h-10 !text-auto-12 cursor-default rounded-md !bg-transparent py-1.5 pl-3 pr-10 text-contrast shadow-sm ring-[1.5px] ring-inset ring-auto-3 focus:outline-none focus:ring-2 focus:ring-focus data-[formkit-state=\'open\']:ring-2 data-[formkit-state=\'open\']:ring-focus sm:text-sm sm:leading-6 data-[formkit-state=\'disabled\']:grayscale *:data-[formkit-state=\'disabled\']:hidden border-none outline-none',
-  option: 'bg-auto-1 !text-auto-12 hover:!bg-theme-7 py-2',
-  help: '!text-auto-alpha-11',
-};
-
-// const schema = computed(() => {
-//   return [
-//     {
-//       $formkit: 'text',
-//       name: 'name',
-//       label: 'Name',
-//       classes: classes,
-//       value: settings.value?.name,
-//     },
-//     {
-//       $formkit: 'select',
-//       name: 'media_type',
-//       label: 'Media type',
-//       classes: classes,
-//       value: mediaType.value,
-//       options: [
-//         'audio', 'video', 'image'
-//       ],
-//     },
-//     {
-//       $formkit: 'select',
-//       name: 'container',
-//       label: 'Video container',
-//       classes: classes,
-//       value: videoContainers.value?.find(encoderContainer =>
-//           encoderContainer.type === mediaType.value),
-//       options: videoContainers.value?.filter(encoderContainer =>
-//           encoderContainer.type === formContext.value?.value.media_type) ?? [],
-//     },
-//     {
-//       $formkit: 'select',
-//       name: 'video_codec',
-//       label: 'Video codec',
-//       classes: classes,
-//       value: schema.value?.find(schema => schema.name === 'container')?.value?.available_video_codecs?.at(0),
-//       options: schema.value?.find(schema => schema.name === 'container')?.value?.available_video_codecs ?? [],
-//     },
-//     {
-//       $formkit: 'select',
-//       name: 'audio_codec',
-//       label: 'Audio codec',
-//       classes: classes,
-//       value: schema.value?.find(schema => schema.name === 'container')?.value?.available_audio_codecs?.at(0),
-//       options: schema.value?.find(schema => schema.name === 'container')?.value?.available_audio_codecs ?? [],
-//     },
-//     {
-//       $formkit: 'select',
-//       name: 'subtitle_codec',
-//       label: 'Subtitle codec',
-//       classes: classes,
-//       value: schema.value?.find(schema => schema.name === 'container')?.value?.available_subtitle_codecs?.at(0),
-//       options: schema.value?.find(schema => schema.name === 'container')?.value?.available_subtitle_codecs ?? [],
-//     },
-//   ];
-// });
+// const submitHandler = (e: any) => {
+//   console.log(e);
+// };
 
 const mediaTypes = ref([
   {label: 'audio', value: 'audio'},
@@ -129,36 +65,37 @@ const mediaTypes = ref([
   {label: 'image', value: 'image'},
 ]);
 const name = ref(settings.value?.name);
-const mediaType = ref<{ label: string, value: string }>();
-const container = ref<Container>();
+const mediaType = ref<{ label: string, value: string } | undefined>(mediaTypes.value?.find(type => type.value === settings.value?.type));
+const container = ref<Container | undefined>(videoContainers.value?.find(ec => ec.type == settings.value?.type));
 
-const videoCodecs = ref<AvailableVideoCodec[][]>([[]]);
-const resolutions = ref<LabelValue[][]>([[]]);
-const colorSpaces = ref<LabelValue[][]>([[]]);
-const crfs = ref<Nullable<number>[][]>([[]]);
-const widths = ref<Nullable<number>[][]>([[]]);
-const tunes = ref<LabelValue[][]>([[]]);
-const profiles = ref<LabelValue[][]>([[]]);
-const playlistNames = ref<Nullable<string>[][]>([[]]);
-const segmentNames = ref<Nullable<string>[][]>([[]]);
-const bitrates = ref<Nullable<number>[][]>([[]]);
+const videoCodecs = ref<AvailableVideoCodec[]>([]);
+const resolutions = ref<LabelValue[]>([]);
+const colorSpaces = ref<LabelValue[]>([]);
+const crfs = ref<Nullable<number>[]>([]);
+const widths = ref<Nullable<number>[]>([]);
+const tunes = ref<LabelValue[]>([]);
+const profiles = ref<LabelValue[]>([]);
+const presets = ref<LabelValue[]>([]);
+const playlistNames = ref<Nullable<string>[]>([]);
+const segmentNames = ref<Nullable<string>[]>([]);
+const bitrates = ref<Nullable<number>[]>([]);
 
-const audioCodecs = ref<AvailableAudioCodec[][]>([[]]);
-const allowedAudioLanguages = ref<LabelValue[][]>([[]]);
+const audioCodecs = ref<AvailableAudioCodec[]>([]);
+const allowedAudioLanguages = ref<LabelValue[][]>([]);
 
-const subtitleCodecs = ref<AvailableSubtitleCodec[][]>([[]]);
-const allowedSubtitleLanguages = ref<LabelValue[][]>([[]]);
+const subtitleCodecs = ref<AvailableSubtitleCodec[]>([]);
+const allowedSubtitleLanguages = ref<LabelValue[][]>([]);
 
 const addVideoProfile = () => {
-  videoCodecs.value.push([]);
+  videoCodecs.value.push(<AvailableVideoCodec>{});
 };
 
 const addAudioProfile = () => {
-  audioCodecs.value.push([]);
+  audioCodecs.value.push(<AvailableAudioCodec>{});
 };
 
 const addSubtitleProfile = () => {
-  subtitleCodecs.value.push([]);
+  subtitleCodecs.value.push(<AvailableSubtitleCodec>{});
 };
 
 const deleteVideoProfile = (index: number) => {
@@ -174,89 +111,88 @@ const deleteSubtitleProfile = (index: number) => {
 };
 
 onMounted(() => {
-  if (!settings.value) return;
   mediaType.value = mediaTypes.value.find(type => type.value === settings.value?.type);
-  if (!videoContainers.value) return;
-  container.value = videoContainers.value.find(ec => ec.type == settings.value!.type);
+  container.value = videoContainers.value?.find(ec => ec.type == settings.value?.type);
 });
 
 watch(settings, (value) => {
   if (!value) return;
   name.value = value.name;
-  mediaType.value = mediaTypes.value.find(type => type.value === value?.type);
-  if (!videoContainers.value) return;
-  container.value = videoContainers.value!.find(ec => ec.type == value!.type);
 });
-
 
 watch(videoContainers, (value) => {
   if (!value) return;
-  container.value = value.find(ec => ec.type == settings.value!.type);
+  container.value = value.find(ec => ec.value == settings.value!.container);
 });
 
-watch(container, (value) => {
+const setValues = (value?: Container) => {
   if (!value) return;
-  console.log('container', value);
+  console.raw('container', value, mediaTypes.value);
+
+  mediaType.value = mediaTypes.value.find(type => type.value === value.type);
+
   // @ts-ignore
   videoCodecs.value = settings.value!.videoProfiles
-      ?.map(vp => [value.available_video_codecs.find(codec => codec.value == vp.codec)]) ?? [];
+      ?.map(vp => value.available_video_codecs.find(codec => codec.value == vp.codec)) ?? [];
 
   // @ts-ignore
   audioCodecs.value = settings.value!.audioProfiles
-      ?.map(ap => [value.available_audio_codecs.find(codec => codec.value == ap.codec)]) ?? [];
+      ?.map(ap => value.available_audio_codecs.find(codec => codec.value == ap.codec)) ?? [];
 
   // @ts-ignore
   subtitleCodecs.value = settings.value!.subtitleProfiles
-      ?.map(sp => [value.available_subtitle_codecs.find(codec => codec.value == sp.codec)]) ?? [];
+      ?.map(sp => value.available_subtitle_codecs.find(codec => codec.value == sp.codec)) ?? [];
 
   // @ts-ignore
   resolutions.value = settings.value!.videoProfiles
-      ?.map(vp => [value.available_resolutions.find(codec => codec.width == vp.width)]) ?? [];
+      ?.map(vp => value.available_resolutions.find(res => res.width == vp.width)) ?? [];
 
   // @ts-ignore
-  colorSpaces.value = settings.value!.videoProfiles
-      ?.map(vp => [value.available_video_codecs.find(codec => codec.value == vp.codec)?.color_spaces
-          ?.find(c => settings.value?.videoProfiles?.map(vp => vp.colorSpace)?.includes(c.value) ?? true)]) ?? [];
+  colorSpaces.value = settings.value.videoProfiles
+      .map(p => videoCodecs.value.find(vc => vc.value == p.codec)?.color_spaces.find(cs2 => cs2.value == p.colorSpace));
 
   // @ts-ignore
   tunes.value = settings.value!.videoProfiles
-      ?.map(vp => [value.available_video_codecs.find(codec => codec.value == vp.codec)?.tunes
-          ?.find(t => settings.value?.videoProfiles?.map(vp => vp.tune)?.includes(t.value) ?? true)]) ?? [];
+      .map(p => videoCodecs.value.find(vc => vc.value == p.codec)?.tunes.find(t2 => t2.value == p.tune));
 
   // @ts-ignore
   profiles.value = settings.value!.videoProfiles
-      ?.map(vp => [value.available_video_codecs.find(codec => codec.value == vp.codec)?.profiles
-          ?.find(p => settings.value?.videoProfiles?.map(vp => vp.preset)?.includes(p.value) ?? true)]) ?? [];
+      .map(p => videoCodecs.value.find(vc => vc.value == p.codec)?.profiles.find(p2 => p2.value == p.profile));
+
+  presets.value = settings.value!.videoProfiles
+      .map(p => videoCodecs.value.find(vc => vc.value == p.codec)?.presets.find(p2 => p2.value == p.preset));
+
+  console.log('presets', presets.value);
 
   // @ts-ignore
-  allowedSubtitleLanguages.value = settings.value!.subtitleProfiles
-      ?.map(sp => sp.allowedLanguages
-          ?.map(lang => value.available_subtitle_codecs.find(codec => codec.value == sp.codec)?.available_languages
-              // @ts-ignore
-              ?.find(l => l.value == lang)) ?? []) ?? [];
+  allowedSubtitleLanguages.value = audioCodecs.value!.map(ac => ac?.available_languages ?? []);
 
   // @ts-ignore
-  allowedAudioLanguages.value = settings.value!.audioProfiles
-      ?.map(ap => ap.allowedLanguages
-          ?.map(lang => value.available_audio_codecs.find(codec => codec.value == ap.codec)?.available_languages
-              // @ts-ignore
-              ?.find(l => l.value == lang)) ?? []) ?? [];
+  allowedAudioLanguages.value = subtitleCodecs.value!.map(sc => sc?.available_languages ?? []);
 
   crfs.value = settings.value!.videoProfiles
-      ?.map(vp => [vp.crf]) ?? [];
+      ?.map(vp => vp.crf) ?? [];
 
   bitrates.value = settings.value!.videoProfiles
-      ?.map(vp => [vp.bitrate]) ?? [];
+      ?.map(vp => vp.bitrate) ?? [];
 
   playlistNames.value = settings.value!.videoProfiles
-      ?.map(vp => [vp.playlistName]) ?? [];
+      ?.map(vp => vp.playlistName) ?? [];
 
   segmentNames.value = settings.value!.videoProfiles
-      ?.map(vp => [vp.segmentName]) ?? [];
+      ?.map(vp => vp.segmentName) ?? [];
 
   widths.value = settings.value!.videoProfiles
-      ?.map(vp => [vp.width]) ?? [];
+      ?.map(vp => vp.width) ?? [];
 
+};
+
+watch(container, setValues);
+
+onMounted(() => {
+  setValues(container.value);
+
+  container.value = videoContainers.value?.find(ec => ec.value == settings.value!.container);
 });
 
 watch(videoCodecs, value => {
@@ -264,22 +200,6 @@ watch(videoCodecs, value => {
   console.log('videoCodecs', value);
 });
 
-// watch(() => videoCodecs[0], (value) => {
-//   if (!value) return;
-//   console.log('videoCodec',value);
-
-
-// colorSpaces.value = value.map(vp => vp.map(codec => codec?.color_spaces
-//     ?.find(c => settings.value?.videoProfiles?.map(vp => vp.colorSpace)?.includes(c.value) ?? true)) ?? []);
-
-// crfs.value = value.map(vp => vp.map(codec => codec.crfs ?? []));
-// widths.value = value.map(vp => vp.map(codec => codec.widths ?? []));
-// tunes.value = value.map(vp => vp.map(codec => codec.tunes ?? []));
-// playlistNames.value = value.map(vp => vp.map(codec => codec.playlist_names ?? []));
-// segmentNames.value = value.map(vp => vp.map(codec => codec.segment_names ?? []));
-// });
-
-const value = ref('');
 </script>
 
 <template>
@@ -292,16 +212,16 @@ const value = ref('');
       </span>
     <div class="grid w-full grid-cols-12 gap-4" v-if="settings">
       <FloatLabel variant="on" class="col-span-3">
-        <InputText v-model="name" id="name" name="Name" class="col-span-3"/>
+        <InputText v-model="name" id="name" name="Name" class="w-full"/>
         <label for="name">Name</label>
       </FloatLabel>
       <FloatLabel variant="on" class="col-span-2">
-        <Select v-model="mediaType" id="type" class="col-span-2"
+        <Select v-model="mediaType" id="type" class="w-full"
                 :options="mediaTypes" optionLabel="label"/>
         <label for="type">Media type</label>
       </FloatLabel>
       <FloatLabel variant="on" class="col-span-2">
-        <Select v-model="container" id="container" class="col-span-2"
+        <Select v-model="container" id="container" class="w-full"
                 :options="videoContainers?.filter(vc => vc.type == mediaType?.value) ?? []"
                 optionLabel="label"/>
         <label for="container">Container</label>
@@ -327,52 +247,53 @@ const value = ref('');
             </FloatLabel>
             <FloatLabel variant="on" class="col-span-2">
               <Select :id="`resolutions_${index}`" label="Resolution" class="col-span-2"
-                      v-model="resolutions[index]" optionLabel="label"
+                      v-model="resolutions[index]" optionLabel="name"
                       :options="container?.available_resolutions ?? []"/>
+              <label :for="`resolutions_${index}`">Resolution</label>
             </FloatLabel>
             <FloatLabel variant="on" class="col-span-2">
               <Select :id="`colorSpaces_${index}`" class="col-span-2"
                       v-model="colorSpaces[index]" optionLabel="label"
-                      :options="profile?.[index]?.color_spaces ?? []"/>
+                      :options="profile?.color_spaces ?? []"/>
               <label :for="`colorSpaces_${index}`">Colorspace</label>
             </FloatLabel>
             <FloatLabel variant="on" class="col-span-2">
               <Select :id="`profiles_${index}`" l class="col-span-2"
                       v-model="profiles[index]" optionLabel="label"
-                      :options="profile?.[index]?.profiles ?? []"/>
+                      :options="profile?.profiles ?? []"/>
               <label :for="`profiles_${index}`">Profile</label>
+            </FloatLabel>
+            <FloatLabel variant="on" class="col-span-2">
+              <Select :id="`presets_${index}`" l class="col-span-2"
+                      v-model="presets[index]" optionLabel="label"
+                      :options="profile?.presets ?? []"/>
+              <label :for="`presets_${index}`">Preset</label>
             </FloatLabel>
             <FloatLabel variant="on" class="col-span-2">
               <Select :id="`tunes_${index}`" class="col-span-2"
                       v-model="tunes[index]" optionLabel="label"
-                      :options="profile?.[index]?.tunes ?? container?.available_video_codecs.map(avc => avc.tunes) ?? []"/>
+                      :options="profile?.tunes ?? []"/>
               <label for="`tunes_${index}`">Tune</label>
             </FloatLabel>
             <FloatLabel variant="on" class="col-span-2">
-              <InputNumber :id="`crfs_${index}`" type="number" :min="0" :max="51" class="col-span-2"
+              <InputNumber :id="`crfs_${index}`" type="number" :min="0" :max="51" class="w-full"
                            v-model="crfs[index]"/>
               <label :for="`crfs_${index}`">CRF</label>
             </FloatLabel>
             <FloatLabel variant="on" class="col-span-2">
-              <InputNumber :id="`bitrates_${index}`" type="number" :min="0" :max="1000000" class="col-span-2"
+              <InputNumber :id="`bitrates_${index}`" type="number" :min="0" :max="1000000" class="w-full"
                            v-model="bitrates[index]"/>
               <label :for="`bitrates_${index}`">Bitrate</label>
             </FloatLabel>
-            <FloatLabel variant="on" class="col-span-2">
-              <InputText :id="`playlistNames_${index}`" class="col-span-2"
-                         v-model="playlistNames[index]"/>
-              <label :for="`playlistNames_${index}`">Playlist name</label>
-            </FloatLabel>
-            <FloatLabel variant="on" class="col-span-2">
-              <InputText :id="`segmentNames_${index}`" class="col-span-2"
+            <FloatLabel variant="on" class="col-span-4">
+              <InputText :id="`segmentNames_${index}`" class="w-full"
                          v-model="segmentNames[index]"/>
               <label :for="`segmentNames_${index}`">Segment name</label>
             </FloatLabel>
-            <FloatLabel variant="on" class="col-span-2">
-              <InputNumber :id="`bitrates_${index}`" type="number" :min="0" :max="1000000" class="col-span-2"
-                           optionLabel="label"
-                           v-model="bitrates[index]"/>
-              <label :for="`bitrates_${index}`">Bitrate</label>
+            <FloatLabel variant="on" class="col-span-4">
+              <InputText :id="`playlistNames_${index}`" class="w-full"
+                         v-model="playlistNames[index]"/>
+              <label :for="`playlistNames_${index}`">Playlist name</label>
             </FloatLabel>
           </div>
           <Button type="button" @click="() => deleteVideoProfile(index)" id="addVideoProfile" class="col-span-2" variant="text"
@@ -400,7 +321,7 @@ const value = ref('');
                 <MultiSelect :id="`allowedAudioLanguages_${index}`" class="col-span-2"
                              optionLabel="label"
                              v-model="allowedAudioLanguages[index]"
-                             :options="profile?.[index]?.available_languages ?? []"/>
+                             :options="profile?.available_languages ?? []"/>
                 <label :for="`allowedAudioLanguages_${index}`">Allowed languages</label>
               </FloatLabel>
           </div>
@@ -426,9 +347,9 @@ const value = ref('');
                 <label for="subtitleProfiles">Codec</label>
             </FloatLabel>
             <FloatLabel variant="on" class="col-span-2">
-              <Select v-model="allowedSubtitleLanguages[index]" :id="`allowedSubtitleLanguages_${index}`" class="col-span-2"
+              <MultiSelect v-model="allowedSubtitleLanguages[index]" :id="`allowedSubtitleLanguages_${index}`" class="col-span-2"
                       optionLabel="label"
-                      :options="profile?.[index]?.available_languages ?? []" multiple/>
+                      :options="profile?.available_languages ?? []" multiple/>
               <label :for="`allowedSubtitleLanguages_${index}`">Allowed languages</label>
             </FloatLabel>
           </div>
@@ -457,7 +378,6 @@ const value = ref('');
       </Button>
       <Button type="submit"
               id="save"
-              variant="default"
               color="theme"
               class="ml-auto"
               form="myForm"

@@ -53,11 +53,11 @@ const props = defineProps({
   },
 });
 
-const {error: permissionsError, isPending} = useServerClient({
+const {dataUpdatedAt, error: permissionsError, isPending} = useServerClient({
   path: 'dashboard/server',
   enabled: !props.allowAnyone,
   refetchInterval: 10000,
-  queryKey: ['dashboard', 'server'],
+  queryKey: ['dashboard', 'server', dashboardSocketIsConnected.value],
 });
 
 const grid = computed(() => {
@@ -109,6 +109,12 @@ const showError = computed(() => {
 watch(showError, (value) => {
   if (value && addModalOpen.value != undefined) {
     addModalOpen.value = false;
+  }
+});
+
+watch(dataUpdatedAt, (value) => {
+  if (value && !dashboardSocketIsConnected.value) {
+    startDashboardSocket();
   }
 });
 

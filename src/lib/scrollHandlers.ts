@@ -90,7 +90,8 @@ export const scrollToDiv = (i: string) => {
     let target: HTMLDivElement | null = null;
     if (i == '#') {
         target = document.querySelector<HTMLDivElement>('[data-scroll]');
-    } else {
+    }
+    else {
         target = document.querySelector<HTMLDivElement>(
             `[data-scroll='scroll_${i}']`
         );

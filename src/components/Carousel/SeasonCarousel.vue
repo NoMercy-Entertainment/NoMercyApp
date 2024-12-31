@@ -66,7 +66,7 @@ watch(currentSeason, reset);
           :disabled="seasonSelectorData.length == 1"
           :items="seasonSelectorData"
           optionLabel="title"
-          class="min-w-52 max-w-[20rem] ml-3"
+          class="min-w-[21rem] ml-3"
           label=""
           variant="normal"
       />

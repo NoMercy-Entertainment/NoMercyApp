@@ -32,10 +32,6 @@ const {data: storage, error} = useServerClient({
   queryKey: ['dashboard', 'storage', currentServer.value?.serverBaseUrl],
 });
 
-watch(storage, (value) => {
-  console.log(value);
-});
-
 onMounted(() => {
   console.raw(storage.value);
 });

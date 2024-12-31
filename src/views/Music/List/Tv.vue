@@ -57,9 +57,6 @@ watch(data, (value) => {
 });
 
 const lastFocused = ref<HTMLAnchorElement>();
-watch(lastFocused, (value) => {
-  console.log(value);
-});
 
 onIonViewDidEnter(() => {
   setTimeout(() => {
@@ -273,7 +270,7 @@ const handleClick = (song: Song) => {
                               >
                                 <EqSpinner :playing="isPlaying"/>
                               </div>
-                              <Marquee :playing="currentSong?.id" :text="song.name" class="!w-[calc(100%-30px)] text-auto-12 children:leading-none w-available overflow-clip"/>
+                              <Marquee :playing="!!currentSong?.id" :text="song.name" class="!w-[calc(100%-30px)] text-auto-12 children:leading-none w-available overflow-clip"/>
                             </div>
 
                             <TrackLinks

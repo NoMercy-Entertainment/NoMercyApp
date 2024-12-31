@@ -37,19 +37,19 @@ onUnmounted(() => {
 <template>
   <ion-page id="main-content">
     <ion-tabs>
-      <NavBar/>
+<!--      <NavBar/>-->
       <ChristmasSnow />
 
       <ion-router-outlet animated="false" class="pointer-events-none children:pointer-events-auto">
       </ion-router-outlet>
 
-      <ProfileMenu v-if="isPlatform('capacitor')"/>
-      <EqualizerMenu v-if="isPlatform('capacitor')"/>
+      <ProfileMenu/>
+      <EqualizerMenu/>
 
       <FullPlayer v-if="currentSong"/>
       <MiniPlayer v-if="currentSong"/>
 
-      <BottomBar v-if="isPlatform('capacitor')"/>
+      <BottomBar/>
     </ion-tabs>
 
     <ImageModal/>

@@ -208,6 +208,10 @@ ion-modal {
   @apply mt-0 -mb-safe-offset-16;
 }
 
+html.plt-mobileweb:has(#miniPlayer) ion-content::part(scroll) {
+  --offset-bottom: -0rem !important;
+}
+
 ion-modal#fullPlayer ion-content::part(scroll) {
   @apply pt-0
 }

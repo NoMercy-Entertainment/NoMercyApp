@@ -170,19 +170,16 @@ export const shouldMarquee = (el: HTMLElement) => {
 	scroller.style.removeProperty('--marquee-width');
 	scroller.classList.remove('animate-marquee');
 
-	setTimeout(() => {
-		const containerWidth = el.getBoundingClientRect()?.width ?? 0;
-		const scrollerWidth = scroller.getBoundingClientRect()?.width ?? 0;
-		console.log('shouldMarquee', containerWidth, scrollerWidth, el);
+	const containerWidth = el.getBoundingClientRect()?.width ?? 0;
+	const scrollerWidth = scroller.getBoundingClientRect()?.width ?? 0;
 
-		if (containerWidth < scrollerWidth) {
-			scroller.style.setProperty('--marquee-width', `${containerWidth}px`);
-			scroller.classList.add('animate-marquee');
-		} else {
-			scroller.style.removeProperty('--marquee-width');
-			scroller.classList.remove('animate-marquee');
-		}
-	}, 1000);
+	if (containerWidth < scrollerWidth) {
+		scroller.style.setProperty('--marquee-width', `${containerWidth}px`);
+		scroller.classList.add('animate-marquee');
+	} else {
+		scroller.style.removeProperty('--marquee-width');
+		scroller.classList.remove('animate-marquee');
+	}
 };
 
 export const stopPropagation = (e: Event) => e.stopPropagation();

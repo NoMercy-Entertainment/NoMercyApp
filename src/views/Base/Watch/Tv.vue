@@ -24,7 +24,7 @@ import {pad} from '@/lib/stringArray';
 
 import audioPlayer from '@/store/audioPlayer';
 import router from "@/router";
-import {hideNavBar, navBarVisible, setNavBarVisible, showNavBar} from "@/store/ui";
+import {hideNavBar, setNavBarVisible, showNavBar} from "@/store/ui";
 
 const {t} = useTranslation();
 const route = useRoute();
@@ -218,7 +218,7 @@ onUnmounted(() => {
 
 <style>
 .nomercyplayer .top-bar {
-  @apply pt-safe-offset-4;
+  padding-top: calc(var(--safe-area-inset-top, 0px) + 1rem);
 }
 .nomercyplayer .seek-container {
   @apply mb-28;

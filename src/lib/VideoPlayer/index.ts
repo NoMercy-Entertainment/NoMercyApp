@@ -1,9 +1,9 @@
 import { SyncPlugin } from './plugins/syncPlugin';
 import { AutoSkipPlugin } from './plugins/autoSkipPlugin';
-import { OctopusPlugin } from './plugins/octopusPlugin';
+// import { OctopusPlugin } from './plugins/octopusPlugin';
 
 import nmplayer from 'nomercyplayer/src/index';
-// import { OctopusPlugin } from 'nomercyplayer/src/plugins/octopusPlugin';
+import { OctopusPlugin } from 'nomercyplayer/src/plugins/octopusPlugin';
 import { TVUIPlugin } from 'nomercyplayer/src/plugins/tvUIPlugin';
 import { DesktopUIPlugin } from 'nomercyplayer/src/plugins/desktopUIPlugin';
 import { KeyHandlerPlugin } from 'nomercyplayer/src/plugins/keyHandlerPlugin';
@@ -17,7 +17,6 @@ import type {NMPlayer, PlaylistItem, SetupConfig, VTTData} from 'nomercyplayer/s
 // import { KeyHandlerPlugin } from 'https://vscode.nomercy.tv/src/plugins/keyHandlerPlugin.ts';
 // import Plugin from 'https://vscode.nomercy.tv/src/plugin.ts';
 // import type {NMPlayer, PlaylistItem, SetupConfig, VTTData} from 'https://vscode.nomercy.tv/src/index.d.ts';
-
 
 export {
 	SyncPlugin,

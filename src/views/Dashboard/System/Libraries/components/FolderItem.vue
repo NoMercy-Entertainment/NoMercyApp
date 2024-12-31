@@ -81,13 +81,13 @@ watch(props, (value) => {
 						<span class="self-stretch text-base font-semibold line-clamp-1 monospace w-[697px]">
 							{{ data?.parsed?.title }}
 							<template
-                  v-if="(data.match as Episode)?.season_number != null"
+                  v-if="(data.match as Episode)?.episode_number"
               >
 								S{{ pad((data.match as Episode)?.season_number) }}E{{
                   pad((data.match as Episode)?.episode_number)
                 }} - {{ data?.match?.title }}
 							</template>
-              <template v-else>
+              <template v-else-if="data?.parsed?.year">
                 ({{ data?.parsed?.year }})
               </template>
 						</span>

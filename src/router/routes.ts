@@ -31,26 +31,21 @@ import DashboardSchedule from '@/views/Dashboard/Advanced/Schedule';
 import DashboardMetadata from '@/views/Dashboard/Content/Metadata';
 import DashboardRipper from '@/views/Dashboard/Content/Ripper';
 import DashboardSpecials from '@/views/Dashboard/Content/Specials';
-import DashboardSpecialsEdit from '@/views/Dashboard/Content/Specials/Edit.vue';
 
 import DashboardActivity from '@/views/Dashboard/Devices/Activity';
 import DashboardDevices from '@/views/Dashboard/Devices/Devices';
-import DashboardDeviceShow from '@/views/Dashboard/Devices/Devices/Show.vue';
 import DashboardDlna from '@/views/Dashboard/Devices/Dlna';
 
 import DashboardEncoderProfiles from '@/views/Dashboard/System/EncoderProfiles';
-import DashboardEncoderProfilesEdit from '@/views/Dashboard/System/EncoderProfiles/Edit.vue';
 
 import DashboardGeneral from '../views/Dashboard/System/General';
 
 import DashboardLibraries from '@/views/Dashboard/System/Libraries';
-import DashboardLibrariesEdit from '@/views/Dashboard/System/Libraries/Edit.vue';
 
 import DashboardNotifications from '@/views/Dashboard/System/Notifications';
 import DashboardSystem from '@/views/Dashboard/System/System';
 
 import DashboardUsers from '@/views/Dashboard/System/Users';
-import DashboardUsersEdit from '@/views/Dashboard/System/Users/Edit.vue';
 
 import PreferencesControls from '@/views/Preferences/Controls';
 import PreferencesDisplay from '@/views/Preferences/Display';
@@ -310,7 +305,7 @@ export const routes: Array<RouteRecordRaw> = [
 			{
 				path: 'users/:id',
 				name: 'Edit user',
-				component: DashboardUsersEdit
+				component: () => import('@/views/Dashboard/System/Users/Edit.vue'),
 			},
 			{
 				path: 'libraries',
@@ -320,7 +315,7 @@ export const routes: Array<RouteRecordRaw> = [
 			{
 				path: 'libraries/:id',
 				name: 'Dashboard Library',
-				component: DashboardLibrariesEdit
+				component: () => import('@/views/Dashboard/System/Libraries/Edit.vue'),
 			},
 			{
 				path: 'specials',
@@ -330,7 +325,7 @@ export const routes: Array<RouteRecordRaw> = [
 			{
 				path: 'specials/:id',
 				name: 'Dashboard Special',
-				component: DashboardSpecialsEdit
+				component: () => import('@/views/Dashboard/System/Libraries/Edit.vue'),
 			},
 			{
 				path: 'devices',
@@ -340,7 +335,7 @@ export const routes: Array<RouteRecordRaw> = [
 			{
 				path: 'devices/:id',
 				name: 'Device',
-				component: DashboardDeviceShow
+				component: () => import('@/views/Dashboard/Devices/Devices/Show.vue'),
 			},
 			{
 				path: 'ripper',
@@ -355,7 +350,7 @@ export const routes: Array<RouteRecordRaw> = [
 			{
 				path: 'encoderprofiles/:id',
 				name: 'Encoder Profile',
-				component: DashboardEncoderProfilesEdit
+				component: () => import('@/views/Dashboard/System/EncoderProfiles/Edit.vue'),
 			},
 			{
 				path: 'notifications',
