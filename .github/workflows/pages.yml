@@ -11,7 +11,7 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v
 
       - name: Set up Node.js
         uses: actions/setup-node@v4
@@ -19,7 +19,7 @@ jobs:
           node-version: 20
 
       - name: Install dependencies
-        run: npm install --force && npm install @rollup/rollup-linux-x64-gnu --save-dev
+        run: npm install --force && npm install @rollup/rollup-linux-x64-gnu --save-dev --force
 
       - name: Build documentation
         run: npm run build
