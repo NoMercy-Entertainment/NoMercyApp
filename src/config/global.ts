@@ -217,6 +217,12 @@ export const greetingValue = computed(() => {
 	return 'Day!';
 });
 
+declare global {
+	interface Console {
+		raw: (...arg: any) => void;
+	}
+}
+
 console.raw = (...arg: any[]) => {
 	console.log(...arg.map(a => toRaw(a)));
 };

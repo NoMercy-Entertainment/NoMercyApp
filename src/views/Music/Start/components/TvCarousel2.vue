@@ -47,14 +47,14 @@ const props = defineProps({
                   @focus="handleFocus($event, item.props.data)"
                   @keydown="handleDown($event)"
                   @keyup="handleUp($event)"
-                  :style="`background-image: url('${currentServer?.serverBaseUrl}/images/music${item.props.data.cover}')`"
+                  :style="`background-image: url('${currentServer?.serverBaseUrl}${item.props.data.cover}')`"
       ></RouterLink>
     </template>
   </div>
 
   <Teleport to=".image-preload-container">
     <template v-for="item in data?.slice(0,7)" :key="item.id">
-      <img :src="`${currentServer?.serverBaseUrl}/images/music${item.props.data.cover}`"
+      <img :src="`${currentServer?.serverBaseUrl}${item.props.data.cover}`"
            width="0"
            height="0"
            loading="eager"

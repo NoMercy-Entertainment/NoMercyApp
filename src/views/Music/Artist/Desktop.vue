@@ -4,7 +4,7 @@ import {useRoute} from 'vue-router';
 import {IonContent, IonPage} from '@ionic/vue';
 
 import type {ArtistResponse} from '@/types/api/music/artist';
-import {type Song, SortOrder, SortType} from '@/types/musicPlayer';
+import {type PlaylistItem, SortOrder, SortType} from '@/types/musicPlayer';
 
 import useServerClient from '@/lib/clients/useServerClient';
 import {setTitle, sortByType} from '@/lib/stringArray';
@@ -37,7 +37,7 @@ onUnmounted(() => {
   setColorPalette(null);
 });
 
-const displayList = ref<Song[]>();
+const displayList = ref<PlaylistItem[]>();
 const filter = ref('');
 
 watch(sortOrder, (value) => {
@@ -54,9 +54,9 @@ watch(data, (value) => {
   setTitle(value?.name ?? null);
 });
 
-const sort = (songs: Song[], sortType: SortType, sortOrder: SortOrder, value: string) => {
+const sort = (songs: PlaylistItem[], sortType: SortType, sortOrder: SortOrder, value: string) => {
 
-  const newList = sortByType<Song>(songs ?? [], sortType, sortOrder, setSortOrder);
+  const newList = sortByType<PlaylistItem>(songs ?? [], sortType, sortOrder, setSortOrder);
 
   if (value == '') {
     displayList.value = newList;

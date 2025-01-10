@@ -16,7 +16,7 @@
     "build:android": "npx ionic capacitor build android",
     "build:ios": "npx ionic capacitor build ios",
     "build": "npx ionic capacitor build web",
-    "preview": "vite preview --host --port=5501 ./",
+    "preview": "vite preview --host --port=5502 ./",
     "test:e2e": "cypress run",
     "test:unit": "vitest",
     "lint": "eslint ."
@@ -28,11 +28,11 @@
     "@capacitor/android": "^6.1.2",
     "@capacitor/app": "6.0.1",
     "@capacitor/assets": "^3.0.5",
-    "@capacitor/core": "6.1.2",
+    "@capacitor/core": "^6.1.2",
     "@capacitor/device": "^6.0.1",
     "@capacitor/haptics": "6.0.1",
     "@capacitor/inappbrowser": "^1.0.2",
-    "@capacitor/ios": "6.1.2",
+    "@capacitor/ios": "^6.1.2",
     "@capacitor/keyboard": "6.0.2",
     "@capacitor/preferences": "^6.0.2",
     "@capacitor/screen-orientation": "^6.0.2",
@@ -48,6 +48,8 @@
     "@ionic/vue-router": "^8.4.0",
     "@jofr/capacitor-media-session": "^4.0.0",
     "@microsoft/signalr": "^8.0.7",
+    "@nomercy-entertainment/media-session": "^0.1.11",
+    "@nomercy-entertainment/nomercy-music-player": "^0.1.6",
     "@primevue/auto-import-resolver": "^4.0.0-beta.5",
     "@primevue/themes": "4.0.0-rc.2",
     "@tanstack/vue-query": "^5.59.17",
@@ -55,6 +57,7 @@
     "@uiw/color-convert": "^2.3.2",
     "@vueuse/core": "^11.2.0",
     "@yeger/vue-masonry-wall": "^5.0.16",
+    "audiomotion-analyzer": "^4.5.0",
     "axios": "^1.7.7",
     "capacitor-plugin-safe-area": "^3.0.3",
     "chart.js": "^4.4.6",
@@ -83,7 +86,7 @@
     "yarn-git-install": "^0.4.7"
   },
   "devDependencies": {
-    "@capacitor/cli": "6.1.2",
+    "@capacitor/cli": "^6.1.2",
     "@geoffcodesthings/tailwind-md-base": "^1.1.0",
     "@types/md5": "^2.3.5",
     "@types/ua-parser-js": "^0.7.39",
@@ -114,5 +117,5 @@
     "vitest": "^0.34.6",
     "vue-tsc": "2.0.29"
   },
-  "packageManager": "yarn@2.4.3"
+  "packageManager": "yarn@4.6.0"
 }

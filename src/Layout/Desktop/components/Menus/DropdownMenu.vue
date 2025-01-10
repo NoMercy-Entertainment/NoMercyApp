@@ -69,7 +69,7 @@ router.beforeEach(() => {
         }"
     >
       <div class="overflow-hidden">
-        <div class="flex w-full flex-col items-start justify-start children:rounded-md bg-slate-light-1 dark:bg-slate-dark-1">
+        <div class="flex w-full flex-col items-start justify-start rounded-xl overflow-clip children:rounded-xl children:overflow-clip border-1 bg-slate-light-1 dark:bg-slate-dark-1 border-slate-light-7 dark:border-slate-dark-4">
           <slot :open="open"/>
         </div>
       </div>

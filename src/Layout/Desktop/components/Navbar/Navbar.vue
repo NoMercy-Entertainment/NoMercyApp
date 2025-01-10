@@ -15,6 +15,7 @@ import AppLogo from '@/components/Images/icons/AppLogo.vue';
 import NavbarButton from './NavbarButton.vue';
 import {isHomeRoute, isLibraryRoute, isMusicRoute, searchUrl} from '@/store/routeState';
 import {currentServer} from '@/store/currentServer';
+import MessagesMenu from "@/Layout/Desktop/components/Menus/MessagesMenu.vue";
 
 const {t} = useTranslation();
 
@@ -86,6 +87,7 @@ const {t} = useTranslation();
           </RouterLink>
         </div>
 
+        <MessagesMenu />
         <NotificationMenu />
         <ProfileMenu />
       </div>

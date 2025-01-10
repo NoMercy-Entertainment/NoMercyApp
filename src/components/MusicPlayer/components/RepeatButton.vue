@@ -19,15 +19,15 @@ const {state, next, go} = useCycleList<'off' | 'one' | 'all'>([
 ]);
 
 onMounted(() => {
-  if (!audioPlayer.value?._repeat) return;
-  go(states.indexOf(audioPlayer.value?._repeat));
+  if (!audioPlayer._repeat) return;
+  go(states.indexOf(audioPlayer._repeat));
 
 });
 
 const handleClick = (e?: MouseEvent) => {
   e?.stopPropagation();
   next();
-  audioPlayer.value?.repeat(state.value);
+  audioPlayer.repeat(state.value);
 };
 </script>
 

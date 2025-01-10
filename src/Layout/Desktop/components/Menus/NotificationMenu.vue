@@ -1,22 +1,21 @@
 <script setup lang="ts">
 import {computed, onMounted, ref} from 'vue';
 
-import messagesState, {markAllMessagesRead} from '@/store/messages';
+import notificationsState, {clearNotifications} from '@/store/notifications';
 
 import DropdownMenu from '@/Layout/Desktop/components/Menus/DropdownMenu.vue';
 import NotificationItem from '@/Layout/Desktop/components/Menus/NotificationItem.vue';
 import MoooomIcon from '@/components/Images/icons/MoooomIcon.vue';
-import {deviceMenuOpen, equalizerMenuOpen, lyricsMenuOpen, queueMenuOpen} from "@/store/audioPlayer";
 
 const hasRang = ref(false);
 const ringing = ref(false);
 
-const hasUnreadMessages = computed(() => {
-  return messagesState.value?.some(message => !message.read);
+const hasUnreadNotifications = computed(() => {
+  return notificationsState.value?.some(notification => !notification.read);
 });
 
 const handleClick = () => {
-  markAllMessagesRead();
+  clearNotifications();
 }
 
 const translate = computed(() => {
@@ -28,7 +27,7 @@ const translate = computed(() => {
 });
 
 onMounted(() => {
-  if(!hasRang.value && hasUnreadMessages.value){
+  if(!hasRang.value && hasUnreadNotifications.value){
     hasRang.value = true;
     ringing.value = true;
     setTimeout(() => {
@@ -43,7 +42,7 @@ onMounted(() => {
     <DropdownMenu className="my-1 rounded-md" :translate="translate">
         <template v-slot:button>
             <div class="relative my-1 flex flex-shrink-0 flex-grow-0 items-start justify-start gap-2 overflow-hidden rounded-md transition-colors duration-300 text-auto-12 hover:bg-focus/10 focus:bg-auto-12/2">
-                <template v-if="hasUnreadMessages">
+                <template v-if="hasUnreadNotifications">
                     <div :class="`relative p-2.5 w-full h-full origin-top ${ringing ? 'animate-swing' : ''}`">
                         <div class="absolute top-3 right-3 h-2 w-2 rounded-full bg-red-dark-7"></div>
                         <MoooomIcon icon="bellNotification"/>
@@ -70,24 +69,24 @@ onMounted(() => {
                             {{ $t('Notifications') }}
                         </p>
 
-                        <button @click="handleClick" v-if="hasUnreadMessages"
+                        <button @click="handleClick" v-if="hasUnreadNotifications"
                             class="relative flex h-5 items-center gap-2 overflow-hidden underline-offset-4 hover:underline"
                         >
-                            <p class="flex-shrink-0 flex-grow-0 text-sm font-medium text-auto-3">
+                            <p class="flex-shrink-0 flex-grow-0 text-sm font-medium text-auto-10">
                                 {{ $t('Mark all as read') }}
                             </p>
                         </button>
                     </div>
 
-                    <template v-if="messagesState?.length > 0">
-                      <template v-for="item in messagesState?.latest()" :key="item.id">
+                    <template v-if="notificationsState?.length > 0">
+                      <template v-for="item in notificationsState?.latest()" :key="item.id">
                         <NotificationItem :data="item"/>
                       </template>
                     </template>
                     <template v-else>
                         <div class="relative flex items-start justify-start gap-2 rounded-lg p-2" >
                             <div class="flex-shrink-0 flex-grow-0 self-stretch text-sm font-semibold text-slate-dark-10 dark:text-slate-light-10">
-                                {{ $t('No messages')}}
+                                {{ $t('No notifications')}}
                             </div>
                         </div>
                     </template>

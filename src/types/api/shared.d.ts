@@ -1,6 +1,4 @@
 import type { KnownFor } from '@/types/api/base/person';
-import {Rating} from '@/types/api/base/collection';
-import {ExtendedVideo, Video} from '@/types/api/base/info';
 
 export interface PaletteColors extends null {
 	dominant?: string;
@@ -64,19 +62,6 @@ export interface Crew {
 	link: string;
 }
 
-export interface Lolomo {
-	id: number|string;
-	title: string;
-	year?: number|null;
-	have_items?: number | undefined;
-	overview?: string | null;
-	logo?: string | null | undefined;
-	backdrop?: string | null;
-	color_palette?: ColorPalettes;
-    content_ratings?: Rating[];
-	videoId?: string;
-    videos?: ExtendedVideo[];
-}
 
 export interface Language {
 	iso_639_1: string;

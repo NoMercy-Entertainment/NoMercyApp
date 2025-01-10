@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import {nextTick, onBeforeMount, onMounted, onUnmounted, ref, watch} from 'vue';
 
-import type {Lyric} from '@/types/api/music/musicPlayer';
+import type {Lyric} from "@/types/musicPlayer";
+
 import {random_string} from '@/lib/stringArray';
 import {scrollCenter} from '@/lib/utils';
 import LyricItem from '@/Layout/Desktop/components/Overlays/LyricItem.vue';
@@ -64,7 +65,7 @@ onMounted(() => {
   const MobilePlayer = document.querySelector<HTMLDivElement>('#MobilePlayer');
   MobilePlayer?.addEventListener('scroll', setScroll);
 
-  audioPlayer.value?.on('seeked', (data) => {
+  audioPlayer.on('seeked', (data) => {
     const newIndex = (lyrics.value?.findIndex?.(l => l.time?.total >= data.position) ?? 0) - 1;
 
     const elements = Array.from(lyrics_container.value?.querySelectorAll<HTMLDivElement>('[data-lyric]') ?? []);
@@ -103,7 +104,6 @@ onUnmounted(() => {
 });
 
 watch(currentTime, (value) => {
-  if (!audioPlayer.value) return;
 
   value = value + 0.5;
 
@@ -189,7 +189,7 @@ watch(lyrics, (value) => {
     </div>
 
     <div ref="lyrics_container" :id="`lyrics_container_${id}`"
-         class="relative z-10 flex w-full flex-col overflow-auto scrollbar-none tv:overflow-clip p-4 children:transition-all duration-300 h-available font-bbc gap-4 sm:gap-4 sm:p-16 text-xl sm:text-2xl">
+         class="relative z-10 flex w-full flex-col overflow-auto scrollbar-none tv:overflow-clip p-4 children:transition-all duration-300 h-available min-h-[calc(100vh-13rem)] gap-4 sm:gap-4 sm:p-16 text-xl sm:text-2xl">
 
       <template v-if="!!lyrics">
         <div class="contents" v-if="Array.isArray(lyrics)">

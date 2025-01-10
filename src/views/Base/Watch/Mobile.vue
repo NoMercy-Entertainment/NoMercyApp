@@ -5,7 +5,6 @@ import {useTranslation} from 'i18next-vue';
 import {IonContent, IonPage, isPlatform} from '@ionic/vue';
 import {App} from '@capacitor/app';
 
-import MediaSession from '@/lib/MediaSession';
 import {disableImmersiveMode, enableImmersiveMode, lockLandscape, lockPortrait} from '@/lib/utils';
 import {isNative} from '@/config/global';
 import {currentServer} from '@/store/currentServer';
@@ -16,12 +15,10 @@ import type {NMPlayer, PlaylistItem, SetupConfig} from '@/lib/VideoPlayer';
 import {
   AutoSkipPlugin,
   DesktopUIPlugin,
-  KeyHandlerPlugin,
   nmplayer,
   OctopusPlugin,
   SyncPlugin
 } from '@/lib/VideoPlayer';
-import {pad} from '@/lib/stringArray';
 
 import audioPlayer from '@/store/audioPlayer';
 import router from "@/router";
@@ -49,11 +46,12 @@ const config: SetupConfig = {
     1.75,
     2,
   ],
-  accessToken: user.value?.accessToken || localStorage.getItem('access_token'),
+  accessToken: user.value?.accessToken || localStorage.getItem('access_token') || '',
   basePath: currentServer.value?.serverBaseUrl,
   forceTvMode: (isPlatform('android') || isPlatform('ios')) && !isPlatform('mobile'),
   disableTouchControls: false,
   disableMediaControls: 'mediaSession' in navigator || isPlatform('capacitor'),
+  renderAhead: 100,
 };
 
 interface MyNmPlayer extends NMPlayer {
@@ -67,7 +65,6 @@ interface MyNmPlayer extends NMPlayer {
 }
 
 const player = ref<MyNmPlayer>();
-const mediaSession = new MediaSession();
 
 onMounted(() => {
   // @ts-ignore
@@ -94,10 +91,6 @@ onMounted(() => {
   // player.value?.registerPlugin('sabre', sabrePlugin);
   // player.value?.usePlugin('sabre');
 
-  const keyHandlerPlugin = new KeyHandlerPlugin();
-  player.value?.registerPlugin('keyHandler', keyHandlerPlugin);
-  player.value?.usePlugin('keyHandler');
-
   const syncPlugin = new SyncPlugin();
   player.value?.registerPlugin('sync', syncPlugin);
   player.value?.usePlugin('sync');
@@ -108,6 +101,7 @@ onMounted(() => {
 
   player.value?.on('playlistComplete', () => {
     player.value?.dispose();
+    router.back();
   });
 
   player.value?.on('back', () => {
@@ -116,56 +110,19 @@ onMounted(() => {
 
   player.value?.on('play', () => {
     setDisableScreensaver(true);
-    mediaSession.setPlaybackState('playing');
   });
 
   player.value?.on('pause', () => {
     setDisableScreensaver(false);
-    mediaSession.setPlaybackState('paused');
   });
 
   player.value?.on('ready', () => {
     lockLandscape();
     enableImmersiveMode();
-    audioPlayer.value?.stop();
-    mediaSession.setActionHandler({
-      play: () => player.value?.play(),
-      pause: () => player.value?.pause(),
-      stop: () => player.value?.stop(),
-      previous: () => player.value?.previous(),
-      next: () => player.value?.next(),
-      seek: (n) => player.value?.seek(n),
-      getPosition: () => player.value?.getCurrentTime() || 0,
-    });
-  });
-
-  player.value?.on('time', (data: any) => {
-    mediaSession.setPositionState({
-      position: data.currentTime,
-      duration: data.duration,
-      playbackRate: data.playbackRate,
-    });
-  });
-
-  player.value?.on('lastTimeTrigger', () => {
+    audioPlayer.stop();
   });
 
   player.value?.on('item', (playlistItem: PlaylistItem) => {
-
-    const parsedTitle = playlistItem.title
-        .replace('%S', t('S'))
-        .replace('%E', t('E'));
-
-    mediaSession.setMetadata({
-      title: parsedTitle,
-      artist: playlistItem.show ?? undefined,
-      album: playlistItem.season
-          // @ts-ignore
-          ? `${t('S')}${pad(playlistItem.season, 2)}${t('E')}${pad(playlistItem.episode, 2)}`
-          : undefined,
-      artwork: playlistItem.image?.replace('w300', 'w500'),
-    });
-
     player.value?.play();
   });
 
@@ -177,14 +134,8 @@ onMounted(() => {
     }
   });
 
-  player.value?.on('error', () => {
-    mediaSession?.setPlaybackState('none');
-  });
-
-
   App.addListener('backButton', () => {
     player.value?.emit('back-button-hyjack');
-    mediaSession?.setPlaybackState('none');
     router.back();
   });
 
@@ -199,7 +150,6 @@ onBeforeUnmount(() => {
 onUnmounted(() => {
   player.value?.dispose();
   setDisableScreensaver(false);
-  mediaSession?.setPlaybackState('none');
 });
 
 </script>

@@ -2,11 +2,11 @@
 import {type PropType} from 'vue';
 
 import type {Component} from '@/lib/routerHelper';
-import {Song} from '@/types/musicPlayer';
+import {PlaylistItem} from '@/types/musicPlayer';
 
 defineProps({
   items: {
-    type: Object as PropType<Component<Component<Song[]>>[]> | undefined,
+    type: Object as PropType<Component<Component<PlaylistItem[]>>[]> | undefined,
     required: true,
   },
   title: {

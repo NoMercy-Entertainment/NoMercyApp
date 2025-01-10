@@ -57,7 +57,7 @@ const {isSwiping, lengthX} = useSwipe(
         ) {
           left.value = '100%';
           opacity.value = 0;
-          audioPlayer.value?.stop();
+          audioPlayer.stop();
           reset();
         } else {
           left.value = '0';

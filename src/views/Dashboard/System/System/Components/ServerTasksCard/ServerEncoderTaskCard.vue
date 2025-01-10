@@ -79,12 +79,12 @@ const toggleRunning = () => {
       <p
           class="w-full flex-grow text-sm font-semibold text-auto-12 line-clamp-1"
       >
-        {{ data.title }}
+        {{ data.title.replace(/NoMercy/giu, '') }}
       </p>
       <p
           class="flex-shrink-0 flex-grow-0 text-right text-xs font-light text-auto-alpha-10"
       >
-        {{ $t('Id') }}: {{ data?.id }}
+        {{ $t('Id') }}: {{ data?.process_id }}
       </p>
     </div>
     <div

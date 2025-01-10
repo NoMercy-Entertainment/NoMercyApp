@@ -12,7 +12,7 @@ import ShuffleButton from '../components/ShuffleButton.vue';
 import StopButton from '../components/StopButton.vue';
 import EqButton from "@/components/MusicPlayer/components/EqButton.vue";
 
-const supportsAudioContext = localStorage.getItem('supports-audio-context') === 'true';
+const supportsAudioContext = localStorage.getItem('nmplayer-supports-audio-context') === 'true';
 
 </script>
 

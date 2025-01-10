@@ -1,13 +1,13 @@
 <script setup lang="ts">
 import {type PropType} from "vue";
 
-import type {Song} from "@/types/musicPlayer";
+import type {PlaylistItem} from "@/types/musicPlayer";
 
 import TrackRow from "./TrackRow.vue";
 
 defineProps({
 	data: {
-		type: Array as PropType<Song[] | null>,
+		type: Array as PropType<PlaylistItem[] | null>,
 		required: true,
 	},
 	title: {

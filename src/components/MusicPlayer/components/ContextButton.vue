@@ -1,14 +1,14 @@
 <script setup lang="ts">
 import { type PropType } from 'vue';
 
-import type { Song } from '@/types/musicPlayer';
+import type { PlaylistItem } from '@/types/musicPlayer';
 
 import MusicButton from './MusicButton.vue';
 import MoooomIcon from '@/components/Images/icons/MoooomIcon.vue';
 
 defineProps({
 	data: {
-		type: Object as PropType<Song>,
+		type: Object as PropType<PlaylistItem>,
 		required: true,
 	},
 	className: {

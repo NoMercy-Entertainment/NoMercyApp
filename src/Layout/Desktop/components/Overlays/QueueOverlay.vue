@@ -6,6 +6,7 @@ import router from '@/router';
 import ScrollContainer from '@/Layout/Desktop/components/ScrollContainer.vue';
 import MoooomIcon from "@/components/Images/icons/MoooomIcon.vue";
 import {MoooomIcons} from "@Icons/icons";
+import {stopPropagation} from "@/lib/utils";
 </script>
 
 <template>
@@ -36,7 +37,7 @@ import {MoooomIcons} from "@Icons/icons";
             <CoverImage v-if="currentSong" :data="currentSong"/>
           </div>
           <div class="relative flex flex-col items-start justify-start gap-1">
-            <p class="w-full flex-shrink-0 font-semibold self-stretch-0">
+            <p class="w-full flex-shrink-0 font-semibold self-stretch-0 text-left">
               {{ currentSong?.name }}
             </p>
             <div
@@ -44,19 +45,18 @@ import {MoooomIcons} from "@Icons/icons";
               <div data-marquee="container" class="-ml-1 w-available">
                 <div data-marquee="scroller"
                      class="ml-1 flex w-fit flex-nowrap gap-1 text-xs line-clamp-1 whitespace-break-spaces hover-animate-pause w-available h-available">
-                            <span class="flex w-fit flex-wrap gap-1 whitespace-wrap line-clamp-2 h-inherit">
-                                <button
-                                    class="flex gap-1 whitespace-nowrap text-xs font-semibold line-clamp-2 h-inherit hover:underline focus:underline dark:font-medium"
-                                    tabindex="0"
-                                    @click="e => {
-                                     e.stopPropagation();
-                                     router.push(currentSong?.artist_track?.[0]?.link ?? '#');
-                                   }">
-                                    <span class="flex items-center gap-1 leading-none line-clamp-2">
-                                        {{ currentSong?.artist_track?.[0]?.name }}
-                                    </span>
-                                </button>
-                            </span>
+                  <span class="flex w-fit flex-wrap gap-1 whitespace-wrap line-clamp-2 h-inherit">
+                      <RouterLink
+                          :to="currentSong?.artist_track?.[0]?.link ?? '#'"
+                          class="flex gap-1 whitespace-nowrap text-xs font-semibold line-clamp-2 h-inherit hover:underline focus:underline dark:font-medium"
+                          tabindex="0"
+                          @click="stopPropagation($event)"
+                      >
+                          <span class="flex items-center gap-1 leading-none line-clamp-2">
+                              {{ currentSong?.artist_track?.[0]?.name }}
+                          </span>
+                      </RouterLink>
+                  </span>
                 </div>
               </div>
             </div>
@@ -72,14 +72,14 @@ import {MoooomIcons} from "@Icons/icons";
             class="flex w-full flex-col items-start justify-start gap-4 pb-4 relative overflow-hidden h-available">
           <ScrollContainer :autoHide="true" :static="false">
           <template v-for="song in queue">
-            <div @click="audioPlayer?.playTrack(song, queue)"
+            <button @click="audioPlayer?.playTrack(song, queue)"
                  class="flex h-auto w-full items-center justify-start gap-2 rounded-lg p-2 hover:bg-auto-3/50">
               <div
                   class="relative aspect-square h-auto w-14 cursor-pointer overflow-hidden rounded-md text-theme-4">
                 <CoverImage v-if="song" :data="song"/>
               </div>
               <div class="relative flex flex-col items-start justify-start gap-1">
-                <p class="w-full flex-shrink-0 font-semibold self-stretch-0">
+                <p class="w-full flex-shrink-0 font-semibold self-stretch-0 text-left">
                   {{ song?.name }}
                 </p>
                 <div
@@ -87,25 +87,23 @@ import {MoooomIcons} from "@Icons/icons";
                   <div data-marquee="container" class="-ml-1 w-available">
                     <div data-marquee="scroller"
                          class="ml-1 flex w-fit flex-nowrap gap-1 text-xs line-clamp-1 whitespace-break-spaces hover-animate-pause w-available h-available">
-                                    <span class="flex w-fit flex-wrap gap-1 whitespace-wrap line-clamp-2 h-inherit">
-                                        <button
-                                            class="flex gap-1 whitespace-nowrap text-xs font-semibold line-clamp-2 h-inherit hover:underline focus:underline dark:font-medium"
-                                            tabindex="0"
-                                            @click="e => {
-                                             e.stopPropagation();
-                                              router.push(song?.artist_track?.[0]?.link ?? '#');
-                                           }"
-                                        >
-                                            <span class="flex items-center gap-1 leading-none line-clamp-2"
-                                                  v-text="song?.artist_track?.[0]?.name">
-                                            </span>
-                                        </button>
-                                    </span>
+                      <span class="flex w-fit flex-wrap gap-1 whitespace-wrap line-clamp-2 h-inherit">
+                          <RouterLink
+                              :to="song?.artist_track?.[0]?.link ?? '#'"
+                              class="flex gap-1 whitespace-nowrap text-xs font-semibold line-clamp-2 h-inherit hover:underline focus:underline dark:font-medium"
+                              tabindex="0"
+                              @click="stopPropagation($event)"
+                          >
+                              <span class="flex items-center gap-1 leading-none line-clamp-2"
+                                    v-text="song?.artist_track?.[0]?.name">
+                              </span>
+                          </RouterLink>
+                      </span>
                     </div>
                   </div>
                 </div>
               </div>
-            </div>
+            </button>
           </template>
           </ScrollContainer>
         </div>

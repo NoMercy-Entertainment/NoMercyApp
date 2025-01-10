@@ -4,7 +4,7 @@
 /// <reference lib="webworker" />
 
 import {VueKeycloakInstance} from '@dsb-norge/vue-keycloak-js/dist/types';
-import {SliderBar} from '@/lib/MusicPlayer/lib/sliderBar';
+import {SliderBar} from '@/lib/sliderBar';
 import {SwiperRef} from 'swiper/swiper-react';
 
 declare module '*.svg'

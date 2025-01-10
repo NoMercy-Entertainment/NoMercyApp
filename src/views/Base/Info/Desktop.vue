@@ -14,7 +14,7 @@ import useServerClient from '@/lib/clients/useServerClient';
 import {setTitle, sortByPosterAlphabetized} from '@/lib/stringArray';
 import {pickPaletteColor} from '@/lib/colorHelper';
 import serverClient from '@/lib/clients/serverClient';
-import {background, setBackground, setColorPalette, setLogo, setPoster} from '@/store/ui';
+import {background, poster, setBackground, setColorPalette, setLogo, setPoster} from '@/store/ui';
 import {currentSong} from '@/store/audioPlayer';
 
 import ListControlHeaderMoreMenu from '@/Layout/Desktop/components/Menus/ListControlHeaderMoreMenu.vue';
@@ -311,7 +311,7 @@ const menuItems: IMenuItem[] = [
               class="flex flex-col gap-4 overflow-clip rounded-3xl border-0 pb-2 w-available scrollbar-none border-auto-3">
             <FloatingBackButton/>
 
-            <div class="relative mx-auto w-full gap-4 rounded-lg p-4 max-w-screen-5xl">
+            <div class="relative mx-auto w-full gap-4 rounded-lg p-4 max-w-screen-4xl">
 
               <div class="z-0 flex w-full flex-grow flex-col items-end justify-start gap-2 pt-[290px]">
 
@@ -334,6 +334,7 @@ const menuItems: IMenuItem[] = [
                 <div
                     class="relative col-start-2 col-end-4 grid flex-shrink-0 flex-grow-0 grid-cols-3 items-start justify-start self-stretch rounded-2xl bg-gradient-to-b py-4 pr-4 from-slate-light-2/12 via-slate-light-3/12 to-slate-light-3/11 dark:from-slate-dark-2/12 dark:via-slate-dark-2/12 dark:to-slate-dark-2/11 border-auto-5/8 border-1 min-h-[23.5rem]">
                   <div
+                      v-if="poster ?? data?.poster"
                       class="absolute bottom-24 z-10 col-start-1 content-center col-end-2 h-auto w-full items-start justify-start rounded-lg -top-[20rem] sm:block">
                     <RouterLink
                         :to="`/${data?.media_type}/${data?.id}/watch`"
@@ -341,10 +342,9 @@ const menuItems: IMenuItem[] = [
                         data-nav="true" data-nav-r="play" data-nav-reset="true">
 
                       <TMDBImage
-                          v-if="data?.poster"
-                          :key="data?.poster"
+                          :key="poster ?? data?.poster ?? 'poster'"
                           :autoShadow="true"
-                          :path="data?.poster"
+                          :path="poster ?? data?.poster"
                           :colorPalette="data?.color_palette?.poster"
                           :size="760"
                           priority="high"

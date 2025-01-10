@@ -7,7 +7,7 @@ import PlayerIcon from '@/components/Images/icons/PlayerIcon.vue';
 
 const handleClick = (e?: MouseEvent) => {
 	e?.stopPropagation();
-	audioPlayer.value?.shuffle(!isShuffling.value);
+	audioPlayer.shuffle(!isShuffling.value);
 };
 
 </script>

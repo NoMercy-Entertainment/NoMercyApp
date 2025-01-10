@@ -1,6 +1,6 @@
-import type {ColorPalettes, PaletteColors} from '../shared';
+import type {ColorPalettes} from '../shared';
 import type {Artist} from '@/types/api/music/artist';
-import {Song} from '@/types/musicPlayer';
+import {PlaylistItem} from '@/types/musicPlayer';
 
 export interface AlbumResponse {
 	id: string;
@@ -17,7 +17,7 @@ export interface AlbumResponse {
 	artist: Artist[] | null;
 	_count: Count;
 	type: string;
-	track: Song[];
+	track: PlaylistItem[];
 }
 
 interface Count {
@@ -30,8 +30,6 @@ interface Album {
 	id: string;
 	name: string;
 	description: string | null;
-	folder: string | null;
-    type: string;
 	cover: string | null;
 	country: string | null;
 	year: number | null;
@@ -40,7 +38,7 @@ interface Album {
 	blurHash: string | null;
 	library_id: string;
 	disambiguation?: string | null;
-	origin: string;
 	album_artist: string;
 	link: string;
+	type: string;
 }

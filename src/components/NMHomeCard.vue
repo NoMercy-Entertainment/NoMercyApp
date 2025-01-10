@@ -41,6 +41,8 @@ const ringBackdropColor = computed(() => pickPaletteColor(props.data?.color_pale
     .replace(')', '')
     .replace(/,/gu, ' ') ?? 'var(--color-primary)');
 
+console.log(props.data, isMobile);
+
 const toggleWatched = () => {
   // if (!props.data) return;
 };
@@ -76,7 +78,7 @@ onIonViewWillLeave(() => {
         :width="null"
         priority="high"
         loading="eager"
-        class="!absolute !inset-0 children:!w-available hidden sm:flex overflow-clip border-2 border-focus rounded-2xl"
+        class="!absolute !inset-0 children:!w-available flex overflow-clip border-2 border-focus rounded-2xl"
         className="relative flex !w-available min-h-full flex-shrink-0 flex-grow-0 items-end justify-start gap-4 self-stretch overflow-clip transition-opacity duration-700 bg-auto-1 h-full">
     </TMDBImage>
 
@@ -87,7 +89,7 @@ onIonViewWillLeave(() => {
         :colorPalette="data?.color_palette?.poster"
         :style="`--color-focus: ${ringPosterColor};`"
         :width="null"
-        class="!absolute !inset-0 children:!w-available flex sm:hidden overflow-clip border-2 border-focus rounded-2xl"
+        class="!absolute !inset-0 children:!w-available flex overflow-clip border-2 border-focus rounded-2xl"
         className="relative flex !w-available min-h-full flex-shrink-0 flex-grow-0 items-end justify-start gap-4 self-stretch overflow-clip transition-opacity duration-700 bg-auto-50 h-full"
         loading="eager">
     </TMDBImage>
@@ -97,7 +99,7 @@ onIonViewWillLeave(() => {
 
     <div class="flex w-full flex-grow flex-col items-end justify-end gap-2">
       <div class="flex flex-shrink-0 flex-grow-0 items-start justify-start self-stretch rounded-3xl p-4">
-        <div class="relative hidden flex-grow flex-col items-start justify-start gap-4 sm:flex">
+        <div class="relative flex-grow flex-col items-start justify-start gap-4">
           <div class="relative flex flex-shrink-0 flex-grow-0 items-end justify-between gap-4 self-stretch w-available">
 
             <div v-if="data?.logo" class="flex h-screen max-h-40 max-w-md flex-grow">

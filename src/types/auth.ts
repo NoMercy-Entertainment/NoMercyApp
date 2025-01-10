@@ -9,13 +9,9 @@ export interface User {
 	moderator: boolean;
 	servers: Server[];
 	currentServer: Server;
-	messages: Message[];
-
-	accessToken: string;
-	expiresIn: number;
-	refreshToken: string;
-	idToken: string;
-	refreshIn: number;
+	receivedMessages: Message[];
+	sendMessages: Message[];
+	notifications: Message[];
 }
 
 export interface Server {

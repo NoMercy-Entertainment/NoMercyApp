@@ -6,12 +6,11 @@ import type {QueueResponse, ServerEncoderProgress} from '@/types/api/dashboard/s
 import {sortBy} from '@/lib/stringArray';
 import useServerClient from '@/lib/clients/useServerClient';
 import useHubListener from '@/hooks/useHubListener';
-import {socketInstance} from '@/store/socket';
+import {connection} from "@/lib/clients/dashboardSocket";
 
 import SystemCard from '../ServerSystemCard.vue';
 import ServerEncoderTaskCard from './ServerEncoderTaskCard.vue';
 import ServerQueueTaskCard from './ServerQueueTaskCard.vue';
-import {connection} from "@/lib/clients/dashboardSocket";
 
 onMounted(() => {
   encoderData.value = [];
@@ -27,15 +26,15 @@ const {data: queueData, refetch} = useServerClient<QueueResponse[]>({
 
 const handleProgress = (data: ServerEncoderProgress) => {
   if (data.status == 'running' || data.status == 'paused') {
-    encoderData.value = sortBy([...encoderData.value.filter(item => item?.id !== data?.id), data], 'id');
+    encoderData.value = sortBy([...encoderData.value.filter(item => item?.process_id !== data?.process_id), data], 'process_id');
   } else {
-    encoderData.value = sortBy([...encoderData.value.filter(item => item?.id !== data?.id)], 'id');
+    encoderData.value = sortBy([...encoderData.value.filter(item => item?.process_id !== data?.process_id)], 'process_id');
     refetch();
   }
 };
 
 const filteredQueueData = computed(() => {
-  return queueData.value?.filter(item => !encoderData.value.find(encoder => encoder.id === item.id));
+  return queueData.value?.filter(item => !encoderData.value.find(encoder => encoder.process_id === item.process_id));
 });
 
 const handleQueue = (data: QueueResponse[]) => {
@@ -61,11 +60,11 @@ useHubListener(connection, 'disconnected', handleClear);
 
     </template>
 
-    <template v-for="data in encoderData ?? []" :key="data.id">
+    <template v-for="data in encoderData ?? []" :key="data.process_id">
       <ServerEncoderTaskCard :data="data"/>
     </template>
 
-    <template v-for="data in filteredQueueData" :key="data.id">
+    <template v-for="data in filteredQueueData" :key="data.process_id">
       <ServerQueueTaskCard :data="data"/>
     </template>
   </SystemCard>

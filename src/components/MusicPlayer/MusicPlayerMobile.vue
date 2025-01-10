@@ -13,7 +13,7 @@ defineProps({
   },
 });
 
-audioPlayer.value?.on?.('song', (item) => {
+audioPlayer.on?.('song', (item) => {
 	if (item) {
 		setMusicVisibility(VisibilityState.showing);
 

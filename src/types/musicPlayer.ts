@@ -1,7 +1,7 @@
-import type {Artist} from '@/types/api/music/artist';
-import type { ServerLibrary} from '@/types/server';
-import type {Album} from '@/types/api/music/album';
 import type {ColorPalettes} from '@/types/api/shared';
+import type {Artist} from '@/types/api/music/artist';
+import type {Album} from '@/types/api/music/album';
+import type {DisplayList} from "@/types/api/music/musicPlayer";
 
 export enum VisibilityState {
 	hidden = 'hidden',
@@ -27,33 +27,15 @@ export enum SortOrder {
 	desc = 'desc',
 }
 
-export enum State {
-	idle = 'idle',
-	loading = 'loading',
-	ready = 'ready',
-	error = 'error',
-}
-
-export enum PlayState {
-	paused = 'paused',
-	playing = 'playing',
-}
-
-export enum MutedState {
-	unmuted = 'unmuted',
-	muted = 'muted',
-}
-
 export interface Music {
 	playlists: any[];
 	audio: HTMLAudioElement;
-	backLog: Song[];
-	// context: Context;
-	currentSong: Song;
+	backLog: PlaylistItem[];
+	currentSong: PlaylistItem;
 	currentSongIndex: number;
-	crossfadeSteps: number;
+	crossFadeSteps: number;
 	displayList: DisplayList;
-	filteredList: Song[];
+	filteredList: PlaylistItem[];
 	durationState: number;
 	fadeDuration: number;
 	isCurrentDevice: boolean;
@@ -63,7 +45,7 @@ export interface Music {
 	mutedState: string;
 	playState: string;
 	positionState: number;
-	queue: Song[];
+	queue: PlaylistItem[];
 	showLyrics: boolean;
 	shuffle: boolean;
 	repeat: boolean;
@@ -71,69 +53,41 @@ export interface Music {
 	volumeState: number;
 }
 
-export enum MusicType {
-	artist = 'artist',
-	album = 'album',
-	playlist = 'playlist',
-	search = 'search',
-	genre = 'genre',
-}
-
-
-export interface MusicCardPageResponse {
-	type: string;
-	data: MusicCardPageResponseData[];
-}
-
-export interface MusicCardPageResponseData {
+export interface BasePlaylistItem {
+  id: string;
+  name: string;
+  cover: string | null;
+  path: string;
+  disc: number;
+  track: number;
+  album_track: {
 	id: string;
 	name: string;
-	title: string;
-	description: null;
-	folder: string;
-	cover: null | string;
-	logo?: null | string;
-	country: null | string;
-	year: number | null;
-	tracks: number;
-	track: Song[];
-	color_palette: ColorPalettes | null;
-	blurHash: null | string;
-	libraryId: string;
-	artists: Artist[];
-	type: string;
-	titleSort: string;
-	origin: string;
-	link: string;
-}
-
-export interface Song {
+	cover: string | null;
+	[key: string]: any;
+  }[];
+  artist_track: {
 	id: string;
 	name: string;
-	track: number;
-	disc: number;
-	cover: string;
-	folder: string;
-	filename: string;
+	cover: string | null;
+	[key: string]: any;
+  }[];
+  [key: string]: any;
+}
+
+export interface PlaylistItem extends BasePlaylistItem {
 	duration: string;
 	quality: number;
-	path: string;
-    media_type: string;
 	lyrics?: Lyric[] | null;
 	color_palette: ColorPalettes;
 	blurHash: string;
-	folder_id: string;
 	created_at: string;
 	updated_at: string;
 	album_track: Album[];
 	artist_track: Artist[];
 	track_user: any[];
-	type: string;
 	favorite: boolean;
-	origin: string;
-	libraryId: string;
 	date: string;
-	link: string;
 }
 
 export interface Lyric {
@@ -146,59 +100,4 @@ export interface Time {
 	minutes: number;
 	seconds: number;
 	hundredths: number;
-}
-
-export interface ArtistResponse {
-	id: string;
-	name: string;
-	description: null;
-	folder: string;
-	cover: string;
-	color_palette: ColorPalettes;
-	blurHash: string;
-	created_at: string;
-	updated_at: string;
-	library_id: string;
-	library: ServerLibrary;
-	type: string;
-	tracks: Song[];
-}
-
-export interface AlbumResponse {
-	id: string;
-	name: string;
-	description: null;
-	folder: string;
-	cover: string;
-	country: string;
-	year: number;
-	color_palette: ColorPalettes;
-	blurHash: null;
-	created_at: string;
-	updated_at: string;
-	library_id: string;
-	library: ServerLibrary;
-	artist: Artist;
-	type: string;
-	tracks: Song[];
-}
-
-export interface DisplayList {
-	id: string;
-	name: string;
-	description?: string | null;
-	cover: string | null;
-	backdrop: string | null;
-	folder: string;
-	color_palette: ColorPalettes;
-	libraryId: string;
-	trackId: null;
-	tracks: Song[];
-	artists?: Artist[];
-    media_type: string;
-	year: number | null;
-	artist: Artist;
-	type: 'track' | 'album' | 'artist';
-	favorite: boolean;
-	link: string;
 }

@@ -8,6 +8,7 @@ import {NavigationBar} from "@hugotomazi/capacitor-navigation-bar";
 import type {ColorScheme} from '@/types/config';
 
 import {isDarkMode} from '@/config/global';
+import {StatusBar, Style} from "@capacitor/status-bar";
 
 export const setColorScheme = async (value: ColorScheme) => {
 	document.body.classList.add('scheme-transition');
@@ -34,8 +35,6 @@ export const setColorScheme = async (value: ColorScheme) => {
 	}
 
 	if (isPlatform('capacitor') && isPlatform('android')) {
-		const {StatusBar, Style} = (await import('@capacitor/status-bar'));
-
 		NavigationBar.setTransparency({
 			isTransparent: false,
 		}).then();

@@ -1,12 +1,12 @@
 
-import {Song} from '@/types/musicPlayer';
+import {PlaylistItem} from '@/types/musicPlayer';
 
 export interface FavoritesResponse {
 	cover: string;
 	description: null;
 	name: string;
 	type: string;
-	track: Song[];
+	track: PlaylistItem[];
 }
 
 export interface Album {

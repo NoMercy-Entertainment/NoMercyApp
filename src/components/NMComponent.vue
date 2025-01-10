@@ -18,13 +18,13 @@ const props = defineProps({
   },
 });
 
-const kc = props.options.queryKey ?? queryKey();
+const qk = props.options.queryKey ?? queryKey();
 
-const isMutating = getMutating(kc);
+const isMutating = getMutating(qk);
 
-const {data: homeData} = getQuery(kc);
+const {data: homeData} = getQuery(qk);
 
-const {data: mutatedData, mutate} = getMutation({key: kc, homeData: homeData});
+const {data: mutatedData, mutate} = getMutation({key: qk, homeData: homeData});
 
 onMounted(() => {
   if (!homeData.value) return;

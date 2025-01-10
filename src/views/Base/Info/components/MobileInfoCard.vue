@@ -1,12 +1,12 @@
 <script setup lang="ts">
-import {computed, type PropType, ref} from "vue";
+import {computed, type PropType} from "vue";
 import {useRoute} from "vue-router";
 
 import type {LibraryResponse} from "@/types/api/base/library";
 import type {InfoResponse} from "@/types/api/base/info";
 import type {ContinueWatching, HomeItem} from "@/types/api/base/home";
 import type {Collection, CollectionResponse} from "@/types/api/base/collection";
-import type {DisplayList, Song} from "@/types/musicPlayer";
+import type {PlaylistItem} from "@/types/musicPlayer";
 
 import {isNative} from "@/config/global";
 import useServerClient from "@/lib/clients/useServerClient";
@@ -21,7 +21,7 @@ const route = useRoute();
 
 const props = defineProps({
   data: {
-    type: Object as PropType<LibraryResponse | InfoResponse | HomeItem | ContinueWatching | Collection | Song | DisplayList | CollectionResponse | undefined>,
+    type: Object as PropType<LibraryResponse | InfoResponse | HomeItem | ContinueWatching | Collection | PlaylistItem  | CollectionResponse | undefined>,
     required: false,
   },
   toggleTrailer: {
@@ -44,11 +44,6 @@ const playbackStatus = computed(() => {
   return 'Unavailable';
 });
 
-const image = computed(() => {
-  // @ts-ignore
-  return props.data?.poster || props.data?.backdrop || props.data?.profile || poster.value;
-});
-
 const title = computed(() => {
   // @ts-ignore
   return props.data?.title ?? props.data?.name;
@@ -57,7 +52,7 @@ const title = computed(() => {
 </script>
 
 <template>
-  <div v-if="image"
+  <div v-if="poster"
       class="frosting flex-grow-0 flex-shrink-0 w-[280px] h-[420px] z-10 absolute left-1/2 -translate-x-1/2 overflow-clip rounded-2xl"
       :class="{
             'top-safe-offset-12': isNative,
@@ -67,9 +62,9 @@ const title = computed(() => {
     <div
         class="flex flex-col justify-start items-start w-[280px] absolute left-0 top-0 bg-cover bg-no-repeat bg-center">
       <TMDBImage
-          :key="image ?? 'poster'"
+          :key="poster ?? 'poster'"
           :autoShadow="true"
-          :path="image"
+          :path="poster"
           :colorPalette="data?.color_palette?.poster"
           :size="760"
           priority="high"
@@ -83,7 +78,7 @@ const title = computed(() => {
 
     <CardShadow colored />
 
-    <div class="flex justify-start items-start w-[280px] absolute left-0 top-[348px] gap-4 p-4">
+    <div class="flex justify-start items-start w-[280px] absolute left-0 top-[348px] gap-4 p-4 z-40">
 
       <RouterLink
           :to="`${data?.link}/watch`"

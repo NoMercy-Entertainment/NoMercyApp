@@ -22,9 +22,10 @@ import Trailer from "@/views/Base/Info/components/Trailer.vue";
 import HeaderItem from "@/views/Base/Person/components/HeaderItem.vue";
 import Collapsible from "@/views/Base/Person/components/Collapsible.vue";
 import MobileInfoCard from "@/views/Base/Info/components/MobileInfoCard.vue";
-import InfoHeaderItem from "@/views/Base/Info/components/InfoHeaderItem.vue";
 import {t} from "i18next";
-import {convertToHumanReact} from "../../../lib/dateTime";
+import {convertToHumanReact} from "@/lib/dateTime";
+import TMDBImage from "@/components/Images/TMDBImage.vue";
+import {currentServer} from "@/store/currentServer";
 
 const route = useRoute();
 const enabled = ref(false);
@@ -37,8 +38,8 @@ const interval = ref<NodeJS.Timeout | null>(null);
 
 const content = ref<VueDivElement>();
 const backgroundUrl = computed(() => {
-  return `${tmdbImageBaseUrl}/original${background.value}`;
-  // return `${currentServer.value?.serverBaseUrl}/images/original${background.value}`;
+  // return `${tmdbImageBaseUrl}/original${background.value}`;
+  return `${currentServer.value?.serverBaseUrl}/images/original${background.value}`;
 });
 
 const {data} = useServerClient<InfoResponse>({
@@ -175,17 +176,31 @@ const processTrailer = (value: InfoResponse | undefined) => {
         :style="`--background-image: ${backgroundUrl && !backgroundUrl.includes('null') ? `url(${backgroundUrl})` : ''};`"
     >
 
-      <MobileInfoCard :data="data" :toggleTrailer="toggleTrailer" />
-
       <div
-          class="flex z-0 flex-col justify-start items-center self-stretch flex-grow overflow-hidden gap-4 will-change-auto text-slate-lightA-12/70 dark:text-slate-darkA-12/80"
+          class="flex z-0 flex-col justify-start items-center self-stretch flex-grow overflow-hidden gap-4 will-change-auto text-slate-lightA-12/70 dark:text-slate-darkA-12/80 z-0"
           style="box-shadow: 0 2px 2px 0 rgba(0,0,0,0.16);"
       >
         <div
             class="flex justify-start items-end flex-grow-0 flex-shrink-0 -mx-4 w-available h-[410px] relative gap-2">
+
           <div
-              class="absolute flex flex-col justify-start items-end flex-grow w-available -mx-20 h-[410px] bg-cover bg-top"
-              style="background: linear-gradient(0deg, rgba(0, 0, 0, 0.30) 0%, rgba(0, 0, 0, 0.30) 100%), var(--background-image) lightgray 50% / cover no-repeat;"></div>
+              class="absolute flex flex-col justify-start items-end flex-grow w-available -mx-20 h-[410px] z-10"
+              style="background: linear-gradient(0deg, rgba(0, 0, 0, 0.50) 0%, rgba(0, 0, 0, 0.50) 100%)"></div>
+
+          <TMDBImage
+              :key="background ?? 'background'"
+              :autoShadow="true"
+              :path="background"
+              :colorPalette="data?.color_palette?.poster"
+              :size="500"
+              priority="low"
+              :title="data?.title ?? data?.name"
+              aspect="poster"
+              loading="eager"
+              class="absolute flex flex-col justify-start items-end flex-grow w-available -mx-20 h-[410px] bg-cover bg-top z-0"
+              className="bg-top"
+              type="image"/>
+
         </div>
 
         <div
@@ -297,6 +312,8 @@ const processTrailer = (value: InfoResponse | undefined) => {
 
         </div>
       </div>
+
+      <MobileInfoCard :data="data" :toggleTrailer="toggleTrailer" />
 
       <Trailer v-if="data?.videos && data?.videos?.length > 0 && trailerOpen"
                :key="trailerIndex"

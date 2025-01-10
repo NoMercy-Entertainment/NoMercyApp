@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import {computed, onMounted, ref, watch} from 'vue';
+import {computed, onMounted, ref} from 'vue';
 
-import type {Song} from '@/types/musicPlayer';
+import type {PlaylistItem} from '@/types/musicPlayer';
 
 import serverClient from '@/lib/clients/serverClient';
 import {setTitle} from '@/lib/stringArray';
@@ -46,11 +46,10 @@ const createMusicDatasetAttribute = (data: any) => {
 onMounted(() => {
   if (!currentServer.value) return;
 
-  audioPlayer.value?.on?.('song', (item) => {
+  audioPlayer.on?.('song', (item) => {
     shouldSubmitPlayback.value = true;
 
     if (item) {
-      // setMusicColor(pickPaletteColor(item?.color_palette?.cover));
       setTitle(`${item.name} - ${item.artist_track.at(0)?.name} - ${item.album_track.at(0)?.name}`);
     }
 
@@ -65,34 +64,7 @@ onMounted(() => {
     );
   });
 
-  audioPlayer.value?.on?.('time', (data) => {
-    if (Math.floor(data.percentage) == 50 && shouldSubmitPlayback.value) {
-      shouldSubmitPlayback.value = false;
-      submitPlayback();
-    }
-  });
-});
-
-watch(audioPlayer, (value) => {
-  value?.on?.('song', (item) => {
-    shouldSubmitPlayback.value = true;
-
-    if (item) {
-      // setMusicColor(pickPaletteColor(item?.color_palette?.cover));
-    }
-
-    dataAttribute.value = createMusicDatasetAttribute(
-        Object.keys(item as object)
-            .filter(key => key !== 'lyrics')
-            .reduce((obj, key) => {
-              // @ts-ignore
-              obj[key] = item[key];
-              return obj;
-            }, {})
-    );
-  });
-
-  value?.on?.('time', (data) => {
+  audioPlayer.on?.('time', (data) => {
     if (Math.floor(data.percentage) == 50 && shouldSubmitPlayback.value) {
       shouldSubmitPlayback.value = false;
       submitPlayback();
@@ -104,7 +76,7 @@ const submitPlayback = async () => {
   if (!currentSong.value) return;
 
   await serverClient()
-      .post<Song>(`music/tracks/${currentSong.value?.id}/playback`);
+      .post<PlaylistItem>(`music/tracks/${currentSong.value?.id}/playback`);
 };
 
 const leftSize = computed(() => {

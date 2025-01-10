@@ -5,16 +5,15 @@ import type {HomeDataItem} from '@/types/api/music';
 import type {Artist, ArtistResponse, Featured} from '@/types/api/music/artist';
 import type {Album, AlbumResponse,} from '@/types/api/music/album';
 import type {DisplayList, MusicCardPageResponseData} from '@/types/api/music/musicPlayer';
-import type {Song} from '@/types/musicPlayer';
+import type {PlaylistItem} from '@/types/musicPlayer';
 
 import {currentServer} from '@/store/currentServer';
 
 import AppLogoSquare from '@/components/Images/icons/AppLogoSquare.vue';
-import {IonCol} from "@ionic/vue";
 
 const props = defineProps({
   data: {
-    type: Object as PropType<HomeDataItem | Song | Artist | Album | DisplayList | MusicCardPageResponseData | AlbumResponse | ArtistResponse | Featured | undefined | null>,
+    type: Object as PropType<HomeDataItem | PlaylistItem | Artist | Album | DisplayList | MusicCardPageResponseData | AlbumResponse | ArtistResponse | Featured | undefined | null>,
     required: false,
   },
   className: {
@@ -47,7 +46,7 @@ const props = defineProps({
     required: false,
   },
   handleFocus: {
-    type: Function as PropType<(e: FocusEvent, track: Song) => void>,
+    type: Function as PropType<(e: FocusEvent, track: PlaylistItem) => void>,
     required: false,
   },
   size: {
@@ -74,7 +73,7 @@ const image = () => {
   }
 
   if (props.data?.cover?.startsWith('/')) {
-    source.value = encodeURI(`${currentServer.value?.serverBaseUrl}/images/music${props.data?.cover}`);
+    source.value = encodeURI(`${currentServer.value?.serverBaseUrl}${props.data?.cover}`);
     return;
   }
 

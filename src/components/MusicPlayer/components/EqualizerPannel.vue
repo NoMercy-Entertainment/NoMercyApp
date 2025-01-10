@@ -15,7 +15,9 @@ import RangeSlider from "@/components/Forms/RangeSlider.vue"
   <div
       class="flex flex-col justify-start items-start relative gap-8 w-full h-full sm:p-8"
   >
-    <p class="text-xl font-bold">Equaliser</p>
+    <p class="text-xl font-bold">
+      {{ $t('Equaliser') }}
+    </p>
 
     <div class="flex items-center self-stretch relative gap-2">
       <p class="leading-none text-xs">L</p>
@@ -107,7 +109,9 @@ import RangeSlider from "@/components/Forms/RangeSlider.vue"
               endIcon="arrowCounterClockwise"
               id="reset"
       >
-        <span>{{ $t('Reset') }}</span>
+        <span>
+          {{ $t('Reset') }}
+        </span>
       </Button>
     </div>
 

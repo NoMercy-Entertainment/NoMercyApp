@@ -32,6 +32,7 @@ export interface HomeDataItem {
 	Artist?: Artist[];
 	Album?: Album[];
 	link: string;
+	type: string;
 }
 
 export interface Count {

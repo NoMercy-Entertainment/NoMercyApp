@@ -1,4 +1,4 @@
-import type { Song } from '@/types/api/music/musicPlayer';
+import type { PlaylistItem } from '@/types/api/music/musicPlayer';
 import type { PaletteColors } from '../shared';
 
 export interface PlaylistsResponse {

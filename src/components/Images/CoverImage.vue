@@ -6,7 +6,7 @@ import type {PaletteColors} from "@/types/api/shared";
 import type {DisplayList, MusicCardPageResponseData} from "@/types/api/music/musicPlayer";
 import type {Album, AlbumResponse} from "@/types/api/music/album";
 import type {Artist} from "@/types/api/music/artist";
-import type {Song} from '@/types/musicPlayer';
+import type {PlaylistItem} from '@/types/musicPlayer';
 
 import {hexLighter} from "@/lib/colorHelper";
 import {currentServer} from '@/store/currentServer';
@@ -15,7 +15,7 @@ import AppLogoSquare from '@/components/Images/icons/AppLogoSquare.vue';
 
 const props = defineProps({
     data: {
-        type: Object as PropType<HomeDataItem | Song | Artist | Album | DisplayList | MusicCardPageResponseData | AlbumResponse | undefined | null>,
+        type: Object as PropType<HomeDataItem | PlaylistItem | Artist | Album | DisplayList | MusicCardPageResponseData | AlbumResponse | undefined | null>,
         required: false,
     },
     className: {
@@ -48,7 +48,7 @@ const props = defineProps({
         required: false,
     },
     handleFocus: {
-        type: Function as PropType<(e: FocusEvent, track: Song) => void>,
+        type: Function as PropType<(e: FocusEvent, track: PlaylistItem) => void>,
         required: false,
     },
     size: {
@@ -66,7 +66,7 @@ const error = ref(false);
 const opacity = ref(0);
 
 const baseImageUrl = computed(() => {
-    return `${currentServer.value?.serverBaseUrl}/images/music${props.data?.cover}`;
+    return `${currentServer.value?.serverBaseUrl}${props.data?.cover}`;
 });
 
 const remove = (e: ErrorEvent) => {

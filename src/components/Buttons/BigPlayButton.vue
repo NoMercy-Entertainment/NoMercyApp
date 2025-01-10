@@ -41,50 +41,50 @@ const handleClick = () => {
   if (props.data?.tracks?.[0]) {
     if (isCurrentPlaylist.value) {
       if (isPlaying.value && isCurrentPlaylist.value) {
-        audioPlayer.value?.pause();
+        audioPlayer.pause();
       } else {
-        audioPlayer.value?.play();
+        audioPlayer.play();
       }
     } else {
-      audioPlayer.value?.setQueue([]);
-      audioPlayer.value?.setBackLog([]);
+      audioPlayer.setQueue([]);
+      audioPlayer.setBackLog([]);
 
       const song = props.data.tracks.find(track => track.id == currentSong.value?.id);
 
       if (currentSong.value?.id && song) {
-        audioPlayer.value?.playTrack(song, props.data?.tracks ?? []);
+        audioPlayer.playTrack(song, props.data?.tracks ?? []);
       } else {
-        audioPlayer.value?.playTrack(props.data?.tracks?.[0], props.data?.tracks ?? []);
+        audioPlayer.playTrack(props.data?.tracks?.[0], props.data?.tracks ?? []);
       }
 
       setCurrentList();
-      state.value = audioPlayer.value?.isPlaying ?? false;
+      state.value = audioPlayer.isPlaying ?? false;
     }
   }
 };
 
 const setIsPlaying = () => {
   if (isCurrentPlaylist.value) {
-    state.value = audioPlayer.value?.isPlaying ?? false;
+    state.value = audioPlayer.isPlaying ?? false;
   }
 };
 
 watch(currentPlaylist, () => {
   if (isCurrentPlaylist.value) {
-    state.value = audioPlayer.value?.isPlaying ?? false;
+    state.value = audioPlayer.isPlaying ?? false;
   }
 });
 
-watch(audioPlayer, () => {
+onUnmounted(() => {
   setIsPlaying();
 
-  audioPlayer.value?.on?.('play', setIsPlaying);
-  audioPlayer.value?.on?.('pause', setIsPlaying);
+  audioPlayer.on?.('play', setIsPlaying);
+  audioPlayer.on?.('pause', setIsPlaying);
 });
 
 onUnmounted(() => {
-  audioPlayer.value?.off('play', setIsPlaying);
-  audioPlayer.value?.off('pause', setIsPlaying);
+  audioPlayer.off('play', setIsPlaying);
+  audioPlayer.off('pause', setIsPlaying);
 });
 
 </script>

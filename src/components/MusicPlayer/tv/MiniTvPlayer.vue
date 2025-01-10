@@ -2,7 +2,7 @@
 import { PropType, watch } from 'vue';
 import { useTranslation } from 'i18next-vue';
 
-import type { Song } from '@/types/musicPlayer';
+import type { PlaylistItem } from '@/types/musicPlayer';
 
 import {isPlaying, musicSize, musicVisibility, setMusicSize} from '@/store/audioPlayer';
 import sidebar from '@/store/sidebar';
@@ -16,7 +16,7 @@ const { t } = useTranslation();
 
 defineProps({
 	currentSong: {
-		type: Object as PropType<Song | null>,
+		type: Object as PropType<PlaylistItem | null>,
 		required: false,
 	},
 });

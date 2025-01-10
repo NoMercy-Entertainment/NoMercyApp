@@ -9,6 +9,7 @@ import router from '@/router';
 
 import TvCarousel from '@/views/Base/Home/components/TvCarousel.vue';
 import TvHomeCard from '@/views/Base/Home/components/TvHomeCard.vue';
+import {musicVisibility} from "@/store/audioPlayer";
 
 const routeName = router.currentRoute.value.name;
 

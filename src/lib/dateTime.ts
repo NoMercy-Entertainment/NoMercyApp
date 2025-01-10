@@ -1,5 +1,5 @@
 import {pad} from './stringArray';
-import {Song} from '@/types/musicPlayer';
+import {PlaylistItem} from '@/types/musicPlayer';
 import {t} from 'i18next';
 import i18next from '@/config/i18next';
 
@@ -172,7 +172,7 @@ export const sleep = function(ms: number) {
 export const calculateDuration = <T>(value?: T) => {
     if (!value) return
     return convertToHumanReact(t,
-        (value as { tracks?: Song[]})?.tracks
+        (value as { tracks?: PlaylistItem[]})?.tracks
             ?.map(track => convertToSeconds(track.duration))
             .reduce((prev, curr) => prev + curr, 0) ?? 0);
 };

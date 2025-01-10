@@ -129,9 +129,8 @@ export default {
       //
       // },
       fontFamily: {
-        sans: ['Figtree', ...defaultTheme.fontFamily.sans],
-        // sans: ['Inter', ...defaultTheme.fontFamily.sans],
-        bbc: ['BBC Reith Sans', ...defaultTheme.fontFamily.sans],
+        // sans: ['Figtree', ...defaultTheme.fontFamily.sans],
+        sans: ['Inter', ...defaultTheme.fontFamily.sans],
       },
       fontWeight: {
         'theme-thin': '100',

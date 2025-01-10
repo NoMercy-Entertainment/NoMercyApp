@@ -76,11 +76,13 @@ export interface ServerTask {
 
 export interface QueueResponse {
 	id: number;
+	payload_id: number;
 	title: string;
 	input_file: boolean;
 	profile: boolean;
 	status: string;
 	type: string;
+	priority: number;
 }
 
 export interface PauseResumeResponse {

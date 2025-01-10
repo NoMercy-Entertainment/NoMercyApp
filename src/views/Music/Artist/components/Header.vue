@@ -41,13 +41,13 @@ const backdrop = computed(() => {
         ?.find(image => image.type === 'background');
   }
   if (!image) return;
-	return currentServer.value?.serverBaseUrl + '/images/music' + image?.src;
+	return currentServer.value?.serverBaseUrl + '' + image?.src;
 });
 
 // const logo = computed(() => {
 //     const image = props.data?.images?.find(image => image.type === 'hdLogo');
 //     if (!image) return;
-//     return serverLocation.value?.serverBaseUrl + '/images/music' + image?.src;
+//     return serverLocation.value?.serverBaseUrl + '' + image?.src;
 // });
 
 const isCurrentPlaylist = computed(() => {
@@ -63,20 +63,20 @@ const handlePlay = () => {
 	if (props.data?.tracks?.[0]) {
 		if (isCurrentPlaylist.value) {
 			if (isPlaying.value) {
-				audioPlayer.value?.pause();
+				audioPlayer.pause();
 			} else {
-				audioPlayer.value?.play();
+				audioPlayer.play();
 			}
 		} else {
-			audioPlayer.value?.setQueue([]);
-			audioPlayer.value?.setBackLog([]);
+			audioPlayer.setQueue([]);
+			audioPlayer.setBackLog([]);
 
 			const song = props.data.tracks.find(track => track.id == currentSong.value?.id);
 
 			if (currentSong.value?.id && song) {
-				audioPlayer.value?.playTrack(song, props.data?.tracks ?? []);
+				audioPlayer.playTrack(song, props.data?.tracks ?? []);
 			} else {
-				audioPlayer.value?.playTrack(props.data?.tracks?.[0], props.data?.tracks ?? []);
+				audioPlayer.playTrack(props.data?.tracks?.[0], props.data?.tracks ?? []);
 			}
 
 			setCurrentList();

@@ -14,7 +14,7 @@
     "noEmit": true,
     "paths": {
       "@/*": ["./src/*"],
-      "@Icons/*": ["./resources/icons/*"],
+      "@Icons/*": ["./resources/icons/*"]
     }
   },
   "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue", "resources/**/*.ts"],

@@ -39,7 +39,7 @@ const {t} = useTranslation();
              }"
         >
 
-          <p class="w-10 text-base font-bold text-auto self-start">
+          <p class="w-10 text-base font-bold text-auto self-start whitespace-nowrap">
 
             {{ item.year == 0 ? '—' : item.year }}
           </p>

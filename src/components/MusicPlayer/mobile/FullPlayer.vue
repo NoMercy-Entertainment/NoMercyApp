@@ -21,7 +21,7 @@ import {colorPalette, setColorPalette} from '@/store/ui';
 
 import {Swiper} from 'swiper';
 import {Swiper as SwiperComponent} from 'swiper/vue';
-import {Song} from '@/types/musicPlayer';
+import {PlaylistItem} from '@/types/musicPlayer';
 import ChristmasSnow from "@/components/Seasonal/Christmas/ChristmasSnow.vue";
 import NavBar from "@/Layout/Mobile/components/NavBar.vue";
 
@@ -34,7 +34,7 @@ const oldColorPalette = ref<PaletteColors | null | undefined>();
 const currentFullPlaylistItem = ref(0);
 const swiper = ref<VueSwiperElement>();
 const loading = ref<'lazy'|'eager'>('lazy');
-const fullPlaylist = ref<Song[]>([currentSong.value!, ...Object.values(queue.value!)]);
+const fullPlaylist = ref<PlaylistItem[]>([currentSong.value!, ...Object.values(queue.value!)]);
 
 watch(lyricsSize, () => {
   setTimeout(() => {
@@ -89,9 +89,9 @@ const focusColor = computed(() => {
 const handleSwiperChange = (swiper: Swiper) => {
   if (swiper.touches.diff == 0) return;
   if(swiper.touches.startX > swiper.touches.currentX) {
-    audioPlayer.value?.next();
+    audioPlayer.next();
   } else {
-    audioPlayer.value?.previous();
+    audioPlayer.previous();
   }
 };
 

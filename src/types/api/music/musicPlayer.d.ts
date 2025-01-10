@@ -1,35 +1,6 @@
-import type { LibraryItem } from '../base/library';
-import type { ColorPalettes } from '../shared';
-import { Album } from '@/types/api/music/album';
-import { Artist } from '@/types/api/music/artist';
-import {Song} from '@/types/musicPlayer';
-
-export interface Music {
-	playlists: any[];
-	audio: HTMLAudioElement;
-	backLog: Song[];
-	// context: Context;
-	currentSong: Song;
-	currentSongIndex: number;
-	crossfadeSteps: number;
-	displayList: DisplayList;
-	filteredList: Song[];
-	durationState: number;
-	fadeDuration: number;
-	isCurrentDevice: boolean;
-	lyrics: string;
-	sortType: string;
-	sortOrder: string;
-	mutedState: string;
-	playState: string;
-	positionState: number;
-	queue: Song[];
-	showLyrics: boolean;
-	shuffle: boolean;
-	repeat: boolean;
-	state: string;
-	volumeState: number;
-}
+import type {Artist} from '@/types/api/music/artist';
+import type {PlaylistItem} from "@/types/musicPlayer";
+import type {ColorPalettes} from "@/types/api/shared";
 
 export interface MusicCardPageResponseData {
 	id: string;
@@ -42,7 +13,7 @@ export interface MusicCardPageResponseData {
 	country: null | string;
 	year: number | null;
 	tracks: number;
-	track: Song[];
+	track: PlaylistItem[];
 	color_palette: ColorPalettes | null;
 	blurHash: null | string;
 	libraryId: string;
@@ -51,18 +22,7 @@ export interface MusicCardPageResponseData {
 	titleSort: string;
 	origin: string;
 	link: string;
-}
-
-export interface Lyric {
-	text: string;
-	time: Time;
-}
-
-export interface Time {
-	total: number;
-	minutes: number;
-	seconds: number;
-	hundredths: number;
+	type: string;
 }
 
 export interface ArtistResponse {
@@ -78,7 +38,7 @@ export interface ArtistResponse {
 	library_id: string;
 	library: string;
 	type: string;
-	tracks: Song[];
+	tracks: PlaylistItem[];
 }
 
 export interface AlbumResponse {
@@ -94,10 +54,10 @@ export interface AlbumResponse {
 	created_at: string;
 	updated_at: string;
 	library_id: string;
-	library: LibraryItem;
+	library: string;
 	artist: Artist;
 	type: string;
-	tracks: Song[];
+	tracks: PlaylistItem[];
 }
 
 export interface DisplayList {
@@ -110,11 +70,40 @@ export interface DisplayList {
 	color_palette: ColorPalettes;
 	libraryId: string;
 	trackId: null;
-	tracks: Song[];
+	tracks: PlaylistItem[];
 	artists?: Artist[];
     media_type: string;
 	year: number | null;
 	artist: Artist;
 	type: 'track' | 'album' | 'artist';
 	favorite: boolean;
+	link: string;
+}
+
+export interface MusicCardPageResponse {
+	type: string;
+	data: MusicCardPageResponseData[];
+}
+
+export interface MusicCardPageResponseData {
+	id: string;
+	name: string;
+	title: string;
+	description: null;
+	folder: string;
+	cover: null | string;
+	logo?: null | string;
+	country: null | string;
+	year: number | null;
+	tracks: number;
+	track: PlaylistItem[];
+	color_palette: ColorPalettes | null;
+	blurHash: null | string;
+	libraryId: string;
+	artists: Artist[];
+	type: string;
+	titleSort: string;
+	origin: string;
+	link: string;
+	type: string;
 }

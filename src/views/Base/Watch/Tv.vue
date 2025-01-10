@@ -1,11 +1,10 @@
 <script setup lang="ts">
-import {onBeforeUnmount, onMounted, onUnmounted, ref} from 'vue';
+import { onMounted, onUnmounted, ref} from 'vue';
 import {useRoute} from 'vue-router';
 import {useTranslation} from 'i18next-vue';
 import {IonContent, IonPage, isPlatform} from '@ionic/vue';
 import {App} from '@capacitor/app';
 
-import MediaSession from '@/lib/MediaSession';
 import {isNative} from '@/config/global';
 import {currentServer} from '@/store/currentServer';
 import {user} from '@/store/user';
@@ -20,7 +19,6 @@ import {
   OctopusPlugin,
   SyncPlugin
 } from '@/lib/VideoPlayer';
-import {pad} from '@/lib/stringArray';
 
 import audioPlayer from '@/store/audioPlayer';
 import router from "@/router";
@@ -49,11 +47,12 @@ const config: SetupConfig = {
     1.75,
     2,
   ],
-  accessToken: user.value?.accessToken || localStorage.getItem('access_token'),
+  accessToken: user.value?.accessToken || localStorage.getItem('access_token') || '',
   basePath: currentServer.value?.serverBaseUrl,
   forceTvMode: (isPlatform('android') || isPlatform('ios')) && !isPlatform('mobile'),
   disableTouchControls: false,
   disableMediaControls: 'mediaSession' in navigator || isPlatform('capacitor'),
+  renderAhead: 10,
 };
 
 interface MyNmPlayer extends NMPlayer {
@@ -67,7 +66,6 @@ interface MyNmPlayer extends NMPlayer {
 }
 
 const player = ref<MyNmPlayer>();
-const mediaSession = new MediaSession();
 
 const goBack =  () => {
   player.value?.emit('back-button');
@@ -114,59 +112,23 @@ onMounted(() => {
 
   player.value?.on('playlistComplete', () => {
     player.value?.dispose();
+    router.back();
   });
 
   player.value?.on('play', () => {
     setDisableScreensaver(true);
-    mediaSession.setPlaybackState('playing');
   });
 
   player.value?.on('pause', () => {
     setDisableScreensaver(false);
-    mediaSession.setPlaybackState('paused');
   });
 
   player.value?.on('ready', () => {
     hideNavBar();
-    audioPlayer.value?.stop();
-    mediaSession.setActionHandler({
-      play: () => player.value?.play(),
-      pause: () => player.value?.pause(),
-      stop: () => player.value?.stop(),
-      previous: () => player.value?.previous(),
-      next: () => player.value?.next(),
-      seek: (n) => player.value?.seek(n),
-      getPosition: () => player.value?.getCurrentTime() || 0,
-    });
-  });
-
-  player.value?.on('time', (data: any) => {
-    mediaSession.setPositionState({
-      position: data.currentTime,
-      duration: data.duration,
-      playbackRate: data.playbackRate,
-    });
-  });
-
-  player.value?.on('lastTimeTrigger', () => {
+    audioPlayer.stop();
   });
 
   player.value?.on('item', (playlistItem: PlaylistItem) => {
-
-    const parsedTitle = playlistItem.title
-        .replace('%S', t('S'))
-        .replace('%E', t('E'));
-
-    mediaSession.setMetadata({
-      title: parsedTitle,
-      artist: playlistItem.show ?? undefined,
-      album: playlistItem.season
-          // @ts-ignore
-          ? `${t('S')}${pad(playlistItem.season, 2)}${t('E')}${pad(playlistItem.episode, 2)}`
-          : undefined,
-      artwork: playlistItem.image?.replace('w300', 'w500'),
-    });
-
     player.value?.play();
   });
 
@@ -178,12 +140,7 @@ onMounted(() => {
     }
   });
 
-  player.value?.on('error', () => {
-    mediaSession?.setPlaybackState('none');
-  });
-
   player.value?.on('dispose', () => {
-    mediaSession?.setPlaybackState('none');
     router.back();
     showNavBar();
   });

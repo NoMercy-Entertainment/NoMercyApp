@@ -1,7 +1,9 @@
 <script setup lang="ts">
-import {PropType, onMounted, onUnmounted, ref, watch, nextTick} from 'vue';
+import {PropType, onMounted, onUnmounted, ref, watch} from 'vue';
 
 import type {DisplayList} from '@/types/api/music/musicPlayer';
+import {SizeState} from '@/types/musicPlayer';
+
 import audioPlayer, {
   currentSong, fullPlayerModalOpen,
   hasLyrics,
@@ -9,14 +11,14 @@ import audioPlayer, {
   musicSize,
   setMusicSize
 } from '@/store/audioPlayer';
-import {SizeState} from '@/types/musicPlayer';
+
+import LyricsOverlay from "@/Layout/Desktop/components/Overlays/LyricsOverlay.vue";
 
 import TrackLinks from '@/components/MusicPlayer/components/TrackLinks.vue';
 import ProgressBarContainer from '@/components/MusicPlayer/components/ProgressBarContainer.vue';
 import CoverImage from '@/components/MusicPlayer/components/CoverImage.vue';
 
 import ButtonContainer from './ButtonContainer.vue';
-import LyricsOverlay from "@/Layout/Desktop/components/Overlays/LyricsOverlay.vue";
 
 defineProps({
   data: {
@@ -24,8 +26,6 @@ defineProps({
     required: false,
   },
 });
-
-// const margin = ref(2.2);
 
 const togglePlayerSize = () => {
   if (musicSize.value === SizeState.compact) {
@@ -48,6 +48,8 @@ const timeout = ref<NodeJS.Timeout>();
 const controls = ref<HTMLDivElement>();
 const item = ref<HTMLDivElement>();
 const backdrop = ref<HTMLDivElement>();
+
+const canvas = ref<HTMLCanvasElement>();
 
 const showControls = () => {
   if (!item.value || !controls.value || !backdrop.value || !fullPlayerModalOpen.value) return;
@@ -85,7 +87,7 @@ const dynamicControls = () => {
   showControls();
 
   timeout.value = setTimeout(() => {
-    if (!audioPlayer.value?.isPlaying) return;
+    if (!audioPlayer.isPlaying) return;
     hideControls();
   }, 10000);
 };
@@ -105,15 +107,37 @@ onMounted(() => {
   document.addEventListener('mousemove', dynamicControls);
   document.addEventListener('backbutton', backButton);
 
-  audioPlayer.value?.on('pause', () => {
+  audioPlayer.on('pause', () => {
     showControls();
   });
-  audioPlayer.value?.on('play', () => {
+  audioPlayer.on('play', () => {
     dynamicControls();
   });
-  audioPlayer.value?.on('song', () => {
+  audioPlayer.on('song', () => {
     dynamicControls();
   });
+
+});
+
+watch(canvas, (value) => {
+  if (!value) return;
+  const context = value.getContext('2d', {
+    willReadFrequently: true,
+    desynchronized: true,
+  });
+
+  const draw = () => {
+    const sourceCanvas = audioPlayer._audioElement1?.motion?.canvas;
+    if (sourceCanvas) {
+      value.width = sourceCanvas.width;
+      value.height = sourceCanvas.height;
+      context!.clearRect(0, 0, value.width, value.height);
+      context!.drawImage(sourceCanvas, 0, 0, value.width, value.height);
+    }
+    requestAnimationFrame(draw);
+  };
+
+  draw();
 });
 
 onUnmounted(() => {
@@ -154,7 +178,7 @@ const ontransitionend = (e: TransitionEvent) => {
 </script>
 
 <template>
-  <div v-if="!!currentSong"
+  <div
        id="FullTvPlayer"
        class="top-0 grid grid-cols-1 transform-gpu grid-rows-1 left-0 h-screen w-screen overflow-hidden transition-transform will-change-transform duration-500 z-[1299] bg-slate-dark-1"
        :class="{
@@ -173,7 +197,8 @@ const ontransitionend = (e: TransitionEvent) => {
          }"
     >
 
-    <div id="backdrop" ref="backdrop"
+    <canvas ref="canvas" id="audio-visualizer" class="absolute top-0 left-0 my-24 mx-6 h-available w-available overflow-clip"></canvas>
+    <div id="audio-color" ref="backdrop"
          class="transform-gpu col-span-1 row-span-1 inset-0 w-full h-screen pointer-events-none bg-[var(--background)] opacity-[var(--backdrop-opacity)] transition-colors duration-1000"
          :class="{
             '!opacity-70': lyricsMenuOpen,
@@ -248,7 +273,8 @@ const ontransitionend = (e: TransitionEvent) => {
         </div>
       </div>
 
-      <div id="controls" ref="controls"
+      <div id="controls"
+           ref="controls"
            :ontransitionend="ontransitionend"
            class="absolute bottom-0 left-0 flex flex-col w-available h-40 items-center px-16 pt-4 mt-4 gap-4 delay-300 transform-gpu transition-all duration-500">
 

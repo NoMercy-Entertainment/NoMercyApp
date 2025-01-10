@@ -271,7 +271,7 @@ export default defineConfig({
 		host: true,
 	},
 	preview: {
-		port: 5501,
+		port: 5502,
 		host: true,
 	},
 	build: {
@@ -293,7 +293,6 @@ export default defineConfig({
 					// NMComponent: ['./src/components/NMComponent.vue'],
 					// NMHoMeCard: ['./src/components/NMHoMeCard.vue'],
 					// NMServerComponent: ['./src/components/NMServerComponent.vue'],
-					// MediaSession: ['/resources/ts/lib/MediaSession.ts'],
 					// SocketClient: ['/resources/ts/lib/clients/SocketClient/index.ts'],
 					// stringArray: ['/resources/ts/lib/stringArray.ts'],
 					// uuidHelper: ['/resources/ts/lib/uuidHelper.ts'],

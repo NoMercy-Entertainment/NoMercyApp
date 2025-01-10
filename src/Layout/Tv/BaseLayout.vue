@@ -15,7 +15,6 @@ import Screensaver from '@/Layout/Screensaver.vue';
 
 import Navbar from './components/NavBar.vue';
 import FullTvPlayer from "@/components/MusicPlayer/tv/FullTvPlayer.vue";
-import ChristmasSnow from "@/components/Seasonal/Christmas/ChristmasSnow.vue";
 
 </script>
 
@@ -27,7 +26,6 @@ import ChristmasSnow from "@/components/Seasonal/Christmas/ChristmasSnow.vue";
       </ion-router-outlet>
     </ion-tabs>
 
-    <ChristmasSnow />
     <ImageModal/>
     <!--      <Toast class="z-1199" />-->
     <Screensaver/>

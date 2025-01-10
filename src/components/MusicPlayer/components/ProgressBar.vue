@@ -25,7 +25,7 @@ const seekValue = ref(0);
 const debouncedSeekValue = useDebounce(seekValue, 50);
 
 watch(debouncedSeekValue, (value) => {
-    audioPlayer.value?.seek(value);
+    audioPlayer.seek(value);
 });
 
 const seek = (value: number) => {

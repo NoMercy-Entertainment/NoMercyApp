@@ -1,6 +1,5 @@
-import {SliderBar} from '@/lib/MusicPlayer/lib/sliderBar';
+import {SliderBar} from '@/lib/sliderBar';
 import {LogoResponse} from '@/types/server';
-import {ClickEventHandler} from "@/lib/utils";
 
 HTMLElement.prototype.sliderBar = function (player: any, callbackFn: string, getSizeFn?: string) {
     if (!(this instanceof HTMLElement) || this.dataset.type != 'slider-bar')
@@ -96,6 +95,8 @@ export const scrollToDiv = (i: string) => {
             `[data-scroll='scroll_${i}']`
         );
     }
+
+    console.log(target);
 
     document.dispatchEvent(new CustomEvent("scrollToDiv", { detail: { top: target?.offsetTop } }));
 

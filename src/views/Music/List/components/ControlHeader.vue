@@ -25,7 +25,7 @@ const props = defineProps({
 defineEmits(['filter-change']);
 
 const handleAdd = () => {
-    audioPlayer.value?.setQueue(props.data?.tracks ?? []);
+    audioPlayer.setQueue(props.data?.tracks ?? []);
 };
 
 </script>

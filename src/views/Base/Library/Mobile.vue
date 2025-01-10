@@ -111,7 +111,7 @@ const onRightClick = (event: Event, data: LibraryResponse | GenreResponse | Peop
             :key="router.currentRoute.value.params?.id as string">
 
           <div
-              :class="`grid w-full gap-4 scroll-smooth music-showing:pb-0 ${useBackdropStyle ? backdropStyle : posterStyle}`">
+              :class="`grid w-full gap-4 scroll-smooth music-showing:pb-0 pl-1 ${useBackdropStyle ? backdropStyle : posterStyle}`">
             <!--        <ContextMenu ref="cardMenu" :model="items"/>-->
             <template v-if="data">
               <template v-for="(group, index) in data.pages ?? []" :key="index">

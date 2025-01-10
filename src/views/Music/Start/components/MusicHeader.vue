@@ -29,9 +29,9 @@ watch(props, (value) => {
        :style="focusColor ? `--color-focus: ${focusColor}` : ''">
     <div class="w-[758px] h-[428px] absolute left-[202px] top-0 overflow-hidden bg-focus">
       <img class="w-[758px] h-[428px] absolute left-[-0.39px] top-[-0.39px] opacity-40 object-cover object-center"
-           :src="`${currentServer?.serverBaseUrl}/images/music${selected?.cover}`" alt=""/>
+           :src="`${currentServer?.serverBaseUrl}${selected?.cover}`" alt=""/>
 <!--      <img class="w-[225px] h-[225px] absolute right-[20%] top-[20%]"-->
-<!--           :src="`${currentServer?.serverBaseUrl}/images/music${selected?.cover}`" alt=""/>-->
+<!--           :src="`${currentServer?.serverBaseUrl}${selected?.cover}`" alt=""/>-->
       <div class="w-[758px] h-[428px] absolute left-[-0.39px] top-[-0.39px]"></div>
       <div
           class="w-[150vw] h-[150vw] absolute left-[-30%] bottom-[-50%]"

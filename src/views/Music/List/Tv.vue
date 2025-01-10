@@ -18,7 +18,7 @@ import BigPlayButton from "@/components/Buttons/BigPlayButton.vue";
 import MusicButton from "@/components/MusicPlayer/components/MusicButton.vue";
 import TrackLinks from "@/components/MusicPlayer/components/TrackLinks.vue";
 import {audioPlayer, currentSong, isPlaying, openFullPlayer, setCurrentPlaylist} from "@/store/audioPlayer";
-import {Song} from "@/types/musicPlayer";
+import {PlaylistItem} from "@/types/musicPlayer";
 import {focusColor, setColorPalette} from "@/store/ui";
 import {currentServer} from "@/store/currentServer";
 import EqSpinner from "@/components/Images/EqSpinner.vue";
@@ -117,12 +117,12 @@ const setCurrentList = () => {
   setCurrentPlaylist(route.fullPath);
 };
 
-const handleClick = (song: Song) => {
+const handleClick = (song: PlaylistItem) => {
   if (!currentSong.value) {
     setCurrentList();
   }
 
-  audioPlayer.value?.playTrack(song, data.value?.tracks ?? []);
+  audioPlayer.playTrack(song, data.value?.tracks ?? []);
   openFullPlayer()
 };
 
@@ -136,7 +136,7 @@ const handleClick = (song: Song) => {
            :style="focusColor ? `--color-focus: ${focusColor}` : ''">
         <div class="w-[758px] h-[428px] absolute left-[202px] top-0 overflow-hidden bg-focus">
           <img class="w-[758px] h-[428px] absolute left-[-0.39px] top-[-0.39px] opacity-40 object-cover object-center"
-               :src="`${currentServer?.serverBaseUrl}/images/music${data?.cover}`" alt=""/>
+               :src="`${currentServer?.serverBaseUrl}${data?.cover}`" alt=""/>
           <div
               class="w-[150vw] h-[150vw] absolute left-[-30%] bottom-[-50%]"
               style="

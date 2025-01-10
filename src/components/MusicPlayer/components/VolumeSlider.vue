@@ -5,7 +5,7 @@ import audioPlayer, {currentTime, duration, percentage} from '@/store/audioPlaye
 
 import SliderBar from '@/components/MusicPlayer/components/SliderBar.vue';
 
-const volumePercentage = ref<number>(audioPlayer.value?.volume ?? 0);
+const volumePercentage = ref<number>(audioPlayer.volume ?? 0);
 
 // watch(volume, (value) => {
 //   volumePercentage.value = value;
@@ -18,7 +18,7 @@ function calculateLogVolume(sliderValue: number, p = 1.5) {
 
 watch(volumePercentage, (value) => {
   const volume = calculateLogVolume(value);
-  audioPlayer.value?.setVolume(volume);
+  audioPlayer.setVolume(volume);
 });
 
 </script>

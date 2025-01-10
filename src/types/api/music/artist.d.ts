@@ -1,5 +1,5 @@
 import type {ColorPalettes, PaletteColors} from '../shared';
-import type {Song} from '@/types/api/music/musicPlayer';
+import type {PlaylistItem} from '@/types/api/music/musicPlayer';
 import type {Genre} from '@/types/api/base/genre';
 import type {Album} from '@/types/api/music/album';
 
@@ -18,6 +18,7 @@ export interface ArtistResponse {
 	type: string;
 	media_type: undefined;
 	favorite: boolean;
+	link: string;
 	tracks: Song[];
 	favorite_tracks: Song[];
 	playlists: Album[];

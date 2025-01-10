@@ -4,7 +4,7 @@ import {useRoute} from 'vue-router';
 import {IonContent, IonPage, onIonViewWillEnter, onIonViewWillLeave} from '@ionic/vue';
 
 import type {DisplayList} from '@/types/api/music/musicPlayer';
-import type {Song, SortOrder, SortType} from '@/types/musicPlayer';
+import type {PlaylistItem, SortOrder, SortType} from '@/types/musicPlayer';
 
 import {isNative} from '@/config/global';
 import useServerClient from '@/lib/clients/useServerClient';
@@ -27,7 +27,7 @@ const {data} = useServerClient<DisplayList>({
 
 const main = ref<HTMLDivElement | null>(null);
 
-const displayList = ref<Song[]>();
+const displayList = ref<PlaylistItem[]>();
 const filter = ref('');
 
 watch(data, (value) => {
@@ -52,9 +52,9 @@ watch(filter, (value) => {
   sort(data.value?.tracks ?? [], sortType.value, sortOrder.value, value);
 });
 
-const sort = (songs: Song[], sortType: SortType, sortOrder: SortOrder, value: string) => {
+const sort = (songs: PlaylistItem[], sortType: SortType, sortOrder: SortOrder, value: string) => {
 
-  const newList = sortByType<Song>(songs ?? [], sortType, sortOrder, setSortOrder);
+  const newList = sortByType<PlaylistItem>(songs ?? [], sortType, sortOrder, setSortOrder);
 
   if (value == '') {
     displayList.value = newList;

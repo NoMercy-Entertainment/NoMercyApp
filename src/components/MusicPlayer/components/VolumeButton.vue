@@ -6,7 +6,7 @@ import audioPlayer, {isMuted, volume} from '@/store/audioPlayer';
 
 const handleClick = (e?: MouseEvent) => {
 	e?.stopPropagation();
-	audioPlayer.value?.toggleMute();
+	audioPlayer.toggleMute();
 };
 </script>
 

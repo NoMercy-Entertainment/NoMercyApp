@@ -10,7 +10,7 @@ const handleClick = (e?: MouseEvent) => {
   setLyricsMenuOpen(false);
   setQueueMenuOpen(false);
   setDeviceMenuOpen(false);
-	audioPlayer.value?.stop();
+	audioPlayer.stop();
 };
 </script>
 

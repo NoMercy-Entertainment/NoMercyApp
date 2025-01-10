@@ -16,7 +16,7 @@ defineProps({
       viewBox="0 0 280 123"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
-      class="w-[280px] h-[122px] absolute left-0 top-[298px] blur-md"
+      class="w-[280px] h-[122px] absolute left-0 top-[298px] blur-md z-20"
       preserveAspectRatio="none"
   >
     <g filter="url(#filter0_bf_5719_22815)">

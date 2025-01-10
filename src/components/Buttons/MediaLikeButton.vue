@@ -4,7 +4,7 @@ import {PropType, ref} from 'vue';
 import {InvalidateQueryFilters, useQueryClient} from '@tanstack/vue-query';
 
 import type {InfoResponse} from '@/types/api/base/info';
-import type {Song} from "@/types/musicPlayer";
+import type {PlaylistItem} from "@/types/musicPlayer";
 import type {Collection, CollectionResponse} from "@/types/api/base/collection";
 import type {ContinueWatching, HomeItem} from "@/types/api/base/home";
 import type {LibraryResponse, StatusResponse} from '@/types/api/base/library';
@@ -23,7 +23,7 @@ import MusicButton from "@/components/MusicPlayer/components/MusicButton.vue";
 
 const props = defineProps({
 	data: {
-		type: Object as PropType<LibraryResponse | InfoResponse | HomeItem | ContinueWatching | Collection | Song | DisplayList | CollectionResponse | ArtistResponse | undefined>,
+		type: Object as PropType<LibraryResponse | InfoResponse | HomeItem | ContinueWatching | Collection | PlaylistItem | DisplayList | CollectionResponse | ArtistResponse | undefined>,
 		required: true,
 	},
 	color: {
@@ -48,7 +48,7 @@ const liked = ref(props.data?.favorite);
 const handleLike = (e?: MouseEvent) => {
 	e?.stopPropagation();
 	serverClient()
-		.post<StatusResponse<string>>(`/${props.data?.media_type ?? props.type}/${props.data?.id}/like`, {
+		.post<StatusResponse<string>>(`${props.data?.link}/like`, {
 			value: !liked.value,
 		})
 		.then(({data}) => {

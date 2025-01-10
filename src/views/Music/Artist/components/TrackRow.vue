@@ -2,7 +2,7 @@
 import {PropType} from 'vue';
 import {useRoute} from 'vue-router';
 
-import type {Song} from '@/types/musicPlayer';
+import type {PlaylistItem} from '@/types/musicPlayer';
 
 import {audioPlayer, currentSong, isPlaying, musicSize, setCurrentPlaylist} from '@/store/audioPlayer';
 
@@ -20,7 +20,7 @@ import PlayerIcon from "@/components/Images/icons/PlayerIcon.vue";
 
 const props = defineProps({
   data: {
-    type: Object as PropType<Song>,
+    type: Object as PropType<PlaylistItem>,
     required: true,
   },
   index: {
@@ -28,7 +28,7 @@ const props = defineProps({
     required: true,
   },
   displayList: {
-    type: Array as PropType<Song[] | undefined>,
+    type: Array as PropType<PlaylistItem[] | undefined>,
     required: true,
   },
 });
@@ -43,7 +43,7 @@ const handleClick = () => {
     setCurrentList();
   }
 
-  audioPlayer.value?.playTrack(props.data, props.displayList);
+  audioPlayer.playTrack(props.data, props.displayList);
 };
 
 </script>

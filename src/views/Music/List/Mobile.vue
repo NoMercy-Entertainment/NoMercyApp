@@ -6,7 +6,7 @@ import {IonContent, IonPage, onIonViewWillEnter, onIonViewWillLeave} from '@ioni
 import type {ScrollCustomEvent} from '@ionic/core/dist/types/components/content/content-interface';
 import type {DisplayList} from '@/types/api/music/musicPlayer';
 
-import {Song, SortOrder, SortType} from '@/types/musicPlayer';
+import {PlaylistItem, SortOrder, SortType} from '@/types/musicPlayer';
 
 import useServerClient from '@/lib/clients/useServerClient';
 import {breakTitle2, setTitle, sortByType} from '@/lib/stringArray';
@@ -27,7 +27,7 @@ const {data} = useServerClient<DisplayList>({
 
 const main = ref<HTMLDivElement | null>(null);
 
-const displayList = ref<Song[]>();
+const displayList = ref<PlaylistItem[]>();
 const filter = ref('');
 
 watch(data, (value) => {
@@ -48,9 +48,9 @@ watch(filter, (value) => {
   sort(data.value?.tracks ?? [], sortType.value, sortOrder.value, value);
 });
 
-const sort = (songs: Song[], sortType: SortType, sortOrder: SortOrder, value: string) => {
+const sort = (songs: PlaylistItem[], sortType: SortType, sortOrder: SortOrder, value: string) => {
 
-  const newList = sortByType<Song>(songs ?? [], sortType, sortOrder, setSortOrder);
+  const newList = sortByType<PlaylistItem>(songs ?? [], sortType, sortOrder, setSortOrder);
 
   if (value == '') {
     displayList.value = newList;
@@ -63,9 +63,17 @@ const sort = (songs: Song[], sortType: SortType, sortOrder: SortOrder, value: st
   }
 };
 
+onMounted(() => {
+  if (data.value?.color_palette?.cover) {
+    setColorPalette(data.value?.color_palette?.cover);
+  }
+});
+
 onIonViewWillEnter(() => {
   sort(data?.value?.tracks ?? [], sortType.value, sortOrder.value, filter.value);
-  setColorPalette(data.value?.color_palette?.cover);
+  if (data.value?.color_palette?.cover) {
+    setColorPalette(data.value?.color_palette?.cover);
+  }
 });
 
 const handleBack = () => {
@@ -87,10 +95,10 @@ const onScroll = (e: ScrollCustomEvent) => {
 
   if (sortHeader.value?.$el?.getBoundingClientRect().top == sortHeaderTop) {
     sortHeader.value?.$el?.classList.add('!bg-focus');
-    sortHeader.value?.$el?.firstChild?.classList.add('!bg-slate-light-10/11', 'dark:!bg-black/45');
+    sortHeader.value?.$el?.firstChild?.classList.add('!bg-slate-light-10/11', 'dark:!bg-[rgb(var(--background-auto)/79%)]');
   } else {
     sortHeader.value?.$el?.classList.remove('!bg-focus');
-    sortHeader.value?.$el?.firstChild?.classList.remove('!bg-slate-light-10/11', 'dark:!bg-black/45');
+    sortHeader.value?.$el?.firstChild?.classList.remove('!bg-slate-light-10/11', 'dark:!bg-[rgb(var(--background-auto)/79%)]');
   }
 };
 
@@ -102,7 +110,7 @@ const onScroll = (e: ScrollCustomEvent) => {
       <div
           v-if="!router.currentRoute.value.params.id || (router.currentRoute.value.params.id && data?.id == router.currentRoute.value.params.id)"
           ref="main"
-          class="flex flex-col overflow-x-clip w-available h-min sm:rounded-2xl -mt-safe-offset-12"
+          class="flex flex-col overflow-x-clip w-available h-min sm:rounded-2xl -mt-safe-offset-12 bg-[rgb(var(--background-auto))]"
       >
         <ArtistHeader
             :data="data"
@@ -120,7 +128,7 @@ const onScroll = (e: ScrollCustomEvent) => {
                }"
           >
             <div id="navBg"
-                 class="z-20 absolute flex items-center inset-0 w-available h-full bg-focus/12 dark:bg-focus transition-transform duration-300 bg-spotifyTop opacity-80 pointer-events-none">
+                 class="z-20 absolute flex items-center inset-0 w-available h-full bg-focus/12 dark:bg-focus transition-transform duration-300 bg-spotifyTop opacity-50 pointer-events-none">
             </div>
 
             <button @click="handleBack" class="z-30 flex h-10 w-12 items-center justify-center rounded-md">
@@ -133,7 +141,7 @@ const onScroll = (e: ScrollCustomEvent) => {
                   'opacity-0 pointer-events-none': !showScrollHeader,
                   'opacity-100 pointer-events-auto': showScrollHeader
                }"
-                 v-html="breakTitle2(data?.name ?? 'Songs you like')"
+                 v-html="breakTitle2(data?.name ?? 'Songs you like', 'text-sm line-clamp-2')"
             >
             </div>
           </div>

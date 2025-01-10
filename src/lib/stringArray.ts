@@ -1,10 +1,11 @@
 import {toRaw} from 'vue';
 import i18next from 'i18next';
 import {SortOrder, SortType} from '@/types/musicPlayer';
+import {siteTitle} from "@/config/config";
 
-export const setTitle = (arg?: string | null, fromMusic = false) => {
+export const setTitle = (arg?: string | null) => {
 	if (!arg || arg == '') {
-		document.title = 'NoMercy TV';
+		document.title = siteTitle;
 		return;
 	}
 
@@ -17,7 +18,7 @@ export const setTitle = (arg?: string | null, fromMusic = false) => {
 		if (arg) {
 			res.push('-');
 		}
-		res.push('NoMercy TV');
+		res.push(siteTitle);
 	}
 
 	document.title = res.join(' ');

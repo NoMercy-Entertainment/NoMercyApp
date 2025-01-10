@@ -1,13 +1,11 @@
 <script setup lang="ts">
 import {onMounted, onUnmounted, ref} from 'vue';
 import {useRoute} from 'vue-router';
-import {useTranslation} from 'i18next-vue';
 import {IonPage, isPlatform} from '@ionic/vue';
 
 import {currentServer} from '@/store/currentServer';
 import {user} from '@/store/user';
 import {setDisableScreensaver} from '@/store/imageModal';
-import MediaSession from '@/lib/MediaSession';
 import {isNative} from '@/config/global';
 
 import type {
@@ -23,11 +21,9 @@ import {
   SyncPlugin,
   AutoSkipPlugin
 } from '@/lib/VideoPlayer';
-import {pad} from '@/lib/stringArray';
 import router from '@/router';
 import audioPlayer from '@/store/audioPlayer';
 
-const {t} = useTranslation();
 const route = useRoute();
 
 const config: SetupConfig = {
@@ -55,6 +51,7 @@ const config: SetupConfig = {
   forceTvMode: (isPlatform('android') || isPlatform('ios')) && !isPlatform('mobile'),
   disableTouchControls: false,
   disableMediaControls: 'mediaSession' in navigator || isPlatform('capacitor'),
+  renderAhead: 100,
 }
 
 interface MyNmPlayer extends NMPlayer {
@@ -68,7 +65,6 @@ interface MyNmPlayer extends NMPlayer {
 }
 
 const player = ref<MyNmPlayer>();
-const mediaSession = new MediaSession();
 
 onMounted(() => {
   // @ts-ignore
@@ -109,6 +105,7 @@ onMounted(() => {
 
   player.value?.on('playlistComplete', () => {
     player.value?.dispose();
+    router.back();
   });
 
   player.value?.once('back', () => {
@@ -116,29 +113,15 @@ onMounted(() => {
 
   player.value?.on('play', () => {
     setDisableScreensaver(true);
-    mediaSession.setPlaybackState('playing');
   });
 
   player.value?.on('pause', () => {
     setDisableScreensaver(false);
-    mediaSession.setPlaybackState('paused');
   });
 
   player.value?.on('ready', () => {
 
-    audioPlayer.value?.stop();
-    mediaSession.setActionHandler({
-      play: () => {
-        alert('play');
-        player.value?.play();
-      },
-      pause: () => player.value?.pause(),
-      stop: () => player.value?.stop(),
-      previous: () => player.value?.previous(),
-      next: () => player.value?.next(),
-      seek: (n) => player.value?.seek(n),
-      getPosition: () => player.value?.getCurrentTime() || 0,
-    });
+    audioPlayer.stop();
 
     const observer = new MutationObserver(mutationList =>
         mutationList.filter(m => m.type === 'childList').forEach(m => {
@@ -157,35 +140,8 @@ onMounted(() => {
     }
   });
 
-  player.value?.on('time', (data: any) => {
-    mediaSession.setPositionState({
-      position: data.currentTime,
-      duration: data.duration,
-      playbackRate: data.playbackRate,
-    });
-  });
-
-  player.value?.on('item', (playlistItem: PlaylistItem) => {
-
-    const parsedTitle = playlistItem.title
-        .replace('%S', t('S'))
-        .replace('%E', t('E'));
-
-    mediaSession.setMetadata({
-      title: parsedTitle,
-      artist: playlistItem.show ?? undefined,
-      album: playlistItem.season
-          // @ts-ignore
-          ? `${t('S')}${pad(playlistItem.season, 2)}${t('E')}${pad(playlistItem.episode, 2)}`
-          : undefined,
-      artwork: playlistItem.image?.replace('w300', 'w500'),
-    });
-
+  player.value?.on('item', () => {
     player.value?.play();
-  });
-
-  player.value?.on('error', () => {
-    mediaSession?.setPlaybackState('none');
   });
 
 });
@@ -193,7 +149,6 @@ onMounted(() => {
 onUnmounted(() => {
   player.value?.dispose();
   setDisableScreensaver(false);
-  mediaSession?.setPlaybackState('none');
 });
 </script>
 
@@ -205,7 +160,7 @@ onUnmounted(() => {
              'mb-28': isNative,
              'mb-0': !isNative,
            }">
-          <div id="player1" class="group nomercyplayer bg-white/20 bg-white"></div>
+          <div id="player1" class="group nomercyplayer"></div>
         </div>
       </Teleport>
   </ion-page>

@@ -7,6 +7,8 @@ import {setCurrentServer} from '@/store/currentServer';
 import type {User} from '@/types/auth';
 import {ref} from 'vue';
 import router from '@/router';
+import {setMessages} from "@/store/messages";
+import {setNotifications} from "@/store/notifications";
 
 const done = ref(false);
 
@@ -25,6 +27,9 @@ const getLocations = (): Promise<void> => new Promise( (resolve, reject) => {
 			updateUserFromApi(data.data);
 
 			setServers(data.data.servers);
+
+			setMessages(data.data.receivedMessages);
+			setNotifications(data.data.notifications);
 
 			if (servers.value.length == 0) {
 				done.value = true;

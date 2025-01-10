@@ -6,7 +6,7 @@ import PlayerIcon from '@/components/Images/icons/PlayerIcon.vue';
 
 const handleClick = (e?: MouseEvent) => {
   e?.stopPropagation();
-  audioPlayer.value?.next();
+  audioPlayer.next();
 };
 </script>
 

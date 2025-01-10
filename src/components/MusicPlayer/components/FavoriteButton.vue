@@ -2,7 +2,7 @@
 import { PropType } from 'vue';
 
 import type { DisplayList } from '@/types/api/music/musicPlayer';
-import type { Song } from '@/types/musicPlayer';
+import type { PlaylistItem } from '@/types/musicPlayer';
 import type { StatusResponse } from '@/types/api/base/library';
 
 import serverClient from '@/lib/clients/serverClient';
@@ -13,7 +13,7 @@ import audioPlayer, {currentSong} from '@/store/audioPlayer';
 
 const props = defineProps({
 	data: {
-		type: Object as PropType<Song|DisplayList>,
+		type: Object as PropType<PlaylistItem|DisplayList>,
 		required: true,
 	},
 	className: {
@@ -40,7 +40,7 @@ const handleClick = (e?: MouseEvent) => {
 			value: !props.data.favorite,
 		})
 		.then(({ data }) => {
-			audioPlayer.value?.setCurrentSong(currentSong.value);
+			audioPlayer.setCurrentSong(currentSong.value);
 
 			if (props.data.type === 'tracks') {
 				// query.invalidateQueries(['music', `${type}s`, (props.data as any)[`${type}_track`]?.[0]?.id]);

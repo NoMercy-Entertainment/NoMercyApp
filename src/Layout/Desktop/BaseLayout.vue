@@ -1,13 +1,9 @@
 <script setup lang="ts">
 import {computed} from 'vue';
 import {useRoute} from 'vue-router';
-
-import {
-  IonPage,
-  IonRouterOutlet, IonTabs,
-} from '@ionic/vue';
-
+import {IonPage, IonRouterOutlet, IonTabs} from '@ionic/vue';
 import {VueQueryDevtools} from '@tanstack/vue-query-devtools'
+
 import ContextMenu from 'primevue/contextmenu';
 import Toast from 'primevue/toast';
 import ConfirmDialog from 'primevue/confirmdialog';
@@ -34,13 +30,13 @@ import DeviceOverlay from './components/Overlays/DeviceOverlay.vue';
 import MusicPlayerDesktop from '@/components/MusicPlayer/MusicPlayerDesktop.vue';
 import EqualizerOverlay from "@/Layout/Desktop/components/Overlays/EqualizerOverlay.vue";
 import ChristmasSnow from "@/components/Seasonal/Christmas/ChristmasSnow.vue";
-import ImageKnittedOverlay from "@/components/Seasonal/Christmas/ImageKnittedOverlay.vue";
-
-const backgroundUrl = computed(() => {
-  return `${currentServer.value?.serverBaseUrl}/images/original${background.value}`;
-});
 
 const route = useRoute();
+
+const backgroundUrl = computed(() => {
+  if (!background.value) return null;
+  return `${currentServer.value?.serverBaseUrl}/images/original${background.value}`;
+});
 
 </script>
 

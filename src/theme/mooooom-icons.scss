@@ -1,11 +1,11 @@
-@import "variables";
+@use "variables";
 
 @font-face {
-  font-family: '#{$icomoon-font-family}';
+  font-family: '#{variables.$icomoon-font-family}';
   src:
-          url('#{$icomoon-font-path}/#{$icomoon-font-family}.ttf?pr1i90') format('truetype'),
-          url('#{$icomoon-font-path}/#{$icomoon-font-family}.woff?pr1i90') format('woff'),
-          url('#{$icomoon-font-path}/#{$icomoon-font-family}.svg?pr1i90##{$icomoon-font-family}') format('svg');
+          url('#{variables.$icomoon-font-path}/#{variables.$icomoon-font-family}.ttf?pr1i90') format('truetype'),
+          url('#{variables.$icomoon-font-path}/#{variables.$icomoon-font-family}.woff?pr1i90') format('woff'),
+          url('#{variables.$icomoon-font-path}/#{variables.$icomoon-font-family}.svg?pr1i90##{variables.$icomoon-font-family}') format('svg');
   font-weight: normal;
   font-style: normal;
   font-display: block;
@@ -13,7 +13,7 @@
 
 [class^="mooooom-"], [class*=" mooooom-"] {
   /* use !important to prevent issues with browser extensions that change fonts */
-  font-family: '#{$icomoon-font-family}' !important;
+  font-family: '#{variables.$icomoon-font-family}' !important;
   speak: never;
   font-style: normal;
   font-weight: normal;
@@ -28,7792 +28,7792 @@
 
 .mooooom-404 {
   &:before {
-    content: $mooooom-404;
+    content: variables.$mooooom-404;
   }
 }
 .mooooom-acorn {
   &:before {
-    content: $mooooom-acorn;
+    content: variables.$mooooom-acorn;
   }
 }
 .mooooom-add {
   &:before {
-    content: $mooooom-add;
+    content: variables.$mooooom-add;
   }
 }
 .mooooom-addCircle {
   &:before {
-    content: $mooooom-addCircle;
+    content: variables.$mooooom-addCircle;
   }
 }
 .mooooom-addressBook {
   &:before {
-    content: $mooooom-addressBook;
+    content: variables.$mooooom-addressBook;
   }
 }
 .mooooom-admin {
   &:before {
-    content: $mooooom-admin;
+    content: variables.$mooooom-admin;
   }
 }
 .mooooom-afghani {
   &:before {
-    content: $mooooom-afghani;
+    content: variables.$mooooom-afghani;
   }
 }
 .mooooom-aFrame {
   &:before {
-    content: $mooooom-aFrame;
+    content: variables.$mooooom-aFrame;
   }
 }
 .mooooom-aiChip {
   &:before {
-    content: $mooooom-aiChip;
+    content: variables.$mooooom-aiChip;
   }
 }
 .mooooom-aiPresentation {
   &:before {
-    content: $mooooom-aiPresentation;
+    content: variables.$mooooom-aiPresentation;
   }
 }
 .mooooom-airConditioner {
   &:before {
-    content: $mooooom-airConditioner;
+    content: variables.$mooooom-airConditioner;
   }
 }
 .mooooom-airPlay {
   &:before {
-    content: $mooooom-airPlay;
+    content: variables.$mooooom-airPlay;
   }
 }
 .mooooom-airPodsCase {
   &:before {
-    content: $mooooom-airPodsCase;
+    content: variables.$mooooom-airPodsCase;
   }
 }
 .mooooom-airPodsPro {
   &:before {
-    content: $mooooom-airPodsPro;
+    content: variables.$mooooom-airPodsPro;
   }
 }
 .mooooom-aiTable {
   &:before {
-    content: $mooooom-aiTable;
+    content: variables.$mooooom-aiTable;
   }
 }
 .mooooom-aiTable1 {
   &:before {
-    content: $mooooom-aiTable1;
+    content: variables.$mooooom-aiTable1;
   }
 }
 .mooooom-alarm {
   &:before {
-    content: $mooooom-alarm;
+    content: variables.$mooooom-alarm;
   }
 }
 .mooooom-alarmAdd {
   &:before {
-    content: $mooooom-alarmAdd;
+    content: variables.$mooooom-alarmAdd;
   }
 }
 .mooooom-alarmAlert {
   &:before {
-    content: $mooooom-alarmAlert;
+    content: variables.$mooooom-alarmAlert;
   }
 }
 .mooooom-alarmRemove {
   &:before {
-    content: $mooooom-alarmRemove;
+    content: variables.$mooooom-alarmRemove;
   }
 }
 .mooooom-alarmSnooz {
   &:before {
-    content: $mooooom-alarmSnooz;
+    content: variables.$mooooom-alarmSnooz;
   }
 }
 .mooooom-alertCircle {
   &:before {
-    content: $mooooom-alertCircle;
+    content: variables.$mooooom-alertCircle;
   }
 }
 .mooooom-alertHexagon {
   &:before {
-    content: $mooooom-alertHexagon;
+    content: variables.$mooooom-alertHexagon;
   }
 }
 .mooooom-alertTriangle {
   &:before {
-    content: $mooooom-alertTriangle;
+    content: variables.$mooooom-alertTriangle;
   }
 }
 .mooooom-alien {
   &:before {
-    content: $mooooom-alien;
+    content: variables.$mooooom-alien;
   }
 }
 .mooooom-alignCenter {
   &:before {
-    content: $mooooom-alignCenter;
+    content: variables.$mooooom-alignCenter;
   }
 }
 .mooooom-alignLeft {
   &:before {
-    content: $mooooom-alignLeft;
+    content: variables.$mooooom-alignLeft;
   }
 }
 .mooooom-alignRight {
   &:before {
-    content: $mooooom-alignRight;
+    content: variables.$mooooom-alignRight;
   }
 }
 .mooooom-ambulance {
   &:before {
-    content: $mooooom-ambulance;
+    content: variables.$mooooom-ambulance;
   }
 }
 .mooooom-anchor {
   &:before {
-    content: $mooooom-anchor;
+    content: variables.$mooooom-anchor;
   }
 }
 .mooooom-anchorAlert {
   &:before {
-    content: $mooooom-anchorAlert;
+    content: variables.$mooooom-anchorAlert;
   }
 }
 .mooooom-anchorLocked {
   &:before {
-    content: $mooooom-anchorLocked;
+    content: variables.$mooooom-anchorLocked;
   }
 }
 .mooooom-antenna {
   &:before {
-    content: $mooooom-antenna;
+    content: variables.$mooooom-antenna;
   }
 }
 .mooooom-antiHornySpray {
   &:before {
-    content: $mooooom-antiHornySpray;
+    content: variables.$mooooom-antiHornySpray;
   }
 }
 .mooooom-apple {
   &:before {
-    content: $mooooom-apple;
+    content: variables.$mooooom-apple;
   }
 }
 .mooooom-appleVisionPro {
   &:before {
-    content: $mooooom-appleVisionPro;
+    content: variables.$mooooom-appleVisionPro;
   }
 }
 .mooooom-aquarius {
   &:before {
-    content: $mooooom-aquarius;
+    content: variables.$mooooom-aquarius;
   }
 }
 .mooooom-arcDeTriomph {
   &:before {
-    content: $mooooom-arcDeTriomph;
+    content: variables.$mooooom-arcDeTriomph;
   }
 }
 .mooooom-archiveBox {
   &:before {
-    content: $mooooom-archiveBox;
+    content: variables.$mooooom-archiveBox;
   }
 }
 .mooooom-aries {
   &:before {
-    content: $mooooom-aries;
+    content: variables.$mooooom-aries;
   }
 }
 .mooooom-armour {
   &:before {
-    content: $mooooom-armour;
+    content: variables.$mooooom-armour;
   }
 }
 .mooooom-arrowAngleDownLeft {
   &:before {
-    content: $mooooom-arrowAngleDownLeft;
+    content: variables.$mooooom-arrowAngleDownLeft;
   }
 }
 .mooooom-arrowAngleDownRight {
   &:before {
-    content: $mooooom-arrowAngleDownRight;
+    content: variables.$mooooom-arrowAngleDownRight;
   }
 }
 .mooooom-arrowAngleLeftDown {
   &:before {
-    content: $mooooom-arrowAngleLeftDown;
+    content: variables.$mooooom-arrowAngleLeftDown;
   }
 }
 .mooooom-arrowAngleLeftUp {
   &:before {
-    content: $mooooom-arrowAngleLeftUp;
+    content: variables.$mooooom-arrowAngleLeftUp;
   }
 }
 .mooooom-arrowAngleRightDown {
   &:before {
-    content: $mooooom-arrowAngleRightDown;
+    content: variables.$mooooom-arrowAngleRightDown;
   }
 }
 .mooooom-arrowAngleRightUp {
   &:before {
-    content: $mooooom-arrowAngleRightUp;
+    content: variables.$mooooom-arrowAngleRightUp;
   }
 }
 .mooooom-arrowAngleTopLeft {
   &:before {
-    content: $mooooom-arrowAngleTopLeft;
+    content: variables.$mooooom-arrowAngleTopLeft;
   }
 }
 .mooooom-arrowAngleTopRight {
   &:before {
-    content: $mooooom-arrowAngleTopRight;
+    content: variables.$mooooom-arrowAngleTopRight;
   }
 }
 .mooooom-arrowArrowsUpDown {
   &:before {
-    content: $mooooom-arrowArrowsUpDown;
+    content: variables.$mooooom-arrowArrowsUpDown;
   }
 }
 .mooooom-arrowBackDown {
   &:before {
-    content: $mooooom-arrowBackDown;
+    content: variables.$mooooom-arrowBackDown;
   }
 }
 .mooooom-arrowBackTo {
   &:before {
-    content: $mooooom-arrowBackTo;
+    content: variables.$mooooom-arrowBackTo;
   }
 }
 .mooooom-arrowBackUp {
   &:before {
-    content: $mooooom-arrowBackUp;
+    content: variables.$mooooom-arrowBackUp;
   }
 }
 .mooooom-arrowBranchingDown {
   &:before {
-    content: $mooooom-arrowBranchingDown;
+    content: variables.$mooooom-arrowBranchingDown;
   }
 }
 .mooooom-arrowBranchingLeft {
   &:before {
-    content: $mooooom-arrowBranchingLeft;
+    content: variables.$mooooom-arrowBranchingLeft;
   }
 }
 .mooooom-arrowBranchingRight {
   &:before {
-    content: $mooooom-arrowBranchingRight;
+    content: variables.$mooooom-arrowBranchingRight;
   }
 }
 .mooooom-arrowBranchingUp {
   &:before {
-    content: $mooooom-arrowBranchingUp;
+    content: variables.$mooooom-arrowBranchingUp;
   }
 }
 .mooooom-arrowClockwise {
   &:before {
-    content: $mooooom-arrowClockwise;
+    content: variables.$mooooom-arrowClockwise;
   }
 }
 .mooooom-arrowColapse {
   &:before {
-    content: $mooooom-arrowColapse;
+    content: variables.$mooooom-arrowColapse;
   }
 }
 .mooooom-arrowCounterClockwise {
   &:before {
-    content: $mooooom-arrowCounterClockwise;
+    content: variables.$mooooom-arrowCounterClockwise;
   }
 }
 .mooooom-arrowDataTransfert {
   &:before {
-    content: $mooooom-arrowDataTransfert;
+    content: variables.$mooooom-arrowDataTransfert;
   }
 }
 .mooooom-arrowDown {
   &:before {
-    content: $mooooom-arrowDown;
+    content: variables.$mooooom-arrowDown;
   }
 }
 .mooooom-arrowDownLeft {
   &:before {
-    content: $mooooom-arrowDownLeft;
+    content: variables.$mooooom-arrowDownLeft;
   }
 }
 .mooooom-arrowDownRight {
   &:before {
-    content: $mooooom-arrowDownRight;
+    content: variables.$mooooom-arrowDownRight;
   }
 }
 .mooooom-arrowDualPathBottom {
   &:before {
-    content: $mooooom-arrowDualPathBottom;
+    content: variables.$mooooom-arrowDualPathBottom;
   }
 }
 .mooooom-arrowDualPathTop {
   &:before {
-    content: $mooooom-arrowDualPathTop;
+    content: variables.$mooooom-arrowDualPathTop;
   }
 }
 .mooooom-arrowEnterFullscreen {
   &:before {
-    content: $mooooom-arrowEnterFullscreen;
+    content: variables.$mooooom-arrowEnterFullscreen;
   }
 }
 .mooooom-arrowExitFullscreen {
   &:before {
-    content: $mooooom-arrowExitFullscreen;
+    content: variables.$mooooom-arrowExitFullscreen;
   }
 }
 .mooooom-arrowExpand {
   &:before {
-    content: $mooooom-arrowExpand;
+    content: variables.$mooooom-arrowExpand;
   }
 }
 .mooooom-arrowForwardDown {
   &:before {
-    content: $mooooom-arrowForwardDown;
+    content: variables.$mooooom-arrowForwardDown;
   }
 }
 .mooooom-arrowForwardTo {
   &:before {
-    content: $mooooom-arrowForwardTo;
+    content: variables.$mooooom-arrowForwardTo;
   }
 }
 .mooooom-arrowForwardUp {
   &:before {
-    content: $mooooom-arrowForwardUp;
+    content: variables.$mooooom-arrowForwardUp;
   }
 }
 .mooooom-arrowFromLineDown {
   &:before {
-    content: $mooooom-arrowFromLineDown;
+    content: variables.$mooooom-arrowFromLineDown;
   }
 }
 .mooooom-arrowFromLineHorizontal {
   &:before {
-    content: $mooooom-arrowFromLineHorizontal;
+    content: variables.$mooooom-arrowFromLineHorizontal;
   }
 }
 .mooooom-arrowFromLineLeft {
   &:before {
-    content: $mooooom-arrowFromLineLeft;
+    content: variables.$mooooom-arrowFromLineLeft;
   }
 }
 .mooooom-arrowFromLineRight {
   &:before {
-    content: $mooooom-arrowFromLineRight;
+    content: variables.$mooooom-arrowFromLineRight;
   }
 }
 .mooooom-arrowFromLineUp {
   &:before {
-    content: $mooooom-arrowFromLineUp;
+    content: variables.$mooooom-arrowFromLineUp;
   }
 }
 .mooooom-arrowFromLineVertical {
   &:before {
-    content: $mooooom-arrowFromLineVertical;
+    content: variables.$mooooom-arrowFromLineVertical;
   }
 }
 .mooooom-arrowHAxisClockwise {
   &:before {
-    content: $mooooom-arrowHAxisClockwise;
+    content: variables.$mooooom-arrowHAxisClockwise;
   }
 }
 .mooooom-arrowHAxisCounterclockwise {
   &:before {
-    content: $mooooom-arrowHAxisCounterclockwise;
+    content: variables.$mooooom-arrowHAxisCounterclockwise;
   }
 }
 .mooooom-arrowHorizontalScroll {
   &:before {
-    content: $mooooom-arrowHorizontalScroll;
+    content: variables.$mooooom-arrowHorizontalScroll;
   }
 }
 .mooooom-arrowLeft {
   &:before {
-    content: $mooooom-arrowLeft;
+    content: variables.$mooooom-arrowLeft;
   }
 }
 .mooooom-arrowMove {
   &:before {
-    content: $mooooom-arrowMove;
+    content: variables.$mooooom-arrowMove;
   }
 }
 .mooooom-arrowRecycle {
   &:before {
-    content: $mooooom-arrowRecycle;
+    content: variables.$mooooom-arrowRecycle;
   }
 }
 .mooooom-arrowRefreshHorizontal {
   &:before {
-    content: $mooooom-arrowRefreshHorizontal;
+    content: variables.$mooooom-arrowRefreshHorizontal;
   }
 }
 .mooooom-arrowRefreshVertical {
   &:before {
-    content: $mooooom-arrowRefreshVertical;
+    content: variables.$mooooom-arrowRefreshVertical;
   }
 }
 .mooooom-arrowRight {
   &:before {
-    content: $mooooom-arrowRight;
+    content: variables.$mooooom-arrowRight;
   }
 }
 .mooooom-arrowsDownUp {
   &:before {
-    content: $mooooom-arrowsDownUp;
+    content: variables.$mooooom-arrowsDownUp;
   }
 }
 .mooooom-arrowSelect {
   &:before {
-    content: $mooooom-arrowSelect;
+    content: variables.$mooooom-arrowSelect;
   }
 }
 .mooooom-arrowsLeftRight {
   &:before {
-    content: $mooooom-arrowsLeftRight;
+    content: variables.$mooooom-arrowsLeftRight;
   }
 }
 .mooooom-arrowSmallDown {
   &:before {
-    content: $mooooom-arrowSmallDown;
+    content: variables.$mooooom-arrowSmallDown;
   }
 }
 .mooooom-arrowSmallDownLeft {
   &:before {
-    content: $mooooom-arrowSmallDownLeft;
+    content: variables.$mooooom-arrowSmallDownLeft;
   }
 }
 .mooooom-arrowSmallDownRight {
   &:before {
-    content: $mooooom-arrowSmallDownRight;
+    content: variables.$mooooom-arrowSmallDownRight;
   }
 }
 .mooooom-arrowSmallLeft {
   &:before {
-    content: $mooooom-arrowSmallLeft;
+    content: variables.$mooooom-arrowSmallLeft;
   }
 }
 .mooooom-arrowSmallRight {
   &:before {
-    content: $mooooom-arrowSmallRight;
+    content: variables.$mooooom-arrowSmallRight;
   }
 }
 .mooooom-arrowSmallUp {
   &:before {
-    content: $mooooom-arrowSmallUp;
+    content: variables.$mooooom-arrowSmallUp;
   }
 }
 .mooooom-arrowSmallUpLeft {
   &:before {
-    content: $mooooom-arrowSmallUpLeft;
+    content: variables.$mooooom-arrowSmallUpLeft;
   }
 }
 .mooooom-arrowSmallUpRight {
   &:before {
-    content: $mooooom-arrowSmallUpRight;
+    content: variables.$mooooom-arrowSmallUpRight;
   }
 }
 .mooooom-arrowSort09 {
   &:before {
-    content: $mooooom-arrowSort09;
+    content: variables.$mooooom-arrowSort09;
   }
 }
 .mooooom-arrowSort90 {
   &:before {
-    content: $mooooom-arrowSort90;
+    content: variables.$mooooom-arrowSort90;
   }
 }
 .mooooom-arrowSortAz {
   &:before {
-    content: $mooooom-arrowSortAz;
+    content: variables.$mooooom-arrowSortAz;
   }
 }
 .mooooom-arrowSortZa {
   &:before {
-    content: $mooooom-arrowSortZa;
+    content: variables.$mooooom-arrowSortZa;
   }
 }
 .mooooom-arrowsRightLeft {
   &:before {
-    content: $mooooom-arrowsRightLeft;
+    content: variables.$mooooom-arrowsRightLeft;
   }
 }
 .mooooom-arrowStepAddLoop {
   &:before {
-    content: $mooooom-arrowStepAddLoop;
+    content: variables.$mooooom-arrowStepAddLoop;
   }
 }
 .mooooom-arrowStepBackward {
   &:before {
-    content: $mooooom-arrowStepBackward;
+    content: variables.$mooooom-arrowStepBackward;
   }
 }
 .mooooom-arrowStepSkip {
   &:before {
-    content: $mooooom-arrowStepSkip;
+    content: variables.$mooooom-arrowStepSkip;
   }
 }
 .mooooom-arrowToLineDown {
   &:before {
-    content: $mooooom-arrowToLineDown;
+    content: variables.$mooooom-arrowToLineDown;
   }
 }
 .mooooom-arrowToLineLeft {
   &:before {
-    content: $mooooom-arrowToLineLeft;
+    content: variables.$mooooom-arrowToLineLeft;
   }
 }
 .mooooom-arrowToLineRight {
   &:before {
-    content: $mooooom-arrowToLineRight;
+    content: variables.$mooooom-arrowToLineRight;
   }
 }
 .mooooom-arrowToLineUp {
   &:before {
-    content: $mooooom-arrowToLineUp;
+    content: variables.$mooooom-arrowToLineUp;
   }
 }
 .mooooom-arrowTreeViewLeft {
   &:before {
-    content: $mooooom-arrowTreeViewLeft;
+    content: variables.$mooooom-arrowTreeViewLeft;
   }
 }
 .mooooom-arrowTreeViewRight {
   &:before {
-    content: $mooooom-arrowTreeViewRight;
+    content: variables.$mooooom-arrowTreeViewRight;
   }
 }
 .mooooom-arrowTrendingDown {
   &:before {
-    content: $mooooom-arrowTrendingDown;
+    content: variables.$mooooom-arrowTrendingDown;
   }
 }
 .mooooom-arrowTrendingUp {
   &:before {
-    content: $mooooom-arrowTrendingUp;
+    content: variables.$mooooom-arrowTrendingUp;
   }
 }
 .mooooom-arrowUp {
   &:before {
-    content: $mooooom-arrowUp;
+    content: variables.$mooooom-arrowUp;
   }
 }
 .mooooom-arrowUpLeft {
   &:before {
-    content: $mooooom-arrowUpLeft;
+    content: variables.$mooooom-arrowUpLeft;
   }
 }
 .mooooom-arrowUpRight {
   &:before {
-    content: $mooooom-arrowUpRight;
+    content: variables.$mooooom-arrowUpRight;
   }
 }
 .mooooom-arrowVerticalScroll {
   &:before {
-    content: $mooooom-arrowVerticalScroll;
+    content: variables.$mooooom-arrowVerticalScroll;
   }
 }
 .mooooom-arrowZAxisClockwise {
   &:before {
-    content: $mooooom-arrowZAxisClockwise;
+    content: variables.$mooooom-arrowZAxisClockwise;
   }
 }
 .mooooom-arrowZAxisCourterclockwise {
   &:before {
-    content: $mooooom-arrowZAxisCourterclockwise;
+    content: variables.$mooooom-arrowZAxisCourterclockwise;
   }
 }
 .mooooom-astronaute {
   &:before {
-    content: $mooooom-astronaute;
+    content: variables.$mooooom-astronaute;
   }
 }
 .mooooom-at {
   &:before {
-    content: $mooooom-at;
+    content: variables.$mooooom-at;
   }
 }
 .mooooom-atAdd {
   &:before {
-    content: $mooooom-atAdd;
+    content: variables.$mooooom-atAdd;
   }
 }
 .mooooom-atAlert {
   &:before {
-    content: $mooooom-atAlert;
+    content: variables.$mooooom-atAlert;
   }
 }
 .mooooom-atBlocked {
   &:before {
-    content: $mooooom-atBlocked;
+    content: variables.$mooooom-atBlocked;
   }
 }
 .mooooom-atCheck {
   &:before {
-    content: $mooooom-atCheck;
+    content: variables.$mooooom-atCheck;
   }
 }
 .mooooom-atClock {
   &:before {
-    content: $mooooom-atClock;
+    content: variables.$mooooom-atClock;
   }
 }
 .mooooom-atDelete {
   &:before {
-    content: $mooooom-atDelete;
+    content: variables.$mooooom-atDelete;
   }
 }
 .mooooom-atEdit {
   &:before {
-    content: $mooooom-atEdit;
+    content: variables.$mooooom-atEdit;
   }
 }
 .mooooom-atEqual {
   &:before {
-    content: $mooooom-atEqual;
+    content: variables.$mooooom-atEqual;
   }
 }
 .mooooom-atHeart {
   &:before {
-    content: $mooooom-atHeart;
+    content: variables.$mooooom-atHeart;
   }
 }
 .mooooom-atHide {
   &:before {
-    content: $mooooom-atHide;
+    content: variables.$mooooom-atHide;
   }
 }
 .mooooom-atInfo {
   &:before {
-    content: $mooooom-atInfo;
+    content: variables.$mooooom-atInfo;
   }
 }
 .mooooom-atLink {
   &:before {
-    content: $mooooom-atLink;
+    content: variables.$mooooom-atLink;
   }
 }
 .mooooom-atLoading {
   &:before {
-    content: $mooooom-atLoading;
+    content: variables.$mooooom-atLoading;
   }
 }
 .mooooom-atLocked {
   &:before {
-    content: $mooooom-atLocked;
+    content: variables.$mooooom-atLocked;
   }
 }
 .mooooom-atOptions {
   &:before {
-    content: $mooooom-atOptions;
+    content: variables.$mooooom-atOptions;
   }
 }
 .mooooom-atPeace {
   &:before {
-    content: $mooooom-atPeace;
+    content: variables.$mooooom-atPeace;
   }
 }
 .mooooom-atRefresh {
   &:before {
-    content: $mooooom-atRefresh;
+    content: variables.$mooooom-atRefresh;
   }
 }
 .mooooom-atRemove {
   &:before {
-    content: $mooooom-atRemove;
+    content: variables.$mooooom-atRemove;
   }
 }
 .mooooom-atStamp {
   &:before {
-    content: $mooooom-atStamp;
+    content: variables.$mooooom-atStamp;
   }
 }
 .mooooom-atTrash {
   &:before {
-    content: $mooooom-atTrash;
+    content: variables.$mooooom-atTrash;
   }
 }
 .mooooom-atUser {
   &:before {
-    content: $mooooom-atUser;
+    content: variables.$mooooom-atUser;
   }
 }
 .mooooom-atView {
   &:before {
-    content: $mooooom-atView;
+    content: variables.$mooooom-atView;
   }
 }
 .mooooom-audioFile {
   &:before {
-    content: $mooooom-audioFile;
+    content: variables.$mooooom-audioFile;
   }
 }
 .mooooom-autoFocus {
   &:before {
-    content: $mooooom-autoFocus;
+    content: variables.$mooooom-autoFocus;
   }
 }
 .mooooom-avatar {
   &:before {
-    content: $mooooom-avatar;
+    content: variables.$mooooom-avatar;
   }
 }
 .mooooom-avocado {
   &:before {
-    content: $mooooom-avocado;
+    content: variables.$mooooom-avocado;
   }
 }
 .mooooom-axe {
   &:before {
-    content: $mooooom-axe;
+    content: variables.$mooooom-axe;
   }
 }
 .mooooom-axe1 {
   &:before {
-    content: $mooooom-axe1;
+    content: variables.$mooooom-axe1;
   }
 }
 .mooooom-babyBed {
   &:before {
-    content: $mooooom-babyBed;
+    content: variables.$mooooom-babyBed;
   }
 }
 .mooooom-backPack {
   &:before {
-    content: $mooooom-backPack;
+    content: variables.$mooooom-backPack;
   }
 }
 .mooooom-backSlash {
   &:before {
-    content: $mooooom-backSlash;
+    content: variables.$mooooom-backSlash;
   }
 }
 .mooooom-backToPlayer {
   &:before {
-    content: $mooooom-backToPlayer;
+    content: variables.$mooooom-backToPlayer;
   }
 }
 .mooooom-baguette {
   &:before {
-    content: $mooooom-baguette;
+    content: variables.$mooooom-baguette;
   }
 }
 .mooooom-baht {
   &:before {
-    content: $mooooom-baht;
+    content: variables.$mooooom-baht;
   }
 }
 .mooooom-baloon {
   &:before {
-    content: $mooooom-baloon;
+    content: variables.$mooooom-baloon;
   }
 }
 .mooooom-bamboo {
   &:before {
-    content: $mooooom-bamboo;
+    content: variables.$mooooom-bamboo;
   }
 }
 .mooooom-bandAid {
   &:before {
-    content: $mooooom-bandAid;
+    content: variables.$mooooom-bandAid;
   }
 }
 .mooooom-bank {
   &:before {
-    content: $mooooom-bank;
+    content: variables.$mooooom-bank;
   }
 }
 .mooooom-bankLocator {
   &:before {
-    content: $mooooom-bankLocator;
+    content: variables.$mooooom-bankLocator;
   }
 }
 .mooooom-barChart {
   &:before {
-    content: $mooooom-barChart;
+    content: variables.$mooooom-barChart;
   }
 }
 .mooooom-barChartOrdered {
   &:before {
-    content: $mooooom-barChartOrdered;
+    content: variables.$mooooom-barChartOrdered;
   }
 }
 .mooooom-barCode {
   &:before {
-    content: $mooooom-barCode;
+    content: variables.$mooooom-barCode;
   }
 }
 .mooooom-baseball {
   &:before {
-    content: $mooooom-baseball;
+    content: variables.$mooooom-baseball;
   }
 }
 .mooooom-baseballBat {
   &:before {
-    content: $mooooom-baseballBat;
+    content: variables.$mooooom-baseballBat;
   }
 }
 .mooooom-basketball {
   &:before {
-    content: $mooooom-basketball;
+    content: variables.$mooooom-basketball;
   }
 }
 .mooooom-basketball1 {
   &:before {
-    content: $mooooom-basketball1;
+    content: variables.$mooooom-basketball1;
   }
 }
 .mooooom-basketballRim {
   &:before {
-    content: $mooooom-basketballRim;
+    content: variables.$mooooom-basketballRim;
   }
 }
 .mooooom-bat {
   &:before {
-    content: $mooooom-bat;
+    content: variables.$mooooom-bat;
   }
 }
 .mooooom-bathtub {
   &:before {
-    content: $mooooom-bathtub;
+    content: variables.$mooooom-bathtub;
   }
 }
 .mooooom-batteryChargingHorizontal {
   &:before {
-    content: $mooooom-batteryChargingHorizontal;
+    content: variables.$mooooom-batteryChargingHorizontal;
   }
 }
 .mooooom-batteryChargingLineHorizontal {
   &:before {
-    content: $mooooom-batteryChargingLineHorizontal;
+    content: variables.$mooooom-batteryChargingLineHorizontal;
   }
 }
 .mooooom-batteryChargingLineVertical {
   &:before {
-    content: $mooooom-batteryChargingLineVertical;
+    content: variables.$mooooom-batteryChargingLineVertical;
   }
 }
 .mooooom-batteryChargingVertical {
   &:before {
-    content: $mooooom-batteryChargingVertical;
+    content: variables.$mooooom-batteryChargingVertical;
   }
 }
 .mooooom-batteryEmptyHorizontal {
   &:before {
-    content: $mooooom-batteryEmptyHorizontal;
+    content: variables.$mooooom-batteryEmptyHorizontal;
   }
 }
 .mooooom-batteryEmptyVertical {
   &:before {
-    content: $mooooom-batteryEmptyVertical;
+    content: variables.$mooooom-batteryEmptyVertical;
   }
 }
 .mooooom-batteryFullHorizontal {
   &:before {
-    content: $mooooom-batteryFullHorizontal;
+    content: variables.$mooooom-batteryFullHorizontal;
   }
 }
 .mooooom-batteryFullHorizontal1 {
   &:before {
-    content: $mooooom-batteryFullHorizontal1;
+    content: variables.$mooooom-batteryFullHorizontal1;
   }
 }
 .mooooom-batteryFullVertical {
   &:before {
-    content: $mooooom-batteryFullVertical;
+    content: variables.$mooooom-batteryFullVertical;
   }
 }
 .mooooom-batteryFullVertical1 {
   &:before {
-    content: $mooooom-batteryFullVertical1;
+    content: variables.$mooooom-batteryFullVertical1;
   }
 }
 .mooooom-batteryLowHorizontal {
   &:before {
-    content: $mooooom-batteryLowHorizontal;
+    content: variables.$mooooom-batteryLowHorizontal;
   }
 }
 .mooooom-batteryLowHorizontal1 {
   &:before {
-    content: $mooooom-batteryLowHorizontal1;
+    content: variables.$mooooom-batteryLowHorizontal1;
   }
 }
 .mooooom-batteryLowVertical {
   &:before {
-    content: $mooooom-batteryLowVertical;
+    content: variables.$mooooom-batteryLowVertical;
   }
 }
 .mooooom-batteryLowVertical1 {
   &:before {
-    content: $mooooom-batteryLowVertical1;
+    content: variables.$mooooom-batteryLowVertical1;
   }
 }
 .mooooom-batteryMediumHighHorizontal {
   &:before {
-    content: $mooooom-batteryMediumHighHorizontal;
+    content: variables.$mooooom-batteryMediumHighHorizontal;
   }
 }
 .mooooom-batteryMediumHighVertical {
   &:before {
-    content: $mooooom-batteryMediumHighVertical;
+    content: variables.$mooooom-batteryMediumHighVertical;
   }
 }
 .mooooom-batteryMediumHorizontal {
   &:before {
-    content: $mooooom-batteryMediumHorizontal;
+    content: variables.$mooooom-batteryMediumHorizontal;
   }
 }
 .mooooom-batteryMediumHorizontal1 {
   &:before {
-    content: $mooooom-batteryMediumHorizontal1;
+    content: variables.$mooooom-batteryMediumHorizontal1;
   }
 }
 .mooooom-batteryMediumLowHorizontal {
   &:before {
-    content: $mooooom-batteryMediumLowHorizontal;
+    content: variables.$mooooom-batteryMediumLowHorizontal;
   }
 }
 .mooooom-batteryMediumLowHorizontal1 {
   &:before {
-    content: $mooooom-batteryMediumLowHorizontal1;
+    content: variables.$mooooom-batteryMediumLowHorizontal1;
   }
 }
 .mooooom-batteryMediumLowVertical {
   &:before {
-    content: $mooooom-batteryMediumLowVertical;
+    content: variables.$mooooom-batteryMediumLowVertical;
   }
 }
 .mooooom-batteryMediumLowVertical1 {
   &:before {
-    content: $mooooom-batteryMediumLowVertical1;
+    content: variables.$mooooom-batteryMediumLowVertical1;
   }
 }
 .mooooom-batteryMediumVertical {
   &:before {
-    content: $mooooom-batteryMediumVertical;
+    content: variables.$mooooom-batteryMediumVertical;
   }
 }
 .mooooom-batteryMediumVertical1 {
   &:before {
-    content: $mooooom-batteryMediumVertical1;
+    content: variables.$mooooom-batteryMediumVertical1;
   }
 }
 .mooooom-battleAxe {
   &:before {
-    content: $mooooom-battleAxe;
+    content: variables.$mooooom-battleAxe;
   }
 }
 .mooooom-bear {
   &:before {
-    content: $mooooom-bear;
+    content: variables.$mooooom-bear;
   }
 }
 .mooooom-bed {
   &:before {
-    content: $mooooom-bed;
+    content: variables.$mooooom-bed;
   }
 }
 .mooooom-beekers {
   &:before {
-    content: $mooooom-beekers;
+    content: variables.$mooooom-beekers;
   }
 }
 .mooooom-bell {
   &:before {
-    content: $mooooom-bell;
+    content: variables.$mooooom-bell;
   }
 }
 .mooooom-bellDisabled {
   &:before {
-    content: $mooooom-bellDisabled;
+    content: variables.$mooooom-bellDisabled;
   }
 }
 .mooooom-bellNotification {
   &:before {
-    content: $mooooom-bellNotification;
+    content: variables.$mooooom-bellNotification;
   }
 }
 .mooooom-bellNotificationCheck {
   &:before {
-    content: $mooooom-bellNotificationCheck;
+    content: variables.$mooooom-bellNotificationCheck;
   }
 }
 .mooooom-bellRing {
   &:before {
-    content: $mooooom-bellRing;
+    content: variables.$mooooom-bellRing;
   }
 }
 .mooooom-berlin {
   &:before {
-    content: $mooooom-berlin;
+    content: variables.$mooooom-berlin;
   }
 }
 .mooooom-bezierPoint {
   &:before {
-    content: $mooooom-bezierPoint;
+    content: variables.$mooooom-bezierPoint;
   }
 }
 .mooooom-bicycle {
   &:before {
-    content: $mooooom-bicycle;
+    content: variables.$mooooom-bicycle;
   }
 }
 .mooooom-bigBen {
   &:before {
-    content: $mooooom-bigBen;
+    content: variables.$mooooom-bigBen;
   }
 }
 .mooooom-bigSppon {
   &:before {
-    content: $mooooom-bigSppon;
+    content: variables.$mooooom-bigSppon;
   }
 }
 .mooooom-bike {
   &:before {
-    content: $mooooom-bike;
+    content: variables.$mooooom-bike;
   }
 }
 .mooooom-binocular {
   &:before {
-    content: $mooooom-binocular;
+    content: variables.$mooooom-binocular;
   }
 }
 .mooooom-birthdayCake {
   &:before {
-    content: $mooooom-birthdayCake;
+    content: variables.$mooooom-birthdayCake;
   }
 }
 .mooooom-blackIceRoad {
   &:before {
-    content: $mooooom-blackIceRoad;
+    content: variables.$mooooom-blackIceRoad;
   }
 }
 .mooooom-blinkLeft {
   &:before {
-    content: $mooooom-blinkLeft;
+    content: variables.$mooooom-blinkLeft;
   }
 }
 .mooooom-blinkRight {
   &:before {
-    content: $mooooom-blinkRight;
+    content: variables.$mooooom-blinkRight;
   }
 }
 .mooooom-bluetooth {
   &:before {
-    content: $mooooom-bluetooth;
+    content: variables.$mooooom-bluetooth;
   }
 }
 .mooooom-bluetoothDisabled {
   &:before {
-    content: $mooooom-bluetoothDisabled;
+    content: variables.$mooooom-bluetoothDisabled;
   }
 }
 .mooooom-bluetoothLocked {
   &:before {
-    content: $mooooom-bluetoothLocked;
+    content: variables.$mooooom-bluetoothLocked;
   }
 }
 .mooooom-bluetoothSearch {
   &:before {
-    content: $mooooom-bluetoothSearch;
+    content: variables.$mooooom-bluetoothSearch;
   }
 }
 .mooooom-bluetoothSignal {
   &:before {
-    content: $mooooom-bluetoothSignal;
+    content: variables.$mooooom-bluetoothSignal;
   }
 }
 .mooooom-bluetoothSymbol {
   &:before {
-    content: $mooooom-bluetoothSymbol;
+    content: variables.$mooooom-bluetoothSymbol;
   }
 }
 .mooooom-boatFront {
   &:before {
-    content: $mooooom-boatFront;
+    content: variables.$mooooom-boatFront;
   }
 }
 .mooooom-boatSide {
   &:before {
-    content: $mooooom-boatSide;
+    content: variables.$mooooom-boatSide;
   }
 }
 .mooooom-bodyScale {
   &:before {
-    content: $mooooom-bodyScale;
+    content: variables.$mooooom-bodyScale;
   }
 }
 .mooooom-bold {
   &:before {
-    content: $mooooom-bold;
+    content: variables.$mooooom-bold;
   }
 }
 .mooooom-bomb {
   &:before {
-    content: $mooooom-bomb;
+    content: variables.$mooooom-bomb;
   }
 }
 .mooooom-bone {
   &:before {
-    content: $mooooom-bone;
+    content: variables.$mooooom-bone;
   }
 }
 .mooooom-boneBroken {
   &:before {
-    content: $mooooom-boneBroken;
+    content: variables.$mooooom-boneBroken;
   }
 }
 .mooooom-bong {
   &:before {
-    content: $mooooom-bong;
+    content: variables.$mooooom-bong;
   }
 }
 .mooooom-book {
   &:before {
-    content: $mooooom-book;
+    content: variables.$mooooom-book;
   }
 }
 .mooooom-bookBookmark {
   &:before {
-    content: $mooooom-bookBookmark;
+    content: variables.$mooooom-bookBookmark;
   }
 }
 .mooooom-bookmark {
   &:before {
-    content: $mooooom-bookmark;
+    content: variables.$mooooom-bookmark;
   }
 }
 .mooooom-bookmarkAdd {
   &:before {
-    content: $mooooom-bookmarkAdd;
+    content: variables.$mooooom-bookmarkAdd;
   }
 }
 .mooooom-bookmarkDelete {
   &:before {
-    content: $mooooom-bookmarkDelete;
+    content: variables.$mooooom-bookmarkDelete;
   }
 }
 .mooooom-bookmarkDisabled {
   &:before {
-    content: $mooooom-bookmarkDisabled;
+    content: variables.$mooooom-bookmarkDisabled;
   }
 }
 .mooooom-bookmarkEdit {
   &:before {
-    content: $mooooom-bookmarkEdit;
+    content: variables.$mooooom-bookmarkEdit;
   }
 }
 .mooooom-bookmarkRemove {
   &:before {
-    content: $mooooom-bookmarkRemove;
+    content: variables.$mooooom-bookmarkRemove;
   }
 }
 .mooooom-bookmarkSearch {
   &:before {
-    content: $mooooom-bookmarkSearch;
+    content: variables.$mooooom-bookmarkSearch;
   }
 }
 .mooooom-bookmarkSearch1 {
   &:before {
-    content: $mooooom-bookmarkSearch1;
+    content: variables.$mooooom-bookmarkSearch1;
   }
 }
 .mooooom-bookmarkTrash {
   &:before {
-    content: $mooooom-bookmarkTrash;
+    content: variables.$mooooom-bookmarkTrash;
   }
 }
 .mooooom-bookOpen {
   &:before {
-    content: $mooooom-bookOpen;
+    content: variables.$mooooom-bookOpen;
   }
 }
 .mooooom-bookOpenBookmark {
   &:before {
-    content: $mooooom-bookOpenBookmark;
+    content: variables.$mooooom-bookOpenBookmark;
   }
 }
 .mooooom-books {
   &:before {
-    content: $mooooom-books;
+    content: variables.$mooooom-books;
   }
 }
 .mooooom-bookSearch {
   &:before {
-    content: $mooooom-bookSearch;
+    content: variables.$mooooom-bookSearch;
   }
 }
 .mooooom-bookTitle {
   &:before {
-    content: $mooooom-bookTitle;
+    content: variables.$mooooom-bookTitle;
   }
 }
 .mooooom-boots {
   &:before {
-    content: $mooooom-boots;
+    content: variables.$mooooom-boots;
   }
 }
 .mooooom-bottomLeftTurn {
   &:before {
-    content: $mooooom-bottomLeftTurn;
+    content: variables.$mooooom-bottomLeftTurn;
   }
 }
 .mooooom-bottomRightTurn {
   &:before {
-    content: $mooooom-bottomRightTurn;
+    content: variables.$mooooom-bottomRightTurn;
   }
 }
 .mooooom-bounceSim {
   &:before {
-    content: $mooooom-bounceSim;
+    content: variables.$mooooom-bounceSim;
   }
 }
 .mooooom-bowArrow {
   &:before {
-    content: $mooooom-bowArrow;
+    content: variables.$mooooom-bowArrow;
   }
 }
 .mooooom-bowling {
   &:before {
-    content: $mooooom-bowling;
+    content: variables.$mooooom-bowling;
   }
 }
 .mooooom-bowTie {
   &:before {
-    content: $mooooom-bowTie;
+    content: variables.$mooooom-bowTie;
   }
 }
 .mooooom-box {
   &:before {
-    content: $mooooom-box;
+    content: variables.$mooooom-box;
   }
 }
 .mooooom-boxDamaged {
   &:before {
-    content: $mooooom-boxDamaged;
+    content: variables.$mooooom-boxDamaged;
   }
 }
 .mooooom-boxerTrunks {
   &:before {
-    content: $mooooom-boxerTrunks;
+    content: variables.$mooooom-boxerTrunks;
   }
 }
 .mooooom-boxIsometric {
   &:before {
-    content: $mooooom-boxIsometric;
+    content: variables.$mooooom-boxIsometric;
   }
 }
 .mooooom-boxOpened {
   &:before {
-    content: $mooooom-boxOpened;
+    content: variables.$mooooom-boxOpened;
   }
 }
 .mooooom-boxOpenedIsometric {
   &:before {
-    content: $mooooom-boxOpenedIsometric;
+    content: variables.$mooooom-boxOpenedIsometric;
   }
 }
 .mooooom-boxReturn {
   &:before {
-    content: $mooooom-boxReturn;
+    content: variables.$mooooom-boxReturn;
   }
 }
 .mooooom-brackets {
   &:before {
-    content: $mooooom-brackets;
+    content: variables.$mooooom-brackets;
   }
 }
 .mooooom-bracketsAngle {
   &:before {
-    content: $mooooom-bracketsAngle;
+    content: variables.$mooooom-bracketsAngle;
   }
 }
 .mooooom-bracketsCurly {
   &:before {
-    content: $mooooom-bracketsCurly;
+    content: variables.$mooooom-bracketsCurly;
   }
 }
 .mooooom-brain {
   &:before {
-    content: $mooooom-brain;
+    content: variables.$mooooom-brain;
   }
 }
 .mooooom-brakes {
   &:before {
-    content: $mooooom-brakes;
+    content: variables.$mooooom-brakes;
   }
 }
 .mooooom-branch {
   &:before {
-    content: $mooooom-branch;
+    content: variables.$mooooom-branch;
   }
 }
 .mooooom-bridge {
   &:before {
-    content: $mooooom-bridge;
+    content: variables.$mooooom-bridge;
   }
 }
 .mooooom-brightnessAuto {
   &:before {
-    content: $mooooom-brightnessAuto;
+    content: variables.$mooooom-brightnessAuto;
   }
 }
 .mooooom-brightnessDark {
   &:before {
-    content: $mooooom-brightnessDark;
+    content: variables.$mooooom-brightnessDark;
   }
 }
 .mooooom-brightnessNight {
   &:before {
-    content: $mooooom-brightnessNight;
+    content: variables.$mooooom-brightnessNight;
   }
 }
 .mooooom-brightnessSunny {
   &:before {
-    content: $mooooom-brightnessSunny;
+    content: variables.$mooooom-brightnessSunny;
   }
 }
 .mooooom-broomStraight {
   &:before {
-    content: $mooooom-broomStraight;
+    content: variables.$mooooom-broomStraight;
   }
 }
 .mooooom-broomSweeping {
   &:before {
-    content: $mooooom-broomSweeping;
+    content: variables.$mooooom-broomSweeping;
   }
 }
 .mooooom-brownBagLunch {
   &:before {
-    content: $mooooom-brownBagLunch;
+    content: variables.$mooooom-brownBagLunch;
   }
 }
 .mooooom-bubbles {
   &:before {
-    content: $mooooom-bubbles;
+    content: variables.$mooooom-bubbles;
   }
 }
 .mooooom-bug {
   &:before {
-    content: $mooooom-bug;
+    content: variables.$mooooom-bug;
   }
 }
 .mooooom-building {
   &:before {
-    content: $mooooom-building;
+    content: variables.$mooooom-building;
   }
 }
 .mooooom-building1 {
   &:before {
-    content: $mooooom-building1;
+    content: variables.$mooooom-building1;
   }
 }
 .mooooom-buildings {
   &:before {
-    content: $mooooom-buildings;
+    content: variables.$mooooom-buildings;
   }
 }
 .mooooom-buildings1 {
   &:before {
-    content: $mooooom-buildings1;
+    content: variables.$mooooom-buildings1;
   }
 }
 .mooooom-buildings2 {
   &:before {
-    content: $mooooom-buildings2;
+    content: variables.$mooooom-buildings2;
   }
 }
 .mooooom-bulletList {
   &:before {
-    content: $mooooom-bulletList;
+    content: variables.$mooooom-bulletList;
   }
 }
 .mooooom-bunkBed {
   &:before {
-    content: $mooooom-bunkBed;
+    content: variables.$mooooom-bunkBed;
   }
 }
 .mooooom-burgerCombo {
   &:before {
-    content: $mooooom-burgerCombo;
+    content: variables.$mooooom-burgerCombo;
   }
 }
 .mooooom-bus {
   &:before {
-    content: $mooooom-bus;
+    content: variables.$mooooom-bus;
   }
 }
 .mooooom-butterfly {
   &:before {
-    content: $mooooom-butterfly;
+    content: variables.$mooooom-butterfly;
   }
 }
 .mooooom-bycicleOld {
   &:before {
-    content: $mooooom-bycicleOld;
+    content: variables.$mooooom-bycicleOld;
   }
 }
 .mooooom-cabinet {
   &:before {
-    content: $mooooom-cabinet;
+    content: variables.$mooooom-cabinet;
   }
 }
 .mooooom-cactus {
   &:before {
-    content: $mooooom-cactus;
+    content: variables.$mooooom-cactus;
   }
 }
 .mooooom-cactus1 {
   &:before {
-    content: $mooooom-cactus1;
+    content: variables.$mooooom-cactus1;
   }
 }
 .mooooom-cakeSlice {
   &:before {
-    content: $mooooom-cakeSlice;
+    content: variables.$mooooom-cakeSlice;
   }
 }
 .mooooom-calculator {
   &:before {
-    content: $mooooom-calculator;
+    content: variables.$mooooom-calculator;
   }
 }
 .mooooom-calendarAdd {
   &:before {
-    content: $mooooom-calendarAdd;
+    content: variables.$mooooom-calendarAdd;
   }
 }
 .mooooom-calendarAlert {
   &:before {
-    content: $mooooom-calendarAlert;
+    content: variables.$mooooom-calendarAlert;
   }
 }
 .mooooom-calendarConfirm {
   &:before {
-    content: $mooooom-calendarConfirm;
+    content: variables.$mooooom-calendarConfirm;
   }
 }
 .mooooom-calendarDate {
   &:before {
-    content: $mooooom-calendarDate;
+    content: variables.$mooooom-calendarDate;
   }
 }
 .mooooom-calendarDateRange {
   &:before {
-    content: $mooooom-calendarDateRange;
+    content: variables.$mooooom-calendarDateRange;
   }
 }
 .mooooom-calendarDefault {
   &:before {
-    content: $mooooom-calendarDefault;
+    content: variables.$mooooom-calendarDefault;
   }
 }
 .mooooom-calendarDelete {
   &:before {
-    content: $mooooom-calendarDelete;
+    content: variables.$mooooom-calendarDelete;
   }
 }
 .mooooom-calendarEdit {
   &:before {
-    content: $mooooom-calendarEdit;
+    content: variables.$mooooom-calendarEdit;
   }
 }
 .mooooom-calendarFavorites {
   &:before {
-    content: $mooooom-calendarFavorites;
+    content: variables.$mooooom-calendarFavorites;
   }
 }
 .mooooom-calendarHidden {
   &:before {
-    content: $mooooom-calendarHidden;
+    content: variables.$mooooom-calendarHidden;
   }
 }
 .mooooom-calendarLink {
   &:before {
-    content: $mooooom-calendarLink;
+    content: variables.$mooooom-calendarLink;
   }
 }
 .mooooom-calendarLoaction {
   &:before {
-    content: $mooooom-calendarLoaction;
+    content: variables.$mooooom-calendarLoaction;
   }
 }
 .mooooom-calendarLocked {
   &:before {
-    content: $mooooom-calendarLocked;
+    content: variables.$mooooom-calendarLocked;
   }
 }
 .mooooom-calendarRemove {
   &:before {
-    content: $mooooom-calendarRemove;
+    content: variables.$mooooom-calendarRemove;
   }
 }
 .mooooom-calendarRevert {
   &:before {
-    content: $mooooom-calendarRevert;
+    content: variables.$mooooom-calendarRevert;
   }
 }
 .mooooom-calendarShare {
   &:before {
-    content: $mooooom-calendarShare;
+    content: variables.$mooooom-calendarShare;
   }
 }
 .mooooom-calendarTimed {
   &:before {
-    content: $mooooom-calendarTimed;
+    content: variables.$mooooom-calendarTimed;
   }
 }
 .mooooom-calendarTrash {
   &:before {
-    content: $mooooom-calendarTrash;
+    content: variables.$mooooom-calendarTrash;
   }
 }
 .mooooom-calendarUser {
   &:before {
-    content: $mooooom-calendarUser;
+    content: variables.$mooooom-calendarUser;
   }
 }
 .mooooom-calendarVisible {
   &:before {
-    content: $mooooom-calendarVisible;
+    content: variables.$mooooom-calendarVisible;
   }
 }
 .mooooom-callAdd {
   &:before {
-    content: $mooooom-callAdd;
+    content: variables.$mooooom-callAdd;
   }
 }
 .mooooom-callDenied {
   &:before {
-    content: $mooooom-callDenied;
+    content: variables.$mooooom-callDenied;
   }
 }
 .mooooom-callDisabled {
   &:before {
-    content: $mooooom-callDisabled;
+    content: variables.$mooooom-callDisabled;
   }
 }
 .mooooom-callEnd {
   &:before {
-    content: $mooooom-callEnd;
+    content: variables.$mooooom-callEnd;
   }
 }
 .mooooom-callIncoming {
   &:before {
-    content: $mooooom-callIncoming;
+    content: variables.$mooooom-callIncoming;
   }
 }
 .mooooom-callMissed {
   &:before {
-    content: $mooooom-callMissed;
+    content: variables.$mooooom-callMissed;
   }
 }
 .mooooom-callOutgoing {
   &:before {
-    content: $mooooom-callOutgoing;
+    content: variables.$mooooom-callOutgoing;
   }
 }
 .mooooom-callPaused {
   &:before {
-    content: $mooooom-callPaused;
+    content: variables.$mooooom-callPaused;
   }
 }
 .mooooom-callRing {
   &:before {
-    content: $mooooom-callRing;
+    content: variables.$mooooom-callRing;
   }
 }
 .mooooom-callShouting {
   &:before {
-    content: $mooooom-callShouting;
+    content: variables.$mooooom-callShouting;
   }
 }
 .mooooom-camera {
   &:before {
-    content: $mooooom-camera;
+    content: variables.$mooooom-camera;
   }
 }
 .mooooom-cameraRotate {
   &:before {
-    content: $mooooom-cameraRotate;
+    content: variables.$mooooom-cameraRotate;
   }
 }
 .mooooom-cameraSelect {
   &:before {
-    content: $mooooom-cameraSelect;
+    content: variables.$mooooom-cameraSelect;
   }
 }
 .mooooom-campFire {
   &:before {
-    content: $mooooom-campFire;
+    content: variables.$mooooom-campFire;
   }
 }
 .mooooom-can {
   &:before {
-    content: $mooooom-can;
+    content: variables.$mooooom-can;
   }
 }
 .mooooom-cancer {
   &:before {
-    content: $mooooom-cancer;
+    content: variables.$mooooom-cancer;
   }
 }
 .mooooom-candy {
   &:before {
-    content: $mooooom-candy;
+    content: variables.$mooooom-candy;
   }
 }
 .mooooom-canRedbull {
   &:before {
-    content: $mooooom-canRedbull;
+    content: variables.$mooooom-canRedbull;
   }
 }
 .mooooom-capricorn {
   &:before {
-    content: $mooooom-capricorn;
+    content: variables.$mooooom-capricorn;
   }
 }
 .mooooom-car {
   &:before {
-    content: $mooooom-car;
+    content: variables.$mooooom-car;
   }
 }
 .mooooom-carBattery {
   &:before {
-    content: $mooooom-carBattery;
+    content: variables.$mooooom-carBattery;
   }
 }
 .mooooom-carDoorsOpen {
   &:before {
-    content: $mooooom-carDoorsOpen;
+    content: variables.$mooooom-carDoorsOpen;
   }
 }
 .mooooom-carFan {
   &:before {
-    content: $mooooom-carFan;
+    content: variables.$mooooom-carFan;
   }
 }
 .mooooom-carFourWheelDrive {
   &:before {
-    content: $mooooom-carFourWheelDrive;
+    content: variables.$mooooom-carFourWheelDrive;
   }
 }
 .mooooom-carHeadlightsFog {
   &:before {
-    content: $mooooom-carHeadlightsFog;
+    content: variables.$mooooom-carHeadlightsFog;
   }
 }
 .mooooom-carHeadlightsHighBeam {
   &:before {
-    content: $mooooom-carHeadlightsHighBeam;
+    content: variables.$mooooom-carHeadlightsHighBeam;
   }
 }
 .mooooom-carHeadlightsLowBeam {
   &:before {
-    content: $mooooom-carHeadlightsLowBeam;
+    content: variables.$mooooom-carHeadlightsLowBeam;
   }
 }
 .mooooom-carHoodOpen {
   &:before {
-    content: $mooooom-carHoodOpen;
+    content: variables.$mooooom-carHoodOpen;
   }
 }
 .mooooom-carousel {
   &:before {
-    content: $mooooom-carousel;
+    content: variables.$mooooom-carousel;
   }
 }
 .mooooom-carrot {
   &:before {
-    content: $mooooom-carrot;
+    content: variables.$mooooom-carrot;
   }
 }
 .mooooom-carSeat {
   &:before {
-    content: $mooooom-carSeat;
+    content: variables.$mooooom-carSeat;
   }
 }
 .mooooom-carSeatBack {
   &:before {
-    content: $mooooom-carSeatBack;
+    content: variables.$mooooom-carSeatBack;
   }
 }
 .mooooom-carSeatForward {
   &:before {
-    content: $mooooom-carSeatForward;
+    content: variables.$mooooom-carSeatForward;
   }
 }
 .mooooom-carSeatHeated {
   &:before {
-    content: $mooooom-carSeatHeated;
+    content: variables.$mooooom-carSeatHeated;
   }
 }
 .mooooom-carTrunkOpen {
   &:before {
-    content: $mooooom-carTrunkOpen;
+    content: variables.$mooooom-carTrunkOpen;
   }
 }
 .mooooom-casetteTape {
   &:before {
-    content: $mooooom-casetteTape;
+    content: variables.$mooooom-casetteTape;
   }
 }
 .mooooom-cash {
   &:before {
-    content: $mooooom-cash;
+    content: variables.$mooooom-cash;
   }
 }
 .mooooom-cashRegister {
   &:before {
-    content: $mooooom-cashRegister;
+    content: variables.$mooooom-cashRegister;
   }
 }
 .mooooom-castle {
   &:before {
-    content: $mooooom-castle;
+    content: variables.$mooooom-castle;
   }
 }
 .mooooom-cat {
   &:before {
-    content: $mooooom-cat;
+    content: variables.$mooooom-cat;
   }
 }
 .mooooom-cctv {
   &:before {
-    content: $mooooom-cctv;
+    content: variables.$mooooom-cctv;
   }
 }
 .mooooom-cellTower {
   &:before {
-    content: $mooooom-cellTower;
+    content: variables.$mooooom-cellTower;
   }
 }
 .mooooom-champagneFlute {
   &:before {
-    content: $mooooom-champagneFlute;
+    content: variables.$mooooom-champagneFlute;
   }
 }
 .mooooom-chargingStation {
   &:before {
-    content: $mooooom-chargingStation;
+    content: variables.$mooooom-chargingStation;
   }
 }
 .mooooom-chartNegative {
   &:before {
-    content: $mooooom-chartNegative;
+    content: variables.$mooooom-chartNegative;
   }
 }
 .mooooom-chartPositive {
   &:before {
-    content: $mooooom-chartPositive;
+    content: variables.$mooooom-chartPositive;
   }
 }
 .mooooom-chatAlert {
   &:before {
-    content: $mooooom-chatAlert;
+    content: variables.$mooooom-chatAlert;
   }
 }
 .mooooom-chatBot {
   &:before {
-    content: $mooooom-chatBot;
+    content: variables.$mooooom-chatBot;
   }
 }
 .mooooom-chatBubble {
   &:before {
-    content: $mooooom-chatBubble;
+    content: variables.$mooooom-chatBubble;
   }
 }
 .mooooom-chatDeath {
   &:before {
-    content: $mooooom-chatDeath;
+    content: variables.$mooooom-chatDeath;
   }
 }
 .mooooom-chatDisabled {
   &:before {
-    content: $mooooom-chatDisabled;
+    content: variables.$mooooom-chatDisabled;
   }
 }
 .mooooom-chatLove {
   &:before {
-    content: $mooooom-chatLove;
+    content: variables.$mooooom-chatLove;
   }
 }
 .mooooom-chatMessages {
   &:before {
-    content: $mooooom-chatMessages;
+    content: variables.$mooooom-chatMessages;
   }
 }
 .mooooom-chatNotification {
   &:before {
-    content: $mooooom-chatNotification;
+    content: variables.$mooooom-chatNotification;
   }
 }
 .mooooom-chatNotificationCheck {
   &:before {
-    content: $mooooom-chatNotificationCheck;
+    content: variables.$mooooom-chatNotificationCheck;
   }
 }
 .mooooom-chatReceived {
   &:before {
-    content: $mooooom-chatReceived;
+    content: variables.$mooooom-chatReceived;
   }
 }
 .mooooom-chatSend {
   &:before {
-    content: $mooooom-chatSend;
+    content: variables.$mooooom-chatSend;
   }
 }
 .mooooom-chatTyping {
   &:before {
-    content: $mooooom-chatTyping;
+    content: variables.$mooooom-chatTyping;
   }
 }
 .mooooom-check {
   &:before {
-    content: $mooooom-check;
+    content: variables.$mooooom-check;
   }
 }
 .mooooom-checkboxes {
   &:before {
-    content: $mooooom-checkboxes;
+    content: variables.$mooooom-checkboxes;
   }
 }
 .mooooom-checkCircle {
   &:before {
-    content: $mooooom-checkCircle;
+    content: variables.$mooooom-checkCircle;
   }
 }
 .mooooom-checkDouble {
   &:before {
-    content: $mooooom-checkDouble;
+    content: variables.$mooooom-checkDouble;
   }
 }
 .mooooom-chefHat {
   &:before {
-    content: $mooooom-chefHat;
+    content: variables.$mooooom-chefHat;
   }
 }
 .mooooom-chefKnife {
   &:before {
-    content: $mooooom-chefKnife;
+    content: variables.$mooooom-chefKnife;
   }
 }
 .mooooom-chevronDown {
   &:before {
-    content: $mooooom-chevronDown;
+    content: variables.$mooooom-chevronDown;
   }
 }
 .mooooom-chevronDownDouble {
   &:before {
-    content: $mooooom-chevronDownDouble;
+    content: variables.$mooooom-chevronDownDouble;
   }
 }
 .mooooom-chevronLeft {
   &:before {
-    content: $mooooom-chevronLeft;
+    content: variables.$mooooom-chevronLeft;
   }
 }
 .mooooom-chevronLeftDouble {
   &:before {
-    content: $mooooom-chevronLeftDouble;
+    content: variables.$mooooom-chevronLeftDouble;
   }
 }
 .mooooom-chevronRight {
   &:before {
-    content: $mooooom-chevronRight;
+    content: variables.$mooooom-chevronRight;
   }
 }
 .mooooom-chevronRightDouble {
   &:before {
-    content: $mooooom-chevronRightDouble;
+    content: variables.$mooooom-chevronRightDouble;
   }
 }
 .mooooom-chevronUp {
   &:before {
-    content: $mooooom-chevronUp;
+    content: variables.$mooooom-chevronUp;
   }
 }
 .mooooom-chevronUpDouble {
   &:before {
-    content: $mooooom-chevronUpDouble;
+    content: variables.$mooooom-chevronUpDouble;
   }
 }
 .mooooom-christRedeemer {
   &:before {
-    content: $mooooom-christRedeemer;
+    content: variables.$mooooom-christRedeemer;
   }
 }
 .mooooom-chromcast {
   &:before {
-    content: $mooooom-chromcast;
+    content: variables.$mooooom-chromcast;
   }
 }
 .mooooom-church {
   &:before {
-    content: $mooooom-church;
+    content: variables.$mooooom-church;
   }
 }
 .mooooom-circle {
   &:before {
-    content: $mooooom-circle;
+    content: variables.$mooooom-circle;
   }
 }
 .mooooom-cleaningBucket {
   &:before {
-    content: $mooooom-cleaningBucket;
+    content: variables.$mooooom-cleaningBucket;
   }
 }
 .mooooom-clock {
   &:before {
-    content: $mooooom-clock;
+    content: variables.$mooooom-clock;
   }
 }
 .mooooom-clockForward {
   &:before {
-    content: $mooooom-clockForward;
+    content: variables.$mooooom-clockForward;
   }
 }
 .mooooom-clokBackward {
   &:before {
-    content: $mooooom-clokBackward;
+    content: variables.$mooooom-clokBackward;
   }
 }
 .mooooom-closedCaption {
   &:before {
-    content: $mooooom-closedCaption;
+    content: variables.$mooooom-closedCaption;
   }
 }
 .mooooom-closedEye {
   &:before {
-    content: $mooooom-closedEye;
+    content: variables.$mooooom-closedEye;
   }
 }
 .mooooom-closePullRequest {
   &:before {
-    content: $mooooom-closePullRequest;
+    content: variables.$mooooom-closePullRequest;
   }
 }
 .mooooom-cloud {
   &:before {
-    content: $mooooom-cloud;
+    content: variables.$mooooom-cloud;
   }
 }
 .mooooom-cloudDelete {
   &:before {
-    content: $mooooom-cloudDelete;
+    content: variables.$mooooom-cloudDelete;
   }
 }
 .mooooom-cloudDownload {
   &:before {
-    content: $mooooom-cloudDownload;
+    content: variables.$mooooom-cloudDownload;
   }
 }
 .mooooom-cloudUpload {
   &:before {
-    content: $mooooom-cloudUpload;
+    content: variables.$mooooom-cloudUpload;
   }
 }
 .mooooom-cloudWind {
   &:before {
-    content: $mooooom-cloudWind;
+    content: variables.$mooooom-cloudWind;
   }
 }
 .mooooom-cloudyDay {
   &:before {
-    content: $mooooom-cloudyDay;
+    content: variables.$mooooom-cloudyDay;
   }
 }
 .mooooom-cloudyDayHeavyRain {
   &:before {
-    content: $mooooom-cloudyDayHeavyRain;
+    content: variables.$mooooom-cloudyDayHeavyRain;
   }
 }
 .mooooom-cloudyDayRain {
   &:before {
-    content: $mooooom-cloudyDayRain;
+    content: variables.$mooooom-cloudyDayRain;
   }
 }
 .mooooom-cloudyDaySnow {
   &:before {
-    content: $mooooom-cloudyDaySnow;
+    content: variables.$mooooom-cloudyDaySnow;
   }
 }
 .mooooom-cloudyDayStorm {
   &:before {
-    content: $mooooom-cloudyDayStorm;
+    content: variables.$mooooom-cloudyDayStorm;
   }
 }
 .mooooom-cloudyNight {
   &:before {
-    content: $mooooom-cloudyNight;
+    content: variables.$mooooom-cloudyNight;
   }
 }
 .mooooom-cloudyNightHeavyRain {
   &:before {
-    content: $mooooom-cloudyNightHeavyRain;
+    content: variables.$mooooom-cloudyNightHeavyRain;
   }
 }
 .mooooom-cloudyNightRain {
   &:before {
-    content: $mooooom-cloudyNightRain;
+    content: variables.$mooooom-cloudyNightRain;
   }
 }
 .mooooom-cloudyNightSnow {
   &:before {
-    content: $mooooom-cloudyNightSnow;
+    content: variables.$mooooom-cloudyNightSnow;
   }
 }
 .mooooom-cloudyNightStorm {
   &:before {
-    content: $mooooom-cloudyNightStorm;
+    content: variables.$mooooom-cloudyNightStorm;
   }
 }
 .mooooom-code {
   &:before {
-    content: $mooooom-code;
+    content: variables.$mooooom-code;
   }
 }
 .mooooom-coffee {
   &:before {
-    content: $mooooom-coffee;
+    content: variables.$mooooom-coffee;
   }
 }
 .mooooom-coffeeCup {
   &:before {
-    content: $mooooom-coffeeCup;
+    content: variables.$mooooom-coffeeCup;
   }
 }
 .mooooom-coffeePot {
   &:before {
-    content: $mooooom-coffeePot;
+    content: variables.$mooooom-coffeePot;
   }
 }
 .mooooom-coin {
   &:before {
-    content: $mooooom-coin;
+    content: variables.$mooooom-coin;
   }
 }
 .mooooom-coinPouch {
   &:before {
-    content: $mooooom-coinPouch;
+    content: variables.$mooooom-coinPouch;
   }
 }
 .mooooom-coins {
   &:before {
-    content: $mooooom-coins;
+    content: variables.$mooooom-coins;
   }
 }
 .mooooom-coliseum {
   &:before {
-    content: $mooooom-coliseum;
+    content: variables.$mooooom-coliseum;
   }
 }
 .mooooom-collection {
   &:before {
-    content: $mooooom-collection;
+    content: variables.$mooooom-collection;
   }
 }
 .mooooom-collection1 {
   &:before {
-    content: $mooooom-collection1;
+    content: variables.$mooooom-collection1;
   }
 }
 .mooooom-collectionAdd {
   &:before {
-    content: $mooooom-collectionAdd;
+    content: variables.$mooooom-collectionAdd;
   }
 }
 .mooooom-collectionRemove {
   &:before {
-    content: $mooooom-collectionRemove;
+    content: variables.$mooooom-collectionRemove;
   }
 }
 .mooooom-colon {
   &:before {
-    content: $mooooom-colon;
+    content: variables.$mooooom-colon;
   }
 }
 .mooooom-commit {
   &:before {
-    content: $mooooom-commit;
+    content: variables.$mooooom-commit;
   }
 }
 .mooooom-compareBranches {
   &:before {
-    content: $mooooom-compareBranches;
+    content: variables.$mooooom-compareBranches;
   }
 }
 .mooooom-compass {
   &:before {
-    content: $mooooom-compass;
+    content: variables.$mooooom-compass;
   }
 }
 .mooooom-compassGeometry {
   &:before {
-    content: $mooooom-compassGeometry;
+    content: variables.$mooooom-compassGeometry;
   }
 }
 .mooooom-cone {
   &:before {
-    content: $mooooom-cone;
+    content: variables.$mooooom-cone;
   }
 }
 .mooooom-connectedHouse {
   &:before {
-    content: $mooooom-connectedHouse;
+    content: variables.$mooooom-connectedHouse;
   }
 }
 .mooooom-connectedScale {
   &:before {
-    content: $mooooom-connectedScale;
+    content: variables.$mooooom-connectedScale;
   }
 }
 .mooooom-content {
   &:before {
-    content: $mooooom-content;
+    content: variables.$mooooom-content;
   }
 }
 .mooooom-contrast {
   &:before {
-    content: $mooooom-contrast;
+    content: variables.$mooooom-contrast;
   }
 }
 .mooooom-controler {
   &:before {
-    content: $mooooom-controler;
+    content: variables.$mooooom-controler;
   }
 }
 .mooooom-cookie {
   &:before {
-    content: $mooooom-cookie;
+    content: variables.$mooooom-cookie;
   }
 }
 .mooooom-copyright {
   &:before {
-    content: $mooooom-copyright;
+    content: variables.$mooooom-copyright;
   }
 }
 .mooooom-couch {
   &:before {
-    content: $mooooom-couch;
+    content: variables.$mooooom-couch;
   }
 }
 .mooooom-couch1 {
   &:before {
-    content: $mooooom-couch1;
+    content: variables.$mooooom-couch1;
   }
 }
 .mooooom-courtHammer {
   &:before {
-    content: $mooooom-courtHammer;
+    content: variables.$mooooom-courtHammer;
   }
 }
 .mooooom-cow {
   &:before {
-    content: $mooooom-cow;
+    content: variables.$mooooom-cow;
   }
 }
 .mooooom-cowboyHat {
   &:before {
-    content: $mooooom-cowboyHat;
+    content: variables.$mooooom-cowboyHat;
   }
 }
 .mooooom-cpu {
   &:before {
-    content: $mooooom-cpu;
+    content: variables.$mooooom-cpu;
   }
 }
 .mooooom-creativeCommon {
   &:before {
-    content: $mooooom-creativeCommon;
+    content: variables.$mooooom-creativeCommon;
   }
 }
 .mooooom-creditCardBack {
   &:before {
-    content: $mooooom-creditCardBack;
+    content: variables.$mooooom-creditCardBack;
   }
 }
 .mooooom-creditCardFront {
   &:before {
-    content: $mooooom-creditCardFront;
+    content: variables.$mooooom-creditCardFront;
   }
 }
 .mooooom-creditCardReader {
   &:before {
-    content: $mooooom-creditCardReader;
+    content: variables.$mooooom-creditCardReader;
   }
 }
 .mooooom-creditCardSwipe {
   &:before {
-    content: $mooooom-creditCardSwipe;
+    content: variables.$mooooom-creditCardSwipe;
   }
 }
 .mooooom-croissant {
   &:before {
-    content: $mooooom-croissant;
+    content: variables.$mooooom-croissant;
   }
 }
 .mooooom-cross {
   &:before {
-    content: $mooooom-cross;
+    content: variables.$mooooom-cross;
   }
 }
 .mooooom-crossair {
   &:before {
-    content: $mooooom-crossair;
+    content: variables.$mooooom-crossair;
   }
 }
 .mooooom-crossairDisabled {
   &:before {
-    content: $mooooom-crossairDisabled;
+    content: variables.$mooooom-crossairDisabled;
   }
 }
 .mooooom-crossCircle {
   &:before {
-    content: $mooooom-crossCircle;
+    content: variables.$mooooom-crossCircle;
   }
 }
 .mooooom-crossOfLife {
   &:before {
-    content: $mooooom-crossOfLife;
+    content: variables.$mooooom-crossOfLife;
   }
 }
 .mooooom-crown {
   &:before {
-    content: $mooooom-crown;
+    content: variables.$mooooom-crown;
   }
 }
 .mooooom-cube {
   &:before {
-    content: $mooooom-cube;
+    content: variables.$mooooom-cube;
   }
 }
 .mooooom-cubeIsometric {
   &:before {
-    content: $mooooom-cubeIsometric;
+    content: variables.$mooooom-cubeIsometric;
   }
 }
 .mooooom-currencySwap {
   &:before {
-    content: $mooooom-currencySwap;
+    content: variables.$mooooom-currencySwap;
   }
 }
 .mooooom-currencySwap1 {
   &:before {
-    content: $mooooom-currencySwap1;
+    content: variables.$mooooom-currencySwap1;
   }
 }
 .mooooom-currentPlaylist {
   &:before {
-    content: $mooooom-currentPlaylist;
+    content: variables.$mooooom-currentPlaylist;
   }
 }
 .mooooom-cutlerySet {
   &:before {
-    content: $mooooom-cutlerySet;
+    content: variables.$mooooom-cutlerySet;
   }
 }
 .mooooom-cyclist {
   &:before {
-    content: $mooooom-cyclist;
+    content: variables.$mooooom-cyclist;
   }
 }
 .mooooom-cylindre {
   &:before {
-    content: $mooooom-cylindre;
+    content: variables.$mooooom-cylindre;
   }
 }
 .mooooom-dashboard {
   &:before {
-    content: $mooooom-dashboard;
+    content: variables.$mooooom-dashboard;
   }
 }
 .mooooom-dataBase {
   &:before {
-    content: $mooooom-dataBase;
+    content: variables.$mooooom-dataBase;
   }
 }
 .mooooom-dataBaseAdd {
   &:before {
-    content: $mooooom-dataBaseAdd;
+    content: variables.$mooooom-dataBaseAdd;
   }
 }
 .mooooom-dataBaseAlert {
   &:before {
-    content: $mooooom-dataBaseAlert;
+    content: variables.$mooooom-dataBaseAlert;
   }
 }
 .mooooom-dataBaseBookmarks {
   &:before {
-    content: $mooooom-dataBaseBookmarks;
+    content: variables.$mooooom-dataBaseBookmarks;
   }
 }
 .mooooom-dataBaseCheck {
   &:before {
-    content: $mooooom-dataBaseCheck;
+    content: variables.$mooooom-dataBaseCheck;
   }
 }
 .mooooom-dataBaseDelete {
   &:before {
-    content: $mooooom-dataBaseDelete;
+    content: variables.$mooooom-dataBaseDelete;
   }
 }
 .mooooom-dataBaseDown {
   &:before {
-    content: $mooooom-dataBaseDown;
+    content: variables.$mooooom-dataBaseDown;
   }
 }
 .mooooom-dataBaseFile {
   &:before {
-    content: $mooooom-dataBaseFile;
+    content: variables.$mooooom-dataBaseFile;
   }
 }
 .mooooom-dataBaseFolder {
   &:before {
-    content: $mooooom-dataBaseFolder;
+    content: variables.$mooooom-dataBaseFolder;
   }
 }
 .mooooom-dataBaseRefresh {
   &:before {
-    content: $mooooom-dataBaseRefresh;
+    content: variables.$mooooom-dataBaseRefresh;
   }
 }
 .mooooom-dataBaseRemove {
   &:before {
-    content: $mooooom-dataBaseRemove;
+    content: variables.$mooooom-dataBaseRemove;
   }
 }
 .mooooom-dataBaseSearch {
   &:before {
-    content: $mooooom-dataBaseSearch;
+    content: variables.$mooooom-dataBaseSearch;
   }
 }
 .mooooom-dataBaseSettings {
   &:before {
-    content: $mooooom-dataBaseSettings;
+    content: variables.$mooooom-dataBaseSettings;
   }
 }
 .mooooom-dataBaseSwap {
   &:before {
-    content: $mooooom-dataBaseSwap;
+    content: variables.$mooooom-dataBaseSwap;
   }
 }
 .mooooom-dataBaseUp {
   &:before {
-    content: $mooooom-dataBaseUp;
+    content: variables.$mooooom-dataBaseUp;
   }
 }
 .mooooom-dataBaseWireless {
   &:before {
-    content: $mooooom-dataBaseWireless;
+    content: variables.$mooooom-dataBaseWireless;
   }
 }
 .mooooom-deathStar {
   &:before {
-    content: $mooooom-deathStar;
+    content: variables.$mooooom-deathStar;
   }
 }
 .mooooom-designerTools {
   &:before {
-    content: $mooooom-designerTools;
+    content: variables.$mooooom-designerTools;
   }
 }
 .mooooom-desk {
   &:before {
-    content: $mooooom-desk;
+    content: variables.$mooooom-desk;
   }
 }
 .mooooom-desk1 {
   &:before {
-    content: $mooooom-desk1;
+    content: variables.$mooooom-desk1;
   }
 }
 .mooooom-desk2 {
   &:before {
-    content: $mooooom-desk2;
+    content: variables.$mooooom-desk2;
   }
 }
 .mooooom-deskLamp {
   &:before {
-    content: $mooooom-deskLamp;
+    content: variables.$mooooom-deskLamp;
   }
 }
 .mooooom-desprovisionSim {
   &:before {
-    content: $mooooom-desprovisionSim;
+    content: variables.$mooooom-desprovisionSim;
   }
 }
 .mooooom-devices {
   &:before {
-    content: $mooooom-devices;
+    content: variables.$mooooom-devices;
   }
 }
 .mooooom-diamond {
   &:before {
-    content: $mooooom-diamond;
+    content: variables.$mooooom-diamond;
   }
 }
 .mooooom-diamondRing {
   &:before {
-    content: $mooooom-diamondRing;
+    content: variables.$mooooom-diamondRing;
   }
 }
 .mooooom-dices {
   &:before {
-    content: $mooooom-dices;
+    content: variables.$mooooom-dices;
   }
 }
 .mooooom-diningTable {
   &:before {
-    content: $mooooom-diningTable;
+    content: variables.$mooooom-diningTable;
   }
 }
 .mooooom-diploma {
   &:before {
-    content: $mooooom-diploma;
+    content: variables.$mooooom-diploma;
   }
 }
 .mooooom-diploma1 {
   &:before {
-    content: $mooooom-diploma1;
+    content: variables.$mooooom-diploma1;
   }
 }
 .mooooom-directory {
   &:before {
-    content: $mooooom-directory;
+    content: variables.$mooooom-directory;
   }
 }
 .mooooom-directory1 {
   &:before {
-    content: $mooooom-directory1;
+    content: variables.$mooooom-directory1;
   }
 }
 .mooooom-discount {
   &:before {
-    content: $mooooom-discount;
+    content: variables.$mooooom-discount;
   }
 }
 .mooooom-discountValue {
   &:before {
-    content: $mooooom-discountValue;
+    content: variables.$mooooom-discountValue;
   }
 }
 .mooooom-dishCover {
   &:before {
-    content: $mooooom-dishCover;
+    content: variables.$mooooom-dishCover;
   }
 }
 .mooooom-disk {
   &:before {
-    content: $mooooom-disk;
+    content: variables.$mooooom-disk;
   }
 }
 .mooooom-diskFailure {
   &:before {
-    content: $mooooom-diskFailure;
+    content: variables.$mooooom-diskFailure;
   }
 }
 .mooooom-dna {
   &:before {
-    content: $mooooom-dna;
+    content: variables.$mooooom-dna;
   }
 }
 .mooooom-dock {
   &:before {
-    content: $mooooom-dock;
+    content: variables.$mooooom-dock;
   }
 }
 .mooooom-dog {
   &:before {
-    content: $mooooom-dog;
+    content: variables.$mooooom-dog;
   }
 }
 .mooooom-dollar {
   &:before {
-    content: $mooooom-dollar;
+    content: variables.$mooooom-dollar;
   }
 }
 .mooooom-doNotEnter {
   &:before {
-    content: $mooooom-doNotEnter;
+    content: variables.$mooooom-doNotEnter;
   }
 }
 .mooooom-door {
   &:before {
-    content: $mooooom-door;
+    content: variables.$mooooom-door;
   }
 }
 .mooooom-doorHandle {
   &:before {
-    content: $mooooom-doorHandle;
+    content: variables.$mooooom-doorHandle;
   }
 }
 .mooooom-doorIn {
   &:before {
-    content: $mooooom-doorIn;
+    content: variables.$mooooom-doorIn;
   }
 }
 .mooooom-doorLocked {
   &:before {
-    content: $mooooom-doorLocked;
+    content: variables.$mooooom-doorLocked;
   }
 }
 .mooooom-doorOpen {
   &:before {
-    content: $mooooom-doorOpen;
+    content: variables.$mooooom-doorOpen;
   }
 }
 .mooooom-doorOut {
   &:before {
-    content: $mooooom-doorOut;
+    content: variables.$mooooom-doorOut;
   }
 }
 .mooooom-doorSign {
   &:before {
-    content: $mooooom-doorSign;
+    content: variables.$mooooom-doorSign;
   }
 }
 .mooooom-doubleHalberd {
   &:before {
-    content: $mooooom-doubleHalberd;
+    content: variables.$mooooom-doubleHalberd;
   }
 }
 .mooooom-download {
   &:before {
-    content: $mooooom-download;
+    content: variables.$mooooom-download;
   }
 }
 .mooooom-dream {
   &:before {
-    content: $mooooom-dream;
+    content: variables.$mooooom-dream;
   }
 }
 .mooooom-dream1 {
   &:before {
-    content: $mooooom-dream1;
+    content: variables.$mooooom-dream1;
   }
 }
 .mooooom-dressShoes {
   &:before {
-    content: $mooooom-dressShoes;
+    content: variables.$mooooom-dressShoes;
   }
 }
 .mooooom-drill {
   &:before {
-    content: $mooooom-drill;
+    content: variables.$mooooom-drill;
   }
 }
 .mooooom-drone {
   &:before {
-    content: $mooooom-drone;
+    content: variables.$mooooom-drone;
   }
 }
 .mooooom-dropDown {
   &:before {
-    content: $mooooom-dropDown;
+    content: variables.$mooooom-dropDown;
   }
 }
 .mooooom-dropUp {
   &:before {
-    content: $mooooom-dropUp;
+    content: variables.$mooooom-dropUp;
   }
 }
 .mooooom-dubai {
   &:before {
-    content: $mooooom-dubai;
+    content: variables.$mooooom-dubai;
   }
 }
 .mooooom-ear {
   &:before {
-    content: $mooooom-ear;
+    content: variables.$mooooom-ear;
   }
 }
 .mooooom-earthAmerica {
   &:before {
-    content: $mooooom-earthAmerica;
+    content: variables.$mooooom-earthAmerica;
   }
 }
 .mooooom-earthAsia {
   &:before {
-    content: $mooooom-earthAsia;
+    content: variables.$mooooom-earthAsia;
   }
 }
 .mooooom-earthEurope {
   &:before {
-    content: $mooooom-earthEurope;
+    content: variables.$mooooom-earthEurope;
   }
 }
 .mooooom-eclipse {
   &:before {
-    content: $mooooom-eclipse;
+    content: variables.$mooooom-eclipse;
   }
 }
 .mooooom-edit {
   &:before {
-    content: $mooooom-edit;
+    content: variables.$mooooom-edit;
   }
 }
 .mooooom-editLine {
   &:before {
-    content: $mooooom-editLine;
+    content: variables.$mooooom-editLine;
   }
 }
 .mooooom-eggplant {
   &:before {
-    content: $mooooom-eggplant;
+    content: variables.$mooooom-eggplant;
   }
 }
 .mooooom-elementAir {
   &:before {
-    content: $mooooom-elementAir;
+    content: variables.$mooooom-elementAir;
   }
 }
 .mooooom-elementEarth {
   &:before {
-    content: $mooooom-elementEarth;
+    content: variables.$mooooom-elementEarth;
   }
 }
 .mooooom-elementFire {
   &:before {
-    content: $mooooom-elementFire;
+    content: variables.$mooooom-elementFire;
   }
 }
 .mooooom-elementWater {
   &:before {
-    content: $mooooom-elementWater;
+    content: variables.$mooooom-elementWater;
   }
 }
 .mooooom-elevatorDown {
   &:before {
-    content: $mooooom-elevatorDown;
+    content: variables.$mooooom-elevatorDown;
   }
 }
 .mooooom-elevatorUp {
   &:before {
-    content: $mooooom-elevatorUp;
+    content: variables.$mooooom-elevatorUp;
   }
 }
 .mooooom-email {
   &:before {
-    content: $mooooom-email;
+    content: variables.$mooooom-email;
   }
 }
 .mooooom-emailAdd {
   &:before {
-    content: $mooooom-emailAdd;
+    content: variables.$mooooom-emailAdd;
   }
 }
 .mooooom-emailEdit {
   &:before {
-    content: $mooooom-emailEdit;
+    content: variables.$mooooom-emailEdit;
   }
 }
 .mooooom-emailNotification {
   &:before {
-    content: $mooooom-emailNotification;
+    content: variables.$mooooom-emailNotification;
   }
 }
 .mooooom-emailOpen {
   &:before {
-    content: $mooooom-emailOpen;
+    content: variables.$mooooom-emailOpen;
   }
 }
 .mooooom-emailOpen1 {
   &:before {
-    content: $mooooom-emailOpen1;
+    content: variables.$mooooom-emailOpen1;
   }
 }
 .mooooom-emailOpen2 {
   &:before {
-    content: $mooooom-emailOpen2;
+    content: variables.$mooooom-emailOpen2;
   }
 }
 .mooooom-emailReceived {
   &:before {
-    content: $mooooom-emailReceived;
+    content: variables.$mooooom-emailReceived;
   }
 }
 .mooooom-emailRemove {
   &:before {
-    content: $mooooom-emailRemove;
+    content: variables.$mooooom-emailRemove;
   }
 }
 .mooooom-emailReply {
   &:before {
-    content: $mooooom-emailReply;
+    content: variables.$mooooom-emailReply;
   }
 }
 .mooooom-emailReply1 {
   &:before {
-    content: $mooooom-emailReply1;
+    content: variables.$mooooom-emailReply1;
   }
 }
 .mooooom-emailScheduled {
   &:before {
-    content: $mooooom-emailScheduled;
+    content: variables.$mooooom-emailScheduled;
   }
 }
 .mooooom-emailSend {
   &:before {
-    content: $mooooom-emailSend;
+    content: variables.$mooooom-emailSend;
   }
 }
 .mooooom-emailSend1 {
   &:before {
-    content: $mooooom-emailSend1;
+    content: variables.$mooooom-emailSend1;
   }
 }
 .mooooom-emergancyWarnings {
   &:before {
-    content: $mooooom-emergancyWarnings;
+    content: variables.$mooooom-emergancyWarnings;
   }
 }
 .mooooom-emergencyKit {
   &:before {
-    content: $mooooom-emergencyKit;
+    content: variables.$mooooom-emergencyKit;
   }
 }
 .mooooom-engine {
   &:before {
-    content: $mooooom-engine;
+    content: variables.$mooooom-engine;
   }
 }
 .mooooom-eraser {
   &:before {
-    content: $mooooom-eraser;
+    content: variables.$mooooom-eraser;
   }
 }
 .mooooom-eScooter {
   &:before {
-    content: $mooooom-eScooter;
+    content: variables.$mooooom-eScooter;
   }
 }
 .mooooom-eSim {
   &:before {
-    content: $mooooom-eSim;
+    content: variables.$mooooom-eSim;
   }
 }
 .mooooom-ether {
   &:before {
-    content: $mooooom-ether;
+    content: variables.$mooooom-ether;
   }
 }
 .mooooom-ethernetCable {
   &:before {
-    content: $mooooom-ethernetCable;
+    content: variables.$mooooom-ethernetCable;
   }
 }
 .mooooom-ethernetPlug {
   &:before {
-    content: $mooooom-ethernetPlug;
+    content: variables.$mooooom-ethernetPlug;
   }
 }
 .mooooom-euro {
   &:before {
-    content: $mooooom-euro;
+    content: variables.$mooooom-euro;
   }
 }
 .mooooom-eventCanceled {
   &:before {
-    content: $mooooom-eventCanceled;
+    content: variables.$mooooom-eventCanceled;
   }
 }
 .mooooom-eventCompleted {
   &:before {
-    content: $mooooom-eventCompleted;
+    content: variables.$mooooom-eventCompleted;
   }
 }
 .mooooom-eventDefault {
   &:before {
-    content: $mooooom-eventDefault;
+    content: variables.$mooooom-eventDefault;
   }
 }
 .mooooom-eventDeleted {
   &:before {
-    content: $mooooom-eventDeleted;
+    content: variables.$mooooom-eventDeleted;
   }
 }
 .mooooom-eventImported {
   &:before {
-    content: $mooooom-eventImported;
+    content: variables.$mooooom-eventImported;
   }
 }
 .mooooom-eventInProgress {
   &:before {
-    content: $mooooom-eventInProgress;
+    content: variables.$mooooom-eventInProgress;
   }
 }
 .mooooom-eventMoved {
   &:before {
-    content: $mooooom-eventMoved;
+    content: variables.$mooooom-eventMoved;
   }
 }
 .mooooom-eventStarted {
   &:before {
-    content: $mooooom-eventStarted;
+    content: variables.$mooooom-eventStarted;
   }
 }
 .mooooom-exclamationMark {
   &:before {
-    content: $mooooom-exclamationMark;
+    content: variables.$mooooom-exclamationMark;
   }
 }
 .mooooom-exclude {
   &:before {
-    content: $mooooom-exclude;
+    content: variables.$mooooom-exclude;
   }
 }
 .mooooom-exponentialDown {
   &:before {
-    content: $mooooom-exponentialDown;
+    content: variables.$mooooom-exponentialDown;
   }
 }
 .mooooom-exponentialUp {
   &:before {
-    content: $mooooom-exponentialUp;
+    content: variables.$mooooom-exponentialUp;
   }
 }
 .mooooom-eye {
   &:before {
-    content: $mooooom-eye;
+    content: variables.$mooooom-eye;
   }
 }
 .mooooom-eyeDropper {
   &:before {
-    content: $mooooom-eyeDropper;
+    content: variables.$mooooom-eyeDropper;
   }
 }
 .mooooom-facebookCode {
   &:before {
-    content: $mooooom-facebookCode;
+    content: variables.$mooooom-facebookCode;
   }
 }
 .mooooom-faceId {
   &:before {
-    content: $mooooom-faceId;
+    content: variables.$mooooom-faceId;
   }
 }
 .mooooom-faderFull {
   &:before {
-    content: $mooooom-faderFull;
+    content: variables.$mooooom-faderFull;
   }
 }
 .mooooom-faderOff {
   &:before {
-    content: $mooooom-faderOff;
+    content: variables.$mooooom-faderOff;
   }
 }
 .mooooom-faderOffOn {
   &:before {
-    content: $mooooom-faderOffOn;
+    content: variables.$mooooom-faderOffOn;
   }
 }
 .mooooom-faderOnOff {
   &:before {
-    content: $mooooom-faderOnOff;
+    content: variables.$mooooom-faderOnOff;
   }
 }
 .mooooom-feather {
   &:before {
-    content: $mooooom-feather;
+    content: variables.$mooooom-feather;
   }
 }
 .mooooom-features {
   &:before {
-    content: $mooooom-features;
+    content: variables.$mooooom-features;
   }
 }
 .mooooom-field {
   &:before {
-    content: $mooooom-field;
+    content: variables.$mooooom-field;
   }
 }
 .mooooom-fieldTrack {
   &:before {
-    content: $mooooom-fieldTrack;
+    content: variables.$mooooom-fieldTrack;
   }
 }
 .mooooom-file {
   &:before {
-    content: $mooooom-file;
+    content: variables.$mooooom-file;
   }
 }
 .mooooom-fileAdd {
   &:before {
-    content: $mooooom-fileAdd;
+    content: variables.$mooooom-fileAdd;
   }
 }
 .mooooom-fileAi {
   &:before {
-    content: $mooooom-fileAi;
+    content: variables.$mooooom-fileAi;
   }
 }
 .mooooom-fileAnalytics {
   &:before {
-    content: $mooooom-fileAnalytics;
+    content: variables.$mooooom-fileAnalytics;
   }
 }
 .mooooom-fileCopy {
   &:before {
-    content: $mooooom-fileCopy;
+    content: variables.$mooooom-fileCopy;
   }
 }
 .mooooom-fileDownload {
   &:before {
-    content: $mooooom-fileDownload;
+    content: variables.$mooooom-fileDownload;
   }
 }
 .mooooom-fileDrop {
   &:before {
-    content: $mooooom-fileDrop;
+    content: variables.$mooooom-fileDrop;
   }
 }
 .mooooom-fileInsert {
   &:before {
-    content: $mooooom-fileInsert;
+    content: variables.$mooooom-fileInsert;
   }
 }
 .mooooom-fileLines {
   &:before {
-    content: $mooooom-fileLines;
+    content: variables.$mooooom-fileLines;
   }
 }
 .mooooom-fileRemove {
   &:before {
-    content: $mooooom-fileRemove;
+    content: variables.$mooooom-fileRemove;
   }
 }
 .mooooom-fileShred {
   &:before {
-    content: $mooooom-fileShred;
+    content: variables.$mooooom-fileShred;
   }
 }
 .mooooom-fileSwap {
   &:before {
-    content: $mooooom-fileSwap;
+    content: variables.$mooooom-fileSwap;
   }
 }
 .mooooom-fileTree {
   &:before {
-    content: $mooooom-fileTree;
+    content: variables.$mooooom-fileTree;
   }
 }
 .mooooom-fileUpload {
   &:before {
-    content: $mooooom-fileUpload;
+    content: variables.$mooooom-fileUpload;
   }
 }
 .mooooom-fileZip {
   &:before {
-    content: $mooooom-fileZip;
+    content: variables.$mooooom-fileZip;
   }
 }
 .mooooom-filmCross {
   &:before {
-    content: $mooooom-filmCross;
+    content: variables.$mooooom-filmCross;
   }
 }
 .mooooom-filmMedia {
   &:before {
-    content: $mooooom-filmMedia;
+    content: variables.$mooooom-filmMedia;
   }
 }
 .mooooom-filmPhotography {
   &:before {
-    content: $mooooom-filmPhotography;
+    content: variables.$mooooom-filmPhotography;
   }
 }
 .mooooom-fingerprint {
   &:before {
-    content: $mooooom-fingerprint;
+    content: variables.$mooooom-fingerprint;
   }
 }
 .mooooom-fire {
   &:before {
-    content: $mooooom-fire;
+    content: variables.$mooooom-fire;
   }
 }
 .mooooom-fireHydrant {
   &:before {
-    content: $mooooom-fireHydrant;
+    content: variables.$mooooom-fireHydrant;
   }
 }
 .mooooom-fireWall {
   &:before {
-    content: $mooooom-fireWall;
+    content: variables.$mooooom-fireWall;
   }
 }
 .mooooom-fish {
   &:before {
-    content: $mooooom-fish;
+    content: variables.$mooooom-fish;
   }
 }
 .mooooom-fistLeft {
   &:before {
-    content: $mooooom-fistLeft;
+    content: variables.$mooooom-fistLeft;
   }
 }
 .mooooom-fistRight {
   &:before {
-    content: $mooooom-fistRight;
+    content: variables.$mooooom-fistRight;
   }
 }
 .mooooom-flag {
   &:before {
-    content: $mooooom-flag;
+    content: variables.$mooooom-flag;
   }
 }
 .mooooom-flagWind {
   &:before {
-    content: $mooooom-flagWind;
+    content: variables.$mooooom-flagWind;
   }
 }
 .mooooom-flagWind1 {
   &:before {
-    content: $mooooom-flagWind1;
+    content: variables.$mooooom-flagWind1;
   }
 }
 .mooooom-flail {
   &:before {
-    content: $mooooom-flail;
+    content: variables.$mooooom-flail;
   }
 }
 .mooooom-flamingo {
   &:before {
-    content: $mooooom-flamingo;
+    content: variables.$mooooom-flamingo;
   }
 }
 .mooooom-flashLight {
   &:before {
-    content: $mooooom-flashLight;
+    content: variables.$mooooom-flashLight;
   }
 }
 .mooooom-flask {
   &:before {
-    content: $mooooom-flask;
+    content: variables.$mooooom-flask;
   }
 }
 .mooooom-flaskFilled {
   &:before {
-    content: $mooooom-flaskFilled;
+    content: variables.$mooooom-flaskFilled;
   }
 }
 .mooooom-flipHorizontal {
   &:before {
-    content: $mooooom-flipHorizontal;
+    content: variables.$mooooom-flipHorizontal;
   }
 }
 .mooooom-flipImage {
   &:before {
-    content: $mooooom-flipImage;
+    content: variables.$mooooom-flipImage;
   }
 }
 .mooooom-flipVertical {
   &:before {
-    content: $mooooom-flipVertical;
+    content: variables.$mooooom-flipVertical;
   }
 }
 .mooooom-floppyDisk {
   &:before {
-    content: $mooooom-floppyDisk;
+    content: variables.$mooooom-floppyDisk;
   }
 }
 .mooooom-flower {
   &:before {
-    content: $mooooom-flower;
+    content: variables.$mooooom-flower;
   }
 }
 .mooooom-flower1 {
   &:before {
-    content: $mooooom-flower1;
+    content: variables.$mooooom-flower1;
   }
 }
 .mooooom-flower2 {
   &:before {
-    content: $mooooom-flower2;
+    content: variables.$mooooom-flower2;
   }
 }
 .mooooom-flower3 {
   &:before {
-    content: $mooooom-flower3;
+    content: variables.$mooooom-flower3;
   }
 }
 .mooooom-foggy {
   &:before {
-    content: $mooooom-foggy;
+    content: variables.$mooooom-foggy;
   }
 }
 .mooooom-folder {
   &:before {
-    content: $mooooom-folder;
+    content: variables.$mooooom-folder;
   }
 }
 .mooooom-folderAdd {
   &:before {
-    content: $mooooom-folderAdd;
+    content: variables.$mooooom-folderAdd;
   }
 }
 .mooooom-folderAi {
   &:before {
-    content: $mooooom-folderAi;
+    content: variables.$mooooom-folderAi;
   }
 }
 .mooooom-folderBookmark {
   &:before {
-    content: $mooooom-folderBookmark;
+    content: variables.$mooooom-folderBookmark;
   }
 }
 .mooooom-folderEdit {
   &:before {
-    content: $mooooom-folderEdit;
+    content: variables.$mooooom-folderEdit;
   }
 }
 .mooooom-folderExtract {
   &:before {
-    content: $mooooom-folderExtract;
+    content: variables.$mooooom-folderExtract;
   }
 }
 .mooooom-folderInsert {
   &:before {
-    content: $mooooom-folderInsert;
+    content: variables.$mooooom-folderInsert;
   }
 }
 .mooooom-folderOpen {
   &:before {
-    content: $mooooom-folderOpen;
+    content: variables.$mooooom-folderOpen;
   }
 }
 .mooooom-folderRemove {
   &:before {
-    content: $mooooom-folderRemove;
+    content: variables.$mooooom-folderRemove;
   }
 }
 .mooooom-folderSwap {
   &:before {
-    content: $mooooom-folderSwap;
+    content: variables.$mooooom-folderSwap;
   }
 }
 .mooooom-folderTree {
   &:before {
-    content: $mooooom-folderTree;
+    content: variables.$mooooom-folderTree;
   }
 }
 .mooooom-fontDecrease {
   &:before {
-    content: $mooooom-fontDecrease;
+    content: variables.$mooooom-fontDecrease;
   }
 }
 .mooooom-fontIncrease {
   &:before {
-    content: $mooooom-fontIncrease;
+    content: variables.$mooooom-fontIncrease;
   }
 }
 .mooooom-football {
   &:before {
-    content: $mooooom-football;
+    content: variables.$mooooom-football;
   }
 }
 .mooooom-footPrint {
   &:before {
-    content: $mooooom-footPrint;
+    content: variables.$mooooom-footPrint;
   }
 }
 .mooooom-fork {
   &:before {
-    content: $mooooom-fork;
+    content: variables.$mooooom-fork;
   }
 }
 .mooooom-forward {
   &:before {
-    content: $mooooom-forward;
+    content: variables.$mooooom-forward;
   }
 }
 .mooooom-forward10sec {
   &:before {
-    content: $mooooom-forward10sec;
+    content: variables.$mooooom-forward10sec;
   }
 }
 .mooooom-forwardSlash {
   &:before {
-    content: $mooooom-forwardSlash;
+    content: variables.$mooooom-forwardSlash;
   }
 }
 .mooooom-fox {
   &:before {
-    content: $mooooom-fox;
+    content: variables.$mooooom-fox;
   }
 }
 .mooooom-freeDraw {
   &:before {
-    content: $mooooom-freeDraw;
+    content: variables.$mooooom-freeDraw;
   }
 }
 .mooooom-fries {
   &:before {
-    content: $mooooom-fries;
+    content: variables.$mooooom-fries;
   }
 }
 .mooooom-frog {
   &:before {
-    content: $mooooom-frog;
+    content: variables.$mooooom-frog;
   }
 }
 .mooooom-galaxy {
   &:before {
-    content: $mooooom-galaxy;
+    content: variables.$mooooom-galaxy;
   }
 }
 .mooooom-gasolineJug {
   &:before {
-    content: $mooooom-gasolineJug;
+    content: variables.$mooooom-gasolineJug;
   }
 }
 .mooooom-gasPump {
   &:before {
-    content: $mooooom-gasPump;
+    content: variables.$mooooom-gasPump;
   }
 }
 .mooooom-gem {
   &:before {
-    content: $mooooom-gem;
+    content: variables.$mooooom-gem;
   }
 }
 .mooooom-gemini {
   &:before {
-    content: $mooooom-gemini;
+    content: variables.$mooooom-gemini;
   }
 }
 .mooooom-ghost {
   &:before {
-    content: $mooooom-ghost;
+    content: variables.$mooooom-ghost;
   }
 }
 .mooooom-giftCard {
   &:before {
-    content: $mooooom-giftCard;
+    content: variables.$mooooom-giftCard;
   }
 }
 .mooooom-glass {
   &:before {
-    content: $mooooom-glass;
+    content: variables.$mooooom-glass;
   }
 }
 .mooooom-glasses {
   &:before {
-    content: $mooooom-glasses;
+    content: variables.$mooooom-glasses;
   }
 }
 .mooooom-globe {
   &:before {
-    content: $mooooom-globe;
+    content: variables.$mooooom-globe;
   }
 }
 .mooooom-golf {
   &:before {
-    content: $mooooom-golf;
+    content: variables.$mooooom-golf;
   }
 }
 .mooooom-golf1 {
   &:before {
-    content: $mooooom-golf1;
+    content: variables.$mooooom-golf1;
   }
 }
 .mooooom-googleHome {
   &:before {
-    content: $mooooom-googleHome;
+    content: variables.$mooooom-googleHome;
   }
 }
 .mooooom-gpu {
   &:before {
-    content: $mooooom-gpu;
+    content: variables.$mooooom-gpu;
   }
 }
 .mooooom-grabDots {
   &:before {
-    content: $mooooom-grabDots;
+    content: variables.$mooooom-grabDots;
   }
 }
 .mooooom-grabLines {
   &:before {
-    content: $mooooom-grabLines;
+    content: variables.$mooooom-grabLines;
   }
 }
 .mooooom-graduationHat {
   &:before {
-    content: $mooooom-graduationHat;
+    content: variables.$mooooom-graduationHat;
   }
 }
 .mooooom-grapes {
   &:before {
-    content: $mooooom-grapes;
+    content: variables.$mooooom-grapes;
   }
 }
 .mooooom-greekEarth {
   &:before {
-    content: $mooooom-greekEarth;
+    content: variables.$mooooom-greekEarth;
   }
 }
 .mooooom-greekJupiter {
   &:before {
-    content: $mooooom-greekJupiter;
+    content: variables.$mooooom-greekJupiter;
   }
 }
 .mooooom-greekMars {
   &:before {
-    content: $mooooom-greekMars;
+    content: variables.$mooooom-greekMars;
   }
 }
 .mooooom-greekMercury {
   &:before {
-    content: $mooooom-greekMercury;
+    content: variables.$mooooom-greekMercury;
   }
 }
 .mooooom-greekNeptune {
   &:before {
-    content: $mooooom-greekNeptune;
+    content: variables.$mooooom-greekNeptune;
   }
 }
 .mooooom-greekSaturn {
   &:before {
-    content: $mooooom-greekSaturn;
+    content: variables.$mooooom-greekSaturn;
   }
 }
 .mooooom-greekSun {
   &:before {
-    content: $mooooom-greekSun;
+    content: variables.$mooooom-greekSun;
   }
 }
 .mooooom-greekUranus {
   &:before {
-    content: $mooooom-greekUranus;
+    content: variables.$mooooom-greekUranus;
   }
 }
 .mooooom-greekVenus {
   &:before {
-    content: $mooooom-greekVenus;
+    content: variables.$mooooom-greekVenus;
   }
 }
 .mooooom-grid {
   &:before {
-    content: $mooooom-grid;
+    content: variables.$mooooom-grid;
   }
 }
 .mooooom-gridBottom {
   &:before {
-    content: $mooooom-gridBottom;
+    content: variables.$mooooom-gridBottom;
   }
 }
 .mooooom-gridCenterHorizontal {
   &:before {
-    content: $mooooom-gridCenterHorizontal;
+    content: variables.$mooooom-gridCenterHorizontal;
   }
 }
 .mooooom-gridCenterVertical {
   &:before {
-    content: $mooooom-gridCenterVertical;
+    content: variables.$mooooom-gridCenterVertical;
   }
 }
 .mooooom-gridEmpty {
   &:before {
-    content: $mooooom-gridEmpty;
+    content: variables.$mooooom-gridEmpty;
   }
 }
 .mooooom-gridLeft {
   &:before {
-    content: $mooooom-gridLeft;
+    content: variables.$mooooom-gridLeft;
   }
 }
 .mooooom-gridMassonery {
   &:before {
-    content: $mooooom-gridMassonery;
+    content: variables.$mooooom-gridMassonery;
   }
 }
 .mooooom-gridRight {
   &:before {
-    content: $mooooom-gridRight;
+    content: variables.$mooooom-gridRight;
   }
 }
 .mooooom-gridTop {
   &:before {
-    content: $mooooom-gridTop;
+    content: variables.$mooooom-gridTop;
   }
 }
 .mooooom-guitar {
   &:before {
-    content: $mooooom-guitar;
+    content: variables.$mooooom-guitar;
   }
 }
 .mooooom-gun {
   &:before {
-    content: $mooooom-gun;
+    content: variables.$mooooom-gun;
   }
 }
 .mooooom-halberd {
   &:before {
-    content: $mooooom-halberd;
+    content: variables.$mooooom-halberd;
   }
 }
 .mooooom-halfPants {
   &:before {
-    content: $mooooom-halfPants;
+    content: variables.$mooooom-halfPants;
   }
 }
 .mooooom-hamburger {
   &:before {
-    content: $mooooom-hamburger;
+    content: variables.$mooooom-hamburger;
   }
 }
 .mooooom-hammer {
   &:before {
-    content: $mooooom-hammer;
+    content: variables.$mooooom-hammer;
   }
 }
 .mooooom-hamster {
   &:before {
-    content: $mooooom-hamster;
+    content: variables.$mooooom-hamster;
   }
 }
 .mooooom-hand2FingersLeft {
   &:before {
-    content: $mooooom-hand2FingersLeft;
+    content: variables.$mooooom-hand2FingersLeft;
   }
 }
 .mooooom-hand2FingersRight {
   &:before {
-    content: $mooooom-hand2FingersRight;
+    content: variables.$mooooom-hand2FingersRight;
   }
 }
 .mooooom-handFLeft {
   &:before {
-    content: $mooooom-handFLeft;
+    content: variables.$mooooom-handFLeft;
   }
 }
 .mooooom-handFRight {
   &:before {
-    content: $mooooom-handFRight;
+    content: variables.$mooooom-handFRight;
   }
 }
 .mooooom-handGrab {
   &:before {
-    content: $mooooom-handGrab;
+    content: variables.$mooooom-handGrab;
   }
 }
 .mooooom-handLeft {
   &:before {
-    content: $mooooom-handLeft;
+    content: variables.$mooooom-handLeft;
   }
 }
 .mooooom-handMetalLeft {
   &:before {
-    content: $mooooom-handMetalLeft;
+    content: variables.$mooooom-handMetalLeft;
   }
 }
 .mooooom-handMetalRight {
   &:before {
-    content: $mooooom-handMetalRight;
+    content: variables.$mooooom-handMetalRight;
   }
 }
 .mooooom-handPointingLeft {
   &:before {
-    content: $mooooom-handPointingLeft;
+    content: variables.$mooooom-handPointingLeft;
   }
 }
 .mooooom-handPointingRight {
   &:before {
-    content: $mooooom-handPointingRight;
+    content: variables.$mooooom-handPointingRight;
   }
 }
 .mooooom-handRight {
   &:before {
-    content: $mooooom-handRight;
+    content: variables.$mooooom-handRight;
   }
 }
 .mooooom-handsClaping {
   &:before {
-    content: $mooooom-handsClaping;
+    content: variables.$mooooom-handsClaping;
   }
 }
 .mooooom-handSwipeLeft {
   &:before {
-    content: $mooooom-handSwipeLeft;
+    content: variables.$mooooom-handSwipeLeft;
   }
 }
 .mooooom-handSwipeRight {
   &:before {
-    content: $mooooom-handSwipeRight;
+    content: variables.$mooooom-handSwipeRight;
   }
 }
 .mooooom-handTouch {
   &:before {
-    content: $mooooom-handTouch;
+    content: variables.$mooooom-handTouch;
   }
 }
 .mooooom-hangerFancy {
   &:before {
-    content: $mooooom-hangerFancy;
+    content: variables.$mooooom-hangerFancy;
   }
 }
 .mooooom-hangerHuman {
   &:before {
-    content: $mooooom-hangerHuman;
+    content: variables.$mooooom-hangerHuman;
   }
 }
 .mooooom-hangerPlastic {
   &:before {
-    content: $mooooom-hangerPlastic;
+    content: variables.$mooooom-hangerPlastic;
   }
 }
 .mooooom-happy {
   &:before {
-    content: $mooooom-happy;
+    content: variables.$mooooom-happy;
   }
 }
 .mooooom-happy1 {
   &:before {
-    content: $mooooom-happy1;
+    content: variables.$mooooom-happy1;
   }
 }
 .mooooom-hashtag {
   &:before {
-    content: $mooooom-hashtag;
+    content: variables.$mooooom-hashtag;
   }
 }
 .mooooom-haunted {
   &:before {
-    content: $mooooom-haunted;
+    content: variables.$mooooom-haunted;
   }
 }
 .mooooom-haunted1 {
   &:before {
-    content: $mooooom-haunted1;
+    content: variables.$mooooom-haunted1;
   }
 }
 .mooooom-hdr {
   &:before {
-    content: $mooooom-hdr;
+    content: variables.$mooooom-hdr;
   }
 }
 .mooooom-headerContentSidebar {
   &:before {
-    content: $mooooom-headerContentSidebar;
+    content: variables.$mooooom-headerContentSidebar;
   }
 }
 .mooooom-heading {
   &:before {
-    content: $mooooom-heading;
+    content: variables.$mooooom-heading;
   }
 }
 .mooooom-headphone {
   &:before {
-    content: $mooooom-headphone;
+    content: variables.$mooooom-headphone;
   }
 }
 .mooooom-headphoneDeafen {
   &:before {
-    content: $mooooom-headphoneDeafen;
+    content: variables.$mooooom-headphoneDeafen;
   }
 }
 .mooooom-headphoneDeafen1 {
   &:before {
-    content: $mooooom-headphoneDeafen1;
+    content: variables.$mooooom-headphoneDeafen1;
   }
 }
 .mooooom-headset {
   &:before {
-    content: $mooooom-headset;
+    content: variables.$mooooom-headset;
   }
 }
 .mooooom-heart {
   &:before {
-    content: $mooooom-heart;
+    content: variables.$mooooom-heart;
   }
 }
 .mooooom-heartBeat {
   &:before {
-    content: $mooooom-heartBeat;
+    content: variables.$mooooom-heartBeat;
   }
 }
 .mooooom-heartBroken {
   &:before {
-    content: $mooooom-heartBroken;
+    content: variables.$mooooom-heartBroken;
   }
 }
 .mooooom-heartDisabled {
   &:before {
-    content: $mooooom-heartDisabled;
+    content: variables.$mooooom-heartDisabled;
   }
 }
 .mooooom-heartFilled {
   &:before {
-    content: $mooooom-heartFilled;
+    content: variables.$mooooom-heartFilled;
   }
 }
 .mooooom-heartHalf {
   &:before {
-    content: $mooooom-heartHalf;
+    content: variables.$mooooom-heartHalf;
   }
 }
 .mooooom-heartHalfFilled {
   &:before {
-    content: $mooooom-heartHalfFilled;
+    content: variables.$mooooom-heartHalfFilled;
   }
 }
 .mooooom-heavyRain {
   &:before {
-    content: $mooooom-heavyRain;
+    content: variables.$mooooom-heavyRain;
   }
 }
 .mooooom-heavySnow {
   &:before {
-    content: $mooooom-heavySnow;
+    content: variables.$mooooom-heavySnow;
   }
 }
 .mooooom-helmet {
   &:before {
-    content: $mooooom-helmet;
+    content: variables.$mooooom-helmet;
   }
 }
 .mooooom-helmetBoba {
   &:before {
-    content: $mooooom-helmetBoba;
+    content: variables.$mooooom-helmetBoba;
   }
 }
 .mooooom-helmetFrench {
   &:before {
-    content: $mooooom-helmetFrench;
+    content: variables.$mooooom-helmetFrench;
   }
 }
 .mooooom-helmetSpartan {
   &:before {
-    content: $mooooom-helmetSpartan;
+    content: variables.$mooooom-helmetSpartan;
   }
 }
 .mooooom-hexagon {
   &:before {
-    content: $mooooom-hexagon;
+    content: variables.$mooooom-hexagon;
   }
 }
 .mooooom-hidden {
   &:before {
-    content: $mooooom-hidden;
+    content: variables.$mooooom-hidden;
   }
 }
 .mooooom-highlight {
   &:before {
-    content: $mooooom-highlight;
+    content: variables.$mooooom-highlight;
   }
 }
 .mooooom-highlighter {
   &:before {
-    content: $mooooom-highlighter;
+    content: variables.$mooooom-highlighter;
   }
 }
 .mooooom-highSneaker {
   &:before {
-    content: $mooooom-highSneaker;
+    content: variables.$mooooom-highSneaker;
   }
 }
 .mooooom-highVisibilityVest {
   &:before {
-    content: $mooooom-highVisibilityVest;
+    content: variables.$mooooom-highVisibilityVest;
   }
 }
 .mooooom-highWind {
   &:before {
-    content: $mooooom-highWind;
+    content: variables.$mooooom-highWind;
   }
 }
 .mooooom-hokey {
   &:before {
-    content: $mooooom-hokey;
+    content: variables.$mooooom-hokey;
   }
 }
 .mooooom-home {
   &:before {
-    content: $mooooom-home;
+    content: variables.$mooooom-home;
   }
 }
 .mooooom-home1 {
   &:before {
-    content: $mooooom-home1;
+    content: variables.$mooooom-home1;
   }
 }
 .mooooom-home2 {
   &:before {
-    content: $mooooom-home2;
+    content: variables.$mooooom-home2;
   }
 }
 .mooooom-home3 {
   &:before {
-    content: $mooooom-home3;
+    content: variables.$mooooom-home3;
   }
 }
 .mooooom-home4 {
   &:before {
-    content: $mooooom-home4;
+    content: variables.$mooooom-home4;
   }
 }
 .mooooom-hoodie {
   &:before {
-    content: $mooooom-hoodie;
+    content: variables.$mooooom-hoodie;
   }
 }
 .mooooom-horizontalPitch {
   &:before {
-    content: $mooooom-horizontalPitch;
+    content: variables.$mooooom-horizontalPitch;
   }
 }
 .mooooom-hospital {
   &:before {
-    content: $mooooom-hospital;
+    content: variables.$mooooom-hospital;
   }
 }
 .mooooom-hospitalBed {
   &:before {
-    content: $mooooom-hospitalBed;
+    content: variables.$mooooom-hospitalBed;
   }
 }
 .mooooom-hotPeper {
   &:before {
-    content: $mooooom-hotPeper;
+    content: variables.$mooooom-hotPeper;
   }
 }
 .mooooom-hotPlate {
   &:before {
-    content: $mooooom-hotPlate;
+    content: variables.$mooooom-hotPlate;
   }
 }
 .mooooom-hourglass {
   &:before {
-    content: $mooooom-hourglass;
+    content: variables.$mooooom-hourglass;
   }
 }
 .mooooom-houseDesigner {
   &:before {
-    content: $mooooom-houseDesigner;
+    content: variables.$mooooom-houseDesigner;
   }
 }
 .mooooom-housePlans {
   &:before {
-    content: $mooooom-housePlans;
+    content: variables.$mooooom-housePlans;
   }
 }
 .mooooom-ice {
   &:before {
-    content: $mooooom-ice;
+    content: variables.$mooooom-ice;
   }
 }
 .mooooom-iceCream {
   &:before {
-    content: $mooooom-iceCream;
+    content: variables.$mooooom-iceCream;
   }
 }
 .mooooom-idCard {
   &:before {
-    content: $mooooom-idCard;
+    content: variables.$mooooom-idCard;
   }
 }
 .mooooom-imageText {
   &:before {
-    content: $mooooom-imageText;
+    content: variables.$mooooom-imageText;
   }
 }
 .mooooom-inbox {
   &:before {
-    content: $mooooom-inbox;
+    content: variables.$mooooom-inbox;
   }
 }
 .mooooom-incognito {
   &:before {
-    content: $mooooom-incognito;
+    content: variables.$mooooom-incognito;
   }
 }
 .mooooom-indentLeft {
   &:before {
-    content: $mooooom-indentLeft;
+    content: variables.$mooooom-indentLeft;
   }
 }
 .mooooom-indentRight {
   &:before {
-    content: $mooooom-indentRight;
+    content: variables.$mooooom-indentRight;
   }
 }
 .mooooom-india {
   &:before {
-    content: $mooooom-india;
+    content: variables.$mooooom-india;
   }
 }
 .mooooom-indianRupee {
   &:before {
-    content: $mooooom-indianRupee;
+    content: variables.$mooooom-indianRupee;
   }
 }
 .mooooom-infoCircle {
   &:before {
-    content: $mooooom-infoCircle;
+    content: variables.$mooooom-infoCircle;
   }
 }
 .mooooom-infoLosange {
   &:before {
-    content: $mooooom-infoLosange;
+    content: variables.$mooooom-infoLosange;
   }
 }
 .mooooom-input {
   &:before {
-    content: $mooooom-input;
+    content: variables.$mooooom-input;
   }
 }
 .mooooom-inputClear {
   &:before {
-    content: $mooooom-inputClear;
+    content: variables.$mooooom-inputClear;
   }
 }
 .mooooom-inputDropDown {
   &:before {
-    content: $mooooom-inputDropDown;
+    content: variables.$mooooom-inputDropDown;
   }
 }
 .mooooom-inputDropDownOpen {
   &:before {
-    content: $mooooom-inputDropDownOpen;
+    content: variables.$mooooom-inputDropDownOpen;
   }
 }
 .mooooom-inputError {
   &:before {
-    content: $mooooom-inputError;
+    content: variables.$mooooom-inputError;
   }
 }
 .mooooom-inputPassword {
   &:before {
-    content: $mooooom-inputPassword;
+    content: variables.$mooooom-inputPassword;
   }
 }
 .mooooom-inputSearch {
   &:before {
-    content: $mooooom-inputSearch;
+    content: variables.$mooooom-inputSearch;
   }
 }
 .mooooom-inputTags {
   &:before {
-    content: $mooooom-inputTags;
+    content: variables.$mooooom-inputTags;
   }
 }
 .mooooom-intersect {
   &:before {
-    content: $mooooom-intersect;
+    content: variables.$mooooom-intersect;
   }
 }
 .mooooom-iosLocationTracking {
   &:before {
-    content: $mooooom-iosLocationTracking;
+    content: variables.$mooooom-iosLocationTracking;
   }
 }
 .mooooom-italic {
   &:before {
-    content: $mooooom-italic;
+    content: variables.$mooooom-italic;
   }
 }
 .mooooom-jigsawPiece {
   &:before {
-    content: $mooooom-jigsawPiece;
+    content: variables.$mooooom-jigsawPiece;
   }
 }
 .mooooom-joustingLance {
   &:before {
-    content: $mooooom-joustingLance;
+    content: variables.$mooooom-joustingLance;
   }
 }
 .mooooom-justify {
   &:before {
-    content: $mooooom-justify;
+    content: variables.$mooooom-justify;
   }
 }
 .mooooom-kanban {
   &:before {
-    content: $mooooom-kanban;
+    content: variables.$mooooom-kanban;
   }
 }
 .mooooom-katana {
   &:before {
-    content: $mooooom-katana;
+    content: variables.$mooooom-katana;
   }
 }
 .mooooom-keyboard {
   &:before {
-    content: $mooooom-keyboard;
+    content: variables.$mooooom-keyboard;
   }
 }
 .mooooom-keyhole {
   &:before {
-    content: $mooooom-keyhole;
+    content: variables.$mooooom-keyhole;
   }
 }
 .mooooom-keyholeModern {
   &:before {
-    content: $mooooom-keyholeModern;
+    content: variables.$mooooom-keyholeModern;
   }
 }
 .mooooom-keyModern {
   &:before {
-    content: $mooooom-keyModern;
+    content: variables.$mooooom-keyModern;
   }
 }
 .mooooom-keyOld {
   &:before {
-    content: $mooooom-keyOld;
+    content: variables.$mooooom-keyOld;
   }
 }
 .mooooom-kidneys {
   &:before {
-    content: $mooooom-kidneys;
+    content: variables.$mooooom-kidneys;
   }
 }
 .mooooom-kip {
   &:before {
-    content: $mooooom-kip;
+    content: variables.$mooooom-kip;
   }
 }
 .mooooom-kremlin {
   &:before {
-    content: $mooooom-kremlin;
+    content: variables.$mooooom-kremlin;
   }
 }
 .mooooom-lader {
   &:before {
-    content: $mooooom-lader;
+    content: variables.$mooooom-lader;
   }
 }
 .mooooom-lakeHouse {
   &:before {
-    content: $mooooom-lakeHouse;
+    content: variables.$mooooom-lakeHouse;
   }
 }
 .mooooom-landscape {
   &:before {
-    content: $mooooom-landscape;
+    content: variables.$mooooom-landscape;
   }
 }
 .mooooom-laptop {
   &:before {
-    content: $mooooom-laptop;
+    content: variables.$mooooom-laptop;
   }
 }
 .mooooom-lari {
   &:before {
-    content: $mooooom-lari;
+    content: variables.$mooooom-lari;
   }
 }
 .mooooom-laserCutter {
   &:before {
-    content: $mooooom-laserCutter;
+    content: variables.$mooooom-laserCutter;
   }
 }
 .mooooom-laserCutter1 {
   &:before {
-    content: $mooooom-laserCutter1;
+    content: variables.$mooooom-laserCutter1;
   }
 }
 .mooooom-laurelCrown {
   &:before {
-    content: $mooooom-laurelCrown;
+    content: variables.$mooooom-laurelCrown;
   }
 }
 .mooooom-layers {
   &:before {
-    content: $mooooom-layers;
+    content: variables.$mooooom-layers;
   }
 }
 .mooooom-layout {
   &:before {
-    content: $mooooom-layout;
+    content: variables.$mooooom-layout;
   }
 }
 .mooooom-layoutAdd {
   &:before {
-    content: $mooooom-layoutAdd;
+    content: variables.$mooooom-layoutAdd;
   }
 }
 .mooooom-leaf {
   &:before {
-    content: $mooooom-leaf;
+    content: variables.$mooooom-leaf;
   }
 }
 .mooooom-leek {
   &:before {
-    content: $mooooom-leek;
+    content: variables.$mooooom-leek;
   }
 }
 .mooooom-leftHand2FingersSwipeLeft {
   &:before {
-    content: $mooooom-leftHand2FingersSwipeLeft;
+    content: variables.$mooooom-leftHand2FingersSwipeLeft;
   }
 }
 .mooooom-leftHand2FingersSwipeRight {
   &:before {
-    content: $mooooom-leftHand2FingersSwipeRight;
+    content: variables.$mooooom-leftHand2FingersSwipeRight;
   }
 }
 .mooooom-leftHand2FingersTap {
   &:before {
-    content: $mooooom-leftHand2FingersTap;
+    content: variables.$mooooom-leftHand2FingersTap;
   }
 }
 .mooooom-leftHandGiveDeath {
   &:before {
-    content: $mooooom-leftHandGiveDeath;
+    content: variables.$mooooom-leftHandGiveDeath;
   }
 }
 .mooooom-leftHandGiveLove {
   &:before {
-    content: $mooooom-leftHandGiveLove;
+    content: variables.$mooooom-leftHandGiveLove;
   }
 }
 .mooooom-leftHandGiveMoney {
   &:before {
-    content: $mooooom-leftHandGiveMoney;
+    content: variables.$mooooom-leftHandGiveMoney;
   }
 }
 .mooooom-leftHandPinch {
   &:before {
-    content: $mooooom-leftHandPinch;
+    content: variables.$mooooom-leftHandPinch;
   }
 }
 .mooooom-leftHandTap {
   &:before {
-    content: $mooooom-leftHandTap;
+    content: variables.$mooooom-leftHandTap;
   }
 }
 .mooooom-leftHandTrackPad {
   &:before {
-    content: $mooooom-leftHandTrackPad;
+    content: variables.$mooooom-leftHandTrackPad;
   }
 }
 .mooooom-leftHandZoom {
   &:before {
-    content: $mooooom-leftHandZoom;
+    content: variables.$mooooom-leftHandZoom;
   }
 }
 .mooooom-leo {
   &:before {
-    content: $mooooom-leo;
+    content: variables.$mooooom-leo;
   }
 }
 .mooooom-libra {
   &:before {
-    content: $mooooom-libra;
+    content: variables.$mooooom-libra;
   }
 }
 .mooooom-lightBulb {
   &:before {
-    content: $mooooom-lightBulb;
+    content: variables.$mooooom-lightBulb;
   }
 }
 .mooooom-lightBulbEco {
   &:before {
-    content: $mooooom-lightBulbEco;
+    content: variables.$mooooom-lightBulbEco;
   }
 }
 .mooooom-lightHouse {
   &:before {
-    content: $mooooom-lightHouse;
+    content: variables.$mooooom-lightHouse;
   }
 }
 .mooooom-lightning {
   &:before {
-    content: $mooooom-lightning;
+    content: variables.$mooooom-lightning;
   }
 }
 .mooooom-lineBreak {
   &:before {
-    content: $mooooom-lineBreak;
+    content: variables.$mooooom-lineBreak;
   }
 }
 .mooooom-link {
   &:before {
-    content: $mooooom-link;
+    content: variables.$mooooom-link;
   }
 }
 .mooooom-link1 {
   &:before {
-    content: $mooooom-link1;
+    content: variables.$mooooom-link1;
   }
 }
 .mooooom-linkBroken {
   &:before {
-    content: $mooooom-linkBroken;
+    content: variables.$mooooom-linkBroken;
   }
 }
 .mooooom-lion {
   &:before {
-    content: $mooooom-lion;
+    content: variables.$mooooom-lion;
   }
 }
 .mooooom-liquidCorrosive {
   &:before {
-    content: $mooooom-liquidCorrosive;
+    content: variables.$mooooom-liquidCorrosive;
   }
 }
 .mooooom-lira {
   &:before {
-    content: $mooooom-lira;
+    content: variables.$mooooom-lira;
   }
 }
 .mooooom-liver {
   &:before {
-    content: $mooooom-liver;
+    content: variables.$mooooom-liver;
   }
 }
 .mooooom-liveStream {
   &:before {
-    content: $mooooom-liveStream;
+    content: variables.$mooooom-liveStream;
   }
 }
 .mooooom-loaderFade {
   &:before {
-    content: $mooooom-loaderFade;
+    content: variables.$mooooom-loaderFade;
   }
 }
 .mooooom-loaderFull {
   &:before {
-    content: $mooooom-loaderFull;
+    content: variables.$mooooom-loaderFull;
   }
 }
 .mooooom-location {
   &:before {
-    content: $mooooom-location;
+    content: variables.$mooooom-location;
   }
 }
 .mooooom-locationCrossair {
   &:before {
-    content: $mooooom-locationCrossair;
+    content: variables.$mooooom-locationCrossair;
   }
 }
 .mooooom-locationCrossairDiabled {
   &:before {
-    content: $mooooom-locationCrossairDiabled;
+    content: variables.$mooooom-locationCrossairDiabled;
   }
 }
 .mooooom-locator {
   &:before {
-    content: $mooooom-locator;
+    content: variables.$mooooom-locator;
   }
 }
 .mooooom-locked {
   &:before {
-    content: $mooooom-locked;
+    content: variables.$mooooom-locked;
   }
 }
 .mooooom-lockedRound {
   &:before {
-    content: $mooooom-lockedRound;
+    content: variables.$mooooom-lockedRound;
   }
 }
 .mooooom-losange {
   &:before {
-    content: $mooooom-losange;
+    content: variables.$mooooom-losange;
   }
 }
 .mooooom-lotus {
   &:before {
-    content: $mooooom-lotus;
+    content: variables.$mooooom-lotus;
   }
 }
 .mooooom-love {
   &:before {
-    content: $mooooom-love;
+    content: variables.$mooooom-love;
   }
 }
 .mooooom-loveLetter {
   &:before {
-    content: $mooooom-loveLetter;
+    content: variables.$mooooom-loveLetter;
   }
 }
 .mooooom-lungs {
   &:before {
-    content: $mooooom-lungs;
+    content: variables.$mooooom-lungs;
   }
 }
 .mooooom-lyrics {
   &:before {
-    content: $mooooom-lyrics;
+    content: variables.$mooooom-lyrics;
   }
 }
 .mooooom-mace {
   &:before {
-    content: $mooooom-mace;
+    content: variables.$mooooom-mace;
   }
 }
 .mooooom-maceFlanged {
   &:before {
-    content: $mooooom-maceFlanged;
+    content: variables.$mooooom-maceFlanged;
   }
 }
 .mooooom-macOsWindow {
   &:before {
-    content: $mooooom-macOsWindow;
+    content: variables.$mooooom-macOsWindow;
   }
 }
 .mooooom-macro {
   &:before {
-    content: $mooooom-macro;
+    content: variables.$mooooom-macro;
   }
 }
 .mooooom-magicWand {
   &:before {
-    content: $mooooom-magicWand;
+    content: variables.$mooooom-magicWand;
   }
 }
 .mooooom-magnet {
   &:before {
-    content: $mooooom-magnet;
+    content: variables.$mooooom-magnet;
   }
 }
 .mooooom-makiSushi {
   &:before {
-    content: $mooooom-makiSushi;
+    content: variables.$mooooom-makiSushi;
   }
 }
 .mooooom-manat {
   &:before {
-    content: $mooooom-manat;
+    content: variables.$mooooom-manat;
   }
 }
 .mooooom-map {
   &:before {
-    content: $mooooom-map;
+    content: variables.$mooooom-map;
   }
 }
 .mooooom-mapClue {
   &:before {
-    content: $mooooom-mapClue;
+    content: variables.$mooooom-mapClue;
   }
 }
 .mooooom-mapPin {
   &:before {
-    content: $mooooom-mapPin;
+    content: variables.$mooooom-mapPin;
   }
 }
 .mooooom-mapPinAdd {
   &:before {
-    content: $mooooom-mapPinAdd;
+    content: variables.$mooooom-mapPinAdd;
   }
 }
 .mooooom-mapPinAlert {
   &:before {
-    content: $mooooom-mapPinAlert;
+    content: variables.$mooooom-mapPinAlert;
   }
 }
 .mooooom-mapPinBank {
   &:before {
-    content: $mooooom-mapPinBank;
+    content: variables.$mooooom-mapPinBank;
   }
 }
 .mooooom-mapPinCheck {
   &:before {
-    content: $mooooom-mapPinCheck;
+    content: variables.$mooooom-mapPinCheck;
   }
 }
 .mooooom-mapPinDelete {
   &:before {
-    content: $mooooom-mapPinDelete;
+    content: variables.$mooooom-mapPinDelete;
   }
 }
 .mooooom-mapPinDisabled {
   &:before {
-    content: $mooooom-mapPinDisabled;
+    content: variables.$mooooom-mapPinDisabled;
   }
 }
 .mooooom-mapPinEdit {
   &:before {
-    content: $mooooom-mapPinEdit;
+    content: variables.$mooooom-mapPinEdit;
   }
 }
 .mooooom-mapPinLocked {
   &:before {
-    content: $mooooom-mapPinLocked;
+    content: variables.$mooooom-mapPinLocked;
   }
 }
 .mooooom-mapPinOld {
   &:before {
-    content: $mooooom-mapPinOld;
+    content: variables.$mooooom-mapPinOld;
   }
 }
 .mooooom-mapPinQuestion {
   &:before {
-    content: $mooooom-mapPinQuestion;
+    content: variables.$mooooom-mapPinQuestion;
   }
 }
 .mooooom-mapPinRemove {
   &:before {
-    content: $mooooom-mapPinRemove;
+    content: variables.$mooooom-mapPinRemove;
   }
 }
 .mooooom-martiniGlass {
   &:before {
-    content: $mooooom-martiniGlass;
+    content: variables.$mooooom-martiniGlass;
   }
 }
 .mooooom-mastercard {
   &:before {
-    content: $mooooom-mastercard;
+    content: variables.$mooooom-mastercard;
   }
 }
 .mooooom-mastercard1 {
   &:before {
-    content: $mooooom-mastercard1;
+    content: variables.$mooooom-mastercard1;
   }
 }
 .mooooom-medal {
   &:before {
-    content: $mooooom-medal;
+    content: variables.$mooooom-medal;
   }
 }
 .mooooom-mediaPlayer {
   &:before {
-    content: $mooooom-mediaPlayer;
+    content: variables.$mooooom-mediaPlayer;
   }
 }
 .mooooom-mediaTimelineEditor {
   &:before {
-    content: $mooooom-mediaTimelineEditor;
+    content: variables.$mooooom-mediaTimelineEditor;
   }
 }
 .mooooom-medicalCase {
   &:before {
-    content: $mooooom-medicalCase;
+    content: variables.$mooooom-medicalCase;
   }
 }
 .mooooom-medicinalPlant {
   &:before {
-    content: $mooooom-medicinalPlant;
+    content: variables.$mooooom-medicinalPlant;
   }
 }
 .mooooom-medicineMortar {
   &:before {
-    content: $mooooom-medicineMortar;
+    content: variables.$mooooom-medicineMortar;
   }
 }
 .mooooom-megaphone {
   &:before {
-    content: $mooooom-megaphone;
+    content: variables.$mooooom-megaphone;
   }
 }
 .mooooom-meh {
   &:before {
-    content: $mooooom-meh;
+    content: variables.$mooooom-meh;
   }
 }
 .mooooom-melt {
   &:before {
-    content: $mooooom-melt;
+    content: variables.$mooooom-melt;
   }
 }
 .mooooom-menuBurger {
   &:before {
-    content: $mooooom-menuBurger;
+    content: variables.$mooooom-menuBurger;
   }
 }
 .mooooom-menuDotsHorizontal {
   &:before {
-    content: $mooooom-menuDotsHorizontal;
+    content: variables.$mooooom-menuDotsHorizontal;
   }
 }
 .mooooom-menuDotsVertical {
   &:before {
-    content: $mooooom-menuDotsVertical;
+    content: variables.$mooooom-menuDotsVertical;
   }
 }
 .mooooom-merge {
   &:before {
-    content: $mooooom-merge;
+    content: variables.$mooooom-merge;
   }
 }
 .mooooom-messageBubble {
   &:before {
-    content: $mooooom-messageBubble;
+    content: variables.$mooooom-messageBubble;
   }
 }
 .mooooom-messageBubbleAdd {
   &:before {
-    content: $mooooom-messageBubbleAdd;
+    content: variables.$mooooom-messageBubbleAdd;
   }
 }
 .mooooom-messageBubbleAlert {
   &:before {
-    content: $mooooom-messageBubbleAlert;
+    content: variables.$mooooom-messageBubbleAlert;
   }
 }
 .mooooom-messageBubbleAlert1Top {
   &:before {
-    content: $mooooom-messageBubbleAlert1Top;
+    content: variables.$mooooom-messageBubbleAlert1Top;
   }
 }
 .mooooom-messageBubbleArrowDownTop {
   &:before {
-    content: $mooooom-messageBubbleArrowDownTop;
+    content: variables.$mooooom-messageBubbleArrowDownTop;
   }
 }
 .mooooom-messageBubbleArrowLeftTop {
   &:before {
-    content: $mooooom-messageBubbleArrowLeftTop;
+    content: variables.$mooooom-messageBubbleArrowLeftTop;
   }
 }
 .mooooom-messageBubbleArrowRightTop {
   &:before {
-    content: $mooooom-messageBubbleArrowRightTop;
+    content: variables.$mooooom-messageBubbleArrowRightTop;
   }
 }
 .mooooom-messageBubbleArrowUpTop {
   &:before {
-    content: $mooooom-messageBubbleArrowUpTop;
+    content: variables.$mooooom-messageBubbleArrowUpTop;
   }
 }
 .mooooom-messageBubbleBookmarkTop {
   &:before {
-    content: $mooooom-messageBubbleBookmarkTop;
+    content: variables.$mooooom-messageBubbleBookmarkTop;
   }
 }
 .mooooom-messageBubbleCheck {
   &:before {
-    content: $mooooom-messageBubbleCheck;
+    content: variables.$mooooom-messageBubbleCheck;
   }
 }
 .mooooom-messageBubbleDelete {
   &:before {
-    content: $mooooom-messageBubbleDelete;
+    content: variables.$mooooom-messageBubbleDelete;
   }
 }
 .mooooom-messageBubbleDeleteTop {
   &:before {
-    content: $mooooom-messageBubbleDeleteTop;
+    content: variables.$mooooom-messageBubbleDeleteTop;
   }
 }
 .mooooom-messageBubbleInfo {
   &:before {
-    content: $mooooom-messageBubbleInfo;
+    content: variables.$mooooom-messageBubbleInfo;
   }
 }
 .mooooom-messageBubbleMore {
   &:before {
-    content: $mooooom-messageBubbleMore;
+    content: variables.$mooooom-messageBubbleMore;
   }
 }
 .mooooom-messageBubbleQuestion {
   &:before {
-    content: $mooooom-messageBubbleQuestion;
+    content: variables.$mooooom-messageBubbleQuestion;
   }
 }
 .mooooom-messageBubbleRemove {
   &:before {
-    content: $mooooom-messageBubbleRemove;
+    content: variables.$mooooom-messageBubbleRemove;
   }
 }
 .mooooom-messageBubbles {
   &:before {
-    content: $mooooom-messageBubbles;
+    content: variables.$mooooom-messageBubbles;
   }
 }
 .mooooom-messageBubbleSearchTop {
   &:before {
-    content: $mooooom-messageBubbleSearchTop;
+    content: variables.$mooooom-messageBubbleSearchTop;
   }
 }
 .mooooom-messageBubbleText {
   &:before {
-    content: $mooooom-messageBubbleText;
+    content: variables.$mooooom-messageBubbleText;
   }
 }
 .mooooom-messageBubbleTranslate {
   &:before {
-    content: $mooooom-messageBubbleTranslate;
+    content: variables.$mooooom-messageBubbleTranslate;
   }
 }
 .mooooom-meteor {
   &:before {
-    content: $mooooom-meteor;
+    content: variables.$mooooom-meteor;
   }
 }
 .mooooom-meteorShower {
   &:before {
-    content: $mooooom-meteorShower;
+    content: variables.$mooooom-meteorShower;
   }
 }
 .mooooom-mexico {
   &:before {
-    content: $mooooom-mexico;
+    content: variables.$mooooom-mexico;
   }
 }
 .mooooom-mic {
   &:before {
-    content: $mooooom-mic;
+    content: variables.$mooooom-mic;
   }
 }
 .mooooom-micLoud {
   &:before {
-    content: $mooooom-micLoud;
+    content: variables.$mooooom-micLoud;
   }
 }
 .mooooom-micLow {
   &:before {
-    content: $mooooom-micLow;
+    content: variables.$mooooom-micLow;
   }
 }
 .mooooom-micMiddle {
   &:before {
-    content: $mooooom-micMiddle;
+    content: variables.$mooooom-micMiddle;
   }
 }
 .mooooom-micMuted {
   &:before {
-    content: $mooooom-micMuted;
+    content: variables.$mooooom-micMuted;
   }
 }
 .mooooom-microbe {
   &:before {
-    content: $mooooom-microbe;
+    content: variables.$mooooom-microbe;
   }
 }
 .mooooom-microscope {
   &:before {
-    content: $mooooom-microscope;
+    content: variables.$mooooom-microscope;
   }
 }
 .mooooom-microSd {
   &:before {
-    content: $mooooom-microSd;
+    content: variables.$mooooom-microSd;
   }
 }
 .mooooom-microSim {
   &:before {
-    content: $mooooom-microSim;
+    content: variables.$mooooom-microSim;
   }
 }
 .mooooom-micShouting {
   &:before {
-    content: $mooooom-micShouting;
+    content: variables.$mooooom-micShouting;
   }
 }
 .mooooom-midWind {
   &:before {
-    content: $mooooom-midWind;
+    content: variables.$mooooom-midWind;
   }
 }
 .mooooom-mirror {
   &:before {
-    content: $mooooom-mirror;
+    content: variables.$mooooom-mirror;
   }
 }
 .mooooom-mitre {
   &:before {
-    content: $mooooom-mitre;
+    content: variables.$mooooom-mitre;
   }
 }
 .mooooom-moari {
   &:before {
-    content: $mooooom-moari;
+    content: variables.$mooooom-moari;
   }
 }
 .mooooom-mobileCreditCardReader {
   &:before {
-    content: $mooooom-mobileCreditCardReader;
+    content: variables.$mooooom-mobileCreditCardReader;
   }
 }
 .mooooom-mobilePhone {
   &:before {
-    content: $mooooom-mobilePhone;
+    content: variables.$mooooom-mobilePhone;
   }
 }
 .mooooom-modal {
   &:before {
-    content: $mooooom-modal;
+    content: variables.$mooooom-modal;
   }
 }
 .mooooom-moderator {
   &:before {
-    content: $mooooom-moderator;
+    content: variables.$mooooom-moderator;
   }
 }
 .mooooom-monitor {
   &:before {
-    content: $mooooom-monitor;
+    content: variables.$mooooom-monitor;
   }
 }
 .mooooom-monkey {
   &:before {
-    content: $mooooom-monkey;
+    content: variables.$mooooom-monkey;
   }
 }
 .mooooom-moon {
   &:before {
-    content: $mooooom-moon;
+    content: variables.$mooooom-moon;
   }
 }
 .mooooom-moonDiagonal {
   &:before {
-    content: $mooooom-moonDiagonal;
+    content: variables.$mooooom-moonDiagonal;
   }
 }
 .mooooom-moonPhase1 {
   &:before {
-    content: $mooooom-moonPhase1;
+    content: variables.$mooooom-moonPhase1;
   }
 }
 .mooooom-moonPhase2 {
   &:before {
-    content: $mooooom-moonPhase2;
+    content: variables.$mooooom-moonPhase2;
   }
 }
 .mooooom-moonPhase4 {
   &:before {
-    content: $mooooom-moonPhase4;
+    content: variables.$mooooom-moonPhase4;
   }
 }
 .mooooom-moonPhase5 {
   &:before {
-    content: $mooooom-moonPhase5;
+    content: variables.$mooooom-moonPhase5;
   }
 }
 .mooooom-moonPhaseFull {
   &:before {
-    content: $mooooom-moonPhaseFull;
+    content: variables.$mooooom-moonPhaseFull;
   }
 }
 .mooooom-moonRise {
   &:before {
-    content: $mooooom-moonRise;
+    content: variables.$mooooom-moonRise;
   }
 }
 .mooooom-mordor {
   &:before {
-    content: $mooooom-mordor;
+    content: variables.$mooooom-mordor;
   }
 }
 .mooooom-motion {
   &:before {
-    content: $mooooom-motion;
+    content: variables.$mooooom-motion;
   }
 }
 .mooooom-motionBounce {
   &:before {
-    content: $mooooom-motionBounce;
+    content: variables.$mooooom-motionBounce;
   }
 }
 .mooooom-motionBounceUp {
   &:before {
-    content: $mooooom-motionBounceUp;
+    content: variables.$mooooom-motionBounceUp;
   }
 }
 .mooooom-motionEaseIn {
   &:before {
-    content: $mooooom-motionEaseIn;
+    content: variables.$mooooom-motionEaseIn;
   }
 }
 .mooooom-motionEaseInHandle {
   &:before {
-    content: $mooooom-motionEaseInHandle;
+    content: variables.$mooooom-motionEaseInHandle;
   }
 }
 .mooooom-motionEaseInOut {
   &:before {
-    content: $mooooom-motionEaseInOut;
+    content: variables.$mooooom-motionEaseInOut;
   }
 }
 .mooooom-motionEaseInOutHandles {
   &:before {
-    content: $mooooom-motionEaseInOutHandles;
+    content: variables.$mooooom-motionEaseInOutHandles;
   }
 }
 .mooooom-motionEaseOut {
   &:before {
-    content: $mooooom-motionEaseOut;
+    content: variables.$mooooom-motionEaseOut;
   }
 }
 .mooooom-motionEaseOutHandle {
   &:before {
-    content: $mooooom-motionEaseOutHandle;
+    content: variables.$mooooom-motionEaseOutHandle;
   }
 }
 .mooooom-motionKeyframe {
   &:before {
-    content: $mooooom-motionKeyframe;
+    content: variables.$mooooom-motionKeyframe;
   }
 }
 .mooooom-motionKeyframeAdd {
   &:before {
-    content: $mooooom-motionKeyframeAdd;
+    content: variables.$mooooom-motionKeyframeAdd;
   }
 }
 .mooooom-motionKeyframeRemove {
   &:before {
-    content: $mooooom-motionKeyframeRemove;
+    content: variables.$mooooom-motionKeyframeRemove;
   }
 }
 .mooooom-motionKeyframes {
   &:before {
-    content: $mooooom-motionKeyframes;
+    content: variables.$mooooom-motionKeyframes;
   }
 }
 .mooooom-motionKeyframesAdd {
   &:before {
-    content: $mooooom-motionKeyframesAdd;
+    content: variables.$mooooom-motionKeyframesAdd;
   }
 }
 .mooooom-motionKeyframesRemove {
   &:before {
-    content: $mooooom-motionKeyframesRemove;
+    content: variables.$mooooom-motionKeyframesRemove;
   }
 }
 .mooooom-motionLinear {
   &:before {
-    content: $mooooom-motionLinear;
+    content: variables.$mooooom-motionLinear;
   }
 }
 .mooooom-motionMoveDown {
   &:before {
-    content: $mooooom-motionMoveDown;
+    content: variables.$mooooom-motionMoveDown;
   }
 }
 .mooooom-motionMoveLeft {
   &:before {
-    content: $mooooom-motionMoveLeft;
+    content: variables.$mooooom-motionMoveLeft;
   }
 }
 .mooooom-motionMoveRight {
   &:before {
-    content: $mooooom-motionMoveRight;
+    content: variables.$mooooom-motionMoveRight;
   }
 }
 .mooooom-motionMoveUp {
   &:before {
-    content: $mooooom-motionMoveUp;
+    content: variables.$mooooom-motionMoveUp;
   }
 }
 .mooooom-mouseAnimals {
   &:before {
-    content: $mooooom-mouseAnimals;
+    content: variables.$mooooom-mouseAnimals;
   }
 }
 .mooooom-mouseDevices {
   &:before {
-    content: $mooooom-mouseDevices;
+    content: variables.$mooooom-mouseDevices;
   }
 }
 .mooooom-movieClap {
   &:before {
-    content: $mooooom-movieClap;
+    content: variables.$mooooom-movieClap;
   }
 }
 .mooooom-mtFuji {
   &:before {
-    content: $mooooom-mtFuji;
+    content: variables.$mooooom-mtFuji;
   }
 }
 .mooooom-multiPointConnection {
   &:before {
-    content: $mooooom-multiPointConnection;
+    content: variables.$mooooom-multiPointConnection;
   }
 }
 .mooooom-multiUsers {
   &:before {
-    content: $mooooom-multiUsers;
+    content: variables.$mooooom-multiUsers;
   }
 }
 .mooooom-muscle {
   &:before {
-    content: $mooooom-muscle;
+    content: variables.$mooooom-muscle;
   }
 }
 .mooooom-mushroom {
   &:before {
-    content: $mooooom-mushroom;
+    content: variables.$mooooom-mushroom;
   }
 }
 .mooooom-naira {
   &:before {
-    content: $mooooom-naira;
+    content: variables.$mooooom-naira;
   }
 }
 .mooooom-nanoSim {
   &:before {
-    content: $mooooom-nanoSim;
+    content: variables.$mooooom-nanoSim;
   }
 }
 .mooooom-nesControler {
   &:before {
-    content: $mooooom-nesControler;
+    content: variables.$mooooom-nesControler;
   }
 }
 .mooooom-newShekel {
   &:before {
-    content: $mooooom-newShekel;
+    content: variables.$mooooom-newShekel;
   }
 }
 .mooooom-newYork {
   &:before {
-    content: $mooooom-newYork;
+    content: variables.$mooooom-newYork;
   }
 }
 .mooooom-next {
   &:before {
-    content: $mooooom-next;
+    content: variables.$mooooom-next;
   }
 }
 .mooooom-nightmare {
   &:before {
-    content: $mooooom-nightmare;
+    content: variables.$mooooom-nightmare;
   }
 }
 .mooooom-nightStand {
   &:before {
-    content: $mooooom-nightStand;
+    content: variables.$mooooom-nightStand;
   }
 }
 .mooooom-nmForwardHalftone {
   &:before {
-    content: $mooooom-nmForwardHalftone;
+    content: variables.$mooooom-nmForwardHalftone;
   }
 }
 .mooooom-nmForwardSolid {
   &:before {
-    content: $mooooom-nmForwardSolid;
+    content: variables.$mooooom-nmForwardSolid;
   }
 }
 .mooooom-nmNextHalftone {
   &:before {
-    content: $mooooom-nmNextHalftone;
+    content: variables.$mooooom-nmNextHalftone;
   }
 }
 .mooooom-nmNextSolid {
   &:before {
-    content: $mooooom-nmNextSolid;
+    content: variables.$mooooom-nmNextSolid;
   }
 }
 .mooooom-nmPauseHalftone {
   &:before {
-    content: $mooooom-nmPauseHalftone;
+    content: variables.$mooooom-nmPauseHalftone;
   }
 }
 .mooooom-nmPauseSolid {
   &:before {
-    content: $mooooom-nmPauseSolid;
+    content: variables.$mooooom-nmPauseSolid;
   }
 }
 .mooooom-nmPlayHalftone {
   &:before {
-    content: $mooooom-nmPlayHalftone;
+    content: variables.$mooooom-nmPlayHalftone;
   }
 }
 .mooooom-nmPlaySolid {
   &:before {
-    content: $mooooom-nmPlaySolid;
+    content: variables.$mooooom-nmPlaySolid;
   }
 }
 .mooooom-nmPreviousHalftone {
   &:before {
-    content: $mooooom-nmPreviousHalftone;
+    content: variables.$mooooom-nmPreviousHalftone;
   }
 }
 .mooooom-nmPreviousSolid {
   &:before {
-    content: $mooooom-nmPreviousSolid;
+    content: variables.$mooooom-nmPreviousSolid;
   }
 }
 .mooooom-nmRepeatdoublearrowHalftone {
   &:before {
-    content: $mooooom-nmRepeatdoublearrowHalftone;
+    content: variables.$mooooom-nmRepeatdoublearrowHalftone;
   }
 }
 .mooooom-nmRepeatdoublearrowsSolid {
   &:before {
-    content: $mooooom-nmRepeatdoublearrowsSolid;
+    content: variables.$mooooom-nmRepeatdoublearrowsSolid;
   }
 }
 .mooooom-nmRepeatHalftone {
   &:before {
-    content: $mooooom-nmRepeatHalftone;
+    content: variables.$mooooom-nmRepeatHalftone;
   }
 }
 .mooooom-nmRepeatoneHalftone {
   &:before {
-    content: $mooooom-nmRepeatoneHalftone;
+    content: variables.$mooooom-nmRepeatoneHalftone;
   }
 }
 .mooooom-nmRepeatoneSolid {
   &:before {
-    content: $mooooom-nmRepeatoneSolid;
+    content: variables.$mooooom-nmRepeatoneSolid;
   }
 }
 .mooooom-nmRepeatSolid {
   &:before {
-    content: $mooooom-nmRepeatSolid;
+    content: variables.$mooooom-nmRepeatSolid;
   }
 }
 .mooooom-nmRewindHalftone {
   &:before {
-    content: $mooooom-nmRewindHalftone;
+    content: variables.$mooooom-nmRewindHalftone;
   }
 }
 .mooooom-nmRewindSolid {
   &:before {
-    content: $mooooom-nmRewindSolid;
+    content: variables.$mooooom-nmRewindSolid;
   }
 }
 .mooooom-nmShuffleHalftone {
   &:before {
-    content: $mooooom-nmShuffleHalftone;
+    content: variables.$mooooom-nmShuffleHalftone;
   }
 }
 .mooooom-nmShuffleSolid {
   &:before {
-    content: $mooooom-nmShuffleSolid;
+    content: variables.$mooooom-nmShuffleSolid;
   }
 }
 .mooooom-nmStopHalftone {
   &:before {
-    content: $mooooom-nmStopHalftone;
+    content: variables.$mooooom-nmStopHalftone;
   }
 }
 .mooooom-nmStopSolid {
   &:before {
-    content: $mooooom-nmStopSolid;
+    content: variables.$mooooom-nmStopSolid;
   }
 }
 .mooooom-noFilm {
   &:before {
-    content: $mooooom-noFilm;
+    content: variables.$mooooom-noFilm;
   }
 }
 .mooooom-nomercy {
   &:before {
-    content: $mooooom-nomercy;
+    content: variables.$mooooom-nomercy;
   }
 }
 .mooooom-noteClefBass {
   &:before {
-    content: $mooooom-noteClefBass;
+    content: variables.$mooooom-noteClefBass;
   }
 }
 .mooooom-noteClefTreble {
   &:before {
-    content: $mooooom-noteClefTreble;
+    content: variables.$mooooom-noteClefTreble;
   }
 }
 .mooooom-noteDouble {
   &:before {
-    content: $mooooom-noteDouble;
+    content: variables.$mooooom-noteDouble;
   }
 }
 .mooooom-noteEighth {
   &:before {
-    content: $mooooom-noteEighth;
+    content: variables.$mooooom-noteEighth;
   }
 }
 .mooooom-noteEighthPair {
   &:before {
-    content: $mooooom-noteEighthPair;
+    content: variables.$mooooom-noteEighthPair;
   }
 }
 .mooooom-noteEighthPairDotted {
   &:before {
-    content: $mooooom-noteEighthPairDotted;
+    content: variables.$mooooom-noteEighthPairDotted;
   }
 }
 .mooooom-noteEighthRest {
   &:before {
-    content: $mooooom-noteEighthRest;
+    content: variables.$mooooom-noteEighthRest;
   }
 }
 .mooooom-noteFlat {
   &:before {
-    content: $mooooom-noteFlat;
+    content: variables.$mooooom-noteFlat;
   }
 }
 .mooooom-noteHalf {
   &:before {
-    content: $mooooom-noteHalf;
+    content: variables.$mooooom-noteHalf;
   }
 }
 .mooooom-noteImportant {
   &:before {
-    content: $mooooom-noteImportant;
+    content: variables.$mooooom-noteImportant;
   }
 }
 .mooooom-noteInvertedMordent {
   &:before {
-    content: $mooooom-noteInvertedMordent;
+    content: variables.$mooooom-noteInvertedMordent;
   }
 }
 .mooooom-notePoint {
   &:before {
-    content: $mooooom-notePoint;
+    content: variables.$mooooom-notePoint;
   }
 }
 .mooooom-noteQuarter {
   &:before {
-    content: $mooooom-noteQuarter;
+    content: variables.$mooooom-noteQuarter;
   }
 }
 .mooooom-noteRepeatBarsBegin {
   &:before {
-    content: $mooooom-noteRepeatBarsBegin;
+    content: variables.$mooooom-noteRepeatBarsBegin;
   }
 }
 .mooooom-noteRepeatBarsEnd {
   &:before {
-    content: $mooooom-noteRepeatBarsEnd;
+    content: variables.$mooooom-noteRepeatBarsEnd;
   }
 }
 .mooooom-noteRestFull {
   &:before {
-    content: $mooooom-noteRestFull;
+    content: variables.$mooooom-noteRestFull;
   }
 }
 .mooooom-noteRestHalf {
   &:before {
-    content: $mooooom-noteRestHalf;
+    content: variables.$mooooom-noteRestHalf;
   }
 }
 .mooooom-noteRestQuarter {
   &:before {
-    content: $mooooom-noteRestQuarter;
+    content: variables.$mooooom-noteRestQuarter;
   }
 }
 .mooooom-noteRestSixteenth {
   &:before {
-    content: $mooooom-noteRestSixteenth;
+    content: variables.$mooooom-noteRestSixteenth;
   }
 }
 .mooooom-noteSixteenth {
   &:before {
-    content: $mooooom-noteSixteenth;
+    content: variables.$mooooom-noteSixteenth;
   }
 }
 .mooooom-noteSixteenthPair {
   &:before {
-    content: $mooooom-noteSixteenthPair;
+    content: variables.$mooooom-noteSixteenthPair;
   }
 }
 .mooooom-noteThirtySecond {
   &:before {
-    content: $mooooom-noteThirtySecond;
+    content: variables.$mooooom-noteThirtySecond;
   }
 }
 .mooooom-noteWhole {
   &:before {
-    content: $mooooom-noteWhole;
+    content: variables.$mooooom-noteWhole;
   }
 }
 .mooooom-notificationSquare {
   &:before {
-    content: $mooooom-notificationSquare;
+    content: variables.$mooooom-notificationSquare;
   }
 }
 .mooooom-noWind {
   &:before {
-    content: $mooooom-noWind;
+    content: variables.$mooooom-noWind;
   }
 }
 .mooooom-nuclearFactory {
   &:before {
-    content: $mooooom-nuclearFactory;
+    content: variables.$mooooom-nuclearFactory;
   }
 }
 .mooooom-nuclearSymbol {
   &:before {
-    content: $mooooom-nuclearSymbol;
+    content: variables.$mooooom-nuclearSymbol;
   }
 }
 .mooooom-numberList {
   &:before {
-    content: $mooooom-numberList;
+    content: variables.$mooooom-numberList;
   }
 }
 .mooooom-octogon {
   &:before {
-    content: $mooooom-octogon;
+    content: variables.$mooooom-octogon;
   }
 }
 .mooooom-octopus {
   &:before {
-    content: $mooooom-octopus;
+    content: variables.$mooooom-octopus;
   }
 }
 .mooooom-officeChair {
   &:before {
-    content: $mooooom-officeChair;
+    content: variables.$mooooom-officeChair;
   }
 }
 .mooooom-onigiri {
   &:before {
-    content: $mooooom-onigiri;
+    content: variables.$mooooom-onigiri;
   }
 }
 .mooooom-onlineShop {
   &:before {
-    content: $mooooom-onlineShop;
+    content: variables.$mooooom-onlineShop;
   }
 }
 .mooooom-openSmile {
   &:before {
-    content: $mooooom-openSmile;
+    content: variables.$mooooom-openSmile;
   }
 }
 .mooooom-orbit {
   &:before {
-    content: $mooooom-orbit;
+    content: variables.$mooooom-orbit;
   }
 }
 .mooooom-orbit1 {
   &:before {
-    content: $mooooom-orbit1;
+    content: variables.$mooooom-orbit1;
   }
 }
 .mooooom-otherDevices {
   &:before {
-    content: $mooooom-otherDevices;
+    content: variables.$mooooom-otherDevices;
   }
 }
 .mooooom-ottoman {
   &:before {
-    content: $mooooom-ottoman;
+    content: variables.$mooooom-ottoman;
   }
 }
 .mooooom-outsideBillboard {
   &:before {
-    content: $mooooom-outsideBillboard;
+    content: variables.$mooooom-outsideBillboard;
   }
 }
 .mooooom-outsideBillboardEmpty {
   &:before {
-    content: $mooooom-outsideBillboardEmpty;
+    content: variables.$mooooom-outsideBillboardEmpty;
   }
 }
 .mooooom-oval {
   &:before {
-    content: $mooooom-oval;
+    content: variables.$mooooom-oval;
   }
 }
 .mooooom-packageLocate {
   &:before {
-    content: $mooooom-packageLocate;
+    content: variables.$mooooom-packageLocate;
   }
 }
 .mooooom-packageSearch {
   &:before {
-    content: $mooooom-packageSearch;
+    content: variables.$mooooom-packageSearch;
   }
 }
 .mooooom-paintBrush {
   &:before {
-    content: $mooooom-paintBrush;
+    content: variables.$mooooom-paintBrush;
   }
 }
 .mooooom-paintBucket {
   &:before {
-    content: $mooooom-paintBucket;
+    content: variables.$mooooom-paintBucket;
   }
 }
 .mooooom-paintGun {
   &:before {
-    content: $mooooom-paintGun;
+    content: variables.$mooooom-paintGun;
   }
 }
 .mooooom-paintRoller {
   &:before {
-    content: $mooooom-paintRoller;
+    content: variables.$mooooom-paintRoller;
   }
 }
 .mooooom-paintSwatches {
   &:before {
-    content: $mooooom-paintSwatches;
+    content: variables.$mooooom-paintSwatches;
   }
 }
 .mooooom-palette {
   &:before {
-    content: $mooooom-palette;
+    content: variables.$mooooom-palette;
   }
 }
 .mooooom-palm {
   &:before {
-    content: $mooooom-palm;
+    content: variables.$mooooom-palm;
   }
 }
 .mooooom-panda {
   &:before {
-    content: $mooooom-panda;
+    content: variables.$mooooom-panda;
   }
 }
 .mooooom-pantone {
   &:before {
-    content: $mooooom-pantone;
+    content: variables.$mooooom-pantone;
   }
 }
 .mooooom-pants {
   &:before {
-    content: $mooooom-pants;
+    content: variables.$mooooom-pants;
   }
 }
 .mooooom-paperclip {
   &:before {
-    content: $mooooom-paperclip;
+    content: variables.$mooooom-paperclip;
   }
 }
 .mooooom-paperplaneSend {
   &:before {
-    content: $mooooom-paperplaneSend;
+    content: variables.$mooooom-paperplaneSend;
   }
 }
 .mooooom-paperScroll {
   &:before {
-    content: $mooooom-paperScroll;
+    content: variables.$mooooom-paperScroll;
   }
 }
 .mooooom-parabole {
   &:before {
-    content: $mooooom-parabole;
+    content: variables.$mooooom-parabole;
   }
 }
 .mooooom-paragraph {
   &:before {
-    content: $mooooom-paragraph;
+    content: variables.$mooooom-paragraph;
   }
 }
 .mooooom-parentheses {
   &:before {
-    content: $mooooom-parentheses;
+    content: variables.$mooooom-parentheses;
   }
 }
 .mooooom-paris {
   &:before {
-    content: $mooooom-paris;
+    content: variables.$mooooom-paris;
   }
 }
 .mooooom-pause {
   &:before {
-    content: $mooooom-pause;
+    content: variables.$mooooom-pause;
   }
 }
 .mooooom-pawPrint {
   &:before {
-    content: $mooooom-pawPrint;
+    content: variables.$mooooom-pawPrint;
   }
 }
 .mooooom-peach {
   &:before {
-    content: $mooooom-peach;
+    content: variables.$mooooom-peach;
   }
 }
 .mooooom-pear {
   &:before {
-    content: $mooooom-pear;
+    content: variables.$mooooom-pear;
   }
 }
 .mooooom-pentagon {
   &:before {
-    content: $mooooom-pentagon;
+    content: variables.$mooooom-pentagon;
   }
 }
 .mooooom-penTool {
   &:before {
-    content: $mooooom-penTool;
+    content: variables.$mooooom-penTool;
   }
 }
 .mooooom-percentDiscount {
   &:before {
-    content: $mooooom-percentDiscount;
+    content: variables.$mooooom-percentDiscount;
   }
 }
 .mooooom-person {
   &:before {
-    content: $mooooom-person;
+    content: variables.$mooooom-person;
   }
 }
 .mooooom-personalChannel {
   &:before {
-    content: $mooooom-personalChannel;
+    content: variables.$mooooom-personalChannel;
   }
 }
 .mooooom-personalChannel1 {
   &:before {
-    content: $mooooom-personalChannel1;
+    content: variables.$mooooom-personalChannel1;
   }
 }
 .mooooom-petriTray {
   &:before {
-    content: $mooooom-petriTray;
+    content: variables.$mooooom-petriTray;
   }
 }
 .mooooom-petriTrayTop {
   &:before {
-    content: $mooooom-petriTrayTop;
+    content: variables.$mooooom-petriTrayTop;
   }
 }
 .mooooom-pharmacy {
   &:before {
-    content: $mooooom-pharmacy;
+    content: variables.$mooooom-pharmacy;
   }
 }
 .mooooom-philippinePeso {
   &:before {
-    content: $mooooom-philippinePeso;
+    content: variables.$mooooom-philippinePeso;
   }
 }
 .mooooom-phone {
   &:before {
-    content: $mooooom-phone;
+    content: variables.$mooooom-phone;
   }
 }
 .mooooom-phoneCharging {
   &:before {
-    content: $mooooom-phoneCharging;
+    content: variables.$mooooom-phoneCharging;
   }
 }
 .mooooom-phoneRotate {
   &:before {
-    content: $mooooom-phoneRotate;
+    content: variables.$mooooom-phoneRotate;
   }
 }
 .mooooom-phoneSwap {
   &:before {
-    content: $mooooom-phoneSwap;
+    content: variables.$mooooom-phoneSwap;
   }
 }
 .mooooom-phoneVibrate {
   &:before {
-    content: $mooooom-phoneVibrate;
+    content: variables.$mooooom-phoneVibrate;
   }
 }
 .mooooom-pickaxe {
   &:before {
-    content: $mooooom-pickaxe;
+    content: variables.$mooooom-pickaxe;
   }
 }
 .mooooom-pickaxe1 {
   &:before {
-    content: $mooooom-pickaxe1;
+    content: variables.$mooooom-pickaxe1;
   }
 }
 .mooooom-picLandscape {
   &:before {
-    content: $mooooom-picLandscape;
+    content: variables.$mooooom-picLandscape;
   }
 }
 .mooooom-picPortrait {
   &:before {
-    content: $mooooom-picPortrait;
+    content: variables.$mooooom-picPortrait;
   }
 }
 .mooooom-picture {
   &:before {
-    content: $mooooom-picture;
+    content: variables.$mooooom-picture;
   }
 }
 .mooooom-pictureInPicture {
   &:before {
-    content: $mooooom-pictureInPicture;
+    content: variables.$mooooom-pictureInPicture;
   }
 }
 .mooooom-pieChart {
   &:before {
-    content: $mooooom-pieChart;
+    content: variables.$mooooom-pieChart;
   }
 }
 .mooooom-pieChartLinked {
   &:before {
-    content: $mooooom-pieChartLinked;
+    content: variables.$mooooom-pieChartLinked;
   }
 }
 .mooooom-pig {
   &:before {
-    content: $mooooom-pig;
+    content: variables.$mooooom-pig;
   }
 }
 .mooooom-pill {
   &:before {
-    content: $mooooom-pill;
+    content: variables.$mooooom-pill;
   }
 }
 .mooooom-pill1 {
   &:before {
-    content: $mooooom-pill1;
+    content: variables.$mooooom-pill1;
   }
 }
 .mooooom-pillow {
   &:before {
-    content: $mooooom-pillow;
+    content: variables.$mooooom-pillow;
   }
 }
 .mooooom-pils {
   &:before {
-    content: $mooooom-pils;
+    content: variables.$mooooom-pils;
   }
 }
 .mooooom-pilsHand {
   &:before {
-    content: $mooooom-pilsHand;
+    content: variables.$mooooom-pilsHand;
   }
 }
 .mooooom-pin {
   &:before {
-    content: $mooooom-pin;
+    content: variables.$mooooom-pin;
   }
 }
 .mooooom-pin1 {
   &:before {
-    content: $mooooom-pin1;
+    content: variables.$mooooom-pin1;
   }
 }
 .mooooom-pin11 {
   &:before {
-    content: $mooooom-pin11;
+    content: variables.$mooooom-pin11;
   }
 }
 .mooooom-ping {
   &:before {
-    content: $mooooom-ping;
+    content: variables.$mooooom-ping;
   }
 }
 .mooooom-pingMulti {
   &:before {
-    content: $mooooom-pingMulti;
+    content: variables.$mooooom-pingMulti;
   }
 }
 .mooooom-pingPong {
   &:before {
-    content: $mooooom-pingPong;
+    content: variables.$mooooom-pingPong;
   }
 }
 .mooooom-pirate {
   &:before {
-    content: $mooooom-pirate;
+    content: variables.$mooooom-pirate;
   }
 }
 .mooooom-pirateFlag {
   &:before {
-    content: $mooooom-pirateFlag;
+    content: variables.$mooooom-pirateFlag;
   }
 }
 .mooooom-pisces {
   &:before {
-    content: $mooooom-pisces;
+    content: variables.$mooooom-pisces;
   }
 }
 .mooooom-pizza {
   &:before {
-    content: $mooooom-pizza;
+    content: variables.$mooooom-pizza;
   }
 }
 .mooooom-placeholder {
   &:before {
-    content: $mooooom-placeholder;
+    content: variables.$mooooom-placeholder;
   }
 }
 .mooooom-plane {
   &:before {
-    content: $mooooom-plane;
+    content: variables.$mooooom-plane;
   }
 }
 .mooooom-planeLanding {
   &:before {
-    content: $mooooom-planeLanding;
+    content: variables.$mooooom-planeLanding;
   }
 }
 .mooooom-planet {
   &:before {
-    content: $mooooom-planet;
+    content: variables.$mooooom-planet;
   }
 }
 .mooooom-planeTakeOff {
   &:before {
-    content: $mooooom-planeTakeOff;
+    content: variables.$mooooom-planeTakeOff;
   }
 }
 .mooooom-plastic {
   &:before {
-    content: $mooooom-plastic;
+    content: variables.$mooooom-plastic;
   }
 }
 .mooooom-play {
   &:before {
-    content: $mooooom-play;
+    content: variables.$mooooom-play;
   }
 }
 .mooooom-playbackSpeed {
   &:before {
-    content: $mooooom-playbackSpeed;
+    content: variables.$mooooom-playbackSpeed;
   }
 }
 .mooooom-playCircle {
   &:before {
-    content: $mooooom-playCircle;
+    content: variables.$mooooom-playCircle;
   }
 }
 .mooooom-playerError {
   &:before {
-    content: $mooooom-playerError;
+    content: variables.$mooooom-playerError;
   }
 }
 .mooooom-playLandscape {
   &:before {
-    content: $mooooom-playLandscape;
+    content: variables.$mooooom-playLandscape;
   }
 }
 .mooooom-playlist {
   &:before {
-    content: $mooooom-playlist;
+    content: variables.$mooooom-playlist;
   }
 }
 .mooooom-playlist1 {
   &:before {
-    content: $mooooom-playlist1;
+    content: variables.$mooooom-playlist1;
   }
 }
 .mooooom-playlist1Add {
   &:before {
-    content: $mooooom-playlist1Add;
+    content: variables.$mooooom-playlist1Add;
   }
 }
 .mooooom-playlist1Remove {
   &:before {
-    content: $mooooom-playlist1Remove;
+    content: variables.$mooooom-playlist1Remove;
   }
 }
 .mooooom-playlistAdd {
   &:before {
-    content: $mooooom-playlistAdd;
+    content: variables.$mooooom-playlistAdd;
   }
 }
 .mooooom-playlistRemove {
   &:before {
-    content: $mooooom-playlistRemove;
+    content: variables.$mooooom-playlistRemove;
   }
 }
 .mooooom-playPortrait {
   &:before {
-    content: $mooooom-playPortrait;
+    content: variables.$mooooom-playPortrait;
   }
 }
 .mooooom-playUnavailable {
   &:before {
-    content: $mooooom-playUnavailable;
+    content: variables.$mooooom-playUnavailable;
   }
 }
 .mooooom-playUnavailableCross {
   &:before {
-    content: $mooooom-playUnavailableCross;
+    content: variables.$mooooom-playUnavailableCross;
   }
 }
 .mooooom-plugged {
   &:before {
-    content: $mooooom-plugged;
+    content: variables.$mooooom-plugged;
   }
 }
 .mooooom-pocketHoodie {
   &:before {
-    content: $mooooom-pocketHoodie;
+    content: variables.$mooooom-pocketHoodie;
   }
 }
 .mooooom-pokerFace {
   &:before {
-    content: $mooooom-pokerFace;
+    content: variables.$mooooom-pokerFace;
   }
 }
 .mooooom-polearm {
   &:before {
-    content: $mooooom-polearm;
+    content: variables.$mooooom-polearm;
   }
 }
 .mooooom-polo {
   &:before {
-    content: $mooooom-polo;
+    content: variables.$mooooom-polo;
   }
 }
 .mooooom-popcorn {
   &:before {
-    content: $mooooom-popcorn;
+    content: variables.$mooooom-popcorn;
   }
 }
 .mooooom-popsicle {
   &:before {
-    content: $mooooom-popsicle;
+    content: variables.$mooooom-popsicle;
   }
 }
 .mooooom-portableRadio {
   &:before {
-    content: $mooooom-portableRadio;
+    content: variables.$mooooom-portableRadio;
   }
 }
 .mooooom-portrait {
   &:before {
-    content: $mooooom-portrait;
+    content: variables.$mooooom-portrait;
   }
 }
 .mooooom-potion {
   &:before {
-    content: $mooooom-potion;
+    content: variables.$mooooom-potion;
   }
 }
 .mooooom-pound {
   &:before {
-    content: $mooooom-pound;
+    content: variables.$mooooom-pound;
   }
 }
 .mooooom-presentation {
   &:before {
-    content: $mooooom-presentation;
+    content: variables.$mooooom-presentation;
   }
 }
 .mooooom-presentationChart {
   &:before {
-    content: $mooooom-presentationChart;
+    content: variables.$mooooom-presentationChart;
   }
 }
 .mooooom-previous {
   &:before {
-    content: $mooooom-previous;
+    content: variables.$mooooom-previous;
   }
 }
 .mooooom-pricing {
   &:before {
-    content: $mooooom-pricing;
+    content: variables.$mooooom-pricing;
   }
 }
 .mooooom-printer {
   &:before {
-    content: $mooooom-printer;
+    content: variables.$mooooom-printer;
   }
 }
 .mooooom-provisionSim {
   &:before {
-    content: $mooooom-provisionSim;
+    content: variables.$mooooom-provisionSim;
   }
 }
 .mooooom-proxy {
   &:before {
-    content: $mooooom-proxy;
+    content: variables.$mooooom-proxy;
   }
 }
 .mooooom-pullRequest {
   &:before {
-    content: $mooooom-pullRequest;
+    content: variables.$mooooom-pullRequest;
   }
 }
 .mooooom-pulse {
   &:before {
-    content: $mooooom-pulse;
+    content: variables.$mooooom-pulse;
   }
 }
 .mooooom-pumkin {
   &:before {
-    content: $mooooom-pumkin;
+    content: variables.$mooooom-pumkin;
   }
 }
 .mooooom-pyramid {
   &:before {
-    content: $mooooom-pyramid;
+    content: variables.$mooooom-pyramid;
   }
 }
 .mooooom-pyramids {
   &:before {
-    content: $mooooom-pyramids;
+    content: variables.$mooooom-pyramids;
   }
 }
 .mooooom-qrCode {
   &:before {
-    content: $mooooom-qrCode;
+    content: variables.$mooooom-qrCode;
   }
 }
 .mooooom-questionMark {
   &:before {
-    content: $mooooom-questionMark;
+    content: variables.$mooooom-questionMark;
   }
 }
 .mooooom-quote {
   &:before {
-    content: $mooooom-quote;
+    content: variables.$mooooom-quote;
   }
 }
 .mooooom-quotes {
   &:before {
-    content: $mooooom-quotes;
+    content: variables.$mooooom-quotes;
   }
 }
 .mooooom-quotesFrench {
   &:before {
-    content: $mooooom-quotesFrench;
+    content: variables.$mooooom-quotesFrench;
   }
 }
 .mooooom-rabbit {
   &:before {
-    content: $mooooom-rabbit;
+    content: variables.$mooooom-rabbit;
   }
 }
 .mooooom-radar {
   &:before {
-    content: $mooooom-radar;
+    content: variables.$mooooom-radar;
   }
 }
 .mooooom-radioButtons {
   &:before {
-    content: $mooooom-radioButtons;
+    content: variables.$mooooom-radioButtons;
   }
 }
 .mooooom-rain {
   &:before {
-    content: $mooooom-rain;
+    content: variables.$mooooom-rain;
   }
 }
 .mooooom-rainDrop {
   &:before {
-    content: $mooooom-rainDrop;
+    content: variables.$mooooom-rainDrop;
   }
 }
 .mooooom-ram {
   &:before {
-    content: $mooooom-ram;
+    content: variables.$mooooom-ram;
   }
 }
 .mooooom-rapier {
   &:before {
-    content: $mooooom-rapier;
+    content: variables.$mooooom-rapier;
   }
 }
 .mooooom-raspberry {
   &:before {
-    content: $mooooom-raspberry;
+    content: variables.$mooooom-raspberry;
   }
 }
 .mooooom-razorBlade {
   &:before {
-    content: $mooooom-razorBlade;
+    content: variables.$mooooom-razorBlade;
   }
 }
 .mooooom-receipt {
   &:before {
-    content: $mooooom-receipt;
+    content: variables.$mooooom-receipt;
   }
 }
 .mooooom-rechargeSim {
   &:before {
-    content: $mooooom-rechargeSim;
+    content: variables.$mooooom-rechargeSim;
   }
 }
 .mooooom-remove {
   &:before {
-    content: $mooooom-remove;
+    content: variables.$mooooom-remove;
   }
 }
 .mooooom-removeCircle {
   &:before {
-    content: $mooooom-removeCircle;
+    content: variables.$mooooom-removeCircle;
   }
 }
 .mooooom-repeat {
   &:before {
-    content: $mooooom-repeat;
+    content: variables.$mooooom-repeat;
   }
 }
 .mooooom-repeatDoubleArrows {
   &:before {
-    content: $mooooom-repeatDoubleArrows;
+    content: variables.$mooooom-repeatDoubleArrows;
   }
 }
 .mooooom-repeatOne {
   &:before {
-    content: $mooooom-repeatOne;
+    content: variables.$mooooom-repeatOne;
   }
 }
 .mooooom-returnPackage {
   &:before {
-    content: $mooooom-returnPackage;
+    content: variables.$mooooom-returnPackage;
   }
 }
 .mooooom-rewind {
   &:before {
-    content: $mooooom-rewind;
+    content: variables.$mooooom-rewind;
   }
 }
 .mooooom-rewind10sec {
   &:before {
-    content: $mooooom-rewind10sec;
+    content: variables.$mooooom-rewind10sec;
   }
 }
 .mooooom-ribCage {
   &:before {
-    content: $mooooom-ribCage;
+    content: variables.$mooooom-ribCage;
   }
 }
 .mooooom-riel {
   &:before {
-    content: $mooooom-riel;
+    content: variables.$mooooom-riel;
   }
 }
 .mooooom-rightHand2FingersSwipeLeft {
   &:before {
-    content: $mooooom-rightHand2FingersSwipeLeft;
+    content: variables.$mooooom-rightHand2FingersSwipeLeft;
   }
 }
 .mooooom-rightHand2FingersSwipeRight {
   &:before {
-    content: $mooooom-rightHand2FingersSwipeRight;
+    content: variables.$mooooom-rightHand2FingersSwipeRight;
   }
 }
 .mooooom-rightHand2FingersTap {
   &:before {
-    content: $mooooom-rightHand2FingersTap;
+    content: variables.$mooooom-rightHand2FingersTap;
   }
 }
 .mooooom-rightHandGiveDeath {
   &:before {
-    content: $mooooom-rightHandGiveDeath;
+    content: variables.$mooooom-rightHandGiveDeath;
   }
 }
 .mooooom-rightHandGiveLove {
   &:before {
-    content: $mooooom-rightHandGiveLove;
+    content: variables.$mooooom-rightHandGiveLove;
   }
 }
 .mooooom-rightHandGiveMoney {
   &:before {
-    content: $mooooom-rightHandGiveMoney;
+    content: variables.$mooooom-rightHandGiveMoney;
   }
 }
 .mooooom-rightHandPinch {
   &:before {
-    content: $mooooom-rightHandPinch;
+    content: variables.$mooooom-rightHandPinch;
   }
 }
 .mooooom-rightHandTap {
   &:before {
-    content: $mooooom-rightHandTap;
+    content: variables.$mooooom-rightHandTap;
   }
 }
 .mooooom-rightHandTrackPad {
   &:before {
-    content: $mooooom-rightHandTrackPad;
+    content: variables.$mooooom-rightHandTrackPad;
   }
 }
 .mooooom-rightHandZoom {
   &:before {
-    content: $mooooom-rightHandZoom;
+    content: variables.$mooooom-rightHandZoom;
   }
 }
 .mooooom-ringPlanet {
   &:before {
-    content: $mooooom-ringPlanet;
+    content: variables.$mooooom-ringPlanet;
   }
 }
 .mooooom-roadCrossing {
   &:before {
-    content: $mooooom-roadCrossing;
+    content: variables.$mooooom-roadCrossing;
   }
 }
 .mooooom-roadHorizontal {
   &:before {
-    content: $mooooom-roadHorizontal;
+    content: variables.$mooooom-roadHorizontal;
   }
 }
 .mooooom-roadLeftTurn {
   &:before {
-    content: $mooooom-roadLeftTurn;
+    content: variables.$mooooom-roadLeftTurn;
   }
 }
 .mooooom-roadRightTurn {
   &:before {
-    content: $mooooom-roadRightTurn;
+    content: variables.$mooooom-roadRightTurn;
   }
 }
 .mooooom-roadVertical {
   &:before {
-    content: $mooooom-roadVertical;
+    content: variables.$mooooom-roadVertical;
   }
 }
 .mooooom-rocket {
   &:before {
-    content: $mooooom-rocket;
+    content: variables.$mooooom-rocket;
   }
 }
 .mooooom-rollerSkate {
   &:before {
-    content: $mooooom-rollerSkate;
+    content: variables.$mooooom-rollerSkate;
   }
 }
 .mooooom-rollingPin {
   &:before {
-    content: $mooooom-rollingPin;
+    content: variables.$mooooom-rollingPin;
   }
 }
 .mooooom-rollingReceipt {
   &:before {
-    content: $mooooom-rollingReceipt;
+    content: variables.$mooooom-rollingReceipt;
   }
 }
 .mooooom-rollingReceiptDownload {
   &:before {
-    content: $mooooom-rollingReceiptDownload;
+    content: variables.$mooooom-rollingReceiptDownload;
   }
 }
 .mooooom-rollingReceiptPrint {
   &:before {
-    content: $mooooom-rollingReceiptPrint;
+    content: variables.$mooooom-rollingReceiptPrint;
   }
 }
 .mooooom-rollingReceiptReturn {
   &:before {
-    content: $mooooom-rollingReceiptReturn;
+    content: variables.$mooooom-rollingReceiptReturn;
   }
 }
 .mooooom-rollingReceiptUpload {
   &:before {
-    content: $mooooom-rollingReceiptUpload;
+    content: variables.$mooooom-rollingReceiptUpload;
   }
 }
 .mooooom-rose {
   &:before {
-    content: $mooooom-rose;
+    content: variables.$mooooom-rose;
   }
 }
 .mooooom-rose1 {
   &:before {
-    content: $mooooom-rose1;
+    content: variables.$mooooom-rose1;
   }
 }
 .mooooom-rotate {
   &:before {
-    content: $mooooom-rotate;
+    content: variables.$mooooom-rotate;
   }
 }
 .mooooom-rotateLeft {
   &:before {
-    content: $mooooom-rotateLeft;
+    content: variables.$mooooom-rotateLeft;
   }
 }
 .mooooom-rotateRight {
   &:before {
-    content: $mooooom-rotateRight;
+    content: variables.$mooooom-rotateRight;
   }
 }
 .mooooom-roundabout {
   &:before {
-    content: $mooooom-roundabout;
+    content: variables.$mooooom-roundabout;
   }
 }
 .mooooom-route {
   &:before {
-    content: $mooooom-route;
+    content: variables.$mooooom-route;
   }
 }
 .mooooom-route1 {
   &:before {
-    content: $mooooom-route1;
+    content: variables.$mooooom-route1;
   }
 }
 .mooooom-ruble {
   &:before {
-    content: $mooooom-ruble;
+    content: variables.$mooooom-ruble;
   }
 }
 .mooooom-rulerAndPencil {
   &:before {
-    content: $mooooom-rulerAndPencil;
+    content: variables.$mooooom-rulerAndPencil;
   }
 }
 .mooooom-running {
   &:before {
-    content: $mooooom-running;
+    content: variables.$mooooom-running;
   }
 }
 .mooooom-rupee {
   &:before {
-    content: $mooooom-rupee;
+    content: variables.$mooooom-rupee;
   }
 }
 .mooooom-ryokan {
   &:before {
-    content: $mooooom-ryokan;
+    content: variables.$mooooom-ryokan;
   }
 }
 .mooooom-sad {
   &:before {
-    content: $mooooom-sad;
+    content: variables.$mooooom-sad;
   }
 }
 .mooooom-safetyPin {
   &:before {
-    content: $mooooom-safetyPin;
+    content: variables.$mooooom-safetyPin;
   }
 }
 .mooooom-sagittarius {
   &:before {
-    content: $mooooom-sagittarius;
+    content: variables.$mooooom-sagittarius;
   }
 }
 .mooooom-sandBox {
   &:before {
-    content: $mooooom-sandBox;
+    content: variables.$mooooom-sandBox;
   }
 }
 .mooooom-satelite {
   &:before {
-    content: $mooooom-satelite;
+    content: variables.$mooooom-satelite;
   }
 }
 .mooooom-saturation {
   &:before {
-    content: $mooooom-saturation;
+    content: variables.$mooooom-saturation;
   }
 }
 .mooooom-savedPlace {
   &:before {
-    content: $mooooom-savedPlace;
+    content: variables.$mooooom-savedPlace;
   }
 }
 .mooooom-savings {
   &:before {
-    content: $mooooom-savings;
+    content: variables.$mooooom-savings;
   }
 }
 .mooooom-scale {
   &:before {
-    content: $mooooom-scale;
+    content: variables.$mooooom-scale;
   }
 }
 .mooooom-scaleLaw {
   &:before {
-    content: $mooooom-scaleLaw;
+    content: variables.$mooooom-scaleLaw;
   }
 }
 .mooooom-scaleTool {
   &:before {
-    content: $mooooom-scaleTool;
+    content: variables.$mooooom-scaleTool;
   }
 }
 .mooooom-scalpel {
   &:before {
-    content: $mooooom-scalpel;
+    content: variables.$mooooom-scalpel;
   }
 }
 .mooooom-sceptre {
   &:before {
-    content: $mooooom-sceptre;
+    content: variables.$mooooom-sceptre;
   }
 }
 .mooooom-scienceTube {
   &:before {
-    content: $mooooom-scienceTube;
+    content: variables.$mooooom-scienceTube;
   }
 }
 .mooooom-scienceTubeFilled {
   &:before {
-    content: $mooooom-scienceTubeFilled;
+    content: variables.$mooooom-scienceTubeFilled;
   }
 }
 .mooooom-scimitar {
   &:before {
-    content: $mooooom-scimitar;
+    content: variables.$mooooom-scimitar;
   }
 }
 .mooooom-scissors {
   &:before {
-    content: $mooooom-scissors;
+    content: variables.$mooooom-scissors;
   }
 }
 .mooooom-scissorsDash {
   &:before {
-    content: $mooooom-scissorsDash;
+    content: variables.$mooooom-scissorsDash;
   }
 }
 .mooooom-scorpio {
   &:before {
-    content: $mooooom-scorpio;
+    content: variables.$mooooom-scorpio;
   }
 }
 .mooooom-screw {
   &:before {
-    content: $mooooom-screw;
+    content: variables.$mooooom-screw;
   }
 }
 .mooooom-screwDriver {
   &:before {
-    content: $mooooom-screwDriver;
+    content: variables.$mooooom-screwDriver;
   }
 }
 .mooooom-scythe {
   &:before {
-    content: $mooooom-scythe;
+    content: variables.$mooooom-scythe;
   }
 }
 .mooooom-searchInText {
   &:before {
-    content: $mooooom-searchInText;
+    content: variables.$mooooom-searchInText;
   }
 }
 .mooooom-searchMagnifyingGlass {
   &:before {
-    content: $mooooom-searchMagnifyingGlass;
+    content: variables.$mooooom-searchMagnifyingGlass;
   }
 }
 .mooooom-seatBeltClosed {
   &:before {
-    content: $mooooom-seatBeltClosed;
+    content: variables.$mooooom-seatBeltClosed;
   }
 }
 .mooooom-seatBeltOpen {
   &:before {
-    content: $mooooom-seatBeltOpen;
+    content: variables.$mooooom-seatBeltOpen;
   }
 }
 .mooooom-selectorNode {
   &:before {
-    content: $mooooom-selectorNode;
+    content: variables.$mooooom-selectorNode;
   }
 }
 .mooooom-selectorNodeEdit {
   &:before {
-    content: $mooooom-selectorNodeEdit;
+    content: variables.$mooooom-selectorNodeEdit;
   }
 }
 .mooooom-semicolon {
   &:before {
-    content: $mooooom-semicolon;
+    content: variables.$mooooom-semicolon;
   }
 }
 .mooooom-server {
   &:before {
-    content: $mooooom-server;
+    content: variables.$mooooom-server;
   }
 }
 .mooooom-serverAdd {
   &:before {
-    content: $mooooom-serverAdd;
+    content: variables.$mooooom-serverAdd;
   }
 }
 .mooooom-serverCluster {
   &:before {
-    content: $mooooom-serverCluster;
+    content: variables.$mooooom-serverCluster;
   }
 }
 .mooooom-serverEdit {
   &:before {
-    content: $mooooom-serverEdit;
+    content: variables.$mooooom-serverEdit;
   }
 }
 .mooooom-serverError {
   &:before {
-    content: $mooooom-serverError;
+    content: variables.$mooooom-serverError;
   }
 }
 .mooooom-serverRemove {
   &:before {
-    content: $mooooom-serverRemove;
+    content: variables.$mooooom-serverRemove;
   }
 }
 .mooooom-serversRack {
   &:before {
-    content: $mooooom-serversRack;
+    content: variables.$mooooom-serversRack;
   }
 }
 .mooooom-serverSwitch {
   &:before {
-    content: $mooooom-serverSwitch;
+    content: variables.$mooooom-serverSwitch;
   }
 }
 .mooooom-settings {
   &:before {
-    content: $mooooom-settings;
+    content: variables.$mooooom-settings;
   }
 }
 .mooooom-settingsFader {
   &:before {
-    content: $mooooom-settingsFader;
+    content: variables.$mooooom-settingsFader;
   }
 }
 .mooooom-shareSquare {
   &:before {
-    content: $mooooom-shareSquare;
+    content: variables.$mooooom-shareSquare;
   }
 }
 .mooooom-sharkWarning {
   &:before {
-    content: $mooooom-sharkWarning;
+    content: variables.$mooooom-sharkWarning;
   }
 }
 .mooooom-shelf {
   &:before {
-    content: $mooooom-shelf;
+    content: variables.$mooooom-shelf;
   }
 }
 .mooooom-shell {
   &:before {
-    content: $mooooom-shell;
+    content: variables.$mooooom-shell;
   }
 }
 .mooooom-shield {
   &:before {
-    content: $mooooom-shield;
+    content: variables.$mooooom-shield;
   }
 }
 .mooooom-shieldAlert {
   &:before {
-    content: $mooooom-shieldAlert;
+    content: variables.$mooooom-shieldAlert;
   }
 }
 .mooooom-shieldCheck {
   &:before {
-    content: $mooooom-shieldCheck;
+    content: variables.$mooooom-shieldCheck;
   }
 }
 .mooooom-ship {
   &:before {
-    content: $mooooom-ship;
+    content: variables.$mooooom-ship;
   }
 }
 .mooooom-shirt {
   &:before {
-    content: $mooooom-shirt;
+    content: variables.$mooooom-shirt;
   }
 }
 .mooooom-shirtButtons {
   &:before {
-    content: $mooooom-shirtButtons;
+    content: variables.$mooooom-shirtButtons;
   }
 }
 .mooooom-shirtShortSleeves {
   &:before {
-    content: $mooooom-shirtShortSleeves;
+    content: variables.$mooooom-shirtShortSleeves;
   }
 }
 .mooooom-shock {
   &:before {
-    content: $mooooom-shock;
+    content: variables.$mooooom-shock;
   }
 }
 .mooooom-shoppingBag {
   &:before {
-    content: $mooooom-shoppingBag;
+    content: variables.$mooooom-shoppingBag;
   }
 }
 .mooooom-shoppingBag1 {
   &:before {
-    content: $mooooom-shoppingBag1;
+    content: variables.$mooooom-shoppingBag1;
   }
 }
 .mooooom-shoppingCart {
   &:before {
-    content: $mooooom-shoppingCart;
+    content: variables.$mooooom-shoppingCart;
   }
 }
 .mooooom-shoppingCartArrowIn {
   &:before {
-    content: $mooooom-shoppingCartArrowIn;
+    content: variables.$mooooom-shoppingCartArrowIn;
   }
 }
 .mooooom-shoppingCartArrowOut {
   &:before {
-    content: $mooooom-shoppingCartArrowOut;
+    content: variables.$mooooom-shoppingCartArrowOut;
   }
 }
 .mooooom-shoppingCartCheck {
   &:before {
-    content: $mooooom-shoppingCartCheck;
+    content: variables.$mooooom-shoppingCartCheck;
   }
 }
 .mooooom-shoppingCartDelete {
   &:before {
-    content: $mooooom-shoppingCartDelete;
+    content: variables.$mooooom-shoppingCartDelete;
   }
 }
 .mooooom-shoppingCartEdit {
   &:before {
-    content: $mooooom-shoppingCartEdit;
+    content: variables.$mooooom-shoppingCartEdit;
   }
 }
 .mooooom-shovel {
   &:before {
-    content: $mooooom-shovel;
+    content: variables.$mooooom-shovel;
   }
 }
 .mooooom-shower {
   &:before {
-    content: $mooooom-shower;
+    content: variables.$mooooom-shower;
   }
 }
 .mooooom-shrimp {
   &:before {
-    content: $mooooom-shrimp;
+    content: variables.$mooooom-shrimp;
   }
 }
 .mooooom-shuffle {
   &:before {
-    content: $mooooom-shuffle;
+    content: variables.$mooooom-shuffle;
   }
 }
 .mooooom-shutter {
   &:before {
-    content: $mooooom-shutter;
+    content: variables.$mooooom-shutter;
   }
 }
 .mooooom-sidebarContentHeader {
   &:before {
-    content: $mooooom-sidebarContentHeader;
+    content: variables.$mooooom-sidebarContentHeader;
   }
 }
 .mooooom-sidebarLeft {
   &:before {
-    content: $mooooom-sidebarLeft;
+    content: variables.$mooooom-sidebarLeft;
   }
 }
 .mooooom-sidebarRight {
   &:before {
-    content: $mooooom-sidebarRight;
+    content: variables.$mooooom-sidebarRight;
   }
 }
 .mooooom-sideSmile {
   &:before {
-    content: $mooooom-sideSmile;
+    content: variables.$mooooom-sideSmile;
   }
 }
 .mooooom-sign {
   &:before {
-    content: $mooooom-sign;
+    content: variables.$mooooom-sign;
   }
 }
 .mooooom-signal1 {
   &:before {
-    content: $mooooom-signal1;
+    content: variables.$mooooom-signal1;
   }
 }
 .mooooom-signal2 {
   &:before {
-    content: $mooooom-signal2;
+    content: variables.$mooooom-signal2;
   }
 }
 .mooooom-signal3 {
   &:before {
-    content: $mooooom-signal3;
+    content: variables.$mooooom-signal3;
   }
 }
 .mooooom-signal4 {
   &:before {
-    content: $mooooom-signal4;
+    content: variables.$mooooom-signal4;
   }
 }
 .mooooom-signal5 {
   &:before {
-    content: $mooooom-signal5;
+    content: variables.$mooooom-signal5;
   }
 }
 .mooooom-signs {
   &:before {
-    content: $mooooom-signs;
+    content: variables.$mooooom-signs;
   }
 }
 .mooooom-sim {
   &:before {
-    content: $mooooom-sim;
+    content: variables.$mooooom-sim;
   }
 }
 .mooooom-simCutout {
   &:before {
-    content: $mooooom-simCutout;
+    content: variables.$mooooom-simCutout;
   }
 }
 .mooooom-simCutout1 {
   &:before {
-    content: $mooooom-simCutout1;
+    content: variables.$mooooom-simCutout1;
   }
 }
 .mooooom-simPassword {
   &:before {
-    content: $mooooom-simPassword;
+    content: variables.$mooooom-simPassword;
   }
 }
 .mooooom-simPin {
   &:before {
-    content: $mooooom-simPin;
+    content: variables.$mooooom-simPin;
   }
 }
 .mooooom-simProfile {
   &:before {
-    content: $mooooom-simProfile;
+    content: variables.$mooooom-simProfile;
   }
 }
 .mooooom-simProfiles {
   &:before {
-    content: $mooooom-simProfiles;
+    content: variables.$mooooom-simProfiles;
   }
 }
 .mooooom-simPuk {
   &:before {
-    content: $mooooom-simPuk;
+    content: variables.$mooooom-simPuk;
   }
 }
 .mooooom-singingMic {
   &:before {
-    content: $mooooom-singingMic;
+    content: variables.$mooooom-singingMic;
   }
 }
 .mooooom-skull {
   &:before {
-    content: $mooooom-skull;
+    content: variables.$mooooom-skull;
   }
 }
 .mooooom-sleeping {
   &:before {
-    content: $mooooom-sleeping;
+    content: variables.$mooooom-sleeping;
   }
 }
 .mooooom-sleeping1 {
   &:before {
-    content: $mooooom-sleeping1;
+    content: variables.$mooooom-sleeping1;
   }
 }
 .mooooom-sleepingPill {
   &:before {
-    content: $mooooom-sleepingPill;
+    content: variables.$mooooom-sleepingPill;
   }
 }
 .mooooom-sleepSound {
   &:before {
-    content: $mooooom-sleepSound;
+    content: variables.$mooooom-sleepSound;
   }
 }
 .mooooom-sleepyEye {
   &:before {
-    content: $mooooom-sleepyEye;
+    content: variables.$mooooom-sleepyEye;
   }
 }
 .mooooom-slipperyFloor {
   &:before {
-    content: $mooooom-slipperyFloor;
+    content: variables.$mooooom-slipperyFloor;
   }
 }
 .mooooom-smartWatch {
   &:before {
-    content: $mooooom-smartWatch;
+    content: variables.$mooooom-smartWatch;
   }
 }
 .mooooom-smashBurger {
   &:before {
-    content: $mooooom-smashBurger;
+    content: variables.$mooooom-smashBurger;
   }
 }
 .mooooom-smile {
   &:before {
-    content: $mooooom-smile;
+    content: variables.$mooooom-smile;
   }
 }
 .mooooom-smoothie {
   &:before {
-    content: $mooooom-smoothie;
+    content: variables.$mooooom-smoothie;
   }
 }
 .mooooom-sneaker {
   &:before {
-    content: $mooooom-sneaker;
+    content: variables.$mooooom-sneaker;
   }
 }
 .mooooom-snow {
   &:before {
-    content: $mooooom-snow;
+    content: variables.$mooooom-snow;
   }
 }
 .mooooom-snowFlake {
   &:before {
-    content: $mooooom-snowFlake;
+    content: variables.$mooooom-snowFlake;
   }
 }
 .mooooom-snowFlake1 {
   &:before {
-    content: $mooooom-snowFlake1;
+    content: variables.$mooooom-snowFlake1;
   }
 }
 .mooooom-snowWarning {
   &:before {
-    content: $mooooom-snowWarning;
+    content: variables.$mooooom-snowWarning;
   }
 }
 .mooooom-soapLiquid {
   &:before {
-    content: $mooooom-soapLiquid;
+    content: variables.$mooooom-soapLiquid;
   }
 }
 .mooooom-soccer {
   &:before {
-    content: $mooooom-soccer;
+    content: variables.$mooooom-soccer;
   }
 }
 .mooooom-socks {
   &:before {
-    content: $mooooom-socks;
+    content: variables.$mooooom-socks;
   }
 }
 .mooooom-sofa {
   &:before {
-    content: $mooooom-sofa;
+    content: variables.$mooooom-sofa;
   }
 }
 .mooooom-softball {
   &:before {
-    content: $mooooom-softball;
+    content: variables.$mooooom-softball;
   }
 }
 .mooooom-soup {
   &:before {
-    content: $mooooom-soup;
+    content: variables.$mooooom-soup;
   }
 }
 .mooooom-span100 {
   &:before {
-    content: $mooooom-span100;
+    content: variables.$mooooom-span100;
   }
 }
 .mooooom-sparkles {
   &:before {
-    content: $mooooom-sparkles;
+    content: variables.$mooooom-sparkles;
   }
 }
 .mooooom-sparyPaint {
   &:before {
-    content: $mooooom-sparyPaint;
+    content: variables.$mooooom-sparyPaint;
   }
 }
 .mooooom-spatula {
   &:before {
-    content: $mooooom-spatula;
+    content: variables.$mooooom-spatula;
   }
 }
 .mooooom-speaker {
   &:before {
-    content: $mooooom-speaker;
+    content: variables.$mooooom-speaker;
   }
 }
 .mooooom-speedometer {
   &:before {
-    content: $mooooom-speedometer;
+    content: variables.$mooooom-speedometer;
   }
 }
 .mooooom-speedSquare {
   &:before {
-    content: $mooooom-speedSquare;
+    content: variables.$mooooom-speedSquare;
   }
 }
 .mooooom-spere {
   &:before {
-    content: $mooooom-spere;
+    content: variables.$mooooom-spere;
   }
 }
 .mooooom-splitBranch {
   &:before {
-    content: $mooooom-splitBranch;
+    content: variables.$mooooom-splitBranch;
   }
 }
 .mooooom-spookyPumkin {
   &:before {
-    content: $mooooom-spookyPumkin;
+    content: variables.$mooooom-spookyPumkin;
   }
 }
 .mooooom-spoon {
   &:before {
-    content: $mooooom-spoon;
+    content: variables.$mooooom-spoon;
   }
 }
 .mooooom-sprout {
   &:before {
-    content: $mooooom-sprout;
+    content: variables.$mooooom-sprout;
   }
 }
 .mooooom-square {
   &:before {
-    content: $mooooom-square;
+    content: variables.$mooooom-square;
   }
 }
 .mooooom-squeegee {
   &:before {
-    content: $mooooom-squeegee;
+    content: variables.$mooooom-squeegee;
   }
 }
 .mooooom-stairsDown {
   &:before {
-    content: $mooooom-stairsDown;
+    content: variables.$mooooom-stairsDown;
   }
 }
 .mooooom-stairsUp {
   &:before {
-    content: $mooooom-stairsUp;
+    content: variables.$mooooom-stairsUp;
   }
 }
 .mooooom-star {
   &:before {
-    content: $mooooom-star;
+    content: variables.$mooooom-star;
   }
 }
 .mooooom-starDisabled {
   &:before {
-    content: $mooooom-starDisabled;
+    content: variables.$mooooom-starDisabled;
   }
 }
 .mooooom-starFilled {
   &:before {
-    content: $mooooom-starFilled;
+    content: variables.$mooooom-starFilled;
   }
 }
 .mooooom-starHalf {
   &:before {
-    content: $mooooom-starHalf;
+    content: variables.$mooooom-starHalf;
   }
 }
 .mooooom-starHalfFilled {
   &:before {
-    content: $mooooom-starHalfFilled;
+    content: variables.$mooooom-starHalfFilled;
   }
 }
 .mooooom-stationaryGlobe {
   &:before {
-    content: $mooooom-stationaryGlobe;
+    content: variables.$mooooom-stationaryGlobe;
   }
 }
 .mooooom-steeringWheel {
   &:before {
-    content: $mooooom-steeringWheel;
+    content: variables.$mooooom-steeringWheel;
   }
 }
 .mooooom-stethoscope {
   &:before {
-    content: $mooooom-stethoscope;
+    content: variables.$mooooom-stethoscope;
   }
 }
 .mooooom-stickyNote {
   &:before {
-    content: $mooooom-stickyNote;
+    content: variables.$mooooom-stickyNote;
   }
 }
 .mooooom-stop {
   &:before {
-    content: $mooooom-stop;
+    content: variables.$mooooom-stop;
   }
 }
 .mooooom-stoprSign {
   &:before {
-    content: $mooooom-stoprSign;
+    content: variables.$mooooom-stoprSign;
   }
 }
 .mooooom-store {
   &:before {
-    content: $mooooom-store;
+    content: variables.$mooooom-store;
   }
 }
 .mooooom-storm {
   &:before {
-    content: $mooooom-storm;
+    content: variables.$mooooom-storm;
   }
 }
 .mooooom-straighten {
   &:before {
-    content: $mooooom-straighten;
+    content: variables.$mooooom-straighten;
   }
 }
 .mooooom-strawberry {
   &:before {
-    content: $mooooom-strawberry;
+    content: variables.$mooooom-strawberry;
   }
 }
 .mooooom-streetView {
   &:before {
-    content: $mooooom-streetView;
+    content: variables.$mooooom-streetView;
   }
 }
 .mooooom-strikethrough {
   &:before {
-    content: $mooooom-strikethrough;
+    content: variables.$mooooom-strikethrough;
   }
 }
 .mooooom-substract {
   &:before {
-    content: $mooooom-substract;
+    content: variables.$mooooom-substract;
   }
 }
 .mooooom-sun {
   &:before {
-    content: $mooooom-sun;
+    content: variables.$mooooom-sun;
   }
 }
 .mooooom-sun1 {
   &:before {
-    content: $mooooom-sun1;
+    content: variables.$mooooom-sun1;
   }
 }
 .mooooom-sunRise {
   &:before {
-    content: $mooooom-sunRise;
+    content: variables.$mooooom-sunRise;
   }
 }
 .mooooom-sunSet {
   &:before {
-    content: $mooooom-sunSet;
+    content: variables.$mooooom-sunSet;
   }
 }
 .mooooom-sunsetSunrise {
   &:before {
-    content: $mooooom-sunsetSunrise;
+    content: variables.$mooooom-sunsetSunrise;
   }
 }
 .mooooom-sweatSmile {
   &:before {
-    content: $mooooom-sweatSmile;
+    content: variables.$mooooom-sweatSmile;
   }
 }
 .mooooom-swimmingPool {
   &:before {
-    content: $mooooom-swimmingPool;
+    content: variables.$mooooom-swimmingPool;
   }
 }
 .mooooom-swissFranc {
   &:before {
-    content: $mooooom-swissFranc;
+    content: variables.$mooooom-swissFranc;
   }
 }
 .mooooom-switchCamera {
   &:before {
-    content: $mooooom-switchCamera;
+    content: variables.$mooooom-switchCamera;
   }
 }
 .mooooom-sword {
   &:before {
-    content: $mooooom-sword;
+    content: variables.$mooooom-sword;
   }
 }
 .mooooom-swordsCrossing {
   &:before {
-    content: $mooooom-swordsCrossing;
+    content: variables.$mooooom-swordsCrossing;
   }
 }
 .mooooom-sydney {
   &:before {
-    content: $mooooom-sydney;
+    content: variables.$mooooom-sydney;
   }
 }
 .mooooom-syringe {
   &:before {
-    content: $mooooom-syringe;
+    content: variables.$mooooom-syringe;
   }
 }
 .mooooom-table {
   &:before {
-    content: $mooooom-table;
+    content: variables.$mooooom-table;
   }
 }
 .mooooom-tableBill {
   &:before {
-    content: $mooooom-tableBill;
+    content: variables.$mooooom-tableBill;
   }
 }
 .mooooom-tableKnife {
   &:before {
-    content: $mooooom-tableKnife;
+    content: variables.$mooooom-tableKnife;
   }
 }
 .mooooom-tada {
   &:before {
-    content: $mooooom-tada;
+    content: variables.$mooooom-tada;
   }
 }
 .mooooom-tag {
   &:before {
-    content: $mooooom-tag;
+    content: variables.$mooooom-tag;
   }
 }
 .mooooom-tagPrice {
   &:before {
-    content: $mooooom-tagPrice;
+    content: variables.$mooooom-tagPrice;
   }
 }
 .mooooom-tags {
   &:before {
-    content: $mooooom-tags;
+    content: variables.$mooooom-tags;
   }
 }
 .mooooom-tanslate {
   &:before {
-    content: $mooooom-tanslate;
+    content: variables.$mooooom-tanslate;
   }
 }
 .mooooom-tapeMeasure {
   &:before {
-    content: $mooooom-tapeMeasure;
+    content: variables.$mooooom-tapeMeasure;
   }
 }
 .mooooom-taskCanceled {
   &:before {
-    content: $mooooom-taskCanceled;
+    content: variables.$mooooom-taskCanceled;
   }
 }
 .mooooom-taskCompleted {
   &:before {
-    content: $mooooom-taskCompleted;
+    content: variables.$mooooom-taskCompleted;
   }
 }
 .mooooom-taskDefault {
   &:before {
-    content: $mooooom-taskDefault;
+    content: variables.$mooooom-taskDefault;
   }
 }
 .mooooom-taskDeleted {
   &:before {
-    content: $mooooom-taskDeleted;
+    content: variables.$mooooom-taskDeleted;
   }
 }
 .mooooom-taskImported {
   &:before {
-    content: $mooooom-taskImported;
+    content: variables.$mooooom-taskImported;
   }
 }
 .mooooom-taskInProgress {
   &:before {
-    content: $mooooom-taskInProgress;
+    content: variables.$mooooom-taskInProgress;
   }
 }
 .mooooom-taskMoved {
   &:before {
-    content: $mooooom-taskMoved;
+    content: variables.$mooooom-taskMoved;
   }
 }
 .mooooom-taskStarted {
   &:before {
-    content: $mooooom-taskStarted;
+    content: variables.$mooooom-taskStarted;
   }
 }
 .mooooom-taurus {
   &:before {
-    content: $mooooom-taurus;
+    content: variables.$mooooom-taurus;
   }
 }
 .mooooom-taxi {
   &:before {
-    content: $mooooom-taxi;
+    content: variables.$mooooom-taxi;
   }
 }
 .mooooom-teaCup {
   &:before {
-    content: $mooooom-teaCup;
+    content: variables.$mooooom-teaCup;
   }
 }
 .mooooom-team {
   &:before {
-    content: $mooooom-team;
+    content: variables.$mooooom-team;
   }
 }
 .mooooom-telescope {
   &:before {
-    content: $mooooom-telescope;
+    content: variables.$mooooom-telescope;
   }
 }
 .mooooom-temperatureCold {
   &:before {
-    content: $mooooom-temperatureCold;
+    content: variables.$mooooom-temperatureCold;
   }
 }
 .mooooom-temperatureFair {
   &:before {
-    content: $mooooom-temperatureFair;
+    content: variables.$mooooom-temperatureFair;
   }
 }
 .mooooom-temperatureHot {
   &:before {
-    content: $mooooom-temperatureHot;
+    content: variables.$mooooom-temperatureHot;
   }
 }
 .mooooom-tennis {
   &:before {
-    content: $mooooom-tennis;
+    content: variables.$mooooom-tennis;
   }
 }
 .mooooom-terminal {
   &:before {
-    content: $mooooom-terminal;
+    content: variables.$mooooom-terminal;
   }
 }
 .mooooom-terminalBox {
   &:before {
-    content: $mooooom-terminalBox;
+    content: variables.$mooooom-terminalBox;
   }
 }
 .mooooom-textImage {
   &:before {
-    content: $mooooom-textImage;
+    content: variables.$mooooom-textImage;
   }
 }
 .mooooom-textNode {
   &:before {
-    content: $mooooom-textNode;
+    content: variables.$mooooom-textNode;
   }
 }
 .mooooom-thermometer {
   &:before {
-    content: $mooooom-thermometer;
+    content: variables.$mooooom-thermometer;
   }
 }
 .mooooom-threeColumns {
   &:before {
-    content: $mooooom-threeColumns;
+    content: variables.$mooooom-threeColumns;
   }
 }
 .mooooom-three-sixtyAxis {
   &:before {
-    content: $mooooom-three-sixtyAxis;
+    content: variables.$mooooom-three-sixtyAxis;
   }
 }
 .mooooom-thumbDown {
   &:before {
-    content: $mooooom-thumbDown;
+    content: variables.$mooooom-thumbDown;
   }
 }
 .mooooom-thumbUp {
   &:before {
-    content: $mooooom-thumbUp;
+    content: variables.$mooooom-thumbUp;
   }
 }
 .mooooom-tiara {
   &:before {
-    content: $mooooom-tiara;
+    content: variables.$mooooom-tiara;
   }
 }
 .mooooom-ticket {
   &:before {
-    content: $mooooom-ticket;
+    content: variables.$mooooom-ticket;
   }
 }
 .mooooom-ticketAngled {
   &:before {
-    content: $mooooom-ticketAngled;
+    content: variables.$mooooom-ticketAngled;
   }
 }
 .mooooom-tie {
   &:before {
-    content: $mooooom-tie;
+    content: variables.$mooooom-tie;
   }
 }
 .mooooom-tiger {
   &:before {
-    content: $mooooom-tiger;
+    content: variables.$mooooom-tiger;
   }
 }
 .mooooom-timeAdd {
   &:before {
-    content: $mooooom-timeAdd;
+    content: variables.$mooooom-timeAdd;
   }
 }
 .mooooom-timeBackward {
   &:before {
-    content: $mooooom-timeBackward;
+    content: variables.$mooooom-timeBackward;
   }
 }
 .mooooom-timeEdit {
   &:before {
-    content: $mooooom-timeEdit;
+    content: variables.$mooooom-timeEdit;
   }
 }
 .mooooom-timeFast {
   &:before {
-    content: $mooooom-timeFast;
+    content: variables.$mooooom-timeFast;
   }
 }
 .mooooom-timeFast1 {
   &:before {
-    content: $mooooom-timeFast1;
+    content: variables.$mooooom-timeFast1;
   }
 }
 .mooooom-timeline {
   &:before {
-    content: $mooooom-timeline;
+    content: variables.$mooooom-timeline;
   }
 }
 .mooooom-timelineView {
   &:before {
-    content: $mooooom-timelineView;
+    content: variables.$mooooom-timelineView;
   }
 }
 .mooooom-timeLoopBackward {
   &:before {
-    content: $mooooom-timeLoopBackward;
+    content: variables.$mooooom-timeLoopBackward;
   }
 }
 .mooooom-timeLoopForward {
   &:before {
-    content: $mooooom-timeLoopForward;
+    content: variables.$mooooom-timeLoopForward;
   }
 }
 .mooooom-timePaused {
   &:before {
-    content: $mooooom-timePaused;
+    content: variables.$mooooom-timePaused;
   }
 }
 .mooooom-timer {
   &:before {
-    content: $mooooom-timer;
+    content: variables.$mooooom-timer;
   }
 }
 .mooooom-timerSleep {
   &:before {
-    content: $mooooom-timerSleep;
+    content: variables.$mooooom-timerSleep;
   }
 }
 .mooooom-timeSpan {
   &:before {
-    content: $mooooom-timeSpan;
+    content: variables.$mooooom-timeSpan;
   }
 }
 .mooooom-tirePressure {
   &:before {
-    content: $mooooom-tirePressure;
+    content: variables.$mooooom-tirePressure;
   }
 }
 .mooooom-toaster {
   &:before {
-    content: $mooooom-toaster;
+    content: variables.$mooooom-toaster;
   }
 }
 .mooooom-toggleOff {
   &:before {
-    content: $mooooom-toggleOff;
+    content: variables.$mooooom-toggleOff;
   }
 }
 .mooooom-toggleOn {
   &:before {
-    content: $mooooom-toggleOn;
+    content: variables.$mooooom-toggleOn;
   }
 }
 .mooooom-toilet {
   &:before {
-    content: $mooooom-toilet;
+    content: variables.$mooooom-toilet;
   }
 }
 .mooooom-toiletPaper {
   &:before {
-    content: $mooooom-toiletPaper;
+    content: variables.$mooooom-toiletPaper;
   }
 }
 .mooooom-tokyoTower {
   &:before {
-    content: $mooooom-tokyoTower;
+    content: variables.$mooooom-tokyoTower;
   }
 }
 .mooooom-tombStone {
   &:before {
-    content: $mooooom-tombStone;
+    content: variables.$mooooom-tombStone;
   }
 }
 .mooooom-tongueLeft {
   &:before {
-    content: $mooooom-tongueLeft;
+    content: variables.$mooooom-tongueLeft;
   }
 }
 .mooooom-tongueRight {
   &:before {
-    content: $mooooom-tongueRight;
+    content: variables.$mooooom-tongueRight;
   }
 }
 .mooooom-tooth {
   &:before {
-    content: $mooooom-tooth;
+    content: variables.$mooooom-tooth;
   }
 }
 .mooooom-toothBrush {
   &:before {
-    content: $mooooom-toothBrush;
+    content: variables.$mooooom-toothBrush;
   }
 }
 .mooooom-toothPaste {
   &:before {
-    content: $mooooom-toothPaste;
+    content: variables.$mooooom-toothPaste;
   }
 }
 .mooooom-topLeftTurn {
   &:before {
-    content: $mooooom-topLeftTurn;
+    content: variables.$mooooom-topLeftTurn;
   }
 }
 .mooooom-topRightTurn {
   &:before {
-    content: $mooooom-topRightTurn;
+    content: variables.$mooooom-topRightTurn;
   }
 }
 .mooooom-toriGate {
   &:before {
-    content: $mooooom-toriGate;
+    content: variables.$mooooom-toriGate;
   }
 }
 .mooooom-tornado {
   &:before {
-    content: $mooooom-tornado;
+    content: variables.$mooooom-tornado;
   }
 }
 .mooooom-towerOfPisa {
   &:before {
-    content: $mooooom-towerOfPisa;
+    content: variables.$mooooom-towerOfPisa;
   }
 }
 .mooooom-tradeMark {
   &:before {
-    content: $mooooom-tradeMark;
+    content: variables.$mooooom-tradeMark;
   }
 }
 .mooooom-trafficCone {
   &:before {
-    content: $mooooom-trafficCone;
+    content: variables.$mooooom-trafficCone;
   }
 }
 .mooooom-trafficLight {
   &:before {
-    content: $mooooom-trafficLight;
+    content: variables.$mooooom-trafficLight;
   }
 }
 .mooooom-train {
   &:before {
-    content: $mooooom-train;
+    content: variables.$mooooom-train;
   }
 }
 .mooooom-trash {
   &:before {
-    content: $mooooom-trash;
+    content: variables.$mooooom-trash;
   }
 }
 .mooooom-tree {
   &:before {
-    content: $mooooom-tree;
+    content: variables.$mooooom-tree;
   }
 }
 .mooooom-tree1 {
   &:before {
-    content: $mooooom-tree1;
+    content: variables.$mooooom-tree1;
   }
 }
 .mooooom-tree2 {
   &:before {
-    content: $mooooom-tree2;
+    content: variables.$mooooom-tree2;
   }
 }
 .mooooom-treePine {
   &:before {
-    content: $mooooom-treePine;
+    content: variables.$mooooom-treePine;
   }
 }
 .mooooom-trees {
   &:before {
-    content: $mooooom-trees;
+    content: variables.$mooooom-trees;
   }
 }
 .mooooom-trialer {
   &:before {
-    content: $mooooom-trialer;
+    content: variables.$mooooom-trialer;
   }
 }
 .mooooom-triangle {
   &:before {
-    content: $mooooom-triangle;
+    content: variables.$mooooom-triangle;
   }
 }
 .mooooom-trophy {
   &:before {
-    content: $mooooom-trophy;
+    content: variables.$mooooom-trophy;
   }
 }
 .mooooom-truck {
   &:before {
-    content: $mooooom-truck;
+    content: variables.$mooooom-truck;
   }
 }
 .mooooom-truckBakward {
   &:before {
-    content: $mooooom-truckBakward;
+    content: variables.$mooooom-truckBakward;
   }
 }
 .mooooom-truckFast {
   &:before {
-    content: $mooooom-truckFast;
+    content: variables.$mooooom-truckFast;
   }
 }
 .mooooom-truckFront {
   &:before {
-    content: $mooooom-truckFront;
+    content: variables.$mooooom-truckFront;
   }
 }
 .mooooom-truckLocation {
   &:before {
-    content: $mooooom-truckLocation;
+    content: variables.$mooooom-truckLocation;
   }
 }
 .mooooom-truncation {
   &:before {
-    content: $mooooom-truncation;
+    content: variables.$mooooom-truncation;
   }
 }
 .mooooom-truncation1 {
   &:before {
-    content: $mooooom-truncation1;
+    content: variables.$mooooom-truncation1;
   }
 }
 .mooooom-tShirt {
   &:before {
-    content: $mooooom-tShirt;
+    content: variables.$mooooom-tShirt;
   }
 }
 .mooooom-tShirtLongSleeves {
   &:before {
-    content: $mooooom-tShirtLongSleeves;
+    content: variables.$mooooom-tShirtLongSleeves;
   }
 }
 .mooooom-tShirtVNeck {
   &:before {
-    content: $mooooom-tShirtVNeck;
+    content: variables.$mooooom-tShirtVNeck;
   }
 }
 .mooooom-turkeyLeg {
   &:before {
-    content: $mooooom-turkeyLeg;
+    content: variables.$mooooom-turkeyLeg;
   }
 }
 .mooooom-tv {
   &:before {
-    content: $mooooom-tv;
+    content: variables.$mooooom-tv;
   }
 }
 .mooooom-twoColumns {
   &:before {
-    content: $mooooom-twoColumns;
+    content: variables.$mooooom-twoColumns;
   }
 }
 .mooooom-typhoon {
   &:before {
-    content: $mooooom-typhoon;
+    content: variables.$mooooom-typhoon;
   }
 }
 .mooooom-ufo {
   &:before {
-    content: $mooooom-ufo;
+    content: variables.$mooooom-ufo;
   }
 }
 .mooooom-ufoAbduction {
   &:before {
-    content: $mooooom-ufoAbduction;
+    content: variables.$mooooom-ufoAbduction;
   }
 }
 .mooooom-umbrella {
   &:before {
-    content: $mooooom-umbrella;
+    content: variables.$mooooom-umbrella;
   }
 }
 .mooooom-underline {
   &:before {
-    content: $mooooom-underline;
+    content: variables.$mooooom-underline;
   }
 }
 .mooooom-unhappy {
   &:before {
-    content: $mooooom-unhappy;
+    content: variables.$mooooom-unhappy;
   }
 }
 .mooooom-union {
   &:before {
-    content: $mooooom-union;
+    content: variables.$mooooom-union;
   }
 }
 .mooooom-unLocked {
   &:before {
-    content: $mooooom-unLocked;
+    content: variables.$mooooom-unLocked;
   }
 }
 .mooooom-unLockedRound {
   &:before {
-    content: $mooooom-unLockedRound;
+    content: variables.$mooooom-unLockedRound;
   }
 }
 .mooooom-unPlugged {
   &:before {
-    content: $mooooom-unPlugged;
+    content: variables.$mooooom-unPlugged;
   }
 }
 .mooooom-upload {
   &:before {
-    content: $mooooom-upload;
+    content: variables.$mooooom-upload;
   }
 }
 .mooooom-upsideDown {
   &:before {
-    content: $mooooom-upsideDown;
+    content: variables.$mooooom-upsideDown;
   }
 }
 .mooooom-usb {
   &:before {
-    content: $mooooom-usb;
+    content: variables.$mooooom-usb;
   }
 }
 .mooooom-user {
   &:before {
-    content: $mooooom-user;
+    content: variables.$mooooom-user;
   }
 }
 .mooooom-userAdd {
   &:before {
-    content: $mooooom-userAdd;
+    content: variables.$mooooom-userAdd;
   }
 }
 .mooooom-userAddBottom {
   &:before {
-    content: $mooooom-userAddBottom;
+    content: variables.$mooooom-userAddBottom;
   }
 }
 .mooooom-userCircle {
   &:before {
-    content: $mooooom-userCircle;
+    content: variables.$mooooom-userCircle;
   }
 }
 .mooooom-userDelete {
   &:before {
-    content: $mooooom-userDelete;
+    content: variables.$mooooom-userDelete;
   }
 }
 .mooooom-userDeleteBottom {
   &:before {
-    content: $mooooom-userDeleteBottom;
+    content: variables.$mooooom-userDeleteBottom;
   }
 }
 .mooooom-userEdit {
   &:before {
-    content: $mooooom-userEdit;
+    content: variables.$mooooom-userEdit;
   }
 }
 .mooooom-userEditBottom {
   &:before {
-    content: $mooooom-userEditBottom;
+    content: variables.$mooooom-userEditBottom;
   }
 }
 .mooooom-userHexagon {
   &:before {
-    content: $mooooom-userHexagon;
+    content: variables.$mooooom-userHexagon;
   }
 }
 .mooooom-userRemove {
   &:before {
-    content: $mooooom-userRemove;
+    content: variables.$mooooom-userRemove;
   }
 }
 .mooooom-userRemoveBottom {
   &:before {
-    content: $mooooom-userRemoveBottom;
+    content: variables.$mooooom-userRemoveBottom;
   }
 }
 .mooooom-users {
   &:before {
-    content: $mooooom-users;
+    content: variables.$mooooom-users;
   }
 }
 .mooooom-usersAdd {
   &:before {
-    content: $mooooom-usersAdd;
+    content: variables.$mooooom-usersAdd;
   }
 }
 .mooooom-usersAddBottom {
   &:before {
-    content: $mooooom-usersAddBottom;
+    content: variables.$mooooom-usersAddBottom;
   }
 }
 .mooooom-usersDelete {
   &:before {
-    content: $mooooom-usersDelete;
+    content: variables.$mooooom-usersDelete;
   }
 }
 .mooooom-usersDeleteBottom {
   &:before {
-    content: $mooooom-usersDeleteBottom;
+    content: variables.$mooooom-usersDeleteBottom;
   }
 }
 .mooooom-userSquare {
   &:before {
-    content: $mooooom-userSquare;
+    content: variables.$mooooom-userSquare;
   }
 }
 .mooooom-usersRemove {
   &:before {
-    content: $mooooom-usersRemove;
+    content: variables.$mooooom-usersRemove;
   }
 }
 .mooooom-usersRemoveBottom {
   &:before {
-    content: $mooooom-usersRemoveBottom;
+    content: variables.$mooooom-usersRemoveBottom;
   }
 }
 .mooooom-usersSwap {
   &:before {
-    content: $mooooom-usersSwap;
+    content: variables.$mooooom-usersSwap;
   }
 }
 .mooooom-ussEnterprise {
   &:before {
-    content: $mooooom-ussEnterprise;
+    content: variables.$mooooom-ussEnterprise;
   }
 }
 .mooooom-vacuum {
   &:before {
-    content: $mooooom-vacuum;
+    content: variables.$mooooom-vacuum;
   }
 }
 .mooooom-vacuum1 {
   &:before {
-    content: $mooooom-vacuum1;
+    content: variables.$mooooom-vacuum1;
   }
 }
 .mooooom-variable {
   &:before {
-    content: $mooooom-variable;
+    content: variables.$mooooom-variable;
   }
 }
 .mooooom-verticalPitch {
   &:before {
-    content: $mooooom-verticalPitch;
+    content: variables.$mooooom-verticalPitch;
   }
 }
 .mooooom-vespa {
   &:before {
-    content: $mooooom-vespa;
+    content: variables.$mooooom-vespa;
   }
 }
 .mooooom-videoCall {
   &:before {
-    content: $mooooom-videoCall;
+    content: variables.$mooooom-videoCall;
   }
 }
 .mooooom-videoSettings {
   &:before {
-    content: $mooooom-videoSettings;
+    content: variables.$mooooom-videoSettings;
   }
 }
 .mooooom-videoSettings1 {
   &:before {
-    content: $mooooom-videoSettings1;
+    content: variables.$mooooom-videoSettings1;
   }
 }
 .mooooom-videoSettings11 {
   &:before {
-    content: $mooooom-videoSettings11;
+    content: variables.$mooooom-videoSettings11;
   }
 }
 .mooooom-virgo {
   &:before {
-    content: $mooooom-virgo;
+    content: variables.$mooooom-virgo;
   }
 }
 .mooooom-virus {
   &:before {
-    content: $mooooom-virus;
+    content: variables.$mooooom-virus;
   }
 }
 .mooooom-voicemail {
   &:before {
-    content: $mooooom-voicemail;
+    content: variables.$mooooom-voicemail;
   }
 }
 .mooooom-voleyball {
   &:before {
-    content: $mooooom-voleyball;
+    content: variables.$mooooom-voleyball;
   }
 }
 .mooooom-volumeMuted {
   &:before {
-    content: $mooooom-volumeMuted;
+    content: variables.$mooooom-volumeMuted;
   }
 }
 .mooooom-volumeOne {
   &:before {
-    content: $mooooom-volumeOne;
+    content: variables.$mooooom-volumeOne;
   }
 }
 .mooooom-volumeShout {
   &:before {
-    content: $mooooom-volumeShout;
+    content: variables.$mooooom-volumeShout;
   }
 }
 .mooooom-volumeThree {
   &:before {
-    content: $mooooom-volumeThree;
+    content: variables.$mooooom-volumeThree;
   }
 }
 .mooooom-volumeTwo {
   &:before {
-    content: $mooooom-volumeTwo;
+    content: variables.$mooooom-volumeTwo;
   }
 }
 .mooooom-volumeZero {
   &:before {
-    content: $mooooom-volumeZero;
+    content: variables.$mooooom-volumeZero;
   }
 }
 .mooooom-vpnDevices {
   &:before {
-    content: $mooooom-vpnDevices;
+    content: variables.$mooooom-vpnDevices;
   }
 }
 .mooooom-vpnSystem {
   &:before {
-    content: $mooooom-vpnSystem;
+    content: variables.$mooooom-vpnSystem;
   }
 }
 .mooooom-wall {
   &:before {
-    content: $mooooom-wall;
+    content: variables.$mooooom-wall;
   }
 }
 .mooooom-wallet {
   &:before {
-    content: $mooooom-wallet;
+    content: variables.$mooooom-wallet;
   }
 }
 .mooooom-wand {
   &:before {
-    content: $mooooom-wand;
+    content: variables.$mooooom-wand;
   }
 }
 .mooooom-wardrobe {
   &:before {
-    content: $mooooom-wardrobe;
+    content: variables.$mooooom-wardrobe;
   }
 }
 .mooooom-warFlag {
   &:before {
-    content: $mooooom-warFlag;
+    content: variables.$mooooom-warFlag;
   }
 }
 .mooooom-warhammer {
   &:before {
-    content: $mooooom-warhammer;
+    content: variables.$mooooom-warhammer;
   }
 }
 .mooooom-washigtonDc {
   &:before {
-    content: $mooooom-washigtonDc;
+    content: variables.$mooooom-washigtonDc;
   }
 }
 .mooooom-washingMachine {
   &:before {
-    content: $mooooom-washingMachine;
+    content: variables.$mooooom-washingMachine;
   }
 }
 .mooooom-watch {
   &:before {
-    content: $mooooom-watch;
+    content: variables.$mooooom-watch;
   }
 }
 .mooooom-wave {
   &:before {
-    content: $mooooom-wave;
+    content: variables.$mooooom-wave;
   }
 }
 .mooooom-wave1 {
   &:before {
-    content: $mooooom-wave1;
+    content: variables.$mooooom-wave1;
   }
 }
 .mooooom-waveForm {
   &:before {
-    content: $mooooom-waveForm;
+    content: variables.$mooooom-waveForm;
   }
 }
 .mooooom-waveForm1 {
   &:before {
-    content: $mooooom-waveForm1;
+    content: variables.$mooooom-waveForm1;
   }
 }
 .mooooom-waveForm2 {
   &:before {
-    content: $mooooom-waveForm2;
+    content: variables.$mooooom-waveForm2;
   }
 }
 .mooooom-webcam {
   &:before {
-    content: $mooooom-webcam;
+    content: variables.$mooooom-webcam;
   }
 }
 .mooooom-weight {
   &:before {
-    content: $mooooom-weight;
+    content: variables.$mooooom-weight;
   }
 }
 .mooooom-whale {
   &:before {
-    content: $mooooom-whale;
+    content: variables.$mooooom-whale;
   }
 }
 .mooooom-wharehouse {
   &:before {
-    content: $mooooom-wharehouse;
+    content: variables.$mooooom-wharehouse;
   }
 }
 .mooooom-wheat {
   &:before {
-    content: $mooooom-wheat;
+    content: variables.$mooooom-wheat;
   }
 }
 .mooooom-wheelchairLiving {
   &:before {
-    content: $mooooom-wheelchairLiving;
+    content: variables.$mooooom-wheelchairLiving;
   }
 }
 .mooooom-wheelchairMedical {
   &:before {
-    content: $mooooom-wheelchairMedical;
+    content: variables.$mooooom-wheelchairMedical;
   }
 }
 .mooooom-wheelRim {
   &:before {
-    content: $mooooom-wheelRim;
+    content: variables.$mooooom-wheelRim;
   }
 }
 .mooooom-whisk {
   &:before {
-    content: $mooooom-whisk;
+    content: variables.$mooooom-whisk;
   }
 }
 .mooooom-whistle {
   &:before {
-    content: $mooooom-whistle;
+    content: variables.$mooooom-whistle;
   }
 }
 .mooooom-wifiAlert {
   &:before {
-    content: $mooooom-wifiAlert;
+    content: variables.$mooooom-wifiAlert;
   }
 }
 .mooooom-wifiCross {
   &:before {
-    content: $mooooom-wifiCross;
+    content: variables.$mooooom-wifiCross;
   }
 }
 .mooooom-wifiDisabled {
   &:before {
-    content: $mooooom-wifiDisabled;
+    content: variables.$mooooom-wifiDisabled;
   }
 }
 .mooooom-wifiDisconnected {
   &:before {
-    content: $mooooom-wifiDisconnected;
+    content: variables.$mooooom-wifiDisconnected;
   }
 }
 .mooooom-wifiEmpty {
   &:before {
-    content: $mooooom-wifiEmpty;
+    content: variables.$mooooom-wifiEmpty;
   }
 }
 .mooooom-wifiFull {
   &:before {
-    content: $mooooom-wifiFull;
+    content: variables.$mooooom-wifiFull;
   }
 }
 .mooooom-wifiLock {
   &:before {
-    content: $mooooom-wifiLock;
+    content: variables.$mooooom-wifiLock;
   }
 }
 .mooooom-wifiLow {
   &:before {
-    content: $mooooom-wifiLow;
+    content: variables.$mooooom-wifiLow;
   }
 }
 .mooooom-wifiMedium {
   &:before {
-    content: $mooooom-wifiMedium;
+    content: variables.$mooooom-wifiMedium;
   }
 }
 .mooooom-wifiRouter {
   &:before {
-    content: $mooooom-wifiRouter;
+    content: variables.$mooooom-wifiRouter;
   }
 }
 .mooooom-wifiSearch {
   &:before {
-    content: $mooooom-wifiSearch;
+    content: variables.$mooooom-wifiSearch;
   }
 }
 .mooooom-wifiSpeed {
   &:before {
-    content: $mooooom-wifiSpeed;
+    content: variables.$mooooom-wifiSpeed;
   }
 }
 .mooooom-wifiWeak {
   &:before {
-    content: $mooooom-wifiWeak;
+    content: variables.$mooooom-wifiWeak;
   }
 }
 .mooooom-wind {
   &:before {
-    content: $mooooom-wind;
+    content: variables.$mooooom-wind;
   }
 }
 .mooooom-windRose {
   &:before {
-    content: $mooooom-windRose;
+    content: variables.$mooooom-windRose;
   }
 }
 .mooooom-windshieldHeater {
   &:before {
-    content: $mooooom-windshieldHeater;
+    content: variables.$mooooom-windshieldHeater;
   }
 }
 .mooooom-windshieldWiper {
   &:before {
-    content: $mooooom-windshieldWiper;
+    content: variables.$mooooom-windshieldWiper;
   }
 }
 .mooooom-windTurbine {
   &:before {
-    content: $mooooom-windTurbine;
+    content: variables.$mooooom-windTurbine;
   }
 }
 .mooooom-wineGlass {
   &:before {
-    content: $mooooom-wineGlass;
+    content: variables.$mooooom-wineGlass;
   }
 }
 .mooooom-witchHat {
   &:before {
-    content: $mooooom-witchHat;
+    content: variables.$mooooom-witchHat;
   }
 }
 .mooooom-won {
   &:before {
-    content: $mooooom-won;
+    content: variables.$mooooom-won;
   }
 }
 .mooooom-worm {
   &:before {
-    content: $mooooom-worm;
+    content: variables.$mooooom-worm;
   }
 }
 .mooooom-wrench {
   &:before {
-    content: $mooooom-wrench;
+    content: variables.$mooooom-wrench;
   }
 }
 .mooooom-yen {
   &:before {
-    content: $mooooom-yen;
+    content: variables.$mooooom-yen;
   }
 }
 .mooooom-youngPlant {
   &:before {
-    content: $mooooom-youngPlant;
+    content: variables.$mooooom-youngPlant;
   }
 }
 .mooooom-youngPlantPot {
   &:before {
-    content: $mooooom-youngPlantPot;
+    content: variables.$mooooom-youngPlantPot;
   }
 }
 .mooooom-zipperHoodie {
   &:before {
-    content: $mooooom-zipperHoodie;
+    content: variables.$mooooom-zipperHoodie;
   }
 }
 

@@ -2,7 +2,7 @@
 import {computed, type PropType} from "vue";
 
 import type {ArtistResponse} from "@/types/api/music/artist";
-import type {Song} from "@/types/musicPlayer";
+import type {PlaylistItem} from "@/types/musicPlayer";
 
 import CoverImage from "@/components/MusicPlayer/components/CoverImage.vue";
 import {Artist} from "@/types/api/music/artist";
@@ -18,7 +18,7 @@ const props = defineProps({
 const artists = computed(() => {
 	const artists: any = {}
 
-	props.data?.tracks?.forEach((track: Song) => {
+	props.data?.tracks?.forEach((track: PlaylistItem) => {
 		track.artist_track?.forEach((artist) => {
 			if (artist.id == props.data.id || !artist.cover) return;
 			artists[artist.id as any] = {

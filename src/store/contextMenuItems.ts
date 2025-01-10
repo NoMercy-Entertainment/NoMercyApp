@@ -4,7 +4,7 @@ import {ContextMenuMethods} from 'primevue';
 import type {MoooomIcons} from '@Icons/icons';
 import serverClient from '@/lib/clients/serverClient';
 import type {AxiosResponse} from 'axios';
-import type {Song} from '@/types/musicPlayer';
+import type {PlaylistItem} from '@/types/musicPlayer';
 import router from '@/router';
 import {copyToClipboard} from '@/lib/stringArray';
 import {isAlbumRoute, isArtistRoute} from '@/store/routeState';
@@ -85,9 +85,9 @@ export const trackContextMenuItems = ref<ContextMenuItem[]>([]);
 
 export const cardMenu = ref();
 
-export const selectedTrackRow = ref<Song>();
+export const selectedTrackRow = ref<PlaylistItem>();
 
-export const onTrackRowRightClick = (event: Event, data: Song) => {
+export const onTrackRowRightClick = (event: Event, data: PlaylistItem) => {
 	selectedTrackRow.value = data;
 
 	const menuItems: ContextMenuItem[] = [];
