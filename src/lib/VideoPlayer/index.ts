@@ -7,7 +7,7 @@ import nmplayer from 'nomercyplayer/src/index';
 import Plugin from 'nomercyplayer/src/plugin';
 import { OctopusPlugin } from 'nomercyplayer/src/plugins/octopusPlugin';
 import { KeyHandlerPlugin } from 'nomercyplayer/src/plugins/keyHandlerPlugin';
-import type {NMPlayer, PlaylistItem, SetupConfig, VTTData} from 'nomercyplayer/src/index.d';
+import type {NMPlayer, PlaylistItem, PlayerConfig, VTTData} from 'nomercyplayer/src/types';
 
 // // @ts-ignore
 // import nmplayer from 'https://vscode.nomercy.tv/src/index.ts';
@@ -18,7 +18,7 @@ import type {NMPlayer, PlaylistItem, SetupConfig, VTTData} from 'nomercyplayer/s
 // // @ts-ignore
 // import { KeyHandlerPlugin } from 'https://vscode.nomercy.tv/src/plugins/keyHandlerPlugin.ts';
 // // @ts-ignore
-// import type {NMPlayer, PlaylistItem, SetupConfig, VTTData} from 'https://vscode.nomercy.tv/src/index.d.ts';
+// import type {NMPlayer, PlaylistItem, PlayerConfig, VTTData} from 'https://vscode.nomercy.tv/src/index.d.ts';
 
 export {
 	nmplayer,
@@ -30,7 +30,7 @@ export {
 	KeyHandlerPlugin,
 	NMPlayer,
 	PlaylistItem,
-	SetupConfig,
+	PlayerConfig,
 	Plugin,
 	VTTData,
 }

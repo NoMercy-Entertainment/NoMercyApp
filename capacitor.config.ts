@@ -6,7 +6,7 @@ const config: CapacitorConfig = {
   webDir: 'dist',
   cordova: {},
   server:{
-    url: 'https://vue-dev.nomercy.tv',
+    // url: 'https://vue-dev.nomercy.tv',
     // androidScheme: 'nomercy',
     // iosScheme: 'nomercy',
   }

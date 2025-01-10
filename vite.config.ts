@@ -275,6 +275,7 @@ export default defineConfig({
 		host: true,
 	},
 	build: {
+		outDir: 'docs',
 		sourcemap: true,
 		chunkSizeWarningLimit: 102400,
 		emptyOutDir: true,
@@ -303,10 +304,6 @@ export default defineConfig({
 		},
 	},
 	optimizeDeps: {
-		exclude: [
-			'qrcode.vue',
-			'@primeuix/styled',
-		],
 		force: true,
 		esbuildOptions: {
 			minify: true, // Minify the code
