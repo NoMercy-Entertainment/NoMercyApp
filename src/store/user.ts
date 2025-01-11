@@ -58,6 +58,8 @@ export const updateUserFromApi = (newUser: User): void => {
 	user.value = {
 		...user.value,
 		avatar: newUser.avatar,
-		messages: newUser.messages,
+		receivedMessages: newUser.receivedMessages,
+		sendMessages: newUser.sendMessages,
+		notifications: newUser.notifications,
 	}
 }

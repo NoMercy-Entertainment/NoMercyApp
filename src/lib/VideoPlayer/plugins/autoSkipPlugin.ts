@@ -1,5 +1,5 @@
 import {groupBy} from '@/lib/stringArray';
-import Plugin from 'nomercyplayer/src/plugin';
+import Plugin from '@nomercy-entertainment/nomercy-video-player/src/plugin';
 import {NMPlayer, VTTData} from '@/lib/VideoPlayer';
 import {toRaw} from "vue";
 

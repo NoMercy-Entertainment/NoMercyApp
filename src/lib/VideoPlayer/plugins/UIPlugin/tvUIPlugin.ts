@@ -4,7 +4,7 @@ import {
 	convertToSeconds,
 	limitSentenceByCharacters,
 	lineBreakShowTitle,
-} from  'nomercyplayer/src/helpers';
+} from  '@nomercy-entertainment/nomercy-video-player/src/helpers';
 
 import type { Icon } from './buttons';
 import type { PlaylistItem } from '../../index';
@@ -792,21 +792,6 @@ export class TVUIPlugin extends BaseUIPlugin {
 			])
 			.appendTo(parent);
 
-		const sliderBuffer = this.player.createElement('div', 'slider-buffer')
-			.addClasses([
-				'slider-buffer',
-				'absolute',
-				'flex',
-				'h-full',
-				'pointer-events-none',
-				'rounded-full',
-				'bg-white/20',
-				'z-0',
-				'-left-full',
-				'w-full',
-			])
-			.appendTo(this.sliderBar);
-
 		const sliderProgress = this.player.createElement('div', 'slider-progress')
 			.addClasses([
 				'slider-progress',
@@ -839,7 +824,6 @@ export class TVUIPlugin extends BaseUIPlugin {
 			this.sliderBar.classList.add('bg-white/20');
 			this.previewTime = [];
 			this.chapters = [];
-			sliderBuffer.style.transform = 'translateX(0%)';
 			sliderProgress.style.transform = 'translateX(0%)';
 			this.fetchPreviewTime();
 		});
@@ -853,7 +837,6 @@ export class TVUIPlugin extends BaseUIPlugin {
 		});
 
 		this.player.on('time', (data) => {
-			sliderBuffer.style.transform = `translateX(${data.buffered}%)`;
 			sliderProgress.style.transform = `translateX(${data.percentage}%)`;
 		});
 
@@ -1197,6 +1180,7 @@ export class TVUIPlugin extends BaseUIPlugin {
 
 		button.addEventListener('keyup', (e) => {
 			if (e.key == 'ArrowLeft') {
+				//
 			} else if (e.key == 'ArrowRight') {
 				if (data.season == this.player.playlistItem()?.season) {
 					Array.from(document.querySelectorAll<HTMLButtonElement>('[id^=playlist-]'))

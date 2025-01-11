@@ -1,5 +1,5 @@
 import {NMPlayer, PlaylistItem} from '@/lib/VideoPlayer';
-import Plugin from 'nomercyplayer/src/plugin';
+import Plugin from '@nomercy-entertainment/nomercy-video-player/src/plugin';
 
 import {useSocket} from '@/store/socket';
 

@@ -1,10 +1,11 @@
 import { twMerge } from 'tailwind-merge';
 import { WebVTTParser } from 'webvtt-parser';
 
-import Plugin from 'nomercyplayer/src/plugin';
-import type { NMPlayer, PreviewTime, VolumeState } from 'nomercyplayer/dist/src';
-import { breakEpisodeTitle, breakLogoTitle, humanTime, nearestValue, unique } from 'nomercyplayer/src/helpers';
+import Plugin from '@nomercy-entertainment/nomercy-video-player/src/plugin';
+import type { NMPlayer, PreviewTime, VolumeState } from '@nomercy-entertainment/nomercy-video-player/src/types';
+import { breakEpisodeTitle, breakLogoTitle, humanTime, nearestValue, unique } from '@nomercy-entertainment/nomercy-video-player/src/helpers';
 import { buttons, type  Icon } from './buttons';
+import {TimeData} from "@nomercy-entertainment/nomercy-video-player/src/types";
 
 export class BaseUIPlugin extends Plugin {
 	player: NMPlayer = <NMPlayer>{};
@@ -27,6 +28,7 @@ export class BaseUIPlugin extends Plugin {
 	chapterText: HTMLDivElement = <HTMLDivElement>{};
 	episodeScrollContainer: HTMLDivElement = <HTMLDivElement>{};
 	playbackButton: HTMLButtonElement = <HTMLButtonElement>{};
+	loader: HTMLDivElement = <HTMLDivElement>{};
 
 	chapters: any[] = [];
 	previewTime: PreviewTime[] = [];
@@ -47,6 +49,7 @@ export class BaseUIPlugin extends Plugin {
 	speedMenuOpen = false;
 	playlistMenuOpen = false;
 	theaterModeEnabled = false;
+	highQuality = false;
 	shouldSlide = false;
 	currentTimeFile = '';
 
@@ -231,9 +234,7 @@ export class BaseUIPlugin extends Plugin {
 	}
 
 	modifySpinner(parent: HTMLDivElement) {
-		// console.log(parent);
-
-		this.player.createElement('h2', 'loader')
+		this.loader = this.player.createElement('h2', 'loader')
 			.addClasses(['loader', 'pointer-events-none'])
 			.appendTo(parent);
 	}
@@ -427,7 +428,7 @@ export class BaseUIPlugin extends Plugin {
 						options: {
 							type: 'blob',
 						},
-						callback: (data) => {
+						callback: (data: Blob) => {
 							const dataURL = URL.createObjectURL(data as Blob);
 
 							img.src = dataURL;
@@ -468,7 +469,7 @@ export class BaseUIPlugin extends Plugin {
 						options: {
 							type: 'text',
 						},
-						callback: (data) => {
+						callback: (data: string) => {
 
 							const parser = new WebVTTParser();
 							const vtt = parser.parse(data, 'metadata');
@@ -843,7 +844,7 @@ export class BaseUIPlugin extends Plugin {
 			])
 			.appendTo(parent);
 
-		time.innerText = '00:00';
+		time.innerText = humanTime(this.player.getDuration());
 
 		switch (type) {
 		case 'current':
@@ -1064,12 +1065,13 @@ export class BaseUIPlugin extends Plugin {
 	}
 
 	createPreviousButton(parent: HTMLDivElement, hovered = false) {
-		if (this.player.isMobile()) return;
-
 		const previousButton = this.createUiButton(
 			parent,
 			'previous'
 		);
+
+		this.player.addClasses(previousButton, ['portrait:!hidden']);
+
 		previousButton.style.display = 'none';
 
 		this.createSVGElement(previousButton, 'previous', this.buttons.previous, false,  hovered);
@@ -1079,6 +1081,13 @@ export class BaseUIPlugin extends Plugin {
 			this.player.previous();
 			this.player.emit('hide-tooltip');
 		});
+
+		if (this.player.getPlaylistIndex() > 0) {
+			previousButton.style.display = 'flex';
+		} else {
+			previousButton.style.display = 'none';
+		}
+
 		this.player.on('item', () => {
 			if (this.player.getPlaylistIndex() > 0) {
 				previousButton.style.display = 'flex';
@@ -1134,6 +1143,8 @@ export class BaseUIPlugin extends Plugin {
 			'next'
 		);
 
+		this.player.addClasses(nextButton, ['portrait:!hidden']);
+
 		nextButton.style.display = 'none';
 		this.player.hasNextTip = true;
 
@@ -1144,6 +1155,12 @@ export class BaseUIPlugin extends Plugin {
 			this.player.next();
 			this.player.emit('hide-tooltip');
 		});
+
+		if (this.player.isLastPlaylistItem()) {
+			nextButton.style.display = 'none';
+		} else {
+			nextButton.style.display = 'flex';
+		}
 
 		this.player.on('item', () => {
 			if (this.player.isLastPlaylistItem()) {
@@ -1199,6 +1216,9 @@ export class BaseUIPlugin extends Plugin {
 			parent,
 			'subtitles'
 		);
+
+		this.player.addClasses(captionButton, ['portrait:!hidden']);
+
 		captionButton.style.display = 'none';
 		captionButton.ariaLabel = this.buttons.subtitles?.title;
 
@@ -1219,6 +1239,12 @@ export class BaseUIPlugin extends Plugin {
 				this.menuFrame.showModal();
 			}
 		});
+
+		if (this.player.hasCaptions()) {
+			captionButton.style.display = 'flex';
+		} else {
+			captionButton.style.display = 'none';
+		}
 
 		this.player.on('captionsList', (tracks) => {
 			if (tracks.length > 1) {
@@ -1255,6 +1281,9 @@ export class BaseUIPlugin extends Plugin {
 			parent,
 			'audio'
 		);
+
+		this.player.addClasses(audioButton, ['portrait:!hidden']);
+
 		audioButton.style.display = 'none';
 		audioButton.ariaLabel = this.buttons.language?.title;
 
@@ -1278,6 +1307,12 @@ export class BaseUIPlugin extends Plugin {
 		this.player.on('item', () => {
 			audioButton.style.display = 'none';
 		});
+
+		if (this.player.hasAudioTracks()) {
+			audioButton.style.display = 'flex';
+		} else {
+			audioButton.style.display = 'none';
+		}
 		this.player.on('audioTracks', (tracks) => {
 			if (tracks.length > 1) {
 				audioButton.style.display = 'flex';
@@ -1289,7 +1324,8 @@ export class BaseUIPlugin extends Plugin {
 		this.player.on('pip-internal', (data) => {
 			if (data) {
 				audioButton.style.display = 'none';
-			} else if (this.player.hasAudioTracks()) {
+			}
+			else if (this.player.hasAudioTracks()) {
 				audioButton.style.display = 'flex';
 			}
 		});
@@ -1303,6 +1339,9 @@ export class BaseUIPlugin extends Plugin {
 			parent,
 			'quality'
 		);
+
+		this.player.addClasses(qualityButton, ['portrait:!hidden']);
+
 		qualityButton.style.display = 'none';
 
 		const offButton = this.createSVGElement(qualityButton, 'low', this.buttons.quality, false,  hovered);
@@ -1322,12 +1361,12 @@ export class BaseUIPlugin extends Plugin {
 				this.menuFrame.showModal();
 			}
 
-			if (this.player.highQuality) {
-				this.player.highQuality = false;
+			if (this.highQuality) {
+				this.highQuality = false;
 				onButton.style.display = 'none';
 				offButton.style.display = 'flex';
 			} else {
-				this.player.highQuality = true;
+				this.highQuality = true;
 				offButton.style.display = 'none';
 				onButton.style.display = 'flex';
 			}
@@ -1338,6 +1377,13 @@ export class BaseUIPlugin extends Plugin {
 		this.player.on('item', () => {
 			qualityButton.style.display = 'none';
 		});
+
+		if (this.player.hasQualities()) {
+			qualityButton.style.display = 'flex';
+		} else {
+			qualityButton.style.display = 'none';
+		}
+
 		this.player.on('levels', () => {
 			if (this.player.hasQualities()) {
 				qualityButton.style.display = 'flex';
@@ -1452,6 +1498,8 @@ export class BaseUIPlugin extends Plugin {
 			'playlist'
 		);
 
+		this.player.addClasses(playlistButton, ['portrait:!hidden']);
+
 		playlistButton.style.display = 'none';
 
 		this.createSVGElement(playlistButton, 'playlist', this.buttons.playlist, false,  hovered);
@@ -1476,6 +1524,12 @@ export class BaseUIPlugin extends Plugin {
 				}, 100);
 			}
 		});
+
+		if (this.player.hasPlaylists()) {
+			playlistButton.style.display = 'flex';
+		} else {
+			playlistButton.style.display = 'none';
+		}
 
 		this.player.on('item', () => {
 			if (this.player.hasPlaylists()) {
@@ -1513,8 +1567,10 @@ export class BaseUIPlugin extends Plugin {
 				'group-[&.nomercyplayer:has(:focus)]:duration-0',
 				'items-center',
 				'mt-auto',
-				'px-6',
-				'py-4',
+				'px-2',
+				'lg:px-6',
+				'py-1',
+				'lg:py-4',
 				'text-center',
 				'transition-all',
 				'translate-y-full',
@@ -1546,6 +1602,7 @@ export class BaseUIPlugin extends Plugin {
 			'divider',
 			'flex',
 			'flex-1',
+			'min-w-4',
 		];
 		const divider = this.player.createElement('div', 'divider')
 			.addClasses(dividerStyles)
@@ -1677,7 +1734,7 @@ export class BaseUIPlugin extends Plugin {
 			// });
 		});
 
-		this.player.on('currentScrubTime', (data) => {
+		this.player.on('currentScrubTime', (data: TimeData) => {
 			if (data.currentTime <= 0) {
 				data.currentTime = 0;
 			} else if (data.currentTime >= this.player.getDuration()) {

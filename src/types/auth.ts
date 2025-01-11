@@ -1,6 +1,9 @@
 import {DeviceIcons} from '@Icons/icons';
 
 export interface User {
+	accessToken: string;
+	refreshToken: string;
+	idToken: string;
 	name: string;
 	email: string;
 	id: string;
@@ -49,4 +52,5 @@ export interface ServerUser {
 	id: string,
 	name: string,
 	email: string,
+	avatar: string,
 }

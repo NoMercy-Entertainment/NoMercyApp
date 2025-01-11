@@ -4,25 +4,28 @@ import {
 	limitSentenceByCharacters,
 	lineBreakShowTitle,
 	unique
-} from  'nomercyplayer/src/helpers';
+} from  '@nomercy-entertainment/nomercy-video-player/src/helpers';
 
 import {BaseUIPlugin} from "./baseUIPlugin";
 
-import type { Chapter, PlaylistItem, Position } from  'nomercyplayer/dist/src';
+import type { Chapter, PlaylistItem, Position } from  '@nomercy-entertainment/nomercy-video-player/src/types';
 import type { Icon } from './buttons';
 
 export class DesktopUIPlugin extends BaseUIPlugin {
 	topBar: HTMLDivElement = <HTMLDivElement>{};
 	bottomRow: HTMLDivElement = <HTMLDivElement>{};
 	frame: HTMLDivElement = <HTMLDivElement>{};
+	center: HTMLDivElement = <HTMLDivElement>{};
 
 	isMouseDown = false;
 	pipEnabled = false;
+	lockActive = false;
 
 	bottomBar: HTMLDivElement = <HTMLDivElement>{};
 	topRow: HTMLDivElement = <HTMLDivElement>{};
 
 	tooltip: HTMLDivElement = <HTMLDivElement>{};
+	episodeTip: HTMLDivElement = <HTMLDivElement>{};
 
 	scrollContainerStyles = [
 		'scroll-container',
@@ -63,7 +66,7 @@ export class DesktopUIPlugin extends BaseUIPlugin {
 		this.createTvCurrentItem(this.topBar);
 
 		if (!this.player.options.disableTouchControls) {
-			this.createCenter(this.overlay);
+			this.center = this.createCenter(this.overlay);
 		}
 
 		this.bottomBar = this.createBottomBar(this.overlay);
@@ -123,27 +126,23 @@ export class DesktopUIPlugin extends BaseUIPlugin {
 
 		this.createToolTip(this.overlay);
 
-		this.createEpisodeTip(this.overlay);
+		this.episodeTip = this.createEpisodeTip(this.overlay);
 
 		this.modifySpinner(this.overlay);
 
 		this.eventHandlers();
+	}
 
-		this.player.plugins.desktopUIPlugin = {} as any;
-		// eslint-disable-next-line @typescript-eslint/no-this-alias
-		let obj: DesktopUIPlugin = this;
+	dispose() {
 
-		do {
-			Object.getOwnPropertyNames(obj).forEach((key) => {
-				const value = (this as any)[key];
-				if (typeof value === 'function') {
-					this.player.plugins.desktopUIPlugin[key] = value.bind(this);
-				} else {
-					this.player.plugins.desktopUIPlugin[key] = value;
-				}
-			});
-		}
-		while ((obj = Object.getPrototypeOf(obj)) !== null);
+		this.topBar.remove();
+		this.bottomBar.remove();
+		this.bottomRow.remove();
+		this.frame.remove();
+		this.center?.remove();
+		this.tooltip.remove();
+		this.episodeTip.remove();
+		this.loader.remove();
 	}
 
 	createTopRow(parent: HTMLDivElement) {
@@ -168,9 +167,9 @@ export class DesktopUIPlugin extends BaseUIPlugin {
 				'bottom-row',
 				'flex',
 				'h-10',
-				'mb-2',
+				'lg:mb-2',
 				'p-1',
-				'px-4',
+				'lg:px-4',
 				'items-center',
 				'relative',
 				'w-available',
@@ -203,7 +202,7 @@ export class DesktopUIPlugin extends BaseUIPlugin {
 				case 'seek':
 				case 'pause':
 					this.seekContainer.style.transform = '';
-					this.player.play();
+					this.player.play().then();
 					break;
 				default:
 					break;
@@ -345,7 +344,6 @@ export class DesktopUIPlugin extends BaseUIPlugin {
 			'touch-playback-button',
 			'pointer-events-none',
 			'fill-white',
-			'hidden',
 		]);
 
 		this.player.on('ready', () => {
@@ -532,7 +530,7 @@ export class DesktopUIPlugin extends BaseUIPlugin {
 		const menuWrapper = this.player.createElement('div', 'menu-wrapper')
 			.addClasses([
 				'menu-wrapper',
-
+				'text-white',
 			])
 			.appendTo(this.menuFrame);
 
@@ -578,7 +576,7 @@ export class DesktopUIPlugin extends BaseUIPlugin {
 
 		this.player.on('show-menu', (showing) => {
 			this.menuOpen = showing;
-			this.player.lockActive = showing;
+			this.lockActive = showing;
 			if (showing) {
 
 				this.sizeMenuFrame();
@@ -609,7 +607,7 @@ export class DesktopUIPlugin extends BaseUIPlugin {
 		});
 		this.player.on('show-main-menu', (showing) => {
 			this.mainMenuOpen = showing;
-			this.player.lockActive = showing;
+			this.lockActive = showing;
 			if (showing) {
 				menuFrame.classList.add('open');
 				this.player.emit('show-language-menu', false);
@@ -629,7 +627,7 @@ export class DesktopUIPlugin extends BaseUIPlugin {
 		});
 		this.player.on('show-language-menu', (showing) => {
 			this.languageMenuOpen = showing;
-			this.player.lockActive = showing;
+			this.lockActive = showing;
 			if (showing) {
 				menuFrame.classList.add('open');
 				this.player.emit('show-main-menu', false);
@@ -644,7 +642,7 @@ export class DesktopUIPlugin extends BaseUIPlugin {
 		});
 		this.player.on('show-subtitles-menu', (showing) => {
 			this.subtitlesMenuOpen = showing;
-			this.player.lockActive = showing;
+			this.lockActive = showing;
 			if (showing) {
 				menuFrame.classList.add('open');
 				this.player.emit('show-main-menu', false);
@@ -659,7 +657,7 @@ export class DesktopUIPlugin extends BaseUIPlugin {
 		});
 		this.player.on('show-quality-menu', (showing) => {
 			this.qualityMenuOpen = showing;
-			this.player.lockActive = showing;
+			this.lockActive = showing;
 			if (showing) {
 				menuFrame.classList.add('open');
 				this.player.emit('show-main-menu', false);
@@ -674,7 +672,7 @@ export class DesktopUIPlugin extends BaseUIPlugin {
 		});
 		this.player.on('show-speed-menu', (showing) => {
 			this.speedMenuOpen = showing;
-			this.player.lockActive = showing;
+			this.lockActive = showing;
 			if (showing) {
 				menuFrame.classList.add('open');
 				this.player.emit('show-main-menu', false);
@@ -690,7 +688,7 @@ export class DesktopUIPlugin extends BaseUIPlugin {
 		this.player.on('show-playlist-menu', (showing) => {
 			// this.createCalcMenu(menuContent);
 			this.playlistMenuOpen = showing;
-			this.player.lockActive = showing;
+			this.lockActive = showing;
 			if (showing) {
 				menuFrame.classList.add('open');
 				this.player.emit('show-main-menu', false);
@@ -706,7 +704,7 @@ export class DesktopUIPlugin extends BaseUIPlugin {
 			}
 		});
 		this.player.on('controls', (showing) => {
-			this.player.lockActive = showing;
+			this.lockActive = showing;
 			if (!showing) {
 				this.player.emit('show-menu', false);
 				this.player.emit('show-main-menu', false);
@@ -787,11 +785,13 @@ export class DesktopUIPlugin extends BaseUIPlugin {
 			'rounded-lg',
 		]);
 
-		this.createMenuButton(this.mainMenu, 'language');
-		this.createMenuButton(this.mainMenu, 'subtitles');
-		this.createMenuButton(this.mainMenu, 'quality');
-		this.createMenuButton(this.mainMenu, 'speed');
-		this.createMenuButton(this.mainMenu, 'playlist');
+		this.player.on('translationsLoaded', () => {
+			this.createMenuButton(this.mainMenu, 'language');
+			this.createMenuButton(this.mainMenu, 'subtitles');
+			this.createMenuButton(this.mainMenu, 'quality');
+			this.createMenuButton(this.mainMenu, 'speed');
+			this.createMenuButton(this.mainMenu, 'playlist');
+		});
 
 		this.createSubMenu(parent);
 
@@ -826,9 +826,13 @@ export class DesktopUIPlugin extends BaseUIPlugin {
 		this.createQualityMenu(submenu);
 		this.createSpeedMenu(submenu);
 
-		this.player.once('playlist', () => {
+		if (this.player.options.playlist) {
 			this.createEpisodeMenu(submenu);
-		});
+		} else {
+			this.player.once('playlist', () => {
+				this.createEpisodeMenu(submenu);
+			});
+		}
 
 		return submenu;
 	}
@@ -860,7 +864,7 @@ export class DesktopUIPlugin extends BaseUIPlugin {
 		close.addEventListener('click', (event) => {
 			event.stopPropagation();
 			this.player.emit('show-menu', false);
-			this.player.lockActive = false;
+			this.lockActive = false;
 			this.player.emit('controls', false);
 
 			this.menuFrame.close();
@@ -924,7 +928,7 @@ export class DesktopUIPlugin extends BaseUIPlugin {
 			close.addEventListener('click', (event) => {
 				event.stopPropagation();
 				this.player.emit('show-menu', false);
-				this.player.lockActive = false;
+				this.lockActive = false;
 				this.player.emit('controls', false);
 
 				this.menuFrame.close();
@@ -941,9 +945,11 @@ export class DesktopUIPlugin extends BaseUIPlugin {
 
 		if (item !== 'speed') {
 			menuButton.style.display = 'none';
-		} else if (this.player.hasSpeeds()) {
+		}
+		else if (this.player.hasSpeeds()) {
 			menuButton.style.display = 'flex';
-		} else {
+		}
+		else {
 			menuButton.style.display = 'none';
 		}
 
@@ -953,7 +959,7 @@ export class DesktopUIPlugin extends BaseUIPlugin {
 			.addClasses(this.menuButtonTextStyles)
 			.appendTo(menuButton);
 
-		menuButtonText.innerText = this.player.localize(item).toTitleCase();
+		menuButtonText.innerText = this.player.localize(item.toTitleCase());
 
 		const chevron = this.createSVGElement(menuButton, 'menu', this.buttons.chevronR, false, hovered);
 		this.player.addClasses(chevron, ['ml-auto']);
@@ -967,6 +973,9 @@ export class DesktopUIPlugin extends BaseUIPlugin {
 			this.player.on('item', () => {
 				menuButton.style.display = 'none';
 			});
+			if (this.player.hasAudioTracks()) {
+				menuButton.style.display = 'flex';
+			}
 			this.player.on('audioTracks', (tracks) => {
 				if (tracks.length > 1) {
 					menuButton.style.display = 'flex';
@@ -979,6 +988,9 @@ export class DesktopUIPlugin extends BaseUIPlugin {
 			this.player.on('item', () => {
 				menuButton.style.display = 'none';
 			});
+			if (this.player.hasCaptions()) {
+				menuButton.style.display = 'flex';
+			}
 			this.player.on('captionsList', (captions) => {
 				if (captions.length > 1) {
 					menuButton.style.display = 'flex';
@@ -991,6 +1003,9 @@ export class DesktopUIPlugin extends BaseUIPlugin {
 			this.player.on('item', () => {
 				menuButton.style.display = 'none';
 			});
+			if (this.player.hasQualities()) {
+				menuButton.style.display = 'flex';
+			}
 			this.player.on('levels', (levels) => {
 				if (levels.length > 1) {
 					menuButton.style.display = 'flex';
@@ -1000,6 +1015,9 @@ export class DesktopUIPlugin extends BaseUIPlugin {
 			});
 		}
 		else if (item === 'playlist') {
+			if (this.player.options.playlist) {
+				menuButton.style.display = 'flex';
+			}
 			this.player.on('playlist', (playlist) => {
 				if (playlist.length > 1) {
 					menuButton.style.display = 'flex';
@@ -1026,6 +1044,18 @@ export class DesktopUIPlugin extends BaseUIPlugin {
 		this.player.on('item', () => {
 			scrollContainer.innerHTML = '';
 		});
+
+		if (this.player.hasAudioTracks()) {
+			Object.values(this.player.getAudioTracks()).forEach((track) => {
+				this.createLanguageMenuButton(scrollContainer, {
+					language: track.language!,
+					label: track.label!,
+					type: 'audio',
+					id: track.id!,
+					buttonType: 'audio',
+				});
+			});
+		}
 
 		this.player.on('audioTracks', (tracks) => {
 			scrollContainer.innerHTML = '';
@@ -1072,6 +1102,18 @@ export class DesktopUIPlugin extends BaseUIPlugin {
 		this.player.on('item', () => {
 			scrollContainer.innerHTML = '';
 		});
+
+		if (this.player.hasCaptions()) {
+			Object.values(this.player.getCaptionsList()).forEach((track) => {
+				this.createLanguageMenuButton(scrollContainer, {
+					language: track.language!,
+					label: track.label!,
+					type: track.type!,
+					id: track.id!,
+					buttonType: 'subtitle',
+				});
+			});
+		}
 
 		this.player.on('captionsList', (tracks) => {
 			scrollContainer.innerHTML = '';
@@ -1180,6 +1222,18 @@ export class DesktopUIPlugin extends BaseUIPlugin {
 		this.player.on('item', () => {
 			scrollContainer.innerHTML = '';
 		});
+
+		if (this.player.hasQualities()) {
+			Object.values(this.player.getQualityLevels()).forEach((level) => {
+				this.createQualityMenuButton(scrollContainer, {
+					id: level.id,
+					width: level.width ?? 0,
+					height: level.height ?? 0,
+					label: level.label,
+					bitrate: level.bitrate ?? 0,
+				});
+			});
+		}
 
 		this.player.on('levels', (levels) => {
 			scrollContainer.innerHTML = '';

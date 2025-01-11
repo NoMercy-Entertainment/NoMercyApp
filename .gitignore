@@ -118,3 +118,5 @@ yarn-error.log
 .yarn
 
 !src/**/Plugins/
+
+docs/

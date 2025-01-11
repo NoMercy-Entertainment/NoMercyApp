@@ -3,11 +3,11 @@ import { AutoSkipPlugin } from './plugins/autoSkipPlugin';
 import { TVUIPlugin } from './plugins/UIPlugin/tvUIPlugin';
 import { DesktopUIPlugin } from './plugins/UIPlugin/desktopUIPlugin';
 
-import nmplayer from 'nomercyplayer/src/index';
-import Plugin from 'nomercyplayer/src/plugin';
-import { OctopusPlugin } from 'nomercyplayer/src/plugins/octopusPlugin';
-import { KeyHandlerPlugin } from 'nomercyplayer/src/plugins/keyHandlerPlugin';
-import type {NMPlayer, PlaylistItem, PlayerConfig, VTTData} from 'nomercyplayer/src/types';
+import nmplayer from '@nomercy-entertainment/nomercy-video-player/src/index';
+import Plugin from '@nomercy-entertainment/nomercy-video-player/src/plugin';
+import { OctopusPlugin } from '@nomercy-entertainment/nomercy-video-player/src/plugins/octopusPlugin';
+import { KeyHandlerPlugin } from '@nomercy-entertainment/nomercy-video-player/src/plugins/keyHandlerPlugin';
+import type {NMPlayer, PlaylistItem, PlayerConfig, VTTData} from '@nomercy-entertainment/nomercy-video-player/src/types';
 
 // // @ts-ignore
 // import nmplayer from 'https://vscode.nomercy.tv/src/index.ts';

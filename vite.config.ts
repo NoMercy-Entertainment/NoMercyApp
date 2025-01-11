@@ -170,7 +170,6 @@ export default defineConfig({
 				'sha256-tQjf8gvb2ROOMapIxFvFAYBeUJ0v1HCbOcSmDNXGtDo=',
 				'sha256-+5XkZFazzJo8n0iOP4ti/cLCMUudTf//Mzkb7xNPXIc=',
 				'sha256-XC/gbdknUrCiLbZdZ8y96M9KVODooJYGbxrY7P+a1Rg=',
-
 				'https://static.cloudflareinsights.com',
 			],
 			'style-src': [
@@ -218,6 +217,7 @@ export default defineConfig({
 				'wss://127.0.0.1:*',
 				'wss://localhost:*',
 				'https://pub-a68768bb5b1045f296df9ea56bd53a7f.r2.dev',
+				'https://raw.githubusercontent.com',
 			],
 			'frame-src': [
 				'self',

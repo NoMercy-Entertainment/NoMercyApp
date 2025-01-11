@@ -4,7 +4,6 @@ import {type PropType} from "vue";
 import type {ServerUser} from '@/types/auth';
 
 import DashboardCard from '@/components/Cards/DashboardCard.vue';
-import Avatar from '@/components/Images/Avatar.vue';
 
 defineProps({
     data: {
@@ -23,10 +22,10 @@ defineProps({
     >
         <template v-slot:image >
             <div
-                class="relative flex aspect-square h-auto w-full flex-col items-center justify-center overflow-clip rounded-lg bg-theme-9"
+                class="relative flex aspect-square h-auto w-full flex-col items-center justify-center overflow-clip rounded-lg bg-black"
             >
                 <div class="backdropCard-overlay"></div>
-                <Avatar :email="data.email" class="w-full" />
+                <img :src="data.avatar" class="w-full h-full object-cover rounded-lg"  alt=""/>
             </div>
         </template>
     </DashboardCard>
