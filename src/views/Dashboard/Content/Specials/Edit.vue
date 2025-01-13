@@ -79,7 +79,7 @@ const handleSave = () => {
 
 <template>
 
-  <DashboardLayout :gridStyle="3" :error="error" :title="`Special: {{title}}`" :params="{title: settings?.title}">
+  <DashboardLayout :gridStyle="1" :error="error" :title="`Special: {{title}}`" :params="{title: settings?.title}">
     <template v-slot:cta>
     </template>
     <template v-slot:actions>
@@ -108,7 +108,7 @@ const handleSave = () => {
       </button>
     </template>
 
-    <div class="flex flex-col gap-5 col-span-2 col-start-1 2xl:col-start-1">
+    <div class="flex flex-col gap-5 col-span-5 col-start-1 2xl:col-start-1">
       <div class="flex flex-col gap-2">
         <label for="name">Name</label>
         <InputText variant="filled" id="name" v-model="title" class="w-full"/>
@@ -137,7 +137,7 @@ const handleSave = () => {
 
     </div>
 
-    <div class="flex flex-col gap-4 col-span-2 row-start-1 col-start-1 2xl:col-start-3">
+    <div class="flex flex-col gap-4 col-span-2 row-start-1 col-start-1 2xl:col-start-6">
       <div class="flex flex-col gap-5">
         <div class="flex flex-col gap-2">
           <label for="poster">Poster</label>

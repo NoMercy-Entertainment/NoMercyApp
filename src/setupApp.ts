@@ -159,6 +159,8 @@ export async function setupApp(app: AppContext['app']) {
                     ? location.search.split('redirectUrl=')[1].split('&')[0]
                     : undefined;
 
+                localStorage.setItem('redirectUrl', redirectUrl || localStorage.getItem('redirectUrl') || '/home');
+
                 if(redirectUrl) {
                     router.push(redirectUrl).then();
                 }

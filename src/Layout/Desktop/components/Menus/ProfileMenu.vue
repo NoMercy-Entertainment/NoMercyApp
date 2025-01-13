@@ -23,6 +23,10 @@ defineProps({
   }
 });
 
+const handleSelectServer = () => {
+  localStorage.setItem('redirectUrl', window.location.hash.replace('#', ''));
+};
+
 </script>
 
 <template>
@@ -46,6 +50,7 @@ defineProps({
             class="flex flex-shrink-0 flex-grow-0 flex-col items-start justify-start gap-1 self-stretch border-0 py-2">
           <RouterLink
               to="/setup/select-servers"
+              @click="handleSelectServer"
               class="flex justify-center items-center self-stretch h-10 relative py-2.5 px-1 rounded-md border border-transparent hover:border-focus/4 active:!bg-focus/11 dark:active:!bg-focus/8 active:border-focus/4 active:hover:border-focus/4 focus:bg-focus-9 hover:!bg-focus/10 disabled:!bg-focus/2 disabled:!border-focus/2 transition-colors duration-300 hover:text-auto-12"
               data-nav-title="Switch server"
               name="Switch server" >

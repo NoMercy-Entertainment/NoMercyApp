@@ -84,7 +84,7 @@ const acquireToken = () => {
         storeTokens(response.data);
         keepTokenFresh();
 
-        await router.push({name: 'Home'});
+        await router.push(localStorage.getItem('redirectUrl') || '/home');
       })
       .catch(() => {
         setTimeout(() => {

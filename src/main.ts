@@ -19,6 +19,9 @@ const refreshToken = location.search.includes('refreshToken')
 	? location.search.split('refreshToken=')[1].split('&')[0]
 	: localStorage.getItem('refresh_token') || undefined;
 
+const redirectUrl = window.location.hash.replace('#', '');
+redirectUrl && localStorage.setItem('redirectUrl', redirectUrl);
+
 // Mobile Capacitor App
 if (isPlatform('capacitor') && !isTv.value && !localStorage.getItem('access_token')) {
 	lockPortrait().then();

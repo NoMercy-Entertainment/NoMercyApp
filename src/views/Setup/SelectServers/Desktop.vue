@@ -14,7 +14,7 @@ import {setColorPalette} from "@/store/ui";
 
 const handleSelectServer = (server: Server) => {
   setCurrentServer(server);
-  router.replace('/home');
+  router.replace(localStorage.getItem('redirectUrl') || '/home');
 };
 
 const queryClient = useQueryClient();

@@ -325,7 +325,7 @@ export const routes: Array<RouteRecordRaw> = [
 			{
 				path: 'specials/:id',
 				name: 'Dashboard Special',
-				component: () => import('@/views/Dashboard/System/Libraries/Edit.vue'),
+				component: () => import('@/views/Dashboard/Content/Specials/Edit.vue'),
 			},
 			{
 				path: 'devices',
