@@ -237,8 +237,8 @@ const height = computed(() => {
       <!--				type="image/webp"-->
       <!--			/>-->
       <source
-        :srcset="`${serverImageUrl}?width=${size ? (size * 2) : null}&type=jpg&aspect_ratio=${aspectRatio} 1x`"
-        type="image/jpeg"
+        :srcset="`${serverImageUrl}?width=${size ? (size * 2) : null}&type=png&aspect_ratio=${aspectRatio} 1x`"
+        type="image/png"
       />
       <img :src="tmdbImageUrl"
            :width="size"

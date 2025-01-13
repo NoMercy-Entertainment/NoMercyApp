@@ -3,6 +3,11 @@
   "integrations": {
     "capacitor": {}
   },
-  "type": "vue",
-  "id": "tv.nomercy.app"
+  "type": "vue-vite",
+  "id": "tv.nomercy.app",
+  "build": {
+    "appId": "tv.nomercy.app",
+    "webDir": "docs",
+    "bundledWebRuntime": false
+  }
 }

@@ -2,11 +2,11 @@ import type { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
   appId: 'tv.nomercy.app',
-  appName: 'NoMercy App',
-  webDir: 'dist',
+  appName: 'NoMercy TV',
+  webDir: 'docs',
   cordova: {},
   server:{
-    url: 'https://vue-dev.nomercy.tv',
+    // url: 'https://vue-dev.nomercy.tv',
     // androidScheme: 'nomercy',
     // iosScheme: 'nomercy',
   }
