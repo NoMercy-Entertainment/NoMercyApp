@@ -25,7 +25,8 @@ defineProps({
                 class="relative flex aspect-square h-auto w-full flex-col items-center justify-center overflow-clip rounded-lg bg-black"
             >
                 <div class="backdropCard-overlay"></div>
-                <img :src="data.avatar" class="w-full h-full object-cover rounded-lg"  alt=""/>
+                <img v-if="data.avatar" :src="data.avatar" class="w-full h-full object-cover rounded-lg"  alt=""/>
+                <Avatar v-else :email="data.email" class="w-full" />
             </div>
         </template>
     </DashboardCard>

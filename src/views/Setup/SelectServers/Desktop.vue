@@ -10,6 +10,7 @@ import { clearLibraries} from '@/store/Libraries';
 
 import ServerCard from '@/views/Setup/SelectServers/components/ServerCard.vue';
 import {Server} from '@/types/auth';
+import {setColorPalette} from "@/store/ui";
 
 const handleSelectServer = (server: Server) => {
   setCurrentServer(server);
@@ -20,6 +21,7 @@ const queryClient = useQueryClient();
 
 onMounted(() => {
   setCurrentServer(null);
+  setColorPalette(null);
   queryClient.removeQueries();
   clearLibraries();
 });

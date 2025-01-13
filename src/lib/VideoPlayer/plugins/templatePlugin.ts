@@ -1,7 +1,7 @@
 import {NMPlayer, Plugin} from '@/lib/VideoPlayer';
 
 export class TemplatePlugin extends Plugin {
-	player: NMPlayer | null = null;
+	player: NMPlayer = <NMPlayer>{};
 
 	initialize(player: NMPlayer) {
 		this.player = player;

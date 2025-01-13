@@ -6,6 +6,7 @@ const cs = ref<Server | null>(null);
 export const currentServer = computed(() => cs.value);
 
 export const setCurrentServer = (server: Server | null): void => {
+	server?.id && localStorage.setItem('currentServer', server?.id);
 	cs.value = server;
 };
 
