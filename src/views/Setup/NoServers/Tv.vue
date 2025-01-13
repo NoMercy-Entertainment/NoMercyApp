@@ -17,5 +17,6 @@ import { IonPage, IonContent } from '@ionic/vue';
           {{ $t('No Servers')}}
         </h1>
       </div>
+    </ion-content>
   </ion-page>
 </template>
