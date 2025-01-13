@@ -236,11 +236,11 @@ const height = computed(() => {
       <!--				:srcset="`${baseImageUrl}?width=${size ? (size * 2) : null}&type=webp&aspect_ratio=${aspectRatio} 1x`"-->
       <!--				type="image/webp"-->
       <!--			/>-->
-      <source v-if="loading == 'eager'"
-        :srcset="`${tmdbImageUrl}?width=${size ? (size * 2) : null}&type=jpg&aspect_ratio=${aspectRatio} 1x`"
+      <source
+        :srcset="`${serverImageUrl}?width=${size ? (size * 2) : null}&type=jpg&aspect_ratio=${aspectRatio} 1x`"
         type="image/jpeg"
       />
-      <img :src="serverImageUrl"
+      <img :src="tmdbImageUrl"
            :width="size"
            :height="height"
            :fetchpriority="priority"

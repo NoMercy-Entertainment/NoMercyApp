@@ -197,8 +197,8 @@ const processTrailer = (value: InfoResponse | undefined) => {
               :title="data?.title ?? data?.name"
               aspect="poster"
               loading="eager"
-              class="absolute flex flex-col justify-start items-end flex-grow w-available -mx-20 h-[410px] bg-cover bg-top z-0"
-              className="bg-top"
+              class="absolute flex flex-col justify-start items-end flex-grow w-available -mx-20 h-[410px] bg-cover bg-top z-0 children:h-available"
+              className="bg-top max-h-available w-available !object-fill"
               type="image"/>
 
         </div>
