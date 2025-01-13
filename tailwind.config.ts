@@ -6,7 +6,6 @@ import radialGradientPlugin from './radialGradientPlugin';
 // @ts-ignore
 import safeArea from 'tailwindcss-safe-area-capacitor';
 // @ts-ignore
-import mdBase from '@geoffcodesthings/tailwind-md-base';
 import scrollBar from 'tailwind-scrollbar';
 import animate from 'tailwindcss-animate';
 import primeui from 'tailwindcss-primeui';
@@ -2090,7 +2089,6 @@ export default {
   supports: {},
   plugins: [
     // forms,
-    mdBase(),
     scrollBar({nocompatible: true}),
     animate,
     radialGradientPlugin,

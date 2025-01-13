@@ -1,22 +1,22 @@
 <script setup lang="ts">
-import {onMounted} from "vue";
-import {Chromecast} from "@gameleap/capacitor-chromecast";
+// import {onMounted} from "vue";
+// import {Chromecast} from "@gameleap/capacitor-chromecast";
 
-import {useChromecast} from "@/hooks/useChromeCast";
-import MoooomIcon from "@/components/Images/icons/MoooomIcon.vue";
+// import {useChromecast} from "@/hooks/useChromeCast";
+// import MoooomIcon from "@/components/Images/icons/MoooomIcon.vue";
 
-const { currentDevice, isCasting, config, startCasting, stopCasting } = useChromecast();
+// const { currentDevice, isCasting, config, startCasting, stopCasting } = useChromecast();
 
 
-onMounted(() => {
-  console.log('mounted', config);
-  // initChromeCast();
-});
+// onMounted(() => {
+//   console.log('mounted', config);
+//   // initChromeCast();
+// });
 
 </script>
 
 <template>
-  <div>
+  <!-- <div>
     <h1>Chromecast Demo</h1>
 
     <div class="flex flex-col gap-4">
@@ -54,7 +54,7 @@ onMounted(() => {
         </button>
       </div>
     </div>
-  </div>
+  </div> -->
 </template>
 
 <style scoped>
