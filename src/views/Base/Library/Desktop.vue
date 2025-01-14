@@ -20,10 +20,11 @@ import GenreCard from '@/components/Cards/GenreCard.vue';
 import EmptyCard from '@/components/Cards/EmptyCard.vue';
 import ScrollContainer from '@/Layout/Desktop/components/ScrollContainer.vue';
 import {useRouter} from 'vue-router';
+import NotFound from "@/Layout/Desktop/components/NotFound.vue";
 
 const routing = useRouter();
 
-const {data, fetchNextPage, hasNextPage} = useInfiniteServerClient<{
+const {data, fetchNextPage, hasNextPage, isError} = useInfiniteServerClient<{
   data: Array<LibraryResponse | GenreResponse | PeopleResponse>
 }>({
   queryKey: ['libraries', routing.currentRoute?.value?.params.id ?? routing.currentRoute.value.name],
@@ -72,8 +73,6 @@ onUnmounted(() => {
   setColorPalette(null);
 });
 
-const items = ref([]);
-
 const selectedCard = ref<LibraryResponse | GenreResponse | PeopleResponse>();
 const cardMenu = ref();
 
@@ -87,7 +86,8 @@ const onRightClick = (event: Event, data: LibraryResponse | GenreResponse | Peop
 <template>
   <ion-page>
     <ion-content :fullscreen="true">
-    <ScrollContainer :autoHide="true" :static="true" :id="router.currentRoute.value.fullPath">
+      <NotFound v-if="isError" />
+      <ScrollContainer v-else :autoHide="true" :static="true" :id="router.currentRoute.value.fullPath">
       <div
            class="z-0 flex flex-col gap-4 rounded-3xl border-0 p-4 w-available scrollbar-none border-auto-3"
            :class="{

@@ -21,6 +21,7 @@ import About from './components/About.vue';
 import Tabs from './components/Tabs.vue';
 import Tab from './components/Tab.vue';
 import Header from './components/Header.vue';
+import NotFound from "@/Layout/Desktop/components/NotFound.vue";
 
 const route = useRoute();
 
@@ -108,7 +109,8 @@ const setDisplayType = (type: 'list' | 'card') => {
 <template>
   <ion-page>
     <ion-content :fullscreen="true">
-      <ScrollContainer :autoHide="true" :static="true">
+      <NotFound v-if="!data" />
+      <ScrollContainer v-else :autoHide="true" :static="true">
 
         <div v-if="data?.id == route.params.id"
              class="inline-flex w-full flex-1 flex-col items-start justify-start overflow-clip rounded-2xl bg-auto-2/1">

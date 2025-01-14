@@ -41,8 +41,6 @@ const ringBackdropColor = computed(() => pickPaletteColor(props.data?.color_pale
     .replace(')', '')
     .replace(/,/gu, ' ') ?? 'var(--color-primary)');
 
-console.log(props.data, isMobile);
-
 const toggleWatched = () => {
   // if (!props.data) return;
 };

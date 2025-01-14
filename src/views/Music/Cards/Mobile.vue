@@ -12,11 +12,12 @@ import {setColorPalette} from '@/store/ui';
 
 import MusicCard from '@/components/Cards/MusicCard.vue';
 import Indexer from '@/Layout/Indexer.vue';
+import NotFound from "@/Layout/Desktop/components/NotFound.vue";
 
 const show = ref(false);
 
 const route = useRoute();
-const { data } = useServerClient<MusicCardPageResponse['data']>({
+const { data, isError } = useServerClient<MusicCardPageResponse['data']>({
   path: route.fullPath,
   keepForever: true,
 });
@@ -37,8 +38,9 @@ onIonViewDidEnter(() => {
 
 <template>
   <ion-page>
-    <ion-content :fullscreen="true"    >
-      <div class="pt-safe flex w-full pr-8 h-inherit">
+    <ion-content :fullscreen="true" >
+      <NotFound v-if="isError" />
+      <div v-else class="pt-safe flex w-full pr-8 h-inherit">
         <div
             v-if="show"
             :class="{

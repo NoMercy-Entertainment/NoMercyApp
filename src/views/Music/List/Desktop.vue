@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import {onMounted, onUnmounted, ref, watch} from 'vue';
+import {ref, watch} from 'vue';
 import {useRoute} from 'vue-router';
 import {IonContent, IonPage, onIonViewWillEnter, onIonViewWillLeave} from '@ionic/vue';
 
@@ -17,10 +17,11 @@ import ArtistHeader from '@/views/Music/List/components/ArtistHeader.vue';
 import SortHeader from '@/views/Music/List/components/SortHeader.vue';
 import TrackRow from '@/views/Music/List/components/TrackRow.vue';
 import ScrollContainer from '@/Layout/Desktop/components/ScrollContainer.vue';
+import NotFound from "@/Layout/Desktop/components/NotFound.vue";
 
 const route = useRoute();
 
-const {data} = useServerClient<DisplayList>({
+const {data, isError} = useServerClient<DisplayList>({
   path: route.fullPath,
   keepForever: true,
 });
@@ -103,7 +104,8 @@ const onScroll = () => {
 <template>
   <ion-page>
     <ion-content :fullscreen="true" class="flex">
-      <ScrollContainer :autoHide="true" :static="true" @scroll="onScroll">
+      <NotFound v-if="isError" />
+      <ScrollContainer v-else :autoHide="true" :static="true" @scroll="onScroll">
         <div
             v-if="!route.params.id || (route.params.id && data?.id == route.params.id)"
             ref="main"

@@ -1,9 +1,8 @@
 <script setup lang="ts">
 import {nextTick, onMounted, ref, watch} from 'vue';
-import {useRoute, useRouter} from 'vue-router';
+import {useRoute} from 'vue-router';
 import {IonPage, IonContent} from '@ionic/vue';
 
-import type {MusicCardPageResponse} from '@/types/musicPlayer';
 
 import useServerClient from '@/lib/clients/useServerClient';
 import {isNative} from '@/config/global';
@@ -12,11 +11,13 @@ import {currentSong} from '@/store/audioPlayer';
 import ScrollContainer from '@/Layout/Desktop/components/ScrollContainer.vue';
 import MusicCard from '@/components/Cards/MusicCard.vue';
 import {setColorPalette} from '@/store/ui';
+import NotFound from "@/Layout/Desktop/components/NotFound.vue";
+import {MusicCardPageResponseData} from "@/types/api/music/musicPlayer";
 
 const show = ref(false);
 
 const route = useRoute();
-const { data } = useServerClient<MusicCardPageResponse['data']>({
+const { data, isError } = useServerClient<MusicCardPageResponseData>({
   path: route.fullPath,
   keepForever: true,
 });
@@ -37,7 +38,8 @@ onMounted(() => {
 <template>
   <ion-page>
     <ion-content :fullscreen="true">
-      <ScrollContainer :autoHide="true" :static="true">
+      <NotFound v-if="isError" />
+      <ScrollContainer v-else :autoHide="true" :static="true">
         <div
             v-if="show"
             :class="{

@@ -35,6 +35,7 @@ import ScrollContainer from '@/Layout/Desktop/components/ScrollContainer.vue';
 import {convertToHumanReact} from "../../../lib/dateTime";
 import {useTranslation} from "i18next-vue";
 import HeaderItem from "@/views/Base/Person/components/HeaderItem.vue";
+import NotFound from "@/Layout/Desktop/components/NotFound.vue";
 
 const route = useRoute();
 
@@ -296,8 +297,8 @@ const menuItems: IMenuItem[] = [
 <template>
   <ion-page>
     <ion-content :fullscreen="true">
-
-      <ScrollContainer :autoHide="true" :static="true">
+      <NotFound v-if="isError" />
+      <ScrollContainer v-else :autoHide="true" :static="true">
         <div
             class="z-0 flex flex-col gap-4 rounded-3xl border-0 w-available scrollbar-none border-auto-3"
             :class="{

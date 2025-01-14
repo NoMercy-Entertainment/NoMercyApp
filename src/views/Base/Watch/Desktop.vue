@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import {onMounted, onUnmounted, ref} from 'vue';
+import {onMounted, onUnmounted, ref, watch} from 'vue';
 import {useRoute} from 'vue-router';
 import {IonPage, isPlatform} from '@ionic/vue';
 
@@ -11,7 +11,7 @@ import {isNative} from '@/config/global';
 import type {
   NMPlayer,
   PlaylistItem,
-  SetupConfig
+  PlayerConfig
 } from '@/lib/VideoPlayer';
 import {
   nmplayer,
@@ -24,35 +24,12 @@ import {
 import router from '@/router';
 import audioPlayer from '@/store/audioPlayer';
 
-const route = useRoute();
+import NotFound from "@/Layout/Desktop/components/NotFound.vue";
+import useServerClient from "@/lib/clients/useServerClient";
 
-const config: SetupConfig = {
-  muted: false,
-  controls: false,
-  preload: 'auto',
-  debug: false,
-  autoPlay: true,
-  playlist: `${currentServer.value?.serverApiUrl}${route.fullPath}`,
+const {data, isError} = useServerClient<PlaylistItem[]>({
 
-  controlsTimeout: 3000,
-  doubleClickDelay: 500,
-  playbackRates: [
-    0.25,
-    0.5,
-    0.75,
-    1,
-    1.25,
-    1.5,
-    1.75,
-    2,
-  ],
-  accessToken: user.value?.accessToken,
-  basePath: currentServer.value?.serverBaseUrl,
-  forceTvMode: (isPlatform('android') || isPlatform('ios')) && !isPlatform('mobile'),
-  disableTouchControls: false,
-  disableMediaControls: 'mediaSession' in navigator || isPlatform('capacitor'),
-  renderAhead: 100,
-}
+});
 
 interface MyNmPlayer extends NMPlayer {
   showInProduction: () => boolean;
@@ -65,8 +42,37 @@ interface MyNmPlayer extends NMPlayer {
 }
 
 const player = ref<MyNmPlayer>();
+const playerContainer = ref<HTMLDivElement>();
 
-onMounted(() => {
+watch(data, (value) => {
+
+  const config: PlayerConfig = {
+    muted: false,
+    controls: false,
+    preload: 'auto',
+    debug: false,
+    autoPlay: true,
+    playlist: value?.filter(item => !!item.id) ?? [],
+    controlsTimeout: 3000,
+    doubleClickDelay: 500,
+    playbackRates: [
+      0.25,
+      0.5,
+      0.75,
+      1,
+      1.25,
+      1.5,
+      1.75,
+      2,
+    ],
+    accessToken: user.value?.accessToken,
+    basePath: currentServer.value?.serverBaseUrl,
+    forceTvMode: (isPlatform('android') || isPlatform('ios')) && !isPlatform('mobile'),
+    disableTouchControls: false,
+    disableMediaControls: 'mediaSession' in navigator || isPlatform('capacitor'),
+    renderAhead: 100,
+  }
+
   // @ts-ignore
   player.value ??= nmplayer('player1')
       .setup(config);
@@ -154,8 +160,9 @@ onUnmounted(() => {
 
 <template>
   <ion-page>
-      <Teleport to="body" :keepAlive="true">
-        <div class="absolute inset-0 flex h-full w-full overflow-clip bg-black z-1199"
+    <NotFound v-if="isError" />
+      <Teleport v-else to="body" :keepAlive="true">
+        <div ref="playerContainer" class="absolute inset-0 flex h-full w-full overflow-clip bg-black z-1199"
              :class="{
              'mb-28': isNative,
              'mb-0': !isNative,

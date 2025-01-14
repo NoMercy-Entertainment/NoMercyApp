@@ -9,8 +9,9 @@ import useServerClient from '@/lib/clients/useServerClient';
 import ScrollContainer from '@/Layout/Desktop/components/ScrollContainer.vue';
 import {onMounted} from 'vue';
 import {setColorPalette} from '@/store/ui';
+import NotFound from "@/Layout/Desktop/components/NotFound.vue";
 
-const {data} = useServerClient<Component<HomeDataItem>[]>({
+const {data, isError} = useServerClient<Component<HomeDataItem>[]>({
   queryKey: ['music', 'home']
 });
 
@@ -23,7 +24,8 @@ onMounted(() => {
 <template>
   <ion-page>
     <ion-content :fullscreen="true">
-      <ScrollContainer :autoHide="true" :static="true">
+      <NotFound v-if="isError" />
+      <ScrollContainer v-else :autoHide="true" :static="true">
         <template v-if="data">
           <component
               v-for="(render, index) in data ?? []"

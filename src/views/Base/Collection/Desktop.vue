@@ -25,12 +25,12 @@ import ImageCarousel from '@/components/Carousel/ImageCarousel.vue';
 import ContentRating from '@/components/Images/ContentRating.vue';
 import {useTranslation} from 'i18next-vue';
 import InfoHeaderItem from "@/views/Base/Info/components/InfoHeaderItem.vue";
-import HeaderItem from "@/views/Base/Person/components/HeaderItem.vue";
+import NotFound from "@/Layout/Desktop/components/NotFound.vue";
 
 const {t} = useTranslation();
 const router = useRouter();
 
-const { data } = useServerClient<CollectionResponse>({
+const { data, isError } = useServerClient<CollectionResponse>({
   queryKey: ['base', 'collection', router.currentRoute.value.params.id],
   limit: 1000,
   keepForever: true,
@@ -87,7 +87,8 @@ onUnmounted(() => {
 <template>
   <ion-page>
     <ion-content :fullscreen="true">
-      <ScrollContainer :static="true" :auto-hide="true">
+      <NotFound v-if="isError" />
+      <ScrollContainer v-else :static="true" :auto-hide="true">
 
         <div class="w-available">
           <FloatingBackButton />

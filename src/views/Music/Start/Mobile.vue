@@ -8,8 +8,9 @@ import useServerClient from '@/lib/clients/useServerClient';
 
 import {onMounted} from 'vue';
 import {setColorPalette} from '@/store/ui';
+import NotFound from "@/Layout/Desktop/components/NotFound.vue";
 
-const {data} = useServerClient<Component<HomeDataItem>[]>({
+const {data, isError} = useServerClient<Component<HomeDataItem>[]>({
   queryKey: ['music', 'home']
 });
 
@@ -25,7 +26,8 @@ onIonViewWillEnter(() => {
 <template>
   <ion-page>
     <ion-content :fullscreen="true">
-      <template v-if="data">
+      <NotFound v-if="isError" />
+      <template v-else-if="data">
         <template v-for="(render, index) in data ?? []" :key="render.id">
           <component
               v-if="render.component"

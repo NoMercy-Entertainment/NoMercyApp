@@ -20,9 +20,10 @@ import MediaCarousel from "@/components/Carousel/MediaCarousel.vue";
 import CreditGroup from "@/components/MusicPlayer/components/CreditGroup.vue";
 import FloatingPersonCard from "@/components/MusicPlayer/components/FloatingPersonCard.vue";
 import ScrollContainer from "@/Layout/Desktop/components/ScrollContainer.vue";
+import NotFound from "@/Layout/Desktop/components/NotFound.vue";
 
 const route = useRoute();
-const {data} = useServerClient<PersonResponseItem>({
+const {data, isError} = useServerClient<PersonResponseItem>({
   queryKey: ['base', 'person', route.params.id],
 });
 
@@ -88,7 +89,8 @@ const filter = 'combined';
 <template>
   <ion-page>
     <ion-content :fullscreen="true">
-      <ScrollContainer :autoHide="true" :static="true">
+      <NotFound v-if="isError" />
+      <ScrollContainer v-else :autoHide="true" :static="true">
         <div v-if="data"
              :class="{
            'pb-24' : isNative && !currentSong,

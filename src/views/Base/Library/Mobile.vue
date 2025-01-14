@@ -24,7 +24,7 @@ import EmptyCard from '@/components/Cards/EmptyCard.vue';
 
 const routing = useRouter();
 
-const {data, fetchNextPage, hasNextPage} = useInfiniteServerClient<{
+const {data, fetchNextPage, hasNextPage, isError} = useInfiniteServerClient<{
   data: Array<LibraryResponse | GenreResponse | PeopleResponse>
 }>({
   queryKey: ['libraries', ((routing.currentRoute?.value?.params.id ?? routing.currentRoute.value.name) as string)?.split('&').at(0)],

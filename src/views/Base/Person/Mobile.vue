@@ -22,7 +22,7 @@ import HeaderItem from "@/views/Base/Person/components/HeaderItem.vue";
 import Collapsible from "@/views/Base/Person/components/Collapsible.vue";
 
 const route = useRoute();
-const {data} = useServerClient<PersonResponseItem>({
+const {data, isError} = useServerClient<PersonResponseItem>({
   queryKey: ['base', 'person', route.params.id],
 });
 

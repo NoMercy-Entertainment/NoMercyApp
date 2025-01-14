@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import {onMounted, onUnmounted, ref, watch} from 'vue';
+import {onMounted, ref, watch} from 'vue';
 import {useRouter} from 'vue-router';
-import {IonContent, IonPage, onIonViewWillEnter, onIonViewWillLeave} from '@ionic/vue';
+import {IonContent, IonPage, onIonViewWillEnter} from '@ionic/vue';
 
 import type {ScrollCustomEvent} from '@ionic/core/dist/types/components/content/content-interface';
 import type {DisplayList} from '@/types/api/music/musicPlayer';
@@ -17,10 +17,11 @@ import ArtistHeader from '@/views/Music/List/components/ArtistHeader.vue';
 import SortHeader from '@/views/Music/List/components/SortHeader.vue';
 import TrackRow from '@/views/Music/List/components/TrackRow.vue';
 import MoooomIcon from '@/components/Images/icons/MoooomIcon.vue';
+import NotFound from "@/Layout/Desktop/components/NotFound.vue";
 
 const router = useRouter();
 
-const {data} = useServerClient<DisplayList>({
+const {data, isError} = useServerClient<DisplayList>({
   path: router.currentRoute.value.fullPath,
   keepForever: true,
 });
@@ -107,8 +108,9 @@ const onScroll = (e: ScrollCustomEvent) => {
 <template>
   <ion-page>
     <ion-content :fullscreen="true" @ionScroll="onScroll" :scrollEvents="true">
+      <NotFound v-if="isError" />
       <div
-          v-if="!router.currentRoute.value.params.id || (router.currentRoute.value.params.id && data?.id == router.currentRoute.value.params.id)"
+          v-else-if="!router.currentRoute.value.params.id || (router.currentRoute.value.params.id && data?.id == router.currentRoute.value.params.id)"
           ref="main"
           class="flex flex-col overflow-x-clip w-available h-min sm:rounded-2xl -mt-safe-offset-12 bg-[rgb(var(--background-auto))]"
       >
