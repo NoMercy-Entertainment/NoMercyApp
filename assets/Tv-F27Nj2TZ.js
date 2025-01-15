@@ -1,2 +1,0 @@
-import{aw as r,e as o,aB as e,a7 as t,o as u,v as a,bd as n,bY as l,bE as s,bF as c}from"./index-Cy6EBPTS.js";import{N as m}from"./NavBar-C73-OeK2.js";const v=r({__name:"Tv",setup(p){return(_,f)=>(u(),o(e(c),null,{default:t(()=>[a(m,{title:e(n).currentRoute.value.name},null,8,["title"]),a(e(s),{fullscreen:!0},{default:t(()=>[a(l,{name:`${e(n).currentRoute.value.name} Desktop page`},null,8,["name"])]),_:1})]),_:1}))}});export{v as default};
-//# sourceMappingURL=Tv-F27Nj2TZ.js.map
