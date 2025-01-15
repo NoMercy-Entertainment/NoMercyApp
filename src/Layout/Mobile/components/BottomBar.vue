@@ -46,12 +46,12 @@ const searchUrl = computed(() => {
       <ion-label>{{ $t('Library') }}</ion-label>
     </ion-tab-button >
 
-    <ion-tab-button tab="music" href="/music/start" @click="closeMenu()" >
+    <ion-tab-button tab="music" href="/music/start" @click="closeMenu()">
       <ion-icon aria-hidden="true" :icon="noteEighthPair"/>
       <ion-label>{{ $t('Music') }}</ion-label>
     </ion-tab-button>
 
-    <ion-tab-button @click="toggleMenu()" :class="{'tab-selected': menuOpen}">
+    <ion-tab-button :_on-click="toggleMenu" @click="toggleMenu()" tab="/dashboard" class="hide-bg" :class="{'tab-selected': menuOpen}">
       <div class="relative mx-auto flex flex-col rounded-full size-12 mt-1.5">
         <NoMercyAvatar :user="user" :size="52" class="absolute"/>
         <span
@@ -88,17 +88,6 @@ ion-tab-button ion-label {
 
 .tab-selected ion-icon {
   transform: rotate(12deg);
-}
-
-.tab-selected ion-avatar:after {
-  @apply content-[''] -z-10 absolute w-[2.75rem] h-[2.75rem] inset-[4px_5px] justify-center items-center rounded-full bg-focus
-  shadow-none
-  dark:shadow-none
-  hover:shadow-none
-  dark:hover:shadow-none
-  active:shadow-none
-  active:dark:shadow-none;
-  box-shadow: 0 -1px 3px 0 rgba(0, 0, 0, 0.08) inset, 0 -1px 2px 0 rgba(0, 0, 0, 0.16) inset, 0 1px 0 0 rgba(255, 255, 255, 0.25) inset, 0 1px 1px 0 rgba(255, 255, 255, 0.45) inset;
 }
 
 ion-tab-bar:not(.hide-bg) .tab-selected ion-icon:after {

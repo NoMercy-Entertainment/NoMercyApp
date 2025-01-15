@@ -1,0 +1,86 @@
+name: Build and Release Android App
+
+on:
+  workflow_dispatch:
+  workflow_run:
+    workflows:
+      - pages.yml
+    types:
+      - completed
+
+jobs:
+  build:
+    name: Build Android APK
+    runs-on: ubuntu-latest
+
+    steps:
+      # Checkout the repository
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      # Set up Node.js
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 20
+
+      # Install dependencies
+      - name: Install Dependencies
+        run: npm install
+
+      # Build the Ionic app
+      - name: Build Ionic App
+        run: npm run build
+
+      # Sync the project
+      - name: Sync Capacitor
+        run: npx cap sync android
+
+      # Build the Android project
+      - name: Build Android APK
+        run: |
+          cd android
+          ./gradlew assembleRelease
+
+      # Upload the APK as an artifact
+      - name: Upload APK
+        uses: actions/upload-artifact@v3
+        with:
+          name: android-apk
+          path: android/app/build/outputs/apk/release/*.apk
+
+  release:
+    name: Create Release
+    needs: build
+    runs-on: ubuntu-latest
+
+    steps:
+      # Download the APK artifact
+      - name: Download APK Artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: android-apk
+
+      # Create a GitHub release
+      - name: Create Release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: v${{ github.run_number }}
+          release_name: Ionic Android APK Release
+          body: |
+            New APK release is ready for download.
+          draft: false
+          prerelease: false
+
+      # Upload the APK to the release
+      - name: Upload APK to Release
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: android/app/build/outputs/apk/release/app-release.apk
+          asset_name: app-release.apk
+          asset_content_type: application/vnd.android.package-archive

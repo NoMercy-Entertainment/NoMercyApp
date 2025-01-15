@@ -179,7 +179,7 @@ watch(dataUpdatedAt, (value) => {
           </div>
         </div>
       </div>
-      <ScrollContainer v-else :static="true" class="z-0 flex !h-sidebar+ !min-h-[calc(100vh-16rem)] w-full flex-1 overflow-y-auto overflow-x-hidden p-4">
+      <ScrollContainer v-else :static="true" class="z-0 flex !h-sidebar+ !min-h-[calc(100vh-16rem)] w-full flex-1 overflow-y-auto overflow-x-hidden sm:p-4">
         <div class="h-auto w-full flex-wrap content-start gap-4" :class="grid">
           <slot/>
         </div>

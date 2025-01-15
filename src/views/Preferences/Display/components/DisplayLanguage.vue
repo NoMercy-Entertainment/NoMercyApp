@@ -10,11 +10,11 @@ const {data: languages} = useServerClient<Language[]>({
 	path: '/dashboard/configuration/languages',
 });
 
-const language = ref(languages.value?.find(l => l.iso_639_1 == displayLanguage?.value || l.iso_639_1 == navigator.language));
+const language = ref(languages.value?.find(l => l.iso_639_1 == displayLanguage?.value || l.iso_639_1 == navigator.language.split('-')[0]));
 
 watch(languages, (value) => {
 	if (!value) return;
-	language.value = value.find(l => l.iso_639_1 == displayLanguage?.value || l.iso_639_1 == navigator.language);
+	language.value = value.find(l => l.iso_639_1 == displayLanguage?.value || l.iso_639_1 == navigator.language.split('-')[0]);
 });
 
 watch(language, (value) => {

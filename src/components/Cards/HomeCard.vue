@@ -153,12 +153,13 @@ const toggleWatched = () => {
               <span class="w-full whitespace-nowrap text-center">{{ $t('Play') }}</span>
             </RouterLink>
 
-            <BannerButton title="">
+            <RouterLink
+                :to="`/${homeItem?.media_type}/${homeItem?.id}`" class="flex justify-center items-center relative gap-2 p-2 rounded-lg hover:bg-auto-5/6 transition-colors duration-300">
               <MoooomIcon icon="add" className="w-6"/>
               <span class="w-full whitespace-nowrap text-center">
-                                {{ $t('My List') }}
-                            </span>
-            </BannerButton>
+                  {{ $t('Info') }}
+              </span>
+            </RouterLink>
           </div>
         </div>
       </div>

@@ -14,6 +14,7 @@ html {
   height: -webkit-fill-available;
   scroll-behavior: smooth;
   --ion-font-family: 'Inter', sans-serif !important;
+  -webkit-overflow-scrolling: touch;
 }
 
 body {
@@ -45,6 +46,7 @@ ion-content::part(scroll),
 ion-content::part(scroll) *,
 .scheme-transition *:not(img, .relative, .absolute, picture) {
   //transition: all calc(var(--speed) * 1ms) ease-in-out !important;
+   -webkit-overflow-scrolling: touch;
 }
 
 :root {

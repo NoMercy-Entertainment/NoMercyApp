@@ -26,15 +26,15 @@ const {data: queueData, refetch} = useServerClient<QueueResponse[]>({
 
 const handleProgress = (data: ServerEncoderProgress) => {
   if (data.status == 'running' || data.status == 'paused') {
-    encoderData.value = sortBy([...encoderData.value.filter(item => item?.process_id !== data?.process_id), data], 'process_id');
+    encoderData.value = sortBy([...encoderData.value.filter(item => item?.id !== data?.id), data], 'id');
   } else {
-    encoderData.value = sortBy([...encoderData.value.filter(item => item?.process_id !== data?.process_id)], 'process_id');
+    encoderData.value = sortBy([...encoderData.value.filter(item => item?.id !== data?.id)], 'id');
     refetch();
   }
 };
 
 const filteredQueueData = computed(() => {
-  return queueData.value?.filter(item => !encoderData.value.find(encoder => encoder.process_id === item.process_id));
+  return queueData.value?.filter(item => !encoderData.value.find(encoder => encoder.id == item.payload_id));
 });
 
 const handleQueue = (data: QueueResponse[]) => {
@@ -54,17 +54,16 @@ useHubListener(connection, 'disconnected', handleClear);
 </script>
 
 <template>
-
   <SystemCard v-if="encoderData.length || queueData?.length" title="Running tasks" :background="false">
     <template v-slot:cta>
 
     </template>
 
-    <template v-for="data in encoderData ?? []" :key="data.process_id">
+    <template v-for="data in encoderData ?? []" :key="data.id">
       <ServerEncoderTaskCard :data="data"/>
     </template>
 
-    <template v-for="data in filteredQueueData" :key="data.process_id">
+    <template v-for="data in filteredQueueData" :key="data.id">
       <ServerQueueTaskCard :data="data"/>
     </template>
   </SystemCard>

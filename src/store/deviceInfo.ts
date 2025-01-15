@@ -26,7 +26,7 @@ export function setDeviceName(value: string) {
 	Preferences.set({key: 'deviceName', value: value}).then();
 }
 const getDeviceName = async () => {
-	const deviceName = (await Preferences.get({key: 'deviceName'})).value ?? deviceUid.deviceId;
+	const deviceName = (await Preferences.get({key: 'deviceName'})).value ?? deviceInfo.value?.name ?? deviceUid.deviceId;
 	setDeviceName(deviceName);
 }
 

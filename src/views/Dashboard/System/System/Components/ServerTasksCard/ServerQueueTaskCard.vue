@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import {type PropType, ref, watch} from 'vue';
+import {IonItem} from '@ionic/vue';
 
 import type {QueueResponse} from '@/types/api/dashboard/server';
 import MoooomIcon from '@/components/Images/icons/MoooomIcon.vue';

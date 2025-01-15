@@ -8,7 +8,6 @@ import DashboardLayout from '@/Layout/Desktop/DashboardLayout.vue';
 
 import ServerResourceCard from './Components/ServerResouceCard/ServerResourceCard.vue';
 import ServerSystemCard from './Components/ServerSystemCard.vue';
-import ServerPathsCard from './Components/ServerPathsCard.vue';
 import ServerTasksCard from './Components/ServerTasksCard/ServerTasksCard.vue';
 import ServerActivityCard from './Components/ServerActivityCard/ServerActivityCard.vue';
 import ServerSystemInfoCard from '@/views/Dashboard/System/System/Components/ServerSystemInfoCard.vue';

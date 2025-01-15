@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import {computed, PropType, ref, watch} from 'vue';
+import {IonItem} from '@ionic/vue';
 
 import {ServerEncoderProgress} from '@/types/api/dashboard/server';
 

@@ -1,14 +1,20 @@
 <script setup lang="ts">
 import { IonPage, IonContent } from '@ionic/vue';
-import ExploreContainer from '@/components/ExploreContainer.vue';
-import NavBar from '@/Layout/Mobile/components/NavBar.vue';
+
+import ServerSystemInfoCard from "./Components/ServerSystemInfoCard.vue";
+import ServerTasksCard from "./Components/ServerTasksCard/ServerTasksCard.vue";
+import DashboardLayout from "@/Layout/Desktop/DashboardLayout.vue";
+
 </script>
 
 <template>
   <ion-page>
     <ion-content :fullscreen="true">
+      <DashboardLayout title="Dashboard overview" :gridStyle="3">
+          <ServerSystemInfoCard />
 
-      <ExploreContainer name="Dashboard General Mobile page" />
+          <ServerTasksCard />
+      </DashboardLayout>
     </ion-content>
   </ion-page>
 </template>

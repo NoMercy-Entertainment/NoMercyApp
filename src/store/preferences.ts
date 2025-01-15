@@ -57,7 +57,8 @@ export const usePercentageColors = computed(() => percentageColors.value);
 		}).then();
 		return;
 	}
-	percentageColors.value = (value || true) == true;
+
+	percentageColors.value = (value || true) == 'true';
 })();
 export const setUsePercentageColors = (value: boolean) => {
 	percentageColors.value = value;
