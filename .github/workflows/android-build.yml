@@ -43,15 +43,15 @@ jobs:
           chmod +x gradlew # Grant execution permissions
           ./gradlew assembleRelease
 
-      - name: Sign APK
-        env:
-          KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
-        run: |
-          echo "${{ secrets.ANDROID_KEYSTORE }}" > release-key.jks
-          jarsigner -verbose -sigalg SHA256withRSA -digestalg SHA-256 \
-            -keystore release-key.jks \
-            -storepass $KEYSTORE_PASSWORD \
-            android/app/build/outputs/apk/release/app-release-unsigned.apk alias_name
+      # - name: Sign APK
+      #   env:
+      #     KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
+      #   run: |
+      #     echo "${{ secrets.ANDROID_KEYSTORE }}" > release-key.jks
+      #     jarsigner -verbose -sigalg SHA256withRSA -digestalg SHA-256 \
+      #       -keystore release-key.jks \
+      #       -storepass $KEYSTORE_PASSWORD \
+      #       android/app/build/outputs/apk/release/app-release-unsigned.apk alias_name
 
       # - name: Verify Signed APK
       #   run: |
@@ -63,12 +63,12 @@ jobs:
       #     mv android/app/build/outputs/apk/release/app-release-unsigned.apk \
       #     android/app/build/outputs/apk/release/app-release.apk
       
-      # # Upload the APK as an artifact
-      # - name: Upload APK
-      #   uses: actions/upload-artifact@v3
-      #   with:
-      #     name: android-apk
-      #     path: android/app/build/outputs/apk/release/*.apk
+      # Upload the APK as an artifact
+      - name: Upload APK
+        uses: actions/upload-artifact@v3
+        with:
+          name: android-apk
+          path: android/app/build/outputs/apk/release/*.apk
 
   release:
     name: Create Release
