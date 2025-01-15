@@ -162,7 +162,6 @@ const handlePlay = () => {
       <MediaLikeButton v-if="data && !isSongRoute"
                        :data="data"
                        color="var(--color-focus)"
-                       :type="'music/' + data.type?.replace(/s$/, '')"
                        className="h-5 w-5"/>
 <!--			<BannerButton title="">-->
 <!--				<MoooomIcon icon="addCircle" className="relative h-5 w-5 text-white"/>-->

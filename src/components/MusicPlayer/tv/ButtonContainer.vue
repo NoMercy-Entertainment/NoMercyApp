@@ -53,7 +53,7 @@ const handleQueue = (e?: MouseEvent) => {
 <template>
     <div v-if="currentSong" class="relative flex w-full items-center justify-between">
         <div class="flex gap-4">
-          <MediaLikeButton :data="currentSong" color="color" className="children:h-7 h-10 children:w-7 w-10" />
+          <MediaLikeButton :data="currentSong" :color="color" className="children:h-7 h-10 children:w-7 w-10" />
         </div>
 
         <div class="fixed left-1/2 mx-auto flex w-fit -translate-x-1/2 items-center justify-center gap-4 rounded-xl bg-black/20 text-white px-4 py-3"

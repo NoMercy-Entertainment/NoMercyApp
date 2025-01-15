@@ -162,9 +162,7 @@ const handleClick = () => {
     >
             <MediaLikeButton :key="data.id"
                              :data="data"
-                             type="music/tracks"
-                             color="var(--color-focus)"
-                             data-target="favorite"/>
+                             color="var(--color-focus)"/>
             <span class="hidden sm:flex mr-4 monospace sm:mr-0">
                 {{ data.duration }}
             </span>

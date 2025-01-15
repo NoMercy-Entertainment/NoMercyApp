@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import {PropType, ref} from 'vue';
 
-import {InvalidateQueryFilters, useQueryClient} from '@tanstack/vue-query';
+import {useQueryClient} from '@tanstack/vue-query';
 
 import type {InfoResponse} from '@/types/api/base/info';
 import type {PlaylistItem} from "@/types/musicPlayer";
@@ -10,15 +10,13 @@ import type {ContinueWatching, HomeItem} from "@/types/api/base/home";
 import type {LibraryResponse, StatusResponse} from '@/types/api/base/library';
 import type {ArtistResponse} from '@/types/api/music/artist';
 
-import router from '@/router';
 
 import serverClient from '@/lib/clients/serverClient';
 
-import BannerButton from '@/components/Buttons/BannerButton.vue';
-import MoooomIcon from '@/components/Images/icons/MoooomIcon.vue';
 import {DisplayList} from '@/types/api/music/musicPlayer';
 import {queryKey} from "@/lib/routerHelper";
 import MusicButton from "@/components/MusicPlayer/components/MusicButton.vue";
+import MoooomIcon from "@/components/Images/icons/MoooomIcon.vue";
 
 
 const props = defineProps({
@@ -35,10 +33,6 @@ const props = defineProps({
 		type: String,
 		required: false,
 	},
-	type: {
-		type: String,
-		required: false,
-	}
 });
 
 const query = useQueryClient();

@@ -109,10 +109,8 @@ const {isSwiping, lengthX} = useSwipe(
       <MediaLikeButton :key="currentSong?.id"
                        :data="currentSong"
                         v-if="currentSong"
-                       type="music/tracks"
                        color="var(--color-focus)"
-                       class="pointer-events-auto flex"
-                       data-target="favorite"/>
+                       class="pointer-events-auto flex"/>
       <PlaybackButton class="pointer-events-auto children:h-7 children:w-7"/>
     </div>
     <div class="absolute left-0 w-full h-0.5 top-[54px] blur-[1px]">

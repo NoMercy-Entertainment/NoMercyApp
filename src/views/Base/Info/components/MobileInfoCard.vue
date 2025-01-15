@@ -111,7 +111,7 @@ const title = computed(() => {
       <div
           class="flex justify-start items-center flex-grow-0 flex-shrink-0 relative overflow-hidden gap-2 rounded-[30px] bg-black/[0.48] border border-black/2"
       >
-        <MediaLikeButton :data="data" class="!p-0" :type="data?.media_type"/>
+        <MediaLikeButton :data="data" class="!p-0"/>
       </div>
     </div>
   </div>

@@ -183,7 +183,7 @@ onUnmounted(() => {
                     <!--                                <MoooomIcon icon="check" className="w-6"/>-->
                     <!--                            </button>-->
 
-                    <MediaLikeButton div v-if="data" :data="data"/>
+                    <MediaLikeButton v-if="data" :data="data"/>
 
                     <DropdownMenu
                         class="relative flex items-center justify-center gap-2 overflow-hidden rounded-lg p-2 transition-colors duration-300 hover:bg-auto-5/6">

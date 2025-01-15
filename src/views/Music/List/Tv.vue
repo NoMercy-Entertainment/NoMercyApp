@@ -289,7 +289,7 @@ const handleClick = (song: PlaylistItem) => {
                                  class="opacity-0 group-focus-within/track:opacity-100">
                           <ion-row tabindex="-1">
 
-                            <MediaLikeButton :data="song" type="track" />
+                            <MediaLikeButton :data="song" />
 
                             <MusicButton
                                 label=""

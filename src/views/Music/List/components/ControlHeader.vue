@@ -58,8 +58,7 @@ const handleAdd = () => {
         <MediaLikeButton
                          :data="data"
                          color="var(--color-focus)"
-                         :type="'music/' + data?.type?.replace(/s$/u, '')"
-                         class=" sm:ml-auto"
+                         class="sm:ml-auto"
                          className="!w-8 !h-8"/>
 
       <MusicButton

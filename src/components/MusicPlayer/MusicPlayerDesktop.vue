@@ -145,10 +145,8 @@ const rightSize = computed(() => {
         </div>
         <MediaLikeButton :key="currentSong.id"
                          :data="currentSong"
-                         type="music/tracks"
                          color="var(--color-focus)"
-                         class="hidden sm:flex"
-                         data-target="favorite"/>
+                         class="hidden sm:flex"/>
       </div>
       <div id="center"
            class="flex w-full flex-grow flex-col items-center justify-start transition-width duration-300"
