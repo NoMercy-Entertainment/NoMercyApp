@@ -63,25 +63,6 @@ jobs:
       #     mv android/app/build/outputs/apk/release/app-release-unsigned.apk \
       #     android/app/build/outputs/apk/release/app-release.apk
       
-      # Upload the APK as an artifact
-      - name: Upload APK
-        uses: actions/upload-artifact@v3
-        with:
-          name: android-apk
-          path: android/app/build/outputs/apk/release/*.apk
-
-  release:
-    name: Create Release
-    needs: build
-    runs-on: ubuntu-latest
-
-    steps:
-      # Download the APK artifact
-      - name: Download APK Artifact
-        uses: actions/download-artifact@v3
-        with:
-          name: android-apk
-
       # Create a GitHub release
       - name: Create Release
         id: create_release
