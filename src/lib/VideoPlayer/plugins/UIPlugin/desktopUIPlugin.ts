@@ -1772,12 +1772,6 @@ export class DesktopUIPlugin extends BaseUIPlugin {
 			])
 			.appendTo(parent);
 
-		playlistMenu.style.minHeight = `${parseInt(getComputedStyle(this.player.getVideoElement()).height.split('px')[0], 10) * 0.8}px`;
-
-		this.player.on('resize', () => {
-			playlistMenu.style.minHeight = `${parseInt(getComputedStyle(this.player.getVideoElement()).height.split('px')[0], 10) * 0.8}px`;
-		});
-
 		const subMenu = this.player.createElement('div', 'sub-menu-content')
 			.addClasses([
 				...this.subMenuContentStyles,
