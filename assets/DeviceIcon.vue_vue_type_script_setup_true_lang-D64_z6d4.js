@@ -1,2 +1,0 @@
-import{aw as a,o as n,c as t,a as c,aB as s,z as r,cW as o}from"./index-BhK3w44Y.js";const i="/assets/device-icons-D5zd3Ct1.svg",l=["xlink:href"],d=a({__name:"DeviceIcon",props:{icon:{type:String,required:!0},className:{type:String,required:!1,default:""}},setup(e){return(u,f)=>(n(),t("svg",{class:r(s(o)("w-6 h-auto aspect-square flex-shrink-0 flex",e.className))},[c("use",{"xlink:href":`${s(i)}#${e.icon}`},null,8,l)],2))}});export{d as _};
-//# sourceMappingURL=DeviceIcon.vue_vue_type_script_setup_true_lang-D64_z6d4.js.map
