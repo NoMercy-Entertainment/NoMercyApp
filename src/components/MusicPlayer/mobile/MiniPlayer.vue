@@ -123,11 +123,3 @@ const {isSwiping, lengthX} = useSwipe(
     </div>
   </div>
 </template>
-
-<style>
-@media screen and (max-width: 800px) {
-  ion-content::part(scroll) {
-    --offset-bottom: -3.5rem;
-  }
-}
-</style>

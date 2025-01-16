@@ -87,14 +87,17 @@ const sortHeader = ref<VueDivElement>();
 
 const onScroll = (e: ScrollCustomEvent) => {
   console.log(sortHeader.value?.$el?.getBoundingClientRect().top);
-  const headerScrollTop = 290;
-  const headerScrollTextTop = 310;
+  const headerScrollTop = 170;
+  const headerScrollTextTop = 160;
   const sortHeaderTop = 88;
 
-  showScrollHeader.value = e.detail?.scrollTop >= headerScrollTop;
-  showScrollHeaderText.value = e.detail?.scrollTop >= headerScrollTextTop;
+  const top = sortHeader.value?.$el?.getBoundingClientRect().top;
+  if (!top) return;
 
-  if (sortHeader.value?.$el?.getBoundingClientRect().top == sortHeaderTop) {
+  showScrollHeader.value = top <= headerScrollTop;
+  showScrollHeaderText.value = top <= headerScrollTextTop;
+
+  if (top == sortHeaderTop) {
     sortHeader.value?.$el?.classList.add('!bg-focus');
     sortHeader.value?.$el?.firstChild?.classList.add('!bg-slate-light-10/11', 'dark:!bg-[rgb(var(--background-auto)/79%)]');
   } else {

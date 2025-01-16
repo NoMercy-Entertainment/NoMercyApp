@@ -23,11 +23,11 @@ const searchUrl = computed(() => {
 <template>
   <ion-tab-bar
       slot="bottom"
-      mode="ios"
+      mode="md"
       selected-tab="home"
       :class="{
-        'bg-sand-light-1 dark:bg-slate-dark-3 hide-bg pl-4': menuOpen,
-        'bg-sand-light-1 dark:bg-slate-dark-3 pl-4': !menuOpen
+        'bg-sand-light-1 dark:bg-slate-dark-3 hide-bg': menuOpen,
+        'bg-sand-light-1 dark:bg-slate-dark-3': !menuOpen
      }"
   >
 
