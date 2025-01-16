@@ -36,7 +36,7 @@ const handleSelectServer = () => {
         <NoMercyAvatar :user="user" :size="40" class="absolute inset-0"/>
         <span
             class="absolute rounded-full border-white bg-green-600 size-[28%] -bottom-[2%] -end-[2%] border-[0.125rem] dark:border-stone-900">
-                </span>
+        </span>
       </div>
     </template>
 
@@ -153,15 +153,15 @@ const handleSelectServer = () => {
               class="flex justify-center items-center self-stretch h-10 relative py-2.5 px-1 rounded-md border border-transparent hover:border-focus/4 active:!bg-focus/11 dark:active:!bg-focus/8 active:border-focus/4 active:hover:border-focus/4 focus:bg-focus-9 hover:!bg-focus/10 disabled:!bg-focus/2 disabled:!border-focus/2 transition-colors duration-300 hover:text-auto-12"
               data-nav-title="Logout"
               name="Logout">
-                        <span
-                            class="relative flex w-full flex-grow items-center justify-center gap-2 px-2 text-lg font-medium text-left">
-                            <MoooomIcon className="" icon="doorOpen"/>
-                            <span class="relative flex flex-grow items-center justify-center gap-2 pl-2">
-                                <span class="w-full flex-grow text-lg font-medium">
-                                    {{ $t('Logout') }}
-                                </span>
-                            </span>
-                        </span>
+            <span
+                class="relative flex w-full flex-grow items-center justify-center gap-2 px-2 text-lg font-medium text-left">
+                <MoooomIcon className="" icon="doorOpen"/>
+                <span class="relative flex flex-grow items-center justify-center gap-2 pl-2">
+                    <span class="w-full flex-grow text-lg font-medium">
+                        {{ $t('Logout') }}
+                    </span>
+                </span>
+            </span>
           </button>
         </div>
       </div>

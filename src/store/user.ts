@@ -57,7 +57,7 @@ export const updateUserFromApi = (newUser: User): void => {
 	console.log('updateUserFromApi');
 	user.value = {
 		...user.value,
-		avatar: newUser.avatar,
+		avatarUrl: newUser.avatarUrl,
 		receivedMessages: newUser.receivedMessages,
 		sendMessages: newUser.sendMessages,
 		notifications: newUser.notifications,

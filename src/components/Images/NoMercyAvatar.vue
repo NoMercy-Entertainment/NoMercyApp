@@ -12,8 +12,6 @@ const {t} = useTranslation();
 const suffix = location.hostname.includes('dev') ? '-dev' : '';
 const baseUrl = computed(() => `https://cdn${suffix}.nomercy.tv`);
 
-const cache = '1';
-
 defineProps({
   size: {
     type: Number,
@@ -30,10 +28,17 @@ defineProps({
 
 <template>
   <ion-avatar :style="`max-width:  100%; max-height: 100%;`">
-    <img v-if="user" :alt="`${t('NoMercyAvatar for')} ${ user.name }`"
+    <img v-if="user && !user.avatarUrl" :alt="`${t('NoMercyAvatar for')} ${ user.name }`"
          class="rounded-full object-cover object-center p-px NoMercyAvatar aspect-square"
-         :src="`${ baseUrl }/avatar/${ md5(user.email) }?cache=${ cache }&d=monsterid&fm=webp&r=pg&s=${ size }&w=${ size }`"
-         :srcset="`${ baseUrl }/avatar/${ md5(user.email) }?cache=${ cache }&d=monsterid&fm=webp&r=pg&s=${ size * 2 }&w=${ size * 2 }`"
+         :src="`${ baseUrl }/avatar/${ md5(user.email) }?d=monsterid&fm=webp&r=pg&s=${ size }&w=${ size }`"
+         :srcset="`${ baseUrl }/avatar/${ md5(user.email) }?d=monsterid&fm=webp&r=pg&s=${ size * 2 }&w=${ size * 2 }`"
+         :height="`${ size }`"
+         :width="`${ size }`"
+         crossorigin="anonymous"
+    />
+    <img v-else-if="user" :alt="`${t('NoMercyAvatar for')} ${ user.name }`"
+         class="rounded-full object-cover object-center p-px NoMercyAvatar aspect-square"
+         :src="user.avatarUrl"
          :height="`${ size }`"
          :width="`${ size }`"
          crossorigin="anonymous"

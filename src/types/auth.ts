@@ -7,7 +7,7 @@ export interface User {
 	name: string;
 	email: string;
 	id: string;
-	avatar: string;
+	avatarUrl: string;
 	locale: string | null;
 	moderator: boolean;
 	servers: Server[];
