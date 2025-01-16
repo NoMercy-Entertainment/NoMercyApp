@@ -826,7 +826,7 @@ export class DesktopUIPlugin extends BaseUIPlugin {
 		this.createQualityMenu(submenu);
 		this.createSpeedMenu(submenu);
 
-		if (this.player.options.playlist) {
+		if (this.player.options.playlist && Array.isArray(this.player.options.playlist)) {
 			this.createEpisodeMenu(submenu);
 		} else {
 			this.player.once('playlist', () => {
@@ -1015,7 +1015,7 @@ export class DesktopUIPlugin extends BaseUIPlugin {
 			});
 		}
 		else if (item === 'playlist') {
-			if (this.player.options.playlist) {
+			if (this.player.options.playlist && Array.isArray(this.player.options.playlist)) {
 				menuButton.style.display = 'flex';
 			}
 			this.player.on('playlist', (playlist) => {
