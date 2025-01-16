@@ -14,7 +14,7 @@ import {
 } from 'primevue';
 
 import {App} from '@capacitor/app';
-import {IonicVue, useBackButton} from '@ionic/vue';
+import {IonicVue, isPlatform, useBackButton} from '@ionic/vue';
 import {VueQueryPlugin} from '@tanstack/vue-query';
 import Aura from '@primevue/themes/aura';
 
@@ -145,4 +145,9 @@ export async function setupApp(app: AppContext['app']) {
             router.back();
         }
     });
+
+    if (!sessionStorage.getItem('load') && isPlatform('capacitor')) {
+        sessionStorage.setItem('load', 'true');
+        location.reload();
+    }
 }
