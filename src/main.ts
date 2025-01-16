@@ -49,6 +49,11 @@ import '@ionic/vue/css/ionic-swiper.css';
 import AppComponent from './App.vue';
 import router from "@/router";
 
+if (!sessionStorage.getItem('load') && isPlatform('capacitor')) {
+	sessionStorage.setItem('load', 'true');
+	location.reload();
+}
+
 const app = createApp(AppComponent);
 
 const refreshToken = location.search.includes('refreshToken')
