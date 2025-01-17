@@ -139,9 +139,9 @@ ion-content::part(scroll) {
   html.plt-cordova ion-content::part(scroll) {
     @apply pt-safe ;
   }
-  //html.plt-cordova:has(#miniPlayer) ion-content::part(scroll) {
-  //  @apply pb-safe-offset-12;
-  //}
+  html.plt-cordova:has(#miniPlayer) ion-content::part(scroll) {
+    @apply pb-safe-offset-12;
+  }
 
   html.plt-mobileweb:has(#miniPlayer) ion-content::part(scroll) {
     --offset-bottom: -3rem;

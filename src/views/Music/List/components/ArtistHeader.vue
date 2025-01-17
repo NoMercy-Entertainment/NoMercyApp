@@ -147,13 +147,9 @@ watch(audioColor, (value) => {
 
         <div v-if="data?.name"
             class="relative mt-2 flex w-full flex-1 flex-shrink-0 flex-col items-start justify-start gap-4 flex-grow-1 sm:hidden">
-            <div class="w-full text-2xl font-semibold line-clamp-1 leading-[130%] whitespace-pre"
+            <div class="w-full text-2xl font-semibold line-clamp-1 whitespace-pre mb-4"
                v-html="breakTitle2(data?.name ?? 'Songs you like', 'text-sm line-clamp-1')">
             </div>
-            <p class="text-left font-semibold uppercase text-white">
-                {{ data?.type?.replace(/s$/u, '') }}
-            </p>
-
         </div>
 
         <div class="relative hidden flex-1 flex-shrink-0 flex-col items-start justify-start gap-1 flex-grow-1 sm:flex">

@@ -1,6 +1,7 @@
 import { Router } from 'vue-router';
 import {isPlatform} from '@ionic/vue';
 import {ignoredRedirectQueries} from '@/config/config';
+import { Browser } from '@capacitor/browser';
 
 const afterEach = (router: Router) => {
 
@@ -30,6 +31,10 @@ const afterEach = (router: Router) => {
 						?.classList.remove('ion-page-invisible');
 				}, 500);
 			}
+		}
+
+		if (!isPlatform('capacitor') && isPlatform('mobileweb')) {
+			Browser.open({url: `nomercy://${to.fullPath}`}).then();
 		}
 	});
 };

@@ -10,6 +10,20 @@ import TvKeycloak from '@/lib/auth/tv-keycloak';
 import { lockPortrait } from '@/lib/utils';
 import { setUserFromKeycloak } from '@/store/user';
 
+let redirectUri = `nomercy://home`;
+if (location.href.includes('logout')) {
+	redirectUri = `nomercy:///logout`;
+}
+
+(async () => {
+	await App.addListener('appUrlOpen', async (data) => {
+		redirectUri = data.url;
+		router.isReady().then(async () => {
+			await router.replace(data.url.replace('nomercy://', ''));
+		});
+	});
+})();
+
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/vue/css/core.css';
 
@@ -57,6 +71,7 @@ const refreshToken = location.search.includes('refreshToken')
 
 const redirectUrl = window.location.hash.replace('#', '');
 redirectUrl && localStorage.setItem('redirectUrl', redirectUrl);
+console.log('location', window.location);
 
 // Mobile Capacitor App
 if (isPlatform('capacitor') && !isTv.value && !localStorage.getItem('access_token')) {
@@ -119,11 +134,6 @@ else if (!isPlatform('capacitor') && location.search.includes('refreshToken')) {
 }
 // TV App
 else {
-	let redirectUri = `nomercy://home`;
-	if (location.href.includes('logout')) {
-		redirectUri = `nomercy:///logout`;
-	}
-
 	app.use(TvKeycloak, {
 		initOptions: {
 			refreshToken: localStorage.getItem('refresh_token') || undefined,
@@ -141,9 +151,3 @@ else {
 
 	import('./setupApp').then(({ setupApp }) => setupApp(app));
 }
-
-(async () => {
-	await App.addListener('appUrlOpen', async (data) => {
-		await router.replace(data.url.replace('nomercy://', ''));
-	});
-})();
