@@ -409,7 +409,7 @@ export class BaseUIPlugin extends Plugin {
 			return '';
 		}
 
-	};
+	}
 
 	fetchPreviewTime() {
 		if (this.previewTime.length === 0) {
@@ -751,12 +751,11 @@ export class BaseUIPlugin extends Plugin {
 	}
 
 	createChapterBackButton(parent: HTMLDivElement, hovered = false) {
-		if (this.player.isMobile()) return;
 		const chapterBack = this.createUiButton(
 			parent,
 			'chapterBack'
 		);
-		chapterBack.style.display = 'none';
+		this.player.addClasses(chapterBack, ['portrait:!hidden']);
 
 		this.player.on('item', () => {
 			chapterBack.style.display = 'none';
@@ -790,12 +789,11 @@ export class BaseUIPlugin extends Plugin {
 	}
 
 	createChapterForwardButton(parent: HTMLDivElement, hovered = false) {
-		if (this.player.isMobile()) return;
 		const chapterForward = this.createUiButton(
 			parent,
 			'chapterForward'
 		);
-		chapterForward.style.display = 'none';
+		this.player.addClasses(chapterForward, ['portrait:!hidden']);
 
 		this.player.on('item', () => {
 			chapterForward.style.display = 'none';
