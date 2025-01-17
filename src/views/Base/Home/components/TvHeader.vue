@@ -14,11 +14,11 @@ defineProps({
 </script>
 
 <template>
-  <div class="w-[960px] h-[540px] absolute left-0 top-0 bg-[#131314]" :key="selected?.id">
-    <div class="w-[758px] h-[428px] absolute left-[202px] top-0 overflow-hidden bg-black">
-      <img class="w-[758px] h-[428px] absolute left-[-0.39px] top-[-0.39px]"
+  <div class="w-full h-full absolute left-0 top-0 bg-[#131314]" :key="selected?.id">
+    <div class="w-available h-available absolute left-[202px] top-0 overflow-hidden bg-black">
+      <img class="w-available h-available absolute left-[-0.39px] top-[-0.39px]"
            :src="`https://image.tmdb.org/t/p/w1280${selected?.backdrop}`" alt=""/>
-      <div class="w-[758px] h-[428px] absolute left-[-0.39px] top-[-0.39px]"></div>
+      <div class="w-available h-available absolute left-[-0.39px] top-[-0.39px]"></div>
       <div
           class="w-[150vw] h-[150vw] absolute left-[-30%] bottom-[-50%]"
           style="

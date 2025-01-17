@@ -26,7 +26,7 @@ defineProps({
     <img
         :src="`${currentServer?.serverBaseUrl}/images/original${carousel?.props?.data?.backdrop}`"
         alt=""
-        class="w-full h-full absolute inset-0 left-40 object-scale-down"
+        class="w-available h-auto absolute inset-0 left-40 object-scale-down"
     />
 
     <div class="absolute bottom-0 w-full h-[200%]"
