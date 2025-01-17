@@ -177,7 +177,7 @@ const processTrailer = (value: InfoResponse | undefined) => {
     >
 
       <div
-          class="flex z-0 flex-col justify-start items-center self-stretch flex-grow overflow-hidden gap-4 will-change-auto text-slate-lightA-12/70 dark:text-slate-darkA-12/80 z-0"
+          class="flex flex-col justify-start items-center self-stretch flex-grow overflow-hidden gap-4 will-change-auto text-slate-lightA-12/70 dark:text-slate-darkA-12/80 z-0"
           style="box-shadow: 0 2px 2px 0 rgba(0,0,0,0.16);"
       >
         <div
@@ -219,7 +219,7 @@ const processTrailer = (value: InfoResponse | undefined) => {
             <HeaderItem v-if="data?.year" title="" :data="data?.year.toString()"/>
 
             <HeaderItem v-if="data?.content_ratings.length" title="" >
-              <ContentRating :size="6" v-if="data?.content_ratings"
+              <ContentRating :size="6"
                              class="h-full min-!h-[1rem] object-scale-down rounded-lg overflow-clip children:-m-0.5"
                              :ratings="data?.content_ratings"/>
             </HeaderItem>

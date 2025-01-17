@@ -20,7 +20,9 @@ const queryClient = useQueryClient();
 
 onMounted(() => {
   setCurrentServer(null);
+  queryClient.invalidateQueries();
   queryClient.removeQueries();
+  queryClient.clear()
   clearLibraries();
 });
 

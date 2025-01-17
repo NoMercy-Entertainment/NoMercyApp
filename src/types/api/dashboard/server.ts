@@ -147,6 +147,7 @@ export interface ConfigurationResponse {
 	request_workers: number;
 	encoder_workers: number;
 	image_workers: number;
+	swagger: boolean;
 }
 
 export interface Library {

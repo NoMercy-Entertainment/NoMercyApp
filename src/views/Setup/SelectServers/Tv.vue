@@ -10,7 +10,6 @@ import { clearLibraries} from '@/store/Libraries';
 
 import ServerCard from '@/views/Setup/SelectServers/components/ServerCard.vue';
 import {Server} from '@/types/auth';
-import NavBar from '@/Layout/Mobile/components/NavBar.vue';
 
 const handleSelectServer = (server: Server) => {
   setCurrentServer(server);
@@ -21,7 +20,9 @@ const queryClient = useQueryClient();
 
 onMounted(() => {
   setCurrentServer(null);
+  queryClient.invalidateQueries();
   queryClient.removeQueries();
+  queryClient.clear()
   clearLibraries();
 });
 

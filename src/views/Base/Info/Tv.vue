@@ -11,7 +11,6 @@ import {setTitle, sortByPosterAlphabetized} from '@/lib/stringArray';
 import {background, poster, setBackground, setColorPalette, setLogo, setPoster} from '@/store/ui';
 import router from '@/router';
 
-import NavBar from '@/Layout/Mobile/components/NavBar.vue';
 import InfoItem from '@/views/Base/Info/components/InfoItem.vue';
 import TMDBImage from '@/components/Images/TMDBImage.vue';
 import ImageCarousel from '@/components/Carousel/ImageCarousel.vue';
@@ -92,7 +91,6 @@ router.afterEach(() => {
 
 <template>
   <ion-page>
-    <NavBar/>
     <ion-content
         ref="content"
         :fullscreen="true"
@@ -430,7 +428,8 @@ router.afterEach(() => {
 
           <div v-if="data?.year" class="flex justify-start items-center self-stretch flex-grow-0 flex-shrink-0 relative gap-2 h-8">
 
-            <ContentRating :size="8" v-if="data?.content_ratings"
+            <ContentRating v-if="data?.content_ratings"
+                           :size="8"
                            class="h-full min-!h-[1rem] object-scale-down rounded-lg overflow-clip children:-m-0.5"
                            :ratings="data?.content_ratings"/>
 

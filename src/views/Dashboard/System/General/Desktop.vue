@@ -12,6 +12,9 @@ import serverClient from '@/lib/clients/serverClient';
 import DashboardLayout from '@/Layout/Desktop/DashboardLayout.vue';
 import useServerClient from '@/lib/clients/useServerClient';
 import {Nullable} from 'vitest';
+import Toggle from "@/components/Forms/Toggle.vue";
+import {currentServer} from "@/store/currentServer";
+import MoooomIcon from "@/components/Images/icons/MoooomIcon.vue";
 
 const {data: configuration, refetch: invalidate, error} = useServerClient<ConfigurationResponse>({
   path: '/dashboard/configuration',
@@ -32,7 +35,7 @@ const updateState = <T>(key: keyof T, value: any) => {
   }
   newConfig.value = {
     ...newConfig.value,
-    [key]: value || undefined,
+    [key]: value ?? undefined,
   };
 };
 
@@ -49,6 +52,7 @@ watch(configuration, (value) => {
   request_workers.value = value?.request_workers;
   encoder_workers.value = value?.encoder_workers;
   image_workers.value = value?.image_workers;
+  swagger.value = value?.swagger;
   ready.value = true;
 });
 
@@ -65,56 +69,61 @@ onMounted(() => {
   request_workers.value = configuration.value?.request_workers;
   encoder_workers.value = configuration.value?.encoder_workers;
   image_workers.value = configuration.value?.image_workers;
+  swagger.value = configuration.value?.swagger;
   ready.value = true;
 });
 
-const server_name = ref<Nullable<string>>(configuration.value?.server_name ?? '');
+const server_name = ref<string>(configuration.value?.server_name ?? '');
 watch(server_name, (value) => {
   updateState('server_name', value);
 });
 
-const external_server_port = ref<Nullable<number>>(configuration.value?.external_server_port ?? 0);
+const external_server_port = ref<number>(configuration.value?.external_server_port ?? 0);
 watch(external_server_port, (value) => {
   updateState('external_server_port', value);
 });
 
-const internal_server_port = ref<Nullable<number>>(configuration.value?.internal_server_port ?? 0);
+const internal_server_port = ref<number>(configuration.value?.internal_server_port ?? 0);
 watch(internal_server_port, (value) => {
   updateState('internal_server_port', value);
 });
 
-const queue_workers = ref<Nullable<number>>(configuration.value?.queue_workers ?? 0);
+const queue_workers = ref<number>(configuration.value?.queue_workers ?? 0);
 watch(queue_workers, (value) => {
   updateState('queue_workers', value);
 });
 
-const cron_workers = ref<Nullable<number>>(configuration.value?.cron_workers ?? 0);
+const cron_workers = ref<number>(configuration.value?.cron_workers ?? 0);
 watch(cron_workers, (value) => {
   updateState('cron_workers', value);
 });
 
-const data_workers = ref<Nullable<number>>(configuration.value?.data_workers ?? 0);
+const data_workers = ref<number>(configuration.value?.data_workers ?? 0);
 watch(data_workers, (value) => {
   updateState('data_workers', value);
 });
 
-const request_workers = ref<Nullable<number>>(configuration.value?.request_workers ?? 0);
+const request_workers = ref<number>(configuration.value?.request_workers ?? 0);
 watch(request_workers, (value) => {
   updateState('request_workers', value);
 });
 
-const image_workers = ref<Nullable<number>>(configuration.value?.image_workers ?? 0);
+const image_workers = ref<number>(configuration.value?.image_workers ?? 0);
 watch(image_workers, (value) => {
   updateState('image_workers', value);
 });
 
-const encoder_workers = ref<Nullable<number>>(configuration.value?.encoder_workers ?? 0);
+const encoder_workers = ref<number>(configuration.value?.encoder_workers ?? 0);
 watch(encoder_workers, (value) => {
   updateState('encoder_workers', value);
 });
 
+const swagger = ref<boolean>(configuration.value?.swagger ?? false);
+watch(swagger, (value) => {
+  updateState('swagger', value);
+});
+
 const hasChanges = computed<boolean>(() => (Object.keys(newConfig.value).length > 0));
-console.log(newConfig.value, Object.keys(newConfig.value));
 
 watch(newConfig, (value) => {
   console.log(value);
@@ -148,35 +157,36 @@ const save = () => {
             <InputText id="server_name" v-model="server_name" class="mb-4"/>
           </div>
           <div class="flex flex-col gap-2">
-            <label for="secure_internal_port">Secure internal port</label>
-            <InputNumber id="secure_internal_port" v-model="internal_server_port" class="mb-4"
+            <label for="internal_server_port">Secure internal port</label>
+            <InputNumber id="internal_server_port" v-model="internal_server_port" class="mb-4"
                           :useGrouping="false" showButtons :min="2000"
             />
           </div>
           <div class="flex flex-col gap-2">
-            <label for="secure_external_port">Secure external port</label>
-            <InputNumber id="secure_external_port" v-model="external_server_port" class="mb-4"
-                          :useGrouping="false" showButtons  :in="2000"/>
+            <label for="external_server_port">Secure external port</label>
+            <InputNumber id="external_server_port" v-model="external_server_port" class="mb-4"
+                         :useGrouping="false" showButtons :min="2000"/>
           </div>
         </div>
+
         <div v-if="ready" class="col-span-2 col-start-1 2xl:col-start-3">
-          <div class="flex flex-col gap-2">
-            <label for="cron_workers">Cron workers</label>
-            <InputNumber
-                id="cron_workers" v-model="cron_workers" class="mb-4"
-                 :useGrouping="false" showButtons :min="0"/>
-          </div>
-          <div class="flex flex-col gap-2">
-            <label for="data_workers">Data workers</label>
-            <InputNumber
-                id="data_workers" v-model="data_workers" class="mb-4"
-                 :useGrouping="false" showButtons :min="0"/>
-          </div>
-          <div class="flex flex-col gap-2">
-            <label for="request_workers">Request workers</label>
-            <InputNumber id="request_workers" v-model="request_workers" class="mb-4"
-                          :useGrouping="false" showButtons :min="0"/>
-          </div>
+<!--          <div class="flex flex-col gap-2">-->
+<!--            <label for="cron_workers">Cron workers</label>-->
+<!--            <InputNumber-->
+<!--                id="cron_workers" v-model="cron_workers" class="mb-4"-->
+<!--                 :useGrouping="false" showButtons :min="0"/>-->
+<!--          </div>-->
+<!--          <div class="flex flex-col gap-2">-->
+<!--            <label for="data_workers">Data workers</label>-->
+<!--            <InputNumber-->
+<!--                id="data_workers" v-model="data_workers" class="mb-4"-->
+<!--                 :useGrouping="false" showButtons :min="0"/>-->
+<!--          </div>-->
+<!--          <div class="flex flex-col gap-2">-->
+<!--            <label for="request_workers">Request workers</label>-->
+<!--            <InputNumber id="request_workers" v-model="request_workers" class="mb-4"-->
+<!--                          :useGrouping="false" showButtons :min="0"/>-->
+<!--          </div>-->
           <div class="flex flex-col gap-2">
             <label for="encoder_workers">Encoder workers</label>
             <InputNumber id="encoder_workers" v-model="encoder_workers" class="mb-4"
@@ -192,6 +202,22 @@ const save = () => {
             <label for="queue_workers">Queue workers</label>
             <InputNumber id="queue_workers" v-model="queue_workers" class="mb-4"
                           :useGrouping="false" showButtons :min="0"/>
+          </div>
+        </div>
+
+        <div v-if="ready" class="col-span-2 col-start-1 2xl:col-start-5">
+          <div class="flex flex-col gap-2">
+            <span class="flex gap-4">
+              <label for="swagger">Open API / Swagger Ui</label>
+              <a v-if="swagger && currentServer?.serverBaseUrl" target="_blank"
+                 :href="currentServer?.serverBaseUrl"
+                 class="flex gap-1 items-center underline underline-offset-4 h-4 text-sm"
+              >
+                <span>{{ $t('Open') }}</span>
+                <MoooomIcon icon="shareSquare" className="size-4" color="theme" />
+              </a>
+            </span>
+            <Toggle :model-value="swagger" @update:model-value="swagger = $event"/>
           </div>
         </div>
 

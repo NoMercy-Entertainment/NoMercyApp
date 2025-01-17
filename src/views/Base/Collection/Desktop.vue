@@ -105,7 +105,8 @@ onUnmounted(() => {
                 <div class="self-stretch h-px bg-[#e2f0fd]/4"></div>
                 <div class="flex flex-shrink-0 flex-grow-0 items-start justify-start gap-8 self-stretch pl-4">
                   <div class="relative flex h-14 items-center justify-center gap-2">
-                      <ContentRating :size="6" v-if="data?.content_ratings"
+                      <ContentRating v-if="data?.content_ratings"
+                                     :size="6"
                                      class="h-full min-!h-[1rem] object-scale-down rounded-lg overflow-clip children:-m-0.5"
                                      :ratings="data?.content_ratings"/>
                   </div>

@@ -40,7 +40,8 @@ defineProps({
 
     <div class="flex flex-col justify-start items-start flex-grow-0 flex-shrink-0 relative gap-1">
 
-      <div class="flex items-center gap-2 text-xs font-medium text-left text-slate-dark-11">
+      <div v-if="carousel.props.data?.content_ratings"
+           class="flex items-center gap-2 text-xs font-medium text-left text-slate-dark-11">
         <ContentRating :ratings="carousel.props.data?.content_ratings" />
         <span class="text-3xs">( {{ carousel.props.data?.year }} )</span>
       </div>
