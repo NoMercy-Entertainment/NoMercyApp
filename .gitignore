@@ -62,6 +62,7 @@ render.experimental.xml
 # Keystore files
 *.jks
 *.keystore
+!android/keystore/debug.keystore
 
 # Google Services (e.g. APIs or Firebase)
 google-services.json
