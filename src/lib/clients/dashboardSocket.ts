@@ -6,8 +6,8 @@ import {connect, onConnect, onDisconnect} from '@/lib/clients/socketClient/event
 import {currentServer} from '@/store/currentServer';
 import {user} from '@/store/user';
 
-const socket: Ref<SocketClient| undefined> = ref();
-export const connection = computed(() => socket.value?.connection);
+const dashboardSocket: Ref<SocketClient| undefined> = ref();
+export const connection = computed(() => dashboardSocket.value?.connection);
 export const dashboardSocketIsConnected = ref(false);
 
 const connected = () => {
@@ -15,9 +15,9 @@ const connected = () => {
 	console.log('Connected to Dashboard SignalR');
 	document.dispatchEvent(new Event('dashboardHub-connected'));
 
-	if (socket.value?.connection) {
-		onConnect(socket.value?.connection);
-		connect(socket.value?.connection);
+	if (dashboardSocket.value?.connection) {
+		onConnect(dashboardSocket.value?.connection);
+		connect(dashboardSocket.value?.connection);
 	}
 };
 
@@ -37,11 +37,11 @@ watch(currentServer, async (newServer) => {
 	const accessToken = user.value?.accessToken;
 
 	if (newServer && dashboardSocketIsConnected.value) {
-		socket.value?.connection?.stop().then();
-		socket.value = new SocketClient(currentServer.value!.serverBaseUrl!, accessToken, 'dashboardHub');
+		dashboardSocket.value?.connection?.stop().then();
+		dashboardSocket.value = new SocketClient(currentServer.value!.serverBaseUrl!, accessToken, 'dashboardHub');
 
-		socket.value?.connection?.on('connected', connected);
-		socket.value?.connection?.on('disconnected', disconnected);
+		dashboardSocket.value?.connection?.on('connected', connected);
+		dashboardSocket.value?.connection?.on('disconnected', disconnected);
 
 		await connectToHub()
 			.catch(error);
@@ -49,17 +49,17 @@ watch(currentServer, async (newServer) => {
 });
 
 const connectToHub = async () => {
-	if (socket.value?.connection?.state === HubConnectionState.Connected) return;
+	if (dashboardSocket.value?.connection?.state === HubConnectionState.Connected) return;
 
-	return socket.value?.connection?.start()
+	return dashboardSocket.value?.connection?.start()
 		.then(connected);
 };
 
 export const stopDashboardSocket = async () => {
 	try {
-		if (socket.value?.connection?.state === HubConnectionState.Disconnected) return;
+		if (dashboardSocket.value?.connection?.state === HubConnectionState.Disconnected) return;
 
-		return socket.value?.connection?.stop()
+		return dashboardSocket.value?.connection?.stop()
 			.then(disconnected)
 			.catch(disconnected);
 
@@ -72,23 +72,23 @@ export const stopDashboardSocket = async () => {
 export const startDashboardSocket = async () => {
 	const accessToken = user.value?.accessToken;
 
-	if (currentServer.value && (!socket.value?.connection?.state || socket.value?.connection?.state === HubConnectionState.Disconnected)) {
-		socket.value = new SocketClient(currentServer.value.serverBaseUrl, accessToken, 'dashboardHub');
+	if (currentServer.value && (!dashboardSocket.value?.connection?.state || dashboardSocket.value?.connection?.state === HubConnectionState.Disconnected)) {
+		dashboardSocket.value = new SocketClient(currentServer.value.serverBaseUrl, accessToken, 'dashboardHub');
 
-		socket.value?.connection?.on('connected', connected);
-		socket.value?.connection?.on('disconnected', disconnected);
+		dashboardSocket.value?.connection?.on('connected', connected);
+		dashboardSocket.value?.connection?.on('disconnected', disconnected);
 
 		await connectToHub()
 			.catch(error);
 
-		socket.value?.connection?.onreconnecting((error: Error | undefined) => {
+		dashboardSocket.value?.connection?.onreconnecting((error: Error | undefined) => {
 			console.log('SignalR Disconnected.', error?.message);
-			onDisconnect(socket.value?.connection);
+			onDisconnect(dashboardSocket.value?.connection);
 			disconnected();
 		});
-		socket.value?.connection?.onreconnected(() => {
+		dashboardSocket.value?.connection?.onreconnected(() => {
 			console.log('SignalR Reconnected.');
-			onConnect(socket.value?.connection);
+			onConnect(dashboardSocket.value?.connection);
 			connected();
 		});
 	}

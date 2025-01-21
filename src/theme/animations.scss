@@ -441,3 +441,72 @@ html.xmas .frosting.sliderBar::before {
   url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACEAAAAXCAYAAACFxybfAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAodJREFUeNrsVb1rWlEUv2pN/GqspKRSKFYXWzEloIWif0Fn6dJChQ7OQil0qd3EzcEpg0OgdHDr4CQODk7VRlLMEIVqApX4We0zflR9/Z1Ui4T34ksaaAYP/Hzc673n/M6550PG8zz73yKjn0wm83fDYDAwo9HINBrNnwOQg4MDs0ql2lQqlfdAWont7ng8Pjw+Ps44nc4G1pI9EXWaSOzt7TGO42aH5Pv7+08ajUZ0MBiUeXEZd7vdL5VK5fX29rZ+5tQiEmdxKrlcjsEYczgcynK5/BKKv/IXFNz/XiqVXkHdjUuRIA9SqdRD8or/R8Ez9fr9fqHVakUR4c2z0REjIQuHw2ZcrPBXLCA0RHTezEdHjIQqkUhEr9I4HOILhQLf6/VoOUFEvDMiQiToDx1Cdz+bzZ6bUFarlel0OkkVUK/XWbvdPoVer5fh3ntsfwJ+CJ2XA4p0Op1bpBgJyxDehQQ6nQ5DZXHBYDBZq9V+EhFUndnr9drEqoc2bwJbwGPgtohuVSwWe2Gz2TZMJpNgRKi6qtUqg2EWj8dTgUDgo0KhWPN4PC70EvXOzs67fD6/S6kiRIKeZA1YJ2MiJNbdbvfTUCjkV6vVK2hcDF8GI2w0GrGTkxM2HA5PDxaLxSOfz/cWEfk81X0XIMMFgJJ/srBjCgk8IdcfuVyuZ36//7nFYtkQyAMumUzuRiKRD0jMFLa+AZOpYwqgB/ziBVqmVBKUO7eAB/R0WG/Z7XaTVqtdbTabHJL6EK2djBaBPHA0NSqpbUsiMUeEBgpF4Q5AbZrmSJ/yEWgBTaBNHl9kdkgmMUeG7qwAq9PqovceTA3zlxlgsuswyuXsGsiSxJLEkoSY/BZgAEjRodi+uBruAAAAAElFTkSuQmCC) no-repeat 100% 0;
 
 }
+
+.nomercyplayer .seek-ripple {
+  --deg: 90deg;
+  align-items: center;
+  background: linear-gradient(var(--deg), #ffffff10 10%, #ffffff10 45%, #ffffff05 100%);
+  display: none;
+  flex-direction: column;
+  height: 100%;
+  justify-content: center;
+  pointer-events: none;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 28%;
+}
+.nomercyplayer .seek-ripple.left {
+  --deg: 90deg;
+}
+.nomercyplayer .seek-ripple.right {
+  --deg: 270deg;
+}
+.nomercyplayer .seek-ripple-arrow {
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  pointer-events: none;
+  position: relative;
+  width: 600px;
+}
+
+.nomercyplayer .seek-ripple-text {
+  font-size: 0.8rem;
+  font-weight: 700;
+  pointer-events: none;
+  position: relative;
+  text-align: center;
+  width: 600px;
+}
+
+.nomercyplayer .arrow {
+  --size: 0.7;
+  border-bottom: calc(var(--size) * 1rem) solid transparent;
+  border-top: calc(var(--size) * 1rem) solid transparent;
+  float: left;
+  height: calc((var(--size) * 1rem) * 2);
+  margin-bottom: .5rem;
+  width: calc((var(--size) * 1rem) * 2);
+}
+
+.nomercyplayer .arrow-right {
+  border-left: calc((var(--size) * 1rem) + 5px) solid white;
+}
+
+.nomercyplayer .arrow-left {
+  border-right: calc((var(--size) * 1rem) + 5px) solid white;
+}
+
+.nomercyplayer .arrow1 {
+  animation: flash 0.75s infinite;
+}
+
+.nomercyplayer .arrow2 {
+  animation: flash 0.75s infinite 0.25s;
+}
+
+.nomercyplayer .arrow3 {
+  animation: flash 0.75s infinite 0.5s;
+}

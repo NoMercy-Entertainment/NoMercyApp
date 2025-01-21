@@ -1,6 +1,6 @@
 import {groupBy} from '@/lib/stringArray';
 import Plugin from '@nomercy-entertainment/nomercy-video-player/src/plugin';
-import {NMPlayer, VTTData} from '@/lib/VideoPlayer';
+import {NMPlayer} from '@/lib/VideoPlayer';
 import {toRaw} from "vue";
 
 export class AutoSkipPlugin extends Plugin {
@@ -108,11 +108,11 @@ export class AutoSkipPlugin extends Plugin {
 		return this.chapterSkipPatterns.some(pattern => pattern.test(chapterTitle));
 	}
 
-	getCurrentChapter(currentTime: number): VTTData['cues'][number] | undefined {
-		return this.player.chapters.cues.find((chapter: VTTCue) => currentTime >= chapter.startTime && currentTime <= chapter.endTime);
+	getCurrentChapter(currentTime: number) {
+		return this.player.chapters.cues.find((chapter) => currentTime >= chapter.startTime && currentTime <= chapter.endTime);
 	}
 
-	getNextChapter(currentEndTime: number): VTTData['cues'][number] | undefined {
-		return this.player.chapters.cues.find((chapter: VTTCue) => chapter.startTime >= currentEndTime);
+	getNextChapter(currentEndTime: number) {
+		return this.player.chapters.cues.find((chapter) => chapter.startTime >= currentEndTime);
 	}
 }

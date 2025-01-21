@@ -7,12 +7,14 @@ import {currentServer} from '@/store/currentServer';
 
 import NoMercyAvatar from '@/components/Images/NoMercyAvatar.vue';
 import {user} from '@/store/user';
+import {RouterLink} from "vue-router";
 
 </script>
 
 <template>
 
-  <div
+  <RouterLink
+      to="/preferences/profile"
       class="flex justify-start items-center self-stretch flex-grow-0 flex-shrink-0 relative gap-2.5 mb-2"
   >
     <NoMercyAvatar :user="user" :size="40"/>
@@ -30,5 +32,5 @@ import {user} from '@/store/user';
         </p>
       </div>
     </div>
-  </div>
+  </RouterLink>
 </template>

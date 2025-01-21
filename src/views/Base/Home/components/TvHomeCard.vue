@@ -31,8 +31,9 @@ defineProps({
 
     <div class="absolute bottom-0 w-full h-[200%]"
          style="
-                flex-shrink: 0;
-               background: radial-gradient(87.82% 267.96% at 92.04% -27%, rgba(19, 19, 20, 0.10) 34%, #131314 70.74%);"
+           flex-shrink: 0;
+           background: radial-gradient(87.82% 267.96% at 92.04% -27%, rgba(19, 19, 20, 0.10) 34%, #131314 70.74%);
+         "
     ></div>
   </div>
 

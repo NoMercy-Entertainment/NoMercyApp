@@ -1,15 +1,11 @@
 <script setup lang="ts">
 import {ref, watch} from 'vue';
 
-import audioPlayer, {currentTime, duration, percentage} from '@/store/audioPlayer';
+import audioPlayer from '@/store/audioPlayer';
 
 import SliderBar from '@/components/MusicPlayer/components/SliderBar.vue';
 
 const volumePercentage = ref<number>(audioPlayer.volume ?? 0);
-
-// watch(volume, (value) => {
-//   volumePercentage.value = value;
-// });
 
 function calculateLogVolume(sliderValue: number, p = 1.5) {
   const normalizedValue = sliderValue / 100;

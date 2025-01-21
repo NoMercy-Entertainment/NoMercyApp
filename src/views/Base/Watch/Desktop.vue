@@ -1,6 +1,5 @@
 <script setup lang="ts">
-import {onMounted, onUnmounted, ref, watch} from 'vue';
-import {useRoute} from 'vue-router';
+import {onUnmounted, ref, watch} from 'vue';
 import {IonPage, isPlatform} from '@ionic/vue';
 
 import {currentServer} from '@/store/currentServer';

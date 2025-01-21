@@ -1562,7 +1562,7 @@ export class BaseUIPlugin extends Plugin {
 				'group-[&.nomercyplayer.active]:translate-y-0',
 				'group-[&.nomercyplayer.paused]:translate-y-0',
 				'group-[&.nomercyplayer:has(.open)]:translate-y-0',
-				'group-[&.nomercyplayer:has(:focus)]:duration-0',
+				// 'group-[&.nomercyplayer:has(:focus)]:duration-0',
 				'items-center',
 				'mt-auto',
 				'px-2',
@@ -1575,7 +1575,6 @@ export class BaseUIPlugin extends Plugin {
 				'w-available',
 				'z-10',
 				'pointer-events-none',
-				// 'group-[&.nomercyplayer:has(:focus)]:translate-y-0',
 			])
 			.appendTo(parent);
 
@@ -1785,7 +1784,7 @@ export class BaseUIPlugin extends Plugin {
 				'group-[&.nomercyplayer.active]:translate-y-0',
 				'group-[&.nomercyplayer.paused]:translate-y-0',
 				'group-[&.nomercyplayer:has(.open)]:translate-y-0',
-				'group-[&.nomercyplayer:has(:focus)]:duration-0',
+				// 'group-[&.nomercyplayer:has(:focus)]:duration-0',
 				'transition-all',
 				'duration-300',
 
