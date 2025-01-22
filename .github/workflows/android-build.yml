@@ -8,6 +8,11 @@ on:
     types:
       - completed
 
+permissions:
+  contents: write
+  id-token: write
+  pull-requests: write
+  
 jobs:
   build:
     name: Build Android APK
