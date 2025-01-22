@@ -19,7 +19,7 @@ const mediaStatus = ref<string>('');
 const volume = ref<number>(0);
 const isMuted = ref<boolean>(false);
 const isStandby = ref<boolean>(false);
-const isPlaying = ref<boolean>(true);
+const isPlaying = ref<boolean>(false);
 const input = ref<string>('tv/117933');
 
 const timeState = ref<TimeData>({
@@ -78,38 +78,43 @@ watch(castSocketIsConnected, (value) => {
           mediaStatus.value = data;
         });
 
-    connection.value?.invoke('GetPlayerState', 'sender');
+    connection.value?.invoke('GetPlayerState');
 
     connection.value?.on('Time', (data) => {
-      timeState.value = data.time;
+      timeState.value = data;
     });
 
     connection.value?.on('Item', (data) => {
-      playlistItem.value = data.item;
+      playlistItem.value = data;
+    });
+    connection.value?.on('Play', () => {
+      isPlaying.value = true;
+    });
+    connection.value?.on('Pause', () => {
+      isPlaying.value = false;
     });
 
     connection.value?.on('Playlist', (data) => {
-      playlist.value = data.playlist;
+      playlist.value = data;
     });
 
     connection.value?.on('AudioTracks', (data) => {
-      audioTracks.value = data.audio;
+      audioTracks.value = data;
     });
 
     connection.value?.on('CurrentAudioTrack', (data) => {
-      currentAudioTrack.value = audioTracks.value.find(item => item.id == data.audio)!;
+      currentAudioTrack.value = audioTracks.value.find(item => item.id == data)!;
     });
 
     connection.value?.on('SubtitleTracks', (data) => {
-      subtitleTracks.value = data.subtitle;
+      subtitleTracks.value = data;
     });
 
     connection.value?.on('CurrentSubtitleTrack', (data) => {
-      currentSubtitleTrack.value = data.subtitle;
+      currentSubtitleTrack.value = data;
     });
 
-    connection.value?.on('PlayerState', ({state}: {
-      state: {
+    connection.value?.on('PlayerState', (state: {
         time: TimeData,
         volume: number,
         muted: boolean,
@@ -119,14 +124,13 @@ watch(castSocketIsConnected, (value) => {
         currentSubtitleTrack: Track,
         audioTracks: MediaPlaylist[],
         currentAudioTrack: number,
-      }
     }) => {
       console.log(state);
       timeState.value = state.time;
       volume.value = state.volume;
       isMuted.value = state.muted;
       playlist.value = state.playlist;
-      isPlaying.value = !state.isPlaying;
+      isPlaying.value = state.isPlaying;
       subtitleTracks.value = state.subtitles;
       currentSubtitleTrack.value = state.currentSubtitleTrack;
       audioTracks.value = state.audioTracks;
@@ -181,38 +185,43 @@ onMounted(() => {
           mediaStatus.value = data;
         });
 
-    connection.value?.invoke('GetPlayerState', 'sender');
+    connection.value?.invoke('GetPlayerState');
 
     connection.value?.on('Time', (data) => {
-      timeState.value = data.time;
+      timeState.value = data;
     });
 
     connection.value?.on('Item', (data) => {
-      playlistItem.value = data.item;
+      playlistItem.value = data;
+    });
+    connection.value?.on('Play', () => {
+      isPlaying.value = true;
+    });
+    connection.value?.on('Pause', () => {
+      isPlaying.value = false;
     });
 
     connection.value?.on('Playlist', (data) => {
-      playlist.value = data.playlist;
+      playlist.value = data;
     });
 
     connection.value?.on('AudioTracks', (data) => {
-      audioTracks.value = data.audio;
+      audioTracks.value = data;
     });
 
     connection.value?.on('CurrentAudioTrack', (data) => {
-      currentAudioTrack.value = audioTracks.value.find(item => item.id == data.audio)!;
+      currentAudioTrack.value = audioTracks.value.find(item => item.id == data)!;
     });
 
     connection.value?.on('SubtitleTracks', (data) => {
-      subtitleTracks.value = data.subtitle;
+      subtitleTracks.value = data;
     });
 
     connection.value?.on('CurrentSubtitleTrack', (data) => {
-      currentSubtitleTrack.value = data.subtitle;
+      currentSubtitleTrack.value = data;
     });
 
-    connection.value?.on('PlayerState', ({state}: {
-      state: {
+    connection.value?.on('PlayerState', (state: {
         time: TimeData,
         volume: number,
         muted: boolean,
@@ -222,13 +231,12 @@ onMounted(() => {
         currentSubtitleTrack: Track,
         audioTracks: MediaPlaylist[],
         currentAudioTrack: number,
-      }
     }) => {
       timeState.value = state.time;
       volume.value = state.volume;
       isMuted.value = state.muted;
       playlist.value = state.playlist;
-      isPlaying.value = !state.isPlaying;
+      isPlaying.value = state.isPlaying;
       subtitleTracks.value = state.subtitles;
       currentSubtitleTrack.value = state.currentSubtitleTrack;
       audioTracks.value = state.audioTracks;
@@ -259,7 +267,7 @@ watch(receivers, (value) => {
 });
 
 watch(volume, (value) => {
-  connection.value?.invoke('SetVolume', 'sender', value);
+  connection.value?.invoke('SetVolume', value);
 });
 
 const launch = () => {
@@ -272,26 +280,26 @@ const castPlaylist = (value: string) => {
 
 const toggleMute = () => {
   if (isMuted.value) {
-    connection.value?.invoke('UnMute');
+    connection.value?.invoke('SetUnMute');
   } else {
-    connection.value?.invoke('Mute');
+    connection.value?.invoke('SetMute');
   }
 };
 
 const handlePlayback = () => {
   if (isPlaying.value) {
-    connection.value?.invoke('Pause', 'sender');
+    connection.value?.invoke('SetPause');
   } else {
-    connection.value?.invoke('Play', 'sender');
+    connection.value?.invoke('SetPlay');
   }
 };
 
 const handleNext = () => {
-  connection.value?.invoke('Next', 'sender');
+  connection.value?.invoke('SetNext');
 };
 
 const handlePrevious = () => {
-  connection.value?.invoke('Previous', 'sender');
+  connection.value?.invoke('SetPrevious');
 };
 
 const disconnect = () => {
@@ -300,7 +308,7 @@ const disconnect = () => {
 
 const seek = (value: number) => {
   percentage.value = value;
-  connection.value?.invoke('Seek', 'sender', value);
+  connection.value?.invoke('SetSeek', value);
 };
 
 const translations = {
@@ -502,15 +510,15 @@ const translations = {
 }
 
 const setSubtitle = (value: number) => {
-  connection.value?.invoke('SetSubtitleTrack', 'sender', value);
+  connection.value?.invoke('SetSubtitleTrack', value);
 }
 
 const setAudio = (value: number) => {
-  connection.value?.invoke('SetAudioTrack', 'sender', value);
+  connection.value?.invoke('SetAudioTrack', value);
 }
 
 const setPlaylistItem = (value: number) => {
-  connection.value?.invoke('SetPlaylistItem', 'sender', value);
+  connection.value?.invoke('SetPlaylistItem', value);
 }
 
 </script>
@@ -519,9 +527,9 @@ const setPlaylistItem = (value: number) => {
   <ion-page>
     <ion-content :fullscreen="true">
       <div class="flex flex-col gap-4 items-center justify-center p-4">
-        <Select v-model="currentReceiver" :options="receivers" optionLabel="" class="w-1/3"/>
+        <Select v-model="currentReceiver" :options="receivers" optionLabel="" class="w-1/3 min-w-96"/>
 
-        <div class="flex gap-4 w-1/3 items-center">
+        <div class="flex gap-4 w-1/3 min-w-96 items-center">
           <Button @click="launch" id="launch">
             {{ $t('Launch') }}
           </Button>
@@ -531,7 +539,7 @@ const setPlaylistItem = (value: number) => {
           </Button>
         </div>
 
-        <div v-if="playlistItem" class="flex flex-col gap-4 w-1/3 items-center justify-center">
+        <div v-if="playlistItem" class="flex flex-col gap-4 w-1/3 min-w-96 items-center justify-center">
           <div class="flex gap-1 items-center">
             <span>
                 {{ playlistItem.show }}
@@ -548,7 +556,7 @@ const setPlaylistItem = (value: number) => {
                class="aspect-video w-full h-auto">
         </div>
 
-        <div class="flex gap-4 w-1/3 items-center justify-center">
+        <div class="flex gap-4 w-1/3 min-w-96 items-center justify-center">
 
           <MusicButton label="Previous" :onclick="handlePrevious">
             <PlayerIcon icon="nmPreviousHalftone" class="absolute h-7 w-7 inset-1.5"/>
@@ -573,7 +581,7 @@ const setPlaylistItem = (value: number) => {
 
         </div>
 
-        <div class="flex gap-4 w-1/3 items-center">
+        <div class="flex gap-4 w-1/3 min-w-96 items-center">
           <span class="font-mono">{{ currentTimeHuman }}</span>
           <SliderBar
               :percentage="percentage"
@@ -585,7 +593,7 @@ const setPlaylistItem = (value: number) => {
           <span class="font-mono">{{ remainingTimeHuman }}</span>
         </div>
 
-        <div class="flex gap-4 w-1/3 items-center">
+        <div class="flex gap-4 w-1/3 min-w-96 items-center">
           <MusicButton label="Mute" :onclick="toggleMute">
             <MoooomIcon icon="volumeMuted" v-if="isMuted" class="h-6 w-6"/>
             <MoooomIcon icon="volumeOne" v-else-if="volume == 0" class="h-6 w-6"/>
@@ -603,7 +611,7 @@ const setPlaylistItem = (value: number) => {
           />
         </div>
 
-        <div class="flex flex-col gap-4 w-1/3 items-center justify-center">
+        <div class="flex flex-col gap-4 w-1/3 min-w-96 items-center justify-center">
 
           <div class="flex gap-4 w-full items-center justify-center">
             <FloatLabel variant="on" class="w-full">

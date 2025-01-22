@@ -1,14 +1,18 @@
-import {NMPlayer, PlaylistItem} from '@/lib/VideoPlayer';
 import Plugin from '@nomercy-entertainment/nomercy-video-player/src/plugin';
+import type {NMPlayer, PlaylistItem} from "@nomercy-entertainment/nomercy-video-player/src/types";
 
-import {useSocket} from '@/store/socket';
+import {useSocket} from "@/store/socket";
+
+export interface SyncPluginArgs {
+	basePath: string;
+	accessToken: string,
+}
 
 export class SyncPlugin extends Plugin {
-	player: NMPlayer = <NMPlayer>{};
+	player: NMPlayer<SyncPluginArgs> = <NMPlayer<SyncPluginArgs>>{};
 
-	initialize(player: NMPlayer) {
+	async initialize(player: NMPlayer<SyncPluginArgs>) {
 		this.player = player;
-		// Initialize the plugin with the player
 	}
 
 	use() {

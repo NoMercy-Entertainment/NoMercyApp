@@ -43,7 +43,7 @@ onMounted(() => {
         <template v-slot:button>
             <div class="relative my-1 flex flex-shrink-0 flex-grow-0 items-start justify-start gap-2 overflow-hidden rounded-md transition-colors duration-300 text-auto-12 hover:bg-focus/10 focus:bg-auto-12/2">
                 <template v-if="hasUnreadMessages">
-                    <div :class="`relative p-2.5 w-full h-full origin-top ${ringing ? 'animate-bounce' : ''}`">
+                    <div :class="`relative p-2.5 w-full h-full origin-bottom ${ringing ? 'animate-swing' : ''}`">
                         <div class="absolute top-3 right-3 h-2 w-2 rounded-full bg-red-dark-7"></div>
                         <MoooomIcon icon="chatAlert"/>
                     </div>

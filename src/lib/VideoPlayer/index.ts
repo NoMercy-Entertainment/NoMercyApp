@@ -5,8 +5,8 @@ import { DesktopUIPlugin } from './plugins/UIPlugin/desktopUIPlugin';
 
 import nmplayer from '@nomercy-entertainment/nomercy-video-player/src/index';
 import Plugin from '@nomercy-entertainment/nomercy-video-player/src/plugin';
-import { OctopusPlugin } from '@nomercy-entertainment/nomercy-video-player/src/plugins/octopusPlugin';
-import { KeyHandlerPlugin } from '@nomercy-entertainment/nomercy-video-player/src/plugins/keyHandlerPlugin';
+import OctopusPlugin from '@nomercy-entertainment/nomercy-video-player/src/plugins/octopusPlugin';
+import KeyHandlerPlugin from '@nomercy-entertainment/nomercy-video-player/src/plugins/keyHandlerPlugin';
 import type {NMPlayer, PlaylistItem, PlayerConfig, VTTData} from '@nomercy-entertainment/nomercy-video-player/src/types';
 
 // // @ts-ignore

@@ -7,7 +7,7 @@ import {
 } from  '@nomercy-entertainment/nomercy-video-player/src/helpers';
 
 import type { Icon } from './buttons';
-import type { PlaylistItem } from '../../index';
+import type { PlaylistItem } from '@nomercy-entertainment/nomercy-video-player/src/types';
 
 export class TVUIPlugin extends BaseUIPlugin {
 
@@ -165,18 +165,11 @@ export class TVUIPlugin extends BaseUIPlugin {
 		this.createTvProgressBar(bottomRow);
 		this.createTime(bottomRow, 'remaining', ['mr-14']);
 
-		// this.player.on('active', (value) => {
-		// 	if (value && this.currentMenu !== 'seek' && !this.controlsVisible) {
-		// 		playbackButton.focus();
-		// 	}
-		// });
-
 		this.player.on('playing', () => {
 			if (this.currentMenu !== 'seek' && !this.controlsVisible) {
 				this.playbackButton.focus();
 			}
 		});
-
 
 		let activeButton = backButton ?? restartButton ?? nextButton;
 
@@ -185,13 +178,16 @@ export class TVUIPlugin extends BaseUIPlugin {
 				if (e.key == 'ArrowDown') {
 					if (this.nextUp.style.display == 'none') {
 						this.playbackButton?.focus();
-					} else {
+					}
+					else {
 						this.nextUp.lastChild?.focus();
 					}
-				} else if (e.key == 'ArrowLeft') {
+				}
+				else if (e.key == 'ArrowLeft') {
 					activeButton = ((e.target as HTMLButtonElement).previousElementSibling as HTMLButtonElement);
 					activeButton?.focus();
-				} else if (e.key == 'ArrowRight') {
+				}
+				else if (e.key == 'ArrowRight') {
 					e.preventDefault();
 					activeButton = ((e.target as HTMLButtonElement).nextElementSibling as HTMLButtonElement);
 					activeButton?.focus();
@@ -227,54 +223,65 @@ export class TVUIPlugin extends BaseUIPlugin {
 		});
 
 		let didSlide: boolean = false;
-		[this.player.getVideoElement(), tvOverlay].forEach((button) => {
-			(button as unknown as HTMLButtonElement)?.addEventListener('keydown', (e: KeyboardEvent) => {
+		[document.body].forEach((button) => {
+			(button as unknown as HTMLButtonElement)?.addEventListener('keyup', (e: KeyboardEvent) => {
 				if (e.key == 'ArrowLeft') {
 					// eslint-disable-next-line max-len
 					if ([backButton, restartButton, nextButton, this.nextUp.firstChild, this.nextUp.lastChild].includes(e.target as HTMLButtonElement)) {
 						return;
 					}
 					e.preventDefault();
+					this.player.pause();
 
 					this.player.emit('show-seek-container', true);
 
 					if (this.shouldSlide) {
 						this.currentScrubTime = this.getClosestSeekableInterval();
 						this.shouldSlide = false;
-					} else {
-						const newScrubbTime = this.currentScrubTime - 10;
-						didSlide = true;
-						this.player.emit('currentScrubTime', {
-							...this.player.getTimeData(),
-							currentTime: newScrubbTime,
-						});
 					}
-
-				} else if (e.key == 'ArrowRight') {
-					// eslint-disable-next-line max-len
-					if ([backButton, restartButton, nextButton, this.nextUp.firstChild, this.nextUp.lastChild].includes(e.target as HTMLButtonElement)) {
-						return;
-					}
-					e.preventDefault();
-
-					this.player.emit('show-seek-container', true);
-
-					if (this.shouldSlide) {
-						this.currentScrubTime = this.getClosestSeekableInterval();
-						this.shouldSlide = false;
-					} else {
-						const newScrubTime = this.currentScrubTime + 10;
+					else {
+						const newScrubTime = this.currentScrubTime - 10;
+						console.log('newScrubTime', newScrubTime);
 						didSlide = true;
 						this.player.emit('currentScrubTime', {
 							...this.player.getTimeData(),
 							currentTime: newScrubTime,
 						});
 					}
-				} else if (e.key == 'Enter') {
+
+				}
+				else if (e.key == 'ArrowRight') {
+					// eslint-disable-next-line max-len
+					if ([backButton, restartButton, nextButton, this.nextUp.firstChild, this.nextUp.lastChild].includes(e.target as HTMLButtonElement)) {
+						return;
+					}
+					e.preventDefault();
+					this.player.pause();
+
+					this.player.emit('show-seek-container', true);
+
+					if (this.shouldSlide) {
+						this.currentScrubTime = this.getClosestSeekableInterval();
+						this.shouldSlide = false;
+					}
+					else {
+						const newScrubTime = this.currentScrubTime + 10;
+						didSlide = true;
+						console.log('newScrubTime', newScrubTime);
+						this.player.emit('currentScrubTime', {
+							...this.player.getTimeData(),
+							currentTime: newScrubTime,
+						});
+					}
+				}
+				else if (e.key == 'Enter') {
 					if (Math.abs(this.currentScrubTime - this.player.getCurrentTime()) > 5 && didSlide) {
 						console.log('seeking to', this.currentScrubTime);
 						this.player.seek(this.currentScrubTime);
 						didSlide = false;
+						this.playbackButton.focus();
+					} else {
+						this.player.togglePlayback();
 					}
 				}
 			});
@@ -1559,5 +1566,4 @@ export class TVUIPlugin extends BaseUIPlugin {
 		return tvButton;
 
 	}
-
 }

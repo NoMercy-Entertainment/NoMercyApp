@@ -1,10 +1,15 @@
-import {groupBy} from '@/lib/stringArray';
-import Plugin from '@nomercy-entertainment/nomercy-video-player/src/plugin';
-import {NMPlayer} from '@/lib/VideoPlayer';
 import {toRaw} from "vue";
 
+import Plugin from '@nomercy-entertainment/nomercy-video-player/src/plugin';
+import {NMPlayer} from '@nomercy-entertainment/nomercy-video-player/src/types';
+
+import {groupBy} from '@/lib/stringArray';
+
+export interface AutoSkipPluginArgs {
+}
+
 export class AutoSkipPlugin extends Plugin {
-	player: NMPlayer = <NMPlayer>{};
+	player: NMPlayer<AutoSkipPluginArgs> = <NMPlayer<AutoSkipPluginArgs>>{};
 
 	chapterSkipPatterns: RegExp[] = [
 		/^OP$/ui,
@@ -34,8 +39,7 @@ export class AutoSkipPlugin extends Plugin {
 		/^Yokoku$/ui,
 	];
 
-
-	initialize(player: NMPlayer) {
+	initialize(player: NMPlayer<AutoSkipPluginArgs>) {
 		this.player = player;
 
 		if (this.player.options.chapterSkipPatterns) {
@@ -84,7 +88,7 @@ export class AutoSkipPlugin extends Plugin {
 		const playlistItem = this.player.playlistItem();
 		if (playlistItem.episode == 1) return true;
 
-		const playlist = this.player.getPlaylist().map((item: any) => toRaw(item as any));
+		const playlist = this.player.getPlaylist().map((item) => toRaw(item as any));
 
 		const seasons = groupBy(playlist, 'season');
 		const season = seasons[playlistItem.season as number];

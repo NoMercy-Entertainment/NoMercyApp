@@ -180,9 +180,6 @@ onUnmounted(() => {
 .nomercyplayer .seek-container {
   @apply mb-28;
 }
-.nomercyplayer .-mb-28 {
-  margin-bottom: 7rem !important;
-}
 .nomercyplayer #thumbnail-clone-1 {
   display: none !important;
 }
