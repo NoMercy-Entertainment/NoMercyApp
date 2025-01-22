@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import {onUnmounted, ref, watch} from 'vue';
-import {IonPage, isPlatform} from '@ionic/vue';
+import {onMounted, onUnmounted, ref, watch} from 'vue';
+import {IonPage, isPlatform, onIonViewDidEnter} from '@ionic/vue';
 
 import {currentServer} from '@/store/currentServer';
 import {user} from '@/store/user';
@@ -43,7 +43,7 @@ interface MyNmPlayer extends NMPlayer {
 const player = ref<MyNmPlayer>();
 const playerContainer = ref<HTMLDivElement>();
 
-watch(data, (value) => {
+const initPlayer = (value: PlaylistItem[] | undefined) => {
 
   const config: PlayerConfig = {
     muted: false,
@@ -72,8 +72,10 @@ watch(data, (value) => {
     renderAhead: 100,
   }
 
+  player.value?.dispose();
+
   // @ts-ignore
-  player.value ??= nmplayer('player1')
+  player.value = nmplayer('player1')
       .setup(config);
 
   player.value?.once('back', () => {
@@ -84,17 +86,9 @@ watch(data, (value) => {
   player.value?.registerPlugin('desktopUI', desktopUIPlugin);
   player.value?.usePlugin('desktopUI');
 
-  const octopusPlugin = new OctopusPlugin();
-  player.value?.registerPlugin('octopus', octopusPlugin);
-  player.value?.usePlugin('octopus');
-
   const autoSkipPlugin = new AutoSkipPlugin();
   player.value?.registerPlugin('autoSkip', autoSkipPlugin);
   player.value?.usePlugin('autoSkip');
-
-  // const sabrePlugin = new SabrePlugin();
-  // player.value?.registerPlugin('sabre', sabrePlugin);
-  // player.value?.usePlugin('sabre');
 
   const keyHandlerPlugin = new KeyHandlerPlugin();
   player.value?.registerPlugin('keyHandler', keyHandlerPlugin);
@@ -103,6 +97,14 @@ watch(data, (value) => {
   const syncPlugin = new SyncPlugin();
   player.value?.registerPlugin('sync', syncPlugin);
   player.value?.usePlugin('sync');
+
+  const octopusPlugin = new OctopusPlugin();
+  player.value?.registerPlugin('octopus', octopusPlugin);
+  player.value?.usePlugin('octopus');
+
+  // const sabrePlugin = new SabrePlugin();
+  // player.value?.registerPlugin('sabre', sabrePlugin);
+  // player.value?.usePlugin('sabre');
 
   player.value?.once('play', () => {
     player.value?.enterFullscreen();
@@ -148,7 +150,14 @@ watch(data, (value) => {
   player.value?.on('item', () => {
     player.value?.play();
   });
+}
 
+watch(data, (value) => {
+  initPlayer(value);
+});
+
+onMounted(() => {
+  initPlayer(data.value);
 });
 
 onUnmounted(() => {

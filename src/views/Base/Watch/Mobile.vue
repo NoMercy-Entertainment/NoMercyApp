@@ -1,8 +1,6 @@
 <script setup lang="ts">
-import {onBeforeUnmount, onMounted, onUnmounted, ref} from 'vue';
-import {useRoute} from 'vue-router';
-import {useTranslation} from 'i18next-vue';
-import {IonContent, IonPage, isPlatform} from '@ionic/vue';
+import {onBeforeUnmount, onUnmounted, ref, watch} from 'vue';
+import {IonContent, IonPage, isPlatform, onIonViewDidEnter} from '@ionic/vue';
 import {App} from '@capacitor/app';
 
 import {disableImmersiveMode, enableImmersiveMode, lockLandscape, lockPortrait} from '@/lib/utils';
@@ -11,7 +9,7 @@ import {currentServer} from '@/store/currentServer';
 import {user} from '@/store/user';
 import {setDisableScreensaver} from '@/store/imageModal';
 
-import type {NMPlayer, PlaylistItem, SetupConfig} from '@/lib/VideoPlayer';
+import type {NMPlayer, PlaylistItem, PlayerConfig} from '@/lib/VideoPlayer';
 import {
   AutoSkipPlugin,
   DesktopUIPlugin,
@@ -22,37 +20,11 @@ import {
 
 import audioPlayer from '@/store/audioPlayer';
 import router from "@/router";
+import useServerClient from "@/lib/clients/useServerClient";
 
-const {t} = useTranslation();
-const route = useRoute();
+const {data, isError} = useServerClient<PlaylistItem[]>({
 
-const config: SetupConfig = {
-  muted: false,
-  controls: false,
-  preload: 'auto',
-  debug: false,
-  autoPlay: true,
-  playlist: `${currentServer.value?.serverApiUrl}${route.fullPath}`,
-
-  controlsTimeout: 3000,
-  doubleClickDelay: 500,
-  playbackRates: [
-    0.25,
-    0.5,
-    0.75,
-    1,
-    1.25,
-    1.5,
-    1.75,
-    2,
-  ],
-  accessToken: user.value?.accessToken || localStorage.getItem('access_token') || '',
-  basePath: currentServer.value?.serverBaseUrl,
-  forceTvMode: (isPlatform('android') || isPlatform('ios')) && !isPlatform('mobile'),
-  disableTouchControls: false,
-  disableMediaControls: 'mediaSession' in navigator || isPlatform('capacitor'),
-  renderAhead: 100,
-};
+});
 
 interface MyNmPlayer extends NMPlayer {
   showInProduction: () => boolean;
@@ -66,9 +38,41 @@ interface MyNmPlayer extends NMPlayer {
 
 const player = ref<MyNmPlayer>();
 
-onMounted(() => {
+const initPlayer = (value: PlaylistItem[] | undefined) => {
+
+  const config: PlayerConfig = {
+    muted: false,
+    controls: false,
+    preload: 'auto',
+    debug: false,
+    autoPlay: true,
+    playlist: value?.filter(item => !!item.id) ?? [],
+
+    controlsTimeout: 3000,
+    doubleClickDelay: 500,
+    playbackRates: [
+      0.25,
+      0.5,
+      0.75,
+      1,
+      1.25,
+      1.5,
+      1.75,
+      2,
+    ],
+    accessToken: user.value?.accessToken || localStorage.getItem('access_token') || '',
+    basePath: currentServer.value?.serverBaseUrl,
+    forceTvMode: (isPlatform('android') || isPlatform('ios')) && !isPlatform('mobile'),
+    disableTouchControls: false,
+    disableMediaControls: 'mediaSession' in navigator || isPlatform('capacitor'),
+    renderAhead: 100,
+  };
+
+  player.value?.dispose();
+
+
   // @ts-ignore
-  player.value ??= nmplayer('player1')
+  player.value = nmplayer('player1')
       .setup(config);
 
   player.value?.once('back', () => {
@@ -79,21 +83,21 @@ onMounted(() => {
   player.value?.registerPlugin('desktopUI', desktopUIPlugin);
   player.value?.usePlugin('desktopUI');
 
-  const octopusPlugin = new OctopusPlugin();
-  player.value?.registerPlugin('octopus', octopusPlugin);
-  player.value?.usePlugin('octopus');
-
   const autoSkipPlugin = new AutoSkipPlugin();
   player.value?.registerPlugin('autoSkip', autoSkipPlugin);
   player.value?.usePlugin('autoSkip');
 
-  // const sabrePlugin = new SabrePlugin();
-  // player.value?.registerPlugin('sabre', sabrePlugin);
-  // player.value?.usePlugin('sabre');
-
   const syncPlugin = new SyncPlugin();
   player.value?.registerPlugin('sync', syncPlugin);
   player.value?.usePlugin('sync');
+
+  const octopusPlugin = new OctopusPlugin();
+  player.value?.registerPlugin('octopus', octopusPlugin);
+  player.value?.usePlugin('octopus');
+
+  // const sabrePlugin = new SabrePlugin();
+  // player.value?.registerPlugin('sabre', sabrePlugin);
+  // player.value?.usePlugin('sabre');
 
   player.value?.once('play', () => {
     player.value?.enterFullscreen();
@@ -122,16 +126,8 @@ onMounted(() => {
     audioPlayer.stop();
   });
 
-  player.value?.on('item', (playlistItem: PlaylistItem) => {
+  player.value?.on('item', () => {
     player.value?.play();
-  });
-
-  player.value?.on('active', (value) => {
-    if (value) {
-      //
-    } else {
-      //
-    }
   });
 
   App.addListener('backButton', () => {
@@ -139,7 +135,14 @@ onMounted(() => {
     router.back();
   });
 
-  document.dispatchEvent(new Event('sidebar'));
+};
+
+watch(data, (value) => {
+  initPlayer(value);
+});
+
+onIonViewDidEnter(() => {
+  initPlayer(data.value);
 });
 
 onBeforeUnmount(() => {
