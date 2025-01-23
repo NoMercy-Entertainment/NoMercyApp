@@ -14,15 +14,13 @@ let redirectUri = `nomercy://home`;
 if (location.href.includes('logout')) {
 	redirectUri = `nomercy:///logout`;
 }
-
-(async () => {
-	await App.addListener('appUrlOpen', async (data) => {
-		redirectUri = data.url;
-		router.isReady().then(async () => {
-			await router.replace(data.url.replace('nomercy://', ''));
-		});
+App.addListener('appUrlOpen', async (data) => {
+	console.log('App opened with URL: ', data.url);
+	redirectUri = data.url;
+	router.isReady().then(async () => {
+		await router.replace(data.url.replace('nomercy://', ''));
 	});
-})();
+}).then();
 
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/vue/css/core.css';
@@ -71,7 +69,6 @@ const refreshToken = location.search.includes('refreshToken')
 
 const redirectUrl = window.location.hash.replace('#', '');
 redirectUrl && localStorage.setItem('redirectUrl', redirectUrl);
-console.log('location', window.location);
 
 // Mobile Capacitor App
 if (isPlatform('capacitor') && !isTv.value && !localStorage.getItem('access_token')) {

@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import {RouterLink} from 'vue-router';
-import {IonIcon, IonItem, IonList, IonRippleEffect} from '@ionic/vue';
+import {RouterLink, useRoute} from 'vue-router';
+import {IonIcon, IonItem, IonList, IonRippleEffect, isPlatform} from '@ionic/vue';
 import {arrowRefreshVertical, doorOpen, gridMasonry, monitor, moonDiagonal, serverSwitch} from '@Icons/index';
 
 import {darkMode} from '@/store/colorScheme';
@@ -11,8 +11,21 @@ import BottomFlyout from '@/Layout/Mobile/components/BottomFlyout.vue';
 import Toggle from '@/components/Forms/Toggle.vue';
 import {logout} from '@/lib/auth/index';
 import {closeMenu, menuOpen} from "@/store/profileMenu";
+import {Browser} from "@capacitor/browser";
+import {phonePortrait} from "ionicons/icons";
 
 const reload = () => window.location.reload();
+
+const route = useRoute();
+const handleOpenApp = async () => {
+  if (isPlatform('android')) {
+    Browser.open({url: `nomercy://${route.path}`}).then(() => {
+      setTimeout(async () => {
+        await Browser.open({url: `nomercy://${route.path}`})
+      }, 1000);
+    });
+  }
+}
 
 </script>
 
@@ -83,6 +96,21 @@ const reload = () => window.location.reload();
           <div class="flex justify-center items-center flex-grow relative gap-2 pl-2">
             <p class="flex-grow w-full text-lg font-medium text-left">
               {{ $t('Refresh') }}
+            </p>
+          </div>
+        </button>
+      </ion-item>
+
+      <ion-item lines="none" v-if="!isPlatform('capacitor') && isPlatform('android')">
+        <button @click="handleOpenApp"
+                class="flex justify-center items-center self-stretch w-full h-full flex-grow-0 flex-shrink-0 relative pl-1 py-2.5 rounded-md bg-transparent border border-transparent"
+        >
+          <ion-ripple-effect/>
+          <div class="flex-grow-0 flex-shrink-0 w-1 h-3.5"></div>
+          <ion-icon aria-hidden="true" :icon="phonePortrait" class="w-6 h-6"/>
+          <div class="flex justify-center items-center flex-grow relative gap-2 pl-2">
+            <p class="flex-grow w-full text-lg font-medium text-left">
+              {{ $t('Open in App') }}
             </p>
           </div>
         </button>

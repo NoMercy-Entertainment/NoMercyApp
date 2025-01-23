@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import {onMounted, ref, watch} from 'vue';
 import {useRouter} from 'vue-router';
-import {IonContent, IonPage, onIonViewWillEnter} from '@ionic/vue';
+import {IonContent, IonPage, isPlatform, onIonViewWillEnter} from '@ionic/vue';
 
 import type {ScrollCustomEvent} from '@ionic/core/dist/types/components/content/content-interface';
 import type {DisplayList} from '@/types/api/music/musicPlayer';
@@ -90,10 +90,11 @@ const onScroll = (e: ScrollCustomEvent) => {
 
   const headerScrollTop = 170;
   const headerScrollTextTop = 160;
-  const sortHeaderTop = 64;
+  const sortHeaderTop = isPlatform('capacitor') ? 88 : 64;
 
   const top = sortHeader.value?.$el?.getBoundingClientRect().top;
   if (!top) return;
+  console.log(top);
 
   showScrollHeader.value = top <= headerScrollTop;
   showScrollHeaderText.value = top <= headerScrollTextTop;
@@ -127,7 +128,7 @@ const onScroll = (e: ScrollCustomEvent) => {
           <div class="pointer-events-none absolute z-0 h-96 w-full bg-spotifyBottom bg-focus"></div>
 
           <div id="navbar"
-               class=" fixed z-1099 -mx-2 flex gap-4 p-2 px-4 w-available sm:hidden bg-slate-light-11 dark:bg-slate-dark-1 top-0 pt-safe-offset-4 transition-opacity duration-300"
+               class=" fixed z-1099 -mx-2 flex gap-4 p-2 px-4 w-available sm:hidden bg-slate-light-11 dark:bg-slate-dark-1 top-0 pt-safe-offset-4 transition-all duration-400"
                :class="{
                   'opacity-0 pointer-events-none': !showScrollHeader,
                   'opacity-100 pointer-events-auto': showScrollHeader

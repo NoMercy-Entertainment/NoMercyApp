@@ -32,10 +32,6 @@ const afterEach = (router: Router) => {
 				}, 500);
 			}
 		}
-
-		if (!isPlatform('capacitor') && isPlatform('mobileweb')) {
-			Browser.open({url: `nomercy://${to.fullPath}`}).then();
-		}
 	});
 };
 

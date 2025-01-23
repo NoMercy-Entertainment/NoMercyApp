@@ -3,15 +3,20 @@ import {SortType} from '@/types/musicPlayer';
 
 import SortButton from './SortButton.vue';
 import {isAlbumRoute} from '@/store/routeState';
+import {isPlatform} from "@ionic/vue";
 
 </script>
 
 <template>
   <div id="sortHeaderElement"
-       class="sticky top-safe-offset-16 -mx-4 px-4 z-30 my-2 block h-10 content-center items-center justify-start self-stretch bg-transparent text-sm font-medium transition-transform duration-500 w-available -mt-0.5 group/track sm:w-available sm:-top-px"
+       class="sticky -mx-4 px-4 z-30 my-2 block h-10 content-center items-center justify-start self-stretch bg-transparent text-sm font-medium transition-all duration-200 w-available -mt-0.5 group/track sm:w-available sm:-top-px"
+       :class="{
+          'top-safe-offset-16': !isPlatform('capacitor'),
+          'top-safe-offset-10': isPlatform('capacitor')
+       }"
        tabindex="0">
     <span id="sorterChild"
-          class="absolute inset-0 h-10 sm:rounded-t-2xl overflow-clip w-full transition-transform duration-500"></span>
+          class="absolute inset-0 h-10 sm:rounded-t-2xl overflow-clip w-full transition-all duration-200"></span>
     <span
         :class="{
           'album-grid': isAlbumRoute,

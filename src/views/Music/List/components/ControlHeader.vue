@@ -10,6 +10,7 @@ import MoooomIcon from '@/components/Images/icons/MoooomIcon.vue';
 import MusicButton from '@/components/MusicPlayer/components/MusicButton.vue';
 import MediaLikeButton from '@/components/Buttons/MediaLikeButton.vue';
 import {isTrackRoute} from '@/store/routeState';
+import {isPlatform} from "@ionic/vue";
 
 const props = defineProps({
     data: {
@@ -73,10 +74,13 @@ const handleAdd = () => {
     </div>
 
     <div
-        class="sm:hidden sticky left-full -mt-16 top-safe-offset-11 z-1199 flex justify-center items-center gap-2 mr-4 h-auto"
+        class="sm:hidden sticky left-full -mt-16 z-1199 flex justify-center items-center gap-2 mr-4 h-auto"
          style="box-shadow: 0 1px 2px 0 rgba(16,24,40,0.05);"
+        :class="{
+          'top-safe-offset-11': !isPlatform('capacitor'),
+          'top-safe-offset-3': isPlatform('capacitor')
+       }"
     >
-
         <BigPlayButton v-if="data?.tracks"
                        :data="data"
         />
