@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import {computed, type PropType, ref} from 'vue';
-import {useTranslation} from 'i18next-vue';
+import { computed, type PropType, ref } from 'vue';
+import { useTranslation } from 'i18next-vue';
 
-import type {HomeDataItem} from '@/types/api/music';
+import type { HomeDataItem } from '@/types/api/music';
 
-import {pickPaletteColor} from '@/lib/colorHelper';
+import { pickPaletteColor } from '@/lib/colorHelper';
 import {
   type ContextMenuItem,
 } from '@/store/contextMenuItems';
@@ -23,7 +23,7 @@ const props = defineProps({
   }
 });
 
-const {t} = useTranslation();
+const { t } = useTranslation();
 
 const footText = computed(() => {
   let text = '';
@@ -44,8 +44,8 @@ const footText = computed(() => {
 
   if (props.data?.tracks) {
     text += ` • ${props.data?.tracks} ${(props.data?.tracks ?? 0) > 1
-        ? t('tracks')
-        : t('track')}`;
+      ? t('tracks')
+      : t('track')}`;
   } else {
     text += ` • ${props.data?.year}`;
   }
@@ -54,30 +54,25 @@ const footText = computed(() => {
 });
 
 const ringColor = ref(pickPaletteColor(props.data.color_palette?.cover)
-    ?.replace('rgb(', '')
-    .replace(')', '')
-    .replace(/,/gu, ' ') ?? 'var(--color-primary)');
+  ?.replace('rgb(', '')
+  .replace(')', '')
+  .replace(/,/gu, ' ') ?? 'var(--color-primary)');
 
 </script>
 
 <template>
   <RouterLink v-if="data?.link"
-              class="relative flex flex-grow flex-col items-center justify-end transition-transform duration-100 group/musicCard active:scale-[98%]"
-              :to="data.link"
-              :style="`--color-focus: ${ringColor}`"
-  >
+    class="relative flex flex-grow flex-col items-center justify-end transition-transform duration-100 group/musicCard active:scale-[98%]"
+    :to="data.link" :style="`--color-focus: ${ringColor}`">
     <MusicCardImage :data="data" />
-    <div
-        class="flex flex-shrink-0 flex-grow-0 items-center justify-start self-stretch py-2 pr-1 pl-2"
-    >
+    <div class="flex flex-shrink-0 flex-grow-0 items-center justify-start self-stretch py-2 pr-1 pl-2">
       <div class="relative flex flex-grow flex-col items-start justify-center text-left">
-        <p
-            class="h-6 w-full flex-shrink-0 flex-grow-0 self-stretch text-sm font-semibold line-clamp-1"
-            :title="data?.name ?? (data as HomeDataItem)?.title"
-        >
+        <p class="h-6 w-full flex-shrink-0 flex-grow-0 self-stretch text-sm font-semibold line-clamp-1"
+          :title="data?.name ?? (data as HomeDataItem)?.title">
           {{ data?.name ?? (data as HomeDataItem)?.title }}
         </p>
-        <p class="h-6 w-full flex-shrink-0 flex-grow-0 self-stretch whitespace-nowrap text-xs font-medium text-auto-10 line-clamp-1 empty:hidden dark:font-normal">
+        <p
+          class="h-6 w-full flex-shrink-0 flex-grow-0 self-stretch whitespace-nowrap text-xs font-medium text-auto-10 line-clamp-1 empty:hidden dark:font-normal">
           {{ footText }}&nbsp;
         </p>
       </div>

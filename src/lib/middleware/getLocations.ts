@@ -1,18 +1,18 @@
 import apiClient from '../clients/apiClient';
 
-import servers, {setServers} from '@/store/servers';
-import {updateUserFromApi} from '@/store/user';
-import {setCurrentServer} from '@/store/currentServer';
+import servers, { setServers } from '@/store/servers';
+import { updateUserFromApi } from '@/store/user';
+import { setCurrentServer } from '@/store/currentServer';
 
-import type {User} from '@/types/auth';
-import {ref} from 'vue';
+import type { User } from '@/types/auth';
+import { ref } from 'vue';
 import router from '@/router';
-import {setMessages} from "@/store/messages";
-import {setNotifications} from "@/store/notifications";
+import { setMessages } from "@/store/messages";
+import { setNotifications } from "@/store/notifications";
 
 const done = ref(false);
 
-const getLocations = (): Promise<void> => new Promise( (resolve, reject) => {
+const getLocations = (): Promise<void> => new Promise((resolve, reject) => {
 	if (servers.value.length > 0 && done.value) {
 		resolve();
 		return;
@@ -20,7 +20,7 @@ const getLocations = (): Promise<void> => new Promise( (resolve, reject) => {
 
 	apiClient()
 		.get<{ data: User }>('/app_config')
-		.then(async ({data}) => {
+		.then(async ({ data }) => {
 
 			if (!data?.data) reject('No data returned from API');
 
@@ -33,7 +33,7 @@ const getLocations = (): Promise<void> => new Promise( (resolve, reject) => {
 
 			if (servers.value.length == 0) {
 				done.value = true;
-				await router.push({name: 'No Servers'});
+				await router.push({ name: 'No Servers' });
 			}
 			else if (servers.value.length == 1) {
 				done.value = true;
@@ -45,7 +45,7 @@ const getLocations = (): Promise<void> => new Promise( (resolve, reject) => {
 			}
 			else if (servers.value.length > 1) {
 				done.value = true;
-				await router.push({name: 'Select Server'});
+				await router.push({ name: 'Select Server' });
 			}
 
 			resolve();

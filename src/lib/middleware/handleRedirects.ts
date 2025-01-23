@@ -1,4 +1,4 @@
-import {ref} from "vue";
+import { ref } from "vue";
 import router from "@/router";
 
 const hasRedirected = ref(false);
@@ -14,7 +14,7 @@ const handleRedirects = (): Promise<void> => new Promise((resolve) => {
         ? location.search.split('redirect_uri=')[1].split('&')[0]
         : undefined;
 
-    if(redirect_uri) {
+    if (redirect_uri) {
         router.push(redirect_uri).then();
         hasRedirected.value = true;
 

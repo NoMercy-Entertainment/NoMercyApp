@@ -1,6 +1,6 @@
 import PlayerCore from '@nomercy-entertainment/nomercy-music-player';
 
-import type {Song} from "./MusicPlayer/types";
+import type { Song } from "./MusicPlayer/types";
 
 export class SliderBar<S extends Song> {
     player: PlayerCore<S>;

@@ -1,11 +1,11 @@
 <script setup lang="ts">
-import {onMounted, PropType, watch} from 'vue';
+import { onMounted, PropType, watch } from 'vue';
 
-import type {Album} from '@/types/api/music/album';
-import type {Artist} from '@/types/api/music/artist';
+import type { Album } from '@/types/api/music/album';
+import type { Artist } from '@/types/api/music/artist';
 
-import {shouldMarquee} from '@/lib/utils';
-import {closeFullPlayer, musicSize} from '@/store/audioPlayer';
+import { shouldMarquee } from '@/lib/utils';
+import { closeFullPlayer, musicSize } from '@/store/audioPlayer';
 
 const props = defineProps({
   data: {
@@ -58,33 +58,23 @@ const handleClick = (e: Event) => {
 </script>
 
 <template>
-  <div
-      data-marquee="container"
-       v-if="data"
-       :id="`trackLink-${type}-${suffix}`"
-       @click="e => e.stopPropagation()"
-       class="-ml-1 h-auto w-available">
+  <div data-marquee="container" v-if="data" :id="`trackLink-${type}-${suffix}`" @click="e => e.stopPropagation()"
+    class="-ml-1 h-auto w-available">
 
-    <div :data-size="musicSize"
-         data-marquee="scroller"
-         class="mb-1 ml-1 flex w-fit flex-nowrap items-center gap-1 overflow-clip text-slate-light-12/11 dark:text-slate-dark-12/11 line-clamp-2 whitespace-break-spaces hover-animate-pause w-available sm:my-0.5">
+    <div :data-size="musicSize" data-marquee="scroller"
+      class="mb-1 ml-1 flex w-fit flex-nowrap items-center gap-1 overflow-clip text-slate-light-12/11 dark:text-slate-dark-12/11 line-clamp-2 whitespace-break-spaces hover-animate-pause w-available sm:my-0.5">
 
       <span v-if="title" class="flex flex-nowrap items-center gap-1 whitespace-nowrap line-clamp-2">
-          {{ title ? `${title} - ` : '' }}
+        {{ title ? `${title} - ` : '' }}
       </span>
 
       <template v-for="(item, index) in data" :key="item.id">
 
-        <RouterLink :to="item.link"
-                    :onkeyup="onkeyup"
-                    tabindex="0"
-                    data-target="album"
-                    @click="handleClick($event)"
-                    class="flex items-center gap-1 whitespace-nowrap font-semibold line-clamp-1 hover:underline focus:underline dark:font-medium pointer-events-auto ">
+        <RouterLink :to="item.link" :onkeyup="onkeyup" tabindex="0" data-target="album" @click="handleClick($event)"
+          class="flex items-center gap-1 whitespace-nowrap font-semibold line-clamp-1 hover:underline focus:underline dark:font-medium pointer-events-auto ">
 
-           <span class="flex whitespace-nowrap leading-6">
-             {{ item.name }}{{ index < data.length - 1 ? ',' : '' }}
-           </span>
+          <span class="flex whitespace-nowrap leading-6">
+            {{ item.name }}{{ index < data.length - 1 ? ',' : '' }} </span>
         </RouterLink>
 
       </template>

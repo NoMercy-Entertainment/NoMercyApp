@@ -1,20 +1,20 @@
 <script lang="ts" setup>
-import {PropType, ref} from 'vue';
+import { PropType, ref } from 'vue';
 
-import {useQueryClient} from '@tanstack/vue-query';
+import { useQueryClient } from '@tanstack/vue-query';
 
-import type {InfoResponse} from '@/types/api/base/info';
-import type {PlaylistItem} from "@/types/musicPlayer";
-import type {Collection, CollectionResponse} from "@/types/api/base/collection";
-import type {ContinueWatching, HomeItem} from "@/types/api/base/home";
-import type {LibraryResponse, StatusResponse} from '@/types/api/base/library';
-import type {ArtistResponse} from '@/types/api/music/artist';
+import type { InfoResponse } from '@/types/api/base/info';
+import type { PlaylistItem } from "@/types/musicPlayer";
+import type { Collection, CollectionResponse } from "@/types/api/base/collection";
+import type { ContinueWatching, HomeItem } from "@/types/api/base/home";
+import type { LibraryResponse, StatusResponse } from '@/types/api/base/library';
+import type { ArtistResponse } from '@/types/api/music/artist';
 
 
 import serverClient from '@/lib/clients/serverClient';
 
-import {DisplayList} from '@/types/api/music/musicPlayer';
-import {queryKey} from "@/lib/routerHelper";
+import { DisplayList } from '@/types/api/music/musicPlayer';
+import { queryKey } from "@/lib/routerHelper";
 import MusicButton from "@/components/MusicPlayer/components/MusicButton.vue";
 import MoooomIcon from "@/components/Images/icons/MoooomIcon.vue";
 
@@ -45,7 +45,7 @@ const handleLike = (e?: MouseEvent) => {
 		.post<StatusResponse<string>>(`${props.data?.link}/like`, {
 			value: !liked.value,
 		})
-		.then(({data}) => {
+		.then(({ data }) => {
 			liked.value = data.args?.[0] == 'liked' || data.args?.[1] == 'liked';
 			// showNotification({
 			// 	title: translate(data.message, ...data.args ?? []),
@@ -57,8 +57,8 @@ const handleLike = (e?: MouseEvent) => {
 			// });
 
 			query.invalidateQueries({
-        queryKey: queryKey(),
-      });
+				queryKey: queryKey(),
+			});
 		});
 };
 
@@ -67,7 +67,7 @@ const handleLike = (e?: MouseEvent) => {
 <template>
 	<MusicButton :onclick="handleLike" label="Favorite">
 		<MoooomIcon v-if="liked" icon="heart" :class="className"
-								:style="`--fill-color: rgb(var(--color-focus, var(--color-red-8))); color: rgb(var(--color-focus, var(--color-red-8)));`"/>
-		<MoooomIcon v-else icon="heart" :class="className"/>
+			:style="`--fill-color: rgb(var(--color-focus, var(--color-red-8))); color: rgb(var(--color-focus, var(--color-red-8)));`" />
+		<MoooomIcon v-else icon="heart" :class="className" />
 	</MusicButton>
 </template>

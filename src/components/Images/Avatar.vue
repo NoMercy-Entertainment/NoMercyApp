@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import {useTranslation} from 'i18next-vue';
+import { useTranslation } from 'i18next-vue';
 import md5 from 'md5';
-import {computed} from 'vue';
+import { computed } from 'vue';
 
-const {t} = useTranslation();
+const { t } = useTranslation();
 
 defineProps({
   height: {
@@ -39,17 +39,14 @@ const baseUrl = computed(() => `https://cdn${suffix}.nomercy.tv`);
 
 <template v-once>
   <div
-      class="relative flex aspect-square flex-shrink-0 flex-grow-0 flex-col items-start justify-start self-stretch overflow-hidden rounded-lg bg-black"
-      :class="className">
+    class="relative flex aspect-square flex-shrink-0 flex-grow-0 flex-col items-start justify-start self-stretch overflow-hidden rounded-lg bg-black"
+    :class="className">
     <div class="absolute h-full">
       <img :alt="`${t('NoMercyAvatar for')} ${email}`"
-           :src="`${baseUrl}/avatar/${md5(email)}?cache=${cache}&d=monsterid&fm=webp&r=pg&s=${size}&w=${size}`"
-           :srcset="`${baseUrl}/avatar/${md5(email)}?cache=${cache}&d=monsterid&fm=webp&r=pg&s=${size*2}&w=${size*2}`"
-           :height="size ?? height"
-           :width="size ?? width"
-           cachekey="0"
-           crossorigin="anonymous"
-           class="h-full object-cover NoMercyAvatar"/>
+        :src="`${baseUrl}/avatar/${md5(email)}?cache=${cache}&d=monsterid&fm=webp&r=pg&s=${size}&w=${size}`"
+        :srcset="`${baseUrl}/avatar/${md5(email)}?cache=${cache}&d=monsterid&fm=webp&r=pg&s=${size * 2}&w=${size * 2}`"
+        :height="size ?? height" :width="size ?? width" cachekey="0" crossorigin="anonymous"
+        class="h-full object-cover NoMercyAvatar" />
     </div>
   </div>
 </template>

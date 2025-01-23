@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import {onMounted} from 'vue';
-import {App} from '@capacitor/app';
-import {IonContent, IonPage} from '@ionic/vue';
+import { onMounted } from 'vue';
+import { App } from '@capacitor/app';
+import { IonContent, IonPage } from '@ionic/vue';
 
-import {clearTokens} from '@/lib/auth/index';
+import { clearTokens } from '@/lib/auth/index';
 
 import ExploreContainer from '@/components/ExploreContainer.vue';
 

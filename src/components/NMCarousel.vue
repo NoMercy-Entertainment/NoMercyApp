@@ -1,14 +1,14 @@
 <script setup lang="ts">
-import {onBeforeMount, onMounted, PropType, ref} from 'vue';
-import {Swiper} from 'swiper';
-import {Swiper as SwiperComponent, SwiperSlide} from 'swiper/vue';
-import {register} from 'swiper/element/bundle';
+import { onBeforeMount, onMounted, PropType, ref } from 'vue';
+import { Swiper } from 'swiper';
+import { Swiper as SwiperComponent, SwiperSlide } from 'swiper/vue';
+import { register } from 'swiper/element/bundle';
 
-import type {Component} from '@/types/config';
+import type { Component } from '@/types/config';
 
-import {isMobile} from '@/config/global';
-import {mappedEntries} from '@/lib/stringArray';
-import {Breakpoints, breakpoints, swiperConfig} from '@/lib/swiper-config';
+import { isMobile } from '@/config/global';
+import { mappedEntries } from '@/lib/stringArray';
+import { Breakpoints, breakpoints, swiperConfig } from '@/lib/swiper-config';
 
 import MoooomIcon from '@/components/Images/icons/MoooomIcon.vue';
 
@@ -100,8 +100,8 @@ const prev = () => {
 };
 
 const offsetBefore = window.innerWidth < 800
-    ? 10
-    : 20;
+  ? 10
+  : 20;
 
 const bp = ref<Breakpoints>();
 
@@ -134,81 +134,55 @@ onMounted(() => {
 
 <template>
   <div v-if="items?.length && show"
-       class="mt-4 mb-2 flex w-auto flex-shrink-0 flex-grow-0 flex-col items-start justify-start gap-2 self-stretch text-left"
-  >
+    class="mt-4 mb-2 flex w-auto flex-shrink-0 flex-grow-0 flex-col items-start justify-start gap-2 self-stretch text-left">
     <div class="flex w-available flex-1 flex-col gap-2">
       <div class="relative ml-2 flex flex-shrink-0 flex-grow-0 items-center self-stretch tv:hidden">
-        <h3 v-if="title" class="text-2xl font-bold text-auto-12 mr-2 ml-1 sm:ml-3 text-slate-dark-1 dark:text-slate-light-1">
+        <h3 v-if="title"
+          class="text-2xl font-bold text-auto-12 mr-2 ml-1 sm:ml-3 text-slate-dark-1 dark:text-slate-light-1">
           {{ title }}
         </h3>
         <slot v-else name="selector"></slot>
 
-        <RouterLink v-if="more_link"
-                    :to="more_link"
-                    class="text-base text-slate-dark-9 dark:text-slate-light-9 flex items-center ml-auto sm:ml-4 mr-2 sm:mr-auto">
+        <RouterLink v-if="more_link" :to="more_link"
+          class="text-base text-slate-dark-9 dark:text-slate-light-9 flex items-center ml-auto sm:ml-4 mr-2 sm:mr-auto">
           <span class="leading-none pt-0.5">{{ more_link_text }}</span>
-          <MoooomIcon icon="chevronRight" className="w-6 mt-1"/>
+          <MoooomIcon icon="chevronRight" className="w-6 mt-1" />
         </RouterLink>
 
         <div class="flex flex-shrink-0 flex-grow-0 items-start justify-start gap-2 pr-4 ml-auto" v-if="!isMobile">
 
           <button v-if="hasScroll"
-                  class="hidden sm:flex justify-center items-center p-1 rounded-lg bg-auto-alpha-7 active:scale-95 hover:bg-auto-alpha-9 transition-transform duration-300"
-                  :class="{
-                    'cursor-not-allowed opacity-50': !backButtonEnabled,
-                  }"
-                  :onclick="prev"
-          >
-            <MoooomIcon class="w-6" icon="chevronLeft"/>
+            class="hidden sm:flex justify-center items-center p-1 rounded-lg bg-auto-alpha-7 active:scale-95 hover:bg-auto-alpha-9 transition-transform duration-300"
+            :class="{
+              'cursor-not-allowed opacity-50': !backButtonEnabled,
+            }" :onclick="prev">
+            <MoooomIcon class="w-6" icon="chevronLeft" />
           </button>
 
           <button v-if="hasScroll"
-                  class="hidden sm:flex justify-center items-center p-1 rounded-lg bg-auto-alpha-7 active:scale-95 hover:bg-auto-alpha-9 transition-transform duration-300"
-                  :class="{
-                    'cursor-not-allowed opacity-50': !hasScroll,
-                  }"
-                  :onclick="isLastSlide ? reset : next"
-          >
-            <MoooomIcon v-if="hasScroll && !isLastSlide"
-                        icon="chevronRight"
-                        class="w-6"
-                        :class="{
-                          'opacity-0': !nextButtonEnabled && isLastSlide,
-                        }"
-            />
-            <MoooomIcon
-                v-if="hasScroll && isLastSlide"
-                icon="chevronLeftDouble"
-                class="w-6"
-                :class="{
-                  'opacity-0': !isLastSlide,
-                }"
-            />
+            class="hidden sm:flex justify-center items-center p-1 rounded-lg bg-auto-alpha-7 active:scale-95 hover:bg-auto-alpha-9 transition-transform duration-300"
+            :class="{
+              'cursor-not-allowed opacity-50': !hasScroll,
+            }" :onclick="isLastSlide ? reset : next">
+            <MoooomIcon v-if="hasScroll && !isLastSlide" icon="chevronRight" class="w-6" :class="{
+              'opacity-0': !nextButtonEnabled && isLastSlide,
+            }" />
+            <MoooomIcon v-if="hasScroll && isLastSlide" icon="chevronLeftDouble" class="w-6" :class="{
+              'opacity-0': !isLastSlide,
+            }" />
           </button>
         </div>
 
       </div>
       <div class="gap-3 py-1 pr-0 w-available swiper">
-        <SwiperComponent
-            v-bind="swiperConfig(backdropCards) as any"
-            ref="swiper"
-            class="opacity-0"
-            :slidesOffsetBefore="offsetBefore"
-            :breakpoints="bp"
-            data-spatial-container="row"
-            @progress="onProgress"
-            @afterInit="afterInit"
-            @slideChange="onSlideChange">
+        <SwiperComponent v-bind="swiperConfig(backdropCards) as any" ref="swiper" class="opacity-0"
+          :slidesOffsetBefore="offsetBefore" :breakpoints="bp" data-spatial-container="row" @progress="onProgress"
+          @afterInit="afterInit" @slideChange="onSlideChange">
 
-          <template v-for="(item) in items"
-                    :key="item?.id">
+          <template v-for="(item) in items" :key="item?.id">
             <swiper-slide v-if="item?.id" class="flex">
 
-              <component
-                  :key="item.id"
-                  :is="item.component"
-                  v-bind="item.props"
-              />
+              <component :key="item.id" :is="item.component" v-bind="item.props" />
 
             </swiper-slide>
           </template>

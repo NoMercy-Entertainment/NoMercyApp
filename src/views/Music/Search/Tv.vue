@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import {watch} from 'vue';
-import {IonPage, IonContent} from '@ionic/vue';
-import {musicSearchResult, musicSearchValue} from '@/store/search';
+import { watch } from 'vue';
+import { IonPage, IonContent } from '@ionic/vue';
+import { musicSearchResult, musicSearchValue } from '@/store/search';
 
 </script>
 
@@ -13,13 +13,8 @@ import {musicSearchResult, musicSearchValue} from '@/store/search';
       </div>
 
       <template v-if="musicSearchResult">
-        <component
-            v-for="(render, index) in musicSearchResult ?? []"
-            :index="index"
-            :key="render.id"
-            :is="render.component"
-            v-bind="render.props"
-        />
+        <component v-for="(render, index) in musicSearchResult ?? []" :index="index" :key="render.id"
+          :is="render.component" v-bind="render.props" />
       </template>
 
     </ion-content>

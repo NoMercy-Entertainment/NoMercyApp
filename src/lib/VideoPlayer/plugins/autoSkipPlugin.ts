@@ -1,9 +1,9 @@
-import {toRaw} from "vue";
+import { toRaw } from "vue";
 
 import Plugin from '@nomercy-entertainment/nomercy-video-player/src/plugin';
-import {NMPlayer} from '@nomercy-entertainment/nomercy-video-player/src/types';
+import { NMPlayer } from '@nomercy-entertainment/nomercy-video-player/src/types';
 
-import {groupBy} from '@/lib/stringArray';
+import { groupBy } from '@/lib/stringArray';
 
 export interface AutoSkipPluginArgs {
 }

@@ -1,13 +1,13 @@
-import {computed, onMounted, ref, watch} from 'vue';
-import {useDebounce, useIntersectionObserver} from '@vueuse/core';
+import { computed, onMounted, ref, watch } from 'vue';
+import { useDebounce, useIntersectionObserver } from '@vueuse/core';
 
-import type {HomeDataItem} from '@/types/api/music';
-import type {Component} from '@/lib/routerHelper';
-import type {Movie, Person, Tv} from '@/types/api/base/info';
+import type { HomeDataItem } from '@/types/api/music';
+import type { Component } from '@/lib/routerHelper';
+import type { Movie, Person, Tv } from '@/types/api/base/info';
 
-import {currentServer} from '@/store/currentServer';
-import {user} from '@/store/user';
-import {tmdbApiKey} from '@/config/config';
+import { currentServer } from '@/store/currentServer';
+import { user } from '@/store/user';
+import { tmdbApiKey } from '@/config/config';
 
 export const musicSearchValue = ref('');
 export const musicSearchResult = computed(() => musicResult.value);
@@ -33,7 +33,7 @@ watch(debouncedSearchValue, (value) => {
 
 
 export const videoSearchValue = ref('');
-export const videoSearchResult = ref<Array<Movie|Tv|Person& any>>([]);
+export const videoSearchResult = ref<Array<Movie | Tv | Person & any>>([]);
 export const hasMoreResults = ref(false);
 
 const debouncedVideoSearchValue = useDebounce(videoSearchValue, 500);

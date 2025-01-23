@@ -1,5 +1,5 @@
-import {SliderBar} from '@/lib/sliderBar';
-import {LogoResponse} from '@/types/server';
+import { SliderBar } from '@/lib/sliderBar';
+import { LogoResponse } from '@/types/server';
 
 HTMLElement.prototype.sliderBar = function (player: any, callbackFn: string, getSizeFn?: string) {
     if (!(this instanceof HTMLElement) || this.dataset.type != 'slider-bar')
@@ -63,18 +63,18 @@ HTMLElement.prototype.isVisible = function (parent?: HTMLElement): boolean {
     return (
         rect.top >= 0 &&
         rect.left >= 0 &&
-        rect.bottom <= (parent?.offsetHeight ||  document.documentElement.clientHeight) &&
+        rect.bottom <= (parent?.offsetHeight || document.documentElement.clientHeight) &&
         rect.right <= (parent?.offsetWidth || document.documentElement.clientWidth)
     );
 }
 
-Document.prototype.querySelectorAllArray = function <K extends keyof HTMLElementTagNameMap>(selector: K):  HTMLElementTagNameMap[K][] {
+Document.prototype.querySelectorAllArray = function <K extends keyof HTMLElementTagNameMap>(selector: K): HTMLElementTagNameMap[K][] {
     return Array.from(this.querySelectorAll<K>(selector));
 }
-Element.prototype.querySelectorAllArray = function <K extends keyof HTMLElementTagNameMap>(selector: K):  HTMLElementTagNameMap[K][] {
+Element.prototype.querySelectorAllArray = function <K extends keyof HTMLElementTagNameMap>(selector: K): HTMLElementTagNameMap[K][] {
     return Array.from(this.querySelectorAll<K>(selector));
 }
-HTMLElement.prototype.querySelectorAllArray = function <K extends keyof HTMLElementTagNameMap>(selector: K):  HTMLElementTagNameMap[K][] {
+HTMLElement.prototype.querySelectorAllArray = function <K extends keyof HTMLElementTagNameMap>(selector: K): HTMLElementTagNameMap[K][] {
     return Array.from(this.querySelectorAll<K>(selector));
 }
 
@@ -140,8 +140,8 @@ export const openImageModal = function (data: LogoResponse | null = null, aspect
 //     if (data) {
 //         data.aspectRatio = data.aspectRatio ?? aspectRatio;
 //     }
-    // window.Alpine.store('config').screensaverDisabled = true;
+// window.Alpine.store('config').screensaverDisabled = true;
 
-    // window.Alpine.store('config').imageModalData = data;
-    // window.Alpine.store('config').imageModalOpen = true;
+// window.Alpine.store('config').imageModalData = data;
+// window.Alpine.store('config').imageModalOpen = true;
 // };

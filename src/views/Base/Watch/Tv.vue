@@ -1,14 +1,14 @@
 <script setup lang="ts">
-import {onMounted, onUnmounted, ref, watch} from 'vue';
-import {IonContent, IonPage, isPlatform} from '@ionic/vue';
-import {App} from '@capacitor/app';
+import { onMounted, onUnmounted, ref, watch } from 'vue';
+import { IonContent, IonPage, isPlatform } from '@ionic/vue';
+import { App } from '@capacitor/app';
 
-import {isNative} from '@/config/global';
-import {currentServer} from '@/store/currentServer';
-import {user} from '@/store/user';
-import {setDisableScreensaver} from '@/store/imageModal';
+import { isNative } from '@/config/global';
+import { currentServer } from '@/store/currentServer';
+import { user } from '@/store/user';
+import { setDisableScreensaver } from '@/store/imageModal';
 
-import type {NMPlayer, PlaylistItem, PlayerConfig} from '@/lib/VideoPlayer';
+import type { NMPlayer, PlaylistItem, PlayerConfig } from '@/lib/VideoPlayer';
 import {
   AutoSkipPlugin,
   TVUIPlugin,
@@ -20,7 +20,7 @@ import {
 
 import audioPlayer from '@/store/audioPlayer';
 import router from "@/router";
-import {hideNavBar, setNavBarVisible, showNavBar} from "@/store/ui";
+import { hideNavBar, setNavBarVisible, showNavBar } from "@/store/ui";
 import useServerClient from "@/lib/clients/useServerClient";
 
 interface MyNmPlayer extends NMPlayer {
@@ -33,13 +33,13 @@ interface MyNmPlayer extends NMPlayer {
   };
 }
 
-const {data} = useServerClient<PlaylistItem[]>({
+const { data } = useServerClient<PlaylistItem[]>({
 
 });
 
 const player = ref<MyNmPlayer>();
 
-const goBack =  () => {
+const goBack = () => {
   player.value?.emit('back-button');
   player.value?.emit('back-button-hyjack');
 }
@@ -78,7 +78,7 @@ const initPlayer = (value: PlaylistItem[] | undefined) => {
 
   // @ts-ignore
   player.value = nmplayer('player1')
-      .setup(config);
+    .setup(config);
 
   const tvUIPlugin = new TVUIPlugin();
   player.value?.registerPlugin('tvUI', tvUIPlugin);
@@ -173,15 +173,14 @@ onUnmounted(() => {
 <template>
   <ion-page>
     <ion-content :fullscreen="true">
-<!--      <Teleport to="body">-->
-        <div class="absolute inset-0 flex h-full w-full overflow-clip bg-black z-1199"
-             :class="{
-             'mb-28': isNative,
-             'mb-0': !isNative,
-           }">
-          <div id="player1" class="group nomercyplayer"></div>
-        </div>
-<!--      </Teleport>-->
+      <!--      <Teleport to="body">-->
+      <div class="absolute inset-0 flex h-full w-full overflow-clip bg-black z-1199" :class="{
+        'mb-28': isNative,
+        'mb-0': !isNative,
+      }">
+        <div id="player1" class="group nomercyplayer"></div>
+      </div>
+      <!--      </Teleport>-->
     </ion-content>
   </ion-page>
 </template>

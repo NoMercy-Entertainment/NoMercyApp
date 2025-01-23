@@ -1,6 +1,6 @@
-import {ref, watch} from 'vue';
+import { ref, watch } from 'vue';
 
-import type {User} from '@/types/auth';
+import type { User } from '@/types/auth';
 import Keycloak from '@/types/keycloak';
 
 export const user = ref<User>(<User>{

@@ -48,7 +48,7 @@ const markdownBase = {
         marginTop: 0,
         marginBottom: defaultTheme.spacing[2],
     },
-    
+
     li: {
         marginTop: 0,
         marginBottom: defaultTheme.spacing[2],

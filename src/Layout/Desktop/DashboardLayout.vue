@@ -1,14 +1,14 @@
 <script setup lang="ts">
-import {computed, onMounted, type PropType, watch} from 'vue';
-import {type AxiosError} from 'axios';
+import { computed, onMounted, type PropType, watch } from 'vue';
+import { type AxiosError } from 'axios';
 
-import {ErrorResponse} from '@/types/server';
+import { ErrorResponse } from '@/types/server';
 
-import {dashboardBigCardGrid, dashboardCardGrid, dashboardColumnGrid} from '@/config/global';
+import { dashboardBigCardGrid, dashboardCardGrid, dashboardColumnGrid } from '@/config/global';
 import useMounted from '@/hooks/useMounted';
 import useServerClient from '@/lib/clients/useServerClient';
-import {dashboardSocketIsConnected, startDashboardSocket, stopDashboardSocket} from '@/lib/clients/dashboardSocket';
-import {setColorPalette} from '@/store/ui';
+import { dashboardSocketIsConnected, startDashboardSocket, stopDashboardSocket } from '@/lib/clients/dashboardSocket';
+import { setColorPalette } from '@/store/ui';
 
 import FloatingBackButton from '@/components/Buttons/FloatingBackButton.vue';
 import HelpButton from '@/components/Buttons/HelpButton.vue';
@@ -53,7 +53,7 @@ const props = defineProps({
   },
 });
 
-const {dataUpdatedAt, error: permissionsError, isPending} = useServerClient({
+const { dataUpdatedAt, error: permissionsError, isPending } = useServerClient({
   path: 'dashboard/server',
   enabled: !props.allowAnyone,
   refetchInterval: 10000,
@@ -136,33 +136,29 @@ watch(dataUpdatedAt, (value) => {
     </div>
 
     <div v-else
-         class="relative z-0 h-available flex flex-shrink-0 flex-grow flex-col overflow-clip items-start justify-start self-stretch w-available min-h-available bg-slate-light-3 dark:bg-slate-dark-2">
+      class="relative z-0 h-available flex flex-shrink-0 flex-grow flex-col overflow-clip items-start justify-start self-stretch w-available min-h-available bg-slate-light-3 dark:bg-slate-dark-2">
       <div
-          class="sticky top-0 z-10 flex flex-shrink-0 flex-grow-0 flex-col items-start justify-start gap-5 self-stretch"
-      >
+        class="sticky top-0 z-10 flex flex-shrink-0 flex-grow-0 flex-col items-start justify-start gap-5 self-stretch">
         <div class="absolute inset-0 z-0 h-full w-full"></div>
         <!--			<Shadow type="linear"/>-->
         <div
-            class="z-10 flex h-20 items-center justify-between gap-4 self-stretch border-b px-4 py-4 border-auto-7/6 xl:px-6 bg-slate-light-3 dark:bg-slate-dark-2"
-        >
-          <div class="relative flex h-full flex-col items-start justify-center gap-1 text-slate-light-12/80 dark:text-slate-dark-12/80">
-            <p
-                class="w-auto flex-shrink-0 flex-grow-0 self-stretch whitespace-nowrap text-xl font-semibold"
-            >
+          class="z-10 flex h-20 items-center justify-between gap-4 self-stretch border-b px-4 py-4 border-auto-7/6 xl:px-6 bg-slate-light-3 dark:bg-slate-dark-2">
+          <div
+            class="relative flex h-full flex-col items-start justify-center gap-1 text-slate-light-12/80 dark:text-slate-dark-12/80">
+            <p class="w-auto flex-shrink-0 flex-grow-0 self-stretch whitespace-nowrap text-xl font-semibold">
               {{ $t(title, params) }}
             </p>
-            <FloatingBackButton v-if="back" position="relative" class="left-4"/>
+            <FloatingBackButton v-if="back" position="relative" class="left-4" />
             <p v-else
-               class="hidden h-8 w-auto flex-shrink-0 flex-grow-0 items-center self-stretch text-sm empty:hidden lg:flex"
-            >
+              class="hidden h-8 w-auto flex-shrink-0 flex-grow-0 items-center self-stretch text-sm empty:hidden lg:flex">
               {{ $t(description) }}
             </p>
           </div>
 
-          <slot name="title"/>
+          <slot name="title" />
           <div class="flex flex-col flex-nowrap items-end justify-center gap-x-3 gap-y-1 sm:flex-row">
-            <HelpButton/>
-            <slot name="cta"/>
+            <HelpButton />
+            <slot name="cta" />
           </div>
         </div>
       </div>
@@ -173,23 +169,24 @@ watch(dataUpdatedAt, (value) => {
             <p class="text-7xl font-bold text-center text-slate-light-12/80 dark:text-slate-dark-12/80">
               {{ error.code }}
             </p>
-            <p class="left-0 text-2xl text-center text-slate-light-12/80 dark:text-slate-dark-12/80 whitespace-pre-line">
+            <p
+              class="left-0 text-2xl text-center text-slate-light-12/80 dark:text-slate-dark-12/80 whitespace-pre-line">
               {{ error.message }}
             </p>
           </div>
         </div>
       </div>
-      <ScrollContainer v-else :static="true" class="z-0 flex !h-sidebar+ !min-h-[calc(100vh-16rem)] w-full flex-1 overflow-y-auto overflow-x-hidden sm:p-4">
+      <ScrollContainer v-else :static="true"
+        class="z-0 flex !h-sidebar+ !min-h-[calc(100vh-16rem)] w-full flex-1 overflow-y-auto overflow-x-hidden sm:p-4">
         <div class="h-auto w-full flex-wrap content-start gap-4" :class="grid">
-          <slot/>
+          <slot />
         </div>
       </ScrollContainer>
 
       <div v-if="!error && $slots.actions"
-           class="sticky bottom-0 z-0 flex w-full flex-wrap items-center gap-4 border-t px-4 py-4 border-auto-7/6 empty:hidden sm:h-16 xl:px-6"
-      >
+        class="sticky bottom-0 z-0 flex w-full flex-wrap items-center gap-4 border-t px-4 py-4 border-auto-7/6 empty:hidden sm:h-16 xl:px-6">
         <div class="absolute inset-0 -z-10 h-full w-full"></div>
-        <slot name="actions"/>
+        <slot name="actions" />
       </div>
 
     </div>

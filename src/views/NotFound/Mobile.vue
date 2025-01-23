@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import {computed} from 'vue';
+import { computed } from 'vue';
 import NavBar from "@/Layout/Mobile/components/NavBar.vue";
-import {IonContent, IonPage} from "@ionic/vue";
+import { IonContent, IonPage } from "@ionic/vue";
 import router from "@/router";
 
 const props = defineProps({
@@ -50,7 +50,8 @@ const description = computed(() => {
           </div>
           <div class="h-6 w-full flex-shrink-0 flex-grow-0">
             <div class="h-6 w-full">
-              <button @click="router.back()" class="absolute w-full text-base text-center  text-slate-light-11 dark:text-slate-dark-11 underline underline-offset-4">
+              <button @click="router.back()"
+                class="absolute w-full text-base text-center  text-slate-light-11 dark:text-slate-dark-11 underline underline-offset-4">
                 {{ $t('Send me back') }}
               </button>
             </div>

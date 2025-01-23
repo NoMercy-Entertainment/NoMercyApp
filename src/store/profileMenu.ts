@@ -1,4 +1,4 @@
-import {computed, ref} from 'vue';
+import { computed, ref } from 'vue';
 
 const mo = ref(false);
 export const menuOpen = computed(() => mo.value);

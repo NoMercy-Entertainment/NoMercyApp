@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import {onMounted, PropType, ref} from 'vue';
+import { onMounted, PropType, ref } from 'vue';
 
 import TvCard from '@/views/Base/Home/components/TvCard.vue';
 
@@ -80,18 +80,11 @@ onMounted(() => {
     </h3>
 
     <div tabindex="1" ref="carouselDiv"
-         class="flex flex-nowrap w-full p-1 snap-x snap-mandatory overflow-x-auto pointer-events-none scroll-mr-20"
-         :data-carousel="carousel.props.title ?? carousel.title"
-         @focus="focusCard">
+      class="flex flex-nowrap w-full p-1 snap-x snap-mandatory overflow-x-auto pointer-events-none scroll-mr-20"
+      :data-carousel="carousel.props.title ?? carousel.title" @focus="focusCard">
       <template v-for="(item, index) in carousel.props?.items as any ?? []" :key="item">
-        <TvCard
-            tabindex="0"
-            :item="item"
-            :index="index"
-            @focus="handleKeysLocked()"
-            :scrollToCenter="scrollToCenter"
-            :style="`flex-basis: calc(100% / ${cardsPerScroll} - 0.70rem)`"
-        />
+        <TvCard tabindex="0" :item="item" :index="index" @focus="handleKeysLocked()" :scrollToCenter="scrollToCenter"
+          :style="`flex-basis: calc(100% / ${cardsPerScroll} - 0.70rem)`" />
       </template>
     </div>
 

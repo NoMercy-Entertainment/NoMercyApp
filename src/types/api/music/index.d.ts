@@ -1,6 +1,6 @@
 import type { Album } from './album';
 import type { Artist } from './artist';
-import type {ColorPalettes} from '@/types/api/shared';
+import type { ColorPalettes } from '@/types/api/shared';
 
 export interface MusicHomeResponse {
 	items: MusicHomeResponseItem[];

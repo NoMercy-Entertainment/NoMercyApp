@@ -8,14 +8,12 @@ import {
 </script>
 
 <template>
-    <ion-content :fullscreen="true" class="ion-padding">
+  <ion-content :fullscreen="true" class="ion-padding">
 
-      <ion-buttons >
-        <ion-button @click="modalController.dismiss(null, 'cancel');">Close</ion-button>
-      </ion-buttons>
-    </ion-content>
+    <ion-buttons>
+      <ion-button @click="modalController.dismiss(null, 'cancel');">Close</ion-button>
+    </ion-buttons>
+  </ion-content>
 </template>
 
-<style scoped>
-
-</style>
+<style scoped></style>

@@ -1,18 +1,18 @@
 <script setup lang="ts">
-import {onBeforeMount, onMounted, ref, toRaw, watch} from 'vue';
-import {useRoute} from 'vue-router';
-import {useTranslation} from 'i18next-vue';
+import { onBeforeMount, onMounted, ref, toRaw, watch } from 'vue';
+import { useRoute } from 'vue-router';
+import { useTranslation } from 'i18next-vue';
 
-import {useQueryClient} from '@tanstack/vue-query';
+import { useQueryClient } from '@tanstack/vue-query';
 
-import type {EncoderProfile, FolderLibrary, LibrariesResponse} from '@/types/api/base/library';
-import type {Language} from '@/types/api/shared';
-import type {Library, NameVal} from '@/types/api/dashboard/server';
+import type { EncoderProfile, FolderLibrary, LibrariesResponse } from '@/types/api/base/library';
+import type { Language } from '@/types/api/shared';
+import type { Library, NameVal } from '@/types/api/dashboard/server';
 
 import useServerClient from '@/lib/clients/useServerClient';
 import serverClient from '@/lib/clients/serverClient';
-import {currentServer} from '@/store/currentServer';
-import {media_types} from '@/config/global';
+import { currentServer } from '@/store/currentServer';
+import { media_types } from '@/config/global';
 
 import DashboardLayout from '@/Layout/Desktop/DashboardLayout.vue';
 import LanguageSelect from '@/components/Forms/LanguageSelect.vue';
@@ -20,18 +20,18 @@ import NewFolderModal from './components/NewFolderModal.vue';
 import DeleteLibraryModal from './components/DeleteLibraryModal.vue';
 import Folder from './components/Folder.vue';
 import AddContentModal from '@/views/Dashboard/System/Libraries/components/AddContentModal.vue';
-import {IonContent, IonPage} from '@ionic/vue';
+import { IonContent, IonPage } from '@ionic/vue';
 
 const route = useRoute();
 const query = useQueryClient();
-const {t} = useTranslation();
+const { t } = useTranslation();
 
-const {data: libraries, error, refetch} = useServerClient<LibrariesResponse[]>({
+const { data: libraries, error, refetch } = useServerClient<LibrariesResponse[]>({
   path: 'dashboard/libraries',
   queryKey: ['dashboard', 'libraries', currentServer.value?.serverBaseUrl],
 });
 
-const {data: languages} = useServerClient<Language[]>({
+const { data: languages } = useServerClient<Language[]>({
   path: '/dashboard/configuration/languages',
 });
 
@@ -114,33 +114,33 @@ const handleRefresh = () => {
   loadingRefresh.value = true;
 
   serverClient()
-      .post<{
-        message: string,
-        status: string,
-        args: string[];
-      }>(`dashboard/libraries/${route.params.id}/refresh`)
-      .then(({data}) => {
-        console.log(data.status == 'ok');
-        loadingRefresh.value = false;
-        // showNotification({
-        //     title: translate(data.message, ...data.args),
-        //     type: data.status == 'ok'
-        //         ? TYPE.SUCCESS
-        //         : TYPE.ERROR,
-        //     visibleOnly: true,
-        //     duration: 2000,
-        // });
-      })
-      .catch(() => {
-        console.log('error');
-        loadingRefresh.value = false;
-        // showNotification({
-        //     title: translate('An error occurred while rescanning the library folders'),
-        //     type: TYPE.ERROR,
-        //     visibleOnly: true,
-        //     duration: 2000,
-        // });
-      });
+    .post<{
+      message: string,
+      status: string,
+      args: string[];
+    }>(`dashboard/libraries/${route.params.id}/refresh`)
+    .then(({ data }) => {
+      console.log(data.status == 'ok');
+      loadingRefresh.value = false;
+      // showNotification({
+      //     title: translate(data.message, ...data.args),
+      //     type: data.status == 'ok'
+      //         ? TYPE.SUCCESS
+      //         : TYPE.ERROR,
+      //     visibleOnly: true,
+      //     duration: 2000,
+      // });
+    })
+    .catch(() => {
+      console.log('error');
+      loadingRefresh.value = false;
+      // showNotification({
+      //     title: translate('An error occurred while rescanning the library folders'),
+      //     type: TYPE.ERROR,
+      //     visibleOnly: true,
+      //     duration: 2000,
+      // });
+    });
 };
 
 
@@ -150,33 +150,33 @@ const handleRescan = () => {
   loadingRescan.value = true;
 
   serverClient()
-      .post<{
-        message: string,
-        status: string,
-        args: string[];
-      }>(`dashboard/libraries/${route.params.id}/rescan`)
-      .then(({data}) => {
-        console.log(data.status == 'ok');
-        loadingRescan.value = false;
-        // showNotification({
-        //     title: translate(data.message, ...data.args),
-        //     type: data.status == 'ok'
-        //         ? TYPE.SUCCESS
-        //         : TYPE.ERROR,
-        //     visibleOnly: true,
-        //     duration: 2000,
-        // });
-      })
-      .catch(() => {
-        console.log('error');
-        loadingRescan.value = false;
-        // showNotification({
-        //     title: translate('An error occurred while rescanning the library folders'),
-        //     type: TYPE.ERROR,
-        //     visibleOnly: true,
-        //     duration: 2000,
-        // });
-      });
+    .post<{
+      message: string,
+      status: string,
+      args: string[];
+    }>(`dashboard/libraries/${route.params.id}/rescan`)
+    .then(({ data }) => {
+      console.log(data.status == 'ok');
+      loadingRescan.value = false;
+      // showNotification({
+      //     title: translate(data.message, ...data.args),
+      //     type: data.status == 'ok'
+      //         ? TYPE.SUCCESS
+      //         : TYPE.ERROR,
+      //     visibleOnly: true,
+      //     duration: 2000,
+      // });
+    })
+    .catch(() => {
+      console.log('error');
+      loadingRescan.value = false;
+      // showNotification({
+      //     title: translate('An error occurred while rescanning the library folders'),
+      //     type: TYPE.ERROR,
+      //     visibleOnly: true,
+      //     duration: 2000,
+      // });
+    });
 };
 
 const handleCancel = () => {
@@ -185,36 +185,36 @@ const handleCancel = () => {
 
 const handleSave = () => {
   serverClient()
-      .patch<{
-        message: string,
-        status: string,
-        args: string[];
-      }>(`dashboard/libraries/${route.params.id}`, {
-        id: route.params.id,
-        title: title.value,
-        type: media_type.value?.value,
-        specialSeasonName: specialName.value,
-        subtitles: subtitleLanguages.value.map(l => l.iso_639_1),
-        autoRefreshInterval: autoRefreshInterval.value,
-        image: image.value,
-        perfectSubtitleMatch: perfectSubtitleMatch.value,
-        realtime: realtime.value,
-        folder_library: folders.value,
-      })
-      .then(({data}) => {
-        query.invalidateQueries({queryKey: ['dashboard', 'libraries']});
+    .patch<{
+      message: string,
+      status: string,
+      args: string[];
+    }>(`dashboard/libraries/${route.params.id}`, {
+      id: route.params.id,
+      title: title.value,
+      type: media_type.value?.value,
+      specialSeasonName: specialName.value,
+      subtitles: subtitleLanguages.value.map(l => l.iso_639_1),
+      autoRefreshInterval: autoRefreshInterval.value,
+      image: image.value,
+      perfectSubtitleMatch: perfectSubtitleMatch.value,
+      realtime: realtime.value,
+      folder_library: folders.value,
+    })
+    .then(({ data }) => {
+      query.invalidateQueries({ queryKey: ['dashboard', 'libraries'] });
 
-        // showNotification({
-        //     title: translate(data.message, ...data.args),
-        //     type: data.status == 'ok'
-        //         ? TYPE.SUCCESS
-        //         : TYPE.ERROR,
-        //     visibleOnly: true,
-        //     duration: 2000,
-        // });
+      // showNotification({
+      //     title: translate(data.message, ...data.args),
+      //     type: data.status == 'ok'
+      //         ? TYPE.SUCCESS
+      //         : TYPE.ERROR,
+      //     visibleOnly: true,
+      //     duration: 2000,
+      // });
 
-        handleCancel();
-      });
+      handleCancel();
+    });
 };
 
 const setEncoderQualities = (folder: FolderLibrary, profiles: EncoderProfile[]) => {
@@ -245,18 +245,16 @@ const handleDeleteFolder = (folder: FolderLibrary) => {
 <template>
   <ion-page>
     <ion-content :fullscreen="true">
-      <DashboardLayout :error="error" :title="`Library: {{title}}`"
-                       :params="{title: settings?.title}"
-                       :back="true"
-                       v-model="addModalOpen"
-      >
+      <DashboardLayout :error="error" :title="`Library: {{title}}`" :params="{ title: settings?.title }" :back="true"
+        v-model="addModalOpen">
         <template v-slot:cta>
         </template>
 
         <div class="flex w-full flex-col p-4 sm:w-full">
           <div class="flex w-full text-md">
             {{
-              t('Changes to metadata or artwork downloading settings will only apply to new content added to your newLibrary.')
+              t('Changes to metadata or artwork downloading settings will only apply to new content added to your
+            newLibrary.')
             }}
             <br>
             {{ t('To apply the changes to existing titles, you\'ll need to refresh their metadata manually.') }}
@@ -272,52 +270,31 @@ const handleDeleteFolder = (folder: FolderLibrary) => {
 
                 <div class="flex flex-col gap-2">
                   <label for="special_name">Library name</label>
-                  <InputText type="text"
-                             tabindex="-1"
-                             id="special_name"
-                             v-model="title"
-                             @change="title = $event.target.value"
-                  />
+                  <InputText type="text" tabindex="-1" id="special_name" v-model="title"
+                    @change="title = $event.target.value" />
                 </div>
 
                 <div class="flex flex-col gap-2">
                   <label for="media_types">Media Type</label>
-                  <Select
-                      id="media_types"
-                      placeholder="Select a media type"
-                      v-if="media_types"
-                      optionLabel="title"
-                      :options="media_types ?? []"
-                      v-model="media_type"
-                  />
+                  <Select id="media_types" placeholder="Select a media type" v-if="media_types" optionLabel="title"
+                    :options="media_types ?? []" v-model="media_type" />
                 </div>
 
                 <template v-if="media_type && !['music', 'image', 'audiobook'].includes(media_type.value)">
 
                   <div class="flex flex-col gap-2">
                     <label for="special_name">Special season display name</label>
-                    <InputText
-                        tabindex="-1"
-                        id="special_name"
-                        v-model="specialName"
-                        @change="specialName = $event.target.value"
-                    />
+                    <InputText tabindex="-1" id="special_name" v-model="specialName"
+                      @change="specialName = $event.target.value" />
                   </div>
 
-                  <LanguageSelect
-                      v-if="languages"
-                      id="subtitleLanguages"
-                      name="Subtitle download languages"
-                      class="mb-4"
-                      multiple
-                      :items="languages"
-                      v-model="subtitleLanguages"
-                      :setSelected="(value: typeof subtitleLanguages) => {
-                                    if (Array.isArray(value)) {
-                                        subtitleLanguages = value;
-                                        return;
-                                    }
-                                }"/>
+                  <LanguageSelect v-if="languages" id="subtitleLanguages" name="Subtitle download languages"
+                    class="mb-4" multiple :items="languages" v-model="subtitleLanguages" :setSelected="(value: typeof subtitleLanguages) => {
+                      if (Array.isArray(value)) {
+                        subtitleLanguages = value;
+                        return;
+                      }
+                    }" />
                 </template>
               </div>
             </div>
@@ -327,27 +304,16 @@ const handleDeleteFolder = (folder: FolderLibrary) => {
                   {{ t('Folders') }}:
                 </h3>
 
-                <Button type="button"
-                        id="yes"
-                        variant="text"
-                        color="white"
-                        class="ml-auto"
-                        startIcon="folderAdd"
-                        :onClick="openNewFolderModal"
-                >
+                <Button type="button" id="yes" variant="text" color="white" class="ml-auto" startIcon="folderAdd"
+                  :onClick="openNewFolderModal">
                   {{ t('Add new folder') }}
                 </Button>
               </div>
               <div class="flex w-full flex-col gap-1">
                 <template v-if="settings?.folder_library">
-                  <template
-                      v-for="folderLibrary in settings?.folder_library"
-                      :key="folderLibrary.folder_id">
-                    <Folder
-                        :folder="folderLibrary"
-                        :type="settings.type"
-                        :setEncoderQualities="setEncoderQualities"
-                        :handleDeleteFolder="handleDeleteFolder"/>
+                  <template v-for="folderLibrary in settings?.folder_library" :key="folderLibrary.folder_id">
+                    <Folder :folder="folderLibrary" :type="settings.type" :setEncoderQualities="setEncoderQualities"
+                      :handleDeleteFolder="handleDeleteFolder" />
                   </template>
                 </template>
               </div>
@@ -356,81 +322,39 @@ const handleDeleteFolder = (folder: FolderLibrary) => {
         </div>
 
         <template v-slot:actions>
-          <Button type="button"
-                  id="refresh"
-                  variant="text"
-                  startIcon="folderSwap"
-                  :disabled="loadingRefresh"
-                  color="auto"
-                  :class="loadingRefresh ? 'first:children:animate-spin !cursor-not-allowed' : ''"
-                  @click="handleRefresh">
+          <Button type="button" id="refresh" variant="text" startIcon="folderSwap" :disabled="loadingRefresh"
+            color="auto" :class="loadingRefresh ? 'first:children:animate-spin !cursor-not-allowed' : ''"
+            @click="handleRefresh">
             {{ t('Refresh') }}
           </button>
-          <Button type="button"
-                  id="rescan"
-                  variant="text"
-                  startIcon="folderSwap"
-                  :disabled="loadingRescan"
-                  color="auto"
-                  :class="loadingRescan ? 'first:children:animate-spin !cursor-not-allowed' : ''"
-                  @click="handleRescan">
+          <Button type="button" id="rescan" variant="text" startIcon="folderSwap" :disabled="loadingRescan" color="auto"
+            :class="loadingRescan ? 'first:children:animate-spin !cursor-not-allowed' : ''" @click="handleRescan">
             {{ t('Rescan') }}
           </button>
-          <Button type="button"
-                  id="remove"
-                  variant="text"
-                  class="children:text-gray-400 children:transition-colors children:duration-100 children:hover:text-red-dark-8"
-                  startIcon="folderRemove"
-                  color="red"
-                  @click="openDeleteConfirm">
+          <Button type="button" id="remove" variant="text"
+            class="children:text-gray-400 children:transition-colors children:duration-100 children:hover:text-red-dark-8"
+            startIcon="folderRemove" color="red" @click="openDeleteConfirm">
             {{ t('Remove') }}
           </button>
-          <Button type="button"
-                  id="add"
-                  variant="text"
-                  class="mr-auto"
-                  color="auto"
-                  startIcon="folderAdd"
-                  @click="openAddContentModal">
+          <Button type="button" id="add" variant="text" class="mr-auto" color="auto" startIcon="folderAdd"
+            @click="openAddContentModal">
             {{ t('Add content') }}
           </button>
-          <Button type="button"
-                  id="cancel"
-                  variant="text"
-                  color="white"
-                  @click="handleCancel">
+          <Button type="button" id="cancel" variant="text" color="white" @click="handleCancel">
             {{ t('Cancel') }}
           </Button>
-          <Button type="button"
-                  id="save"
-                  variant="default"
-                  color="theme"
-                  @click="handleSave">
+          <Button type="button" id="save" variant="default" color="theme" @click="handleSave">
             {{ t('Save') }}
           </button>
         </template>
 
-        <NewFolderModal
-            :close="closeNewModal"
-            :folder="folder"
-            :open="newModalOpen"
-            :setFolder="setFolder"
-        />
+        <NewFolderModal :close="closeNewModal" :folder="folder" :open="newModalOpen" :setFolder="setFolder" />
 
-        <DeleteLibraryModal
-            v-if="settings?.id"
-            :id="settings?.id"
-            :name="settings?.title"
-            :close="closeDeleteConfirm"
-            :open="deleteConfirmOpen"
-        />
+        <DeleteLibraryModal v-if="settings?.id" :id="settings?.id" :name="settings?.title" :close="closeDeleteConfirm"
+          :open="deleteConfirmOpen" />
 
-        <AddContentModal
-            v-if="settings"
-            :closeAddContentModal="closeAddModal"
-            :addContentModalOpen="addModalOpen"
-            :librarySettings="settings"
-        />
+        <AddContentModal v-if="settings" :closeAddContentModal="closeAddModal" :addContentModalOpen="addModalOpen"
+          :librarySettings="settings" />
       </DashboardLayout>
     </ion-content>
   </ion-page>

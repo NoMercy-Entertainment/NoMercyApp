@@ -320,7 +320,7 @@ declare class KeycloakInstance {
 	/**
 	 * Called when a AIA has been requested by the application.
 	 */
-	onActionUpdate(status: 'success'|'cancelled'|'error'): void;
+	onActionUpdate(status: 'success' | 'cancelled' | 'error'): void;
 
 	/**
 	 * Called to initialize the adapter.

@@ -1,12 +1,12 @@
 <script setup lang="ts">
-import {computed, onMounted, ref} from 'vue';
+import { computed, onMounted, ref } from 'vue';
 
-import type {QueueResponse, ServerEncoderProgress} from '@/types/api/dashboard/server';
+import type { QueueResponse, ServerEncoderProgress } from '@/types/api/dashboard/server';
 
-import {sortBy} from '@/lib/stringArray';
+import { sortBy } from '@/lib/stringArray';
 import useServerClient from '@/lib/clients/useServerClient';
 import useHubListener from '@/hooks/useHubListener';
-import {connection} from "@/lib/clients/dashboardSocket";
+import { connection } from "@/lib/clients/dashboardSocket";
 
 import SystemCard from '../ServerSystemCard.vue';
 import ServerEncoderTaskCard from './ServerEncoderTaskCard.vue';
@@ -18,7 +18,7 @@ onMounted(() => {
 
 const encoderData = ref<ServerEncoderProgress[]>([]);
 
-const {data: queueData, refetch} = useServerClient<QueueResponse[]>({
+const { data: queueData, refetch } = useServerClient<QueueResponse[]>({
   path: 'dashboard/tasks/queue',
   queryKey: ['queue'],
   refetchInterval: 30000,
@@ -60,20 +60,20 @@ useHubListener(connection, 'disconnected', handleClear);
     </template>
 
     <template v-for="data in encoderData ?? []" :key="data.id">
-      <ServerEncoderTaskCard :data="data"/>
+      <ServerEncoderTaskCard :data="data" />
     </template>
 
     <template v-for="data in filteredQueueData" :key="data.id">
-      <ServerQueueTaskCard :data="data"/>
+      <ServerQueueTaskCard :data="data" />
     </template>
   </SystemCard>
 
   <SystemCard v-else title="Running tasks" :background="false">
     <div
-        class="relative flex items-start justify-start gap-2 self-stretch rounded-lg p-4 bg-slate-lightA-3 dark:bg-slate-darkA-3 text-slate-light-12/80 dark:text-slate-dark-12/80">
-        <span class="flex-shrink-0 flex-grow-0 self-stretch text-sm font-semibold">
-          {{ $t('No tasks are currently running') }}
-        </span>
+      class="relative flex items-start justify-start gap-2 self-stretch rounded-lg p-4 bg-slate-lightA-3 dark:bg-slate-darkA-3 text-slate-light-12/80 dark:text-slate-dark-12/80">
+      <span class="flex-shrink-0 flex-grow-0 self-stretch text-sm font-semibold">
+        {{ $t('No tasks are currently running') }}
+      </span>
     </div>
   </SystemCard>
 </template>

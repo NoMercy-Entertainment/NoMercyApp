@@ -2,11 +2,11 @@
 
 import MusicButton from './MusicButton.vue';
 import MoooomIcon from '@/components/Images/icons/MoooomIcon.vue';
-import audioPlayer, {isMuted, volume} from '@/store/audioPlayer';
+import audioPlayer, { isMuted, volume } from '@/store/audioPlayer';
 
 const handleClick = (e?: MouseEvent) => {
-	e?.stopPropagation();
-	audioPlayer.toggleMute();
+    e?.stopPropagation();
+    audioPlayer.toggleMute();
 };
 </script>
 

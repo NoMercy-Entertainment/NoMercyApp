@@ -1,4 +1,4 @@
-import type {PaletteColors} from '@/types/api/shared';
+import type { PaletteColors } from '@/types/api/shared';
 
 export interface ReleaseGroup {
     id: string;

@@ -1,4 +1,4 @@
-import {NMPlayer, Plugin} from '@/lib/VideoPlayer';
+import { NMPlayer, Plugin } from '@/lib/VideoPlayer';
 
 export class TemplatePlugin extends Plugin {
 	player: NMPlayer = <NMPlayer>{};

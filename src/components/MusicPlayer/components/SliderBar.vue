@@ -1,6 +1,6 @@
 <script setup lang="ts">
 
-import {computed, PropType} from 'vue';
+import { computed, PropType } from 'vue';
 
 const props = defineProps({
   position: {
@@ -46,27 +46,16 @@ const computedPercentage = computed(() => {
 
 <template>
   <span class="sliderBar h-2 w-full rounded-full group relative"
-        style="box-shadow: 0 1px 0 0 rgba(0, 0, 0, 0.24) inset, 0 -1px 0 0 rgba(255, 255, 255, 0.12) inset, 0 4px 4px 0 rgba(0, 0, 0, 0.08) inset;"
-        >
-  <input
-      id="slider"
-      type="range"
-      :step="step"
-      :min="min"
-      :max="max"
-      @keydown="onKeyDown && onKeyDown($event)"
-      @keyup="onKeyUp && onKeyUp($event)"
-      class="relative w-full
+    style="box-shadow: 0 1px 0 0 rgba(0, 0, 0, 0.24) inset, 0 -1px 0 0 rgba(255, 255, 255, 0.12) inset, 0 4px 4px 0 rgba(0, 0, 0, 0.08) inset;">
+    <input id="slider" type="range" :step="step" :min="min" :max="max" @keydown="onKeyDown && onKeyDown($event)"
+      @keyup="onKeyUp && onKeyUp($event)" class="relative w-full
         [&::-webkit-slider-runnable-track]:transition-all 
         [&::-webkit-slider-runnable-track]:duration-100
         [&::-webkit-slider-thumb]:opacity-0
         [&::-moz-slider-thumb]:opacity-0
         group-hover:[&::-webkit-slider-thumb]:opacity-100
         group-hover:[&::-moz-slider-thumb]:opacity-100
-      "
-      :value="position"
-      :style="{ '--left': `${computedPercentage}%` }"
-      @input="$emit('update:modelValue', ($event.target as HTMLInputElement).value)"
-      name="slider">
+      " :value="position" :style="{ '--left': `${computedPercentage}%` }"
+      @input="$emit('update:modelValue', ($event.target as HTMLInputElement).value)" name="slider">
   </span>
 </template>

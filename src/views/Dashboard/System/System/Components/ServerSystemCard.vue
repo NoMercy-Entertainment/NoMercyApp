@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import {IonItem} from '@ionic/vue';
+import { IonItem } from '@ionic/vue';
 
-import {dashboardSocketIsConnected} from "@/lib/clients/dashboardSocket";
-import {isMobile} from "@/config/global";
+import { dashboardSocketIsConnected } from "@/lib/clients/dashboardSocket";
+import { isMobile } from "@/config/global";
 
 defineProps({
   title: {
@@ -20,51 +20,43 @@ defineProps({
 
 <template>
   <ion-item v-if="isMobile && dashboardSocketIsConnected">
-    <div
-         class="flex flex-shrink-0 flex-grow-0 flex-col items-start justify-start gap-3 self-stretch w-full">
+    <div class="flex flex-shrink-0 flex-grow-0 flex-col items-start justify-start gap-3 self-stretch w-full">
       <div
-          class="relative flex flex-shrink-0 flex-grow-0 items-center justify-start gap-4 self-stretch text-slate-light-12 dark:text-slate-dark-12"
-      >
+        class="relative flex flex-shrink-0 flex-grow-0 items-center justify-start gap-4 self-stretch text-slate-light-12 dark:text-slate-dark-12">
         <p class="flex-grow text-xl font-medium">
           {{ $t(title) }}
         </p>
         <div class="ml-auto flex gap-2">
-          <slot name="cta"/>
+          <slot name="cta" />
         </div>
       </div>
 
-      <div
-          class="flex flex-shrink-0 flex-grow-0 flex-col items-start justify-start gap-4 self-stretch rounded-xl"
-          :class="{
-            'bg-slate-lightA-3 dark:bg-slate-darkA-3 p-4' : background
-          }"
-      >
-        <slot/>
+      <div class="flex flex-shrink-0 flex-grow-0 flex-col items-start justify-start gap-4 self-stretch rounded-xl"
+        :class="{
+          'bg-slate-lightA-3 dark:bg-slate-darkA-3 p-4': background
+        }">
+        <slot />
 
       </div>
     </div>
 
   </ion-item>
   <div v-else-if="dashboardSocketIsConnected"
-      class="flex flex-shrink-0 flex-grow-0 flex-col items-start justify-start gap-3 self-stretch">
+    class="flex flex-shrink-0 flex-grow-0 flex-col items-start justify-start gap-3 self-stretch">
     <div
-        class="relative flex flex-shrink-0 flex-grow-0 items-center justify-start gap-4 self-stretch text-slate-light-12 dark:text-slate-dark-12"
-    >
+      class="relative flex flex-shrink-0 flex-grow-0 items-center justify-start gap-4 self-stretch text-slate-light-12 dark:text-slate-dark-12">
       <p class="flex-grow text-xl font-medium">
         {{ $t(title) }}
       </p>
       <div class="ml-auto flex gap-2">
-        <slot name="cta"/>
+        <slot name="cta" />
       </div>
     </div>
 
-    <div
-        class="flex flex-shrink-0 flex-grow-0 flex-col items-start justify-start gap-4 self-stretch rounded-xl"
-        :class="{
-            'bg-slate-lightA-3 dark:bg-slate-darkA-3 p-4' : background
-          }"
-    >
-      <slot/>
+    <div class="flex flex-shrink-0 flex-grow-0 flex-col items-start justify-start gap-4 self-stretch rounded-xl" :class="{
+      'bg-slate-lightA-3 dark:bg-slate-darkA-3 p-4': background
+    }">
+      <slot />
 
     </div>
   </div>

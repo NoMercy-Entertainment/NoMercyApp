@@ -1,8 +1,8 @@
-import {twMerge} from 'tailwind-merge';
-import {WebVTTParser} from 'webvtt-parser';
+import { twMerge } from 'tailwind-merge';
+import { WebVTTParser } from 'webvtt-parser';
 
 import Plugin from '@nomercy-entertainment/nomercy-video-player/src/plugin';
-import type {NMPlayer, PreviewTime, VolumeState} from '@nomercy-entertainment/nomercy-video-player/src/types';
+import type { NMPlayer, PreviewTime, VolumeState } from '@nomercy-entertainment/nomercy-video-player/src/types';
 import {
     breakEpisodeTitle,
     breakLogoTitle,
@@ -10,8 +10,8 @@ import {
     nearestValue,
     unique
 } from '@nomercy-entertainment/nomercy-video-player/src/helpers';
-import {buttons, type  Icon} from './buttons';
-import {TimeData} from "@nomercy-entertainment/nomercy-video-player/src/types";
+import { buttons, type Icon } from './buttons';
+import { TimeData } from "@nomercy-entertainment/nomercy-video-player/src/types";
 
 export class BaseUIPlugin extends Plugin {
     player: NMPlayer = <NMPlayer>{};
@@ -495,7 +495,7 @@ export class BaseUIPlugin extends Plugin {
                                 const match = regex.exec(cue.text);
                                 if (!match?.groups) return;
 
-                                const {x, y, w, h} = match.groups;
+                                const { x, y, w, h } = match.groups;
 
                                 const [imgX, imgY, imgW, imgH] = [x, y, w, h]
                                     .map(val => parseInt(val, 10));
@@ -1527,7 +1527,7 @@ export class BaseUIPlugin extends Plugin {
 
                 setTimeout(() => {
                     document.querySelector(`playlist-${this.player.playlistItem().id}`)
-                        ?.scrollIntoView({block: 'center'});
+                        ?.scrollIntoView({ block: 'center' });
                 }, 100);
             }
         });

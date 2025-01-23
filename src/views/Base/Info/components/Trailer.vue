@@ -1,15 +1,15 @@
 <script lang="ts" setup>
-import {onMounted, onUnmounted, type PropType, ref, toRaw} from 'vue';
+import { onMounted, onUnmounted, type PropType, ref, toRaw } from 'vue';
 
-import type {InfoResponse} from '@/types/api/base/info';
+import type { InfoResponse } from '@/types/api/base/info';
 
-import type {NMPlayer, PlaylistItem, SetupConfig} from '@/lib/VideoPlayer';
-import {DesktopUIPlugin, KeyHandlerPlugin, nmplayer,} from '@/lib/VideoPlayer';
-import {closeSidebar, setSidebar, sidebar} from '@/store/sidebar';
-import {setDisableScreensaver} from '@/store/imageModal';
-import {musicVisibility} from '@/store/audioPlayer';
-import {App} from "@capacitor/app";
-import {isNative} from "@/config/global";
+import type { NMPlayer, PlaylistItem, SetupConfig } from '@/lib/VideoPlayer';
+import { DesktopUIPlugin, KeyHandlerPlugin, nmplayer, } from '@/lib/VideoPlayer';
+import { closeSidebar, setSidebar, sidebar } from '@/store/sidebar';
+import { setDisableScreensaver } from '@/store/imageModal';
+import { musicVisibility } from '@/store/audioPlayer';
+import { App } from "@capacitor/app";
+import { isNative } from "@/config/global";
 
 const props = defineProps({
   videos: {
@@ -74,8 +74,8 @@ onMounted(() => {
         image: `https://trailer.nomercy.tv/${props.videos[props.index].src}/${props.videos[props.index].src}.jpg`,
         file: `https://trailer.nomercy.tv/${props.videos[props.index].src}/${props.videos[props.index].src}.webm`,
         title: `${props.videos[props.index].name.toLocaleLowerCase().includes(props.title.toLocaleLowerCase())
-            ? ''
-            : `${props.title} - `}${props.videos[props.index].name}`.toTitleCase(),
+          ? ''
+          : `${props.title} - `}${props.videos[props.index].name}`.toTitleCase(),
         duration: '',
         description: '',
         tracks: [
@@ -93,7 +93,7 @@ onMounted(() => {
 
   // @ts-ignore
   trailer.value = nmplayer('trailer')
-      .setup(config);
+    .setup(config);
 
   trailer.value?.once('back', () => {
     props.toggle();
@@ -167,14 +167,11 @@ onUnmounted(() => {
 
 </script>
 
-<style scoped>
-</style>
+<style scoped></style>
 
 <template>
   <div @click="toggle" class="fixed h-full w-full overflow-hidden rounded-lg bg-black/50">
-    <div :data-music="musicVisibility"
-         :data-sidebar="sidebar"
-         class="absolute w-screen h-available sm:w-auto sm:overflow-hidden sm:inset-1/2 sm:aspect-video sm:-translate-y-[50%]
+    <div :data-music="musicVisibility" :data-sidebar="sidebar" class="absolute w-screen h-available sm:w-auto sm:overflow-hidden sm:inset-1/2 sm:aspect-video sm:-translate-y-[50%]
               sidebar-closed:sm:h-full
               sidebar-closed:sm:max-w-[90vw]
               sidebar-closed:sm:max-h-[93%]
@@ -189,11 +186,9 @@ onUnmounted(() => {
               sidebar-open:py-6
               sidebar-open:xl:px-[2.8rem]
               sidebar-open:xl:py-6
-      "
-    >
-      <div ref="trailerContainer"
-           @click="(e: MouseEvent) => e.stopPropagation()"
-           class="relative rounded-2xl flex overflow-clip children:overflow-clip w-full h-full children:!w-full children:!h-auto children:!aspect-video">
+      ">
+      <div ref="trailerContainer" @click="(e: MouseEvent) => e.stopPropagation()"
+        class="relative rounded-2xl flex overflow-clip children:overflow-clip w-full h-full children:!w-full children:!h-auto children:!aspect-video">
         <div id="trailer" class="group nomercyplayer"></div>
       </div>
     </div>

@@ -7,12 +7,12 @@ import type { ServerLibrary } from '@/types/server';
 
 import apiClient from "@/lib/clients/apiClient";
 import useServerClient from '@/lib/clients/useServerClient';
-import {currentServer} from '@/store/currentServer';
-import {queryClient} from '@/config/tanstack-query';
+import { currentServer } from '@/store/currentServer';
+import { queryClient } from '@/config/tanstack-query';
 
 import Modal from '@/components/Modal.vue';
 import Button from '@/components/Buttons/Button.vue';
-import {Nullable} from 'vitest';
+import { Nullable } from 'vitest';
 
 const { t } = useTranslation();
 
@@ -36,7 +36,7 @@ const errorBucket = ref<{
   message: string;
 }[]>([]);
 
-const {data: libraries} = useServerClient<ServerLibrary[]>({
+const { data: libraries } = useServerClient<ServerLibrary[]>({
   path: '/dashboard/libraries',
 });
 
@@ -80,42 +80,41 @@ const handleInvite = () => {
   }
 
   apiClient()
-      .post('server/users', {
-        server_id: currentServer.value?.id,
-        email: email.value,
-        libraries: allowedLibraries.value?.map(l => l.id),
-      })
-      .then(() => {
-        queryClient.invalidateQueries({queryKey: ['server_users']});
+    .post('server/users', {
+      server_id: currentServer.value?.id,
+      email: email.value,
+      libraries: allowedLibraries.value?.map(l => l.id),
+    })
+    .then(() => {
+      queryClient.invalidateQueries({ queryKey: ['server_users'] });
 
-        email.value = '';
+      email.value = '';
 
-        props.close();
-      })
-      .catch(({response}: AxiosError<{status: string, message?: string, exception?: string}>) => {
-        if (response?.status != 200 && response?.data) {
-          errorBucket.value.push({
-            message: response.data.message ?? 'An error occurred',
-            place: 'email',
-            type: response.data.status ?? response.data.exception,
-          });
-        }
-      });
+      props.close();
+    })
+    .catch(({ response }: AxiosError<{ status: string, message?: string, exception?: string }>) => {
+      if (response?.status != 200 && response?.data) {
+        errorBucket.value.push({
+          message: response.data.message ?? 'An error occurred',
+          place: 'email',
+          type: response.data.status ?? response.data.exception,
+        });
+      }
+    });
 
 };
 
 </script>
 
 <template>
-  <Modal :open="open"
-         :close="closeInviteModal"
-         title="Invite user">
+  <Modal :open="open" :close="closeInviteModal" title="Invite user">
 
     <div class="flex w-full flex-col justify-start text-left">
 
       <p class="py-4 text-sm text-auto-10">
         {{ $t('Enter the email of the friend you want to invite to your server.') }}<br>
-        {{ $t('We will send this person an email with a link to join the server, if they accept the invitation they will be automatically shown here.') }}
+        {{ $t('We will send this person an email with a link to join the server, if they accept the invitation they will
+        be automatically shown here.') }}
       </p>
 
       <div class="flex flex-col gap-2 w-full">
@@ -125,34 +124,18 @@ const handleInvite = () => {
 
       <div class="pointer-events-auto mt-2 w-full flex-col gap-1 card flex justify-center">
         <label for="libraries">Allowed libraries</label>
-        <MultiSelect
-            id="libraries"
-            display="chip"
-            label="libraries"
-            placeholder="Select libraries"
-            multiple
-            :options="libraries"
-            optionLabel="title"
-            v-model="allowedLibraries"
-        />
+        <MultiSelect id="libraries" display="chip" label="libraries" placeholder="Select libraries" multiple
+          :options="libraries" optionLabel="title" v-model="allowedLibraries" />
       </div>
     </div>
 
 
     <template v-slot:actions>
-      <Button type="button"
-              id="yes"
-              color="theme"
-              variant="contained"
-              endIcon="emailSend"
-              :disabled="!isValidEmail"
-              @click="handleInvite">
+      <Button type="button" id="yes" color="theme" variant="contained" endIcon="emailSend" :disabled="!isValidEmail"
+        @click="handleInvite">
         {{ $t('Send') }}
       </button>
-      <Button type="button"
-              id="no"
-              variant="text"
-              @click="closeInviteModal">
+      <Button type="button" id="no" variant="text" @click="closeInviteModal">
         {{ $t('Cancel') }}
       </button>
     </template>

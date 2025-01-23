@@ -1,6 +1,6 @@
 <script setup lang="ts">
 
-import {musicSize} from '@/store/audioPlayer';
+import { musicSize } from '@/store/audioPlayer';
 
 import DeviceButton from '../components/DeviceButton.vue';
 import NextButton from '../components/NextButton.vue';
@@ -17,8 +17,7 @@ const supportsAudioContext = localStorage.getItem('nmplayer-supports-audio-conte
 </script>
 
 <template>
-    <div class="flex w-full items-center justify-between px-6"
-         :data-size="musicSize">
+    <div class="flex w-full items-center justify-between px-6" :data-size="musicSize">
         <ShuffleButton />
         <PreviousButton />
         <PlaybackButton class="!h-14 !w-14 !bg-focus/50 !rounded-full
@@ -31,8 +30,7 @@ const supportsAudioContext = localStorage.getItem('nmplayer-supports-audio-conte
         <NextButton />
         <RepeatButton />
     </div>
-    <div class="z-0 mb-12 flex h-12 w-full justify-between px-6 gap-2"
-         :data-size="musicSize">
+    <div class="z-0 mb-12 flex h-12 w-full justify-between px-6 gap-2" :data-size="musicSize">
         <DeviceButton />
         <StopButton class="ml-auto" />
         <EqButton v-if="supportsAudioContext" />

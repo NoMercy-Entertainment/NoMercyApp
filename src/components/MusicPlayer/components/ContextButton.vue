@@ -29,7 +29,8 @@ const handleClick = (e?: MouseEvent) => {
 </script>
 
 <template>
-    <MusicButton label="" :onclick="handleClick" class="-outline-offset-1 focus:outline focus:outline-1 focus:outline-white">
-        <MoooomIcon icon="menuDotsHorizontal" class="h-5 w-5" />
-    </MusicButton>
+	<MusicButton label="" :onclick="handleClick"
+		class="-outline-offset-1 focus:outline focus:outline-1 focus:outline-white">
+		<MoooomIcon icon="menuDotsHorizontal" class="h-5 w-5" />
+	</MusicButton>
 </template>

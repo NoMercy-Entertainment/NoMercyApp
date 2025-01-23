@@ -1,10 +1,10 @@
 <script lang="ts" setup>
-import {computed, type PropType} from 'vue';
+import { computed, type PropType } from 'vue';
 
-import type {ArtistResponse} from '@/types/api/music/artist';
-import type {Artist} from '@/types/api/music/artist';
-import type {HomeDataItem, MusicHomeResponseItem} from '@/types/api/music';
-import type {PlaylistItem} from '@/types/musicPlayer';
+import type { ArtistResponse } from '@/types/api/music/artist';
+import type { Artist } from '@/types/api/music/artist';
+import type { HomeDataItem, MusicHomeResponseItem } from '@/types/api/music';
+import type { PlaylistItem } from '@/types/musicPlayer';
 
 import MusicCarousel from '@/components/Carousel/MusicCarousel.vue';
 import TabFrame from '@/views/Music/Artist/components/TabFrame.vue';
@@ -69,25 +69,23 @@ const transformToBionic = (content: string) => {
 
 <template>
   <div v-if="activeTab"
-       class="flex flex-1 basis-0 items-start justify-start self-stretch overflow-clip px-8 py-8 w-available">
+    class="flex flex-1 basis-0 items-start justify-start self-stretch overflow-clip px-8 py-8 w-available">
     <TabFrame :data="data" :activeTab="activeTab">
       <div class="flex flex-col gap-2 overflow-clip w-available max-w-[75ch]">
         <!--				<div v-for="line in transformToBionic(data.description ?? overview ?? '')?.split('\n') ?? []"-->
-        <div v-for="line in (data.description ?? '')?.split('\n') ?? []" :key="line"
-             class="flex flex-col gap-1"
-        >
+        <div v-for="line in (data.description ?? '')?.split('\n') ?? []" :key="line" class="flex flex-col gap-1">
           <template v-for="sentence in line.split('\n')" :key="sentence">
-          <span class="bionic-text !text-auto-6 font-semibold !text-base"
-                v-html="sentence"/>
+            <span class="bionic-text !text-auto-6 font-semibold !text-base" v-html="sentence" />
           </template>
         </div>
       </div>
 
-      <GenresCard :data="data"/>
+      <GenresCard :data="data" />
 
       <div class="max-w-available">
         <template v-for="carousel in artistCarousel ?? []" :key="carousel.title">
-          <MusicCarousel :data="carousel as unknown as MusicHomeResponseItem<HomeDataItem>" class="-mx-3" :limitCardCountBy="2"/>
+          <MusicCarousel :data="carousel as unknown as MusicHomeResponseItem<HomeDataItem>" class="-mx-3"
+            :limitCardCountBy="2" />
         </template>
       </div>
     </TabFrame>

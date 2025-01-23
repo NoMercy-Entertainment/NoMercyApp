@@ -1,7 +1,7 @@
-import {computed, ref, toRaw} from 'vue';
+import { computed, ref, toRaw } from 'vue';
 
 import SocketClient from '@/lib/clients/socketClient/SocketClient';
-import {HubConnection} from '@microsoft/signalr';
+import { HubConnection } from '@microsoft/signalr';
 
 const si = ref<SocketClient>(<SocketClient>{});
 export const socketInstance = computed(() => si.value);

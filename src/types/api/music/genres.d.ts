@@ -1,4 +1,4 @@
-import type {ColorPalettes} from '@/types/api/shared';
+import type { ColorPalettes } from '@/types/api/shared';
 
 export interface GenresResponse {
 	type: string;
@@ -9,7 +9,7 @@ export interface GenreItem {
 	id: string;
 	name: string;
 	musicGenre_track: MusicGenreTrack[];
-    color_palette: ColorPalettes;
+	color_palette: ColorPalettes;
 	type: string;
 	titleSort: string;
 	origin: string;

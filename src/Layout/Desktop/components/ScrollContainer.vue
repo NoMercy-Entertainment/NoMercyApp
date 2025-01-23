@@ -1,9 +1,9 @@
 <script lang="ts" setup>
-import {onMounted, ref} from 'vue';
-import {VueScrollEvent} from '@/vite-env';
+import { onMounted, ref } from 'vue';
+import { VueScrollEvent } from '@/vite-env';
 
 import router from '@/router';
-import {musicVisibility} from '@/store/audioPlayer';
+import { musicVisibility } from '@/store/audioPlayer';
 
 const refHandle = ref<HTMLSpanElement>();
 const refBar = ref<HTMLDivElement>();
@@ -11,19 +11,19 @@ const element = ref<HTMLDivElement>();
 const show = ref(false);
 
 defineProps({
-    autoHide: {
-        type: Boolean,
-        default: false,
-    },
-    className: {
-        type: String,
-        required: false,
-        default: '',
-    },
-    static: {
-        type: Boolean,
-        default: true,
-    },
+  autoHide: {
+    type: Boolean,
+    default: false,
+  },
+  className: {
+    type: String,
+    required: false,
+    default: '',
+  },
+  static: {
+    type: Boolean,
+    default: true,
+  },
 });
 
 defineEmits<{
@@ -47,7 +47,7 @@ const enable = () => {
 
     const scroll = container.scrollTop / container.scrollHeight;
     handle.style.top = `${scroll * 100}%`;
-    
+
     if ((container.firstElementChild as HTMLDivElement)?.scrollHeight > height || container.scrollHeight > height) {
       show.value = true;
     } else {
@@ -90,71 +90,55 @@ const enable = () => {
 }
 
 onMounted(() => {
-    enable();
+  enable();
 });
 
 router.afterEach(enable);
 
 const mouseEnter = () => {
-    show.value = true;
+  show.value = true;
 };
 
 const mouseLeave = () => {
-    show.value = false;
+  show.value = false;
 };
 
 </script>
 
 <template>
-    <div class="flex flex-1 h-inherit min-h-inherit max-h-[calc(100vh-5rem)] music-showing:h-[calc(100vh-11rem)] overflow-auto will-change-scroll w-full flex-col scrollbar-none group/scrollContainer transform-gpu pb-2"
-         ref="element"
-         @scroll="$emit('scroll', $event as unknown as VueScrollEvent)"
-         @mousemove="mouseEnter"
-         @mouseleave="mouseLeave"
-         :data-music="musicVisibility"
-    >
-        <slot/>
+  <div
+    class="flex flex-1 h-inherit min-h-inherit max-h-[calc(100vh-5rem)] music-showing:h-[calc(100vh-11rem)] overflow-auto will-change-scroll w-full flex-col scrollbar-none group/scrollContainer transform-gpu pb-2"
+    ref="element" @scroll="$emit('scroll', $event as unknown as VueScrollEvent)" @mousemove="mouseEnter"
+    @mouseleave="mouseLeave" :data-music="musicVisibility">
+    <slot />
 
-      <Teleport to="body" v-if="static">
-        <div ref="refBar"
-             data-scrollbar
-             :style="`position: ${static ? 'fixed' : 'absolute'}`"
-             :class="{
-                 'opacity-100' : show,
-                 'opacity-0 pointer-events-none' : !show,
-                 'top-16 mr-1': static,
-                 'top-0 mr-1': !static,
-                 'bottom-20': musicVisibility === 'showing',
-                 className,
-             }"
-             class="right-0 bottom-0 mt-2 mb-2 hidden rounded-full border-r-2 border-l-4 border-transparent w-3.5 group-active/scrollContainer:bg-auto-2/9 hover:bg-auto-2/9 sm:flex">
-            <span draggable="true"
-                  data-scrollbar
-                  ref="refHandle"
-                  :class="{
-                    'opacity-0 group-hover/scrollContainer:opacity-100': autoHide && !show,
-                    '!transition-none': !show,
-                  }"
-                  class="absolute w-2 rounded-full transition-all right-[1px] bg-auto-12/11 active:opacity-100 [transition-duration:75ms] [animation-duration:75ms] active:[transition-duration:0ms] active:[animation-duration:0ms]"
-            >
-            </span>
-        </div>
-      </Teleport>
-
-      <div ref="refBar"
-           v-else
-           data-scrollbar
-           class="absolute top-0 mr-1 h-[96%] right-0 bottom-0 mt-2 mb-2 hidden rounded-full border-r-2 border-l-4 border-transparent w-3.5 group-active/scrollContainer:bg-auto-2/9 hover:bg-auto-2/9 sm:flex">
-            <span draggable="true"
-                  data-scrollbar
-                  ref="refHandle"
-                  :class="{
-                    'opacity-0 group-hover/scrollContainer:opacity-100': !static && autoHide,
-                    '!transition-none': !show,
-                  }"
-                  class="absolute w-2 rounded-full transition-all right-[1px] bg-auto-12/11 active:opacity-100 [transition-duration:75ms] [animation-duration:75ms] active:[transition-duration:0ms] active:[animation-duration:0ms]"
-            >
-            </span>
+    <Teleport to="body" v-if="static">
+      <div ref="refBar" data-scrollbar :style="`position: ${static ? 'fixed' : 'absolute'}`" :class="{
+        'opacity-100': show,
+        'opacity-0 pointer-events-none': !show,
+        'top-16 mr-1': static,
+        'top-0 mr-1': !static,
+        'bottom-20': musicVisibility === 'showing',
+        className,
+      }"
+        class="right-0 bottom-0 mt-2 mb-2 hidden rounded-full border-r-2 border-l-4 border-transparent w-3.5 group-active/scrollContainer:bg-auto-2/9 hover:bg-auto-2/9 sm:flex">
+        <span draggable="true" data-scrollbar ref="refHandle" :class="{
+          'opacity-0 group-hover/scrollContainer:opacity-100': autoHide && !show,
+          '!transition-none': !show,
+        }"
+          class="absolute w-2 rounded-full transition-all right-[1px] bg-auto-12/11 active:opacity-100 [transition-duration:75ms] [animation-duration:75ms] active:[transition-duration:0ms] active:[animation-duration:0ms]">
+        </span>
       </div>
+    </Teleport>
+
+    <div ref="refBar" v-else data-scrollbar
+      class="absolute top-0 mr-1 h-[96%] right-0 bottom-0 mt-2 mb-2 hidden rounded-full border-r-2 border-l-4 border-transparent w-3.5 group-active/scrollContainer:bg-auto-2/9 hover:bg-auto-2/9 sm:flex">
+      <span draggable="true" data-scrollbar ref="refHandle" :class="{
+        'opacity-0 group-hover/scrollContainer:opacity-100': !static && autoHide,
+        '!transition-none': !show,
+      }"
+        class="absolute w-2 rounded-full transition-all right-[1px] bg-auto-12/11 active:opacity-100 [transition-duration:75ms] [animation-duration:75ms] active:[transition-duration:0ms] active:[animation-duration:0ms]">
+      </span>
     </div>
+  </div>
 </template>

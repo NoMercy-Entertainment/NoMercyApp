@@ -14,12 +14,12 @@ export class SocketClient {
     private baseUrl: string;
     private deviceInfo: ReturnType<typeof deviceInfo> = deviceInfo();
     private keepAliveInterval: number = 10;
-		private endpoint: string;
+    private endpoint: string;
 
     constructor(baseUrl: string, accessToken: string, endpoint: string = 'socket') {
         this.baseUrl = baseUrl;
         this.accessToken = accessToken;
-		this.endpoint = endpoint;
+        this.endpoint = endpoint;
 
         this.connection = this.connectionBuilder();
     }
@@ -31,7 +31,7 @@ export class SocketClient {
     }
 
     setup = async () => {
-			if (!this.connection) return;
+        if (!this.connection) return;
 
         try {
             this.connection.onreconnecting((error: Error | undefined) => {
@@ -72,7 +72,7 @@ export class SocketClient {
             })
             .withKeepAliveInterval(this.keepAliveInterval * 1000)
             .withAutomaticReconnect()
-						.withStatefulReconnect()
+            .withStatefulReconnect()
             .configureLogging(LogLevel.Error)
             .build();
     }

@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import {type PropType} from "vue";
+import { type PropType } from "vue";
 
-import type {PlaylistItem} from "@/types/musicPlayer";
+import type { PlaylistItem } from "@/types/musicPlayer";
 
 import TrackRow from "./TrackRow.vue";
 
@@ -41,7 +41,7 @@ defineProps({
 		</div>
 		<div class="flex flex-col items-start justify-start gap-1 self-stretch">
 			<template v-for="(track, index) in data ?? []" :key="track.id">
-				<TrackRow :index="index" :data="track" :displayList="data"/>
+				<TrackRow :index="index" :data="track" :displayList="data" />
 			</template>
 		</div>
 	</div>

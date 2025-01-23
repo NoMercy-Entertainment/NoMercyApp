@@ -1,10 +1,10 @@
-import {ComputedRef, Ref, ref, toRaw, UnwrapRef} from 'vue';
-import {QueryKey, useQuery, UseQueryReturnType} from '@tanstack/vue-query';
+import { ComputedRef, Ref, ref, toRaw, UnwrapRef } from 'vue';
+import { QueryKey, useQuery, UseQueryReturnType } from '@tanstack/vue-query';
 
 import apiClient from './apiClient';
-import {AxiosError} from 'axios';
-import {ErrorResponse} from '@/types/server';
-import {queryKey} from '@/lib/clients/useInfiniteServerClient';
+import { AxiosError } from 'axios';
+import { ErrorResponse } from '@/types/server';
+import { queryKey } from '@/lib/clients/useInfiniteServerClient';
 import router from '@/router';
 
 export interface ServerClientProps {
@@ -28,7 +28,7 @@ type Return<T> = UseQueryReturnType<T, AxiosError<ErrorResponse>> extends {
 	setLetter: (value: string) => void;
 };
 
-const useApiClient = <T, >(options?: ServerClientProps): Return<T> => {
+const useApiClient = <T,>(options?: ServerClientProps): Return<T> => {
 
 	const letter = ref<string>(router.currentRoute.value.params?.letter as string || '_');
 
@@ -37,7 +37,7 @@ const useApiClient = <T, >(options?: ServerClientProps): Return<T> => {
 		// queryClient.refetch();
 	};
 
-	router.afterEach( () => {
+	router.afterEach(() => {
 		setLetter(router.currentRoute.value.params.letter as string);
 	});
 
@@ -113,7 +113,7 @@ const useApiClient = <T, >(options?: ServerClientProps): Return<T> => {
 								{
 									signal: controller.signal,
 								})
-							.then(({data}) => {
+							.then(({ data }) => {
 								// @ts-ignore
 								return data?.data ?? data;
 							})
@@ -131,7 +131,7 @@ const useApiClient = <T, >(options?: ServerClientProps): Return<T> => {
 								{
 									signal: controller.signal,
 								})
-							.then(({data}) => {
+							.then(({ data }) => {
 								// @ts-ignore
 								return data?.data ?? data;
 							})
@@ -148,7 +148,7 @@ const useApiClient = <T, >(options?: ServerClientProps): Return<T> => {
 								{
 									signal: controller.signal,
 								})
-							.then(({data}) => {
+							.then(({ data }) => {
 								// @ts-ignore
 								return data?.data ?? data;
 							})
@@ -165,7 +165,7 @@ const useApiClient = <T, >(options?: ServerClientProps): Return<T> => {
 								{
 									signal: controller.signal,
 								})
-							.then(({data}) => {
+							.then(({ data }) => {
 								// @ts-ignore
 								return data?.data ?? data;
 							})

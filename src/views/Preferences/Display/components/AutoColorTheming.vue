@@ -1,6 +1,6 @@
 <script setup lang='ts'>
-import {ref, watch} from 'vue';
-import {setUseAutoThemeColors, useAutoThemeColors} from "@/store/preferences";
+import { ref, watch } from 'vue';
+import { setUseAutoThemeColors, useAutoThemeColors } from "@/store/preferences";
 import Toggle from "@/components/Forms/Toggle.vue";
 
 const value = ref(useAutoThemeColors.value);
@@ -27,14 +27,11 @@ watch(value, (value) => {
 			</p>
 		</div>
 		<div class='flex transition-transform duration-150'>
-			<Toggle id="autoTheme"
-							label="Auto theme"
-							v-model="value"
-							class="mr-2"/>
+			<Toggle id="autoTheme" label="Auto theme" v-model="value" class="mr-2" />
 			<div class="flex flex-col justify-center">
 				<span class="whitespace-pre-wrap text-sm font-semibold text-contrast">
-            {{ $t('Enabled') }}
-        </span>
+					{{ $t('Enabled') }}
+				</span>
 				<span class="h-5 whitespace-pre-wrap text-sm text-contrast empty:hidden"></span>
 			</div>
 		</div>

@@ -4,7 +4,7 @@ import { useTranslation } from 'i18next-vue';
 
 // import { getColorFromPercent, percentColors } from '@/lib/colorHelper';
 import AppLogo from "@/components/Images/icons/AppLogo.vue";
-import {showBackdrops} from "@/store/preferences";
+import { showBackdrops } from "@/store/preferences";
 
 const { t } = useTranslation();
 
@@ -24,11 +24,13 @@ const colors = computed(() => {
 		class="mb-4 hidden sm:flex tv:!hidden xl:col-start-1 xl:col-span-2 xl:row-start-2 xl:row-span-2 2xl:col-start-1 2xl:col-span-2 2xl:row-start-2 2xl:row-span-2">
 		<div class="relative flex select-none flex-col gap-3 w-available">
 			<p class="font-bold text-contrast">{{ t('Theme preview') }}</p>
-			<div class="relative flex h-auto items-start justify-start overflow-hidden rounded-2xl border-2 aspect-[16/10] bg-auto-1 border-auto-9/20">
+			<div
+				class="relative flex h-auto items-start justify-start overflow-hidden rounded-2xl border-2 aspect-[16/10] bg-auto-1 border-auto-9/20">
 
 				<div class="relative flex w-full flex-shrink-0 flex-col overflow-clip px-2 h-available">
 					<div class="mt-1 flex h-8">
-						<div class="w-auto h-[7%] aspect-square absolute right-3 top-2 rounded-full bg-[#51525C] z-10"></div>
+						<div class="w-auto h-[7%] aspect-square absolute right-3 top-2 rounded-full bg-[#51525C] z-10">
+						</div>
 						<div class="mt-1 flex items-center justify-start gap-4">
 							<AppLogo class="z-10 mr-4 ml-1 w-20" />
 
@@ -62,11 +64,9 @@ const colors = computed(() => {
 						</div>
 
 						<div class="relative w-px flex-1 rounded-lg mb-1.5">
-							<div
-								class="w-full h-full px-2 pt-2 gap-2.5 flex flex-col ml-auto overflow-hidden rounded-xl bg-auto-100
+							<div class="w-full h-full px-2 pt-2 gap-2.5 flex flex-col ml-auto overflow-hidden rounded-xl bg-auto-100
 								bg-cover border-2 border-transparent text-start [background:padding-box_var(--bg-color),border-box_var(--border-color)] transition-transform duration-300
-								"
-								:style="`
+								" :style="`
 									--angle: 145deg;
 									--bg-color: linear-gradient(rgb(var(--color-auto-50)), rgb(var(--color-auto-50)));
 									--border-color: linear-gradient(var(--angle),
@@ -75,51 +75,41 @@ const colors = computed(() => {
 										rgb(var(--color-logo-light) / 0.14) 66.67%,
 										rgb(var(--color-logo-light) / 0.1) 100%
 									);
-								`"
-							>
+								`">
 
 								<div class="mx-auto h-24 w-full rounded-sm min-h-[5.5rem] bg-auto-4/90">
 								</div>
 
-								<div
-									class="flex w-auto flex-wrap overflow-hidden transition-transform duration-500"
+								<div class="flex w-auto flex-wrap overflow-hidden transition-transform duration-500"
 									:class="showBackdrops
 										? '-mr-[54.2%] gap-y-2'
-										: '-mr-[23.3%] gap-y-2'"
-								>
-									<div
-										v-for="(item, index) in colors"
+										: '-mr-[23.3%] gap-y-2'">
+									<div v-for="(item, index) in colors"
 										class="relative flex h-auto flex-col overflow-clip pr-2 transition-transform duration-500"
 										:class="showBackdrops
 											? 'w-1/6'
-											: 'w-1/6'"
-									>
-										<div
-											class="flex h-auto w-full overflow-clip transition-transform duration-500 rounded-[3px] bg-auto-11/30"
+											: 'w-1/6'">
+										<div class="flex h-auto w-full overflow-clip transition-transform duration-500 rounded-[3px] bg-auto-11/30"
 											:class="showBackdrops
 												? `aspect-backdrop ${index != 0 && index % 6 == 4
 													? 'bg-auto-11/0'
 													: 'bg-auto-11/30'
-											}`
+												}`
 												: `aspect-poster ${index != 0 && index % 6 == 5
 													? 'bg-auto-11/0'
 													: 'bg-auto-11/30'
-											}`"
-										>
+												}`">
 										</div>
-										<div
-											class="absolute left-0 transition-transform duration-500 w-[2.5px] h-2.5 top-1.5 rounded-tr-[2.5px] rounded-br-[2.5px]"
-											:style="`background-color:${item}`"
-											:class="showBackdrops
+										<div class="absolute left-0 transition-transform duration-500 w-[2.5px] h-2.5 top-1.5 rounded-tr-[2.5px] rounded-br-[2.5px]"
+											:style="`background-color:${item}`" :class="showBackdrops
 												? `${index != 0 && (index % 6 == 4 || index % 6 == 5)
 													? 'opacity-0'
 													: 'opacity-100'
-											}`
+												}`
 												: `${index != 0 && (index % 6 == 5 || index % 6 == 6)
 													? 'opacity-0'
 													: 'opacity-100'
-											}`"
-										>
+												}`">
 										</div>
 									</div>
 								</div>

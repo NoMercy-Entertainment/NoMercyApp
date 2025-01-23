@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import {ref, watch} from 'vue';
+import { ref, watch } from 'vue';
 
 import audioPlayer from '@/store/audioPlayer';
 
@@ -20,12 +20,6 @@ watch(volumePercentage, (value) => {
 </script>
 
 <template>
-  <SliderBar
-      :percentage="volumePercentage"
-      :position="volumePercentage"
-      @input="volumePercentage = Number(($event.target as HTMLInputElement).value)"
-      :min="0"
-      :step="1"
-      :max="100"
-  />
+  <SliderBar :percentage="volumePercentage" :position="volumePercentage"
+    @input="volumePercentage = Number(($event.target as HTMLInputElement).value)" :min="0" :step="1" :max="100" />
 </template>

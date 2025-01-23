@@ -1,6 +1,6 @@
 <script setup lang="ts">
 
-import {computed, type PropType} from 'vue';
+import { computed, type PropType } from 'vue';
 
 const props = defineProps({
 	id: {
@@ -112,21 +112,11 @@ const svgPaths = computed(() => {
 </script>
 
 <template>
-	<div
-		class="relative flex select-none items-center justify-start gap-2 self-stretch border border-transparent bg-transparent"
-		@click="handleClick"
-	>
+	<div class="relative flex select-none items-center justify-start gap-2 self-stretch border border-transparent bg-transparent"
+		@click="handleClick">
 		<input :id="id" type="checkbox" class="hidden item-selector" model-value:checked="!!modelValue" />
-		<svg
-				 :id="id"
-				 :width="width"
-				 :height="height"
-				 fill="none"
-				 viewBox="0 0 18 18"
-				 xmlns="http://www.w3.org/2000/svg"
-				 class="relative w-[18px] h-[18px]"
-				 preserveAspectRatio="xMidYMid meet"
-		>
+		<svg :id="id" :width="width" :height="height" fill="none" viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg"
+			class="relative w-[18px] h-[18px]" preserveAspectRatio="xMidYMid meet">
 			<g v-html="svgPaths"></g>
 		</svg>
 		<div class="relative flex flex-grow items-center justify-center gap-2 px-2" v-if="label">
@@ -134,6 +124,6 @@ const svgPaths = computed(() => {
 				{{ $t(label) }}
 			</p>
 		</div>
-		<slot/>
+		<slot />
 	</div>
 </template>

@@ -1,14 +1,14 @@
-import {ref, watch} from 'vue';
-import {isPlatform} from '@ionic/vue';
-import {Preferences} from '@capacitor/preferences';
-import {SafeArea} from 'capacitor-plugin-safe-area';
-import {useMediaQuery} from '@vueuse/core';
-import {NavigationBar} from "@hugotomazi/capacitor-navigation-bar";
+import { ref, watch } from 'vue';
+import { isPlatform } from '@ionic/vue';
+import { Preferences } from '@capacitor/preferences';
+import { SafeArea } from 'capacitor-plugin-safe-area';
+import { useMediaQuery } from '@vueuse/core';
+import { NavigationBar } from "@hugotomazi/capacitor-navigation-bar";
 
-import type {ColorScheme} from '@/types/config';
+import type { ColorScheme } from '@/types/config';
 
-import {isDarkMode} from '@/config/global';
-import {StatusBar, Style} from "@capacitor/status-bar";
+import { isDarkMode } from '@/config/global';
+import { StatusBar, Style } from "@capacitor/status-bar";
 
 export const setColorScheme = async (value: ColorScheme) => {
 	document.body.classList.add('scheme-transition');
@@ -40,7 +40,7 @@ export const setColorScheme = async (value: ColorScheme) => {
 		}).then();
 
 		const safeAreaData = await SafeArea.getSafeAreaInsets();
-		const {insets} = safeAreaData;
+		const { insets } = safeAreaData;
 		for (const [key, value] of Object.entries(insets)) {
 			document.documentElement.style.setProperty(
 				`--safe-area-inset-${key}`,
@@ -51,18 +51,18 @@ export const setColorScheme = async (value: ColorScheme) => {
 		if (value === 'dark') {
 			darkMode.value = true;
 			isDarkMode.value = true;
-			NavigationBar.setColor({color: '#000000', darkButtons: true}).then();
-			StatusBar.setBackgroundColor({color: '#00000080'}).then();
-			StatusBar.setStyle({style: Style.Dark}).then();
+			NavigationBar.setColor({ color: '#000000', darkButtons: true }).then();
+			StatusBar.setBackgroundColor({ color: '#00000080' }).then();
+			StatusBar.setStyle({ style: Style.Dark }).then();
 		} else {
 			darkMode.value = false;
 			isDarkMode.value = false;
-			NavigationBar.setColor({color: '#FFFFFF', darkButtons: true}).then();
-			StatusBar.setBackgroundColor({color: '#FFFFFFA0'}).then();
-			StatusBar.setStyle({style: Style.Dark}).then();
+			NavigationBar.setColor({ color: '#FFFFFF', darkButtons: true }).then();
+			StatusBar.setBackgroundColor({ color: '#FFFFFFA0' }).then();
+			StatusBar.setStyle({ style: Style.Dark }).then();
 		}
 
-		StatusBar.setOverlaysWebView({overlay: true}).then();
+		StatusBar.setOverlaysWebView({ overlay: true }).then();
 	}
 
 	await Preferences.set({
@@ -72,12 +72,12 @@ export const setColorScheme = async (value: ColorScheme) => {
 };
 
 export const checkColorScheme = async () => {
-	const {value} = await Preferences.get({key: 'colorScheme'});
+	const { value } = await Preferences.get({ key: 'colorScheme' });
 	return value as ColorScheme;
 };
 
 export const removeColorScheme = async () => {
-	await Preferences.remove({key: 'colorScheme'});
+	await Preferences.remove({ key: 'colorScheme' });
 };
 
 export const darkMode = ref(isDarkMode.value);

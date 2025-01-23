@@ -1,12 +1,12 @@
 <script setup lang="ts">
-import {onMounted, ref, watch} from 'vue';
-import {IonPage, IonContent, onIonViewDidEnter} from '@ionic/vue';
+import { onMounted, ref, watch } from 'vue';
+import { IonPage, IonContent, onIonViewDidEnter } from '@ionic/vue';
 
 // import type {HomeDataItem} from '@/types/api/music';
 // import type {Component} from '@/lib/routerHelper';
 
 import useServerClient from '@/lib/clients/useServerClient';
-import type {ContinueWatching, HomeItem, HomeResponse} from "@/types/api/base/home";
+import type { ContinueWatching, HomeItem, HomeResponse } from "@/types/api/base/home";
 import ContentRating from "@/components/Images/ContentRating.vue";
 import useInfiniteServerClient from "@/lib/clients/useInfiniteServerClient";
 import TvCarousel2 from "@/views/Base/Home/components/TvCarousel2.vue";
@@ -16,7 +16,7 @@ import TvHeader from "@/views/Base/Home/components/TvHeader.vue";
 //   queryKey: ['music', 'home']
 // });
 
-const {data: home, fetchNextPage, hasNextPage} = useInfiniteServerClient<{ data: HomeResponse[] }>({
+const { data: home, fetchNextPage, hasNextPage } = useInfiniteServerClient<{ data: HomeResponse[] }>({
   path: '/',
   queryKey: ['home'],
 });
@@ -27,7 +27,7 @@ watch(home, () => {
   }
 });
 
-const {data: continueWatching} = useServerClient<ContinueWatching[]>({
+const { data: continueWatching } = useServerClient<ContinueWatching[]>({
   path: 'userdata/continue',
   queryKey: ['continue'],
   refetchInterval: 1000 * 60 * 5,
@@ -147,29 +147,17 @@ const handleUp = (event: KeyboardEvent) => {
         <TvHeader v-if="selected" :selected="selected" />
 
         <div ref="scrollContainer" tabindex="0" @focus="handleFocus($event)"
-             class="flex flex-col justify-start items-start w-available -mx-3 px-3 absolute left-14 right-14 top-[264px] h-available overflow-auto scroll-smooth gap-4 flex-1 pb-16"
-        >
+          class="flex flex-col justify-start items-start w-available -mx-3 px-3 absolute left-14 right-14 top-[264px] h-available overflow-auto scroll-smooth gap-4 flex-1 pb-16">
 
-          <TvCarousel2
-              title="Continue watching"
-              :data="continueWatching?.filter(i => !!i.id) ?? []"
-              :handleFocus="handleFocus"
-              :handleDown="handleDown"
-              :handleUp="handleUp"
-          />
+          <TvCarousel2 title="Continue watching" :data="continueWatching?.filter(i => !!i.id) ?? []"
+            :handleFocus="handleFocus" :handleDown="handleDown" :handleUp="handleUp" />
 
           <template v-if="home?.pages">
             <template v-for="(group, index) in home.pages" :key="index">
               <template v-if="group">
                 <template v-for="(data, index2) in group?.data ?? []" :key="index2">
-                  <TvCarousel2
-                      :title="data.title"
-                      :data="data.items"
-                      :handleFocus="handleFocus"
-                      :handleDown="handleDown"
-                      :handleUp="handleUp"
-                      suffix="/watch"
-                  />
+                  <TvCarousel2 :title="data.title" :data="data.items" :handleFocus="handleFocus"
+                    :handleDown="handleDown" :handleUp="handleUp" suffix="/watch" />
                 </template>
               </template>
             </template>
@@ -177,23 +165,23 @@ const handleUp = (event: KeyboardEvent) => {
         </div>
       </div>
 
-<!--      <template v-for="(item, index) in continueWatching?.filter(item => item.id)" :key="item.id">-->
-<!--        <img :src="`https://image.tmdb.org/t/p/w1280${item.backdrop}`" width="0" height="0" loading="eager" alt=""-->
-<!--             class="absolute">-->
-<!--      </template>-->
+      <!--      <template v-for="(item, index) in continueWatching?.filter(item => item.id)" :key="item.id">-->
+      <!--        <img :src="`https://image.tmdb.org/t/p/w1280${item.backdrop}`" width="0" height="0" loading="eager" alt=""-->
+      <!--             class="absolute">-->
+      <!--      </template>-->
 
-<!--      <template v-if="home?.pages">-->
-<!--        <template v-for="(group, index) in home.pages" :key="index">-->
-<!--          <template v-if="group">-->
-<!--            <template v-for="(data, index2) in group?.data ?? []" :key="index2">-->
-<!--              <template v-for="(item, index) in data.items.slice(0,7)" :key="item.id">-->
-<!--                <img :src="`https://image.tmdb.org/t/p/w1280${item.backdrop}`" width="0" height="0" loading="eager"-->
-<!--                     alt="" class="absolute">-->
-<!--              </template>-->
-<!--            </template>-->
-<!--          </template>-->
-<!--        </template>-->
-<!--      </template>-->
+      <!--      <template v-if="home?.pages">-->
+      <!--        <template v-for="(group, index) in home.pages" :key="index">-->
+      <!--          <template v-if="group">-->
+      <!--            <template v-for="(data, index2) in group?.data ?? []" :key="index2">-->
+      <!--              <template v-for="(item, index) in data.items.slice(0,7)" :key="item.id">-->
+      <!--                <img :src="`https://image.tmdb.org/t/p/w1280${item.backdrop}`" width="0" height="0" loading="eager"-->
+      <!--                     alt="" class="absolute">-->
+      <!--              </template>-->
+      <!--            </template>-->
+      <!--          </template>-->
+      <!--        </template>-->
+      <!--      </template>-->
       <!--      <div class="flex flex-col flex-1 justify-center items-center mt-16">-->
       <!--      <template v-if="data">-->
       <!--        <component-->

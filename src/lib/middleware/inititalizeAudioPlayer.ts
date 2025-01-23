@@ -1,7 +1,7 @@
 import { watch } from 'vue';
 
-import {currentServer} from '@/store/currentServer';
-import {user} from '@/store/user';
+import { currentServer } from '@/store/currentServer';
+import { user } from '@/store/user';
 import audioPlayer from '@/store/audioPlayer';
 
 const initializeAudioPlayer = (): Promise<void> => {
@@ -31,9 +31,9 @@ const initializeAudioPlayer = (): Promise<void> => {
 			}
 			audioContext.onstatechange = () => {
 				console.log(audioContext.state);
-				if(audioContext.state === 'running') {
+				if (audioContext.state === 'running') {
 					localStorage.setItem('supports-audio-context', 'true');
-				} else if(audioContext.state === 'suspended') {
+				} else if (audioContext.state === 'suspended') {
 					audioContext.close().then();
 					localStorage.setItem('supports-audio-context', 'false');
 				}

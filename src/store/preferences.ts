@@ -1,5 +1,5 @@
-import {computed, ref} from 'vue';
-import {Preferences} from '@capacitor/preferences';
+import { computed, ref } from 'vue';
+import { Preferences } from '@capacitor/preferences';
 
 const autoThemeColors = ref<boolean>(true);
 export const useAutoThemeColors = computed(() => autoThemeColors.value);

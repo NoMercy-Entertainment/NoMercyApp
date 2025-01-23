@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import {IonPage, IonContent} from '@ionic/vue';
+import { IonPage, IonContent } from '@ionic/vue';
 
-import type {ActivityLog, Device} from "@/types/server";
+import type { ActivityLog, Device } from "@/types/server";
 
 import useServerClient from "@/lib/clients/useServerClient";
 
@@ -31,13 +31,8 @@ const { data: devices, error: devicesError } = useServerClient<Device[]>({
         <template v-slot:cta>
         </template>
 
-        <ActivityCard
-            v-for="activity in serverActivity ?? []"
-            :devices="devices ?? []"
-            :key="activity?.id"
-            :activity="activity"
-            class="col-span-2 gap-3"
-        />
+        <ActivityCard v-for="activity in serverActivity ?? []" :devices="devices ?? []" :key="activity?.id"
+          :activity="activity" class="col-span-2 gap-3" />
       </DashboardLayout>
     </ion-content>
   </ion-page>

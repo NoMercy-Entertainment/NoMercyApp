@@ -1,12 +1,12 @@
 <script setup lang="ts">
-import {computed, onMounted, onUnmounted, PropType, ref} from 'vue';
-import {Card} from 'primevue';
+import { computed, onMounted, onUnmounted, PropType, ref } from 'vue';
+import { Card } from 'primevue';
 
-import type {ActivityLog} from '@/types/server';
-import type {Device} from '@/types/api/dashboard/server';
+import type { ActivityLog } from '@/types/server';
+import type { Device } from '@/types/api/dashboard/server';
 
-import {timeAgoShort} from '@/lib/dateTime';
-import {sensorPublicIpAddresses} from '@/lib/stringArray';
+import { timeAgoShort } from '@/lib/dateTime';
+import { sensorPublicIpAddresses } from '@/lib/stringArray';
 
 const props = defineProps({
   activity: {
@@ -48,7 +48,7 @@ const device = computed(() => {
   <Card>
     <template #title>
       <span class="text-slate-light-12/80 dark:text-slate-dark-12/70">
-      {{ activity?.user }} {{ $t(activity?.type) }}
+        {{ activity?.user }} {{ $t(activity?.type) }}
       </span>
     </template>
     <template #content>
@@ -60,16 +60,16 @@ const device = computed(() => {
           </span>
         </p>
         <span class="flex-shrink-0 flex-grow-0 self-stretch text-sm">
-            {{ $t('Device') }}:
+          {{ $t('Device') }}:
           <span class="text-slate-light-11 dark:text-slate-dark-11">
             {{ device.name }}
           </span>
         </span>
         <span class="flex-shrink-0 flex-grow-0 self-stretch text-sm">
-            {{ $t('IP address') }}:
-            <span class="text-slate-light-11 dark:text-slate-dark-11">
-              {{ device.ip }}
-            </span>
+          {{ $t('IP address') }}:
+          <span class="text-slate-light-11 dark:text-slate-dark-11">
+            {{ device.ip }}
+          </span>
         </span>
       </div>
     </template>

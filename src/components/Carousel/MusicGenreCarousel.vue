@@ -2,7 +2,7 @@
 import { PropType } from 'vue';
 import { SwiperSlide } from 'swiper/vue';
 
-import {HomeDataItem, MusicHomeResponseItem} from '@/types/api/music';
+import { HomeDataItem, MusicHomeResponseItem } from '@/types/api/music';
 
 import Carousel from '@/components/Carousel/Carousel.vue';
 import MusicCard from '@/components/Cards/MusicCard.vue';
@@ -47,13 +47,10 @@ const handleClick = (item: HomeDataItem) => {
 </script>
 
 <template>
-  <Carousel :title="data.title" :index="index"  :limitCardCountBy="limitCardCountBy">
-    <swiper-slide v-for="item in data.items" :key="item.id"
-                  class="flex py-1" :virtualIndex="index">
-      <MusicCard :data="item"
-            class="px-2"
-            :id="`item-${item.name}-${item.id}`"
-            :onclick="() => handleClick(item)" />
-    </swiper-slide>
-  </Carousel>
+	<Carousel :title="data.title" :index="index" :limitCardCountBy="limitCardCountBy">
+		<swiper-slide v-for="item in data.items" :key="item.id" class="flex py-1" :virtualIndex="index">
+			<MusicCard :data="item" class="px-2" :id="`item-${item.name}-${item.id}`"
+				:onclick="() => handleClick(item)" />
+		</swiper-slide>
+	</Carousel>
 </template>

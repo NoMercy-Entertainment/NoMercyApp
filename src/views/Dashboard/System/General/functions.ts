@@ -1,9 +1,9 @@
-import {onMounted, Ref, ref, watch} from 'vue';
+import { onMounted, Ref, ref, watch } from 'vue';
 
-import type {ConfigurationResponse} from '@/types/api/dashboard/server';
+import type { ConfigurationResponse } from '@/types/api/dashboard/server';
 
 import useServerClient from '@/lib/clients/useServerClient';
-import {Nullable} from 'vitest';
+import { Nullable } from 'vitest';
 
 const updateState = <T>(configuration: Ref<T, T> | Ref<undefined, undefined>, newConfig: Ref<T>, key: keyof T, value: any) => {
 	if (configuration.value?.[key] == value) {
@@ -19,7 +19,7 @@ const updateState = <T>(configuration: Ref<T, T> | Ref<undefined, undefined>, ne
 	};
 };
 
-const {data: configuration, refetch: invalidate} = useServerClient<ConfigurationResponse>({
+const { data: configuration, refetch: invalidate } = useServerClient<ConfigurationResponse>({
 	path: '/dashboard/configuration',
 });
 

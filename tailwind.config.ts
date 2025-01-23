@@ -47,38 +47,42 @@ export default {
       },
     },
     fontSize: {
-      '3xs': ['0.65rem', {lineHeight: '1.15rem'}],
-      '2xs': ['0.75rem', {lineHeight: '1.25rem'}],
-      xs: ['0.8125rem', {lineHeight: '1.5rem'}],
-      sm: ['0.875rem', {lineHeight: '1.5rem'}],
-      base: ['1rem', {lineHeight: '1.75rem'}],
-      lg: ['1.125rem', {lineHeight: '1.75rem'}],
-      xl: ['1.25rem', {lineHeight: '1.75rem'}],
-      '2xl': ['1.5rem', {lineHeight: '2rem'}],
-      '3xl': ['1.875rem', {lineHeight: '2.25rem'}],
-      '4xl': ['2.25rem', {lineHeight: '2.5rem'}],
-      '5xl': ['3rem', {lineHeight: '1'}],
-      '6xl': ['3.75rem', {lineHeight: '1'}],
-      '7xl': ['4.5rem', {lineHeight: '1'}],
-      '8xl': ['6rem', {lineHeight: '1'}],
-      '9xl': ['8rem', {lineHeight: '1'}],
+      '3xs': ['0.65rem', { lineHeight: '1.15rem' }],
+      '2xs': ['0.75rem', { lineHeight: '1.25rem' }],
+      xs: ['0.8125rem', { lineHeight: '1.5rem' }],
+      sm: ['0.875rem', { lineHeight: '1.5rem' }],
+      base: ['1rem', { lineHeight: '1.75rem' }],
+      lg: ['1.125rem', { lineHeight: '1.75rem' }],
+      xl: ['1.25rem', { lineHeight: '1.75rem' }],
+      '2xl': ['1.5rem', { lineHeight: '2rem' }],
+      '3xl': ['1.875rem', { lineHeight: '2.25rem' }],
+      '4xl': ['2.25rem', { lineHeight: '2.5rem' }],
+      '5xl': ['3rem', { lineHeight: '1' }],
+      '6xl': ['3.75rem', { lineHeight: '1' }],
+      '7xl': ['4.5rem', { lineHeight: '1' }],
+      '8xl': ['6rem', { lineHeight: '1' }],
+      '9xl': ['8rem', { lineHeight: '1' }],
     },
     extend: {
       keyframes: {
         'accordion-down': {
-          from: {height: 0},
-          to: {height: 'var(--radix-accordion-content-height)'},
+          from: { height: 0 },
+          to: { height: 'var(--radix-accordion-content-height)' },
         },
         'accordion-up': {
-          from: {height: 'var(--radix-accordion-content-height)'},
-          to: {height: 0},
+          from: { height: 'var(--radix-accordion-content-height)' },
+          to: { height: 0 },
         },
         backAndForth: {
           '0%': {
             transform: 'translateX(0)',
             opacity: 0,
           },
-          '10%': {
+          '5%': {
+            transform: 'translateX(0)',
+            opacity: 1,
+          },
+          '20%': {
             transform: 'translateX(0)',
             opacity: 1,
           },
@@ -100,18 +104,18 @@ export default {
           },
         },
         swing: {
-          '0%': {transform: "rotate(0)"},
-          '20%': {transform: "rotate(15deg)"},
-          '20.01%': {transform: "rotate(15deg)"},
-          '80%': {transform: "rotate(-15deg)"},
-          '80.01%': {transform: "rotate(-15deg)"},
-          '100%': {transform: "rotate(0)"},
+          '0%': { transform: "rotate(0)" },
+          '20%': { transform: "rotate(15deg)" },
+          '20.01%': { transform: "rotate(15deg)" },
+          '80%': { transform: "rotate(-15deg)" },
+          '80.01%': { transform: "rotate(-15deg)" },
+          '100%': { transform: "rotate(0)" },
         }
       },
       animation: {
         'accordion-down': 'accordion-down 0.2s ease-out',
         'accordion-up': 'accordion-up 0.2s ease-out',
-        marquee: 'backAndForth 5s linear infinite',
+        marquee: 'backAndForth 12s linear infinite',
         pause: 'animation-play-state: paused',
         swing: 'swing 0.5s infinite'
       },
@@ -226,22 +230,22 @@ export default {
       },
       backgroundImage: {
         highlight:
-            'radial-gradient(81.87% 66.22% at 0% 0%, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0) 100%)',
+          'radial-gradient(81.87% 66.22% at 0% 0%, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0) 100%)',
         spotifyBottom:
-            'linear-gradient(rgb(0,0,0,var(--bg-opacity, 0.3)) 0, rgb(var(--background-auto)) 90%),url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMDAiIGhlaWdodD0iMzAwIj48ZmlsdGVyIGlkPSJhIiB4PSIwIiB5PSIwIj48ZmVUdXJidWxlbmNlIHR5cGU9ImZyYWN0YWxOb2lzZSIgYmFzZUZyZXF1ZW5jeT0iLjc1IiBzdGl0Y2hUaWxlcz0ic3RpdGNoIi8+PGZlQ29sb3JNYXRyaXggdHlwZT0ic2F0dXJhdGUiIHZhbHVlcz0iMCIvPjwvZmlsdGVyPjxwYXRoIGZpbHRlcj0idXJsKCNhKSIgb3BhY2l0eT0iLjA1IiBkPSJNMCAwaDMwMHYzMDBIMHoiLz48L3N2Zz4=)',
+          'linear-gradient(rgb(0,0,0,var(--bg-opacity, 0.3)) 0, rgb(var(--background-auto)) 90%),url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMDAiIGhlaWdodD0iMzAwIj48ZmlsdGVyIGlkPSJhIiB4PSIwIiB5PSIwIj48ZmVUdXJidWxlbmNlIHR5cGU9ImZyYWN0YWxOb2lzZSIgYmFzZUZyZXF1ZW5jeT0iLjc1IiBzdGl0Y2hUaWxlcz0ic3RpdGNoIi8+PGZlQ29sb3JNYXRyaXggdHlwZT0ic2F0dXJhdGUiIHZhbHVlcz0iMCIvPjwvZmlsdGVyPjxwYXRoIGZpbHRlcj0idXJsKCNhKSIgb3BhY2l0eT0iLjA1IiBkPSJNMCAwaDMwMHYzMDBIMHoiLz48L3N2Zz4=)',
         spotifyTop:
-            'linear-gradient(transparent 0,rgb(0,0,0,var(--bg-opacity, 0.5)) 100%),url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMDAiIGhlaWdodD0iMzAwIj48ZmlsdGVyIGlkPSJhIiB4PSIwIiB5PSIwIj48ZmVUdXJidWxlbmNlIGJhc2VGcmVxdWVuY3k9Ii43NSIgc3RpdGNoVGlsZXM9InN0aXRjaCIgdHlwZT0iZnJhY3RhbE5vaXNlIi8+PGZlQ29sb3JNYXRyaXggdHlwZT0ic2F0dXJhdGUiIHZhbHVlcz0iMCIvPjwvZmlsdGVyPjxwYXRoIGQ9Ik0wIDBoMzAwdjMwMEgweiIgZmlsdGVyPSJ1cmwoI2EpIiBvcGFjaXR5PSIuMDUiLz48L3N2Zz4=)',
+          'linear-gradient(transparent 0,rgb(0,0,0,var(--bg-opacity, 0.5)) 100%),url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMDAiIGhlaWdodD0iMzAwIj48ZmlsdGVyIGlkPSJhIiB4PSIwIiB5PSIwIj48ZmVUdXJidWxlbmNlIGJhc2VGcmVxdWVuY3k9Ii43NSIgc3RpdGNoVGlsZXM9InN0aXRjaCIgdHlwZT0iZnJhY3RhbE5vaXNlIi8+PGZlQ29sb3JNYXRyaXggdHlwZT0ic2F0dXJhdGUiIHZhbHVlcz0iMCIvPjwvZmlsdGVyPjxwYXRoIGQ9Ik0wIDBoMzAwdjMwMEgweiIgZmlsdGVyPSJ1cmwoI2EpIiBvcGFjaXR5PSIuMDUiLz48L3N2Zz4=)',
       },
       boxShadow: {
         img: '#000 0px 32px 80px -24px',
         top: 'inset 0px 1px 0px rgb(255 255 255 / 24%)',
         bottom:
-            'inset 0px -1px 0px rgb(0 0 0 / 24%), inset 0px -2px 0px rgb(0 0 0 / 24%)',
+          'inset 0px -1px 0px rgb(0 0 0 / 24%), inset 0px -2px 0px rgb(0 0 0 / 24%)',
         container: 'rgb(255 255 255 / 16%) 0px 1px 0px 0px inset',
         pill: 'inset 0px 1px 0px rgb(255 255 255 / 24%), inset 0px -1px 0px rgb(0 0 0 / 24%), inset 0px -2px 0px rgb(0 0 0 / 24%)',
         highlight: 'inset 0px 1px 0px rgba(255, 255, 255, 0.24)',
         footer:
-            'inset 0px -1px 0px rgba(0, 0, 0, 0.24), inset 0px -2px 0px rgba(0, 0, 0, 0.24)',
+          'inset 0px -1px 0px rgba(0, 0, 0, 0.24), inset 0px -2px 0px rgba(0, 0, 0, 0.24)',
         card: 'inset 0px 1px 0px rgba(255, 255, 255, 0.24)',
         glow: '0 0 4px rgb(0 0 0 / 0.1)',
       },
@@ -2088,12 +2092,12 @@ export default {
   supports: {},
   plugins: [
     // forms,
-    scrollBar({nocompatible: true}),
+    scrollBar({ nocompatible: true }),
     animate,
     radialGradientPlugin,
     safeArea,
     primeui,
-    plugin(({addVariant}) => {
+    plugin(({ addVariant }) => {
       addVariant('compact', '&[data-size="compact"]');
       addVariant('full', '&[data-size="full"]');
       addVariant('sidebar-open', '&[data-sidebar="open"]');
@@ -2133,36 +2137,36 @@ export default {
       // @ts-ignore
       addVariant('children-disabled', childrenVariant('disabled'));
     }),
-    plugin(({matchUtilities, theme}) => {
+    plugin(({ matchUtilities, theme }) => {
       matchUtilities(
-          {
-            vh: value => ({
-              height: `${value
-                  .replace('rem', '')
-                  .replace('px', '')
-                  .replace('%', '')}dvh`,
-              maxHeight: `${value
-                  .replace('rem', '')
-                  .replace('px', '')
-                  .replace('%', '')}vh`,
-            }),
-          },
-          {values: theme('dvh')}
+        {
+          vh: value => ({
+            height: `${value
+              .replace('rem', '')
+              .replace('px', '')
+              .replace('%', '')}dvh`,
+            maxHeight: `${value
+              .replace('rem', '')
+              .replace('px', '')
+              .replace('%', '')}vh`,
+          }),
+        },
+        { values: theme('dvh') }
       );
     }),
-    plugin(function ({addUtilities}) {
+    plugin(function ({ addUtilities }) {
       addUtilities([
-        {".grid-cols-0": {"grid-template-columns": "repeat(1, minmax(0, 0fr))"}},
-        {".grid-rows-0": {"grid-template-rows": "repeat(1, minmax(0, 0fr))"}},
+        { ".grid-cols-0": { "grid-template-columns": "repeat(1, minmax(0, 0fr))" } },
+        { ".grid-rows-0": { "grid-template-rows": "repeat(1, minmax(0, 0fr))" } },
       ]);
     }),
   ],
 };
 
-const childrenVariant = function (pseudoClass: string|null = null, childrenSelector: string|null = null) {
+const childrenVariant = function (pseudoClass: string | null = null, childrenSelector: string | null = null) {
   childrenSelector = childrenSelector ? childrenSelector : (pseudoClass ? `:${pseudoClass}` : '*');
-  return ({modifySelectors, separator}:any) => {
-    return modifySelectors(({selector}:any) => {
+  return ({ modifySelectors, separator }: any) => {
+    return modifySelectors(({ selector }: any) => {
       return selectorParser(selectors => {
         selectors.walkClasses(classNode => {
           classNode.value = `children${pseudoClass ? (separator + pseudoClass) : ''}${separator}${classNode.value}`;

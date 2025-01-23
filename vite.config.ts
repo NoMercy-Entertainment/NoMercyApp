@@ -1,9 +1,9 @@
 /// <reference types="vitest" />
 import path from 'path';
 
-import {defineConfig} from 'vite';
-import {VitePWA} from 'vite-plugin-pwa';
-import {ViteCspPlugin} from 'vite-plugin-csp';
+import { defineConfig } from 'vite';
+import { VitePWA } from 'vite-plugin-pwa';
+import { ViteCspPlugin } from 'vite-plugin-csp';
 import { ViteMinifyPlugin } from 'vite-plugin-minify'
 import vue from '@vitejs/plugin-vue';
 import * as fs from 'node:fs';
@@ -337,7 +337,7 @@ export default defineConfig({
 // Function to copy assets
 const copyAssets = (outputFiles, mode) => {
 	// If the mode is 'development' and the 'dist' directory exists, remove it
-	if(mode === 'development' && fs.existsSync('dist')) {
+	if (mode === 'development' && fs.existsSync('dist')) {
 		fs.rmSync('dist', { recursive: true, force: true });
 	}
 
@@ -345,7 +345,7 @@ const copyAssets = (outputFiles, mode) => {
 	const outputHtmlFile = './dist/index.html';
 
 	// Copy the 'public' directory to the 'dist' directory
-	fs.cpSync('./public', './dist', {recursive: true});
+	fs.cpSync('./public', './dist', { recursive: true });
 
 	// Generate the script tags for the output files
 	const outputScripts = outputFiles

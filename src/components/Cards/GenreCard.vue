@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import {computed, PropType} from "vue";
+import { computed, PropType } from "vue";
 
-import type {GenreResponse} from "@/types/api/base/genre";
+import type { GenreResponse } from "@/types/api/base/genre";
 
-import {genreColors} from "@/config/global";
+import { genreColors } from "@/config/global";
 import MoooomIcon from '@/components/Images/icons/MoooomIcon.vue';
 
 const props = defineProps({
@@ -32,9 +32,7 @@ const genreColor = computed(() => genreColors(props.data.title));
 </script>
 
 <template>
-    <RouterLink
-        :data-scroll="scrollLetter"
-        :to="data.have_items > 1 ? `/genres/${data.id}` : '#'"
+    <RouterLink :data-scroll="scrollLetter" :to="data.have_items > 1 ? `/genres/${data.id}` : '#'"
         :class="`flex flex-col relative justify-start items-center w-full h-auto aspect-poster flex-grow flex-shrink-0 overflow-hidden rounded-lg border-1-light transition-all duration-300 select-none group/card ${genreColor.bg}`">
 
         <div class="backdropCard-overlay"></div>
@@ -44,7 +42,7 @@ const genreColor = computed(() => genreColors(props.data.title));
             hover:!shadow-[0_1px_0_0_rgba(255,255,255,0.20)_inset,0_-1px_0_0_rgba(var(--color-slate-11)/60%)_inset,0_22px_30px_-4px_rgba(var(--color-slate-11)/70%)]
             dark:shadow-[0_1px_0_0_rgba(255,255,255,0.20)_inset,0_-1px_0_0_rgba(var(--color-slate-1)/30%)_inset,0_22px_30px_-4px_rgba(var(--color-slate-1)/70%)]
             dark:hover:!shadow-[0_1px_0_0_rgba(255,255,255,0.20)_inset,0_-1px_0_0_rgba(var(--color-slate-1)/30%)_inset,0_22px_30px_-4px_rgba(var(--color-slate-1)/70%)]`"
-                 style="
+                style="
                     background: radial-gradient(50% 50% at 50% 100%, rgba(255, 255, 255, 0.09) 0%, rgba(255, 255, 255, 0.06) 40%, rgba(255, 255, 255, 0.00) 100%), linear-gradient(180deg, rgba(255, 255, 255, 0.00) 0%, rgba(255, 255, 255, 0.12) 100%), rgba(var(--background-auto-5) / 20%);
                     background-blend-mode: normal, overlay, normal;
                 ">

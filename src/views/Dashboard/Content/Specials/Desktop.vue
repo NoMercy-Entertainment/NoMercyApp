@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import {IonPage, IonContent} from '@ionic/vue';
+import { IonPage, IonContent } from '@ionic/vue';
 
-import type {LibrariesResponse, StatusResponse} from "@/types/api/base/library";
-import type {Library} from "@/types/api/dashboard/server";
+import type { LibrariesResponse, StatusResponse } from "@/types/api/base/library";
+import type { Library } from "@/types/api/dashboard/server";
 
 import useServerClient from "@/lib/clients/useServerClient";
 import serverClient from "@/lib/clients/serverClient";
@@ -18,10 +18,10 @@ const { data: specials, error } = useServerClient<LibrariesResponse[]>({
 
 const handleCreateSpecial = () => {
   serverClient()
-      .post<StatusResponse<Library>>('dashboard/specials')
-      .then(({ data }) => {
-        router.push(`/dashboard/special/${data?.data?.id ?? 'unknown'}`);
-      });
+    .post<StatusResponse<Library>>('dashboard/specials')
+    .then(({ data }) => {
+      router.push(`/dashboard/special/${data?.data?.id ?? 'unknown'}`);
+    });
 }
 
 </script>
@@ -30,15 +30,11 @@ const handleCreateSpecial = () => {
   <ion-page>
     <ion-content :fullscreen="true">
 
-      <DashboardLayout :error="error" :gridStyle="1" title="Specials" description="Manage your specials and their content here.">
+      <DashboardLayout :error="error" :gridStyle="1" title="Specials"
+        description="Manage your specials and their content here.">
         <template v-slot:cta>
 
-          <Button
-              id="newLibrary"
-              color="theme"
-              startIcon="collectionAdd"
-              @click="handleCreateSpecial"
-          >
+          <Button id="newLibrary" color="theme" startIcon="collectionAdd" @click="handleCreateSpecial">
             {{ $t('Create special') }}
           </Button>
         </template>

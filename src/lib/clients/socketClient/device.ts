@@ -7,8 +7,8 @@ const deviceType =
     uuid.os.vendor === 'Android TV'
         ? 'tv'
         : new UAParser().getDevice().type
-        ? new UAParser().getDevice().type
-        : 'desktop';
+            ? new UAParser().getDevice().type
+            : 'desktop';
 
 const res = new UAParser().getResult();
 

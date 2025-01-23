@@ -1,16 +1,16 @@
 <script setup lang="ts">
-import {onMounted, onUnmounted, ref, watch} from 'vue';
-import {useRouter} from 'vue-router';
-import {IonPage, IonContent} from '@ionic/vue';
+import { onMounted, onUnmounted, ref, watch } from 'vue';
+import { useRouter } from 'vue-router';
+import { IonPage, IonContent } from '@ionic/vue';
 import collect from 'collect.js';
 
-import type {CollectionResponse} from '@/types/api/base/collection';
+import type { CollectionResponse } from '@/types/api/base/collection';
 
 import i18next from '@/config/i18next';
 import useServerClient from '@/lib/clients/useServerClient';
-import {setBackground, setColorPalette} from '@/store/ui';
-import {setTitle, sortByPosterAlphabetized, unique} from '@/lib/stringArray';
-import {convertToHumanReact} from '@/lib/dateTime';
+import { setBackground, setColorPalette } from '@/store/ui';
+import { setTitle, sortByPosterAlphabetized, unique } from '@/lib/stringArray';
+import { convertToHumanReact } from '@/lib/dateTime';
 
 import ScrollContainer from '@/Layout/Desktop/components/ScrollContainer.vue';
 import FloatingBackButton from '@/components/Buttons/FloatingBackButton.vue';
@@ -18,16 +18,16 @@ import GenrePill from '@/components/Buttons/GenrePill.vue';
 import MoooomIcon from '@/components/Images/icons/MoooomIcon.vue';
 import MediaLikeButton from '@/components/Buttons/MediaLikeButton.vue';
 import DropdownMenu from '@/Layout/Desktop/components/Menus/DropdownMenu.vue';
-import {showBackdrops} from '@/store/preferences';
+import { showBackdrops } from '@/store/preferences';
 import MediaCard from '@/components/Cards/MediaCard.vue';
 import PersonCarousel from '@/components/Carousel/PersonCarousel.vue';
 import ImageCarousel from '@/components/Carousel/ImageCarousel.vue';
 import ContentRating from '@/components/Images/ContentRating.vue';
-import {useTranslation} from 'i18next-vue';
+import { useTranslation } from 'i18next-vue';
 import InfoHeaderItem from "@/views/Base/Info/components/InfoHeaderItem.vue";
 import NotFound from "@/Layout/Desktop/components/NotFound.vue";
 
-const {t} = useTranslation();
+const { t } = useTranslation();
 const router = useRouter();
 
 const { data, isError } = useServerClient<CollectionResponse>({
@@ -92,7 +92,8 @@ onUnmounted(() => {
 
         <div class="w-available">
           <FloatingBackButton />
-          <div v-if="data" class="w-available overflow-x-clip relative mt-12 flex flex-grow flex-col items-start justify-start gap-4 self-stretch p-4 pr-0 pb-5">
+          <div v-if="data"
+            class="w-available overflow-x-clip relative mt-12 flex flex-grow flex-col items-start justify-start gap-4 self-stretch p-4 pr-0 pb-5">
             <p class="ml-4 w-full flex-shrink-0 flex-grow-0 self-stretch text-5xl font-bold">
               {{ data?.title?.replace(/(: | en de )/, '\n') }}
             </p>
@@ -101,14 +102,13 @@ onUnmounted(() => {
             </p>
             <div class="flex flex-shrink-0 flex-grow-0 flex-col items-start justify-start gap-4 self-stretch">
               <div
-                  class="relative flex flex-shrink-0 flex-grow-0 flex-col items-start justify-start gap-4 self-stretch">
+                class="relative flex flex-shrink-0 flex-grow-0 flex-col items-start justify-start gap-4 self-stretch">
                 <div class="self-stretch h-px bg-[#e2f0fd]/4"></div>
                 <div class="flex flex-shrink-0 flex-grow-0 items-start justify-start gap-8 self-stretch pl-4">
                   <div class="relative flex h-14 items-center justify-center gap-2">
-                      <ContentRating v-if="data?.content_ratings"
-                                     :size="6"
-                                     class="h-full min-!h-[1rem] object-scale-down rounded-lg overflow-clip children:-m-0.5"
-                                     :ratings="data?.content_ratings"/>
+                    <ContentRating v-if="data?.content_ratings" :size="6"
+                      class="h-full min-!h-[1rem] object-scale-down rounded-lg overflow-clip children:-m-0.5"
+                      :ratings="data?.content_ratings" />
                   </div>
                   <div class="relative flex flex-shrink-0 flex-grow-0 flex-col items-start justify-center gap-1">
                     <p class="flex-shrink-0 flex-grow-0 text-xs font-bold uppercase text-auto-alpha-10">
@@ -147,23 +147,22 @@ onUnmounted(() => {
                       {{ $t('Genre') }}
                     </p>
                     <div class="flex flex-shrink-0 flex-grow-0 flex-wrap self-stretch overflow-clip font-medium gap-0.5"
-                         :class="data?.genres?.length > 5 ? 'children:grayscale' : ''"
-                    >
+                      :class="data?.genres?.length > 5 ? 'children:grayscale' : ''">
                       <template v-for="genre in data?.genres" :key="genre.id">
                         <GenrePill :genre="genre" />
                       </template>
                     </div>
                   </div>
 
-                  <div class="relative ml-auto flex h-16 flex-shrink-0 flex-grow-0 items-center justify-center gap-4" v-if="data">
+                  <div class="relative ml-auto flex h-16 flex-shrink-0 flex-grow-0 items-center justify-center gap-4"
+                    v-if="data">
 
-                    <RouterLink
-                        :to="`/${data?.media_type}/${data?.id}/watch`"
-                        class="relative flex items-center justify-center gap-2 rounded-lg p-2 transition-colors duration-300 group/play hover:bg-auto-5/6">
-                      <MoooomIcon icon="play" className="w-6"/>
+                    <RouterLink :to="`/${data?.media_type}/${data?.id}/watch`"
+                      class="relative flex items-center justify-center gap-2 rounded-lg p-2 transition-colors duration-300 group/play hover:bg-auto-5/6">
+                      <MoooomIcon icon="play" className="w-6" />
 
                       <div
-                          class="absolute top-3 grid h-0 w-max flex-shrink-0 flex-grow-0 origin-bottom group-hover/play:grid-cols-1 items-center justify-start bg-black duration-300 grid-cols-[0fr] group-hover/play:h-[32.77px] transform-all left-[-31px] group-hover/play:top-[-38px] rounded-[5.46px]">
+                        class="absolute top-3 grid h-0 w-max flex-shrink-0 flex-grow-0 origin-bottom group-hover/play:grid-cols-1 items-center justify-start bg-black duration-300 grid-cols-[0fr] group-hover/play:h-[32.77px] transform-all left-[-31px] group-hover/play:top-[-38px] rounded-[5.46px]">
                         <div class="overflow-hidden">
                           <p class="flex-shrink-0 flex-grow-0 py-0 text-xs font-bold px-2.5">
                             {{ $t('Ends at') }}
@@ -184,19 +183,19 @@ onUnmounted(() => {
                     <!--                                <MoooomIcon icon="check" className="w-6"/>-->
                     <!--                            </button>-->
 
-                    <MediaLikeButton v-if="data" :data="data"/>
+                    <MediaLikeButton v-if="data" :data="data" />
 
                     <DropdownMenu
-                        class="relative flex items-center justify-center gap-2 overflow-hidden rounded-lg p-2 transition-colors duration-300 hover:bg-auto-5/6">
+                      class="relative flex items-center justify-center gap-2 overflow-hidden rounded-lg p-2 transition-colors duration-300 hover:bg-auto-5/6">
                       >
                       <template v-slot:button>
-                        <MoooomIcon icon="menuDotsVertical" className="w-6"/>
+                        <MoooomIcon icon="menuDotsVertical" className="w-6" />
                       </template>
 
                       <div class="flex w-full flex-col items-start justify-start bg-auto-1"
-                           style="box-shadow: 0 4px 7px 0 rgba(0,0,0,0.08);">
+                        style="box-shadow: 0 4px 7px 0 rgba(0,0,0,0.08);">
                         <div
-                            class="relative flex h-auto flex-shrink-0 flex-grow-0 flex-col items-center justify-start gap-2 self-stretch z-1099 group">
+                          class="relative flex h-auto flex-shrink-0 flex-grow-0 flex-col items-center justify-start gap-2 self-stretch z-1099 group">
                           <div class="flex flex-col p-2">
 
                           </div>
@@ -210,30 +209,23 @@ onUnmounted(() => {
             </div>
 
             <div class="flex-shrink-0 flex-grow-0 items-start justify-start gap-4 self-stretch px-4"
-                 :class="showBackdrops ? 'media-backdrop-grid' : 'media-poster-grid'">
+              :class="showBackdrops ? 'media-backdrop-grid' : 'media-poster-grid'">
               <template v-for="movie in data?.collection ?? []" :key="movie?.id">
-                <MediaCard :data="movie"  class="" />
+                <MediaCard :data="movie" class="" />
               </template>
             </div>
 
-            <PersonCarousel v-if="data?.cast && data?.cast?.length > 0"
-                            :data="unique(data?.cast, 'id').slice(0, 50)"
-                            title="Cast"/>
+            <PersonCarousel v-if="data?.cast && data?.cast?.length > 0" :data="unique(data?.cast, 'id').slice(0, 50)"
+              title="Cast" />
 
             <PersonCarousel v-if="data?.crew && data?.crew?.length > 0"
-                            :data="sortByPosterAlphabetized(data?.crew).slice(0, 50)"
-                            title="Crew"/>
+              :data="sortByPosterAlphabetized(data?.crew).slice(0, 50)" title="Crew" />
 
-            <ImageCarousel v-if="data?.posters && data?.posters?.length > 0"
-                           :data="data?.posters"
-                           title="Poster"
-                           type="poster"/>
+            <ImageCarousel v-if="data?.posters && data?.posters?.length > 0" :data="data?.posters" title="Poster"
+              type="poster" />
 
             <ImageCarousel v-if="data?.backdrops && data?.backdrops?.length > 0"
-                           :color-palette="data?.color_palette?.poster"
-                           :data="data?.backdrops"
-                           title="Backdrop"
-                           type="backdrop"/>
+              :color-palette="data?.color_palette?.poster" :data="data?.backdrops" title="Backdrop" type="backdrop" />
 
 
           </div>

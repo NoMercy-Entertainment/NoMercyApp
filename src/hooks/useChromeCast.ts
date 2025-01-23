@@ -1,9 +1,9 @@
 // @ts-nocheck
 import { ref, onMounted, onUnmounted } from 'vue';
-import {CastContext, CastDevice, CastSession, MediaInfo} from "@/vite-env";
-import {user} from "@/store/user";
+import { CastContext, CastDevice, CastSession, MediaInfo } from "@/vite-env";
+import { user } from "@/store/user";
 import router from "@/router";
-import {useRoute} from "vue-router";
+import { useRoute } from "vue-router";
 
 export function useChromecast() {
     const castContext = ref<CastContext>(window.cast?.framework.CastContext.getInstance());
@@ -28,25 +28,25 @@ export function useChromecast() {
 
         castContext.value.addEventListener(
             window.cast.framework.CastContextEventType.CONNECTED,
-            function(event) {
+            function (event) {
                 console.log('CastContext: CastState connected', event);
             });
 
         castContext.value.addEventListener(
             window.cast.framework.CastContextEventType.DISCONNECTED,
-            function(event) {
+            function (event) {
                 console.log('CastContext: CastState disconnected', event);
             });
 
         castContext.value.addEventListener(
             window.cast.framework.CastContextEventType.CAST_STATE_CHANGED,
-            function(event) {
+            function (event) {
                 console.log(`CastContext: CastState changed: ${event.castState}`);
             });
 
         castContext.value.addEventListener(
             window.cast.framework.CastContextEventType.SESSION_STATE_CHANGED,
-            function(event) {
+            function (event) {
                 console.log(`CastContext: SessionState changed: ${event.sessionState}`, event);
                 switch (event.sessionState) {
                     case window.cast.framework.SessionState.SESSION_STARTED:
@@ -125,7 +125,7 @@ export function useChromecast() {
 
     const config = {
         refreshToken: user.value?.refreshToken ?? localStorage.getItem('refresh_token'),
-        redirectUrl: router.resolve({name: 'Watch', params: {id: 60808, type: 'tv' }}).path,
+        redirectUrl: router.resolve({ name: 'Watch', params: { id: 60808, type: 'tv' } }).path,
     };
 
     return {

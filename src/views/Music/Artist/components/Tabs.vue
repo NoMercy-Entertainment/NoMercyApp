@@ -1,6 +1,6 @@
 <script setup lang="ts">
 
-import {type PropType, ref} from 'vue';
+import { type PropType, ref } from 'vue';
 
 const props = defineProps({
   tabs: {
@@ -24,19 +24,18 @@ const setTab = (value: number) => {
       <nav class="absolute left-4 inline-flex flex-col items-start justify-start gap-2 top-[15px]">
         <ul class="inline-flex items-start justify-start gap-4">
           <li v-for="(tab, index) in tabs" :key="tab.name" @click="setTab(index)"
-              :class="`px-1 pb-4 ${activeTab == tab.name ? 'border-b-2' : ''} empty:hidden transition-transform duration-100 border-focus justify-center items-center gap-2 flex cursor-pointer`"
-          >
+            :class="`px-1 pb-4 ${activeTab == tab.name ? 'border-b-2' : ''} empty:hidden transition-transform duration-100 border-focus justify-center items-center gap-2 flex cursor-pointer`">
             <div v-if="tab?.name"
-                 :class="`${activeTab == tab.name ? 'text-focus' : ''} text-base font-semibold leading-normal`">
+              :class="`${activeTab == tab.name ? 'text-focus' : ''} text-base font-semibold leading-normal`">
               {{ $t(tab.name) }}
             </div>
           </li>
         </ul>
       </nav>
 
-      <slot :activeTab="activeTab" name="extra"/>
+      <slot :activeTab="activeTab" name="extra" />
     </div>
 
-    <slot :activeTab="activeTab" class="z-0"/>
+    <slot :activeTab="activeTab" class="z-0" />
   </div>
 </template>

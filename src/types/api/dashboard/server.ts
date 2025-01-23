@@ -1,5 +1,5 @@
-import {Country, Language} from '@/types/api/shared';
-import {InfoResponse} from '@/types/api/base/info';
+import { Country, Language } from '@/types/api/shared';
+import { InfoResponse } from '@/types/api/base/info';
 
 export interface NameVal {
 	title: string;
@@ -126,7 +126,7 @@ export interface ServerEncoderProgress {
 	hours: number;
 	days: number;
 	eta: string;
-	speed: number|string;
+	speed: number | string;
 	remaining_split: number[];
 	subtitle_streams: string[];
 	audio_streams: string[];
@@ -234,65 +234,65 @@ export interface VideoProfile {
 }
 
 export interface Container {
-	label:                     string;
-	value:                     string;
-	type:                      string;
-	default:                   boolean;
-	available_video_codecs:    AvailableVideoCodec[];
-	available_audio_codecs:    AvailableAudioCodec[];
+	label: string;
+	value: string;
+	type: string;
+	default: boolean;
+	available_video_codecs: AvailableVideoCodec[];
+	available_audio_codecs: AvailableAudioCodec[];
 	available_subtitle_codecs: AvailableSubtitleCodec[];
-	available_resolutions:     AvailableResolution[];
+	available_resolutions: AvailableResolution[];
 }
 
 export interface AvailableVideoCodec {
-	name:           string;
-	value:          string;
-	simpleValue:    string;
-	isDefault:      boolean;
-	requiresGpu:    boolean;
+	name: string;
+	value: string;
+	simpleValue: string;
+	isDefault: boolean;
+	requiresGpu: boolean;
 	requiresStrict: boolean;
-	type:           string;
-	label:          string;
-	color_spaces:   LabelValue[];
-	profiles:       LabelValue[];
-	tunes:          LabelValue[];
-	presets:        LabelValue[];
+	type: string;
+	label: string;
+	color_spaces: LabelValue[];
+	profiles: LabelValue[];
+	tunes: LabelValue[];
+	presets: LabelValue[];
 }
 
 export interface AvailableAudioCodec {
-	name:           string;
-	value:          string;
-	simpleValue:    string;
-	isDefault:      boolean;
+	name: string;
+	value: string;
+	simpleValue: string;
+	isDefault: boolean;
 	requiresStrict: boolean;
-	type:           string;
-	label:          string;
+	type: string;
+	label: string;
 	available_languages: LabelValue[];
-	profiles:       LabelValue[];
-	tunes:          LabelValue[];
+	profiles: LabelValue[];
+	tunes: LabelValue[];
 }
 
 export interface AvailableSubtitleCodec {
-	name:           string;
-	value:          string;
-	simpleValue:    string;
-	isDefault:      boolean;
+	name: string;
+	value: string;
+	simpleValue: string;
+	isDefault: boolean;
 	requiresStrict: boolean;
-	type:           string;
-	label:          string;
+	type: string;
+	label: string;
 	available_languages: LabelValue[];
-	profiles:       LabelValue[];
-	tunes:          LabelValue[];
+	profiles: LabelValue[];
+	tunes: LabelValue[];
 }
 
 export interface AvailableResolution {
-	name:   string;
-	width:  number;
+	name: string;
+	width: number;
 	height: number;
 }
 
 export interface LabelValue {
-	label:   string;
-	value:  string;
+	label: string;
+	value: string;
 }
 

@@ -6,6 +6,10 @@
 @tailwind components;
 @tailwind utilities;
 
+@view-transition {
+  navigation: auto;
+}
+
 :root {
   interpolate-size: allow-keywords;
 }

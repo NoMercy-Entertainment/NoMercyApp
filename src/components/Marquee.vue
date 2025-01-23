@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import {onMounted, ref, watch} from 'vue';
+import { onMounted, ref, watch } from 'vue';
 
-import {shouldMarquee} from '@/lib/utils';
+import { shouldMarquee } from '@/lib/utils';
 
 const props = defineProps({
   text: {
@@ -33,9 +33,10 @@ onMounted(() => {
 </script>
 
 <template>
-  <div ref="marquee" class="w-available relative flex flex-grow flex-col items-start justify-start gap-2" data-marquee="container">
+  <div ref="marquee" class="w-available relative flex flex-grow flex-col items-start justify-start gap-2"
+    data-marquee="container">
     <div class="flex-shrink-0 flex-grow-0 self-stretch font-semibold line-clamp-1 w-fit whitespace-nowrap leading-none"
-         data-marquee="scroller">
+      data-marquee="scroller">
       {{ text }}
       <slot />
     </div>

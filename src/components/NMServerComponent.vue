@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import {onMounted, ref, shallowRef, h, computed} from 'vue';
-import {$t} from '@primeuix/styled';
-import {currentServer} from '@/store/currentServer';
+import { onMounted, ref, shallowRef, h, computed } from 'vue';
+import { $t } from '@primeuix/styled';
+import { currentServer } from '@/store/currentServer';
 
 // @ts-ignore
 window.h = h;
@@ -38,11 +38,9 @@ onMounted(loadComponent);
 <template>
   <div>
     <component markRaw :is="dynamicComponent" v-if="dynamicComponent"></component>
-    <p v-else-if="loading">{{ $t('Loading component')}}...</p>
+    <p v-else-if="loading">{{ $t('Loading component') }}...</p>
     <p v-else>{{ $t('Failed to load component') }}.</p>
   </div>
 </template>
 
-<style scoped>
-
-</style>
+<style scoped></style>

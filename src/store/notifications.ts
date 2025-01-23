@@ -1,5 +1,5 @@
-import {computed, ref} from 'vue';
-import {Message} from '@/types/auth';
+import { computed, ref } from 'vue';
+import { Message } from '@/types/auth';
 import apiClient from "@/lib/clients/apiClient";
 
 const notifications = ref<Message[]>([]);

@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import {PropType} from "vue";
+import { PropType } from "vue";
 
-import type {ArtistResponse} from "@/types/api/music/artist";
+import type { ArtistResponse } from "@/types/api/music/artist";
 
 import TrackCard from "./TrackCard.vue";
 import Tab from "./Tab.vue";
@@ -17,7 +17,7 @@ defineProps({
 		required: true,
 		default: 'list',
 	},
-	activeTab:{
+	activeTab: {
 		type: String,
 		required: true,
 	}
@@ -39,8 +39,8 @@ const tabs = [
 	<div class="flex flex-1 basis-0 items-start justify-start gap-8 self-stretch p-8">
 		<TabFrame :data="data" :activeTab="activeTab">
 			<Tab :isActive="displayType === tabs[0].name">
-				<TrackCard title="Your most played" :data="data.favorite_tracks ?? []"/>
-				<TrackCard title="All songs" :data="data.tracks ?? []"/>
+				<TrackCard title="Your most played" :data="data.favorite_tracks ?? []" />
+				<TrackCard title="All songs" :data="data.tracks ?? []" />
 			</Tab>
 			<Tab :isActive="displayType === tabs[1].name">
 

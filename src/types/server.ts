@@ -1,4 +1,4 @@
-import {HttpStatusCode} from 'axios';
+import { HttpStatusCode } from 'axios';
 import {
 	ArtistLibrary,
 	EncoderProfileLibrary,
@@ -7,7 +7,7 @@ import {
 	LibraryTv,
 	LibraryUser
 } from '@/types/api/base/library';
-import {ColorPalettes} from '@/types/api/shared';
+import { ColorPalettes } from '@/types/api/shared';
 
 export interface ErrorResponse {
 	type: string;

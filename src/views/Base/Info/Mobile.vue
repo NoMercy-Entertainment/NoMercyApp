@@ -1,15 +1,15 @@
 <script setup lang="ts">
-import {computed, ref, watch} from 'vue';
-import {useRoute} from 'vue-router';
-import {IonContent, IonPage, IonSkeletonText, onIonViewWillEnter, onIonViewWillLeave} from '@ionic/vue';
+import { computed, ref, watch } from 'vue';
+import { useRoute } from 'vue-router';
+import { IonContent, IonPage, IonSkeletonText, onIonViewWillEnter, onIonViewWillLeave } from '@ionic/vue';
 import axios from "axios";
 
-import type {InfoResponse} from '@/types/api/base/info';
+import type { InfoResponse } from '@/types/api/base/info';
 
-import {tmdbImageBaseUrl} from '@/config/config';
+import { tmdbImageBaseUrl } from '@/config/config';
 import useServerClient from '@/lib/clients/useServerClient';
-import {breakTitle2, setTitle, sortByPosterAlphabetized} from '@/lib/stringArray';
-import {background, setBackground, setColorPalette, setLogo, setPoster, title} from '@/store/ui';
+import { breakTitle2, setTitle, sortByPosterAlphabetized } from '@/lib/stringArray';
+import { background, setBackground, setColorPalette, setLogo, setPoster, title } from '@/store/ui';
 import router from '@/router';
 import i18next from "@/config/i18next";
 
@@ -22,10 +22,10 @@ import Trailer from "@/views/Base/Info/components/Trailer.vue";
 import HeaderItem from "@/views/Base/Person/components/HeaderItem.vue";
 import Collapsible from "@/views/Base/Person/components/Collapsible.vue";
 import MobileInfoCard from "@/views/Base/Info/components/MobileInfoCard.vue";
-import {t} from "i18next";
-import {convertToHumanReact} from "@/lib/dateTime";
+import { t } from "i18next";
+import { convertToHumanReact } from "@/lib/dateTime";
 import TMDBImage from "@/components/Images/TMDBImage.vue";
-import {currentServer} from "@/store/currentServer";
+import { currentServer } from "@/store/currentServer";
 
 const route = useRoute();
 const enabled = ref(false);
@@ -42,7 +42,7 @@ const backgroundUrl = computed(() => {
   return `${currentServer.value?.serverBaseUrl}/images/original${background.value}`;
 });
 
-const {data} = useServerClient<InfoResponse>({
+const { data } = useServerClient<InfoResponse>({
   keepForever: true,
   path: route?.fullPath,
 });
@@ -119,8 +119,8 @@ const toggleTrailer = () => {
   if (!main) return;
 
   main.style.overflow = trailerOpen.value
-      ? 'hidden'
-      : 'auto';
+    ? 'hidden'
+    : 'auto';
 };
 
 const incrementTrailerIndex = () => {
@@ -157,80 +157,63 @@ const processTrailer = (value: InfoResponse | undefined) => {
   axios.head(`https://trailer.nomercy.tv/${value.videos[trailerIndex.value]?.src}/${value.videos[trailerIndex.value]?.src}.webm`, {
     withCredentials: false,
   })
-      .then(() => {
-        trailerState.value = true;
-      })
-      .catch(() => {
-        incrementTrailerIndex();
-        trailerState.value = false;
-      });
+    .then(() => {
+      trailerState.value = true;
+    })
+    .catch(() => {
+      incrementTrailerIndex();
+      trailerState.value = false;
+    });
 };
 
 </script>
 
 <template>
   <ion-page>
-    <ion-content
-        ref="content"
-        :fullscreen="true"
-        :style="`--background-image: ${backgroundUrl && !backgroundUrl.includes('null') ? `url(${backgroundUrl})` : ''};`"
-    >
+    <ion-content ref="content" :fullscreen="true"
+      :style="`--background-image: ${backgroundUrl && !backgroundUrl.includes('null') ? `url(${backgroundUrl})` : ''};`">
 
       <div
-          class="flex flex-col justify-start items-center self-stretch flex-grow overflow-hidden gap-4 will-change-auto text-slate-lightA-12/70 dark:text-slate-darkA-12/80 z-0"
-          style="box-shadow: 0 2px 2px 0 rgba(0,0,0,0.16);"
-      >
-        <div
-            class="flex justify-start items-end flex-grow-0 flex-shrink-0 -mx-4 w-available h-[410px] relative gap-2">
+        class="flex flex-col justify-start items-center self-stretch flex-grow overflow-hidden gap-4 will-change-auto text-slate-lightA-12/70 dark:text-slate-darkA-12/80 z-0"
+        style="box-shadow: 0 2px 2px 0 rgba(0,0,0,0.16);">
+        <div class="flex justify-start items-end flex-grow-0 flex-shrink-0 -mx-4 w-available h-[410px] relative gap-2">
 
-          <div
-              class="absolute flex flex-col justify-start items-end flex-grow w-available -mx-20 h-[410px] z-10"
-              style="background: linear-gradient(0deg, rgba(0, 0, 0, 0.50) 0%, rgba(0, 0, 0, 0.50) 100%)"></div>
+          <div class="absolute flex flex-col justify-start items-end flex-grow w-available -mx-20 h-[410px] z-10"
+            style="background: linear-gradient(0deg, rgba(0, 0, 0, 0.50) 0%, rgba(0, 0, 0, 0.50) 100%)"></div>
 
-          <TMDBImage
-              :key="background ?? 'background'"
-              :autoShadow="true"
-              :path="background"
-              :colorPalette="data?.color_palette?.poster"
-              :size="500"
-              priority="low"
-              :title="data?.title ?? data?.name"
-              aspect="poster"
-              loading="eager"
-              class="absolute flex flex-col justify-start items-end flex-grow w-available -mx-20 h-[410px] bg-cover bg-top z-0 children:h-available"
-              className="bg-top max-h-available w-available !object-fill"
-              type="image"/>
+          <TMDBImage :key="background ?? 'background'" :autoShadow="true" :path="background"
+            :colorPalette="data?.color_palette?.poster" :size="500" priority="low" :title="data?.title ?? data?.name"
+            aspect="poster" loading="eager"
+            class="absolute flex flex-col justify-start items-end flex-grow w-available -mx-20 h-[410px] bg-cover bg-top z-0 children:h-available"
+            className="bg-top max-h-available w-available !object-fill" type="image" />
 
         </div>
 
         <div
-            class="flex bg-slate-light-3 dark:bg-slate-dark-1 flex-col justify-start items-start self-stretch flex-grow-0 flex-shrink-0 gap-3 pt-16 pb-5 will-change-auto w-inherit px-6"
-        >
-          <p
-             class="self-stretch flex-grow-0 flex-shrink-0 w-[351px] text-3xl font-bold text-left z-10"
-             v-html="breakTitle2(data?.title || title || '', 'text-lg line-clamp-2')">
+          class="flex bg-slate-light-3 dark:bg-slate-dark-1 flex-col justify-start items-start self-stretch flex-grow-0 flex-shrink-0 gap-3 pt-16 pb-5 will-change-auto w-inherit px-6">
+          <p class="self-stretch flex-grow-0 flex-shrink-0 w-[351px] text-3xl font-bold text-left z-10"
+            v-html="breakTitle2(data?.title || title || '', 'text-lg line-clamp-2')">
           </p>
 
-          <Collapsible v-if="data?.overview" :text="data?.overview" :maxLines="3"/>
+          <Collapsible v-if="data?.overview" :text="data?.overview" :maxLines="3" />
 
           <div v-if="data"
-               class="flex justify-start items-center self-stretch flex-grow-0 flex-shrink-0 relative gap-2">
+            class="flex justify-start items-center self-stretch flex-grow-0 flex-shrink-0 relative gap-2">
 
-            <HeaderItem v-if="data?.year" title="" :data="data?.year.toString()"/>
+            <HeaderItem v-if="data?.year" title="" :data="data?.year.toString()" />
 
-            <HeaderItem v-if="data?.content_ratings.length" title="" >
+            <HeaderItem v-if="data?.content_ratings.length" title="">
               <ContentRating :size="6"
-                             class="h-full min-!h-[1rem] object-scale-down rounded-lg overflow-clip children:-m-0.5"
-                             :ratings="data?.content_ratings"/>
+                class="h-full min-!h-[1rem] object-scale-down rounded-lg overflow-clip children:-m-0.5"
+                :ratings="data?.content_ratings" />
             </HeaderItem>
 
-            <HeaderItem v-if="data?.have_items" title=""
-                        :data="`${ data?.have_items }/${ data?.number_of_items }`"/>
+            <HeaderItem v-if="data?.have_items" title="" :data="`${data?.have_items}/${data?.number_of_items}`" />
 
             <HeaderItem v-if="data?.duration" title="">
-                <span class="whitespace-nowrap">
-                  {{ convertToHumanReact(t, data?.duration, true) }}
-                </span>
+              <span class="whitespace-nowrap">
+                {{ convertToHumanReact(t, data?.duration, true) }}
+              </span>
             </HeaderItem>
 
             <HeaderItem v-if="data?.voteAverage" title="">
@@ -241,89 +224,61 @@ const processTrailer = (value: InfoResponse | undefined) => {
           </div>
 
           <ion-skeleton-text v-else :animated="true" class="h-6 will-change-auto"></ion-skeleton-text>
-          <div
-              class="self-stretch flex-grow-0 flex-shrink-0 h-px bg-slate-dark-7/[0.1] dark:bg-slate-dark-11/[0.1]"></div>
+          <div class="self-stretch flex-grow-0 flex-shrink-0 h-px bg-slate-dark-7/[0.1] dark:bg-slate-dark-11/[0.1]">
+          </div>
 
-          <InfoItem v-if="data?.genres" :data="data" title="Genres" keyName="genres" prefix="genres"/>
+          <InfoItem v-if="data?.genres" :data="data" title="Genres" keyName="genres" prefix="genres" />
           <ion-skeleton-text v-else :animated="true" class="h-12 will-change-auto"></ion-skeleton-text>
 
-          <div
-              class="self-stretch flex-grow-0 flex-shrink-0 h-px bg-slate-dark-7/[0.1] dark:bg-slate-dark-11/[0.1]"></div>
+          <div class="self-stretch flex-grow-0 flex-shrink-0 h-px bg-slate-dark-7/[0.1] dark:bg-slate-dark-11/[0.1]">
+          </div>
 
-          <InfoItem v-if="data?.writer" :data="{writer: [data?.writer]}" title="Writer" keyName="writer"
-                    prefix="person"/>
+          <InfoItem v-if="data?.writer" :data="{ writer: [data?.writer] }" title="Writer" keyName="writer"
+            prefix="person" />
 
-          <InfoItem v-if="data?.creator" :data="{creator: [data?.creator]}" title="Creator"
-                    keyName="creator"
-                    prefix="person"/>
+          <InfoItem v-if="data?.creator" :data="{ creator: [data?.creator] }" title="Creator" keyName="creator"
+            prefix="person" />
 
-          <InfoItem v-if="data?.director" :data="{director: [data?.director]}" title="Director"
-                    keyName="director"
-                    prefix="person"/>
+          <InfoItem v-if="data?.director" :data="{ director: [data?.director] }" title="Director" keyName="director"
+            prefix="person" />
 
-          <InfoItem v-if="data?.creators" :data="data" title="Creators" keyName="creators" prefix="person"/>
+          <InfoItem v-if="data?.creators" :data="data" title="Creators" keyName="creators" prefix="person" />
 
-          <InfoItem v-if="data?.directors" :data="data" title="Directors" keyName="directors"
-                    prefix="person"/>
+          <InfoItem v-if="data?.directors" :data="data" title="Directors" keyName="directors" prefix="person" />
 
-          <InfoItem v-if="data?.writers" :data="data" title="Writers" keyName="writers" prefix="person"/>
+          <InfoItem v-if="data?.writers" :data="data" title="Writers" keyName="writers" prefix="person" />
 
-          <InfoItem v-if="data?.keywords" :data="data" title="Keywords" keyName="keywords"/>
+          <InfoItem v-if="data?.keywords" :data="data" title="Keywords" keyName="keywords" />
 
-          <div
-              class="self-stretch flex-grow-0 flex-shrink-0 h-px bg-slate-dark-7/[0.1] dark:bg-slate-dark-11/[0.1]"></div>
+          <div class="self-stretch flex-grow-0 flex-shrink-0 h-px bg-slate-dark-7/[0.1] dark:bg-slate-dark-11/[0.1]">
+          </div>
 
-          <PersonCarousel v-if="data?.cast && data?.cast?.length > 0"
-                          class="-mx-6"
-                          :data="data?.cast"
-                          title="Cast"/>
+          <PersonCarousel v-if="data?.cast && data?.cast?.length > 0" class="-mx-6" :data="data?.cast" title="Cast" />
 
-          <PersonCarousel v-if="data?.crew && data?.crew?.length > 0"
-                          class="-mx-6"
-                          :data="sortByPosterAlphabetized(data?.crew, 'profile', 'id')"
-                          title="Crew"/>
+          <PersonCarousel v-if="data?.crew && data?.crew?.length > 0" class="-mx-6"
+            :data="sortByPosterAlphabetized(data?.crew, 'profile', 'id')" title="Crew" />
 
-          <ImageCarousel v-if="data?.posters && data?.posters?.length > 0"
-                         class="-mx-6"
-                         :data="data?.posters"
-                         title="Poster"
-                         type="poster"/>
+          <ImageCarousel v-if="data?.posters && data?.posters?.length > 0" class="-mx-6" :data="data?.posters"
+            title="Poster" type="poster" />
 
-          <ImageCarousel v-if="data?.backdrops && data?.backdrops?.length > 0"
-                         class="-mx-6"
-                         :colorPalette="data?.color_palette?.poster"
-                         :data="data?.backdrops"
-                         title="Backdrop"
-                         type="backdrop"/>
+          <ImageCarousel v-if="data?.backdrops && data?.backdrops?.length > 0" class="-mx-6"
+            :colorPalette="data?.color_palette?.poster" :data="data?.backdrops" title="Backdrop" type="backdrop" />
 
-          <MediaCarousel v-if="data?.recommendations && data?.recommendations?.length > 0"
-                         class="-mx-6"
-                         :colorPalette="data?.color_palette"
-                         :data="data?.recommendations"
-                         title="Recommendations"
-                         type="poster"/>
+          <MediaCarousel v-if="data?.recommendations && data?.recommendations?.length > 0" class="-mx-6"
+            :colorPalette="data?.color_palette" :data="data?.recommendations" title="Recommendations" type="poster" />
 
-          <MediaCarousel v-if="data?.similar && data?.similar?.length > 0"
-                         class="-mx-6"
-                         :colorPalette="data?.color_palette"
-                         :data="data?.similar"
-                         title="Similar"
-                         type="poster"/>
+          <MediaCarousel v-if="data?.similar && data?.similar?.length > 0" class="-mx-6"
+            :colorPalette="data?.color_palette" :data="data?.similar" title="Similar" type="poster" />
 
         </div>
       </div>
 
       <MobileInfoCard :data="data" :toggleTrailer="toggleTrailer" />
 
-      <Trailer v-if="data?.videos && data?.videos?.length > 0 && trailerOpen"
-               :key="trailerIndex"
-               :incrementTrailerIndex="incrementTrailerIndex"
-               :index="trailerIndex"
-               :open="trailerOpen"
-               :title="data?.title ?? data?.name"
-               :toggle="toggleTrailer"
-               :videos="data?.videos"
-               class="absolute inset-0 h-full w-full z-999"/>
+      <Trailer v-if="data?.videos && data?.videos?.length > 0 && trailerOpen" :key="trailerIndex"
+        :incrementTrailerIndex="incrementTrailerIndex" :index="trailerIndex" :open="trailerOpen"
+        :title="data?.title ?? data?.name" :toggle="toggleTrailer" :videos="data?.videos"
+        class="absolute inset-0 h-full w-full z-999" />
 
     </ion-content>
   </ion-page>
@@ -333,5 +288,4 @@ const processTrailer = (value: InfoResponse | undefined) => {
 :root {
   --background-image: none;
 }
-
 </style>

@@ -1,14 +1,14 @@
 <script setup lang="ts">
 
-import type {ActivityLog, Device} from '@/types/server';
+import type { ActivityLog, Device } from '@/types/server';
 
 import useServerClient from '@/lib/clients/useServerClient';
 
 import SystemCard from '../ServerSystemCard.vue';
 import ActivityCard from './ActivityCard.vue';
-import {dashboardSocketIsConnected} from "@/lib/clients/dashboardSocket";
+import { dashboardSocketIsConnected } from "@/lib/clients/dashboardSocket";
 
-const {data: serverActivity} = useServerClient<ActivityLog[]>({
+const { data: serverActivity } = useServerClient<ActivityLog[]>({
   path: 'dashboard/activity',
   refetchInterval: 10000,
   data: {
@@ -17,7 +17,7 @@ const {data: serverActivity} = useServerClient<ActivityLog[]>({
   queryKey: ['server', 'activity'],
 });
 
-const {data: devices} = useServerClient<Device[]>({
+const { data: devices } = useServerClient<Device[]>({
   path: 'dashboard/devices',
   refetchInterval: 10000,
   queryKey: ['devices'],
@@ -33,11 +33,7 @@ const {data: devices} = useServerClient<Device[]>({
 
     </template>
 
-    <ActivityCard
-        v-for="activity in serverActivity?.slice(0, 5) ?? []"
-        :devices="devices ?? []"
-        :key="activity?.id"
-        :activity="activity"
-    />
+    <ActivityCard v-for="activity in serverActivity?.slice(0, 5) ?? []" :devices="devices ?? []" :key="activity?.id"
+      :activity="activity" />
   </SystemCard>
 </template>

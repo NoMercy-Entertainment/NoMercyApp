@@ -1,4 +1,4 @@
-import {onUnmounted, onMounted, ref, toRaw} from 'vue';
+import { onUnmounted, onMounted, ref, toRaw } from 'vue';
 
 const keepAlive = ref<{
 	mount: () => void;

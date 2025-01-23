@@ -11,6 +11,6 @@
 export { getToken, getKeycloak, isTokenReady } from './keycloak';
 export * from './composable';
 export * from './plugin';
-import {vueKeycloak} from './plugin';
+import { vueKeycloak } from './plugin';
 
 export default vueKeycloak;

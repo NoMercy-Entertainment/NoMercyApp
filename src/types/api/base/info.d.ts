@@ -1,7 +1,7 @@
-import type {ColorPalettes} from '../shared';
-import {InfoCredit} from '@/types/server';
-import {Item} from '@nomercy-entertainment/nomercy-music-player/types';
-import {Rating} from '@/types/api/base/collection';
+import type { ColorPalettes } from '../shared';
+import { InfoCredit } from '@/types/server';
+import { Item } from '@nomercy-entertainment/nomercy-music-player/types';
+import { Rating } from '@/types/api/base/collection';
 
 export interface InfoResponse {
 	id: number;

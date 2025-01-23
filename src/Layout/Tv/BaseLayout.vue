@@ -8,7 +8,7 @@ import {
 } from '@ionic/vue';
 
 
-import {currentSong} from "@/store/audioPlayer";
+import { currentSong } from "@/store/audioPlayer";
 
 import ImageModal from '@/Layout/ImageModal.vue';
 import Screensaver from '@/Layout/Screensaver.vue';
@@ -26,12 +26,11 @@ import FullTvPlayer from "@/components/MusicPlayer/tv/FullTvPlayer.vue";
       </ion-router-outlet>
     </ion-tabs>
 
-    <ImageModal/>
+    <ImageModal />
     <!--      <Toast class="z-1199" />-->
-    <Screensaver/>
-    <FullTvPlayer v-if="currentSong"/>
+    <Screensaver />
+    <FullTvPlayer v-if="currentSong" />
   </ion-page>
 </template>
 
-<style scoped>
-</style>
+<style scoped></style>

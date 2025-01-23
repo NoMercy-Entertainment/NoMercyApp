@@ -1,11 +1,11 @@
 <script lang="ts" setup>
-import {PropType, ref} from 'vue';
-import {useTranslation} from 'i18next-vue';
+import { PropType, ref } from 'vue';
+import { useTranslation } from 'i18next-vue';
 
-import {useQueryClient} from '@tanstack/vue-query';
+import { useQueryClient } from '@tanstack/vue-query';
 
 import apiClient from '@/lib/clients/apiClient';
-import {currentServer} from '@/store/currentServer';
+import { currentServer } from '@/store/currentServer';
 
 import Modal from '@/components/Modal.vue';
 import Button from '@/components/Buttons/Button.vue';
@@ -33,7 +33,7 @@ const props = defineProps({
   },
 });
 
-const {t} = useTranslation();
+const { t } = useTranslation();
 const query = useQueryClient();
 
 const errorBucket = ref<{
@@ -53,16 +53,16 @@ const handleDelete = () => {
   }
 
   apiClient()
-      .post('server/users', {
-        _method: 'delete',
-        server_id: currentServer.value?.id,
-        user_id: props.id,
-      })
-      .then(() => {
-        query.invalidateQueries({queryKey: ['users']}).then(() => {
-          history.back();
-        });
+    .post('server/users', {
+      _method: 'delete',
+      server_id: currentServer.value?.id,
+      user_id: props.id,
+    })
+    .then(() => {
+      query.invalidateQueries({ queryKey: ['users'] }).then(() => {
+        history.back();
       });
+    });
 
   props.close();
 };
@@ -70,10 +70,7 @@ const handleDelete = () => {
 </script>
 
 <template>
-  <Modal :open="open"
-         :close="close"
-         :params="{name : name}"
-         :title="`Delete server member {{name}}`">
+  <Modal :open="open" :close="close" :params="{ name: name }" :title="`Delete server member {{name}}`">
 
     <p class="my-6 text-sm text-auto-10">
       {{ $t('Are you sure you want to delete this server member?') }}<br>
@@ -81,19 +78,10 @@ const handleDelete = () => {
     </p>
 
     <template v-slot:actions>
-      <Button type="button"
-              id="yes"
-              color="red"
-              variant="contained"
-              endIcon="userRemove"
-              @click="handleDelete">
+      <Button type="button" id="yes" color="red" variant="contained" endIcon="userRemove" @click="handleDelete">
         {{ $t('Yes') }}
       </Button>
-      <Button type="button"
-              id="no"
-              variant="text"
-              color="white"
-              @click="close">
+      <Button type="button" id="no" variant="text" color="white" @click="close">
         {{ $t('Cancel') }}
       </Button>
     </template>

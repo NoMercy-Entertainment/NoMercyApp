@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import {IonPage, IonContent} from '@ionic/vue';
+import { IonPage, IonContent } from '@ionic/vue';
 
 import Chromecast from "@/components/Buttons/Chromecast.vue";
 import DashboardLayout from "@/Layout/Desktop/DashboardLayout.vue";
@@ -13,7 +13,7 @@ import DashboardLayout from "@/Layout/Desktop/DashboardLayout.vue";
         <template v-slot:cta>
         </template>
         <div class="grid place-content-center w-available h-available">
-          <Chromecast/>
+          <Chromecast />
         </div>
       </DashboardLayout>
     </ion-content>

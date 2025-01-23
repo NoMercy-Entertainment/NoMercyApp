@@ -1,7 +1,7 @@
-import type {ColorPalettes, PaletteColors} from '../shared';
-import type {PlaylistItem} from '@/types/api/music/musicPlayer';
-import type {Genre} from '@/types/api/base/genre';
-import type {Album} from '@/types/api/music/album';
+import type { ColorPalettes, PaletteColors } from '../shared';
+import type { PlaylistItem } from '@/types/api/music/musicPlayer';
+import type { Genre } from '@/types/api/base/genre';
+import type { Album } from '@/types/api/music/album';
 
 export interface ArtistResponse {
 	id: string;

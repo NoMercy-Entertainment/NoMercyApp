@@ -1,5 +1,5 @@
-import {computed, ref} from 'vue';
-import {LogoResponse} from '@/types/server';
+import { computed, ref } from 'vue';
+import { LogoResponse } from '@/types/server';
 
 const sim = ref<boolean>();
 export const showImageModal = computed(() => sim.value);
@@ -31,9 +31,9 @@ export const setImageModalData = (data: any) => {
 	imd.value = data;
 }
 
-const ct = ref<'poster'|'backdrop'>();
+const ct = ref<'poster' | 'backdrop'>();
 export const currentType = computed(() => ct.value);
-export const setCurrentType = (type: 'poster'|'backdrop') => {
+export const setCurrentType = (type: 'poster' | 'backdrop') => {
 	ct.value = type;
 }
 

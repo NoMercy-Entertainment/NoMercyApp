@@ -1,5 +1,5 @@
 // @ts-ignore
-import {SwiperOptions} from 'swiper/types/swiper-options.d';
+import { SwiperOptions } from 'swiper/types/swiper-options.d';
 
 export const breakpoints = (isBackdrop: boolean) => {
 	return {

@@ -1,17 +1,17 @@
 <script setup lang="ts">
-import {IonContent, IonPage} from '@ionic/vue';
+import { IonContent, IonPage } from '@ionic/vue';
 
-import type {HomeDataItem} from '@/types/api/music';
-import type {Component} from '@/lib/routerHelper';
+import type { HomeDataItem } from '@/types/api/music';
+import type { Component } from '@/lib/routerHelper';
 
 import useServerClient from '@/lib/clients/useServerClient';
 
 import ScrollContainer from '@/Layout/Desktop/components/ScrollContainer.vue';
-import {onMounted} from 'vue';
-import {setColorPalette} from '@/store/ui';
+import { onMounted } from 'vue';
+import { setColorPalette } from '@/store/ui';
 import NotFound from "@/Layout/Desktop/components/NotFound.vue";
 
-const {data, isError} = useServerClient<Component<HomeDataItem>[]>({
+const { data, isError } = useServerClient<Component<HomeDataItem>[]>({
   queryKey: ['music', 'home']
 });
 
@@ -27,13 +27,8 @@ onMounted(() => {
       <NotFound v-if="isError" />
       <ScrollContainer v-else :autoHide="true" :static="true">
         <template v-if="data">
-          <component
-              v-for="(render, index) in data ?? []"
-              :index="index"
-              :key="render.id"
-              :is="render.component"
-              v-bind="render.props"
-          />
+          <component v-for="(render, index) in data ?? []" :index="index" :key="render.id" :is="render.component"
+            v-bind="render.props" />
         </template>
       </ScrollContainer>
     </ion-content>

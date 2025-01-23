@@ -1,6 +1,6 @@
-import {computed, ref} from 'vue';
-import {Playlist} from '@/types/api/music/playlists';
-import {PlaylistItem} from '@/types/musicPlayer';
+import { computed, ref } from 'vue';
+import { Playlist } from '@/types/api/music/playlists';
+import { PlaylistItem } from '@/types/musicPlayer';
 
 
 const pl = ref<Playlist[]>([]);

@@ -1,5 +1,5 @@
-import {computed, ref} from 'vue';
-import {Message} from '@/types/auth';
+import { computed, ref } from 'vue';
+import { Message } from '@/types/auth';
 import apiClient from "@/lib/clients/apiClient";
 
 const messages = ref<Message[]>([]);
@@ -25,21 +25,21 @@ export const markMessageRead = (message: Message) => {
 	message.read = true;
 
 	apiClient()
-		.patch(`/messages/${message.id}`, {read: true})
+		.patch(`/messages/${message.id}`, { read: true })
 		.catch(console.error);
 }
 export const markMessageUnread = (message: Message) => {
 	message.read = false;
 
 	apiClient()
-		.patch(`/messages/${message.id}`, {read: false})
+		.patch(`/messages/${message.id}`, { read: false })
 		.catch(console.error);
 }
 export const markAllMessagesRead = () => {
 	messages.value.forEach(message => message.read = true);
 
 	apiClient()
-		.patch(`/messages`, {read: true})
+		.patch(`/messages`, { read: true })
 		.catch(console.error);
 }
 export const clearMessages = () => {

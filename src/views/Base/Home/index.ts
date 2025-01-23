@@ -1,6 +1,6 @@
-import {Component} from 'vue';
+import { Component } from 'vue';
 
-import {isMobile, isTv} from '@/config/global';
+import { isMobile, isTv } from '@/config/global';
 
 import Tv from './Tv.vue';
 import Mobile from './Mobile.vue';

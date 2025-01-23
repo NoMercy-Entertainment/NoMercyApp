@@ -1,5 +1,5 @@
 
-export type ColorScheme = 'dark'|'light'|'system';
+export type ColorScheme = 'dark' | 'light' | 'system';
 
 export interface Component {
 	id: string;

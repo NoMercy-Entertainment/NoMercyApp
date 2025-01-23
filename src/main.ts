@@ -1,6 +1,6 @@
 import { createApp } from 'vue';
 import { isPlatform } from '@ionic/vue';
-import {App} from "@capacitor/app";
+import { App } from "@capacitor/app";
 import WebKeycloak from '@dsb-norge/vue-keycloak-js';
 
 import { isTv } from '@/config/global';

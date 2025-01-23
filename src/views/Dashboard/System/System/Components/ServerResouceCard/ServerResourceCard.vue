@@ -1,27 +1,27 @@
 <script setup lang="ts">
-import {computed, onMounted, ref, watch} from 'vue';
+import { computed, onMounted, ref, watch } from 'vue';
 import Chart from 'primevue/chart';
 
-import type {Resource} from '@/types/api/dashboard/resource';
-import type {ServerInfo} from "@/types/api/dashboard/server";
+import type { Resource } from '@/types/api/dashboard/resource';
+import type { ServerInfo } from "@/types/api/dashboard/server";
 
 import useMounted from '@/hooks/useMounted';
 import useHubListener from '@/hooks/useHubListener';
-import {connection} from '@/lib/clients/dashboardSocket';
-import {useSocket} from '@/store/socket';
-import {getCpuColor, getGpuColor, hexOpacity} from "@/lib/colorHelper";
-import {orange, purple} from "@/config/global";
+import { connection } from '@/lib/clients/dashboardSocket';
+import { useSocket } from '@/store/socket';
+import { getCpuColor, getGpuColor, hexOpacity } from "@/lib/colorHelper";
+import { orange, purple } from "@/config/global";
 import useServerClient from "@/lib/clients/useServerClient";
-import {currentServer} from "@/store/currentServer";
+import { currentServer } from "@/store/currentServer";
 
 import SystemCard from '../ServerSystemCard.vue';
 import ResourceBar from './ResourceBar.vue';
 import ResourceCircle from './ResourceCircle.vue';
-import {darkMode} from "@/store/colorScheme";
-import {ChartOptions, LineController} from "chart.js";
-import {useLocalStorage} from "@vueuse/core";
+import { darkMode } from "@/store/colorScheme";
+import { ChartOptions, LineController } from "chart.js";
+import { useLocalStorage } from "@vueuse/core";
 
-const {data: serverInfo} = useServerClient<ServerInfo>({
+const { data: serverInfo } = useServerClient<ServerInfo>({
   path: 'dashboard/server/info',
   queryKey: ['serverInfo', currentServer.value?.serverBaseUrl],
 });
@@ -47,8 +47,8 @@ const handleResourceUpdate = (data: Resource) => {
 };
 
 useMounted(
-    () => connection.value?.invoke('StartResources'),
-    () => connection.value?.invoke('StopResources').catch(),
+  () => connection.value?.invoke('StartResources'),
+  () => connection.value?.invoke('StopResources').catch(),
 );
 
 useHubListener(connection, 'ResourceUpdate', handleResourceUpdate);
@@ -64,15 +64,15 @@ onMounted(() => {
 
 const cpuCores = computed(() => {
   return resources.value?.cpu?.core
-      // .filter(c => !Number.isNaN(c))
-      ?.toSorted((a, b) => a.index - b.index) ?? [];
+    // .filter(c => !Number.isNaN(c))
+    ?.toSorted((a, b) => a.index - b.index) ?? [];
 });
 
 const gpuCores = computed(() => {
   return resources.value?.gpu
-      // ?.filter(c => !Number.isNaN(c))
-      ?.toSorted((a, b) => a.index - b.index)
-      .map(gpu => gpu.encode) ?? [];
+    // ?.filter(c => !Number.isNaN(c))
+    ?.toSorted((a, b) => a.index - b.index)
+    .map(gpu => gpu.encode) ?? [];
 });
 
 const cpuUsage = computed(() => {
@@ -161,8 +161,8 @@ const legendPosition = useLocalStorage<"left" | "top" | "right" | "bottom">('leg
 const chartOptions = computed(() => {
   const documentStyle = getComputedStyle(document.documentElement);
   const textColor = darkMode.value
-      ? `rgb(${documentStyle.getPropertyValue('--color-slate-12')})`
-      : `rgb(${documentStyle.getPropertyValue('--color-slate-1')})`;
+    ? `rgb(${documentStyle.getPropertyValue('--color-slate-12')})`
+    : `rgb(${documentStyle.getPropertyValue('--color-slate-1')})`;
 
   const surfaceBorder = documentStyle.getPropertyValue('--p-content-border-color');
   const positionOptions: Array<"left" | "top" | "right" | "bottom"> = ["left", "top", "right", "bottom"];
@@ -235,37 +235,27 @@ const chartHeight = computed(() => {
     </template>
 
     <div
-        class="flex items-start justify-between gap-2 overflow-clip w-available text-slate-light-12/80 dark:text-slate-dark-12/80"
-    >
-      <ResourceCircle name="CPU"
-                      :value="cpuUsage"
-                      :size="size"/>
+      class="flex items-start justify-between gap-2 overflow-clip w-available text-slate-light-12/80 dark:text-slate-dark-12/80">
+      <ResourceCircle name="CPU" :value="cpuUsage" :size="size" />
 
       <div class="w-px flex-shrink-0 flex-grow-0 self-stretch bg-white/10"></div>
 
-      <ResourceCircle name="Memory"
-                      :value="memoryUsage"
-                      :size="size"/>
+      <ResourceCircle name="Memory" :value="memoryUsage" :size="size" />
 
       <div class="w-px flex-shrink-0 flex-grow-0 self-stretch bg-white/10"></div>
 
-      <ResourceCircle name="GPU"
-                      :value="gpuUsage"
-                      :size="size"/>
+      <ResourceCircle name="GPU" :value="gpuUsage" :size="size" />
     </div>
-    <div
-        class="flex flex-shrink-0 flex-grow-0 flex-col items-start justify-start self-stretch"
-    >
+    <div class="flex flex-shrink-0 flex-grow-0 flex-col items-start justify-start self-stretch">
       <template v-if="display == 'bar'">
         <template v-for="(core, index) in resources?.cpu?.core ?? []" :key="core.index">
-          <ResourceBar :cpu="index" :value="core.utilization" v-if="!Number.isNaN(core.utilization)"/>
+          <ResourceBar :cpu="index" :value="core.utilization" v-if="!Number.isNaN(core.utilization)" />
         </template>
       </template>
 
       <template v-if="display == 'graph'">
         <Chart type="line" :data="chartData" :options="chartOptions" :style="`height: ${chartHeight}`"
-               class="w-available"
-        />
+          class="w-available" />
       </template>
     </div>
   </SystemCard>

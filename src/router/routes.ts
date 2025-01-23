@@ -1,6 +1,6 @@
-import {NavigationGuardNext, RouteLocationNormalizedGeneric, RouteRecordRaw} from 'vue-router';
-import {computed} from 'vue';
-import {isMobile, isTv} from '@/config/global';
+import { NavigationGuardNext, RouteLocationNormalizedGeneric, RouteRecordRaw } from 'vue-router';
+import { computed } from 'vue';
+import { isMobile, isTv } from '@/config/global';
 
 import MobileBaseLayout from '@/Layout/Mobile/BaseLayout.vue';
 import TvBaseLayout from '@/Layout/Tv/BaseLayout.vue';

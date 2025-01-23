@@ -9,11 +9,11 @@ import serverClient from '@/lib/clients/serverClient';
 
 import MoooomIcon from '@/components/Images/icons/MoooomIcon.vue';
 import MusicButton from './MusicButton.vue';
-import audioPlayer, {currentSong} from '@/store/audioPlayer';
+import audioPlayer, { currentSong } from '@/store/audioPlayer';
 
 const props = defineProps({
 	data: {
-		type: Object as PropType<PlaylistItem|DisplayList>,
+		type: Object as PropType<PlaylistItem | DisplayList>,
 		required: true,
 	},
 	className: {
@@ -26,7 +26,7 @@ const props = defineProps({
 		required: false,
 	},
 	type: {
-		type: String as PropType<'track'|'artist'|'album'>,
+		type: String as PropType<'track' | 'artist' | 'album'>,
 		required: false,
 		default: 'track',
 	},
@@ -62,13 +62,9 @@ const handleClick = (e?: MouseEvent) => {
 </script>
 
 <template>
-    <MusicButton label="Favorite"
-                 :onclick="handleClick"
-                 :style="`--fill: ${color};`">
+	<MusicButton label="Favorite" :onclick="handleClick" :style="`--fill: ${color};`">
 		<slot />
 
-        <MoooomIcon icon="heart" class="h-7 w-7" v-if="data.favorite"
-                  :class="className"
-        />
-    </MusicButton>
+		<MoooomIcon icon="heart" class="h-7 w-7" v-if="data.favorite" :class="className" />
+	</MusicButton>
 </template>

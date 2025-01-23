@@ -1,21 +1,21 @@
 <script setup lang="ts">
-import {onBeforeMount, onMounted, ref, watch} from 'vue';
-import {useRoute} from 'vue-router';
+import { onBeforeMount, onMounted, ref, watch } from 'vue';
+import { useRoute } from 'vue-router';
 
-import type {LibrariesResponse} from "@/types/api/base/library";
+import type { LibrariesResponse } from "@/types/api/base/library";
 
 import useServerClient from '@/lib/clients/useServerClient';
 
 import DashboardLayout from '@/Layout/Desktop/DashboardLayout.vue';
 import DeleteSpecialModal from './components/DeleteSpecialModal.vue';
 import Button from '@/components/Buttons/Button.vue';
-import {InputText} from "primevue";
-import {currentServer} from "@/store/currentServer";
+import { InputText } from "primevue";
+import { currentServer } from "@/store/currentServer";
 import serverClient from "@/lib/clients/serverClient";
 
 const route = useRoute();
 
-const {data: specials, error, refetch} = useServerClient<LibrariesResponse[]>({
+const { data: specials, error, refetch } = useServerClient<LibrariesResponse[]>({
   path: 'dashboard/specials',
   queryKey: ['dashboard', 'specials'],
 });
@@ -70,7 +70,7 @@ const handleSave = () => {
     backdrop: backdrop.value,
     poster: poster.value,
     logo: logo.value,
-  }).then(({data}) => {
+  }).then(({ data }) => {
     console.log(data);
   });
 };
@@ -79,31 +79,19 @@ const handleSave = () => {
 
 <template>
 
-  <DashboardLayout :gridStyle="1" :error="error" :title="`Special: {{title}}`" :params="{title: settings?.title}">
+  <DashboardLayout :gridStyle="1" :error="error" :title="`Special: {{title}}`" :params="{ title: settings?.title }">
     <template v-slot:cta>
     </template>
     <template v-slot:actions>
-      <Button type="button"
-              id="remove"
-              variant="text"
-              startIcon="folderRemove"
-              class="children:text-gray-400 children:transition-colors children:duration-100 children:hover:text-red-dark-8"
-              color="text-auto-alpha-11"
-              @click="openDeleteConfirm">
+      <Button type="button" id="remove" variant="text" startIcon="folderRemove"
+        class="children:text-gray-400 children:transition-colors children:duration-100 children:hover:text-red-dark-8"
+        color="text-auto-alpha-11" @click="openDeleteConfirm">
         {{ $t('Remove') }}
       </button>
-      <Button type="button"
-              id="cancel"
-              variant="text"
-              color="white"
-              @click="handleCancel">
+      <Button type="button" id="cancel" variant="text" color="white" @click="handleCancel">
         {{ $t('Cancel') }}
       </Button>
-      <Button type="button"
-              id="save"
-              class="ml-auto"
-              color="theme"
-              @click="handleSave">
+      <Button type="button" id="save" class="ml-auto" color="theme" @click="handleSave">
         {{ $t('Save') }}
       </button>
     </template>
@@ -111,27 +99,29 @@ const handleSave = () => {
     <div class="flex flex-col gap-5 col-span-5 col-start-1 2xl:col-start-1">
       <div class="flex flex-col gap-2">
         <label for="name">Name</label>
-        <InputText variant="filled" id="name" v-model="title" class="w-full"/>
+        <InputText variant="filled" id="name" v-model="title" class="w-full" />
       </div>
       <div class="flex flex-col gap-2">
         <label for="overview">Overview</label>
-        <Textarea variant="filled" :rows="8" id="overview" v-model="overview" class="w-full"/>
+        <Textarea variant="filled" :rows="8" id="overview" v-model="overview" class="w-full" />
       </div>
 
       <div class="flex gap-4 w-full">
         <div class="flex flex-col gap-4 w-full">
           <div class="flex flex-col gap-2">
             <label for="backdrop">Backdrop</label>
-            <InputText variant="filled" id="backdrop" v-model="backdrop" class="w-full"/>
+            <InputText variant="filled" id="backdrop" v-model="backdrop" class="w-full" />
           </div>
-          <Image :src="`${currentServer?.serverBaseUrl}/images/original${backdrop}`" alt="Image" width="100%" class="mx-2" preview/>
+          <Image :src="`${currentServer?.serverBaseUrl}/images/original${backdrop}`" alt="Image" width="100%"
+            class="mx-2" preview />
         </div>
         <div class="flex flex-col gap-4 w-full">
           <div class="flex flex-col gap-2">
             <label for="logo">Logo</label>
-            <InputText variant="filled" id="logo" v-model="logo" class="w-full"/>
+            <InputText variant="filled" id="logo" v-model="logo" class="w-full" />
           </div>
-          <Image :src="`${currentServer?.serverBaseUrl}/images/original${logo}`" alt="Image" width="100%" class="mx-2" preview/>
+          <Image :src="`${currentServer?.serverBaseUrl}/images/original${logo}`" alt="Image" width="100%" class="mx-2"
+            preview />
         </div>
       </div>
 
@@ -141,23 +131,17 @@ const handleSave = () => {
       <div class="flex flex-col gap-5">
         <div class="flex flex-col gap-2">
           <label for="poster">Poster</label>
-          <InputText variant="filled" id="poster" v-model="poster" class="w-full"/>
+          <InputText variant="filled" id="poster" v-model="poster" class="w-full" />
         </div>
-        <Image :src="`${currentServer?.serverBaseUrl}/images/original${poster}`" alt="Image" width="100%" class="mx-2" preview/>
+        <Image :src="`${currentServer?.serverBaseUrl}/images/original${poster}`" alt="Image" width="100%" class="mx-2"
+          preview />
       </div>
     </div>
 
 
-    <DeleteSpecialModal
-        v-if="settings?.id"
-        :id="settings?.id"
-        :name="settings?.title"
-        :close="closeDeleteConfirm"
-        :open="deleteConfirmOpen"
-    />
+    <DeleteSpecialModal v-if="settings?.id" :id="settings?.id" :name="settings?.title" :close="closeDeleteConfirm"
+      :open="deleteConfirmOpen" />
   </DashboardLayout>
 </template>
 
-<style scoped>
-
-</style>
+<style scoped></style>

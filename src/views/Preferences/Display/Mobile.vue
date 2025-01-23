@@ -13,7 +13,7 @@ import ScreensaverSettings from "@/views/Preferences/Display/components/Screensa
   <ion-page>
     <ion-content :fullscreen="true">
       <DashboardLayout title="Display settings" :gridStyle="3" :allowAnyone="true">
-        <div class="flex flex-col p-4 gap-4" >
+        <div class="flex flex-col p-4 gap-4">
           <DeviceName />
           <DisplayLanguage />
           <ScreensaverSettings />

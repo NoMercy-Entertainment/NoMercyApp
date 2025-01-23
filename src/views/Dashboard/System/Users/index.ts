@@ -1,4 +1,4 @@
-import {isMobile, isTv} from '@/config/global';
+import { isMobile, isTv } from '@/config/global';
 
 let View: () => Promise<any>;
 

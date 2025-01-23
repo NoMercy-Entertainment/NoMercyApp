@@ -1,4 +1,4 @@
-import {ExtendedVideo, MediaItem, Video} from '@/types/api/base/info';
+import { ExtendedVideo, MediaItem, Video } from '@/types/api/base/info';
 import type { ColorPalettes } from '@/types/api/shared';
 import type { InfoCredit } from '@/types/server';
 
@@ -10,17 +10,17 @@ export interface CollectionResponse {
 	titleSort: string;
 	type: string;
 	id: string;
-    total_duration: number;
+	total_duration: number;
 	media_type: string;
 	color_palette: ColorPalettes;
 	collection: Collection[];
 	number_of_items: number;
 	have_items: number;
-    duration: number;
-    content_ratings: Rating[];
+	duration: number;
+	content_ratings: Rating[];
 	year: number;
 	score: number;
-    favorite: boolean;
+	favorite: boolean;
 	genres: CollectionGenre[];
 	link: string;
 
@@ -38,19 +38,19 @@ export interface Collection {
 	logo: string | null;
 	media_type: string;
 	overview: string;
-    duration: number;
-    titleSort: string;
+	duration: number;
+	titleSort: string;
 	color_palette?: ColorPalettes;
 	poster: string;
 	title: string;
 	type: string;
 	year: number;
 	genres: CollectionGenre[];
-    content_ratings: Rating[];
+	content_ratings: Rating[];
 	videoId: string;
 	number_of_items: number;
 	have_items: number;
-    videos: ExtendedVideo[];
+	videos: ExtendedVideo[];
 	link: string;
 }
 

@@ -2,15 +2,15 @@
 import { onUnmounted, onMounted, ref, watch } from 'vue';
 import { useIdle } from '@vueuse/core';
 
-import type {LogoResponse} from "@/types/server";
+import type { LogoResponse } from "@/types/server";
 
 import useServerClient from "@/lib/clients/useServerClient";
-import {screensaverDelay} from "@/store/preferences";
+import { screensaverDelay } from "@/store/preferences";
 import {
-  disableScreensaver,
-  setImageModalData, setShowScreensaver,
-  showImageModal,
-  showScreensaver
+	disableScreensaver,
+	setImageModalData, setShowScreensaver,
+	showImageModal,
+	showScreensaver
 } from '@/store/imageModal';
 
 const { idle, reset } = useIdle((screensaverDelay.value ?? 0) * 60 * 1000);
@@ -25,8 +25,8 @@ const { data: images } = useServerClient<LogoResponse[]>({
 onMounted(() => {
 	interval.value = setInterval(() => {
 		if (!images.value) return;
-        if (disableScreensaver.value) return;
-        if (!showScreensaver.value) return;
+		if (disableScreensaver.value) return;
+		if (!showScreensaver.value) return;
 
 		index.value = index.value + 1 >= images.value?.length
 			? 0
@@ -42,11 +42,11 @@ watch(index, () => {
 });
 
 watch(screensaverDelay, () => {
-  reset();
+	reset();
 });
 
 watch(images, () => {
-  index.value = 0;
+	index.value = 0;
 });
 
 watch(idle, (idleValue) => {
@@ -66,5 +66,5 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <i></i>
+	<i></i>
 </template>

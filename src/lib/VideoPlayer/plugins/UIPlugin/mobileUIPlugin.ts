@@ -1,4 +1,4 @@
-import Plugin from  '@nomercy-entertainment/nomercy-video-player/src/plugin';
+import Plugin from '@nomercy-entertainment/nomercy-video-player/src/plugin';
 import type { NMPlayer } from '@nomercy-entertainment/nomercy-video-player/src/types';
 
 export class MobileUIPlugin extends Plugin {

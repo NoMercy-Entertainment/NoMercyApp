@@ -1,7 +1,7 @@
-import {toRaw} from 'vue';
+import { toRaw } from 'vue';
 import i18next from 'i18next';
-import {SortOrder, SortType} from '@/types/musicPlayer';
-import {siteTitle} from "@/config/config";
+import { SortOrder, SortType } from '@/types/musicPlayer';
+import { siteTitle } from "@/config/config";
 
 export const setTitle = (arg?: string | null) => {
 	if (!arg || arg == '') {
@@ -539,11 +539,11 @@ declare global {
 	}
 }
 
-String.prototype.capitalize = function(): string {
+String.prototype.capitalize = function (): string {
 	return this.charAt(0).toUpperCase() + this.slice(1);
 };
 
-String.prototype.toTitleCase = function(): string {
+String.prototype.toTitleCase = function (): string {
 	let i: number;
 	let j: number;
 	let str: string;
@@ -598,7 +598,7 @@ String.prototype.toTitleCase = function(): string {
  * @param  {string} lang EN|NL|FR
  * @param  {boolean} withLowers true|false
  */
-String.prototype.titleCase = function(lang = navigator.language.split('-')[0], withLowers = true): string {
+String.prototype.titleCase = function (lang = navigator.language.split('-')[0], withLowers = true): string {
 	let string: string;
 	let lowers: string[] = [];
 
@@ -654,13 +654,13 @@ String.prototype.titleCase = function(lang = navigator.language.split('-')[0], w
 	return string;
 };
 
-String.prototype.toPascalCase = function(): string {
-    return (this.match(/[a-z0-9]+/giu) as string[])
-        .map((word: string) => word.charAt(0).toUpperCase() + word.substr(1).toLowerCase())
-        .join('_');
+String.prototype.toPascalCase = function (): string {
+	return (this.match(/[a-z0-9]+/giu) as string[])
+		.map((word: string) => word.charAt(0).toUpperCase() + word.substr(1).toLowerCase())
+		.join('_');
 };
 
-String.prototype.toInt = function(): number {
+String.prototype.toInt = function (): number {
 	return parseInt(this as string, 10);
 }
 
@@ -774,7 +774,7 @@ interface SortConfig<T> {
 }
 
 export function byObjectValues<T extends object>(keys: (keyof T | SortConfig<T>)[]): (a: T, b: T) => 0 | 1 | -1 {
-	return function(a: T, b: T) {
+	return function (a: T, b: T) {
 		const firstKey: keyof T | SortConfig<T> = keys[0];
 		const isSimple = typeof firstKey === 'string';
 		const key: keyof T = isSimple
@@ -916,35 +916,35 @@ export const mappedEntries = <O>(input: O) => {
 	return Object.entries(input as any) as Entries<O>;
 };
 
-export const alphaNumericRange = (function() {
-    const data = '_#ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'.split('');
-    return function (start:string, stop: string) {
-        let a = data.indexOf(start);
-        let b = data.indexOf(stop);
-        return (!~start || !~stop) ? null : data.slice(a,b+1);
-    };
+export const alphaNumericRange = (function () {
+	const data = '_#ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'.split('');
+	return function (start: string, stop: string) {
+		let a = data.indexOf(start);
+		let b = data.indexOf(stop);
+		return (!~start || !~stop) ? null : data.slice(a, b + 1);
+	};
 })() as (start: string, stop: string) => string[];
 
 declare global {
-    interface Array<T> {
-        latest(): Array<T>;
-    }
+	interface Array<T> {
+		latest(): Array<T>;
+	}
 }
 
-Array.prototype.latest = function() {
-    return [...this].sort((a:{updated_at:number}, b: {updated_at:number}) => {
-        if (a.updated_at > b.updated_at) {
-            return -1;
-        }
-        if (a.updated_at < b.updated_at) {
-            return 1;
-        }
-        return 0;
-    });
+Array.prototype.latest = function () {
+	return [...this].sort((a: { updated_at: number }, b: { updated_at: number }) => {
+		if (a.updated_at > b.updated_at) {
+			return -1;
+		}
+		if (a.updated_at < b.updated_at) {
+			return 1;
+		}
+		return 0;
+	});
 }
 
 export const getRandomNumberBetween = (a: number, b: number) => {
-    return Math.floor(Math.random() * (b - a + 1)) + a;
+	return Math.floor(Math.random() * (b - a + 1)) + a;
 }
 
 export const isIp = (ip: string) => {
@@ -973,7 +973,7 @@ export const sensorPublicIpAddresses = (string?: string) => {
  * @returns {false | null | true} - Returns `false` if no values are selected, `true` if all values are selected, and `null` if some but not all values are selected.
  */
 export const checkboxValue = (selectedArray: unknown[], totalArray: unknown[]): false | null | true => {
-	if (selectedArray.length == 0){
+	if (selectedArray.length == 0) {
 		return false;
 	}
 	else if (selectedArray.length == totalArray?.length) {

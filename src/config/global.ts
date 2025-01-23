@@ -1,8 +1,8 @@
-import {computed, ref, toRaw} from 'vue';
-import {isPlatform} from '@ionic/vue';
-import {useLocalStorage, useMediaQuery} from '@vueuse/core';
-import {MoooomIcons} from '@Icons/icons';
-import {NameVal} from '@/types/api/dashboard/server';
+import { computed, ref, toRaw } from 'vue';
+import { isPlatform } from '@ionic/vue';
+import { useLocalStorage, useMediaQuery } from '@vueuse/core';
+import { MoooomIcons } from '@Icons/icons';
+import { NameVal } from '@/types/api/dashboard/server';
 
 export const isTv = useMediaQuery('(width: 960px) and (height: 540px)');
 // export const isMobile = useMediaQuery('(max-width: 800px) and (orientation: portrait), (max-height: 800px) and (orientation: landscape)');
@@ -171,7 +171,7 @@ export const genreColors = (title: string) => {
 			icon = 'bat';
 			iconBg = '';
 	}
-	return {bg, iconBg, icon};
+	return { bg, iconBg, icon };
 };
 
 export const media_types: NameVal[] = [
@@ -232,7 +232,7 @@ console.raw({
 	isMobile: isMobile.value,
 	isNativeMobile: isPlatform('mobile'),
 	isWebMobile: isPlatform('mobileweb'),
-	isNative : isNative.value,
+	isNative: isNative.value,
 	nativeOverride: nativeOverride.value,
 	isDarkMode: isDarkMode.value,
 	greetingValue: greetingValue.value,

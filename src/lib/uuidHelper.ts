@@ -367,7 +367,7 @@ const createUUID = () => {
 			const regex = /Android\s(?<version>\d{1,2});\sNoMercy\sTV;\s(?<name>.+);\s(?<brand>.+);\s(?<model>.+)/iu;
 			if (regex.test(navigator.userAgent)) {
 
-                // @ts-ignore
+				// @ts-ignore
 				const groups = regex.exec(navigator.userAgent)?.groups;
 				if (!groups) return null;
 

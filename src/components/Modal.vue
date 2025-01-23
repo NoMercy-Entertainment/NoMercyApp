@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import {useTranslation} from 'i18next-vue';
-import {PropType, ref, watch} from 'vue';
+import { useTranslation } from 'i18next-vue';
+import { PropType, ref, watch } from 'vue';
 
-const {t} = useTranslation();
+const { t } = useTranslation();
 
 const props = defineProps({
   open: {
@@ -52,25 +52,22 @@ watch(visible, (value) => {
 </script>
 
 <template>
-  <Dialog v-model:visible="visible" v-model:open="visible" modal :header="$t(title, params)" role="dialog" class="w-full"
-  :class="{
-    [maxWidth]: true,
-  }">
-    <ScrollPanel
-        class="w-available h-available"
-        :dt="{
-            bar: {
-                background: 'rgb(var(--background-auto-12) / 60%)'
-            }
-        }"
-    >
+  <Dialog v-model:visible="visible" v-model:open="visible" modal :header="$t(title, params)" role="dialog"
+    class="w-full" :class="{
+      [maxWidth]: true,
+    }">
+    <ScrollPanel class="w-available h-available" :dt="{
+      bar: {
+        background: 'rgb(var(--background-auto-12) / 60%)'
+      }
+    }">
       <template #default>
-        <slot/>
+        <slot />
       </template>
     </ScrollPanel>
 
     <template #footer>
-      <slot name="actions"/>
+      <slot name="actions" />
     </template>
   </Dialog>
 </template>

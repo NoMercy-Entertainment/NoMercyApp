@@ -1,18 +1,18 @@
 <script setup lang="ts">
-import {nextTick, onBeforeMount, onMounted, onUnmounted, ref, watch} from 'vue';
+import { nextTick, onBeforeMount, onMounted, onUnmounted, ref, watch } from 'vue';
 
-import type {Lyric} from "@/types/musicPlayer";
+import type { Lyric } from "@/types/musicPlayer";
 
-import {random_string} from '@/lib/stringArray';
-import {scrollCenter} from '@/lib/utils';
+import { random_string } from '@/lib/stringArray';
+import { scrollCenter } from '@/lib/utils';
 import LyricItem from '@/Layout/Desktop/components/Overlays/LyricItem.vue';
 
-import {user} from '@/store/user';
-import {currentServer} from '@/store/currentServer';
-import audioPlayer, {currentSong, currentTime, lyricsMenuOpen, setHasLyrics} from '@/store/audioPlayer';
+import { user } from '@/store/user';
+import { currentServer } from '@/store/currentServer';
+import audioPlayer, { currentSong, currentTime, lyricsMenuOpen, setHasLyrics } from '@/store/audioPlayer';
 
 const lyrics_container = ref<HTMLDivElement>();
-const lyrics = ref<Lyric[] | undefined| null>(currentSong.value?.lyrics);
+const lyrics = ref<Lyric[] | undefined | null>(currentSong.value?.lyrics);
 const id = ref(random_string(8));
 const index = ref<number>(0);
 const lastIndex = ref(-1);
@@ -30,11 +30,11 @@ const fetchLyrics = (id: string) => {
       'Authorization': `Bearer ${user.value.accessToken}`
     },
   })
-      .then(response => response.json())
-      .then((data) => {
-        setHasLyrics(data.data?.length > 0);
-        lyrics.value = data.data;
-      });
+    .then(response => response.json())
+    .then((data) => {
+      setHasLyrics(data.data?.length > 0);
+      lyrics.value = data.data;
+    });
 };
 
 const setScroll = () => {
@@ -73,10 +73,10 @@ onMounted(() => {
     if (newIndex === -1) {
 
       elements
-          .forEach(el => {
-            el.style.opacity = '1';
-            el.style.color = 'black';
-          });
+        .forEach(el => {
+          el.style.opacity = '1';
+          el.style.color = 'black';
+        });
 
       const currentLyric = lyrics_container.value?.querySelector<HTMLDivElement>(`[data-index='0']`);
       currentLyric?.animateVerticalIntoView(lyrics_container.value);
@@ -85,11 +85,11 @@ onMounted(() => {
     else if (newIndex === -2) {
 
       elements
-          .filter(el => parseInt(el.dataset.index!, 10) < newIndex)
-          .forEach(el => {
-            el.style.opacity = '0.5';
-            el.style.color = 'white';
-          });
+        .filter(el => parseInt(el.dataset.index!, 10) < newIndex)
+        .forEach(el => {
+          el.style.opacity = '0.5';
+          el.style.color = 'white';
+        });
 
       const currentLyric = lyrics_container.value?.querySelector<HTMLDivElement>(`[data-index='${elements.length - 1}']`);
       currentLyric?.animateVerticalIntoView(lyrics_container.value);
@@ -117,11 +117,11 @@ watch(currentTime, (value) => {
   const elements = Array.from(lyrics_container.value?.querySelectorAll<HTMLDivElement>('[data-lyric]') ?? []);
 
   elements
-      .filter(el => parseInt(el.dataset.index!, 10) < newIndex)
-      .forEach(el => {
-        el.style.opacity = '0.5';
-        el.style.color = 'white';
-      });
+    .filter(el => parseInt(el.dataset.index!, 10) < newIndex)
+    .forEach(el => {
+      el.style.opacity = '0.5';
+      el.style.color = 'white';
+    });
 
   const currentLyric = lyrics_container.value?.querySelector<HTMLDivElement>(`[data-index='${newIndex}']`);
 
@@ -132,11 +132,11 @@ watch(currentTime, (value) => {
   }
 
   elements
-      .filter(el => parseInt(el.dataset.index!, 10) > newIndex)
-      .forEach(el => {
-        el.style.opacity = '1';
-        el.style.color = 'black';
-      });
+    .filter(el => parseInt(el.dataset.index!, 10) > newIndex)
+    .forEach(el => {
+      el.style.opacity = '1';
+      el.style.color = 'black';
+    });
 });
 
 watch(currentSong, (value) => {
@@ -180,21 +180,20 @@ watch(lyrics, (value) => {
 </script>
 
 <template>
-  <div :data-open="lyricsMenuOpen"
-       id="lyricsContainer"
-       class="absolute inset-0 h-inherit w-inherit sm:left-auto sm:right-4 sm:top-4 sm:bottom-4 sm:w-2/3 sm:max-w-3xl flex items-center justify-center rounded-xl transition-all duration-500 sm:data-[open='false']:translate-x-[150%] sm:overflow-clip z-[9999]  tv:data-[open='false']:translate-x-[150%] tv:!w-available tv:data-[open='true']:delay-500 will-change-transform">
+  <div :data-open="lyricsMenuOpen" id="lyricsContainer"
+    class="absolute inset-0 h-inherit w-inherit sm:left-auto sm:right-4 sm:top-4 sm:bottom-4 sm:w-2/3 sm:max-w-3xl flex items-center justify-center rounded-xl transition-all duration-500 sm:data-[open='false']:translate-x-[150%] sm:overflow-clip z-[9999]  tv:data-[open='false']:translate-x-[150%] tv:!w-available tv:data-[open='true']:delay-500 will-change-transform">
 
     <div
-        class="pointer-events-none absolute inset-0 z-0 flex items-center justify-center rounded-xl sm:bg-white/6 dark:sm:bg-black/30 tv:!bg-transparent">
+      class="pointer-events-none absolute inset-0 z-0 flex items-center justify-center rounded-xl sm:bg-white/6 dark:sm:bg-black/30 tv:!bg-transparent">
     </div>
 
     <div ref="lyrics_container" :id="`lyrics_container_${id}`"
-         class="relative z-10 flex w-full flex-col overflow-auto scrollbar-none tv:overflow-clip p-4 children:transition-all duration-300 h-available min-h-[calc(100vh-13rem)] gap-4 sm:gap-4 sm:p-16 text-xl sm:text-2xl">
+      class="relative z-10 flex w-full flex-col overflow-auto scrollbar-none tv:overflow-clip p-4 children:transition-all duration-300 h-available sm:min-h-[calc(100vh-13rem)] gap-4 sm:gap-4 sm:p-16 text-xl sm:text-2xl">
 
       <template v-if="!!lyrics">
         <div class="contents" v-if="Array.isArray(lyrics)">
           <template v-for="(lyric, index) in lyrics ?? []" :key="index">
-            <LyricItem :lyric="lyric" :index="index"/>
+            <LyricItem :lyric="lyric" :index="index" />
           </template>
 
           <p class="mt-8 sm:mt-16 font-semibold text-2xs">

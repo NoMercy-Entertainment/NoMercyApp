@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import {PropType} from "vue";
+import { PropType } from "vue";
 import Button from '@/components/MusicPlayer/components/Button.vue';
 
 defineProps({
@@ -24,19 +24,12 @@ defineProps({
 </script>
 
 <template>
-	<RouterLink v-if="href"
-				:to="href" title="watch"
-				:id="$t(title)"
-				:aria-label="$t(title)"
-				:onclick="onclick"
-				:class="`flex justify-center items-center relative gap-2 p-2 rounded-lg hover:bg-auto-5/6 transition-colors duration-300 ${isActive ? 'text-focus' : 'text-auto-12'}`">
-		<slot/>
+	<RouterLink v-if="href" :to="href" title="watch" :id="$t(title)" :aria-label="$t(title)" :onclick="onclick"
+		:class="`flex justify-center items-center relative gap-2 p-2 rounded-lg hover:bg-auto-5/6 transition-colors duration-300 ${isActive ? 'text-focus' : 'text-auto-12'}`">
+		<slot />
 	</RouterLink>
-	<button v-else
-					:id="$t(title)"
-					:aria-label="$t(title)"
-					:onclick="onclick"
-					:class="`flex justify-center items-center relative gap-2 p-2 rounded-lg hover:bg-auto-5/6 transition-colors duration-300 ${isActive ? 'text-focus' : 'text-auto-12'}`">
-		<slot/>
+	<button v-else :id="$t(title)" :aria-label="$t(title)" :onclick="onclick"
+		:class="`flex justify-center items-center relative gap-2 p-2 rounded-lg hover:bg-auto-5/6 transition-colors duration-300 ${isActive ? 'text-focus' : 'text-auto-12'}`">
+		<slot />
 	</button>
 </template>

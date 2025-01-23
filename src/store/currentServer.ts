@@ -1,6 +1,6 @@
-import {computed, ref} from 'vue';
+import { computed, ref } from 'vue';
 
-import type {Server} from '@/types/auth';
+import type { Server } from '@/types/auth';
 
 const cs = ref<Server | null>(null);
 export const currentServer = computed(() => cs.value);

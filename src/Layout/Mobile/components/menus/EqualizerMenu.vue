@@ -17,17 +17,17 @@ const handleClose = () => {
 
 <template>
   <Teleport to="body">
-  <BottomFlyout :menuOpen="equalizerMenuOpen" :closeMenu="closeEqualizerMenu" :allowSwipeToClose="false">
-    <div id="equalizer" class="flex flex-col w-available -mt-4 gap-4 p-4 z-[9999]">
-      <EqualizerPannel >
-        <template v-slot:button>
-          <button @click="handleClose()">
-            <MoooomIcon icon="cross" class="w-6 h-6"/>
-          </button>
-        </template>
-      </EqualizerPannel>
-    </div>
-  </BottomFlyout>
+    <BottomFlyout :menuOpen="equalizerMenuOpen" :closeMenu="closeEqualizerMenu" :allowSwipeToClose="false">
+      <div id="equalizer" class="flex flex-col w-available -mt-4 gap-4 p-4 z-[9999]">
+        <EqualizerPannel>
+          <template v-slot:button>
+            <button @click="handleClose()">
+              <MoooomIcon icon="cross" class="w-6 h-6" />
+            </button>
+          </template>
+        </EqualizerPannel>
+      </div>
+    </BottomFlyout>
   </Teleport>
 </template>
 
@@ -39,6 +39,7 @@ input[type="range"].vertical {
 ion-list {
   @apply bg-transparent w-full;
 }
+
 ion-item {
   --background: transparent;
   --color: rgb(var(--color-text));

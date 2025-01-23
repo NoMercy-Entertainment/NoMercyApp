@@ -1,15 +1,15 @@
 // noinspection JSUnusedGlobalSymbols
 
-import {ref, toRaw} from 'vue';
-import {createAnimation, modalController} from '@ionic/vue';
+import { ref, toRaw } from 'vue';
+import { createAnimation, modalController } from '@ionic/vue';
 
-import {SizeState, VisibilityState, type PlaylistItem} from '@/types/musicPlayer';
+import { SizeState, VisibilityState, type PlaylistItem } from '@/types/musicPlayer';
 
 import MusicPlayer from '@nomercy-entertainment/nomercy-music-player';
 
-import {RepeatState, type EQBand, type EqualizerPreset, type EQSliderValues} from '@nomercy-entertainment/nomercy-music-player/src/types';
-import {onDoubleClick} from "@/lib/utils";
-import {siteTitle} from "@/config/config";
+import { RepeatState, type EQBand, type EqualizerPreset, type EQSliderValues } from '@nomercy-entertainment/nomercy-music-player/src/types';
+import { onDoubleClick } from "@/lib/utils";
+import { siteTitle } from "@/config/config";
 
 export const audioPlayer = new MusicPlayer<PlaylistItem>({
 	motionConfig: {
@@ -136,8 +136,8 @@ export const enterAnimation = (baseEl: HTMLElement) => {
 	const wrapperAnimation = createAnimation()
 		.addElement(root.querySelector('.modal-wrapper')!)
 		.keyframes([
-			{offset: 0, transform: 'translateY(100%)', opacity: '1'},
-			{offset: 1, transform: 'translateY(0%)', opacity: '1'},
+			{ offset: 0, transform: 'translateY(100%)', opacity: '1' },
+			{ offset: 1, transform: 'translateY(0%)', opacity: '1' },
 		]);
 
 	return createAnimation()
@@ -256,7 +256,7 @@ export const handleChange = (type: string, event: Event, band?: EQBand) => {
 };
 
 export const handleReset = (type: string, event: MouseEvent, band?: EQBand) => {
-	onDoubleClick(event, () => {}, () => {
+	onDoubleClick(event, () => { }, () => {
 		if (type === 'panning') {
 			panning.value = 0;
 			audioPlayer.setPanner(0);

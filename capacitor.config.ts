@@ -5,7 +5,7 @@ const config: CapacitorConfig = {
   appName: 'NoMercy TV',
   webDir: 'docs',
   cordova: {},
-  server:{
+  server: {
     // url: 'https://vue-dev.nomercy.tv',
     // androidScheme: 'nomercy',
     // iosScheme: 'nomercy',

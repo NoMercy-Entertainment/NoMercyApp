@@ -1,12 +1,12 @@
-import {camelize, getCurrentInstance, ref, toHandlerKey} from 'vue';
-import {type ClassValue, clsx} from 'clsx';
-import {twMerge} from 'tailwind-merge';
+import { camelize, getCurrentInstance, ref, toHandlerKey } from 'vue';
+import { type ClassValue, clsx } from 'clsx';
+import { twMerge } from 'tailwind-merge';
 
-import type {InfoResponse} from '@/types/api/base/info';
-import {isTv} from '@/config/global';
-import {isPlatform} from '@ionic/vue';
-import {AndroidFullScreen, AndroidSystemUiFlags} from '@awesome-cordova-plugins/android-full-screen';
-import {StatusBar} from '@capacitor/status-bar';
+import type { InfoResponse } from '@/types/api/base/info';
+import { isTv } from '@/config/global';
+import { isPlatform } from '@ionic/vue';
+import { AndroidFullScreen, AndroidSystemUiFlags } from '@awesome-cordova-plugins/android-full-screen';
+import { StatusBar } from '@capacitor/status-bar';
 
 export function cn(...inputs: ClassValue[]) {
 	return twMerge(clsx(inputs));
@@ -191,7 +191,7 @@ export const stopAndPrevent = (e: Event) => {
 
 export const lockPortrait = async () => {
 	if (isPlatform('capacitor') && !isTv.value) {
-		const {ScreenOrientation} = (await import('@capacitor/screen-orientation'));
+		const { ScreenOrientation } = (await import('@capacitor/screen-orientation'));
 		try {
 			ScreenOrientation.lock({
 				orientation: 'portrait',
@@ -204,7 +204,7 @@ export const lockPortrait = async () => {
 
 export const lockLandscape = async () => {
 	if (isPlatform('capacitor') && !isTv.value) {
-		const {ScreenOrientation} = (await import('@capacitor/screen-orientation'));
+		const { ScreenOrientation } = (await import('@capacitor/screen-orientation'));
 		try {
 			ScreenOrientation.lock({
 				orientation: 'landscape',
@@ -217,7 +217,7 @@ export const lockLandscape = async () => {
 
 export const unlockOrientation = async () => {
 	if (isPlatform('capacitor')) {
-		const {ScreenOrientation} = (await import('@capacitor/screen-orientation'));
+		const { ScreenOrientation } = (await import('@capacitor/screen-orientation'));
 		try {
 			ScreenOrientation.unlock().then();
 		} catch (e) {
@@ -249,7 +249,7 @@ export const enableImmersiveMode = async () => {
 			| AndroidSystemUiFlags.LayoutFullscreen
 			| AndroidSystemUiFlags.LayoutStable
 			| AndroidSystemUiFlags.Fullscreen);
-		await StatusBar.setOverlaysWebView({overlay: true});
+		await StatusBar.setOverlaysWebView({ overlay: true });
 	}
 };
 
@@ -262,7 +262,7 @@ export const disableImmersiveMode = () => {
 
 		StatusBar.show().then();
 		AndroidFullScreen.showSystemUI().then();
-		StatusBar.setOverlaysWebView({overlay: true}).then();
+		StatusBar.setOverlaysWebView({ overlay: true }).then();
 	}
 };
 
@@ -286,7 +286,7 @@ const delay = 300;
 export const onDoubleClick = (event: MouseEvent, click: (event: MouseEvent) => void, double: (event: MouseEvent) => void) => {
 	clicks.value++;
 	if (clicks.value === 1) {
-		timer.value = setTimeout( () => {
+		timer.value = setTimeout(() => {
 			clicks.value = 0
 			click(event);
 		}, delay);

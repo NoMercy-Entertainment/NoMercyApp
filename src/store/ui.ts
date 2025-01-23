@@ -1,37 +1,37 @@
-import {computed, ref} from 'vue';
-import {PaletteColors, pickPaletteColor} from '@/lib/colorHelper';
-import {isPlatform} from '@ionic/vue';
-import {SortOrder, SortType} from '@/types/musicPlayer';
-import {useAutoThemeColors} from '@/store/preferences';
-import {Preferences} from "@capacitor/preferences";
-import {isXmasTime} from "@/lib/dateTime";
+import { computed, ref } from 'vue';
+import { PaletteColors, pickPaletteColor } from '@/lib/colorHelper';
+import { isPlatform } from '@ionic/vue';
+import { SortOrder, SortType } from '@/types/musicPlayer';
+import { useAutoThemeColors } from '@/store/preferences';
+import { Preferences } from "@capacitor/preferences";
+import { isXmasTime } from "@/lib/dateTime";
 
 export const setupComplete = ref(false);
 
-const p = ref<string|null>();
+const p = ref<string | null>();
 export const poster = computed(() => p.value);
 export function setPoster(value?: string | null) {
     p.value = value;
 }
 
-const t = ref<string|null>();
+const t = ref<string | null>();
 export const title = computed(() => t.value);
 export function setTitle(value?: string | null) {
     p.value = value;
 }
 
-const b = ref<string|null>();
+const b = ref<string | null>();
 export const background = computed(() => b.value);
 export function setBackground(value?: string | null) {
-  b.value = value;
+    b.value = value;
 }
 
 const fc = ref('var(--color-theme-7)');
 export const focusColor = computed(() => fc.value);
 
-const c = ref<PaletteColors|null>();
+const c = ref<PaletteColors | null>();
 export const colorPalette = computed(() => c.value);
-export function setColorPalette(value?: PaletteColors|null) {
+export function setColorPalette(value?: PaletteColors | null) {
     c.value = value;
 
     if (!useAutoThemeColors.value) {
@@ -46,44 +46,44 @@ export function setColorPalette(value?: PaletteColors|null) {
     }
 }
 
-const l = ref<string|null>();
+const l = ref<string | null>();
 export const logo = computed(() => l.value);
 export function setLogo(value?: string | null) {
-  l.value = value;
+    l.value = value;
 }
 
 export const displayLanguage = ref(window.navigator.language);
 export function setDisplayLanguage(value: string) {
     displayLanguage.value = value;
-    Preferences.set({key: 'display_language', value: value}).then();
+    Preferences.set({ key: 'display_language', value: value }).then();
 }
 
 interface StatusBarPlugin {
     show(): void;
     hide(): void;
-    setBackgroundColor(options: {color: string}): void;
+    setBackgroundColor(options: { color: string }): void;
 }
 
 export const statusbar = computed(() => {
-  if (isPlatform('capacitor')) {
-    return import('@capacitor/status-bar')
-        .then(({StatusBar}) => {
-          return StatusBar
-        });
-  }
-  return () => {};
+    if (isPlatform('capacitor')) {
+        return import('@capacitor/status-bar')
+            .then(({ StatusBar }) => {
+                return StatusBar
+            });
+    }
+    return () => { };
 });
 
 export const showStatusbar = async () => {
-   (await statusbar.value as StatusBarPlugin)?.show();
+    (await statusbar.value as StatusBarPlugin)?.show();
 }
 
 export const hideStatusbar = async () => {
-  (await statusbar.value as StatusBarPlugin).hide();
+    (await statusbar.value as StatusBarPlugin).hide();
 }
 
 export const setStatusBarColor = async (color: string) => {
-  (await statusbar.value as StatusBarPlugin)?.setBackgroundColor({color});
+    (await statusbar.value as StatusBarPlugin)?.setBackgroundColor({ color });
 }
 
 const st = ref<SortType>(SortType.index);

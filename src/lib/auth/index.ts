@@ -1,11 +1,11 @@
-import type { IDToken, RefreshTokenRequestData, TokenRequestData, TokenResponse} from './index.d';
-import {generatePKCE, parseToken} from './helpers';
+import type { IDToken, RefreshTokenRequestData, TokenRequestData, TokenResponse } from './index.d';
+import { generatePKCE, parseToken } from './helpers';
 import apiClient from '@/lib/clients/apiClient';
 import cdnClient from '../clients/cdnClient';
 
-import {user} from '@/store/user';
-import {isPlatform} from '@ionic/vue';
-import {authBaseUrl} from '@/config/config';
+import { user } from '@/store/user';
+import { isPlatform } from '@ionic/vue';
+import { authBaseUrl } from '@/config/config';
 
 const originalLocation = window.location.href.startsWith('file://')
 	? 'http://localhost:5173'
@@ -159,7 +159,7 @@ function hasToken() {
 
 function hasValidToken() {
 	return hasToken()
-        && (user.value.refreshIn - Date.now()) > 5000;
+		&& (user.value.refreshIn - Date.now()) > 5000;
 }
 
 export function storeTokens(data: TokenResponse) {
@@ -202,7 +202,7 @@ export function clearTokens() {
 	localStorage.removeItem('id_token');
 }
 
-async function checkAuth(): Promise<boolean|void> {
+async function checkAuth(): Promise<boolean | void> {
 
 	if (!window.location.href.includes('oauth/callback')) {
 		sessionStorage.setItem('redirect', window.location.hash);

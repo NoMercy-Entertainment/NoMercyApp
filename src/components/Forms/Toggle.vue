@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import {IonToggle} from '@ionic/vue';
+import { IonToggle } from '@ionic/vue';
 
 const modelValue = defineModel({
   type: Boolean,
@@ -9,16 +9,11 @@ const modelValue = defineModel({
 </script>
 
 <template>
-  <ion-toggle
-      :checked="modelValue"
-      @ionChange="modelValue = $event.target.checked"
-      mode="ios"
-      @click="$event.stopPropagation()"
-      />
+  <ion-toggle :checked="modelValue" @ionChange="modelValue = $event.target.checked" mode="ios"
+    @click="$event.stopPropagation()" />
 </template>
 
 <style scoped>
-
 ion-toggle {
   --handle-width: 1.2rem;
   --track-background: rgb(var(--color-slate-11));

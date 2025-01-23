@@ -1,13 +1,13 @@
 <script setup lang="ts">
-import {onMounted, onUnmounted} from 'vue';
+import { onMounted, onUnmounted } from 'vue';
 import router from '@/router';
-import {useIsFetching} from "@tanstack/vue-query";
+import { useIsFetching } from "@tanstack/vue-query";
 
-import {IonPage, IonProgressBar, IonRouterOutlet, IonTabs, isPlatform,} from '@ionic/vue';
+import { IonPage, IonProgressBar, IonRouterOutlet, IonTabs, isPlatform, } from '@ionic/vue';
 
-import {lockPortrait, unlockOrientation} from '@/lib/utils';
-import {closeMenu} from '@/store/profileMenu';
-import {currentSong} from '@/store/audioPlayer';
+import { lockPortrait, unlockOrientation } from '@/lib/utils';
+import { closeMenu } from '@/store/profileMenu';
+import { currentSong } from '@/store/audioPlayer';
 
 import ImageModal from '@/Layout/ImageModal.vue';
 import Screensaver from '@/Layout/Screensaver.vue';
@@ -39,26 +39,27 @@ onUnmounted(() => {
 <template>
   <ion-page id="main-content">
     <ion-tabs>
-      <ion-progress-bar v-if="isFetching > 0" type="indeterminate" class="absolute mt-safe top-0 z-1199 bg-black"></ion-progress-bar>
+      <ion-progress-bar v-if="isFetching > 0" type="indeterminate"
+        class="absolute mt-safe top-0 z-1199 bg-black"></ion-progress-bar>
       <ChristmasSnow />
 
       <ion-router-outlet animated="false" class="pointer-events-none children:pointer-events-auto">
       </ion-router-outlet>
 
-      <ProfileMenu/>
-      <EqualizerMenu/>
+      <ProfileMenu />
+      <EqualizerMenu />
 
-      <FullPlayer v-if="currentSong"/>
-      <MiniPlayer v-if="currentSong"/>
+      <FullPlayer v-if="currentSong" />
+      <MiniPlayer v-if="currentSong" />
 
-      <BottomBar/>
+      <BottomBar />
     </ion-tabs>
 
-    <ImageModal/>
+    <ImageModal />
     <!--      <Toast class="z-1199" />-->
-    <Screensaver/>
+    <Screensaver />
 
-    <SideFlyout v-if="!isPlatform('capacitor')"/>
+    <SideFlyout v-if="!isPlatform('capacitor')" />
   </ion-page>
 </template>
 
@@ -84,5 +85,4 @@ ion-progress-bar::part(track) {
 ion-progress-bar::part(progress) {
   @apply bg-focus;
 }
-
 </style>

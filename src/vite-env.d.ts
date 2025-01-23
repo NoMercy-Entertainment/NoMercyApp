@@ -3,9 +3,9 @@
 
 /// <reference lib="webworker" />
 
-import {VueKeycloakInstance} from '@dsb-norge/vue-keycloak-js/dist/types';
-import {SliderBar} from '@/lib/sliderBar';
-import {SwiperRef} from 'swiper/swiper-react';
+import { VueKeycloakInstance } from '@dsb-norge/vue-keycloak-js/dist/types';
+import { SliderBar } from '@/lib/sliderBar';
+import { SwiperRef } from 'swiper/swiper-react';
 
 declare module '*.svg'
 declare module '*.scss';
@@ -15,7 +15,7 @@ declare module '*.png';
 declare module '*.gif';
 
 declare module '@vue/runtime-core' {
-	interface ComponentCustomProperties  {
+	interface ComponentCustomProperties {
 		$keycloak: VueKeycloakInstance;
 		$t: (key?: string, args?: unknown) => string;
 	}
@@ -40,21 +40,21 @@ declare global {
 		querySelectorAllArray<K extends keyof SVGElementTagNameMap>(selectors: K): Array<SVGElementTagNameMap[K]>;
 		querySelectorAllArray<K extends keyof MathMLElementTagNameMap>(selectors: K): Array<MathMLElementTagNameMap[K]>;
 		querySelectorAllArray<E extends Element = Element>(selectors: string): Array<E>;
-		onDoubleClick: ({singleClickEvtCallback, doubleClickEvtCallback}: {   singleClickEvtCallback: (event: MouseEvent) => void;   doubleClickEvtCallback: (event: MouseEvent) => void; }) => void
+		onDoubleClick: ({ singleClickEvtCallback, doubleClickEvtCallback }: { singleClickEvtCallback: (event: MouseEvent) => void; doubleClickEvtCallback: (event: MouseEvent) => void; }) => void
 	}
 	interface Element {
 		querySelectorAllArray<K extends keyof HTMLElementTagNameMap>(selectors: K): Array<HTMLElementTagNameMap[K]>;
 		querySelectorAllArray<K extends keyof SVGElementTagNameMap>(selectors: K): Array<SVGElementTagNameMap[K]>;
 		querySelectorAllArray<K extends keyof MathMLElementTagNameMap>(selectors: K): Array<MathMLElementTagNameMap[K]>;
 		querySelectorAllArray<E extends Element = Element>(selectors: string): Array<E>;
-		onDoubleClick: ({singleClickEvtCallback, doubleClickEvtCallback}: {   singleClickEvtCallback: (event: MouseEvent) => void;   doubleClickEvtCallback: (event: MouseEvent) => void; }) => void
+		onDoubleClick: ({ singleClickEvtCallback, doubleClickEvtCallback }: { singleClickEvtCallback: (event: MouseEvent) => void; doubleClickEvtCallback: (event: MouseEvent) => void; }) => void
 	}
 	interface Document {
 		querySelectorAllArray<K extends keyof HTMLElementTagNameMap>(selectors: K): Array<HTMLElementTagNameMap[K]>;
 		querySelectorAllArray<K extends keyof SVGElementTagNameMap>(selectors: K): Array<SVGElementTagNameMap[K]>;
 		querySelectorAllArray<K extends keyof MathMLElementTagNameMap>(selectors: K): Array<MathMLElementTagNameMap[K]>;
 		querySelectorAllArray<E extends Element = Element>(selectors: string): Array<E>;
-		onDoubleClick: ({singleClickEvtCallback, doubleClickEvtCallback}: {   singleClickEvtCallback: (event: MouseEvent) => void;   doubleClickEvtCallback: (event: MouseEvent) => void; }) => void
+		onDoubleClick: ({ singleClickEvtCallback, doubleClickEvtCallback }: { singleClickEvtCallback: (event: MouseEvent) => void; doubleClickEvtCallback: (event: MouseEvent) => void; }) => void
 	}
 
 	interface MouseEvent {
@@ -75,8 +75,8 @@ declare global {
 		$el: HTMLElement & {
 			scrollToTop: (arg: number) => void;
 			scrollToBottom: (arg: number) => void;
-			scrollToPoint: (x?: number|null, y?: number|null, duration?: number) => void;
-			scrollByPoint: (x?: number|null, y?: number|null, duration?: number) => void;
+			scrollToPoint: (x?: number | null, y?: number | null, duration?: number) => void;
+			scrollByPoint: (x?: number | null, y?: number | null, duration?: number) => void;
 		};
 	}
 	interface VueSwiperElement {
@@ -106,7 +106,7 @@ declare global {
 					MediaMetadata: {
 						// The constructor signature for MediaMetadata
 						// eslint-disable-next-line @typescript-eslint/no-misused-new
-						new (type: MetadataType): MediaMetadata;
+						new(type: MetadataType): MediaMetadata;
 						type: MetadataType;
 					};
 					MetadataType: typeof MetadataType;
@@ -171,7 +171,7 @@ interface MediaInfo {
 interface MediaMetadata {
 	// The constructor signature for MediaMetadata
 	// eslint-disable-next-line @typescript-eslint/no-misused-new
-	new (type: MetadataType): MediaMetadata;
+	new(type: MetadataType): MediaMetadata;
 	type: MetadataType;
 }
 

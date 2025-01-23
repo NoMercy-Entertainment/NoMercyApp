@@ -23,7 +23,7 @@ export function getKeycloak(): Keycloak.KeycloakInstance {
 	return $keycloak as Keycloak.KeycloakInstance;
 }
 
-export function getToken(): Promise<string|undefined> {
+export function getToken(): Promise<string | undefined> {
 	return updateToken();
 }
 
@@ -39,7 +39,7 @@ export async function isLoggedIn(): Promise<boolean> {
 	}
 }
 
-export async function updateToken(): Promise<string|undefined> {
+export async function updateToken(): Promise<string | undefined> {
 	if (!$keycloak) {
 		throw new Error('Keycloak is not initialized.');
 	}
@@ -76,7 +76,7 @@ export async function initKeycloak(initConfig: Keycloak.KeycloakInitOptions): Pr
 			$keycloak!.onAuthRefreshSuccess = () => setToken($keycloak!.token as string);
 			$keycloak!.onTokenExpired = () => updateToken();
 		}
-	} catch (error : any) {
+	} catch (error: any) {
 		hasFailed(true);
 		isAuthenticated(false);
 		throw new Error(error);

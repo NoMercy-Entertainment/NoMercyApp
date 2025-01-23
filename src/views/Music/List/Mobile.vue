@@ -1,16 +1,16 @@
 <script setup lang="ts">
-import {onMounted, ref, watch} from 'vue';
-import {useRouter} from 'vue-router';
-import {IonContent, IonPage, isPlatform, onIonViewWillEnter} from '@ionic/vue';
+import { onMounted, ref, watch } from 'vue';
+import { useRouter } from 'vue-router';
+import { IonContent, IonPage, isPlatform, onIonViewWillEnter } from '@ionic/vue';
 
-import type {ScrollCustomEvent} from '@ionic/core/dist/types/components/content/content-interface';
-import type {DisplayList} from '@/types/api/music/musicPlayer';
+import type { ScrollCustomEvent } from '@ionic/core/dist/types/components/content/content-interface';
+import type { DisplayList } from '@/types/api/music/musicPlayer';
 
-import {PlaylistItem, SortOrder, SortType} from '@/types/musicPlayer';
+import { PlaylistItem, SortOrder, SortType } from '@/types/musicPlayer';
 
 import useServerClient from '@/lib/clients/useServerClient';
-import {breakTitle, breakTitle2, setTitle, sortByType} from '@/lib/stringArray';
-import {setColorPalette, setSortOrder, sortOrder, sortType} from '@/store/ui';
+import { breakTitle, breakTitle2, setTitle, sortByType } from '@/lib/stringArray';
+import { setColorPalette, setSortOrder, sortOrder, sortType } from '@/store/ui';
 
 import ControlHeader from '@/views/Music/List/components/ControlHeader.vue';
 import ArtistHeader from '@/views/Music/List/components/ArtistHeader.vue';
@@ -21,7 +21,7 @@ import NotFound from "@/Layout/Desktop/components/NotFound.vue";
 
 const router = useRouter();
 
-const {data, isError} = useServerClient<DisplayList>({
+const { data, isError } = useServerClient<DisplayList>({
   path: router.currentRoute.value.fullPath,
   keepForever: true,
 });
@@ -58,9 +58,9 @@ const sort = (songs: PlaylistItem[], sortType: SortType, sortOrder: SortOrder, v
   } else {
     // @ts-ignore
     displayList.value = newList?.filter(t =>
-        t.name?.toLowerCase().includes(value?.toLowerCase?.())
-        || t.artist_track?.some(a => a.name.toLowerCase().includes(value?.toLowerCase?.()))
-        || t.album_track?.[0]?.name.toLowerCase().includes(value?.toLowerCase?.())) ?? [];
+      t.name?.toLowerCase().includes(value?.toLowerCase?.())
+      || t.artist_track?.some(a => a.name.toLowerCase().includes(value?.toLowerCase?.()))
+      || t.album_track?.[0]?.name.toLowerCase().includes(value?.toLowerCase?.())) ?? [];
   }
 };
 
@@ -115,62 +115,46 @@ const onScroll = (e: ScrollCustomEvent) => {
     <ion-content :fullscreen="true" @ionScroll="onScroll" :scrollEvents="true">
       <NotFound v-if="isError" />
       <div
-          v-else-if="!router.currentRoute.value.params.id || (router.currentRoute.value.params.id && data?.id == router.currentRoute.value.params.id)"
-          ref="main"
-          class="flex flex-col overflow-x-clip w-available h-min sm:rounded-2xl -mt-safe-offset-12 bg-[rgb(var(--background-auto))]"
-      >
-        <ArtistHeader
-            :data="data"
-        />
+        v-else-if="!router.currentRoute.value.params.id || (router.currentRoute.value.params.id && data?.id == router.currentRoute.value.params.id)"
+        ref="main"
+        class="flex flex-col overflow-x-clip w-available h-min sm:rounded-2xl -mt-safe-offset-12 bg-[rgb(var(--background-auto))]">
+        <ArtistHeader :data="data" />
 
         <div class="relative z-0 flex h-auto flex-shrink-0 flex-grow flex-col items-start justify-start self-stretch">
 
           <div class="pointer-events-none absolute z-0 h-96 w-full bg-spotifyBottom bg-focus"></div>
 
           <div id="navbar"
-               class=" fixed z-1099 -mx-2 flex gap-4 p-2 px-4 w-available sm:hidden bg-slate-light-11 dark:bg-slate-dark-1 top-0 pt-safe-offset-4 transition-all duration-400"
-               :class="{
-                  'opacity-0 pointer-events-none': !showScrollHeader,
-                  'opacity-100 pointer-events-auto': showScrollHeader
-               }"
-          >
+            class=" fixed z-1099 -mx-2 flex gap-4 p-2 px-4 w-available sm:hidden bg-slate-light-11 dark:bg-slate-dark-1 top-0 pt-safe-offset-4 transition-all duration-400"
+            :class="{
+              'opacity-0 pointer-events-none': !showScrollHeader,
+              'opacity-100 pointer-events-auto': showScrollHeader
+            }">
             <div id="navBg"
-                 class="z-20 absolute flex items-center inset-0 w-available h-full bg-focus/12 dark:bg-focus transition-transform duration-300 bg-spotifyTop opacity-50 pointer-events-none">
+              class="z-20 absolute flex items-center inset-0 w-available h-full bg-focus/12 dark:bg-focus transition-transform duration-300 bg-spotifyTop opacity-50 pointer-events-none">
             </div>
 
             <button @click="handleBack" class="z-30 flex h-10 w-11 items-center justify-center rounded-md">
-              <MoooomIcon icon="arrowLeft"/>
+              <MoooomIcon icon="arrowLeft" />
             </button>
 
             <div id="navText"
-                 class="pointer-events-none whitespace-pre text-left relative z-20 line-clamp-1 h-auto self-center font-bold leading-none transition-opacity duration-300 w-[70%] overflow-clip text-xl"
-                 :class="{
-                  'opacity-0 pointer-events-none': !showScrollHeader,
-                  'opacity-100 pointer-events-auto': showScrollHeader
-               }"
-                 v-html="breakTitle(data?.name ?? 'Songs you like', 'text-xs line-clamp-1')"
-            >
+              class="pointer-events-none whitespace-pre text-left relative z-20 line-clamp-1 h-auto self-center font-bold leading-none transition-opacity duration-300 w-[70%] overflow-clip text-xl"
+              :class="{
+                'opacity-0 pointer-events-none': !showScrollHeader,
+                'opacity-100 pointer-events-auto': showScrollHeader
+              }" v-html="breakTitle(data?.name ?? 'Songs you like', 'text-xs line-clamp-1')">
             </div>
           </div>
 
-          <ControlHeader
-              :key="data?.id"
-              :data="data"
-              :filter="filter"
-              @filter-change="(e: string) => filter = e"/>
+          <ControlHeader :key="data?.id" :data="data" :filter="filter" @filter-change="(e: string) => filter = e" />
 
           <div
-              class="flex flex-1 flex-shrink-0 flex-col items-start justify-start self-stretch bg-slate-dark-12 dark:bg-transparent flex-grow-1 gap-0.5 sm:p-4">
-            <SortHeader
-                ref="sortHeader"
-                :key="data?.id"/>
+            class="flex flex-1 flex-shrink-0 flex-col items-start justify-start self-stretch bg-slate-dark-12 dark:bg-transparent flex-grow-1 gap-0.5 sm:p-4">
+            <SortHeader ref="sortHeader" :key="data?.id" />
 
-            <TrackRow
-                v-for="(item, index) in displayList"
-                :key="item.id"
-                :data="item"
-                :displayList="displayList"
-                :index="index"/>
+            <TrackRow v-for="(item, index) in displayList" :key="item.id" :data="item" :displayList="displayList"
+              :index="index" />
           </div>
         </div>
       </div>

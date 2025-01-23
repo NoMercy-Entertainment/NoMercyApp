@@ -1,11 +1,11 @@
 <script setup lang="ts">
-import {computed, onMounted, PropType, ref, toRaw, watch} from 'vue';
-import {SwiperSlide} from 'swiper/vue';
-import {createGesture, Gesture, GestureDetail} from '@ionic/vue';
-import {useEventListener} from '@vueuse/core';
+import { computed, onMounted, PropType, ref, toRaw, watch } from 'vue';
+import { SwiperSlide } from 'swiper/vue';
+import { createGesture, Gesture, GestureDetail } from '@ionic/vue';
+import { useEventListener } from '@vueuse/core';
 
-import type {MediaItem} from '@/types/api/base/info';
-import type {ColorPalettes} from '@/types/api/shared';
+import type { MediaItem } from '@/types/api/base/info';
+import type { ColorPalettes } from '@/types/api/shared';
 
 import {
   currentType,
@@ -16,7 +16,7 @@ import {
   setTemp,
   showImageModal, temp,
 } from '@/store/imageModal';
-import {colorPalette} from '@/store/ui';
+import { colorPalette } from '@/store/ui';
 
 import Carousel from '@/components/Carousel/Carousel.vue';
 import ImageCard from '@/components/Cards/ImageCard.vue';
@@ -45,11 +45,11 @@ const setData = (data: MediaItem) => {
   setImageModalData({
     ...data,
     color_palette: toRaw(data.color_palette)
-        ? toRaw(data.color_palette)
-        : {image: toRaw(colorPalette.value)} as ColorPalettes,
+      ? toRaw(data.color_palette)
+      : { image: toRaw(colorPalette.value) } as ColorPalettes,
     aspectRatio: props.type == 'poster'
-        ? '2/3'
-        : '16/9',
+      ? '2/3'
+      : '16/9',
   });
 
   setTemp({
@@ -75,11 +75,11 @@ const handleLeft = () => {
   setImageModalData({
     ...item,
     color_palette: item.color_palette
-        ? toRaw(item.color_palette)
-        : {image: toRaw(colorPalette.value)} as ColorPalettes,
+      ? toRaw(item.color_palette)
+      : { image: toRaw(colorPalette.value) } as ColorPalettes,
     aspectRatio: props.type == 'poster'
-        ? '2/3'
-        : '16/9',
+      ? '2/3'
+      : '16/9',
   });
 };
 
@@ -97,11 +97,11 @@ const handleRight = () => {
   setImageModalData({
     ...item,
     color_palette: item.color_palette
-        ? toRaw(item.color_palette)
-        : {image: toRaw(colorPalette.value)} as ColorPalettes,
+      ? toRaw(item.color_palette)
+      : { image: toRaw(colorPalette.value) } as ColorPalettes,
     aspectRatio: props.type == 'poster'
-        ? '2/3'
-        : '16/9',
+      ? '2/3'
+      : '16/9',
   });
 };
 
@@ -177,10 +177,10 @@ onMounted(() => {
   });
 });
 
-const onMove = ({velocityX}: GestureDetail) => {
+const onMove = ({ velocityX }: GestureDetail) => {
   if (currentType.value != props.type) return;
 
-  if  (velocityX > 0) {
+  if (velocityX > 0) {
     handleLeft();
   } else {
     handleRight();
@@ -198,7 +198,7 @@ const onEnd = () => {
 <template>
   <Carousel :title="title + 's'" :type="type" :disableAutoAspect="type == 'poster'">
     <swiper-slide v-for="item in data" :key="item.id" class="flex">
-      <ImageCard :data="item" :aspect="type" :setData="setData"/>
+      <ImageCard :data="item" :aspect="type" :setData="setData" />
     </swiper-slide>
   </Carousel>
 </template>

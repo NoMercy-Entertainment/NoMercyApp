@@ -1,9 +1,9 @@
-import {watch} from 'vue';
+import { watch } from 'vue';
 
 import SocketClient from '@/lib/clients/socketClient/SocketClient';
-import {setSocketInstance, socketInstance} from '@/store/socket';
-import {currentServer} from '@/store/currentServer';
-import {user} from '@/store/user';
+import { setSocketInstance, socketInstance } from '@/store/socket';
+import { currentServer } from '@/store/currentServer';
+import { user } from '@/store/user';
 
 const initializeSocket = async (): Promise<void> => {
 	if (socketInstance.value?.connection) {

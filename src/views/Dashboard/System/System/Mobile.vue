@@ -11,9 +11,9 @@ import DashboardLayout from "@/Layout/Desktop/DashboardLayout.vue";
   <ion-page>
     <ion-content :fullscreen="true">
       <DashboardLayout title="Dashboard overview" :gridStyle="3">
-          <ServerSystemInfoCard />
+        <ServerSystemInfoCard />
 
-          <ServerTasksCard />
+        <ServerTasksCard />
       </DashboardLayout>
     </ion-content>
   </ion-page>

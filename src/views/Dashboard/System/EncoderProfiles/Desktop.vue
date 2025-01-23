@@ -1,12 +1,12 @@
 <script setup lang="ts">
-import {IonPage, IonContent} from '@ionic/vue';
+import { IonPage, IonContent } from '@ionic/vue';
 
-import type {EncoderProfile, StatusResponse} from '@/types/api/base/library';
-import type {Library} from '@/types/api/dashboard/server';
+import type { EncoderProfile, StatusResponse } from '@/types/api/base/library';
+import type { Library } from '@/types/api/dashboard/server';
 
 import useServerClient from '@/lib/clients/useServerClient';
 import serverClient from '@/lib/clients/serverClient';
-import {queryClient} from '@/config/tanstack-query';
+import { queryClient } from '@/config/tanstack-query';
 
 import DashboardLayout from '@/Layout/Desktop/DashboardLayout.vue';
 import ServerEncoderCard from './components/ServerEncoderCard.vue';
@@ -18,12 +18,12 @@ const { data: encoderProfiles, error } = useServerClient<EncoderProfile[]>({
 
 const handleCreateEncoderProfile = () => {
   serverClient()
-      .post<StatusResponse<Library>>('dashboard/encoderprofiles')
-      .then(({data}) => {
-        queryClient.invalidateQueries({
-          queryKey: ['dashboard', 'encoderProfiles'],
-        });
+    .post<StatusResponse<Library>>('dashboard/encoderprofiles')
+    .then(({ data }) => {
+      queryClient.invalidateQueries({
+        queryKey: ['dashboard', 'encoderProfiles'],
       });
+    });
 };
 </script>
 
@@ -31,14 +31,10 @@ const handleCreateEncoderProfile = () => {
   <ion-page>
     <ion-content :fullscreen="true">
 
-      <DashboardLayout :error="error" :gridStyle="1" title="Encoder profiles" description="Manage your encoder profiles and their settings here.">
+      <DashboardLayout :error="error" :gridStyle="1" title="Encoder profiles"
+        description="Manage your encoder profiles and their settings here.">
         <template v-slot:cta>
-          <Button
-              id="newEncoderProfile"
-              color="theme"
-              startIcon="folderAdd"
-              @click="handleCreateEncoderProfile"
-          >
+          <Button id="newEncoderProfile" color="theme" startIcon="folderAdd" @click="handleCreateEncoderProfile">
             {{ $t('New encoder profile') }}
           </Button>
         </template>

@@ -1,4 +1,4 @@
-import {computed} from 'vue';
+import { computed } from 'vue';
 
 import libraries from '@/store/Libraries';
 import router from '@/router';

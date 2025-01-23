@@ -4,11 +4,11 @@ import {
 	limitSentenceByCharacters,
 	lineBreakShowTitle,
 	unique
-} from  '@nomercy-entertainment/nomercy-video-player/src/helpers';
+} from '@nomercy-entertainment/nomercy-video-player/src/helpers';
 
-import {BaseUIPlugin} from "./baseUIPlugin";
+import { BaseUIPlugin } from "./baseUIPlugin";
 
-import type { Chapter, PlaylistItem, Position } from  '@nomercy-entertainment/nomercy-video-player/src/types';
+import type { Chapter, PlaylistItem, Position } from '@nomercy-entertainment/nomercy-video-player/src/types';
 import type { Icon } from './buttons';
 
 export class DesktopUIPlugin extends BaseUIPlugin {
@@ -339,7 +339,7 @@ export class DesktopUIPlugin extends BaseUIPlugin {
 			));
 		});
 
-		const playButton = this.createSVGElement(touchPlayback, 'bigPlay', this.buttons.bigPlay, false,  hovered);
+		const playButton = this.createSVGElement(touchPlayback, 'bigPlay', this.buttons.bigPlay, false, hovered);
 		this.player.addClasses(playButton, [
 			'touch-playback-button',
 			'pointer-events-none',
@@ -1762,7 +1762,7 @@ export class DesktopUIPlugin extends BaseUIPlugin {
 	}
 
 	createEpisodeMenu(parent: HTMLDivElement) {
-		if (!this.player.getVideoElement())	return;
+		if (!this.player.getVideoElement()) return;
 
 		const playlistMenu = this.player.createElement('div', 'playlist-menu')
 			.addClasses([
@@ -2026,8 +2026,8 @@ export class DesktopUIPlugin extends BaseUIPlugin {
 			.appendTo(episodeMenuButtonRightSide);
 
 		if (item.episode) {
-		episodeMenuButtonTitle.innerText = lineBreakShowTitle(item.title?.replace(item.show ?? '', '').replace('%S', this.player.localize('S'))
-			.replace('%E', this.player.localize('E')));
+			episodeMenuButtonTitle.innerText = lineBreakShowTitle(item.title?.replace(item.show ?? '', '').replace('%S', this.player.localize('S'))
+				.replace('%E', this.player.localize('E')));
 		}
 
 		const episodeMenuButtonOverview = this.player.createElement('span', `episode-${item.id}-overview`)
@@ -2257,7 +2257,7 @@ export class DesktopUIPlugin extends BaseUIPlugin {
 		});
 	}
 
-	createButton(match: string, id: string, insert: 'before'| 'after' = 'after', icon: Icon['path'], click?: () => void, rightClick?: () => void) {
+	createButton(match: string, id: string, insert: 'before' | 'after' = 'after', icon: Icon['path'], click?: () => void, rightClick?: () => void) {
 
 		const element = document.querySelector<HTMLButtonElement>(`${match}`);
 		if (!element) {

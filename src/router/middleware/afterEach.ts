@@ -1,6 +1,6 @@
 import { Router } from 'vue-router';
-import {isPlatform} from '@ionic/vue';
-import {ignoredRedirectQueries} from '@/config/config';
+import { isPlatform } from '@ionic/vue';
+import { ignoredRedirectQueries } from '@/config/config';
 import { Browser } from '@capacitor/browser';
 
 const afterEach = (router: Router) => {
@@ -15,7 +15,7 @@ const afterEach = (router: Router) => {
 			if (new URLSearchParams(hash.at(-1)).size > 0) {
 				if (hash && hash != location.hash && !ignoredRedirectQueries.some(iq => query?.includes(iq))) {
 					localStorage.setItem('hash', hash);
-					router.replace({query: {}}).then();
+					router.replace({ query: {} }).then();
 				} else {
 					if (new URLSearchParams(location.hash.split('&').at(-1)).size > 0) {
 						const hash = location.hash.split('&').at(0);

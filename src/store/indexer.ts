@@ -1,4 +1,4 @@
-import {computed, ref} from 'vue';
+import { computed, ref } from 'vue';
 
 const indexer = ref<boolean>(false);
 export const indexerState = computed(() => indexer.value);

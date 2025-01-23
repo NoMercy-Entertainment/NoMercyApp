@@ -22,17 +22,17 @@ function polyfill(input = '') {
 	let output = '';
 	for (
 		let buffer;
-	// initialize result and counters
-	// get next character
+		// initialize result and counters
+		// get next character
 		(buffer = str.charAt(idx++));
-	// character found in table? initialize bit storage and add its ascii value;
+		// character found in table? initialize bit storage and add its ascii value;
 		~buffer
-        && ((bs = bc % 4
-        	? bs * 64 + buffer
-        	: buffer),
-        // and if not first of each 4 characters,
-        // convert the first 8 bits to one ascii character
-        bc++ % 4)
+			&& ((bs = bc % 4
+				? bs * 64 + buffer
+				: buffer),
+				// and if not first of each 4 characters,
+				// convert the first 8 bits to one ascii character
+				bc++ % 4)
 			? (output += String.fromCharCode(255 & (bs >> ((-2 * bc) & 6))))
 			: 0
 	) {
@@ -43,9 +43,9 @@ function polyfill(input = '') {
 }
 
 const atob = (typeof window !== 'undefined'
-    && window.atob
-    && window.atob.bind(window))
-|| polyfill;
+	&& window.atob
+	&& window.atob.bind(window))
+	|| polyfill;
 
 function b64DecodeUnicode(str: string) {
 	return decodeURIComponent(
@@ -63,16 +63,16 @@ function b64DecodeUnicode(str: string) {
 function base64_url_decode(str: string) {
 	let output = str.replace(/-/gu, '+').replace(/_/gu, '/');
 	switch (output.length % 4) {
-	case 0:
-		break;
-	case 2:
-		output += '==';
-		break;
-	case 3:
-		output += '=';
-		break;
-	default:
-		throw new Error('base64 string is not of the correct length');
+		case 0:
+			break;
+		case 2:
+			output += '==';
+			break;
+		case 3:
+			output += '=';
+			break;
+		default:
+			throw new Error('base64 string is not of the correct length');
 	}
 
 	try {

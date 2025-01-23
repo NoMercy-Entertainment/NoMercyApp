@@ -1,12 +1,12 @@
 <script setup lang="ts">
-import {ref, watch} from 'vue';
+import { ref, watch } from 'vue';
 
 import useServerClient from "@/lib/clients/useServerClient";
-import {Language} from "@/types/api/shared";
-import {displayLanguage, setDisplayLanguage} from "@/store/ui";
+import { Language } from "@/types/api/shared";
+import { displayLanguage, setDisplayLanguage } from "@/store/ui";
 import LanguageSelect from "@/components/Forms/LanguageSelect.vue";
 
-const {data: languages} = useServerClient<Language[]>({
+const { data: languages } = useServerClient<Language[]>({
 	path: '/dashboard/configuration/languages',
 });
 
@@ -26,12 +26,6 @@ watch(language, (value) => {
 
 <template>
 	<div class="xl:col-start-1 2xl:col-span-2 2xl:col-start-1">
-		<LanguageSelect
-			v-if="languages"
-			id="language"
-			v-model="language"
-			class="mb-4"
-			name="Display language"
-		/>
+		<LanguageSelect v-if="languages" id="language" v-model="language" class="mb-4" name="Display language" />
 	</div>
 </template>

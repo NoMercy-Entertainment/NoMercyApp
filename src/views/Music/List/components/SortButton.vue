@@ -1,8 +1,8 @@
 <script lang="ts" setup>
 import { PropType } from 'vue';
 import { useTranslation } from 'i18next-vue';
-import {setSortOrder, setSortType, sortOrder, sortType} from '@/store/ui';
-import {SortOrder, SortType} from '@/types/musicPlayer';
+import { setSortOrder, setSortType, sortOrder, sortType } from '@/store/ui';
+import { SortOrder, SortType } from '@/types/musicPlayer';
 import MoooomIcon from '@/components/Images/icons/MoooomIcon.vue';
 
 defineProps({
@@ -62,13 +62,17 @@ const handleKeyup = (e: KeyboardEvent) => {
 </script>
 
 <template>
-	<button class="relative cursor-pointer items-center text-contrast focus-visible:underline focus-visible:underline-offset-2"
-			:onclick="() => handleSortChange(sortingType)"
-			:onkeyup="handleKeyup">
-        <span class="">
-            {{ t(name) }}
-        </span>
-    <MoooomIcon icon="chevronUp"  v-if="sortOrder == SortOrder.asc && sortType == sortingType && sortType != SortType.index" :class="`w-6 h-6 ${iconSpacer}`"/>
-    <MoooomIcon icon="chevronDown" v-else-if="sortOrder == SortOrder.desc && sortType == sortingType && sortType != SortType.index" :class="`w-6 h-6 ${iconSpacer}`"/>
+	<button
+		class="relative cursor-pointer items-center text-contrast focus-visible:underline focus-visible:underline-offset-2"
+		:onclick="() => handleSortChange(sortingType)" :onkeyup="handleKeyup">
+		<span class="">
+			{{ t(name) }}
+		</span>
+		<MoooomIcon icon="chevronUp"
+			v-if="sortOrder == SortOrder.asc && sortType == sortingType && sortType != SortType.index"
+			:class="`w-6 h-6 ${iconSpacer}`" />
+		<MoooomIcon icon="chevronDown"
+			v-else-if="sortOrder == SortOrder.desc && sortType == sortingType && sortType != SortType.index"
+			:class="`w-6 h-6 ${iconSpacer}`" />
 	</button>
 </template>

@@ -1,11 +1,11 @@
 <script setup lang="ts">
-import {onMounted, onUnmounted, ref, watch} from 'vue';
-import {IonPage, isPlatform, onIonViewDidEnter} from '@ionic/vue';
+import { onMounted, onUnmounted, ref, watch } from 'vue';
+import { IonPage, isPlatform, onIonViewDidEnter } from '@ionic/vue';
 
-import {currentServer} from '@/store/currentServer';
-import {user} from '@/store/user';
-import {setDisableScreensaver} from '@/store/imageModal';
-import {isNative} from '@/config/global';
+import { currentServer } from '@/store/currentServer';
+import { user } from '@/store/user';
+import { setDisableScreensaver } from '@/store/imageModal';
+import { isNative } from '@/config/global';
 
 import type {
   NMPlayer,
@@ -26,7 +26,7 @@ import audioPlayer from '@/store/audioPlayer';
 import NotFound from "@/Layout/Desktop/components/NotFound.vue";
 import useServerClient from "@/lib/clients/useServerClient";
 
-const {data, isError} = useServerClient<PlaylistItem[]>({
+const { data, isError } = useServerClient<PlaylistItem[]>({
 
 });
 
@@ -76,7 +76,7 @@ const initPlayer = (value: PlaylistItem[] | undefined) => {
 
   // @ts-ignore
   player.value = nmplayer('player1')
-      .setup(config);
+    .setup(config);
 
   player.value?.once('back', () => {
     router.back();
@@ -131,19 +131,19 @@ const initPlayer = (value: PlaylistItem[] | undefined) => {
     audioPlayer.stop();
 
     const observer = new MutationObserver(mutationList =>
-        mutationList.filter(m => m.type === 'childList').forEach(m => {
-          m.addedNodes.forEach(node => {
-            if (node instanceof HTMLElement) {
-              if (node.tagName === 'VIDEO') {
-                console.log('video removed');
-              }
+      mutationList.filter(m => m.type === 'childList').forEach(m => {
+        m.addedNodes.forEach(node => {
+          if (node instanceof HTMLElement) {
+            if (node.tagName === 'VIDEO') {
+              console.log('video removed');
             }
-          });
-        }));
+          }
+        });
+      }));
 
     const videoElement = player.value?.getVideoElement();
     if (videoElement) {
-      observer.observe(videoElement, {childList: true, subtree: true});
+      observer.observe(videoElement, { childList: true, subtree: true });
     }
   });
 
@@ -169,14 +169,13 @@ onUnmounted(() => {
 <template>
   <ion-page>
     <NotFound v-if="isError" />
-      <Teleport v-else to="body" :keepAlive="true">
-        <div ref="playerContainer" class="absolute inset-0 flex h-full w-full overflow-clip bg-black z-1199"
-             :class="{
-             'mb-28': isNative,
-             'mb-0': !isNative,
-           }">
-          <div id="player1" class="group nomercyplayer"></div>
-        </div>
-      </Teleport>
+    <Teleport v-else to="body" :keepAlive="true">
+      <div ref="playerContainer" class="absolute inset-0 flex h-full w-full overflow-clip bg-black z-1199" :class="{
+        'mb-28': isNative,
+        'mb-0': !isNative,
+      }">
+        <div id="player1" class="group nomercyplayer"></div>
+      </div>
+    </Teleport>
   </ion-page>
 </template>

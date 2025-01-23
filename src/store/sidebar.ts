@@ -1,4 +1,4 @@
-import {computed, ref} from 'vue';
+import { computed, ref } from 'vue';
 
 const sb = ref<'open' | 'closed' | 'hidden'>('hidden');
 

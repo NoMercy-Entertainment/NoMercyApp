@@ -1,22 +1,22 @@
 <script setup lang="ts">
-import {computed, onMounted, ref, Ref, toRaw, watch} from 'vue';
-import {IonContent, IonPage} from '@ionic/vue';
-import {useQueryClient} from '@tanstack/vue-query';
-import {useDebounce} from '@vueuse/core';
-import {InputNumber, InputText} from 'primevue';
+import { computed, onMounted, ref, Ref, toRaw, watch } from 'vue';
+import { IonContent, IonPage } from '@ionic/vue';
+import { useQueryClient } from '@tanstack/vue-query';
+import { useDebounce } from '@vueuse/core';
+import { InputNumber, InputText } from 'primevue';
 
-import type {ConfigurationResponse} from '@/types/api/dashboard/server';
+import type { ConfigurationResponse } from '@/types/api/dashboard/server';
 
 import serverClient from '@/lib/clients/serverClient';
 
 import DashboardLayout from '@/Layout/Desktop/DashboardLayout.vue';
 import useServerClient from '@/lib/clients/useServerClient';
-import {Nullable} from 'vitest';
+import { Nullable } from 'vitest';
 import Toggle from "@/components/Forms/Toggle.vue";
-import {currentServer} from "@/store/currentServer";
+import { currentServer } from "@/store/currentServer";
 import MoooomIcon from "@/components/Images/icons/MoooomIcon.vue";
 
-const {data: configuration, refetch: invalidate, error} = useServerClient<ConfigurationResponse>({
+const { data: configuration, refetch: invalidate, error } = useServerClient<ConfigurationResponse>({
   path: '/dashboard/configuration',
 });
 
@@ -134,11 +134,11 @@ const query = useQueryClient();
 const save = () => {
   console.raw(newConfig.value);
   serverClient()
-      .patch(`/dashboard/configuration`, newConfig.value)
-      .then(() => {
-        invalidate();
-        query.invalidateQueries({queryKey: ['serverInfo']});
-      });
+    .patch(`/dashboard/configuration`, newConfig.value)
+    .then(() => {
+      invalidate();
+      query.invalidateQueries({ queryKey: ['serverInfo'] });
+    });
 };
 
 </script>
@@ -154,54 +154,52 @@ const save = () => {
         <div v-if="ready" class="col-span-2 col-start-1 2xl:col-start-1">
           <div class="flex flex-col gap-2">
             <label for="server_name">Server name</label>
-            <InputText id="server_name" v-model="server_name" class="mb-4"/>
+            <InputText id="server_name" v-model="server_name" class="mb-4" />
           </div>
           <div class="flex flex-col gap-2">
             <label for="internal_server_port">Secure internal port</label>
-            <InputNumber id="internal_server_port" v-model="internal_server_port" class="mb-4"
-                          :useGrouping="false" showButtons :min="2000"
-            />
+            <InputNumber id="internal_server_port" v-model="internal_server_port" class="mb-4" :useGrouping="false"
+              showButtons :min="2000" />
           </div>
           <div class="flex flex-col gap-2">
             <label for="external_server_port">Secure external port</label>
-            <InputNumber id="external_server_port" v-model="external_server_port" class="mb-4"
-                         :useGrouping="false" showButtons :min="2000"/>
+            <InputNumber id="external_server_port" v-model="external_server_port" class="mb-4" :useGrouping="false"
+              showButtons :min="2000" />
           </div>
         </div>
 
         <div v-if="ready" class="col-span-2 col-start-1 2xl:col-start-3">
-<!--          <div class="flex flex-col gap-2">-->
-<!--            <label for="cron_workers">Cron workers</label>-->
-<!--            <InputNumber-->
-<!--                id="cron_workers" v-model="cron_workers" class="mb-4"-->
-<!--                 :useGrouping="false" showButtons :min="0"/>-->
-<!--          </div>-->
-<!--          <div class="flex flex-col gap-2">-->
-<!--            <label for="data_workers">Data workers</label>-->
-<!--            <InputNumber-->
-<!--                id="data_workers" v-model="data_workers" class="mb-4"-->
-<!--                 :useGrouping="false" showButtons :min="0"/>-->
-<!--          </div>-->
-<!--          <div class="flex flex-col gap-2">-->
-<!--            <label for="request_workers">Request workers</label>-->
-<!--            <InputNumber id="request_workers" v-model="request_workers" class="mb-4"-->
-<!--                          :useGrouping="false" showButtons :min="0"/>-->
-<!--          </div>-->
+          <!--          <div class="flex flex-col gap-2">-->
+          <!--            <label for="cron_workers">Cron workers</label>-->
+          <!--            <InputNumber-->
+          <!--                id="cron_workers" v-model="cron_workers" class="mb-4"-->
+          <!--                 :useGrouping="false" showButtons :min="0"/>-->
+          <!--          </div>-->
+          <!--          <div class="flex flex-col gap-2">-->
+          <!--            <label for="data_workers">Data workers</label>-->
+          <!--            <InputNumber-->
+          <!--                id="data_workers" v-model="data_workers" class="mb-4"-->
+          <!--                 :useGrouping="false" showButtons :min="0"/>-->
+          <!--          </div>-->
+          <!--          <div class="flex flex-col gap-2">-->
+          <!--            <label for="request_workers">Request workers</label>-->
+          <!--            <InputNumber id="request_workers" v-model="request_workers" class="mb-4"-->
+          <!--                          :useGrouping="false" showButtons :min="0"/>-->
+          <!--          </div>-->
           <div class="flex flex-col gap-2">
             <label for="encoder_workers">Encoder workers</label>
-            <InputNumber id="encoder_workers" v-model="encoder_workers" class="mb-4"
-                          :useGrouping="false" showButtons :min="0"/>
+            <InputNumber id="encoder_workers" v-model="encoder_workers" class="mb-4" :useGrouping="false" showButtons
+              :min="0" />
           </div>
           <div class="flex flex-col gap-2">
             <label for="image_workers">Image workers</label>
-            <InputNumber
-                id="image_workers" v-model="image_workers" class="mb-4"
-                 :useGrouping="false" showButtons :min="0"/>
+            <InputNumber id="image_workers" v-model="image_workers" class="mb-4" :useGrouping="false" showButtons
+              :min="0" />
           </div>
           <div class="flex flex-col gap-2">
             <label for="queue_workers">Queue workers</label>
-            <InputNumber id="queue_workers" v-model="queue_workers" class="mb-4"
-                          :useGrouping="false" showButtons :min="0"/>
+            <InputNumber id="queue_workers" v-model="queue_workers" class="mb-4" :useGrouping="false" showButtons
+              :min="0" />
           </div>
         </div>
 
@@ -209,27 +207,20 @@ const save = () => {
           <div class="flex flex-col gap-2">
             <span class="flex gap-4">
               <label for="swagger">Open API / Swagger Ui</label>
-              <a v-if="swagger && currentServer?.serverBaseUrl" target="_blank"
-                 :href="currentServer?.serverBaseUrl"
-                 class="flex gap-1 items-center underline underline-offset-4 h-4 text-sm"
-              >
+              <a v-if="swagger && currentServer?.serverBaseUrl" target="_blank" :href="currentServer?.serverBaseUrl"
+                class="flex gap-1 items-center underline underline-offset-4 h-4 text-sm">
                 <span>{{ $t('Open') }}</span>
                 <MoooomIcon icon="shareSquare" className="size-4" color="theme" />
               </a>
             </span>
-            <Toggle :model-value="swagger" @update:model-value="swagger = $event"/>
+            <Toggle :model-value="swagger" @update:model-value="swagger = $event" />
           </div>
         </div>
 
         <template v-slot:actions>
 
-          <Button type="submit"
-                  id="save"
-                  :disabled="!hasChanges"
-                  color="theme"
-                  class="ml-auto"
-                  form="myForm"
-                  @click="save()">
+          <Button type="submit" id="save" :disabled="!hasChanges" color="theme" class="ml-auto" form="myForm"
+            @click="save()">
             {{ $t('Save') }}
           </button>
         </template>
@@ -238,4 +229,3 @@ const save = () => {
     </ion-content>
   </ion-page>
 </template>
-

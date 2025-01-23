@@ -1,6 +1,6 @@
-import {ref} from 'vue';
+import { ref } from 'vue';
 
-import type {Server} from '@/types/auth';
+import type { Server } from '@/types/auth';
 
 const servers = ref<Server[]>([]);
 

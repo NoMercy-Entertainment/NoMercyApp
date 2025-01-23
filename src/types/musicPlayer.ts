@@ -1,7 +1,7 @@
-import type {ColorPalettes} from '@/types/api/shared';
-import type {Artist} from '@/types/api/music/artist';
-import type {Album} from '@/types/api/music/album';
-import type {DisplayList} from "@/types/api/music/musicPlayer";
+import type { ColorPalettes } from '@/types/api/shared';
+import type { Artist } from '@/types/api/music/artist';
+import type { Album } from '@/types/api/music/album';
+import type { DisplayList } from "@/types/api/music/musicPlayer";
 
 export enum VisibilityState {
 	hidden = 'hidden',
@@ -54,25 +54,25 @@ export interface Music {
 }
 
 export interface BasePlaylistItem {
-  id: string;
-  name: string;
-  cover: string | null;
-  path: string;
-  disc: number;
-  track: number;
-  album_track: {
 	id: string;
 	name: string;
 	cover: string | null;
+	path: string;
+	disc: number;
+	track: number;
+	album_track: {
+		id: string;
+		name: string;
+		cover: string | null;
+		[key: string]: any;
+	}[];
+	artist_track: {
+		id: string;
+		name: string;
+		cover: string | null;
+		[key: string]: any;
+	}[];
 	[key: string]: any;
-  }[];
-  artist_track: {
-	id: string;
-	name: string;
-	cover: string | null;
-	[key: string]: any;
-  }[];
-  [key: string]: any;
 }
 
 export interface PlaylistItem extends BasePlaylistItem {

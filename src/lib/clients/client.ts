@@ -1,5 +1,5 @@
-import axios, {AxiosRequestConfig, AxiosResponse} from 'axios';
-import {user, keycloak} from '@/store/user';
+import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
+import { user, keycloak } from '@/store/user';
 
 export interface AxiosInstance<E> {
 	request<T = unknown>(config: AxiosRequestConfig): Promise<AxiosResponse<T, E>>;
@@ -12,7 +12,7 @@ export interface AxiosInstance<E> {
 }
 
 export default <T>(baseUrl: string, timeout?: number) => {
-    const language = localStorage.getItem('NoMercy-displayLanguage')?.replace(/"/gu, '') || navigator.language;
+	const language = localStorage.getItem('NoMercy-displayLanguage')?.replace(/"/gu, '') || navigator.language;
 
 	const axiosInstance = axios.create({
 		headers: {

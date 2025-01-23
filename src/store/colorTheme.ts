@@ -1,9 +1,9 @@
-import {computed} from 'vue';
-import {rgbaToHex} from '@uiw/color-convert';
-import {isPlatform} from '@ionic/vue';
-import {focusColor} from '@/store/ui';
-import {setColorScheme} from "@/store/colorScheme";
-import {isDarkMode} from "@/config/global";
+import { computed } from 'vue';
+import { rgbaToHex } from '@uiw/color-convert';
+import { isPlatform } from '@ionic/vue';
+import { focusColor } from '@/store/ui';
+import { setColorScheme } from "@/store/colorScheme";
+import { isDarkMode } from "@/config/global";
 
 const topNavColor = computed(() => {
 	return rgbaToHex({
@@ -16,17 +16,17 @@ const topNavColor = computed(() => {
 
 const setBackgroundColor = computed(() => {
 	if (isPlatform('capacitor')) {
-		return import('@capacitor/status-bar').then(({StatusBar}) => {
+		return import('@capacitor/status-bar').then(({ StatusBar }) => {
 			return StatusBar.setBackgroundColor
 		});
 	}
-	return () => {};
+	return () => { };
 });
 
 export const change = async (value: boolean) => {
 	if (isPlatform('capacitor')) {
 		if (value) {
-			(await setBackgroundColor.value)?.({color: topNavColor.value});
+			(await setBackgroundColor.value)?.({ color: topNavColor.value });
 		}
 		else {
 			await setColorScheme(isDarkMode ? 'dark' : 'light');

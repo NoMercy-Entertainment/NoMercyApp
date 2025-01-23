@@ -1,12 +1,11 @@
 <script setup lang="ts">
 
-import {isXmasTime} from "@/lib/dateTime";
-import {disableScreensaver} from "@/store/imageModal";
+import { isXmasTime } from "@/lib/dateTime";
+import { disableScreensaver } from "@/store/imageModal";
 </script>
 
 <template>
-  <div v-if="isXmasTime() && !disableScreensaver"
-       class="z-[999999999999] absolute pointer-events-none opacity-6">
+  <div v-if="isXmasTime() && !disableScreensaver" class="z-[999999999999] absolute pointer-events-none opacity-6">
     <template v-for="i in Array.from(Array(30).keys())" :key="i">
       <div class="snowflake"></div>
     </template>
@@ -16,6 +15,4 @@ import {disableScreensaver} from "@/store/imageModal";
   </div>
 </template>
 
-<style scoped>
-
-</style>
+<style scoped></style>

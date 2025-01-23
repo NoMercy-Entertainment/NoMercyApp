@@ -1,7 +1,7 @@
 import Plugin from '@nomercy-entertainment/nomercy-video-player/src/plugin';
-import type {NMPlayer, PlaylistItem} from "@nomercy-entertainment/nomercy-video-player/src/types";
+import type { NMPlayer, PlaylistItem } from "@nomercy-entertainment/nomercy-video-player/src/types";
 
-import {useSocket} from "@/store/socket";
+import { useSocket } from "@/store/socket";
 
 export interface SyncPluginArgs {
 	basePath: string;
@@ -31,7 +31,7 @@ export class SyncPlugin extends Plugin {
 		this.player.off('finished', this.ended.bind(this));
 	}
 
-	lastTimeTrigger(){
+	lastTimeTrigger() {
 		console.log('lastTimeTrigger');
 		const data = this.episodeData();
 
@@ -39,7 +39,7 @@ export class SyncPlugin extends Plugin {
 		socket?.invoke?.('SetTime', data);
 	}
 
-	ended(){
+	ended() {
 		if (this.player.isLastPlaylistItem()) {
 			const socket = useSocket();
 			socket?.invoke('RemoveWatched', this.episodeData());
@@ -50,7 +50,7 @@ export class SyncPlugin extends Plugin {
 	}
 
 	episodeData() {
-		const current = this.player.playlistItem() as  PlaylistItem & {
+		const current = this.player.playlistItem() as PlaylistItem & {
 			tmdb_id: number,
 			special_id: number,
 			video_type: string,
@@ -59,8 +59,8 @@ export class SyncPlugin extends Plugin {
 
 		const route = location.hash.split('/');
 
-		let specialId: string|undefined;
-		let collectionId: number|undefined;
+		let specialId: string | undefined;
+		let collectionId: number | undefined;
 		if (route.at(-3) === 'specials') {
 			specialId = route.at(-2) as string;
 		} else if (route.at(-3) === 'collection') {

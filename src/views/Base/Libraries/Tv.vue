@@ -1,26 +1,26 @@
 <script setup lang="ts">
-import {computed, onMounted, onUnmounted, ref, watch} from 'vue';
-import {IonContent, IonPage, onIonViewDidEnter} from '@ionic/vue';
+import { computed, onMounted, onUnmounted, ref, watch } from 'vue';
+import { IonContent, IonPage, onIonViewDidEnter } from '@ionic/vue';
 
-import type {HomeItem} from '@/types/api/base/home';
+import type { HomeItem } from '@/types/api/base/home';
 
-import {getMutating, getMutation, getQuery} from '@/lib/routerHelper';
+import { getMutating, getMutation, getQuery } from '@/lib/routerHelper';
 import router from '@/router';
 
 import TvCarousel from '@/views/Base/Home/components/TvCarousel.vue';
 import TvHomeCard from '@/views/Base/Home/components/TvHomeCard.vue';
-import {musicVisibility} from "@/store/audioPlayer";
+import { musicVisibility } from "@/store/audioPlayer";
 
 const routeName = router.currentRoute.value.name;
 
 const isMutating = getMutating();
 
-const {data: homeData} = getQuery<HomeItem>({
+const { data: homeData } = getQuery<HomeItem>({
   path: '/libraries/tv',
   queryKey: ['libraries', 'tv'],
 });
 
-const {data: mutatedData, mutate} = getMutation<HomeItem>({
+const { data: mutatedData, mutate } = getMutation<HomeItem>({
   homeData: homeData,
   queryKey: ['libraries', 'tv'],
 });
@@ -138,7 +138,7 @@ const unlockKeys = () => {
 };
 
 const handleKeyDown = (e: KeyboardEvent) => {
-  if(!(e.target as HTMLElement).dataset.card) return;
+  if (!(e.target as HTMLElement).dataset.card) return;
   if (!keysLocked.value) {
     keysLocked.value = true;
     return;
@@ -160,10 +160,10 @@ onUnmounted(() => {
 });
 
 const homeCardData = computed(() => (mutatedData.value ?? homeData.value)
-    ?.filter( d => d.component == 'NMHomeCard') ?? [])
+  ?.filter(d => d.component == 'NMHomeCard') ?? [])
 
 const carouselsData = computed(() => (mutatedData.value ?? homeData.value)
-    ?.filter( d => d.component == 'NMCarousel') ?? [])
+  ?.filter(d => d.component == 'NMCarousel') ?? [])
 
 </script>
 
@@ -172,36 +172,21 @@ const carouselsData = computed(() => (mutatedData.value ?? homeData.value)
     <ion-content :fullscreen="true" ref="content">
 
       <div v-if="!isMutating" class="flex flex-col gap-8 pt-24 pb-4" id="container">
-        <div
-            tabindex="0" ref="top"
-            @focus="jumpTo('#watch_now')"
-            class="flex items-center mx-12 w-available min-h-[60vh] relative overflow-hidden rounded-2xl border-2 border-slate-light-9 transition-opacity duration-300"
-        >
-          <template v-for="(carousel) in homeCardData"
-                    :key="carousel.props.title">
-            <TvHomeCard  :carousel="carousel" :items="carousel.props.items" />
+        <div tabindex="0" ref="top" @focus="jumpTo('#watch_now')"
+          class="flex items-center mx-12 w-available min-h-[60vh] relative overflow-hidden rounded-2xl border-2 border-slate-light-9 transition-opacity duration-300">
+          <template v-for="(carousel) in homeCardData" :key="carousel.props.title">
+            <TvHomeCard :carousel="carousel" :items="carousel.props.items" />
           </template>
         </div>
 
-        <div v-if="carouselsData.length > 0"
-             tabindex="0" ref="bottom"
-             @focus="scrollToBottom"
-             class="mx-11 flex flex-col justify-start items-start w-available gap-5 h-[calc(100vh-5rem)] overflow-auto"
-        >
+        <div v-if="carouselsData.length > 0" tabindex="0" ref="bottom" @focus="scrollToBottom"
+          class="mx-11 flex flex-col justify-start items-start w-available gap-5 h-[calc(100vh-5rem)] overflow-auto">
           <template v-if="!isMutating">
-            <template v-for="(carousel, index) in carouselsData"
-                      :key="carousel.props.title">
-              <TvCarousel
-                  v-if="carousel.props.items.length > 0"
-                  :carousel="carousel"
-                  :index="index"
-                  :scrollToCenter="scrollToCenter"
-                  :scrollIndex="scrollIndex"
-                  :setScrollIndex="setScrollIndex"
-                  :cardsPerScroll="cardsPerScroll"
-                  :unlockKeys="unlockKeys"
-                  :setHasMoreCardsToRight="setHasMoreCardsToRight"
-              />
+            <template v-for="(carousel, index) in carouselsData" :key="carousel.props.title">
+              <TvCarousel v-if="carousel.props.items.length > 0" :carousel="carousel" :index="index"
+                :scrollToCenter="scrollToCenter" :scrollIndex="scrollIndex" :setScrollIndex="setScrollIndex"
+                :cardsPerScroll="cardsPerScroll" :unlockKeys="unlockKeys"
+                :setHasMoreCardsToRight="setHasMoreCardsToRight" />
             </template>
           </template>
         </div>

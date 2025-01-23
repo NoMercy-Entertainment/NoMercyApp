@@ -1,11 +1,11 @@
 <script setup lang="ts">
-import {onMounted, type PropType} from 'vue';
+import { onMounted, type PropType } from 'vue';
 
-import type {HomeItem} from '@/types/api/base/home';
-import {type Component, getMutating, getMutation, getQuery, queryKey} from '@/lib/routerHelper';
+import type { HomeItem } from '@/types/api/base/home';
+import { type Component, getMutating, getMutation, getQuery, queryKey } from '@/lib/routerHelper';
 
-import {setTitle} from '@/lib/stringArray';
-import {setBackground, setColorPalette} from '@/store/ui';
+import { setTitle } from '@/lib/stringArray';
+import { setBackground, setColorPalette } from '@/store/ui';
 
 const props = defineProps({
   options: {
@@ -22,9 +22,9 @@ const qk = props.options.queryKey ?? queryKey();
 
 const isMutating = getMutating(qk);
 
-const {data: homeData} = getQuery(qk);
+const { data: homeData } = getQuery(qk);
 
-const {data: mutatedData, mutate} = getMutation({key: qk, homeData: homeData});
+const { data: mutatedData, mutate } = getMutation({ key: qk, homeData: homeData });
 
 onMounted(() => {
   if (!homeData.value) return;
@@ -41,12 +41,7 @@ onMounted(() => {
 
 <template>
   <template v-if="!isMutating">
-    <component
-        v-for="(render, index) in mutatedData ?? homeData ?? []"
-        :index="index"
-        :key="render.id"
-        :is="render.component"
-        v-bind="render.props"
-    />
+    <component v-for="(render, index) in mutatedData ?? homeData ?? []" :index="index" :key="render.id"
+      :is="render.component" v-bind="render.props" />
   </template>
 </template>

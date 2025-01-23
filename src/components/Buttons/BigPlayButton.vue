@@ -1,12 +1,12 @@
 <script setup lang="ts">
-import {computed, onUnmounted, PropType, ref, watch} from 'vue';
+import { computed, onUnmounted, PropType, ref, watch } from 'vue';
 
-import type {AlbumResponse, ArtistResponse, DisplayList} from '@/types/api/music/musicPlayer';
-import audioPlayer, {currentPlaylist, currentSong, setCurrentPlaylist, isPlaying} from '@/store/audioPlayer';
+import type { AlbumResponse, ArtistResponse, DisplayList } from '@/types/api/music/musicPlayer';
+import audioPlayer, { currentPlaylist, currentSong, setCurrentPlaylist, isPlaying } from '@/store/audioPlayer';
 
 import PlayerIcon from '@/components/Images/icons/PlayerIcon.vue';
 import MusicButton from '@/components/MusicPlayer/components/MusicButton.vue';
-import {useRoute} from 'vue-router';
+import { useRoute } from 'vue-router';
 
 const props = defineProps({
   data: {
@@ -90,13 +90,8 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <MusicButton label="Play"
-               v-if="audioPlayer"
-               id="playList"
-               :onclick="handleClick"
-               :onkeyup="onkeyup"
-               :class="className"
-               class="h-12 w-12 min-w-12 min-h-12 max-w-12 max-h-12 relative !rounded-full overflow-clip !bg-focus transition-all duration-300
+  <MusicButton label="Play" v-if="audioPlayer" id="playList" :onclick="handleClick" :onkeyup="onkeyup"
+    :class="className" class="h-12 w-12 min-w-12 min-h-12 max-w-12 max-h-12 relative !rounded-full overflow-clip !bg-focus transition-all duration-300
                        shadow-[0_1px_0_0_rgba(255,255,255,0.20)_inset,0_-1px_0_0_rgba(var(--color-slate-9)/60%)_inset,0_22px_30px_-4px_rgba(var(--color-slate-9)/70%)]
                        dark:shadow-[0_1px_0_0_rgba(255,255,255,0.20)_inset,0_-1px_0_0_rgba(var(--color-slate-1)/30%)_inset,0_22px_30px_-4px_rgba(var(--color-slate-1)/70%)]
                        hover:shadow-[0_1px_0_0_rgba(255,255,255,0.20)_inset,0_-1px_0_0_rgba(var(--color-slate-11)/60%)_inset,0_22px_30px_-4px_rgba(var(--color-slate-11)/70%)]
@@ -104,7 +99,7 @@ onUnmounted(() => {
                        active:!bg-focus focus-visible:!bg-focus hover:!bg-focus dark:active:!bg-focus dark:focus-visible:!bg-focus dark:sm:hover:!bg-focus
                        active:!shadow-none
                        active:!dark:shadow-none">
-    <PlayerIcon icon="nmPause" v-if="(isPlaying && isCurrentPlaylist)" class="h-8 w-8 text-white"/>
-    <PlayerIcon icon="nmPlay" v-else class="h-8 w-8 text-white"/>
+    <PlayerIcon icon="nmPause" v-if="(isPlaying && isCurrentPlaylist)" class="h-8 w-8 text-white" />
+    <PlayerIcon icon="nmPlay" v-else class="h-8 w-8 text-white" />
   </MusicButton>
 </template>

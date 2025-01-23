@@ -1,4 +1,4 @@
-import type {Artist} from '@/types/api/music/artist';
+import type { Artist } from '@/types/api/music/artist';
 
 export interface AlbumsResponse {
 	type: string;

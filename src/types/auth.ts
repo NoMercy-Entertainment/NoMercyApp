@@ -1,4 +1,4 @@
-import {DeviceIcons} from '@Icons/icons';
+import { DeviceIcons } from '@Icons/icons';
 
 export interface User {
 	accessToken: string;

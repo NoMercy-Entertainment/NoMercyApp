@@ -1,6 +1,6 @@
-import type {ColorPalettes} from '../shared.d.ts';
-import {Rating} from '@/types/api/base/collection';
-import {ExtendedVideo} from '@/types/api/base/info';
+import type { ColorPalettes } from '../shared.d.ts';
+import { Rating } from '@/types/api/base/collection';
+import { ExtendedVideo } from '@/types/api/base/info';
 
 export interface HomeResponse {
 	id: number;

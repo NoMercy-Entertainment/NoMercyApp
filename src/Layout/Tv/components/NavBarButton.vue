@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import {type PropType} from 'vue';
-import type {MoooomIcons} from '@Icons/icons';
+import { type PropType } from 'vue';
+import type { MoooomIcons } from '@Icons/icons';
 
 import MoooomIcon from '@/components/Images/icons/MoooomIcon.vue';
 
@@ -29,21 +29,17 @@ defineProps({
 </script>
 
 <template>
-  <RouterLink
-      :to="href"
-      class="flex justify-center items-center relative first:children:mt-0.5 gap-2 pl-2 pr-3 h-8 rounded-3xl pointer-events-auto focus:outline-none focus-visible:outline-2 focus-visible:outline-focus focus-visible:outline"
-      :class="{
-        'bg-focus/80': active,
-        'bg-white/10': !active,
-      }"
-  >
-    <MoooomIcon :icon="icon" className="size-5 relative"/>
+  <RouterLink :to="href"
+    class="flex justify-center items-center relative first:children:mt-0.5 gap-2 pl-2 pr-3 h-8 rounded-3xl pointer-events-auto focus:outline-none focus-visible:outline-2 focus-visible:outline-focus focus-visible:outline"
+    :class="{
+      'bg-focus/80': active,
+      'bg-white/10': !active,
+    }">
+    <MoooomIcon :icon="icon" className="size-5 relative" />
     <p class="flex-grow-0 flex-shrink-0 text-xs text-left leading-none text-white mt-0.5">
       {{ $t(name) }}
     </p>
   </RouterLink>
 </template>
 
-<style scoped>
-
-</style>
+<style scoped></style>

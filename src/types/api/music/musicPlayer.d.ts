@@ -1,6 +1,6 @@
-import type {Artist} from '@/types/api/music/artist';
-import type {PlaylistItem} from "@/types/musicPlayer";
-import type {ColorPalettes} from "@/types/api/shared";
+import type { Artist } from '@/types/api/music/artist';
+import type { PlaylistItem } from "@/types/musicPlayer";
+import type { ColorPalettes } from "@/types/api/shared";
 
 export interface MusicCardPageResponseData {
 	id: string;
@@ -72,7 +72,7 @@ export interface DisplayList {
 	trackId: null;
 	tracks: PlaylistItem[];
 	artists?: Artist[];
-    media_type: string;
+	media_type: string;
 	year: number | null;
 	artist: Artist;
 	type: 'track' | 'album' | 'artist';

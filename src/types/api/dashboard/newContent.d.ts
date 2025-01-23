@@ -17,19 +17,19 @@ export interface FileItem {
 }
 
 export interface Streams {
-    video: {
-        index: number;
-        width: number;
-        height:number;
-    }[];
-    audio: {
-        index: number;
-        language: string;
-    }[];
-    subtitle: {
-        index: number;
-        language: string;
-    }[];
+	video: {
+		index: number;
+		width: number;
+		height: number;
+	}[];
+	audio: {
+		index: number;
+		language: string;
+	}[];
+	subtitle: {
+		index: number;
+		language: string;
+	}[];
 }
 
 export interface Episode {

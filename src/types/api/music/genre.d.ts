@@ -1,6 +1,6 @@
-import type {PaletteColors} from '../shared';
-import type {Artist} from '@/types/api/music/artist';
-import type {Album} from '@/types/api/music/album';
+import type { PaletteColors } from '../shared';
+import type { Artist } from '@/types/api/music/artist';
+import type { Album } from '@/types/api/music/album';
 
 export interface GenreResponse {
 	id: string;
@@ -9,7 +9,7 @@ export interface GenreResponse {
 	titleSort: string;
 	origin: string;
 	track: Track[];
-    have_items: number;
+	have_items: number;
 }
 
 export interface Track {

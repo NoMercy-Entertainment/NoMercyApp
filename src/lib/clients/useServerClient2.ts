@@ -1,12 +1,12 @@
-import {ComputedRef, Ref, ref, toRaw, UnwrapRef} from 'vue';
-import {QueryKey, useQuery, UseQueryReturnType} from '@tanstack/vue-query';
+import { ComputedRef, Ref, ref, toRaw, UnwrapRef } from 'vue';
+import { QueryKey, useQuery, UseQueryReturnType } from '@tanstack/vue-query';
 
 import serverClient from './serverClient';
-import {AxiosError} from 'axios';
-import {ErrorResponse} from '@/types/server'
-import {queryKey} from '@/lib/clients/useInfiniteServerClient';
-import {currentServer} from '@/store/currentServer';
-import {useRoute} from 'vue-router';
+import { AxiosError } from 'axios';
+import { ErrorResponse } from '@/types/server'
+import { queryKey } from '@/lib/clients/useInfiniteServerClient';
+import { currentServer } from '@/store/currentServer';
+import { useRoute } from 'vue-router';
 
 export interface ServerClientProps {
 	path?: string;
@@ -28,7 +28,7 @@ type Return<T> = UseQueryReturnType<T, AxiosError<ErrorResponse>> extends {
 	setLetter?: (value: string) => void;
 };
 
-const useServerClient = <T, >(options?: ServerClientProps): Return<T> => {
+const useServerClient = <T,>(options?: ServerClientProps): Return<T> => {
 
 	const route = useRoute();
 
@@ -52,7 +52,7 @@ const useServerClient = <T, >(options?: ServerClientProps): Return<T> => {
 		staleTime: options?.keepForever
 			? Infinity
 			: 1000 * 60 * 5,
-		queryFn: ({signal}) => {
+		queryFn: ({ signal }) => {
 			return new Promise<T>((resolve, reject) => {
 				setTimeout(() => {
 					if (!currentServer.value?.serverApiUrl) return reject();
@@ -90,7 +90,7 @@ const useServerClient = <T, >(options?: ServerClientProps): Return<T> => {
 								{
 									signal: signal,
 								})
-							.then(({data}) => {
+							.then(({ data }) => {
 								// @ts-ignore
 								return data?.data ?? data;
 							})
@@ -106,7 +106,7 @@ const useServerClient = <T, >(options?: ServerClientProps): Return<T> => {
 								{
 									signal: signal,
 								})
-							.then(({data}) => {
+							.then(({ data }) => {
 								// @ts-ignore
 								return data?.data ?? data;
 							})
@@ -121,7 +121,7 @@ const useServerClient = <T, >(options?: ServerClientProps): Return<T> => {
 								{
 									signal: signal,
 								})
-							.then(({data}) => {
+							.then(({ data }) => {
 								// @ts-ignore
 								return data?.data ?? data;
 							})
@@ -136,7 +136,7 @@ const useServerClient = <T, >(options?: ServerClientProps): Return<T> => {
 								{
 									signal: signal,
 								})
-							.then(({data}) => {
+							.then(({ data }) => {
 								// @ts-ignore
 								return data?.data ?? data;
 							})

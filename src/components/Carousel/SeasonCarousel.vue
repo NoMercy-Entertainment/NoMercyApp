@@ -1,17 +1,17 @@
 <script lang="ts" setup>
-import {PropType, ref, watch} from 'vue';
-import {SwiperSlide} from 'swiper/vue';
+import { PropType, ref, watch } from 'vue';
+import { SwiperSlide } from 'swiper/vue';
 
-import type {Episode, Season} from '@/types/api/base/info';
+import type { Episode, Season } from '@/types/api/base/info';
 
 import Carousel from '@/components/Carousel/Carousel.vue';
 import Select from '@/components/Forms/Select.vue';
-import {Swiper} from 'swiper';
-import {useTranslation} from 'i18next-vue';
-import {SwiperContainer} from 'swiper/element/bundle';
+import { Swiper } from 'swiper';
+import { useTranslation } from 'i18next-vue';
+import { SwiperContainer } from 'swiper/element/bundle';
 import SeasonCard from '@/components/Cards/SeasonCard.vue';
 
-const {t} = useTranslation();
+const { t } = useTranslation();
 
 const props = defineProps({
   data: {
@@ -60,48 +60,30 @@ watch(currentSeason, reset);
 <template>
   <Carousel :index="currentSeason.season_number" :limitCardCountBy="limitCardCountBy" :type="type">
     <template v-slot:selector>
-      <Select
-          id="season-selector"
-          v-model="currentSeason"
-          :disabled="seasonSelectorData.length == 1"
-          :items="seasonSelectorData"
-          optionLabel="title"
-          class="min-w-[21rem] ml-3"
-          label=""
-          variant="normal"
-      />
+      <Select id="season-selector" v-model="currentSeason" :disabled="seasonSelectorData.length == 1"
+        :items="seasonSelectorData" optionLabel="title" class="min-w-[21rem] ml-3" label="" variant="normal" />
     </template>
 
-    <swiper-slide v-if="currentSeason.episodes?.length == 0"
-                  class="flex p-1 pl-0">
+    <swiper-slide v-if="currentSeason.episodes?.length == 0" class="flex p-1 pl-0">
 
-      <SeasonCard
-          id="item-0"
-          :key="0"
-          :data="{
-            id: 1,
-            title: t('To be announced'),
-             season_number: null,
-             episode_number: null,
-             available: false,
-             overview: '',
-             airDate: '',
-             still: '',
-             link: '',
-             color_palette: {still: {darkVibrant: '', lightVibrant: ''}},
-             progress: null
-           }"
-          :onclick="() => {}"/>
+      <SeasonCard id="item-0" :key="0" :data="{
+        id: 1,
+        title: t('To be announced'),
+        season_number: null,
+        episode_number: null,
+        available: false,
+        overview: '',
+        airDate: '',
+        still: '',
+        link: '',
+        color_palette: { still: { darkVibrant: '', lightVibrant: '' } },
+        progress: null
+      }" :onclick="() => { }" />
 
     </swiper-slide>
 
-    <swiper-slide v-for="item in currentSeason.episodes" v-else
-                  :key="item.id"
-                  class="flex p-1 pl-0">
-      <SeasonCard
-          :id="`item-${item.id}`"
-          :data="item"
-          :onclick="() => handleClick(item as Episode)"/>
+    <swiper-slide v-for="item in currentSeason.episodes" v-else :key="item.id" class="flex p-1 pl-0">
+      <SeasonCard :id="`item-${item.id}`" :data="item" :onclick="() => handleClick(item as Episode)" />
     </swiper-slide>
   </Carousel>
 </template>

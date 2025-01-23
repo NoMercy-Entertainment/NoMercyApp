@@ -1,14 +1,14 @@
 <script setup lang="ts">
-import {onMounted, ref, watch} from "vue";
-import {MoooomIcons} from "@Icons/icons";
+import { onMounted, ref, watch } from "vue";
+import { MoooomIcons } from "@Icons/icons";
 import MeterGroup from "primevue/metergroup";
 
 import useServerClient from '@/lib/clients/useServerClient';
 
 import SystemCard from './ServerSystemCard.vue';
-import {green, purple, orange, blue, gray} from "@/config/global";
-import {hexOpacity} from "@/lib/colorHelper";
-import {dashboardSocketIsConnected} from "@/lib/clients/dashboardSocket";
+import { green, purple, orange, blue, gray } from "@/config/global";
+import { hexOpacity } from "@/lib/colorHelper";
+import { dashboardSocketIsConnected } from "@/lib/clients/dashboardSocket";
 
 // const {data: paths} = useServerClient<SystemPath[]>({
 //   path: 'dashboard/server/paths',
@@ -27,7 +27,7 @@ interface StorageItem {
   }
 }
 
-const {data: storage} = useServerClient<StorageItem[]>({
+const { data: storage } = useServerClient<StorageItem[]>({
   path: 'dashboard/server/storage',
   refetchInterval: 10000,
 });
@@ -48,14 +48,14 @@ watch(storage, (value) => {
   if (!value) return;
 
   drives.value = value.map(l => {
-    const {movies, shows, music, other, free} = l.data;
+    const { movies, shows, music, other, free } = l.data;
     return {
       name: l.path,
       data: [
-        {label: 'Movies', color: hexOpacity(green, 50), value: movies, icon: 'mooooom-movie'},
-        {label: 'TV Shows', color: hexOpacity(orange, 50), value: shows, icon: 'mooooom-tv'},
-        {label: 'Music', color: hexOpacity(purple, 50), value: music, icon: 'mooooom-music'},
-        {label: 'Other', color: hexOpacity(blue, 50), value: other, icon: 'mooooom-folder'},
+        { label: 'Movies', color: hexOpacity(green, 50), value: movies, icon: 'mooooom-movie' },
+        { label: 'TV Shows', color: hexOpacity(orange, 50), value: shows, icon: 'mooooom-tv' },
+        { label: 'Music', color: hexOpacity(purple, 50), value: music, icon: 'mooooom-music' },
+        { label: 'Other', color: hexOpacity(blue, 50), value: other, icon: 'mooooom-folder' },
         // {label: 'Free', color: hexOpacity(gray, 1), value: free ?? 1, icon: 'mooooom-folder'}
       ].filter(d => d.value > 0)
     } as Drive
@@ -66,14 +66,14 @@ onMounted(() => {
   if (!storage.value) return;
 
   drives.value = storage.value.map(l => {
-    const {movies, shows, music, other, free} = l.data;
+    const { movies, shows, music, other, free } = l.data;
     return {
       name: l.path,
       data: [
-        {label: 'Movies', color: hexOpacity(green, 50), value: movies, icon: 'mooooom-movie'},
-        {label: 'TV Shows', color: hexOpacity(orange, 50), value: shows, icon: 'mooooom-tv'},
-        {label: 'Music', color: hexOpacity(purple, 50), value: music, icon: 'mooooom-music'},
-        {label: 'Other', color: hexOpacity(blue, 50), value: other, icon: 'mooooom-folder'},
+        { label: 'Movies', color: hexOpacity(green, 50), value: movies, icon: 'mooooom-movie' },
+        { label: 'TV Shows', color: hexOpacity(orange, 50), value: shows, icon: 'mooooom-tv' },
+        { label: 'Music', color: hexOpacity(purple, 50), value: music, icon: 'mooooom-music' },
+        { label: 'Other', color: hexOpacity(blue, 50), value: other, icon: 'mooooom-folder' },
         // {label: 'Free', color: hexOpacity(gray, 1), value: free ?? 1, icon: 'mooooom-folder'}
       ].filter(d => d.value > 0)
     } as Drive
@@ -101,11 +101,12 @@ onMounted(() => {
     <!--    </template>-->
 
     <div v-for="drive in drives" :key="drive.name"
-         class="relative flex flex-shrink-0 flex-grow-0 flex-col items-start justify-start self-stretch overflow-clip w-available text-slate-light-12/80 dark:text-slate-dark-12/70">
+      class="relative flex flex-shrink-0 flex-grow-0 flex-col items-start justify-start self-stretch overflow-clip w-available text-slate-light-12/80 dark:text-slate-dark-12/70">
       <p class="self-stretch text-sm font-semibold whitespace-nowrap">
         {{ drive.name }}
       </p>
-      <MeterGroup :value="drive.data" :max="100" class="flex-shrink-0 flex-grow-0 self-stretch text-xs line-clamp-1 mt-2 children:first:children:bg-auto-2 dark:children:first:children:bg-auto-1"/>
+      <MeterGroup :value="drive.data" :max="100"
+        class="flex-shrink-0 flex-grow-0 self-stretch text-xs line-clamp-1 mt-2 children:first:children:bg-auto-2 dark:children:first:children:bg-auto-1" />
     </div>
   </SystemCard>
 </template>

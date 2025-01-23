@@ -1,10 +1,10 @@
 import createUUID from '@/lib/uuidHelper';
-import {ref} from 'vue';
+import { ref } from 'vue';
 import { HubConnection } from '@microsoft/signalr';
-import {ActivityLog} from '@/types/server';
-import {queryClient} from "@/config/tanstack-query";
-import {useSocket} from '@/store/socket';
-import {connection, dashboardSocketIsConnected} from "@/lib/clients/dashboardSocket";
+import { ActivityLog } from '@/types/server';
+import { queryClient } from "@/config/tanstack-query";
+import { useSocket } from '@/store/socket';
+import { connection, dashboardSocketIsConnected } from "@/lib/clients/dashboardSocket";
 
 export const connect = (socket?: HubConnection) => {
     if (!socket) return
@@ -98,11 +98,11 @@ const onCommand = (data: any) => {
 };
 
 const onAddActivityLog = (data: ActivityLog) => {
-//     addActivityLog(data);
+    //     addActivityLog(data);
 };
 
 const onSetActivityLog = (data: ActivityLog[]) => {
-//     setActivityLog(data);
+    //     setActivityLog(data);
 };
 
 const pingEvent = (startTime: number) => {

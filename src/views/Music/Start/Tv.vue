@@ -1,16 +1,16 @@
 <script setup lang="ts">
-import {onMounted, ref, watch} from 'vue';
-import {IonPage, IonContent, onIonViewDidEnter} from '@ionic/vue';
+import { onMounted, ref, watch } from 'vue';
+import { IonPage, IonContent, onIonViewDidEnter } from '@ionic/vue';
 
-import type {HomeDataItem} from '@/types/api/music';
-import type {Component} from "@/lib/routerHelper";
+import type { HomeDataItem } from '@/types/api/music';
+import type { Component } from "@/lib/routerHelper";
 
 import useServerClient from '@/lib/clients/useServerClient';
 
 import MusicHeader from "./components/MusicHeader.vue";
 import TvCarousel2 from "./components/TvCarousel2.vue";
 
-const {data} = useServerClient<Component<Component<HomeDataItem>>[]>({
+const { data } = useServerClient<Component<Component<HomeDataItem>>[]>({
   queryKey: ['music', 'home']
 });
 
@@ -128,31 +128,24 @@ const handleUp = (event: KeyboardEvent) => {
         <MusicHeader v-if="selected" :selected="selected" />
 
         <div ref="scrollContainer" tabindex="0" @focus="handleFocus($event)"
-             class="flex flex-col justify-start items-start w-available -mx-3 px-3 absolute left-14 right-14 top-[320px] h-available overflow-auto scroll-smooth gap-4 flex-1 pb-8"
-        >
+          class="flex flex-col justify-start items-start w-available -mx-3 px-3 absolute left-14 right-14 top-[320px] h-available overflow-auto scroll-smooth gap-4 flex-1 pb-8">
 
           <template v-if="data">
 
-            <TvCarousel2
-                v-for="(render, index) in data?.filter?.((item) => item.component == 'NMCarousel') ?? []"
-                :key="render.id"
-                :title="render.props.title"
-                :data="render.props.items ?? []"
-                :handleFocus="handleFocus"
-                :handleDown="handleDown"
-                :handleUp="handleUp"
-            />
+            <TvCarousel2 v-for="(render, index) in data?.filter?.((item) => item.component == 'NMCarousel') ?? []"
+              :key="render.id" :title="render.props.title" :data="render.props.items ?? []" :handleFocus="handleFocus"
+              :handleDown="handleDown" :handleUp="handleUp" />
 
-<!--            <component-->
-<!--                v-for="(render, index) in data?.filter((item) => item.component == 'NMCarousel') ?? []"-->
-<!--                :index="index"-->
-<!--                :key="render.id"-->
-<!--                :is="render.component"-->
-<!--                v-bind="render.props"-->
-<!--                :handleFocus="handleFocus"-->
-<!--                :handleDown="handleDown"-->
-<!--                :handleUp="handleUp"-->
-<!--            />-->
+            <!--            <component-->
+            <!--                v-for="(render, index) in data?.filter((item) => item.component == 'NMCarousel') ?? []"-->
+            <!--                :index="index"-->
+            <!--                :key="render.id"-->
+            <!--                :is="render.component"-->
+            <!--                v-bind="render.props"-->
+            <!--                :handleFocus="handleFocus"-->
+            <!--                :handleDown="handleDown"-->
+            <!--                :handleUp="handleUp"-->
+            <!--            />-->
           </template>
         </div>
       </div>

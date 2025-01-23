@@ -1,8 +1,8 @@
 <script setup lang="ts">
 
-import {type PropType} from "vue";
-import type {Device} from '@/types/api/dashboard/server';
-import type {DeviceIcons} from '@Icons/icons';
+import { type PropType } from "vue";
+import type { Device } from '@/types/api/dashboard/server';
+import type { DeviceIcons } from '@Icons/icons';
 
 import DashboardCard from '@/components/Cards/DashboardCard.vue';
 import DeviceIcon from '@/components/Images/icons/DeviceIcon.vue';
@@ -132,18 +132,14 @@ switch (props.server.browser) {
 </script>
 
 <template>
-    <DashboardCard
-        :line1="server.custom_name ?? server.name"
-        :line2="server.ip?.startsWith('192') || server.ip?.startsWith('10.') || server.ip?.startsWith('172')
-            ? server.ip
-            : server.ip?.replace(/\d/gu, '*')"
-        :route="`/dashboard/${basePath}/${server.id}`"
-    >
-        <template v-slot:image >
+    <DashboardCard :line1="server.custom_name ?? server.name" :line2="server.ip?.startsWith('192') || server.ip?.startsWith('10.') || server.ip?.startsWith('172')
+        ? server.ip
+        : server.ip?.replace(/\d/gu, '*')" :route="`/dashboard/${basePath}/${server.id}`">
+        <template v-slot:image>
             <div
                 class="flex flex-col justify-start items-start self-stretch bg-auto-1 bg-[radial-gradient(81.87%_66.22%_at_0%_0%,rgba(255,255,255,0.2)_0%,rgba(255,255,255,0)_100%)] w-full h-auto aspect-video">
                 <div v-if="icon"
-                     class="relative m-auto flex aspect-video h-auto w-full flex-shrink-0 flex-grow-0 flex-col items-center justify-center self-stretch text-auto-12 bg-focus/8">
+                    class="relative m-auto flex aspect-video h-auto w-full flex-shrink-0 flex-grow-0 flex-col items-center justify-center self-stretch text-auto-12 bg-focus/8">
                     <DeviceIcon :icon="icon" className="!w-[40%]" />
                 </div>
             </div>

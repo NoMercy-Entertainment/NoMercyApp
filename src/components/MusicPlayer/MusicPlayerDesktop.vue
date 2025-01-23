@@ -1,12 +1,12 @@
 <script setup lang="ts">
-import {computed, onMounted, ref} from 'vue';
+import { computed, onMounted, ref } from 'vue';
 
-import type {PlaylistItem} from '@/types/musicPlayer';
+import type { PlaylistItem } from '@/types/musicPlayer';
 
 import serverClient from '@/lib/clients/serverClient';
-import {setTitle} from '@/lib/stringArray';
-import audioPlayer, {currentSong, musicSize, musicVisibility} from '@/store/audioPlayer';
-import {currentServer} from '@/store/currentServer';
+import { setTitle } from '@/lib/stringArray';
+import audioPlayer, { currentSong, musicSize, musicVisibility } from '@/store/audioPlayer';
+import { currentServer } from '@/store/currentServer';
 import sidebar from '@/store/sidebar';
 
 import CoverImage from '@/components/MusicPlayer/components/CoverImage.vue';
@@ -54,13 +54,13 @@ onMounted(() => {
     }
 
     dataAttribute.value = createMusicDatasetAttribute(
-        Object.keys(item as object)
-            .filter(key => key !== 'lyrics')
-            .reduce((obj, key) => {
-              // @ts-ignore
-              obj[key] = item[key];
-              return obj;
-            }, {})
+      Object.keys(item as object)
+        .filter(key => key !== 'lyrics')
+        .reduce((obj, key) => {
+          // @ts-ignore
+          obj[key] = item[key];
+          return obj;
+        }, {})
     );
   });
 
@@ -76,110 +76,85 @@ const submitPlayback = async () => {
   if (!currentSong.value) return;
 
   await serverClient()
-      .post<PlaylistItem>(`music/tracks/${currentSong.value?.id}/playback`);
+    .post<PlaylistItem>(`music/tracks/${currentSong.value?.id}/playback`);
 };
 
 const leftSize = computed(() => {
   if (sidebar.value == 'open') {
-    return 100/4;
+    return 100 / 4;
   }
   else if (sidebar.value == 'closed') {
-    return 100/3.2;
+    return 100 / 3.2;
   }
-  return 100/3;
+  return 100 / 3;
 });
 const centerSize = computed(() => {
-  return 100/3;
+  return 100 / 3;
 });
 const rightSize = computed(() => {
   if (sidebar.value == 'open') {
-    return 100/2.9;
+    return 100 / 2.9;
   }
   else if (sidebar.value == 'closed') {
-    return 100/3;
+    return 100 / 3;
   }
-  return 100/3;
+  return 100 / 3;
 });
 
 </script>
 
 <template>
   <div id="fullPlayer"
-       class="bg-slate-lightA-4 dark:bg-slate-darkA-4 hidden h-0 music-showing:h-20 flex-shrink-0 flex-grow-0 flex-row items-center justify-start gap-12 self-stretch pr-6 sidebar-closed:ml-20 sidebar-open:ml-64 rounded-lg m-2 mt-2 mb-4 pl-4 mx-5 transition-all duration-300 sm:flex 2xl:sidebar-open:ml-[16.3rem]"
-       :data-music="musicVisibility"
-       :data-sidebar="sidebar">
+    class="bg-slate-lightA-4 dark:bg-slate-darkA-4 hidden h-0 music-showing:h-20 flex-shrink-0 flex-grow-0 flex-row items-center justify-start gap-12 self-stretch pr-6 sidebar-closed:ml-20 sidebar-open:ml-64 rounded-lg m-2 mt-2 mb-4 pl-4 mx-5 transition-all duration-300 sm:flex 2xl:sidebar-open:ml-[16.3rem]"
+    :data-music="musicVisibility" :data-sidebar="sidebar">
     <div v-if="currentSong"
-         class="flex h-full w-full items-center gap-8 music-showing:transition-all music-showing:duration-75">
-      <div id="left"
-           class="flex flex-grow items-center justify-start transition-width duration-300 gap-2"
-           :style="{
-              width: `${leftSize}%`
-            }"
-           data-target="track">
+      class="flex h-full w-full items-center gap-8 music-showing:transition-all music-showing:duration-75">
+      <div id="left" class="flex flex-grow items-center justify-start transition-width duration-300 gap-2" :style="{
+        width: `${leftSize}%`
+      }" data-target="track">
 
-        <CoverImage v-if="currentSong"
-                    :size="100"
-                    className="relative aspect-square h-auto w-16 cursor-pointer overflow-hidden rounded-md text-theme-4 min-w-[3rem]"
-                    :data="currentSong"/>
+        <CoverImage v-if="currentSong" :size="100"
+          className="relative aspect-square h-auto w-16 cursor-pointer overflow-hidden rounded-md text-theme-4 min-w-[3rem]"
+          :data="currentSong" />
 
-        <div v-if="currentSong"
-             class="mx-4 flex flex-col overflow-hidden gap-0.5 w-available hover-animate-pause">
-          <Marquee :text="currentSong?.name"/>
-<!--          <div class="relative flex flex-grow flex-col items-start justify-start gap-2"-->
-<!--               :data-data="dataAttribute" data-marquee="container">-->
-<!--            <div class="flex-shrink-0 flex-grow-0 self-stretch font-semibold line-clamp-1 w-fit whitespace-nowrap"-->
-<!--                 data-marquee="scroller">-->
-<!--              {{ currentSong?.name }}-->
-<!--            </div>-->
-<!--          </div>-->
-          <div :data-size="musicSize"
-               :key="currentSong.id"
-               class="inline-flex gap-1 overflow-hidden whitespace-nowrap text-xs w-available line-clamp-1 hover-animate-pause">
-            <TrackLinks v-if="currentSong"
-                        :id="currentSong.id"
-                        :key="currentSong.id"
-                        :data="currentSong.artist_track"
-                        suffix="player"
-                        type="artists"/>
+        <div v-if="currentSong" class="mx-4 flex flex-col overflow-hidden gap-0.5 w-available hover-animate-pause">
+          <Marquee :text="currentSong?.name" />
+          <div :data-size="musicSize" :key="currentSong.id"
+            class="inline-flex gap-1 overflow-hidden whitespace-nowrap text-xs w-available line-clamp-1 hover-animate-pause">
+            <TrackLinks v-if="currentSong" :id="currentSong.id" :key="currentSong.id" :data="currentSong.artist_track"
+              suffix="player" type="artists" />
           </div>
         </div>
-        <MediaLikeButton :key="currentSong.id"
-                         :data="currentSong"
-                         color="var(--color-focus)"
-                         class="hidden sm:flex"/>
+        <MediaLikeButton :key="currentSong.id" :data="currentSong" color="var(--color-focus)" class="hidden sm:flex" />
       </div>
-      <div id="center"
-           class="flex w-full flex-grow flex-col items-center justify-start transition-width duration-300"
-            :style="{
-              width: `${centerSize}%`
-            }"
-      >
+      <div id="center" class="flex w-full flex-grow flex-col items-center justify-start transition-width duration-300"
+        :style="{
+          width: `${centerSize}%`
+        }">
         <div class="flex justify-center">
           <div class="flex flex-shrink-0 flex-grow-0 items-center justify-center gap-2">
-            <ShuffleButton/>
-            <PreviousButton/>
-            <PlaybackButton class="children:h-10 h-12 children:w-10 w-12 !bg-white dark:!bg-slate-darkA-2"/>
-            <NextButton/>
-            <RepeatButton/>
+            <ShuffleButton />
+            <PreviousButton />
+            <PlaybackButton class="children:h-10 h-12 children:w-10 w-12 !bg-white dark:!bg-slate-darkA-2" />
+            <NextButton />
+            <RepeatButton />
           </div>
         </div>
         <ProgressBarContainer />
       </div>
-      <div id="right"
-           class="relative flex flex-grow items-center justify-end gap-2 transition-width duration-300"
-           :style="{
-              width: `${rightSize}%`
-           }"
-           :data-size="musicSize">
+      <div id="right" class="relative flex flex-grow items-center justify-end gap-2 transition-width duration-300"
+        :style="{
+          width: `${rightSize}%`
+        }" :data-size="musicSize">
 
-        <StopButton/>
+        <StopButton />
 
-        <LyricsButton/>
-        <QueueButton/>
+        <LyricsButton />
+        <QueueButton />
         <EqButton />
-        <DeviceButton/>
+        <DeviceButton />
 
-        <VolumeContainer/>
+        <VolumeContainer />
       </div>
     </div>
   </div>

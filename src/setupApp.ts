@@ -1,8 +1,8 @@
-import {AppContext} from 'vue';
+import { AppContext } from 'vue';
 import I18NextVue from 'i18next-vue';
 // @ts-ignore
 import KonamiCode from 'vue3-konami-code';
-import {Swiper, SwiperSlide} from 'swiper/vue';
+import { Swiper, SwiperSlide } from 'swiper/vue';
 import PrimeVue from 'primevue/config';
 import {
     Card, Checkbox, ConfirmationService,
@@ -13,9 +13,9 @@ import {
     Tooltip, Textarea, Image,
 } from 'primevue';
 
-import {App} from '@capacitor/app';
-import {IonicVue, isPlatform, useBackButton} from '@ionic/vue';
-import {VueQueryPlugin} from '@tanstack/vue-query';
+import { App } from '@capacitor/app';
+import { IonicVue, isPlatform, useBackButton } from '@ionic/vue';
+import { VueQueryPlugin } from '@tanstack/vue-query';
 import Aura from '@primevue/themes/aura';
 
 import MasonryWall from '@yeger/vue-masonry-wall'
@@ -25,7 +25,7 @@ import '@/store/deviceInfo';
 
 import konamiEnabled from '@/store/konami';
 import i18next from '@/config/i18next';
-import {queryClient} from '@/config/tanstack-query';
+import { queryClient } from '@/config/tanstack-query';
 import router from './router';
 
 import Button from '@/components/Buttons/Button.vue';
@@ -125,7 +125,7 @@ export async function setupApp(app: AppContext['app']) {
 
                 localStorage.setItem('redirectUrl', redirectUrl || localStorage.getItem('redirectUrl') || '/home');
 
-                if(redirectUrl) {
+                if (redirectUrl) {
                     router.push(redirectUrl).then();
                 }
             }, 1000);

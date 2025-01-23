@@ -1,16 +1,16 @@
 <script setup lang="ts">
-import {ref, watch} from 'vue';
-import {useRoute} from 'vue-router';
-import {IonContent, IonPage, onIonViewWillEnter, onIonViewWillLeave} from '@ionic/vue';
+import { ref, watch } from 'vue';
+import { useRoute } from 'vue-router';
+import { IonContent, IonPage, onIonViewWillEnter, onIonViewWillLeave } from '@ionic/vue';
 
-import type {DisplayList} from '@/types/api/music/musicPlayer';
-import type {PlaylistItem, SortOrder, SortType} from '@/types/musicPlayer';
+import type { DisplayList } from '@/types/api/music/musicPlayer';
+import type { PlaylistItem, SortOrder, SortType } from '@/types/musicPlayer';
 
-import {isNative} from '@/config/global';
+import { isNative } from '@/config/global';
 import useServerClient from '@/lib/clients/useServerClient';
-import {setTitle, sortByType} from '@/lib/stringArray';
-import {setColorPalette, setSortOrder, sortOrder, sortType} from '@/store/ui';
-import {currentSong} from '@/store/audioPlayer';
+import { setTitle, sortByType } from '@/lib/stringArray';
+import { setColorPalette, setSortOrder, sortOrder, sortType } from '@/store/ui';
+import { currentSong } from '@/store/audioPlayer';
 
 import ControlHeader from '@/views/Music/List/components/ControlHeader.vue';
 import ArtistHeader from '@/views/Music/List/components/ArtistHeader.vue';
@@ -21,7 +21,7 @@ import NotFound from "@/Layout/Desktop/components/NotFound.vue";
 
 const route = useRoute();
 
-const {data, isError} = useServerClient<DisplayList>({
+const { data, isError } = useServerClient<DisplayList>({
   path: route.fullPath,
   keepForever: true,
 });
@@ -38,7 +38,7 @@ watch(data, (value) => {
 
   sort(value?.tracks ?? [], sortType.value, sortOrder.value, filter.value);
 
-  if(value?.color_palette?.cover) {
+  if (value?.color_palette?.cover) {
     setColorPalette(value?.color_palette?.cover);
   }
 });
@@ -62,9 +62,9 @@ const sort = (songs: PlaylistItem[], sortType: SortType, sortOrder: SortOrder, v
   } else {
     // @ts-ignore
     displayList.value = newList?.filter(t =>
-        t.name?.toLowerCase().includes(value?.toLowerCase?.())
-        || t.artist_track?.some(a => a.name.toLowerCase().includes(value?.toLowerCase?.()))
-        || t.album_track?.[0]?.name.toLowerCase().includes(value?.toLowerCase?.())) ?? [];
+      t.name?.toLowerCase().includes(value?.toLowerCase?.())
+      || t.artist_track?.some(a => a.name.toLowerCase().includes(value?.toLowerCase?.()))
+      || t.album_track?.[0]?.name.toLowerCase().includes(value?.toLowerCase?.())) ?? [];
   }
 };
 
@@ -73,7 +73,7 @@ onIonViewWillEnter(() => {
     sort(data?.value?.tracks ?? [], sortType.value, sortOrder.value, filter.value);
   }
 
-  if(data.value?.color_palette?.cover) {
+  if (data.value?.color_palette?.cover) {
     setColorPalette(data.value?.color_palette?.cover);
   }
 });
@@ -89,7 +89,7 @@ const sortHeader = ref<VueDivElement>();
 
 const onScroll = () => {
   // Skip if the browser supports native sticky top.
-  if(window.CSS.supports('container-type', 'scroll-state')) return;
+  if (window.CSS.supports('container-type', 'scroll-state')) return;
 
   const sortHeaderTop = 67;
 
@@ -109,42 +109,25 @@ const onScroll = () => {
     <ion-content :fullscreen="true" class="flex">
       <NotFound v-if="isError" />
       <ScrollContainer v-else :autoHide="true" :static="true" @scroll="onScroll">
-        <div
-            v-if="!route.params.id || (route.params.id && data?.id == route.params.id)"
-            ref="main"
-            class="flex flex-col overflow-x-clip w-available h-available sm:rounded-2xl"
-        >
-          <ArtistHeader
-              :data="data"
-          />
-          <div
-              class="relative z-0 flex h-auto flex-shrink-0 flex-grow flex-col items-start justify-start self-stretch">
+        <div v-if="!route.params.id || (route.params.id && data?.id == route.params.id)" ref="main"
+          class="flex flex-col overflow-x-clip w-available h-available sm:rounded-2xl">
+          <ArtistHeader :data="data" />
+          <div class="relative z-0 flex h-auto flex-shrink-0 flex-grow flex-col items-start justify-start self-stretch">
             <div class="pointer-events-none absolute z-0 h-96 w-full bg-spotifyBottom bg-focus"></div>
 
-            <ControlHeader
-                :key="data?.id"
-                :data="data"
-                :filter="filter"
-                @filter-change="(e: string) => filter = e"/>
+            <ControlHeader :key="data?.id" :data="data" :filter="filter" @filter-change="(e: string) => filter = e" />
 
             <div
-                class="flex flex-1 flex-shrink-0 flex-col items-start justify-start self-stretch bg-slate-light-1 dark:bg-slate-dark-2 flex-grow-1 gap-0.5 sm:p-4"
-                :class="{
-                   'pb-24' : isNative &&  !currentSong,
-                   'pb-40' : isNative &&  currentSong,
-                   'pb-4 sm:pb-4' : !isNative &&  currentSong
-                }"
-            >
-              <SortHeader
-                  ref="sortHeader"
-                  :key="data?.id"/>
+              class="flex flex-1 flex-shrink-0 flex-col items-start justify-start self-stretch bg-slate-light-1 dark:bg-slate-dark-2 flex-grow-1 gap-0.5 sm:p-4"
+              :class="{
+                'pb-24': isNative && !currentSong,
+                'pb-40': isNative && currentSong,
+                'pb-4 sm:pb-4': !isNative && currentSong
+              }">
+              <SortHeader ref="sortHeader" :key="data?.id" />
 
-              <TrackRow
-                  v-for="(item, index) in displayList"
-                  :key="item.id"
-                  :data="item"
-                  :displayList="displayList"
-                  :index="index"/>
+              <TrackRow v-for="(item, index) in displayList" :key="item.id" :data="item" :displayList="displayList"
+                :index="index" />
             </div>
           </div>
         </div>

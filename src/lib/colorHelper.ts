@@ -1,6 +1,6 @@
-import {hexToRgba, hsvaToHex} from '@uiw/color-convert';
-import {chunk} from '@/lib/stringArray';
-import {blue, brown, gray, green, red} from "@/config/global";
+import { hexToRgba, hsvaToHex } from '@uiw/color-convert';
+import { chunk } from '@/lib/stringArray';
+import { blue, brown, gray, green, red } from "@/config/global";
 
 export const greenToRed = [
 	{
@@ -250,48 +250,48 @@ export enum TailwindColors {
 }
 
 export const themeColors: { title: keyof typeof TailwindColors; color: string }[] = [
-	{title: 'red', color: 'rgb(var(--color-red-9))'},
-	{title: 'tomato', color: 'rgb(var(--color-tomato-9))'},
-	{title: 'orange', color: 'rgb(var(--color-orange-9))'},
-	{title: 'amber', color: 'rgb(var(--color-amber-9))'},
-	{title: 'yellow', color: 'rgb(var(--color-yellow-9))'},
+	{ title: 'red', color: 'rgb(var(--color-red-9))' },
+	{ title: 'tomato', color: 'rgb(var(--color-tomato-9))' },
+	{ title: 'orange', color: 'rgb(var(--color-orange-9))' },
+	{ title: 'amber', color: 'rgb(var(--color-amber-9))' },
+	{ title: 'yellow', color: 'rgb(var(--color-yellow-9))' },
 
-	{title: 'lime', color: 'rgb(var(--color-lime-9))'},
-	{title: 'grass', color: 'rgb(var(--color-grass-9))'},
-	{title: 'green', color: 'rgb(var(--color-green-9))'},
-	{title: 'teal', color: 'rgb(var(--color-teal-9))'},
+	{ title: 'lime', color: 'rgb(var(--color-lime-9))' },
+	{ title: 'grass', color: 'rgb(var(--color-grass-9))' },
+	{ title: 'green', color: 'rgb(var(--color-green-9))' },
+	{ title: 'teal', color: 'rgb(var(--color-teal-9))' },
 
-	{title: 'mint', color: 'rgb(var(--color-mint-9))'},
-	{title: 'cyan', color: 'rgb(var(--color-cyan-9))'},
-	{title: 'sky', color: 'rgb(var(--color-sky-9))'},
-	{title: 'blue', color: 'rgb(var(--color-blue-9))'},
-	{title: 'indigo', color: 'rgb(var(--color-indigo-9))'},
+	{ title: 'mint', color: 'rgb(var(--color-mint-9))' },
+	{ title: 'cyan', color: 'rgb(var(--color-cyan-9))' },
+	{ title: 'sky', color: 'rgb(var(--color-sky-9))' },
+	{ title: 'blue', color: 'rgb(var(--color-blue-9))' },
+	{ title: 'indigo', color: 'rgb(var(--color-indigo-9))' },
 
-	{title: 'violet', color: 'rgb(var(--color-violet-9))'},
-	{title: 'purple', color: 'rgb(var(--color-purple-9))'},
-	{title: 'plum', color: 'rgb(var(--color-plum-9))'},
-	{title: 'pink', color: 'rgb(var(--color-pink-9))'},
-	{title: 'crimson', color: 'rgb(var(--color-crimson-9))'},
+	{ title: 'violet', color: 'rgb(var(--color-violet-9))' },
+	{ title: 'purple', color: 'rgb(var(--color-purple-9))' },
+	{ title: 'plum', color: 'rgb(var(--color-plum-9))' },
+	{ title: 'pink', color: 'rgb(var(--color-pink-9))' },
+	{ title: 'crimson', color: 'rgb(var(--color-crimson-9))' },
 
-	{title: 'brown', color: 'rgb(var(--color-brown-9))'},
-	{title: 'gold', color: 'rgb(var(--color-gold-9))'},
-	{title: 'bronze', color: 'rgb(var(--color-bronze-9))'},
+	{ title: 'brown', color: 'rgb(var(--color-brown-9))' },
+	{ title: 'gold', color: 'rgb(var(--color-gold-9))' },
+	{ title: 'bronze', color: 'rgb(var(--color-bronze-9))' },
 
-	{title: 'olive', color: 'rgb(var(--color-olive-9))'},
-	{title: 'sage', color: 'rgb(var(--color-sage-9))'},
-	{title: 'slate', color: 'rgb(var(--color-slate-9))'},
-	{title: 'mauve', color: 'rgb(var(--color-mauve-9))'},
-	{title: 'sand', color: 'rgb(var(--color-sand-9))'},
-	{title: 'gray', color: 'rgb(var(--color-gray-9))'},
+	{ title: 'olive', color: 'rgb(var(--color-olive-9))' },
+	{ title: 'sage', color: 'rgb(var(--color-sage-9))' },
+	{ title: 'slate', color: 'rgb(var(--color-slate-9))' },
+	{ title: 'mauve', color: 'rgb(var(--color-mauve-9))' },
+	{ title: 'sand', color: 'rgb(var(--color-sand-9))' },
+	{ title: 'gray', color: 'rgb(var(--color-gray-9))' },
 ];
 
 export const backgroundColors: { title: keyof typeof TailwindColors; color: string }[] = [
-	{title: 'olive', color: 'rgb(var(--background-olive-9))'},
-	{title: 'sage', color: 'rgb(var(--background-sage-9))'},
-	{title: 'slate', color: 'rgb(var(--background-slate-9))'},
-	{title: 'mauve', color: 'rgb(var(--background-mauve-9))'},
-	{title: 'sand', color: 'rgb(var(--background-sand-9))'},
-	{title: 'gray', color: 'rgb(var(--background-gray-9))'},
+	{ title: 'olive', color: 'rgb(var(--background-olive-9))' },
+	{ title: 'sage', color: 'rgb(var(--background-sage-9))' },
+	{ title: 'slate', color: 'rgb(var(--background-slate-9))' },
+	{ title: 'mauve', color: 'rgb(var(--background-mauve-9))' },
+	{ title: 'sand', color: 'rgb(var(--background-sand-9))' },
+	{ title: 'gray', color: 'rgb(var(--background-gray-9))' },
 
 ];
 
@@ -339,7 +339,7 @@ export const getImageBrightness = (imageSrc: string, cb: (arg: ImageBrightness) 
 		canvas.width = img.naturalWidth;
 		canvas.height = img.naturalHeight;
 
-		const ctx = canvas.getContext('2d', {willReadFrequently: true})!;
+		const ctx = canvas.getContext('2d', { willReadFrequently: true })!;
 		ctx.drawImage(img, 0, 0);
 
 		const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
@@ -526,11 +526,11 @@ export const hexLighter = (hex?: string, luminosity?: number) => {
 		hsl.l += luminosity;
 	}
 
-	while (hsvaToHex({h:hsl.h, s:hsl.s, v:hsl.l, a:1}).length !== 7) {
+	while (hsvaToHex({ h: hsl.h, s: hsl.s, v: hsl.l, a: 1 }).length !== 7) {
 		hsl.l -= 1;
 	}
 
-	return hsvaToHex({h:hsl.h, s:hsl.s, v:hsl.l, a:1});
+	return hsvaToHex({ h: hsl.h, s: hsl.s, v: hsl.l, a: 1 });
 }
 
 export const hexDarker = (hex: string, luminosity?: number): string => {
@@ -541,13 +541,13 @@ export const hexDarker = (hex: string, luminosity?: number): string => {
 		hsl.l -= luminosity;
 	}
 
-	while (hsvaToHex({h:hsl.h, s:hsl.s, v:hsl.l, a:1}).length !== 7) {
+	while (hsvaToHex({ h: hsl.h, s: hsl.s, v: hsl.l, a: 1 }).length !== 7) {
 		hsl.l += 1;
 	}
 
-	console.log(hsvaToHex({h:hsl.h, s:hsl.s, v:hsl.l, a:1}));
+	console.log(hsvaToHex({ h: hsl.h, s: hsl.s, v: hsl.l, a: 1 }));
 
-	return hsvaToHex({h:hsl.h, s:hsl.s, v:hsl.l, a:1});
+	return hsvaToHex({ h: hsl.h, s: hsl.s, v: hsl.l, a: 1 });
 }
 
 export const hexOpacity = (hex: string, opacity: number): string => {

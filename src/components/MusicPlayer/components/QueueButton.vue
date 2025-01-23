@@ -2,7 +2,7 @@
 
 import MoooomIcon from '@/components/Images/icons/MoooomIcon.vue';
 import MusicButton from './MusicButton.vue';
-import {queueMenuOpen, toggleQueueMenuOpen} from '@/store/audioPlayer';
+import { queueMenuOpen, toggleQueueMenuOpen } from '@/store/audioPlayer';
 
 const handleClick = (e?: MouseEvent) => {
     e?.stopPropagation();

@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import {sidebar} from '@/store/sidebar';
+import { sidebar } from '@/store/sidebar';
 
 import indexer from '@/store/indexer';
-import {useIsFetching, useIsMutating} from '@tanstack/vue-query';
+import { useIsFetching, useIsMutating } from '@tanstack/vue-query';
 
 const isFetching = useIsFetching();
 const isMutating = useIsMutating();
@@ -11,7 +11,7 @@ const isMutating = useIsMutating();
 
 <template>
     <div id="gradientBorder" tabindex="-1"
-         class="relative flex flex-1 overflow-clip border-transparent text-start outline-none transition-all duration-300 h-available w-available scrollbar-none gradient-border sm:rounded-3xl"
+        class="relative flex flex-1 overflow-clip border-transparent text-start outline-none transition-all duration-300 h-available w-available scrollbar-none gradient-border sm:rounded-3xl"
         :class="{
             'sm:ml-[1.35rem]': sidebar == 'hidden',
             'sm:mr-[1.35rem]': !indexer,

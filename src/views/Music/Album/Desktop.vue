@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import {IonPage, IonContent} from '@ionic/vue';
+import { IonPage, IonContent } from '@ionic/vue';
 import ExploreContainer from '@/components/ExploreContainer.vue';
 import router from '@/router';
 

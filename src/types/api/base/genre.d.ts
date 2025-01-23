@@ -1,4 +1,4 @@
-import type {ColorPalettes} from '@/types/api/shared';
+import type { ColorPalettes } from '@/types/api/shared';
 
 export interface GenreResponse {
 	id: string;
@@ -12,7 +12,7 @@ export interface GenreResponse {
 }
 
 export interface Genre {
-    id: string;
-    name: string;
+	id: string;
+	name: string;
 	link: string;
 }

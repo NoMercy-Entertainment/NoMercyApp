@@ -1,4 +1,4 @@
-import {LibraryResponse} from '@/types/api/base/library';
+import { LibraryResponse } from '@/types/api/base/library';
 
 export interface MobileLibrariesResponseItem {
 	title: string;

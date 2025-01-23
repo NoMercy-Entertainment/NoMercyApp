@@ -1,7 +1,7 @@
-import {type ComputedRef} from 'vue';
+import { type ComputedRef } from 'vue';
 
 import useMounted from '@/hooks/useMounted';
-import {HubConnection} from '@microsoft/signalr';
+import { HubConnection } from '@microsoft/signalr';
 
 const useHubListener = (
 	connection: ComputedRef<HubConnection | null | undefined>,

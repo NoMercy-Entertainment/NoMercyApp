@@ -1,16 +1,16 @@
 <script setup lang="ts">
-import {type PropType, ref, computed} from 'vue';
+import { type PropType, ref, computed } from 'vue';
 
-import type {HomeDataItem} from '@/types/api/music';
-import type {PaletteColors} from "@/types/api/shared";
-import type {DisplayList, MusicCardPageResponseData} from "@/types/api/music/musicPlayer";
-import type {Album, AlbumResponse} from "@/types/api/music/album";
-import type {Artist} from "@/types/api/music/artist";
-import type {PlaylistItem} from '@/types/musicPlayer';
+import type { HomeDataItem } from '@/types/api/music';
+import type { PaletteColors } from "@/types/api/shared";
+import type { DisplayList, MusicCardPageResponseData } from "@/types/api/music/musicPlayer";
+import type { Album, AlbumResponse } from "@/types/api/music/album";
+import type { Artist } from "@/types/api/music/artist";
+import type { PlaylistItem } from '@/types/musicPlayer';
 
-import {hexLighter} from "@/lib/colorHelper";
-import {currentServer} from '@/store/currentServer';
-import {useAutoThemeColors} from '@/store/preferences';
+import { hexLighter } from "@/lib/colorHelper";
+import { currentServer } from '@/store/currentServer';
+import { useAutoThemeColors } from '@/store/preferences';
 import AppLogoSquare from '@/components/Images/icons/AppLogoSquare.vue';
 
 const props = defineProps({
@@ -142,40 +142,20 @@ const style = computed(() => {
 </script>
 
 <template>
-    <div
-        :class="`${className} aspect-square`"
-        :style="style">
+    <div :class="`${className} aspect-square`" :style="style">
 
         <picture v-if="data?.cover"
-                 class="aspect-square inset-0 !absolute top-0 overflow-clip z-10 h-available w-available object-cover transition-all duration-300"
-                 :style="`opacity: ${opacity};`">
-            <source
-                :srcset="`${baseImageUrl}?width=300&type=avif 1x`"
-                type="image/avif"
-            />
-            <source
-                :srcset="`${baseImageUrl}?width=${(size ?? 500)}&type=webp 1x`"
-                type="image/webp"
-            />
-            <source
-                :srcset="`${baseImageUrl}?width=${(size ?? 500)}&type=jpg 1x`"
-                type="image/jpeg"
-            />
-            <img :src="baseImageUrl"
-                 :alt="`cover image for ${data?.name ?? 'image'}`"
-                 :id="id"
-                 class="aspect-square !absolute top-0 z-10 h-available w-available object-cover"
-                 :loading="loading"
-                 crossorigin="anonymous"
-                 :data-id="data?.id"
-                 :onfocus="handleFocus"
-                 :onload="onLoad"
-                 :onloadstart="onLoadStart"
-                 :onerror="remove"
-            />
+            class="aspect-square inset-0 !absolute top-0 overflow-clip z-10 h-available w-available object-cover transition-all duration-300"
+            :style="`opacity: ${opacity};`">
+            <source :srcset="`${baseImageUrl}?width=300&type=avif 1x`" type="image/avif" />
+            <source :srcset="`${baseImageUrl}?width=${(size ?? 500)}&type=webp 1x`" type="image/webp" />
+            <source :srcset="`${baseImageUrl}?width=${(size ?? 500)}&type=jpg 1x`" type="image/jpeg" />
+            <img :src="baseImageUrl" :alt="`cover image for ${data?.name ?? 'image'}`" :id="id"
+                class="aspect-square !absolute top-0 z-10 h-available w-available object-cover" :loading="loading"
+                crossorigin="anonymous" :data-id="data?.id" :onfocus="handleFocus" :onload="onLoad"
+                :onloadstart="onLoadStart" :onerror="remove" />
         </picture>
-        <div v-else
-             class="inset-0 grid aspect-video h-full w-full place-items-center bg-black p-2 place-center">
+        <div v-else class="inset-0 grid aspect-video h-full w-full place-items-center bg-black p-2 place-center">
             <div
                 class="w-full h-full inset-0 grid place-items-center place-center bg-[rgb(var(--color-logo-dark)/20%)]">
                 <AppLogoSquare class="h-auto w-3/5" />

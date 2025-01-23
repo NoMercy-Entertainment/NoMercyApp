@@ -1,12 +1,12 @@
-import {computed, type Ref, ref, watch} from 'vue';
-import {HubConnectionState} from '@microsoft/signalr/src/HubConnection';
+import { computed, type Ref, ref, watch } from 'vue';
+import { HubConnectionState } from '@microsoft/signalr/src/HubConnection';
 
 import SocketClient from '@/lib/clients/socketClient/SocketClient';
-import {connect, onConnect, onDisconnect} from '@/lib/clients/socketClient/events';
-import {currentServer} from '@/store/currentServer';
-import {user} from '@/store/user';
+import { connect, onConnect, onDisconnect } from '@/lib/clients/socketClient/events';
+import { currentServer } from '@/store/currentServer';
+import { user } from '@/store/user';
 
-const castSocket: Ref<SocketClient| undefined> = ref();
+const castSocket: Ref<SocketClient | undefined> = ref();
 export const connection = computed(() => castSocket.value?.connection);
 export const castSocketIsConnected = ref(false);
 
@@ -21,7 +21,7 @@ const connected = () => {
 	}
 };
 
-const disconnected = (err?: Event|void) => {
+const disconnected = (err?: Event | void) => {
 	castSocketIsConnected.value = false;
 	console.log('Disconnected from Cast SignalR', err);
 	document.dispatchEvent(new Event('castHub-disconnected'));

@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import {type PropType} from "vue";
+import { type PropType } from "vue";
 
-import {twMerge} from "tailwind-merge";
-import {DeviceIcons} from '@Icons/icons';
+import { twMerge } from "tailwind-merge";
+import { DeviceIcons } from '@Icons/icons';
 
 import icons from '/resources/device-icons.svg';
 
@@ -22,6 +22,6 @@ defineProps({
 
 <template>
     <svg :class="twMerge('w-6 h-auto aspect-square flex-shrink-0 flex', className)">
-      <use :xlink:href="`${icons}#${ icon }`"></use>
+        <use :xlink:href="`${icons}#${icon}`"></use>
     </svg>
 </template>

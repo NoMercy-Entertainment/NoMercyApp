@@ -19,15 +19,15 @@ export interface KeycloakComposable {
 }
 
 export const useKeycloak = (): KeycloakComposable => {
-	return {
-		...toRefs<KeycloakState>(state),
-		keycloak: getKeycloak(),
-		hasRoles: (roles: string[]) =>
-			!isNil(roles) && state.isAuthenticated && roles.every(role => state.roles.includes(role)),
-		hasResourceRoles: (roles: string[], resource: string) =>
-			!isNil(roles)
+  return {
+    ...toRefs<KeycloakState>(state),
+    keycloak: getKeycloak(),
+    hasRoles: (roles: string[]) =>
+      !isNil(roles) && state.isAuthenticated && roles.every(role => state.roles.includes(role)),
+    hasResourceRoles: (roles: string[], resource: string) =>
+      !isNil(roles)
       && !isNil(resource)
       && state.isAuthenticated
       && roles.every(role => state.resourceRoles[resource].includes(role)),
-	};
+  };
 };

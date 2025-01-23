@@ -1,16 +1,16 @@
 <script setup lang="ts">
-import {onMounted, ref, watch} from "vue";
-import {IonPage, IonContent} from '@ionic/vue';
+import { onMounted, ref, watch } from "vue";
+import { IonPage, IonContent } from '@ionic/vue';
 
 import useMounted from "@/hooks/useMounted";
-import {connection, castSocketIsConnected, startCastSocket, stopCastSocket} from "@/lib/clients/castSocket";
+import { connection, castSocketIsConnected, startCastSocket, stopCastSocket } from "@/lib/clients/castSocket";
 import SliderBar from "@/components/MusicPlayer/components/SliderBar.vue";
 import MoooomIcon from "@/components/Images/icons/MoooomIcon.vue";
 import MusicButton from "@/components/MusicPlayer/components/MusicButton.vue";
 import PlayerIcon from "@/components/Images/icons/PlayerIcon.vue";
-import {TimeData, PlaylistItem, Track} from "@nomercy-entertainment/nomercy-video-player/src/types";
-import {pad} from "@/lib/stringArray";
-import type {MediaPlaylist} from "hls.js";
+import { TimeData, PlaylistItem, Track } from "@nomercy-entertainment/nomercy-video-player/src/types";
+import { pad } from "@/lib/stringArray";
+import type { MediaPlaylist } from "hls.js";
 
 const receivers = ref<string[]>([]);
 const currentReceiver = ref<string>('');
@@ -55,7 +55,7 @@ const playlist = ref<PlaylistItem[]>([]);
 const playlistItem = ref<PlaylistItem>(<PlaylistItem>{});
 
 const subtitleTracks = ref<Array<Track>>([]);
-const currentSubtitleTrack = ref<Track|null>(null);
+const currentSubtitleTrack = ref<Track | null>(null);
 const audioTracks = ref<MediaPlaylist[]>([]);
 const currentAudioTrack = ref<MediaPlaylist | null>(null);
 
@@ -64,19 +64,19 @@ useMounted(startCastSocket, stopCastSocket);
 watch(castSocketIsConnected, (value) => {
   if (value) {
     connection.value?.invoke('GetChromeCasts')
-        .then((data: string[]) => {
-          receivers.value = data;
-        });
+      .then((data: string[]) => {
+        receivers.value = data;
+      });
 
     connection.value?.invoke('GetChromeCastStatus')
-        .then((data) => {
-          chromeCastStatus.value = data;
-        });
+      .then((data) => {
+        chromeCastStatus.value = data;
+      });
 
     connection.value?.invoke('GetMediaStatus')
-        .then((data) => {
-          mediaStatus.value = data;
-        });
+      .then((data) => {
+        mediaStatus.value = data;
+      });
 
     connection.value?.invoke('GetPlayerState');
 
@@ -171,19 +171,19 @@ onMounted(() => {
 
   if (castSocketIsConnected.value) {
     connection.value?.invoke('GetChromeCasts')
-        .then((data: string[]) => {
-          receivers.value = data;
-        });
+      .then((data: string[]) => {
+        receivers.value = data;
+      });
 
     connection.value?.invoke('GetChromeCastStatus')
-        .then((data) => {
-          chromeCastStatus.value = data;
-        });
+      .then((data) => {
+        chromeCastStatus.value = data;
+      });
 
     connection.value?.invoke('GetMediaStatus')
-        .then((data) => {
-          mediaStatus.value = data;
-        });
+      .then((data) => {
+        mediaStatus.value = data;
+      });
 
     connection.value?.invoke('GetPlayerState');
 
@@ -527,13 +527,13 @@ const setPlaylistItem = (value: number) => {
   <ion-page>
     <ion-content :fullscreen="true">
       <div class="flex flex-col gap-4 items-center justify-center p-4">
-        <Select v-model="currentReceiver" :options="receivers" optionLabel="" class="w-1/3 min-w-96"/>
+        <Select v-model="currentReceiver" :options="receivers" optionLabel="" class="w-1/3 min-w-96" />
 
         <div class="flex gap-4 w-1/3 min-w-96 items-center">
           <Button @click="launch" id="launch">
             {{ $t('Launch') }}
           </Button>
-          <InputText v-model="input" class="w-full"/>
+          <InputText v-model="input" class="w-full" />
           <Button @click="castPlaylist(input)" id="cast">
             {{ $t('Cast') }}
           </Button>
@@ -542,109 +542,81 @@ const setPlaylistItem = (value: number) => {
         <div v-if="playlistItem" class="flex flex-col gap-4 w-1/3 min-w-96 items-center justify-center">
           <div class="flex gap-1 items-center">
             <span>
-                {{ playlistItem.show }}
+              {{ playlistItem.show }}
             </span>
             <span v-if="playlistItem.season && playlistItem.episode">
-                - S{{ pad(playlistItem.season, 2) }}E{{ pad(playlistItem.episode, 2) }} -
+              - S{{ pad(playlistItem.season, 2) }}E{{ pad(playlistItem.episode, 2) }} -
             </span>
             <span>
-                {{ playlistItem.title }}
+              {{ playlistItem.title }}
             </span>
           </div>
 
           <img v-if="playlistItem.image" :src="playlistItem.image" :alt="playlistItem.title"
-               class="aspect-video w-full h-auto">
+            class="aspect-video w-full h-auto">
         </div>
 
         <div class="flex gap-4 w-1/3 min-w-96 items-center justify-center">
 
           <MusicButton label="Previous" :onclick="handlePrevious">
-            <PlayerIcon icon="nmPreviousHalftone" class="absolute h-7 w-7 inset-1.5"/>
-            <PlayerIcon icon="nmPrevious"
-                        class="absolute h-7 w-7 opacity-0 group-hover/button:opacity-100 inset-1.5"/>
+            <PlayerIcon icon="nmPreviousHalftone" class="absolute h-7 w-7 inset-1.5" />
+            <PlayerIcon icon="nmPrevious" class="absolute h-7 w-7 opacity-0 group-hover/button:opacity-100 inset-1.5" />
           </MusicButton>
 
           <MusicButton label="Toggle Playback" :onclick="handlePlayback">
 
-            <PlayerIcon icon="nmPause" v-if="isPlaying"
-                        className="h-9 w-9"/>
-            <PlayerIcon icon="nmPlay" v-else
-                        className="h-9 w-9"/>
+            <PlayerIcon icon="nmPause" v-if="isPlaying" className="h-9 w-9" />
+            <PlayerIcon icon="nmPlay" v-else className="h-9 w-9" />
 
           </MusicButton>
 
           <MusicButton label="Next" :onclick="handleNext">
-            <PlayerIcon icon="nmNextHalftone" class="absolute h-7 w-7 inset-1.5"/>
-            <PlayerIcon icon="nmNext"
-                        class="absolute h-7 w-7 opacity-0 group-hover/button:opacity-100 inset-1.5"/>
+            <PlayerIcon icon="nmNextHalftone" class="absolute h-7 w-7 inset-1.5" />
+            <PlayerIcon icon="nmNext" class="absolute h-7 w-7 opacity-0 group-hover/button:opacity-100 inset-1.5" />
           </MusicButton>
 
         </div>
 
         <div class="flex gap-4 w-1/3 min-w-96 items-center">
           <span class="font-mono">{{ currentTimeHuman }}</span>
-          <SliderBar
-              :percentage="percentage"
-              :position="currentTime"
-              :min="0"
-              :max="duration"
-              @input="seek(Number(($event.target as HTMLInputElement).value))"
-          />
+          <SliderBar :percentage="percentage" :position="currentTime" :min="0" :max="duration"
+            @input="seek(Number(($event.target as HTMLInputElement).value))" />
           <span class="font-mono">{{ remainingTimeHuman }}</span>
         </div>
 
         <div class="flex gap-4 w-1/3 min-w-96 items-center">
           <MusicButton label="Mute" :onclick="toggleMute">
-            <MoooomIcon icon="volumeMuted" v-if="isMuted" class="h-6 w-6"/>
-            <MoooomIcon icon="volumeOne" v-else-if="volume == 0" class="h-6 w-6"/>
-            <MoooomIcon icon="volumeThree" v-else-if="volume > 50" class="h-6 w-6"/>
-            <MoooomIcon icon="volumeTwo" v-else class="h-6 w-6"/>
+            <MoooomIcon icon="volumeMuted" v-if="isMuted" class="h-6 w-6" />
+            <MoooomIcon icon="volumeOne" v-else-if="volume == 0" class="h-6 w-6" />
+            <MoooomIcon icon="volumeThree" v-else-if="volume > 50" class="h-6 w-6" />
+            <MoooomIcon icon="volumeTwo" v-else class="h-6 w-6" />
           </MusicButton>
 
-          <SliderBar
-              :percentage="volume"
-              :position="volume"
-              @input="volume = Number(($event.target as HTMLInputElement).value)"
-              :min="0"
-              :step="1"
-              :max="100"
-          />
+          <SliderBar :percentage="volume" :position="volume"
+            @input="volume = Number(($event.target as HTMLInputElement).value)" :min="0" :step="1" :max="100" />
         </div>
 
         <div class="flex flex-col gap-4 w-1/3 min-w-96 items-center justify-center">
 
           <div class="flex gap-4 w-full items-center justify-center">
             <FloatLabel variant="on" class="w-full">
-              <Select v-model="currentSubtitleTrack"
-                      :options="subtitleTracks"
-                      id="subtitleTracks"
-                      :optionLabel="(track: Track) => `${track.language ? translations[track.language as 'off'] : ''} ${track.label?.toTitleCase()} ${track.file.endsWith('ass') ? ' - Styled' : ''}`"
-                      class="w-full"
-                      @change="setSubtitle($event.value.id)"
-              />
+              <Select v-model="currentSubtitleTrack" :options="subtitleTracks" id="subtitleTracks"
+                :optionLabel="(track: Track) => `${track.language ? translations[track.language as 'off'] : ''} ${track.label?.toTitleCase()} ${track.file.endsWith('ass') ? ' - Styled' : ''}`"
+                class="w-full" @change="setSubtitle($event.value.id)" />
               <label for="subtitleTracks">Subtitle</label>
             </FloatLabel>
 
             <FloatLabel variant="on" class="w-full">
-              <Select v-model="currentAudioTrack"
-                      :options="audioTracks"
-                      id="audioTracks"
-                      :optionLabel="(track: Track) => `${track.label}`"
-                      class="w-full"
-                      @change="setAudio($event.value.id)"
-              />
+              <Select v-model="currentAudioTrack" :options="audioTracks" id="audioTracks"
+                :optionLabel="(track: Track) => `${track.label}`" class="w-full" @change="setAudio($event.value.id)" />
               <label for="audioTracks">Audio</label>
             </FloatLabel>
           </div>
 
           <FloatLabel variant="on" class="w-full">
-            <Select v-model="playlistItem"
-                    id="playlist"
-                    :options="playlist"
-                    :optionLabel="(item: PlaylistItem) => `S${pad(item.season ?? 0,2) }E${pad(item.episode ?? 0,2) } - ${item.title}`"
-                    class="w-full"
-                    @change="setPlaylistItem(playlist.indexOf($event.value))"
-            />
+            <Select v-model="playlistItem" id="playlist" :options="playlist"
+              :optionLabel="(item: PlaylistItem) => `S${pad(item.season ?? 0, 2)}E${pad(item.episode ?? 0, 2)} - ${item.title}`"
+              class="w-full" @change="setPlaylistItem(playlist.indexOf($event.value))" />
             <label for="playlist">Playlist Item</label>
           </FloatLabel>
         </div>

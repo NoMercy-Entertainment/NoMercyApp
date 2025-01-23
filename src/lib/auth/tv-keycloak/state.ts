@@ -2,15 +2,15 @@ import { reactive } from 'vue';
 import { jwtDecode } from 'jwt-decode';
 
 export interface KeycloakState<T = unknown> {
-  isAuthenticated: boolean
-  hasFailed: boolean
-  isPending: boolean
-  token: string
-  refreshToken: string
-  decodedToken: T
-  username: string
-  roles: string[]
-  resourceRoles: Record<string, string[]>
+	isAuthenticated: boolean
+	hasFailed: boolean
+	isPending: boolean
+	token: string
+	refreshToken: string
+	decodedToken: T
+	username: string
+	roles: string[]
+	resourceRoles: Record<string, string[]>
 }
 
 export const state = reactive<KeycloakState>({
@@ -26,11 +26,11 @@ export const state = reactive<KeycloakState>({
 });
 
 interface TokenContent {
-  preferred_username: string
-  realm_access: {
-    roles: string[]
-  }
-  resource_access: Record<string, { roles: string[] }>
+	preferred_username: string
+	realm_access: {
+		roles: string[]
+	}
+	resource_access: Record<string, { roles: string[] }>
 }
 
 export const setToken = (token: string): void => {

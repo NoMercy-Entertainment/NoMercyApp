@@ -1,15 +1,15 @@
 <script setup lang="ts">
-import {onBeforeUnmount, onMounted, onUnmounted, ref, watch} from 'vue';
-import {IonContent, IonPage, isPlatform, onIonViewDidEnter} from '@ionic/vue';
-import {App} from '@capacitor/app';
+import { onBeforeUnmount, onMounted, onUnmounted, ref, watch } from 'vue';
+import { IonContent, IonPage, isPlatform, onIonViewDidEnter } from '@ionic/vue';
+import { App } from '@capacitor/app';
 
-import {disableImmersiveMode, enableImmersiveMode, lockLandscape, lockPortrait} from '@/lib/utils';
-import {isNative} from '@/config/global';
-import {currentServer} from '@/store/currentServer';
-import {user} from '@/store/user';
-import {setDisableScreensaver} from '@/store/imageModal';
+import { disableImmersiveMode, enableImmersiveMode, lockLandscape, lockPortrait } from '@/lib/utils';
+import { isNative } from '@/config/global';
+import { currentServer } from '@/store/currentServer';
+import { user } from '@/store/user';
+import { setDisableScreensaver } from '@/store/imageModal';
 
-import type {NMPlayer, PlaylistItem, PlayerConfig} from '@/lib/VideoPlayer';
+import type { NMPlayer, PlaylistItem, PlayerConfig } from '@/lib/VideoPlayer';
 import {
   AutoSkipPlugin,
   DesktopUIPlugin,
@@ -21,9 +21,9 @@ import {
 import audioPlayer from '@/store/audioPlayer';
 import router from "@/router";
 import useServerClient from "@/lib/clients/useServerClient";
-import {setNavBarVisible} from "@/store/ui";
+import { setNavBarVisible } from "@/store/ui";
 
-const {data, isError} = useServerClient<PlaylistItem[]>({
+const { data, isError } = useServerClient<PlaylistItem[]>({
 
 });
 
@@ -71,7 +71,7 @@ const initPlayer = (value: PlaylistItem[] | undefined) => {
 
   // @ts-ignore
   player.value = nmplayer('player1')
-      .setup(config);
+    .setup(config);
 
   player.value?.once('back', () => {
     //
@@ -163,11 +163,10 @@ onUnmounted(() => {
   <ion-page>
     <ion-content :fullscreen="true">
       <Teleport to="body">
-        <div class="absolute inset-0 flex h-full w-full overflow-clip bg-black z-1199"
-             :class="{
-             'mb-28': isNative,
-             'mb-0': !isNative,
-           }">
+        <div class="absolute inset-0 flex h-full w-full overflow-clip bg-black z-1199" :class="{
+          'mb-28': isNative,
+          'mb-0': !isNative,
+        }">
           <div id="player1" class="group nomercyplayer"></div>
         </div>
       </Teleport>

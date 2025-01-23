@@ -1,12 +1,12 @@
-import {Plugin} from 'vue';
-import {defaultInitConfig} from './const';
-import {createKeycloak, initKeycloak} from './keycloak';
-import {isFunction, isNil, isPromise, isString} from './utils';
-import {loadJsonConfig} from './config';
+import { Plugin } from 'vue';
+import { defaultInitConfig } from './const';
+import { createKeycloak, initKeycloak } from './keycloak';
+import { isFunction, isNil, isPromise, isString } from './utils';
+import { loadJsonConfig } from './config';
 
 interface KeycloakPluginConfig {
-  config: Keycloak.KeycloakConfig
-  initOptions?: Keycloak.KeycloakInitOptions
+	config: Keycloak.KeycloakConfig
+	initOptions?: Keycloak.KeycloakInitOptions
 }
 
 type KeycloakConfigFactory = () => KeycloakPluginConfig

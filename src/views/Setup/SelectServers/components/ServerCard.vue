@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import {type PropType} from "vue";
+import { type PropType } from "vue";
 
-import {Server} from '@/types/auth';
+import { Server } from '@/types/auth';
 
 import DeviceIcon from '@/components/Images/icons/DeviceIcon.vue';
 import MoooomIcon from '@/components/Images/icons/MoooomIcon.vue';
@@ -16,7 +16,8 @@ defineProps({
 </script>
 
 <template>
-    <button  class="flex flex-col justify-end items-center w-full overflow-hidden rounded-xl border-[1.5px] border-[#e2f0fd]/4 transition-transform duration-300 cursor-pointer">
+    <button
+        class="flex flex-col justify-end items-center w-full overflow-hidden rounded-xl border-[1.5px] border-[#e2f0fd]/4 transition-transform duration-300 cursor-pointer">
         <div
             class="flex flex-col justify-start items-start self-stretch bg-auto-1 bg-[radial-gradient(81.87%_66.22%_at_0%_0%,rgba(255,255,255,0.2)_0%,rgba(255,255,255,0)_100%)] w-full h-auto aspect-video">
             <div

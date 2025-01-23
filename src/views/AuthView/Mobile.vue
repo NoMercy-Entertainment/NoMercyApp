@@ -151,131 +151,130 @@
 </script>
 
 <template>
-<!--  <div v-if="show"-->
-<!--       class="flex h-screen w-screen flex-col flex-nowrap items-center justify-center gap-4 overflow-hidden p-8 text-contrast bg-auto-50">-->
-<!--    <div class="mx-12 flex">-->
-<!--      <AppLogo class="h-12 w-full"/>-->
-<!--    </div>-->
-<!--    <div v-if="tab == 'login'"-->
-<!--         class="flex w-full flex-col gap-4">-->
-<!--      <div class="pointer-events-auto flex w-full flex-col">-->
+    <!--  <div v-if="show"-->
+    <!--       class="flex h-screen w-screen flex-col flex-nowrap items-center justify-center gap-4 overflow-hidden p-8 text-contrast bg-auto-50">-->
+    <!--    <div class="mx-12 flex">-->
+    <!--      <AppLogo class="h-12 w-full"/>-->
+    <!--    </div>-->
+    <!--    <div v-if="tab == 'login'"-->
+    <!--         class="flex w-full flex-col gap-4">-->
+    <!--      <div class="pointer-events-auto flex w-full flex-col">-->
 
-<!--        <Input id="email"-->
-<!--               v-model="email"-->
-<!--               name="Email"-->
-<!--        >-->
-<!--        </Input>-->
+    <!--        <Input id="email"-->
+    <!--               v-model="email"-->
+    <!--               name="Email"-->
+    <!--        >-->
+    <!--        </Input>-->
 
-<!--        <Input id="password"-->
-<!--               v-model="password"-->
-<!--               name="Password"-->
-<!--               type="password"-->
-<!--        >-->
-<!--        </Input>-->
+    <!--        <Input id="password"-->
+    <!--               v-model="password"-->
+    <!--               name="Password"-->
+    <!--               type="password"-->
+    <!--        >-->
+    <!--        </Input>-->
 
-<!--        <Input id="twofactor"-->
-<!--               v-model="twoFactor"-->
-<!--               name="Two factor code"-->
-<!--               type="number"-->
-<!--        >-->
-<!--        </Input>-->
-<!--        <template v-if="errorBucket.some(e => e.place == 'login')">-->
-<!--          <p :class="errorBucket.find(e => e.place == 'login')?.type == 'error'-->
-<!--                           ? 'text-red-600 dark:text-red-400'-->
-<!--                           : 'text-green-600 dark:text-green-400'"-->
-<!--             class="text-sm">-->
-<!--            {{ t(errorBucket.find(e => e.place == 'login')?.message ?? '') }}-->
-<!--          </p>-->
-<!--        </template>-->
-<!--      </div>-->
-<!--      <div class="flex w-full flex-col gap-4">-->
-<!--        <Button id="Login"-->
-<!--                :class="`flex gap-4 ${loading && 'last:children:animate-spin'}`"-->
-<!--                color="violet"-->
-<!--                @click="login">-->
-<!--          <span class="">{{ t('Login') }}</span>-->
-<!--          <MoooomIcon icon="dataBaseRefresh" class="w-6 h-6"/>-->
-<!--        </Button>-->
-<!--      </div>-->
-<!--      <span class="text-center text-sm text-contrast">-->
-<!--                {{ t('Don\'t have an account') }}? <button :onclick="() => setTab('register')"-->
-<!--                                                           class="text-theme-500" id="register">-->
-<!--                    <span>{{ t('Register') }}</span>-->
-<!--                </button>-->
-<!--            </span>-->
-<!--    </div>-->
-<!--    <div v-else-->
-<!--         class="flex w-full flex-col gap-4">-->
-<!--      <div class="pointer-events-auto flex w-full flex-col">-->
+    <!--        <Input id="twofactor"-->
+    <!--               v-model="twoFactor"-->
+    <!--               name="Two factor code"-->
+    <!--               type="number"-->
+    <!--        >-->
+    <!--        </Input>-->
+    <!--        <template v-if="errorBucket.some(e => e.place == 'login')">-->
+    <!--          <p :class="errorBucket.find(e => e.place == 'login')?.type == 'error'-->
+    <!--                           ? 'text-red-600 dark:text-red-400'-->
+    <!--                           : 'text-green-600 dark:text-green-400'"-->
+    <!--             class="text-sm">-->
+    <!--            {{ t(errorBucket.find(e => e.place == 'login')?.message ?? '') }}-->
+    <!--          </p>-->
+    <!--        </template>-->
+    <!--      </div>-->
+    <!--      <div class="flex w-full flex-col gap-4">-->
+    <!--        <Button id="Login"-->
+    <!--                :class="`flex gap-4 ${loading && 'last:children:animate-spin'}`"-->
+    <!--                color="violet"-->
+    <!--                @click="login">-->
+    <!--          <span class="">{{ t('Login') }}</span>-->
+    <!--          <MoooomIcon icon="dataBaseRefresh" class="w-6 h-6"/>-->
+    <!--        </Button>-->
+    <!--      </div>-->
+    <!--      <span class="text-center text-sm text-contrast">-->
+    <!--                {{ t('Don\'t have an account') }}? <button :onclick="() => setTab('register')"-->
+    <!--                                                           class="text-theme-500" id="register">-->
+    <!--                    <span>{{ t('Register') }}</span>-->
+    <!--                </button>-->
+    <!--            </span>-->
+    <!--    </div>-->
+    <!--    <div v-else-->
+    <!--         class="flex w-full flex-col gap-4">-->
+    <!--      <div class="pointer-events-auto flex w-full flex-col">-->
 
-<!--        <Input id="firstName"-->
-<!--               v-model="firstName"-->
-<!--               name="FirstName"-->
-<!--               @change-firstName="firstName = $event">-->
-<!--        </Input>-->
+    <!--        <Input id="firstName"-->
+    <!--               v-model="firstName"-->
+    <!--               name="FirstName"-->
+    <!--               @change-firstName="firstName = $event">-->
+    <!--        </Input>-->
 
-<!--        <Input id="lastName"-->
-<!--               v-model="lastName"-->
-<!--               name="LastName"-->
-<!--               @change-lastName="lastName = $event">-->
-<!--        </Input>-->
+    <!--        <Input id="lastName"-->
+    <!--               v-model="lastName"-->
+    <!--               name="LastName"-->
+    <!--               @change-lastName="lastName = $event">-->
+    <!--        </Input>-->
 
-<!--        <Input id="username"-->
-<!--               v-model="username"-->
-<!--               name="Username"-->
-<!--               @change-username="username = $event">-->
-<!--        </Input>-->
+    <!--        <Input id="username"-->
+    <!--               v-model="username"-->
+    <!--               name="Username"-->
+    <!--               @change-username="username = $event">-->
+    <!--        </Input>-->
 
-<!--        <Input id="email"-->
-<!--               v-model="email"-->
-<!--               name="Email"-->
-<!--               @change-email="email = $event">-->
-<!--        </Input>-->
+    <!--        <Input id="email"-->
+    <!--               v-model="email"-->
+    <!--               name="Email"-->
+    <!--               @change-email="email = $event">-->
+    <!--        </Input>-->
 
-<!--        <Input id="password"-->
-<!--               v-model="password"-->
-<!--               name="Password"-->
-<!--               type="password"-->
-<!--               @change-password="password = $event">-->
-<!--        </Input>-->
+    <!--        <Input id="password"-->
+    <!--               v-model="password"-->
+    <!--               name="Password"-->
+    <!--               type="password"-->
+    <!--               @change-password="password = $event">-->
+    <!--        </Input>-->
 
-<!--        <Input id="passwordConfirm"-->
-<!--               v-model="passwordConfirm"-->
-<!--               name="Confirm password"-->
-<!--               type="password"-->
-<!--               @change-passwordConfirm="passwordConfirm = $event">-->
-<!--        </Input>-->
+    <!--        <Input id="passwordConfirm"-->
+    <!--               v-model="passwordConfirm"-->
+    <!--               name="Confirm password"-->
+    <!--               type="password"-->
+    <!--               @change-passwordConfirm="passwordConfirm = $event">-->
+    <!--        </Input>-->
 
-<!--        <template v-if="errorBucket.some(e => e.place == 'register')">-->
-<!--          <p :class="errorBucket.find(e => e.place == 'register')?.type == 'error'-->
-<!--                           ? 'text-red-600 dark:text-red-400'-->
-<!--                           : 'text-green-600 dark:text-green-400'"-->
-<!--             class="text-sm">-->
-<!--            {{ t(errorBucket.find(e => e.place == 'register')?.message ?? '') }}-->
-<!--          </p>-->
-<!--        </template>-->
-<!--      </div>-->
-<!--      <div class="flex w-full flex-col gap-4">-->
-<!--        <Button id="Register"-->
-<!--                color="theme"-->
-<!--                @click="register()">-->
-<!--          {{ t('Register') }}-->
-<!--        </Button>-->
-<!--      </div>-->
-<!--      <span class="text-center text-sm text-contrast">-->
-<!--                {{ t('Already have an account') }}? <button id="login" :onclick="() => setTab('login')"-->
-<!--                                                            class="text-theme-500">-->
-<!--                    {{ t('Login') }}-->
-<!--                </button>-->
-<!--            </span>-->
-<!--    </div>-->
-<!--  </div>-->
-<!--  <div v-else-->
-<!--       class="grid h-screen w-screen place-items-center">-->
+    <!--        <template v-if="errorBucket.some(e => e.place == 'register')">-->
+    <!--          <p :class="errorBucket.find(e => e.place == 'register')?.type == 'error'-->
+    <!--                           ? 'text-red-600 dark:text-red-400'-->
+    <!--                           : 'text-green-600 dark:text-green-400'"-->
+    <!--             class="text-sm">-->
+    <!--            {{ t(errorBucket.find(e => e.place == 'register')?.message ?? '') }}-->
+    <!--          </p>-->
+    <!--        </template>-->
+    <!--      </div>-->
+    <!--      <div class="flex w-full flex-col gap-4">-->
+    <!--        <Button id="Register"-->
+    <!--                color="theme"-->
+    <!--                @click="register()">-->
+    <!--          {{ t('Register') }}-->
+    <!--        </Button>-->
+    <!--      </div>-->
+    <!--      <span class="text-center text-sm text-contrast">-->
+    <!--                {{ t('Already have an account') }}? <button id="login" :onclick="() => setTab('login')"-->
+    <!--                                                            class="text-theme-500">-->
+    <!--                    {{ t('Login') }}-->
+    <!--                </button>-->
+    <!--            </span>-->
+    <!--    </div>-->
+    <!--  </div>-->
+    <!--  <div v-else-->
+    <!--       class="grid h-screen w-screen place-items-center">-->
 
-<!--    <div role="status">-->
-<!--      <span>{{ t('Loading') }}...</span>-->
-<!--    </div>-->
-<!--  </div>-->
+    <!--    <div role="status">-->
+    <!--      <span>{{ t('Loading') }}...</span>-->
+    <!--    </div>-->
+    <!--  </div>-->
 </template>
-

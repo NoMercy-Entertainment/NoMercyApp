@@ -4,7 +4,7 @@ import {
 	convertToSeconds,
 	limitSentenceByCharacters,
 	lineBreakShowTitle,
-} from  '@nomercy-entertainment/nomercy-video-player/src/helpers';
+} from '@nomercy-entertainment/nomercy-video-player/src/helpers';
 
 import type { Icon } from './buttons';
 import type { PlaylistItem } from '../../index';
@@ -1475,7 +1475,7 @@ export class TVUIPlugin extends BaseUIPlugin {
 
 	}
 
-	createTvButton(parent: HTMLElement, id: string, text: string|null, action: () => void, icon?: Icon['path']) {
+	createTvButton(parent: HTMLElement, id: string, text: string | null, action: () => void, icon?: Icon['path']) {
 
 		const tvButton = this.player.createElement('button', id)
 			.addClasses([
@@ -1552,7 +1552,7 @@ export class TVUIPlugin extends BaseUIPlugin {
 			.appendTo(tvButton);
 
 		if (!text) {
-			text ='Play';
+			text = 'Play';
 
 			setTimeout(() => {
 				this.player.once('firstFrame', () => {

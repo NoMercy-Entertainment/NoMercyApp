@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import {onMounted, PropType, watch} from 'vue';
+import { onMounted, PropType, watch } from 'vue';
 
-import {Artist} from '@/types/api/music/artist';
-import {Album} from '@/types/api/music/album';
-import {closeFullPlayer, musicSize} from '@/store/audioPlayer';
-import {shouldMarquee} from '@/lib/utils';
+import { Artist } from '@/types/api/music/artist';
+import { Album } from '@/types/api/music/album';
+import { closeFullPlayer, musicSize } from '@/store/audioPlayer';
+import { shouldMarquee } from '@/lib/utils';
 
 const props = defineProps({
   data: {
@@ -64,39 +64,28 @@ const handleClick = (e: Event) => {
 </script>
 
 <template>
-  <div data-marquee="container"
-       :id="`trackLink-${type}-${id}-${suffix}`"
-       class="-ml-1 w-available">
+  <div data-marquee="container" :id="`trackLink-${type}-${id}-${suffix}`" class="-ml-1 w-available">
 
-    <div :data-size="musicSize"
-         data-marquee="scroller"
-         class="mb-1 ml-1 flex w-fit flex-nowrap gap-1 overflow-clip text-xs text-contrast line-clamp-2 whitespace-break-spaces hover-animate-pause w-available sm:my-0.5">
-				<span v-if="title" class="flex-nowrap gap-1 whitespace-nowrap lex line-clamp-2 h-inherit">
-					{{ title ? `${title} - ` : '' }}
-				</span>
-
-      <span class="flex w-fit flex-wrap gap-1 whitespace-wrap line-clamp-2 h-inherit"
-            v-for="(item, index) in data" :key="item.id">
-        <span v-if="noLink"
-              data-target="album"
-              @click="handleClick($event)"
-              class="pointer-events-auto flex gap-1 whitespace-nowrap text-xs font-semibold line-clamp-2 h-inherit hover:underline focus:underline dark:font-medium">
-            <span class="flex whitespace-nowrap leading-5">
-              {{ item.name }}{{ index < data.length - 1 ? ',' : '' }}
-            </span>
-          </span>
-        <RouterLink :to="item.link"
-                    v-else
-                    :onkeyup="onkeyup"
-                    tabindex="1"
-                    data-target="album"
-                    @click="handleClick($event)"
-                    class="pointer-events-auto flex gap-1 whitespace-nowrap text-xs font-semibold line-clamp-2 h-inherit hover:underline focus:underline dark:font-medium">
-            <span class="flex whitespace-nowrap leading-5">
-              {{ item.name }}{{ index < data.length - 1 ? ',' : '' }}
-            </span>
-        </RouterLink>
+    <div :data-size="musicSize" data-marquee="scroller"
+      class="mb-1 ml-1 flex w-fit flex-nowrap gap-1 overflow-clip text-xs text-contrast line-clamp-2 whitespace-break-spaces hover-animate-pause w-available sm:my-0.5 pr-2">
+      <span v-if="title" class="flex-nowrap gap-1 whitespace-nowrap lex line-clamp-2 h-inherit">
+        {{ title ? `${title} - ` : '' }}
       </span>
+
+      <span class="flex w-fit flex-wrap gap-1 whitespace-wrap line-clamp-2 h-inherit" v-for="(item, index) in data"
+        :key="item.id">
+        <span v-if="noLink" data-target="album" @click="handleClick($event)"
+          class="pointer-events-auto flex gap-1 whitespace-nowrap text-xs font-semibold line-clamp-2 h-inherit hover:underline focus:underline dark:font-medium">
+          <span class="flex whitespace-nowrap leading-5">
+            {{ item.name }}{{ index < data.length - 1 ? ',' : '' }} </span>
+          </span>
+          <RouterLink :to="item.link" v-else :onkeyup="onkeyup" tabindex="1" data-target="album"
+            @click="handleClick($event)"
+            class="pointer-events-auto flex gap-1 whitespace-nowrap text-xs font-semibold line-clamp-2 h-inherit hover:underline focus:underline dark:font-medium">
+            <span class="flex whitespace-nowrap leading-5">
+              {{ item.name }}{{ index < data.length - 1 ? ',' : '' }} </span>
+          </RouterLink>
+        </span>
     </div>
   </div>
 </template>

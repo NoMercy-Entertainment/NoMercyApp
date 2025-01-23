@@ -1,6 +1,6 @@
 <script setup lang="ts">
 
-import {onMounted} from "vue";
+import { onMounted } from "vue";
 import sidebar from "@/store/sidebar";
 
 // const getRandomArbitrary = (min: number, max: number) => {
@@ -4931,14 +4931,8 @@ onMounted(() => {
 
 <template>
 
-  <canvas
-      :data-sidebar="sidebar"
-      id="tree"
-      width="730" height="900"
-      class="fixed bottom-0 top-2/3 w-64 h-available -mb-6 -translate-x-full sidebar-open:translate-x-0 duration-300 transition-all delay-300"
-  ></canvas>
+  <canvas :data-sidebar="sidebar" id="tree" width="730" height="900"
+    class="fixed bottom-0 top-2/3 w-64 h-available -mb-6 -translate-x-full sidebar-open:translate-x-0 duration-300 transition-all delay-300"></canvas>
 </template>
 
-<style scoped>
-
-</style>
+<style scoped></style>

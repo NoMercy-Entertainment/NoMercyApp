@@ -1,7 +1,7 @@
 <script setup lang='ts'>
-import {computed, PropType, ref, toRaw, watch} from 'vue';
+import { computed, PropType, ref, toRaw, watch } from 'vue';
 
-import type {EncoderProfile, FolderLibrary} from '@/types/api/base/library';
+import type { EncoderProfile, FolderLibrary } from '@/types/api/base/library';
 
 import useServerClient from "@/lib/clients/useServerClient";
 
@@ -26,7 +26,7 @@ const props = defineProps({
 	},
 });
 
-const {data: encoderProfiles} = useServerClient<EncoderProfile[]>({
+const { data: encoderProfiles } = useServerClient<EncoderProfile[]>({
 	path: 'dashboard/encoderProfiles',
 	queryKey: ['dashboard', 'encoderProfiles'],
 });
@@ -48,8 +48,8 @@ const availableQualities = computed(() => {
 
 const encoderQualities = ref<EncoderProfile[]>(availableQualities.value?.filter((quality) => props.folder.folder.encoder_profiles?.some((profile) => profile.id === quality.id)) ?? []);
 watch(availableQualities, (newVal) => {
-  if (!newVal) return;
-  encoderQualities.value = newVal.filter((quality) => props.folder.folder.encoder_profiles.some((profile) => profile.id === quality.id));
+	if (!newVal) return;
+	encoderQualities.value = newVal.filter((quality) => props.folder.folder.encoder_profiles.some((profile) => profile.id === quality.id));
 });
 
 watch(encoderQualities, (newVal) => {
@@ -74,30 +74,17 @@ const closeDeleteConfirm = () => {
 		</span>
 
 		<div class="ml-auto flex w-full gap-2 sm:w-auto">
-			<MultiSelect
-				id="encoderProfiles"
-				placeholder="Select encoder profiles"
-				class="w-full min-w-[200px] sm:w-auto"
-				:options="availableQualities"
-        optionLabel="name"
-				v-model="encoderQualities"
-			/>
+			<MultiSelect id="encoderProfiles" placeholder="Select encoder profiles"
+				class="w-full min-w-[200px] sm:w-auto" :options="availableQualities" optionLabel="name"
+				v-model="encoderQualities" />
 
-			<Button type="button"
-							id="yes"
-							variant="text"
-							class="children:text-gray-400 children:transition-colors children:duration-100 children:hover:text-red-dark-8"
-							color="red"
-							startIcon="folderRemove"
-							@click="openDeleteConfirm">
+			<Button type="button" id="yes" variant="text"
+				class="children:text-gray-400 children:transition-colors children:duration-100 children:hover:text-red-dark-8"
+				color="red" startIcon="folderRemove" @click="openDeleteConfirm">
 			</Button>
 
-			<DeleteFolderModal
-				:id="folder.folder.id"
-				:name="folder.folder.path"
-				:close="closeDeleteConfirm"
-				:open="deleteConfirmOpen"
-			/>
+			<DeleteFolderModal :id="folder.folder.id" :name="folder.folder.path" :close="closeDeleteConfirm"
+				:open="deleteConfirmOpen" />
 
 		</div>
 	</div>

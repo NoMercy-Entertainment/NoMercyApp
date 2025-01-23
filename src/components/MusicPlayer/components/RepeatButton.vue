@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import {onMounted} from 'vue';
+import { onMounted } from 'vue';
 
 import MusicButton from './MusicButton.vue';
-import {useCycleList} from '@vueuse/core';
+import { useCycleList } from '@vueuse/core';
 import audioPlayer from '@/store/audioPlayer';
 import PlayerIcon from '@/components/Images/icons/PlayerIcon.vue';
 
@@ -12,7 +12,7 @@ const states = [
   'all',
 ];
 
-const {state, next, go} = useCycleList<'off' | 'one' | 'all'>([
+const { state, next, go } = useCycleList<'off' | 'one' | 'all'>([
   'off',
   'one',
   'all',
@@ -32,13 +32,9 @@ const handleClick = (e?: MouseEvent) => {
 </script>
 
 <template>
-  <MusicButton :label="`repeat ${state}`" :key="state"
-               :onclick="handleClick">
-    <PlayerIcon icon="nmRepeatHalftone" v-if="state == 'off'"
-                class="h-6 w-6"/>
-    <PlayerIcon icon="nmRepeat" v-else-if="state == 'one'"
-                class="h-6 w-6 text-focus"/>
-    <PlayerIcon icon="nmRepeatdoublearrowHalftone" v-else-if="state == 'all'"
-                class="h-6 w-6 text-focus"/>
+  <MusicButton :label="`repeat ${state}`" :key="state" :onclick="handleClick">
+    <PlayerIcon icon="nmRepeatHalftone" v-if="state == 'off'" class="h-6 w-6" />
+    <PlayerIcon icon="nmRepeat" v-else-if="state == 'one'" class="h-6 w-6 text-focus" />
+    <PlayerIcon icon="nmRepeatdoublearrowHalftone" v-else-if="state == 'all'" class="h-6 w-6 text-focus" />
   </MusicButton>
 </template>
