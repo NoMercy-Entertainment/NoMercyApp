@@ -252,10 +252,7 @@ const handleDeleteFolder = (folder: FolderLibrary) => {
 
         <div class="flex w-full flex-col p-4 sm:w-full">
           <div class="flex w-full text-md">
-            {{
-              t('Changes to metadata or artwork downloading settings will only apply to new content added to your
-            newLibrary.')
-            }}
+            {{ t('Changes to metadata or artwork downloading settings will only apply to new content added to your newLibrary.') }}
             <br>
             {{ t('To apply the changes to existing titles, you\'ll need to refresh their metadata manually.') }}
           </div>
