@@ -47,8 +47,8 @@ const closeInviteModal = () => {
   props.close();
 }
 
-const validateEmail = (email: string): boolean => {
-  const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/u;
+const validateEmail = (email?: string): boolean => {
+  const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/u;
   return re.test(String(email).toLowerCase());
 };
 
@@ -113,8 +113,7 @@ const handleInvite = () => {
 
       <p class="py-4 text-sm text-auto-10">
         {{ $t('Enter the email of the friend you want to invite to your server.') }}<br>
-        {{ $t('We will send this person an email with a link to join the server, if they accept the invitation they will
-        be automatically shown here.') }}
+        {{ $t('We will send this person an email with a link to join the server, if they accept the invitation they will be automatically shown here.') }}
       </p>
 
       <div class="flex flex-col gap-2 w-full">
