@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import {onBeforeUnmount, onUnmounted, ref, watch} from 'vue';
+import {onBeforeUnmount, onMounted, onUnmounted, ref, watch} from 'vue';
 import {IonContent, IonPage, isPlatform, onIonViewDidEnter} from '@ionic/vue';
 import {App} from '@capacitor/app';
 
@@ -21,6 +21,7 @@ import {
 import audioPlayer from '@/store/audioPlayer';
 import router from "@/router";
 import useServerClient from "@/lib/clients/useServerClient";
+import {setNavBarVisible} from "@/store/ui";
 
 const {data, isError} = useServerClient<PlaylistItem[]>({
 
@@ -67,9 +68,6 @@ const initPlayer = (value: PlaylistItem[] | undefined) => {
     disableMediaControls: 'mediaSession' in navigator || isPlatform('capacitor'),
     renderAhead: 100,
   };
-
-  player.value?.dispose();
-
 
   // @ts-ignore
   player.value = nmplayer('player1')
@@ -138,11 +136,15 @@ const initPlayer = (value: PlaylistItem[] | undefined) => {
 };
 
 watch(data, (value) => {
+  if (!value) return;
   initPlayer(value);
 });
 
-onIonViewDidEnter(() => {
-  initPlayer(data.value);
+onMounted(() => {
+  setNavBarVisible(false);
+  if (data.value) {
+    initPlayer(data.value);
+  }
 });
 
 onBeforeUnmount(() => {

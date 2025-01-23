@@ -864,30 +864,30 @@ export const breakTitle = (title: string, className: string | null = null) => {
 	const items = title.split(/(:\s|\sand\sthe\s|\sen\sde\s|\s-\s|\s–\s|\s&\s)/iu);
 	if ((items.includes(' - ') || items.includes(' – ')) && items.includes(': ')) {
 		return title?.replace(/(.+)(:\s|sand\sthe|\sen\sde|\s&\s)(.*)/u,
-			`<span class='${className}'>$1</span><span class='${className}'>$3</span>`)
+			`<span class=''>$1</span><span class='${className}'>$3</span>`)
 			.replace(/\s-.+$/iu, ' ');
 	}
 	if (items.length == 3 && title.length > 30) {
 		if (title.includes(':')) {
 			return title?.replace(/(.+)(:\s|sand\sthe|\sen\sde|\s&\s)(.*)/u,
-				`<span class='${className}'>$1</span><span class='${className}'>$3</span>`);
+				`<span class=''>$1</span><span class='${className}'>$3</span>`);
 		}
 		return title?.replace(/(.+)(\sand\sthe\s|\sen\sde\s|\s-\s|\s&\s)(.+)/iu,
-			`<span class='${className}'>$1</span><span class='${className}'>$3</span>`);
+			`<span class=''>$1</span><span class='${className}'>$3</span>`);
 	}
 	if ((items.includes(' and the ') || items.includes(' en de ')) && title.length > 25 && !items.includes(': ')) {
 		return title?.replace(/(.+)(:\s|\sand\sthe\s|\sen\sde\s|\s-\s|\s&\s)(.+)/iu,
-			`<span class='${className}'>$1</span><span class='${className}'>$3</span>`)
+			`<span class=''>$1</span><span class='${className}'>$3</span>`)
 			.replace(/\sand\sthe\s|\sen\sde\s/iu, ' ');
 	}
 	if ((items.includes(' and the ') || items.includes(' en de ')) && title.length > 40 && items.includes(': ')) {
 		return title?.replace(/(.+)(\sand\sthe\s|\sen\sde\s|\s-\s|\s&\s)(.+)/iu,
-			`<span class='${className}'>$1</span><span class='${className}'>$3</span>`)
+			`<span class=''>$1</span><span class='${className}'>$3</span>`)
 			.replace(/\sand\sthe\s|\sen\sde\s/iu, ' ');
 	}
 	if (title.includes(':') && title.split(/[I\-]+$/iu)[0].length > 20) {
 		return title?.replace(/(.+)(:\s|sand\sthe|\sen\sde|\s&\s)(.*)/u,
-			`<span class='${className}'>$1</span><span class='${className}'>$3</span>`);
+			`<span class=''>$1</span><span class='${className}'>$3</span>`);
 	}
 
 	return title;

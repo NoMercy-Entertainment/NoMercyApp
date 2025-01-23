@@ -88,6 +88,9 @@ onIonViewWillLeave(() => {
 const sortHeader = ref<VueDivElement>();
 
 const onScroll = () => {
+  // Skip if the browser supports native sticky top.
+  if(window.CSS.supports('container-type', 'scroll-state')) return;
+
   const sortHeaderTop = 67;
 
   if (Math.ceil(sortHeader.value?.$el?.getBoundingClientRect()?.top ?? 500) <= sortHeaderTop) {

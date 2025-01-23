@@ -8,7 +8,7 @@ import {isAlbumRoute} from '@/store/routeState';
 
 <template>
   <div id="sortHeaderElement"
-       class="sticky top-safe-offset-10 -mx-4 px-4 z-30 my-2 block h-10 content-center items-center justify-start self-stretch bg-transparent text-sm font-medium transition-transform duration-500 w-available -mt-0.5 group/track sm:w-available sm:-top-px"
+       class="sticky top-safe-offset-16 -mx-4 px-4 z-30 my-2 block h-10 content-center items-center justify-start self-stretch bg-transparent text-sm font-medium transition-transform duration-500 w-available -mt-0.5 group/track sm:w-available sm:-top-px"
        tabindex="0">
     <span id="sorterChild"
           class="absolute inset-0 h-10 sm:rounded-t-2xl overflow-clip w-full transition-transform duration-500"></span>
@@ -50,3 +50,16 @@ import {isAlbumRoute} from '@/store/routeState';
         </span>
   </div>
 </template>
+
+<style scoped>
+
+.sticky {
+  container-type: scroll-state;
+
+  > *:first-child {
+    @container scroll-state(stuck: top) {
+      background: hsl(from rgb(var(--color-focus, var(--color-theme-9)) / var(--tw-bg-opacity, 1)) h 40% 30%);
+    }
+  }
+}
+</style>

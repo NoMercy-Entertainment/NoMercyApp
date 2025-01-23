@@ -9,7 +9,7 @@ import type {DisplayList} from '@/types/api/music/musicPlayer';
 import {PlaylistItem, SortOrder, SortType} from '@/types/musicPlayer';
 
 import useServerClient from '@/lib/clients/useServerClient';
-import {breakTitle2, setTitle, sortByType} from '@/lib/stringArray';
+import {breakTitle, breakTitle2, setTitle, sortByType} from '@/lib/stringArray';
 import {setColorPalette, setSortOrder, sortOrder, sortType} from '@/store/ui';
 
 import ControlHeader from '@/views/Music/List/components/ControlHeader.vue';
@@ -86,10 +86,11 @@ const showScrollHeaderText = ref(false);
 const sortHeader = ref<VueDivElement>();
 
 const onScroll = (e: ScrollCustomEvent) => {
-  console.log(sortHeader.value?.$el?.getBoundingClientRect().top);
+  // if(window.CSS.supports('container-type', 'scroll-state')) return;
+
   const headerScrollTop = 170;
   const headerScrollTextTop = 160;
-  const sortHeaderTop = 88;
+  const sortHeaderTop = 64;
 
   const top = sortHeader.value?.$el?.getBoundingClientRect().top;
   if (!top) return;
@@ -136,17 +137,17 @@ const onScroll = (e: ScrollCustomEvent) => {
                  class="z-20 absolute flex items-center inset-0 w-available h-full bg-focus/12 dark:bg-focus transition-transform duration-300 bg-spotifyTop opacity-50 pointer-events-none">
             </div>
 
-            <button @click="handleBack" class="z-30 flex h-10 w-12 items-center justify-center rounded-md">
+            <button @click="handleBack" class="z-30 flex h-10 w-11 items-center justify-center rounded-md">
               <MoooomIcon icon="arrowLeft"/>
             </button>
 
             <div id="navText"
-                 class="pointer-events-none whitespace-pre text-left relative z-20 h-auto line-clamp-2 w-full self-center text-xl font-bold leading-none transition-opacity duration-300"
+                 class="pointer-events-none whitespace-pre text-left relative z-20 line-clamp-1 h-auto self-center font-bold leading-none transition-opacity duration-300 w-[70%] overflow-clip text-xl"
                  :class="{
                   'opacity-0 pointer-events-none': !showScrollHeader,
                   'opacity-100 pointer-events-auto': showScrollHeader
                }"
-                 v-html="breakTitle2(data?.name ?? 'Songs you like', 'text-sm line-clamp-2')"
+                 v-html="breakTitle(data?.name ?? 'Songs you like', 'text-xs line-clamp-1')"
             >
             </div>
           </div>

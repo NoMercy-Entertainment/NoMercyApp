@@ -1721,12 +1721,20 @@ export class BaseUIPlugin extends Plugin {
 
                 this.player.once('time', () => {
                     this.currentScrubTime = this.getClosestSeekableInterval();
+                    this.player.emit('currentScrubTime', {
+                        ...this.player.getTimeData(),
+                        currentTime: this.getClosestSeekableInterval(),
+                    });
                 });
             });
         });
 
         this.player.on('lastTimeTrigger', () => {
             this.currentScrubTime = this.getClosestSeekableInterval();
+            this.player.emit('currentScrubTime', {
+                ...this.player.getTimeData(),
+                currentTime: this.getClosestSeekableInterval(),
+            });
         });
 
         this.player.on('currentScrubTime', (data: TimeData) => {

@@ -175,7 +175,9 @@ onUnmounted(() => {
     <div :data-music="musicVisibility"
          :data-sidebar="sidebar"
          class="absolute w-screen h-available sm:w-auto sm:overflow-hidden sm:inset-1/2 sm:aspect-video sm:-translate-y-[50%]
-              sidebar-closed:sm:h-[93%]
+              sidebar-closed:sm:h-full
+              sidebar-closed:sm:max-w-[90vw]
+              sidebar-closed:sm:max-h-[93%]
               sidebar-closed:px-4
               sidebar-closed:py-2
               sidebar-closed:xl:px-[1.8rem]

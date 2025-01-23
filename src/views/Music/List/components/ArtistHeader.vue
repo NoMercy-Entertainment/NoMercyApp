@@ -7,7 +7,7 @@ import type {DisplayList} from '@/types/api/music/musicPlayer';
 
 import {convertToHumanReact, convertToSeconds} from '@/lib/dateTime';
 import {isArtistRoute} from '@/store/routeState';
-import {breakTitle2} from "@/lib/stringArray";
+import {breakTitle} from "@/lib/stringArray";
 import audioPlayer from "@/store/audioPlayer";
 
 import FavoriteImage from "@/components/Images/FavoriteImage.vue";
@@ -119,17 +119,22 @@ watch(audioColor, (value) => {
 </script>
 
 <template>
-    <div id="artist-header" class="relative z-0 flex flex-col items-end justify-start gap-4 px-8 text-white sm:flex-row sm:gap-9 sm:pt-12 sm:pb-8 sm:px-8"
+    <div id="artist-header" class="relative z-0 flex flex-col items-end justify-start text-white sm:flex-row sm:gap-9 sm:pt-12 sm:pb-8 sm:px-8"
       :class="{
-        'pt-safe-offset-12': isPlatform('capacitor'),
-        'pt-8': !isPlatform('capacitor')
+        'pt-safe-offset-12 px-8 gap-4': isPlatform('capacitor'),
+        'pt-24 px-6 gap-12 sm:gap-4': !isPlatform('capacitor')
       }"
     >
         <div ref="audioColor" id="audio-color" class="absolute top-0 left-0 h-full w-full overflow-clip bg-focus"></div>
         <div class="absolute top-0 left-0 h-full w-full overflow-clip bg-black/50  "></div>
-        <canvas ref="canvas" id="audio-visualizer" class="absolute top-0 left-96 my-12 ml-6 mr-6 mt-full h-available w-available overflow-clip pointer-events-none"></canvas>
+<!--        <canvas ref="canvas" id="audio-visualizer" class="absolute top-0 left-96 my-12 ml-6 mr-6 mt-full h-available w-available overflow-clip pointer-events-none"></canvas>-->
         <div
-            class="frosting relative mx-auto flex aspect-square -mt-4 h-amin-w-80 flex-col items-center justify-center overflow-clip rounded-xl bg-gradient-to-br min-w-64 bg-theme-7 from-theme-5 via-theme-7 to-theme-11 shadow">
+            class="frosting relative mx-auto flex aspect-square h-amin-w-80 flex-col items-center justify-center overflow-clip rounded-xl bg-gradient-to-br min-w-64 bg-theme-7 from-theme-5 via-theme-7 to-theme-11 shadow"
+            :class="{
+              '-mt-4': isPlatform('capacitor'),
+              '': !isPlatform('capacitor')
+            }"
+        >
             <CoverImage
                 id="image"
                 v-if="data?.cover"
@@ -148,7 +153,7 @@ watch(audioColor, (value) => {
         <div v-if="data?.name"
             class="relative mt-2 flex w-full flex-1 flex-shrink-0 flex-col items-start justify-start gap-4 flex-grow-1 sm:hidden">
             <div class="w-full text-2xl font-semibold line-clamp-1 whitespace-pre mb-4"
-               v-html="breakTitle2(data?.name ?? 'Songs you like', 'text-sm line-clamp-1')">
+               v-html="breakTitle(data?.name ?? 'Songs you like', 'text-sm line-clamp-1')">
             </div>
         </div>
 
@@ -158,7 +163,7 @@ watch(audioColor, (value) => {
             </p>
             <div
                 class="w-full text-5xl font-semibold line-clamp-2 leading-[130%] whitespace-pre"
-               v-html="breakTitle2(data?.name ?? 'Songs you like', 'ml-2 text-2xl line-clamp-1')">
+               v-html="breakTitle(data?.name ?? 'Songs you like', 'text-2xl line-clamp-1')">
             </div>
 
             <div class="relative flex items-center justify-start gap-2">

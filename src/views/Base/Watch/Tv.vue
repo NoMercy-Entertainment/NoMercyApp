@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import {onUnmounted, ref, watch} from 'vue';
-import {IonContent, IonPage, isPlatform, onIonViewDidEnter} from '@ionic/vue';
+import {onMounted, onUnmounted, ref, watch} from 'vue';
+import {IonContent, IonPage, isPlatform} from '@ionic/vue';
 import {App} from '@capacitor/app';
 
 import {isNative} from '@/config/global';
@@ -33,7 +33,7 @@ interface MyNmPlayer extends NMPlayer {
   };
 }
 
-const {data, isError} = useServerClient<PlaylistItem[]>({
+const {data} = useServerClient<PlaylistItem[]>({
 
 });
 
@@ -129,7 +129,7 @@ const initPlayer = (value: PlaylistItem[] | undefined) => {
     audioPlayer.stop();
   });
 
-  player.value?.on('item', (playlistItem: PlaylistItem) => {
+  player.value?.on('item', () => {
     player.value?.play();
   });
 
@@ -141,27 +141,30 @@ const initPlayer = (value: PlaylistItem[] | undefined) => {
     }
   });
 
-  player.value?.on('dispose', () => {
-    router.back();
-    showNavBar();
-  });
+  // player.value?.on('dispose', () => {
+  //   router.back();
+  //   showNavBar();
+  // });
 
   App.addListener('backButton', goBack);
 
 };
 
 watch(data, (value) => {
+  if (!value) return;
   initPlayer(value);
 });
 
-onIonViewDidEnter(() => {
+onMounted(() => {
   setNavBarVisible(false);
-  initPlayer(data.value);
+  if (data.value) {
+    initPlayer(data.value);
+  }
 });
 
 onUnmounted(() => {
   setDisableScreensaver(false);
-  setNavBarVisible(true);
+  showNavBar();
   player.value?.dispose();
 });
 
@@ -186,11 +189,5 @@ onUnmounted(() => {
 <style>
 .nomercyplayer .top-bar {
   padding-top: calc(var(--safe-area-inset-top, 0px) + 1rem);
-}
-.nomercyplayer .seek-container {
-  @apply mb-28;
-}
-.nomercyplayer #thumbnail-clone-1 {
-  display: none !important;
 }
 </style>

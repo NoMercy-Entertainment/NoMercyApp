@@ -73,7 +73,7 @@ const handleAdd = () => {
     </div>
 
     <div
-        class="sm:hidden sticky left-full -mt-16 top-safe-offset-6 z-1199 flex justify-center items-center gap-2 mr-4 h-auto"
+        class="sm:hidden sticky left-full -mt-16 top-safe-offset-11 z-1199 flex justify-center items-center gap-2 mr-4 h-auto"
          style="box-shadow: 0 1px 2px 0 rgba(16,24,40,0.05);"
     >
 

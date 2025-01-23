@@ -7,7 +7,7 @@ import {
 } from  '@nomercy-entertainment/nomercy-video-player/src/helpers';
 
 import type { Icon } from './buttons';
-import type { PlaylistItem } from '@nomercy-entertainment/nomercy-video-player/src/types';
+import type { PlaylistItem } from '../../index';
 
 export class TVUIPlugin extends BaseUIPlugin {
 
@@ -75,8 +75,7 @@ export class TVUIPlugin extends BaseUIPlugin {
 		});
 
 		this.player.on('pause', () => {
-			// this.showPreScreen();
-			// this.player.pause();
+			this.player.overlay.scrollIntoView();
 		});
 
 		this.player.once('ready', () => {
@@ -123,10 +122,6 @@ export class TVUIPlugin extends BaseUIPlugin {
 			'z-0',
 		]);
 
-		const backButton = this.createBackButton(topBar, true);
-		if (backButton) {
-			this.player.addClasses(backButton, ['children:stroke-2']);
-		}
 		const restartButton = this.createRestartButton(topBar, true);
 		this.player.addClasses(restartButton, ['children:stroke-2']);
 
@@ -169,25 +164,24 @@ export class TVUIPlugin extends BaseUIPlugin {
 			if (this.currentMenu !== 'seek' && !this.controlsVisible) {
 				this.playbackButton.focus();
 			}
+
+			this.currentScrubTime = this.getClosestSeekableInterval();
 		});
 
-		let activeButton = backButton ?? restartButton ?? nextButton;
+		let activeButton = restartButton ?? nextButton;
 
-		[backButton, restartButton, nextButton].forEach((button) => {
+		[restartButton, nextButton].forEach((button) => {
 			button?.addEventListener('keydown', (e) => {
 				if (e.key == 'ArrowDown') {
-					if (this.nextUp.style.display == 'none') {
+					if (!this.nextUp.style || this.nextUp.style.display == 'none') {
 						this.playbackButton?.focus();
-					}
-					else {
+					} else {
 						this.nextUp.lastChild?.focus();
 					}
-				}
-				else if (e.key == 'ArrowLeft') {
+				} else if (e.key == 'ArrowLeft') {
 					activeButton = ((e.target as HTMLButtonElement).previousElementSibling as HTMLButtonElement);
 					activeButton?.focus();
-				}
-				else if (e.key == 'ArrowRight') {
+				} else if (e.key == 'ArrowRight') {
 					e.preventDefault();
 					activeButton = ((e.target as HTMLButtonElement).nextElementSibling as HTMLButtonElement);
 					activeButton?.focus();
@@ -213,7 +207,7 @@ export class TVUIPlugin extends BaseUIPlugin {
 			button?.addEventListener('keydown', (e) => {
 				if (e.key == 'ArrowUp') {
 					e.preventDefault();
-					if (this.nextUp.style.display == 'none') {
+					if (!this.nextUp.style || this.nextUp.style.display == 'none') {
 						activeButton?.focus();
 					} else {
 						this.nextUp.lastChild?.focus();
@@ -224,24 +218,25 @@ export class TVUIPlugin extends BaseUIPlugin {
 
 		let didSlide: boolean = false;
 		[document.body].forEach((button) => {
-			(button as unknown as HTMLButtonElement)?.addEventListener('keyup', (e: KeyboardEvent) => {
+			(button as unknown as HTMLButtonElement)?.addEventListener('keydown', (e: KeyboardEvent) => {
 				if (e.key == 'ArrowLeft') {
 					// eslint-disable-next-line max-len
-					if ([backButton, restartButton, nextButton, this.nextUp.firstChild, this.nextUp.lastChild].includes(e.target as HTMLButtonElement)) {
+					if ([restartButton, nextButton, this.nextUp.firstChild, this.nextUp.lastChild].includes(e.target as HTMLButtonElement)) {
 						return;
 					}
 					e.preventDefault();
-					this.player.pause();
 
 					this.player.emit('show-seek-container', true);
 
 					if (this.shouldSlide) {
 						this.currentScrubTime = this.getClosestSeekableInterval();
+						this.player.emit('currentScrubTime', {
+							...this.player.getTimeData(),
+							currentTime: this.getClosestSeekableInterval(),
+						});
 						this.shouldSlide = false;
-					}
-					else {
+					} else {
 						const newScrubTime = this.currentScrubTime - 10;
-						console.log('newScrubTime', newScrubTime);
 						didSlide = true;
 						this.player.emit('currentScrubTime', {
 							...this.player.getTimeData(),
@@ -252,22 +247,23 @@ export class TVUIPlugin extends BaseUIPlugin {
 				}
 				else if (e.key == 'ArrowRight') {
 					// eslint-disable-next-line max-len
-					if ([backButton, restartButton, nextButton, this.nextUp.firstChild, this.nextUp.lastChild].includes(e.target as HTMLButtonElement)) {
+					if ([restartButton, nextButton, this.nextUp.firstChild, this.nextUp.lastChild].includes(e.target as HTMLButtonElement)) {
 						return;
 					}
 					e.preventDefault();
-					this.player.pause();
 
 					this.player.emit('show-seek-container', true);
 
 					if (this.shouldSlide) {
 						this.currentScrubTime = this.getClosestSeekableInterval();
+						this.player.emit('currentScrubTime', {
+							...this.player.getTimeData(),
+							currentTime: this.getClosestSeekableInterval(),
+						});
 						this.shouldSlide = false;
-					}
-					else {
+					} else {
 						const newScrubTime = this.currentScrubTime + 10;
 						didSlide = true;
-						console.log('newScrubTime', newScrubTime);
 						this.player.emit('currentScrubTime', {
 							...this.player.getTimeData(),
 							currentTime: newScrubTime,
@@ -276,18 +272,23 @@ export class TVUIPlugin extends BaseUIPlugin {
 				}
 				else if (e.key == 'Enter') {
 					if (Math.abs(this.currentScrubTime - this.player.getCurrentTime()) > 5 && didSlide) {
-						console.log('seeking to', this.currentScrubTime);
 						this.player.seek(this.currentScrubTime);
 						didSlide = false;
-						this.playbackButton.focus();
-					} else {
+					}
+					else if (e.target == document.body) {
 						this.player.togglePlayback();
 					}
 				}
 			});
 		});
 
-		this.playbackButton.focus();
+		this.player.on('active', (value) => {
+			if (!this.controlsVisible && value) {
+				this.playbackButton.focus();
+			}
+			this.controlsVisible = value;
+			this.player.overlay.scrollIntoView();
+		});
 
 		return bottomBar;
 	}
@@ -1551,7 +1552,7 @@ export class TVUIPlugin extends BaseUIPlugin {
 			.appendTo(tvButton);
 
 		if (!text) {
-			text = 'Play';
+			text ='Play';
 
 			setTimeout(() => {
 				this.player.once('firstFrame', () => {
@@ -1566,4 +1567,5 @@ export class TVUIPlugin extends BaseUIPlugin {
 		return tvButton;
 
 	}
+
 }
