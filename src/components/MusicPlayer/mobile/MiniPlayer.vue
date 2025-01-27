@@ -1,4 +1,4 @@
-<script setup lang="ts">
+2<script setup lang="ts">
 import { computed, ref } from 'vue';
 import { useSwipe } from '@vueuse/core';
 
@@ -88,7 +88,7 @@ const { isSwiping, lengthX } = useSwipe(
         </p>
         <p
           class="children:children:children:children:children:leading-6 w-auto self-stretch text-left text-sm text-auto-12/11">
-          -->
+         
           <TrackLinks v-if="currentSong" :id="currentSong.id" :data="currentSong.artist_track" type="artists" />
         </p>
       </div>
