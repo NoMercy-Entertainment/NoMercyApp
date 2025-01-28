@@ -84,7 +84,8 @@ export default defineConfig({
 							networkTimeoutSeconds: 10
 						}
 					}
-				]
+				],
+				maximumFileSizeToCacheInBytes: 25 * 1024 * 1024, // 15MB
 			},
 			manifest: {
 				name: 'NoMercy TV',
