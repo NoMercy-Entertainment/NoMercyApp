@@ -27,6 +27,10 @@ export default defineConfig({
 			strategies: 'generateSW',
 			includeAssets: ['**/*'],
 			workbox: {
+				cleanupOutdatedCaches: true,
+				clientsClaim: true,
+				skipWaiting: true,
+				sourcemap: true,
 				globPatterns: ['**/*.{js,css,html,ico,png,svg,jpg,jpeg,gif,webp,woff,woff2,ttf,eot}'],
 				navigateFallback: 'index.html',
 				navigateFallbackDenylist: [/^\/api/],
@@ -35,20 +39,31 @@ export default defineConfig({
 						urlPattern: /\.(js|css|png|jpg|jpeg|gif|svg|ico|webp|woff2?)$/,
 						handler: 'CacheFirst',
 						options: {
-							cacheName: 'static-assets',
-							expiration: { maxEntries: 1000, maxAgeSeconds: 60 * 60 * 24 * 30 }
+							cacheName: 'static-assets-v1',
+							expiration: {
+								maxEntries: 1000,
+								maxAgeSeconds: 60 * 60 * 24 * 30 // 30 days
+							},
+							cacheableResponse: {
+								statuses: [0, 200]
+							}
 						}
 					},
 					{
-						urlPattern: /^https:\/\/(?:cdn|storage|cdn-dev)\.nomercy\.tv\/.*/i,
+						urlPattern: /^https:\/\/(cdn|storage|cdn-dev)\.nomercy\.tv\/.*/i,
 						handler: 'CacheFirst',
 						options: {
-							cacheName: 'cdn-assets',
-							expiration: { maxEntries: 1000, maxAgeSeconds: 60 * 60 * 24 * 30 }
+							cacheName: 'cdn-assets-v1',
+							expiration: {
+								maxEntries: 1000,
+								maxAgeSeconds: 60 * 60 * 24 * 30
+							},
+							cacheableResponse: {
+								statuses: [0, 200]
+							}
 						}
 					},
 					{
-						// Complex URL pattern that handles dynamic server hostnames for API routes
 						urlPattern: ({ url }) => {
 							return /^[^.]+\.[^.]+\.nomercy\.tv/.test(url.hostname) 
 								&& url.pathname.includes('/api');
@@ -56,13 +71,12 @@ export default defineConfig({
 						handler: 'NetworkOnly',
 						options: {
 							backgroundSync: {
-								name: 'api-queue',
+								name: 'mediaserver-api',
 								options: { forceSyncFallback: true }
 							}
 						}
 					},
 					{
-						// Permanently cache images from your API servers
 						urlPattern: ({ url }) => {
 							const isApiServer = /^[^.]+\.[^.]+\.nomercy\.tv/.test(url.hostname);
 							const isImageRequest = url.pathname.match(/\.(jpg|jpeg|png|gif|webp|avif)$/i);
@@ -70,22 +84,18 @@ export default defineConfig({
 						},
 						handler: 'CacheFirst',
 						options: {
-							cacheName: 'cover-images',
-							expiration: { maxEntries: 100000 },
-							cacheableResponse: { statuses: [0, 200] }
-						}
-					},
-					{
-						urlPattern: /^https?.*/,
-						handler: 'NetworkFirst',
-						options: {
-							cacheName: 'fallback',
-							expiration: { maxEntries: 200, maxAgeSeconds: 60 * 60 * 24 },
-							networkTimeoutSeconds: 10
+							cacheName: 'cover-images-v1',
+							expiration: {
+								maxEntries: 100000,
+								maxAgeSeconds: 60 * 60 * 24 * 30 // 30 days
+							},
+							cacheableResponse: {
+								statuses: [0, 200]
+							}
 						}
 					}
 				],
-				maximumFileSizeToCacheInBytes: 25 * 1024 * 1024, // 15MB
+				maximumFileSizeToCacheInBytes: 25 * 1024 * 1024, // 25MB
 			},
 			manifest: {
 				name: 'NoMercy TV',

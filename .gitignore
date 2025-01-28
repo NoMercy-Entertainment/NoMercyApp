@@ -122,3 +122,4 @@ yarn-error.log
 
 docs/
 dev-dist/
+vite.config.ts.*
