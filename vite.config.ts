@@ -6,7 +6,6 @@ import { VitePWA } from 'vite-plugin-pwa';
 import { ViteCspPlugin } from 'vite-plugin-csp';
 import { ViteMinifyPlugin } from 'vite-plugin-minify'
 import vue from '@vitejs/plugin-vue';
-import * as fs from 'node:fs';
 
 export default defineConfig({
 	plugins: [
@@ -29,31 +28,45 @@ export default defineConfig({
 		// 	modernTargets: ['chrome 100', 'firefox 100', 'safari 14', 'edge 100'],
 		// }),
 		VitePWA({
+			disable: process.env.NODE_ENV === 'development',
 			registerType: 'autoUpdate',
-			selfDestroying: true,
+			strategies: 'generateSW',
 			includeAssets: [
 				"**/*",
 			],
 			workbox: {
-				cleanupOutdatedCaches: true,
-				sourcemap: true,
-				skipWaiting: true,
 				globPatterns: ["**/*"],
-				globIgnores: [
-					'**/node_modules/**/*',
-					'sw.js',
-					'workbox-*.js',
-				],
-				navigateFallbackDenylist: [/^\/docs\//],
+				maximumFileSizeToCacheInBytes: 50000000, // 50mb
+				cleanupOutdatedCaches: true,
+				skipWaiting: true,
+				clientsClaim: true,
+				sourcemap: true,
 				runtimeCaching: [
 					{
-						urlPattern: /^https:\/\/(?:cdn|storage|cdn-dev)\.nomercy\.tv\/.*/i,
+						urlPattern: /.*/i,
+						handler: 'CacheFirst',
+						options: {
+							cacheName: 'nomercy-app-cache',
+							expiration: {
+								maxEntries: 1000,
+								maxAgeSeconds: 60 * 60 * 24 * 30 // 30 days
+							},
+							cacheableResponse: {
+								statuses: [0, 200]
+							}
+						}
+					},
+					{
+						urlPattern: /^https:\/\/(?:cdn|storage|cdn-dev|app)\.nomercy\.tv\/.*/i,
 						handler: 'CacheFirst',
 						options: {
 							cacheName: 'nomercy-assets',
 							expiration: {
-								maxEntries: 500,
-								maxAgeSeconds: 60 * 60 * 24 * 365
+								maxEntries: 1000,
+								maxAgeSeconds: 60 * 60 * 24 * 30 // 30 days
+							},
+							cacheableResponse: {
+								statuses: [0, 200]
 							}
 						}
 					}
@@ -165,7 +178,8 @@ export default defineConfig({
 			base: '/',
 			devOptions: {
 				enabled: true,
-				type: 'module'
+				type: 'module',
+				navigateFallback: 'index.html',
 			}
 		}),
 		ViteCspPlugin({

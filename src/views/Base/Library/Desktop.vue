@@ -27,7 +27,7 @@ const routing = useRouter();
 const { data, fetchNextPage, hasNextPage, isError } = useInfiniteServerClient<{
   data: Array<LibraryResponse | GenreResponse | PeopleResponse>
 }>({
-  queryKey: ['libraries', routing.currentRoute?.value?.params.id ?? routing.currentRoute.value.name],
+  queryKey: ['libraries', routing.currentRoute?.value?.params.id ?? routing.currentRoute?.value.name],
   limit: 20,
   keepForever: true,
 });
