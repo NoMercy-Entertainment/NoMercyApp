@@ -37,12 +37,12 @@ export default defineConfig({
 				runtimeCaching: [
 					{
 						urlPattern: /\.(js|css|png|jpg|jpeg|gif|svg|ico|webp|woff2?)$/,
-						handler: 'CacheFirst',
+						handler: 'StaleWhileRevalidate',
 						options: {
-							cacheName: 'static-assets-v1',
-							expiration: {
-								maxEntries: 1000,
-								maxAgeSeconds: 60 * 60 * 24 * 30 // 30 days
+							cacheName: 'static-assets-v2',
+							fetchOptions: {
+								mode: 'cors',
+								credentials: 'same-origin'
 							},
 							cacheableResponse: {
 								statuses: [0, 200]
@@ -205,6 +205,7 @@ export default defineConfig({
 				enabled: true,
 				type: 'module',
 				navigateFallback: 'index.html',
+				suppressWarnings: false,
 			}
 		}),
 		ViteCspPlugin({

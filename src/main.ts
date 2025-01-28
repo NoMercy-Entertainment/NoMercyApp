@@ -163,9 +163,22 @@ const lang = getCurrentLanguage();
 const messages = pwaMessages[lang as keyof typeof pwaMessages] || pwaMessages.en;
 
 const updateSW = registerSW({
+	immediate: true,
 	onNeedRefresh() {
 		if (confirm(`${messages.newVersion} ${messages.updateNow}`)) {
 			updateSW(true);
 		}
 	},
+	onOfflineReady() {
+		console.log('App ready to work offline')
+	},
+	onRegistered(r) {
+		console.log('SW Registered:', r)
+		r?.addEventListener('message', (event) => {
+			console.log('SW message:', event)
+		})
+	},
+	onRegisterError(error) {
+		console.error('SW registration error:', error)
+	}
 });
