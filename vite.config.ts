@@ -77,8 +77,8 @@ export default defineConfig({
 				// display_override: ['standalone', 'minimal-ui'],
 				display: 'standalone',
 				orientation: 'any',
-				scope: '/NoMercy.App/',
-				start_url: '/NoMercy.App/',
+				scope: '/',
+				start_url: '/',
 				display_override: [
 					'standalone',
 					'window-controls-overlay',
@@ -162,7 +162,7 @@ export default defineConfig({
 					},
 				],
 			},
-			base: '/NoMercy.App/',
+			base: '/',
 			devOptions: {
 				enabled: true,
 				type: 'module'
