@@ -2,7 +2,6 @@ import { createApp } from 'vue';
 import { isPlatform } from '@ionic/vue';
 import { App } from "@capacitor/app";
 import WebKeycloak from '@dsb-norge/vue-keycloak-js';
-import { registerPWAUpdate } from './pwa-update';
 
 import { isTv } from '@/config/global';
 import { keycloakConfig } from '@/config/config';
@@ -153,8 +152,6 @@ else {
 	import('./setupApp').then(({ setupApp }) => setupApp(app));
 }
 
-registerPWAUpdate();
-
 
 function getCurrentLanguage(): string {
 	return localStorage.getItem('language') ||
@@ -167,7 +164,7 @@ const messages = pwaMessages[lang as keyof typeof pwaMessages] || pwaMessages.en
 
 const updateSW = registerSW({
 	onNeedRefresh() {
-		if (confirm(`${messages.newVersion}, ${messages.updateNow}`)) {
+		if (confirm(`${messages.newVersion} ${messages.updateNow}`)) {
 			updateSW(true);
 		}
 	},

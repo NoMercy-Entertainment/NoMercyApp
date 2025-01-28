@@ -379,7 +379,7 @@ const handleUp = (event: KeyboardEvent) => {
 <!--        <div v-if="carouselsData.length > 0"-->
 <!--            tabindex="0" ref="bottom"-->
 <!--            @focus="scrollToBottom"-->
-<!--            class="mx-11 flex flex-col justify-start items-start w-available gap-5 h-[calc(100vh-5rem)] overflow-auto"-->
+<!--            class="mx-11 flex flex-col justify-start items-start w-available gap-5 h-[calc(100vh-6rem)] overflow-auto"-->
 <!--        >-->
 <!--          <template v-if="!isMutating">-->
 <!--            <template v-for="(carousel, index) in carouselsData"-->

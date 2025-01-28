@@ -44,7 +44,7 @@ onMounted(() => {
           'pb-24': isNative && !currentSong,
           'pb-40': isNative && currentSong,
           'children:pb-4 sm:children:pb-3': !isNative && currentSong
-        }" class="z-0 w-available overflow-x-clip w-full h-auto grid gap-4 pl-4 pr-4 pt-4 music-showing:pb-0 grid-cols-2 sm:grid-cols-3 md:grid-cols-5 lg:grid-cols-6 xl:grid-cols-7 2xl:grid-cols-7 3xl:grid-cols-9 4xl:grid-cols-9 5xl:grid-cols-[repeat(14,minmax(0,1fr))] tv:grid-cols-6 scroll-smooth"
+        }" class="z-0 w-available overflow-x-clip w-full h-auto grid gap-4 p-4 music-showing:pb-0 grid-cols-2 sm:grid-cols-3 md:grid-cols-5 lg:grid-cols-6 xl:grid-cols-7 2xl:grid-cols-7 3xl:grid-cols-9 4xl:grid-cols-9 5xl:grid-cols-[repeat(14,minmax(0,1fr))] tv:grid-cols-6 scroll-smooth"
           style="opacity:1">
 
           <template v-if="Array.isArray(data)">

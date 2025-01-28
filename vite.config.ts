@@ -22,52 +22,66 @@ export default defineConfig({
 
 			},
 		}),
-		// legacy({
-		// 	targets: ['chrome 100', 'firefox 100', 'safari 14', 'edge 100', 'not IE 11'],
-		// 	additionalLegacyPolyfills: ['regenerator-runtime/runtime'],
-		// 	modernTargets: ['chrome 100', 'firefox 100', 'safari 14', 'edge 100'],
-		// }),
 		VitePWA({
-			disable: process.env.NODE_ENV === 'development',
 			registerType: 'autoUpdate',
 			strategies: 'generateSW',
-			includeAssets: [
-				"**/*",
-			],
+			includeAssets: ['**/*'],
 			workbox: {
-				globPatterns: ["**/*"],
-				maximumFileSizeToCacheInBytes: 50000000, // 50mb
-				cleanupOutdatedCaches: true,
-				skipWaiting: true,
-				clientsClaim: true,
-				sourcemap: true,
+				globPatterns: ['**/*.{js,css,html,ico,png,svg,jpg,jpeg,gif,webp,woff,woff2,ttf,eot}'],
+				navigateFallback: 'index.html',
+				navigateFallbackDenylist: [/^\/api/],
 				runtimeCaching: [
 					{
-						urlPattern: /.*/i,
+						urlPattern: /\.(js|css|png|jpg|jpeg|gif|svg|ico|webp|woff2?)$/,
 						handler: 'CacheFirst',
 						options: {
-							cacheName: 'nomercy-app-cache',
-							expiration: {
-								maxEntries: 1000,
-								maxAgeSeconds: 60 * 60 * 24 * 30 // 30 days
-							},
-							cacheableResponse: {
-								statuses: [0, 200]
+							cacheName: 'static-assets',
+							expiration: { maxEntries: 1000, maxAgeSeconds: 60 * 60 * 24 * 30 }
+						}
+					},
+					{
+						urlPattern: /^https:\/\/(?:cdn|storage|cdn-dev)\.nomercy\.tv\/.*/i,
+						handler: 'CacheFirst',
+						options: {
+							cacheName: 'cdn-assets',
+							expiration: { maxEntries: 1000, maxAgeSeconds: 60 * 60 * 24 * 30 }
+						}
+					},
+					{
+						// Complex URL pattern that handles dynamic server hostnames for API routes
+						urlPattern: ({ url }) => {
+							return /^[^.]+\.[^.]+\.nomercy\.tv/.test(url.hostname) 
+								&& url.pathname.includes('/api');
+						},
+						handler: 'NetworkOnly',
+						options: {
+							backgroundSync: {
+								name: 'api-queue',
+								options: { forceSyncFallback: true }
 							}
 						}
 					},
 					{
-						urlPattern: /^https:\/\/(?:cdn|storage|cdn-dev|app)\.nomercy\.tv\/.*/i,
+						// Permanently cache images from your API servers
+						urlPattern: ({ url }) => {
+							const isApiServer = /^[^.]+\.[^.]+\.nomercy\.tv/.test(url.hostname);
+							const isImageRequest = url.pathname.match(/\.(jpg|jpeg|png|gif|webp|avif)$/i);
+							return isApiServer && isImageRequest;
+						},
 						handler: 'CacheFirst',
 						options: {
-							cacheName: 'nomercy-assets',
-							expiration: {
-								maxEntries: 1000,
-								maxAgeSeconds: 60 * 60 * 24 * 30 // 30 days
-							},
-							cacheableResponse: {
-								statuses: [0, 200]
-							}
+							cacheName: 'cover-images',
+							expiration: { maxEntries: 100000 },
+							cacheableResponse: { statuses: [0, 200] }
+						}
+					},
+					{
+						urlPattern: /^https?.*/,
+						handler: 'NetworkFirst',
+						options: {
+							cacheName: 'fallback',
+							expiration: { maxEntries: 200, maxAgeSeconds: 60 * 60 * 24 },
+							networkTimeoutSeconds: 10
 						}
 					}
 				]
@@ -289,7 +303,8 @@ export default defineConfig({
 				'self',
 				'blob:',
 			],
-		}, {
+		}, 
+		{
 			enabled: true,
 			hashingMethod: 'sha256',
 			hashEnabled: {
@@ -310,6 +325,12 @@ export default defineConfig({
 	server: {
 		port: 5502,
 		host: true,
+		headers: {
+			'Cache-Control': 'no-store',
+		},
+		fs: {
+			strict: false
+		}
 	},
 	preview: {
 		port: 5502,
@@ -322,14 +343,15 @@ export default defineConfig({
 		emptyOutDir: true,
 		minify: 'esbuild',
 		rollupOptions: {
+			output: {
+				manualChunks: undefined, // Disable manual chunk splitting
+				inlineDynamicImports: true,
+				entryFileNames: 'assets/[name]-[hash].js',
+				chunkFileNames: 'assets/[name]-[hash].js',
+				assetFileNames: 'assets/[name]-[hash].[ext]'
+			},
 			preserveEntrySignatures: 'exports-only',
 			treeshake: 'recommended',
-			output: {
-				compact: true,
-				esModule: true,
-				minifyInternalExports: true,
-				sanitizeFileName: true,
-			},
 		},
 	},
 	optimizeDeps: {
