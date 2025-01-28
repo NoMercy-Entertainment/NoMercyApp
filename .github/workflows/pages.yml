@@ -2,10 +2,11 @@
 
 on:
   push:
-    paths:
-      - 'src/**'
-      - 'package.json'
-      - '*.*'
+    paths-ignore: 
+      - 'android/**'
+      - 'ios/**'
+      - 'node_modules/**'
+      - 'docs/**'
     branches:
       - master
 
