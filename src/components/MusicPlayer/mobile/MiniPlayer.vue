@@ -1,4 +1,4 @@
-<script setup lang="ts">
+2<script setup lang="ts">
 import { computed, ref } from 'vue';
 import { useSwipe } from '@vueuse/core';
 
@@ -86,15 +86,9 @@ const { isSwiping, lengthX } = useSwipe(
         <p class="w-auto self-stretch text-left text-sm font-medium leading-6 line-clamp-1">
           {{ currentSong?.name }}
         </p>
-
-        <!-- <Marquee
-            v-if="currentSong"
-            :text="currentSong.artist_track.map((at, index) => `${at.name}${index == currentSong!.artist_track.length - 1 ? '' : ','}`).join(' ')"
-            class="w-auto self-stretch text-left font-medium leading-6 line-clamp-1 text-sm text-auto-12/11"/> -->
-
         <p
           class="children:children:children:children:children:leading-6 w-auto self-stretch text-left text-sm text-auto-12/11">
-          -->
+         
           <TrackLinks v-if="currentSong" :id="currentSong.id" :data="currentSong.artist_track" type="artists" />
         </p>
       </div>
