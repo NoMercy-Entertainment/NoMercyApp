@@ -347,5 +347,5 @@ export default defineConfig({
 			},
 		},
 	},
-	base: '/NoMercy.App/',
+	base: '/',
 });
