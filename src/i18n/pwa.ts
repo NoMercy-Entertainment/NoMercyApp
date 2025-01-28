@@ -1,22 +1,37 @@
 export const pwaMessages = {
     en: {
-        newVersion: 'A new version is available!',
-        updateNow: 'Update now'
+        newVersion: 'New version available.',
+        updateNow: 'Update now?',
+        offline: 'You are offline',
+        offlineMessage: 'Please check your internet connection and try again.',
+        reload: 'Reload page'
     },
     nl: {
-        newVersion: 'Er is een nieuwe versie beschikbaar!',
-        updateNow: 'Nu updaten'
+        newVersion: 'Nieuwe versie beschikbaar.',
+        updateNow: 'Nu updaten?',
+        offline: 'Je bent offline',
+        offlineMessage: 'Controleer je internetverbinding en probeer het opnieuw.',
+        reload: 'Pagina herladen'
     },
     fr: {
-        newVersion: 'Une nouvelle version est disponible !',
-        updateNow: 'Mettre à jour'
+        newVersion: 'Nouvelle version disponible.',
+        updateNow: 'Mettre à jour maintenant?',
+        offline: 'Vous êtes hors ligne',
+        offlineMessage: 'Veuillez vérifier votre connexion Internet et réessayer.',
+        reload: 'Recharger la page'
     },
     de: {
-        newVersion: 'Eine neue Version ist verfügbar!',
-        updateNow: 'Jetzt aktualisieren'
+        newVersion: 'Neue Version verfügbar.',
+        updateNow: 'Jetzt aktualisieren?',
+        offline: 'Du bist offline',
+        offlineMessage: 'Bitte überprüfe deine Internetverbindung und versuche es erneut.',
+        reload: 'Seite neu laden'
     },
     es: {
         newVersion: '¡Una nueva versión está disponible!',
-        updateNow: 'Actualizar ahora'
+        updateNow: 'Actualizar ahora',
+        offline: 'Estás sin conexión',
+        offlineMessage: 'Por favor, comprueba tu conexión a Internet y vuelve a intentarlo.',
+        reload: 'Recargar página'
     }
 };

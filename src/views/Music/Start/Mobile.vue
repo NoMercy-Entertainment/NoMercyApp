@@ -26,7 +26,7 @@ onIonViewWillEnter(() => {
 <template>
   <ion-page>
     <ion-content :fullscreen="true">
-      <NotFound v-if="isError" />
+      <NotFound v-if="isError && !data" />
       <template v-else-if="data">
         <template v-for="(render, index) in data ?? []" :key="render.id">
           <component v-if="render.component" :index="index" :is="render.component" v-bind="render.props" />

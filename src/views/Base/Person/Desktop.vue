@@ -89,7 +89,7 @@ const filter = 'combined';
 <template>
   <ion-page>
     <ion-content :fullscreen="true">
-      <NotFound v-if="isError" />
+      <NotFound v-if="isError && !data" />
       <ScrollContainer v-else :autoHide="true" :static="true">
         <div v-if="data" :class="{
           'pb-24': isNative && !currentSong,

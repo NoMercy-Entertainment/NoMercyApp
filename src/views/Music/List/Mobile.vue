@@ -113,7 +113,7 @@ const onScroll = (e: ScrollCustomEvent) => {
 <template>
   <ion-page>
     <ion-content :fullscreen="true" @ionScroll="onScroll" :scrollEvents="true">
-      <NotFound v-if="isError" />
+      <NotFound v-if="isError && !data" />
       <div
         v-else-if="!router.currentRoute.value.params.id || (router.currentRoute.value.params.id && data?.id == router.currentRoute.value.params.id)"
         ref="main"

@@ -109,7 +109,7 @@ const setDisplayType = (type: 'list' | 'card') => {
 <template>
   <ion-page>
     <ion-content :fullscreen="true">
-      <NotFound v-if="!data" />
+      <NotFound v-if="!data && !data" />
       <ScrollContainer v-else :autoHide="true" :static="true">
 
         <div v-if="data?.id == route.params.id"

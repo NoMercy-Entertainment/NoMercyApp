@@ -30,7 +30,7 @@ export default defineConfig({
 				clientsClaim: true,
 				skipWaiting: true,
 				sourcemap: true,
-				globPatterns: ['**/*.{js,css,html,ico,png,svg,jpg,jpeg,gif,webp,woff,woff2,ttf,eot}'],
+				globPatterns: ['**/*.{js,css,html,ico,png,svg,jpg,jpeg,gif,webp,woff,woff2,ttf,eot,json}'],
 				globIgnores: ['**/*.webmanifest'],
 				navigateFallback: 'index.html',
 				runtimeCaching: [
@@ -73,9 +73,40 @@ export default defineConfig({
 						}
 					},
 					{
+						urlPattern: ({ url }) => {
+							return /^api(-dev)?.nomercy\.tv/.test(url.hostname);
+						},
+						handler: 'NetworkFirst',
+						options: {
+							cacheName: 'mediaserver-api',
+							backgroundSync: {
+								name: 'mediaserver-api',
+								options: { forceSyncFallback: true }
+							}
+						}
+					},
+					{
+						// Add specific rule for app_config
+						urlPattern: ({ url }) => {
+							return /^api(-dev)?.nomercy\.tv.*\/app_config/.test(url.toString());
+						},
+						handler: 'NetworkFirst',
+						options: {
+							cacheName: 'app-config',
+							networkTimeoutSeconds: 3,
+							cacheableResponse: {
+								statuses: [0, 200]
+							},
+							expiration: {
+								maxEntries: 1,
+								maxAgeSeconds: 60 * 60 // 1 hour
+							}
+						}
+					},
+					{
 						// this should match urls like https://192-168-2-123.123abc-1234abc-123abc-123abc.nomercy.tv:7626/api
 						urlPattern: ({ url }) => {
-							return /^[^.]+\.[^.]+\.nomercy\.tv/.test(url.hostname) 
+							return /^[^.]+\.[^.]+\.nomercy\.tv/.test(url.hostname)
 								&& url.pathname.includes('/api');
 						},
 						handler: 'NetworkFirst',
@@ -94,7 +125,7 @@ export default defineConfig({
 							const isImageRequest = url.pathname.match(/\.(jpg|jpeg|png|gif|webp|avif)$/i);
 							return isApiServer && isImageRequest;
 						},
-						handler: 'CacheFirst',
+						handler: 'NetworkFirst',
 						options: {
 							cacheName: 'cover-images-v1',
 							expiration: {

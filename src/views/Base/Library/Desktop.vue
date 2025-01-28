@@ -86,7 +86,7 @@ const onRightClick = (event: Event, data: LibraryResponse | GenreResponse | Peop
 <template>
   <ion-page>
     <ion-content :fullscreen="true">
-      <NotFound v-if="isError" />
+      <NotFound v-if="isError && !data?.pages" />
       <ScrollContainer v-else :autoHide="true" :static="true" :id="router.currentRoute.value.fullPath">
         <div class="z-0 flex flex-col gap-4 rounded-3xl border-0 p-4 w-available scrollbar-none border-auto-3" :class="{
           'pb-24': isNative && !currentSong,

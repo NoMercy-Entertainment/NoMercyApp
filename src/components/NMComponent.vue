@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import { onMounted, type PropType } from 'vue';
+import { onMounted, watch, type PropType } from 'vue';
 
 import type { HomeItem } from '@/types/api/base/home';
-import { type Component, getMutating, getMutation, getQuery, queryKey } from '@/lib/routerHelper';
+import { type Component, getMutating, getMutation, getQuery, queryKey as qk } from '@/lib/routerHelper';
 
 import { setTitle } from '@/lib/stringArray';
 import { setBackground, setColorPalette } from '@/store/ui';
@@ -14,18 +14,18 @@ const props = defineProps({
     required: false,
     default: () => ({
       keepForever: true,
-      queryKey: queryKey(),
+      queryKey: qk(),
     }),
   },
 });
 
-const qk = props.options.queryKey ?? queryKey();
+const queryKey = props.options.queryKey ?? qk();
 
-const isMutating = getMutating(qk);
+const isMutating = getMutating({ queryKey });
 
-const { data: homeData } = getQuery(qk);
+const { data: homeData } = getQuery({ queryKey });
 
-const { data: mutatedData, mutate } = getMutation({ key: qk, homeData: homeData });
+const { data: mutatedData, mutate } = getMutation({ queryKey, homeData: homeData });
 
 const onlineStatus = useOnline();
 
@@ -36,7 +36,16 @@ onMounted(() => {
   setBackground(null);
   setColorPalette(null);
 
-  const mutations = homeData.value?.filter?.(item => item?.update?.when == 'pageLoad') ?? [];
+  if (onlineStatus.value) {
+    const mutations = homeData.value?.filter?.(item => item?.update?.when == 'pageLoad') ?? [];
+    mutate(mutations);
+  }
+});
+
+watch(onlineStatus, (value) => {
+  if (!value) return;
+
+  const mutations = homeData.value?.filter?.(item => item?.update?.when == 'online') ?? [];
   mutate(mutations);
 });
 

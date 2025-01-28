@@ -39,7 +39,7 @@ onIonViewDidEnter(() => {
 <template>
   <ion-page>
     <ion-content :fullscreen="true">
-      <NotFound v-if="isError" />
+      <NotFound v-if="isError && !data" />
       <div v-else class="pt-safe flex w-full pr-8 h-inherit">
         <div v-if="show" :class="{
           'pb-24': isNative && !currentSong,

@@ -2,7 +2,9 @@ import { useRoute } from 'vue-router';
 import { useIsMutating, useMutation, useQuery } from '@tanstack/vue-query';
 import serverClient from '@/lib/clients/serverClient';
 import router from '@/router';
-import { Ref, toRaw } from 'vue';
+import { Ref, toRaw, watch } from 'vue';
+import { useOnline } from '@vueuse/core';
+import { queryClient } from '@/config/tanstack-query';
 
 export interface Component<T> {
 	id: string;
@@ -54,12 +56,17 @@ export const getMutating = ({ queryKey: key, path }: { queryKey?: string[], path
 	mutationKey: key ?? queryKey(path),
 });
 
+const onlineStatus = useOnline();
+
+watch(onlineStatus, (value) => {
+	if (value) {
+		queryClient.invalidateQueries();
+	}
+});
+
 export const getQuery = <T>({ queryKey: key, path }: { queryKey?: string[], path?: string } = { queryKey: undefined, path: undefined }) => useQuery<Component<T>[]>({
 	queryKey: key ?? queryKey(path),
 	queryFn: async () => {
-		if (!navigator.onLine) {
-			return [];
-		}
 		return serverClient()
 			.get<{ data: Component<T>[] }>(path ?? router.currentRoute.value.path)
 			.then(({ data }) => {
@@ -71,9 +78,6 @@ export const getQuery = <T>({ queryKey: key, path }: { queryKey?: string[], path
 export const getMutation = <T>({ queryKey: key, path, homeData }: { queryKey?: string[], path?: string, homeData: Ref<Component<T>[]> | Ref<undefined, undefined> }) => useMutation({
 	mutationKey: key ?? queryKey(path),
 	mutationFn: async (mutations: Component<T>[]) => {
-		if (!navigator.onLine) {
-			return homeData.value;
-		}
 		const data = [...homeData.value?.map(d => {
 			return structuredClone(toRaw(d));
 		}) ?? []];

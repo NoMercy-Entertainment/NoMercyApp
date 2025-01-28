@@ -42,6 +42,11 @@ import NMTopResultCard from '@/components/NMTopResultCard.vue';
 import NMTrackRow from '@/components/NMTrackRow.vue';
 
 export async function setupApp(app: AppContext['app']) {
+
+    if ('serviceWorker' in navigator) {
+        await navigator.serviceWorker.ready;
+    }
+
     app.use(router);
     app.use(IonicVue);
     app.use(I18NextVue, {

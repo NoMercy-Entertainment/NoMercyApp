@@ -168,7 +168,7 @@ onUnmounted(() => {
 
 <template>
   <ion-page>
-    <NotFound v-if="isError" />
+    <NotFound v-if="isError && !data" />
     <Teleport v-else to="body" :keepAlive="true">
       <div ref="playerContainer" class="absolute inset-0 flex h-full w-full overflow-clip bg-black z-1199" :class="{
         'mb-28': isNative,

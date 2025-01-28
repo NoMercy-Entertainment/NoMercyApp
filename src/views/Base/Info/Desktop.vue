@@ -297,7 +297,7 @@ const menuItems: IMenuItem[] = [
 <template>
   <ion-page>
     <ion-content :fullscreen="true">
-      <NotFound v-if="isError" />
+      <NotFound v-if="isError && !data" />
       <ScrollContainer v-else :autoHide="true" :static="true">
         <div class="z-0 flex flex-col gap-4 rounded-3xl border-0 w-available scrollbar-none border-auto-3" :class="{
           'pb-2': isNative && currentSong,

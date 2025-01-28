@@ -24,7 +24,7 @@ onMounted(() => {
 <template>
   <ion-page>
     <ion-content :fullscreen="true">
-      <NotFound v-if="isError" />
+      <NotFound v-if="isError && !data" />
       <ScrollContainer v-else :autoHide="true" :static="true">
         <template v-if="data">
           <component v-for="(render, index) in data ?? []" :index="index" :key="render.id" :is="render.component"
