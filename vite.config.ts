@@ -29,22 +29,35 @@ export default defineConfig({
 		// 	modernTargets: ['chrome 100', 'firefox 100', 'safari 14', 'edge 100'],
 		// }),
 		VitePWA({
-			// registerType: 'prompt',
-			// devOptions: {
-			// 	enabled: true
-			// },
-			// workbox: {
-			// 	cleanupOutdatedCaches: true,
-			// 	sourcemap: true,
-			// 	skipWaiting: true,
-			// 	clientsClaim: true,
-			// },
 			registerType: 'autoUpdate',
 			selfDestroying: true,
+			includeAssets: ['favicon.ico', 'apple-touch-icon.png', 'mask-icon.svg'],
 			workbox: {
 				cleanupOutdatedCaches: true,
 				sourcemap: true,
 				skipWaiting: true,
+				globPatterns: [
+					'**/*.{js,css,html,ico,png,svg,jpg,jpeg,gif,webp,woff,woff2,ttf,eot,mp4}',
+				],
+				globIgnores: [
+					'**/node_modules/**/*',
+					'sw.js',
+					'workbox-*.js',
+				],
+				navigateFallbackDenylist: [/^\/docs\//],
+				runtimeCaching: [
+					{
+						urlPattern: /^https:\/\/(?:cdn|storage|cdn-dev)\.nomercy\.tv\/.*/i,
+						handler: 'CacheFirst',
+						options: {
+							cacheName: 'nomercy-assets',
+							expiration: {
+								maxEntries: 500,
+								maxAgeSeconds: 60 * 60 * 24 * 365
+							}
+						}
+					}
+				]
 			},
 			manifest: {
 				name: 'NoMercy TV',
@@ -64,8 +77,8 @@ export default defineConfig({
 				// display_override: ['standalone', 'minimal-ui'],
 				display: 'standalone',
 				orientation: 'any',
-				scope: '/',
-				start_url: '/',
+				scope: '/NoMercy.App/',
+				start_url: '/NoMercy.App/',
 				display_override: [
 					'standalone',
 					'window-controls-overlay',
@@ -149,6 +162,11 @@ export default defineConfig({
 					},
 				],
 			},
+			base: '/NoMercy.App/',
+			devOptions: {
+				enabled: true,
+				type: 'module'
+			}
 		}),
 		ViteCspPlugin({
 			'base-uri': [
@@ -303,12 +321,12 @@ export default defineConfig({
 	optimizeDeps: {
 		force: true,
 		esbuildOptions: {
-			minify: true, // Minify the code
+			minify: true,
 			minifySyntax: true,
 			minifyIdentifiers: true,
 			minifyWhitespace: true,
-			treeShaking: true, // dead code elimination
-			// splitting: true, // create chunks
+			treeShaking: true,
+			// splitting: true,
 			format: 'esm',
 			sourcemap: true,
 			dropLabels: ['DEV'],
@@ -329,4 +347,5 @@ export default defineConfig({
 			},
 		},
 	},
+	base: '/NoMercy.App/',
 });
