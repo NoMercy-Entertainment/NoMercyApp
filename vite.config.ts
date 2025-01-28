@@ -31,14 +31,14 @@ export default defineConfig({
 		VitePWA({
 			registerType: 'autoUpdate',
 			selfDestroying: true,
-			includeAssets: ['favicon.ico', 'apple-touch-icon.png', 'mask-icon.svg'],
+			includeAssets: [
+				"**/*",
+			],
 			workbox: {
 				cleanupOutdatedCaches: true,
 				sourcemap: true,
 				skipWaiting: true,
-				globPatterns: [
-					'**/*.{js,css,html,ico,png,svg,jpg,jpeg,gif,webp,woff,woff2,ttf,eot,mp4}',
-				],
+				globPatterns: ["**/*"],
 				globIgnores: [
 					'**/node_modules/**/*',
 					'sw.js',

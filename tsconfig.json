@@ -22,7 +22,10 @@
       "@Icons/*": [
         "./resources/icons/*"
       ]
-    }
+    },
+    "types": [
+      "vite-plugin-pwa/client"
+    ]
   },
   "include": [
     "src/**/*.ts",

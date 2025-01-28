@@ -10,6 +10,9 @@ import MobileKeycloak from '@/lib/auth/mobile-keycloak';
 import TvKeycloak from '@/lib/auth/tv-keycloak';
 import { lockPortrait } from '@/lib/utils';
 import { setUserFromKeycloak } from '@/store/user';
+import { registerSW } from "virtual:pwa-register"; 
+import { pwaMessages } from './i18n/pwa';
+
 
 let redirectUri = `nomercy://home`;
 if (location.href.includes('logout')) {
@@ -151,3 +154,21 @@ else {
 }
 
 registerPWAUpdate();
+
+
+function getCurrentLanguage(): string {
+	return localStorage.getItem('language') ||
+		navigator.language.split('-')[0] ||
+		'en';
+}
+
+const lang = getCurrentLanguage();
+const messages = pwaMessages[lang as keyof typeof pwaMessages] || pwaMessages.en;
+
+const updateSW = registerSW({
+	onNeedRefresh() {
+		if (confirm(`${messages.newVersion}, ${messages.updateNow}`)) {
+			updateSW(true);
+		}
+	},
+});
