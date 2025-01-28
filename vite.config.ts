@@ -29,13 +29,22 @@ export default defineConfig({
 		// 	modernTargets: ['chrome 100', 'firefox 100', 'safari 14', 'edge 100'],
 		// }),
 		VitePWA({
+			// registerType: 'prompt',
+			// devOptions: {
+			// 	enabled: true
+			// },
+			// workbox: {
+			// 	cleanupOutdatedCaches: true,
+			// 	sourcemap: true,
+			// 	skipWaiting: true,
+			// 	clientsClaim: true,
+			// },
 			registerType: 'autoUpdate',
 			selfDestroying: true,
 			workbox: {
 				cleanupOutdatedCaches: true,
 				sourcemap: true,
 				skipWaiting: true,
-				maximumFileSizeToCacheInBytes: 30000000
 			},
 			manifest: {
 				name: 'NoMercy TV',
@@ -288,18 +297,6 @@ export default defineConfig({
 				esModule: true,
 				minifyInternalExports: true,
 				sanitizeFileName: true,
-				manualChunks: {
-					// NMCard: ['./src/components/NMCard.vue'],
-					// NMCarousel: ['./src/components/NMCarousel.vue'],
-					// NMComponent: ['./src/components/NMComponent.vue'],
-					// NMHoMeCard: ['./src/components/NMHoMeCard.vue'],
-					// NMServerComponent: ['./src/components/NMServerComponent.vue'],
-					// SocketClient: ['/resources/ts/lib/clients/SocketClient/index.ts'],
-					// stringArray: ['/resources/ts/lib/stringArray.ts'],
-					// uuidHelper: ['/resources/ts/lib/uuidHelper.ts'],
-					// colorHelper: ['/resources/ts/lib/colorHelper.ts'],
-					// musicPlayer: ['/resources/ts/lib/MusicPlayer/index.ts'],
-				},
 			},
 		},
 	},
@@ -333,30 +330,3 @@ export default defineConfig({
 		},
 	},
 });
-
-// Function to copy assets
-const copyAssets = (outputFiles, mode) => {
-	// If the mode is 'development' and the 'dist' directory exists, remove it
-	if (mode === 'development' && fs.existsSync('dist')) {
-		fs.rmSync('dist', { recursive: true, force: true });
-	}
-
-	// Define the path of the output HTML file
-	const outputHtmlFile = './dist/index.html';
-
-	// Copy the 'public' directory to the 'dist' directory
-	fs.cpSync('./public', './dist', { recursive: true });
-
-	// Generate the script tags for the output files
-	const outputScripts = outputFiles
-		.map(chunk => `    <script type="module" src="./${path.basename(chunk.path)}"></script>`)
-		.join('\n');
-
-	// Read the content of the output HTML file
-	const htmlNewContent = fs
-		.readFileSync(outputHtmlFile, { encoding: 'utf8', flag: 'r' })
-		.replace('</body>', `${outputScripts}\n</body>`); // Replace the '</body>' tag with the script tags and the '</body>' tag
-
-	// Write the new content to the output HTML file
-	fs.writeFileSync(outputHtmlFile, htmlNewContent);
-};

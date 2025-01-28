@@ -2232,11 +2232,11 @@ export class DesktopUIPlugin extends BaseUIPlugin {
 	}
 
 	getTipDataIndex(direction: string) {
-		let index: number;
+		let index: number = this.player.getPlaylistIndex();
 		if (direction == 'previous') {
-			index = this.player.playlistItem().episode ?? 0 - 1 - 1;
+			index -= 1;
 		} else {
-			index = this.player.getPlaylistIndex() + 1;
+			index += 1;
 		}
 
 		return this.player.getPlaylist().at(index);
