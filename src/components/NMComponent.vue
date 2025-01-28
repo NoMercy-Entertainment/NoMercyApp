@@ -6,6 +6,7 @@ import { type Component, getMutating, getMutation, getQuery, queryKey } from '@/
 
 import { setTitle } from '@/lib/stringArray';
 import { setBackground, setColorPalette } from '@/store/ui';
+import { useOnline } from '@vueuse/core';
 
 const props = defineProps({
   options: {
@@ -26,6 +27,8 @@ const { data: homeData } = getQuery(qk);
 
 const { data: mutatedData, mutate } = getMutation({ key: qk, homeData: homeData });
 
+const onlineStatus = useOnline();
+
 onMounted(() => {
   if (!homeData.value) return;
 
@@ -40,7 +43,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <template v-if="!isMutating">
+  <template v-if="!isMutating || !onlineStatus">
     <component v-for="(render, index) in mutatedData ?? homeData ?? []" :index="index" :key="render.id"
       :is="render.component" v-bind="render.props" />
   </template>

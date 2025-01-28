@@ -56,16 +56,24 @@ export const getMutating = ({ queryKey: key, path }: { queryKey?: string[], path
 
 export const getQuery = <T>({ queryKey: key, path }: { queryKey?: string[], path?: string } = { queryKey: undefined, path: undefined }) => useQuery<Component<T>[]>({
 	queryKey: key ?? queryKey(path),
-	queryFn: () => serverClient()
-		.get<{ data: Component<T>[] }>(path ?? router.currentRoute.value.path)
-		.then(({ data }) => {
-			return data.data;
-		}),
+	queryFn: async () => {
+		if (!navigator.onLine) {
+			return [];
+		}
+		return serverClient()
+			.get<{ data: Component<T>[] }>(path ?? router.currentRoute.value.path)
+			.then(({ data }) => {
+				return data.data;
+			});
+	},
 });
 
 export const getMutation = <T>({ queryKey: key, path, homeData }: { queryKey?: string[], path?: string, homeData: Ref<Component<T>[]> | Ref<undefined, undefined> }) => useMutation({
 	mutationKey: key ?? queryKey(path),
 	mutationFn: async (mutations: Component<T>[]) => {
+		if (!navigator.onLine) {
+			return homeData.value;
+		}
 		const data = [...homeData.value?.map(d => {
 			return structuredClone(toRaw(d));
 		}) ?? []];

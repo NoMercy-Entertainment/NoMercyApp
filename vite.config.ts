@@ -78,8 +78,9 @@ export default defineConfig({
 							return /^[^.]+\.[^.]+\.nomercy\.tv/.test(url.hostname) 
 								&& url.pathname.includes('/api');
 						},
-						handler: 'NetworkOnly',
+						handler: 'NetworkFirst',
 						options: {
+							cacheName: 'mediaserver-api',
 							backgroundSync: {
 								name: 'mediaserver-api',
 								options: { forceSyncFallback: true }
