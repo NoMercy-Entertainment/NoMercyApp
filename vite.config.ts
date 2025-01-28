@@ -25,16 +25,25 @@ export default defineConfig({
 		VitePWA({
 			registerType: 'autoUpdate',
 			strategies: 'generateSW',
-			includeAssets: ['**/*'],
 			workbox: {
 				cleanupOutdatedCaches: true,
 				clientsClaim: true,
 				skipWaiting: true,
 				sourcemap: true,
 				globPatterns: ['**/*.{js,css,html,ico,png,svg,jpg,jpeg,gif,webp,woff,woff2,ttf,eot}'],
+				globIgnores: ['**/*.webmanifest'],
 				navigateFallback: 'index.html',
-				navigateFallbackDenylist: [/^\/api/],
 				runtimeCaching: [
+					{
+						urlPattern: /\.css$/,
+						handler: 'CacheFirst',
+						options: {
+							cacheName: 'css-cache-v1',
+							cacheableResponse: {
+								statuses: [0, 200]
+							}
+						}
+					},
 					{
 						urlPattern: /\.(js|css|png|jpg|jpeg|gif|svg|ico|webp|woff2?)$/,
 						handler: 'StaleWhileRevalidate',
@@ -64,6 +73,7 @@ export default defineConfig({
 						}
 					},
 					{
+						// this should match urls like https://192-168-2-123.123abc-1234abc-123abc-123abc.nomercy.tv:7626/api
 						urlPattern: ({ url }) => {
 							return /^[^.]+\.[^.]+\.nomercy\.tv/.test(url.hostname) 
 								&& url.pathname.includes('/api');
@@ -77,6 +87,7 @@ export default defineConfig({
 						}
 					},
 					{
+						// this should match urls like https://192-168-2-123.123abc-1234abc-123abc-123abc.nomercy.tv:7626/images
 						urlPattern: ({ url }) => {
 							const isApiServer = /^[^.]+\.[^.]+\.nomercy\.tv/.test(url.hostname);
 							const isImageRequest = url.pathname.match(/\.(jpg|jpeg|png|gif|webp|avif)$/i);
@@ -93,9 +104,33 @@ export default defineConfig({
 								statuses: [0, 200]
 							}
 						}
+					},
+					{
+						urlPattern: /\.(woff2?|ttf|eot)$/,
+						handler: 'CacheFirst',
+						options: {
+							cacheName: 'fonts-cache-v1',
+							cacheableResponse: {
+								statuses: [0, 200]
+							},
+							expiration: {
+								maxEntries: 100,
+								maxAgeSeconds: 60 * 60 * 24 * 30
+							}
+						}
+					},
+					{
+						urlPattern: /^\/[^/]+\.[^/]+$/,
+						handler: 'CacheFirst',
+						options: {
+							cacheName: 'root-files-v1',
+							cacheableResponse: {
+								statuses: [0, 200]
+							}
+						}
 					}
 				],
-				maximumFileSizeToCacheInBytes: 25 * 1024 * 1024, // 25MB
+				maximumFileSizeToCacheInBytes: 25 * 1024 * 1024,
 			},
 			manifest: {
 				name: 'NoMercy TV',

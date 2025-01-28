@@ -16,7 +16,7 @@
     "build:android": "ionic capacitor build android",
     "build:ios": "ionic capacitor build ios",
     "build": "vite build",
-    "preview": "vite preview --host --port=5502 ./",
+    "preview": "vite build && vite preview --host --port=5502 ./",
     "test:e2e": "cypress run",
     "test:unit": "vitest",
     "lint": "eslint ."
