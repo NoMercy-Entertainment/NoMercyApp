@@ -78,9 +78,9 @@ export default defineConfig({
 						},
 						handler: 'NetworkFirst',
 						options: {
-							cacheName: 'mediaserver-api',
+							cacheName: 'nomercy-api-v1',
 							backgroundSync: {
-								name: 'mediaserver-api',
+								name: 'nomercy-api-v1',
 								options: { forceSyncFallback: true }
 							}
 						}
@@ -92,7 +92,7 @@ export default defineConfig({
 						},
 						handler: 'NetworkFirst',
 						options: {
-							cacheName: 'app-config',
+							cacheName: 'app-config-v1',
 							networkTimeoutSeconds: 3,
 							cacheableResponse: {
 								statuses: [0, 200]

@@ -3,7 +3,7 @@ export const handlePromises = async <CB extends Function>(promises: Array<() => 
 	for (const promise of promises) {
 		await promise()
 			.catch((error) => {
-				// throw new Error(error);
+				throw new Error(error);
 			});
 	}
 
