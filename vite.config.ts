@@ -30,48 +30,48 @@ export default defineConfig({
 				clientsClaim: true,
 				skipWaiting: true,
 				sourcemap: true,
-				globPatterns: ['**/*.{js,css,html,ico,png,svg,jpg,jpeg,gif,webp,woff,woff2,ttf,eot,json}'],
-				globIgnores: ['**/*.webmanifest'],
+				// globPatterns: ['**/*.{js,css,html,ico,png,svg,jpg,jpeg,gif,webp,woff,woff2,ttf,eot,json}'],
+				// globIgnores: ['**/*.webmanifest'],
 				navigateFallback: 'index.html',
 				runtimeCaching: [
-					{
-						urlPattern: /\.css$/,
-						handler: 'CacheFirst',
-						options: {
-							cacheName: 'css-cache-v1',
-							cacheableResponse: {
-								statuses: [0, 200]
-							}
-						}
-					},
-					{
-						urlPattern: /\.(js|css|png|jpg|jpeg|gif|svg|ico|webp|woff2?)$/,
-						handler: 'StaleWhileRevalidate',
-						options: {
-							cacheName: 'static-assets-v2',
-							fetchOptions: {
-								mode: 'cors',
-								credentials: 'same-origin'
-							},
-							cacheableResponse: {
-								statuses: [0, 200]
-							}
-						}
-					},
-					{
-						urlPattern: /^https:\/\/(cdn|storage|cdn-dev)\.nomercy\.tv\/.*/i,
-						handler: 'CacheFirst',
-						options: {
-							cacheName: 'cdn-assets-v1',
-							expiration: {
-								maxEntries: 1000,
-								maxAgeSeconds: 60 * 60 * 24 * 30
-							},
-							cacheableResponse: {
-								statuses: [0, 200]
-							}
-						}
-					},
+					// {
+					// 	urlPattern: /\.css$/,
+					// 	handler: 'CacheFirst',
+					// 	options: {
+					// 		cacheName: 'css-cache-v1',
+					// 		cacheableResponse: {
+					// 			statuses: [0, 200]
+					// 		}
+					// 	}
+					// },
+					// {
+					// 	urlPattern: /\.(js|css|png|jpg|jpeg|gif|svg|ico|webp|woff2?)$/,
+					// 	handler: 'StaleWhileRevalidate',
+					// 	options: {
+					// 		cacheName: 'static-assets-v2',
+					// 		fetchOptions: {
+					// 			mode: 'cors',
+					// 			credentials: 'same-origin'
+					// 		},
+					// 		cacheableResponse: {
+					// 			statuses: [0, 200]
+					// 		}
+					// 	}
+					// },
+					// {
+					// 	urlPattern: /^https:\/\/(cdn|storage|cdn-dev)\.nomercy\.tv\/.*/i,
+					// 	handler: 'CacheFirst',
+					// 	options: {
+					// 		cacheName: 'cdn-assets-v1',
+					// 		expiration: {
+					// 			maxEntries: 1000,
+					// 			maxAgeSeconds: 60 * 60 * 24 * 30
+					// 		},
+					// 		cacheableResponse: {
+					// 			statuses: [0, 200]
+					// 		}
+					// 	}
+					// },
 					{
 						urlPattern: ({ url }) => {
 							return /^api(-dev)?.nomercy\.tv/.test(url.hostname);
@@ -122,7 +122,7 @@ export default defineConfig({
 						// this should match urls like https://192-168-2-123.123abc-1234abc-123abc-123abc.nomercy.tv:7626/images
 						urlPattern: ({ url }) => {
 							const isApiServer = /^[^.]+\.[^.]+\.nomercy\.tv/.test(url.hostname);
-							const isImageRequest = url.pathname.match(/\.(jpg|jpeg|png|gif|webp|avif)$/i);
+							const isImageRequest = url.pathname.match(/\/images\/.*?\.(jpg|jpeg|png|gif|webp|avif)$/i);
 							return isApiServer && isImageRequest;
 						},
 						handler: 'NetworkFirst',
@@ -138,31 +138,33 @@ export default defineConfig({
 						}
 					},
 					{
-						urlPattern: /\.(woff2?|ttf|eot)$/,
+						// User-managed downloadable content
+						urlPattern: ({ url }) => {
+							const isMediaServer = /^[^.]+\.[^.]+\.nomercy\.tv/.test(url.hostname);
+							const isMediaContent = url.pathname.match(/\.(mp4|webm|mp3|m4a|flac|m3u8|srt|vtt|ass|ssa|ttf|otf|woff2?|mov|mkv|m4v|ts)$/i);
+							return isMediaServer && isMediaContent;
+						},
 						handler: 'CacheFirst',
 						options: {
-							cacheName: 'fonts-cache-v1',
-							cacheableResponse: {
-								statuses: [0, 200]
-							},
+							cacheName: 'offline-content-v1',
 							expiration: {
-								maxEntries: 100,
-								maxAgeSeconds: 60 * 60 * 24 * 30
-							}
-						}
-					},
-					{
-						urlPattern: /^\/[^/]+\.[^/]+$/,
-						handler: 'CacheFirst',
-						options: {
-							cacheName: 'root-files-v1',
+								maxEntries: 10000,
+								maxAgeSeconds: 365 * 24 * 60 * 60 // 1 year
+							},
 							cacheableResponse: {
-								statuses: [0, 200]
+								statuses: [0, 200, 206]
+							},
+							rangeRequests: true,
+							backgroundSync: {
+								name: 'offline-content-queue',
+								options: {
+									maxRetentionTime: 24 * 60
+								}
 							}
 						}
 					}
 				],
-				maximumFileSizeToCacheInBytes: 25 * 1024 * 1024,
+				maximumFileSizeToCacheInBytes: 25 * 1024 * 1024 * 1024, // 25GB per item
 			},
 			manifest: {
 				name: 'NoMercy TV',

@@ -98,7 +98,7 @@ watch(data, (value) => {
     setLogo(value?.logo);
   }
   if (value?.color_palette?.backdrop || value?.color_palette?.poster) {
-    setColorPalette(value?.color_palette?.poster ?? value?.color_palette?.backdrop);
+    setColorPalette(value?.color_palette?.poster || value?.color_palette?.backdrop);
   }
 
   processTrailer(value);
@@ -325,14 +325,14 @@ const menuItems: IMenuItem[] = [
 
                 <div
                   class="relative col-start-2 col-end-4 grid flex-shrink-0 flex-grow-0 grid-cols-3 items-start justify-start self-stretch rounded-2xl bg-gradient-to-b py-4 pr-4 from-slate-light-2/12 via-slate-light-3/12 to-slate-light-3/11 dark:from-slate-dark-2/12 dark:via-slate-dark-2/12 dark:to-slate-dark-2/11 border-auto-5/8 border-1 min-h-[23.5rem]">
-                  <div v-if="poster ?? data?.poster"
+                  <div v-if="poster || data?.poster"
                     class="absolute bottom-24 z-10 col-start-1 content-center col-end-2 h-auto w-full items-start justify-start rounded-lg -top-[20rem] sm:block">
                     <RouterLink :to="`/${data?.media_type}/${data?.id}/watch`"
                       :class="`top-3 relative h-auto m-auto mx-auto w-[65%] scale-95 cursor-default group/card block z-0 transitioning rounded-2xl aspect-poster overflow-clip select-none cover !shadow-none max-h-available  ${hasItem ? 'hover:!scale-100 hover:-translate-y-1' : ''}`"
                       data-nav="true" data-nav-r="play" data-nav-reset="true">
 
-                      <TMDBImage :key="poster ?? data?.poster ?? 'poster'" :autoShadow="true"
-                        :path="poster ?? data?.poster" :colorPalette="data?.color_palette?.poster" :size="760"
+                      <TMDBImage :key="poster || data?.poster || 'poster'" :autoShadow="true"
+                        :path="poster || data?.poster" :colorPalette="data?.color_palette?.poster" :size="760"
                         priority="high" :title="data?.title" aspect="poster"
                         className="pointer-events-none absolute -inset-1 z-20 flex aspect-poster scale-100 select-none items-center place-self-start overflow-hidden rounded-2xl !w-auto !h-auto max-h-available"
                         class="m-auto !w-auto !h-auto children:w-auto scale-100 rounded-2xl aspect-poster 5xl:w-inherit"

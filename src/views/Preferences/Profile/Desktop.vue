@@ -252,6 +252,7 @@ watch(currentReceiver, (value) => {
 });
 
 watch(chromeCastStatus, (value) => {
+  if (!value) return;
   // @ts-ignore
   volume.value = value.Volume.Level * 100;
   // @ts-ignore
@@ -621,16 +622,6 @@ const setPlaylistItem = (value: number) => {
           </FloatLabel>
         </div>
       </div>
-
-      <!--            <pre>-->
-      <!--            {{ currentReceiver }}-->
-
-      <!--            {{ mediaStatus }}-->
-
-      <!--            {{ audioTracks }}-->
-      <!--            {{ subtitleTracks }}-->
-      <!--        </pre>-->
-
     </ion-content>
   </ion-page>
 </template>

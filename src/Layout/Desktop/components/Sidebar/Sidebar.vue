@@ -186,10 +186,7 @@ const libraryIconName = (type: string) => {
           <!--                    Preferences pages-->
           <SidebarButton href="/preferences/display" icon="tv" :show="isPreferencesRoute" name="Display" />
           <SidebarButton href="/preferences/profile" icon="userEdit" :show="isPreferencesRoute" name="Profile" />
-          <!--          <SidebarButton href="/preferences/subtitles"-->
-          <!--                         icon="closedCaption"-->
-          <!--                         :show="isPreferencesRoute"-->
-          <!--                         name="Subtitles"/>-->
+          <SidebarButton href="/preferences/subtitles" icon="closedCaption" :show="isPreferencesRoute" name="Subtitles"/>
           <!--          <SidebarButton href="/preferences/controls"-->
           <!--                         icon="keyboard"-->
           <!--                         :show="isPreferencesRoute"-->
