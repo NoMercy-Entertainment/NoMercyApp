@@ -123,5 +123,5 @@
     "vue-tsc": "2.0.29",
     "webpack-cli": "^6.0.1"
   },
-  "packageManager": "yarn@4.1.1"
+  "packageManager": "yarn@1.22.22"
 }

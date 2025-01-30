@@ -62,7 +62,11 @@ async function downloadShow() {
               <div v-for="item in downloadQueue" :key="item.id"
                 class="bg-neutral-900/50 rounded p-4 flex flex-col gap-2">
                 <div class="flex justify-between items-center">
-                  <h3 class="text-sm font-medium truncate">{{ item.title }}</h3>
+                  <div class="text-sm font-medium truncate flex items-center gap-2">
+                    {{ item.title }}
+                    <span v-if="item.status === 'downloading'" class="text-2xs text-neutral-400">(Downloading...)</span>
+                    <span v-else-if="item.status === 'waiting'" class="text-2xs text-neutral-400">(Waiting...)</span>
+                  </div>
                   <button 
                     v-if="item.status !== 'completed'"
                     @click="item.status === 'downloading' ? pauseItem(item.id) : resumeItem(item.id)" 

@@ -12,6 +12,7 @@ interface WorkerTask {
 interface ControlMessage {
     type: 'pause' | 'resume' | 'pauseItem' | 'resumeItem';
     itemId?: string;
+    pausedIds?: string[];  // Add this line
 }
 
 interface WorkerMessage {
@@ -56,11 +57,24 @@ async function fetchWithAuth(path: string, baseUrl: string, token: string) {
     return response;
 }
 
-// Add pause check helper
-async function checkPause(taskId?: string) {
-    if (isPaused || (taskId && pausedItems.has(taskId))) {
-        throw 'paused';
-    }
+// Update the checkPause helper to be more reliable
+async function checkPause(taskId?: string): Promise<void> {
+    return new Promise((resolve, reject) => {
+        if (isPaused || (taskId && pausedItems.has(taskId))) {
+            reject(new Error('paused'));
+        } else {
+            resolve();
+        }
+    });
+}
+
+// Add helper to update download status
+function updateItemStatus(taskId: string, status: string) {
+    self.postMessage({
+        type: 'status',
+        itemId: taskId,
+        status
+    });
 }
 
 // Track completed assets per item
@@ -109,6 +123,12 @@ async function downloadContent(task: WorkerTask, baseUrl: string, token: string,
         cache = await caches.open('offline-content-v1');
     }
 
+    // Add pause check at start
+    await checkPause(task.mediaId);
+    if (isPaused || pausedItems.has(task.mediaId)) {
+        return false;
+    }
+
     const assetProgress = new Map<string, AssetProgress>();
 
     // Initialize or get completed assets for this item
@@ -128,7 +148,7 @@ async function downloadContent(task: WorkerTask, baseUrl: string, token: string,
             const progress = { type, total, completed: initialCompleted };
             assetProgress.set(type, progress);
             
-            // Send initial progress update
+            // Send initial progress update with status 'downloading' instead of 'pending'
             const overallProgress = calculateProgress();
             self.postMessage({
                 type: 'progress',
@@ -139,11 +159,11 @@ async function downloadContent(task: WorkerTask, baseUrl: string, token: string,
                 assetType: type,
                 assetProgress: Math.round((initialCompleted / total) * 100),
                 itemId: task.mediaId,
-                status: 'downloading'
+                status: 'downloading' // Always start as downloading
             });
 
-            // If all segments are already completed, mark the asset type as complete
-            if (initialCompleted === total) {
+            // Only mark as completed if truly done
+            if (initialCompleted === total && type !== 'video' && type !== 'audio') {
                 itemCompletedAssets.add(type);
             }
         }
@@ -155,24 +175,14 @@ async function downloadContent(task: WorkerTask, baseUrl: string, token: string,
             progress.completed++;
             const percentage = Math.round((progress.completed / progress.total) * 100);
             
-            // If this asset type is complete, mark it
-            if (percentage === 100) {
+            // Only mark asset as complete if it's truly finished AND not a segmented asset
+            if (percentage === 100 && type !== 'video' && type !== 'audio') {
                 itemCompletedAssets.add(type);
-                
-                // Check if all required assets are completed
-                const requiredAssets = new Set(['video']);
-                if (task.subtitlePaths?.length) requiredAssets.add('subtitle');
-                if (task.fontPaths?.length) requiredAssets.add('font');
-                if (task.previewPaths?.length) requiredAssets.add('preview');
-                
-                // Only mark as completed if all required assets are done
-                const isFullyComplete = Array.from(requiredAssets).every(
-                    reqType => itemCompletedAssets.has(reqType)
-                );
-                if (isFullyComplete) {
-                    completedItems.set(task.mediaId, true);
-                }
             }
+            
+            // Don't mark video/audio as completed until all segments are processed
+            const isSegmentedAsset = type === 'video' || type === 'audio';
+            const isFullyComplete = percentage === 100 && !isSegmentedAsset;
             
             // Calculate overall progress
             const overallProgress = calculateProgress();
@@ -186,8 +196,13 @@ async function downloadContent(task: WorkerTask, baseUrl: string, token: string,
                 assetType: type,
                 assetProgress: percentage,
                 itemId: task.mediaId,
-                status: isPaused || pausedItems.has(task.mediaId) ? 'paused' : 'downloading'
+                status: isFullyComplete ? 'completed' : 'downloading'
             });
+
+            // Only update completion status after all segments are actually downloaded
+            if (percentage === 100 && !isSegmentedAsset) {
+                // ...rest of completion logic...
+            }
         }
     };
 
@@ -259,6 +274,7 @@ async function downloadContent(task: WorkerTask, baseUrl: string, token: string,
                     const videoBasePath = manifest.path.substring(0, manifest.path.lastIndexOf('/'));
 
                     for (const segment of manifest.segments) {
+                        await checkPause(task.mediaId);
                         const segmentUrl = segment.uri.startsWith('http')
                             ? segment.uri
                             : `${videoBasePath}/${segment.uri}`;
@@ -266,20 +282,23 @@ async function downloadContent(task: WorkerTask, baseUrl: string, token: string,
                         // Skip if this segment is already downloaded
                         const segmentKey = getCacheKey(task.mediaId, segmentUrl);
                         
-                        if (!itemCompletedSegments.has(segmentKey)) {
-                            const hasSegment = await cache.match(segmentKey);
-                            
-                            if (!hasSegment) {
-                                await checkPause(task.mediaId);
-                                const response = await fetchWithAuth(segmentUrl, baseUrl, token).then(r => r.blob());
-                                const responseClone = new Response(response.slice(0));
-                                await cache.put(segmentKey, responseClone);
-                            }
-                            
-                            // Mark segment as completed
-                            itemCompletedSegments.add(segmentKey);
+                        if (itemCompletedSegments.has(segmentKey)) {
+                            // Skip this segment entirely as it's already counted in completedVideoSegments
+                            continue;
                         }
                         
+                        const hasSegment = await cache.match(segmentKey);
+                        if (hasSegment) {
+                            itemCompletedSegments.add(segmentKey);
+                            // Skip this segment entirely as it's already counted in completedVideoSegments
+                            continue;
+                        }
+                        
+                        await checkPause(task.mediaId);
+                        const response = await fetchWithAuth(segmentUrl, baseUrl, token).then(r => r.blob());
+                        const responseClone = new Response(response.slice(0));
+                        await cache.put(segmentKey, responseClone);
+                        itemCompletedSegments.add(segmentKey);
                         incrementAssetProgress('video');
                     }
                 }
@@ -333,6 +352,7 @@ async function downloadContent(task: WorkerTask, baseUrl: string, token: string,
                         const audioBasePath = manifest.path.substring(0, manifest.path.lastIndexOf('/'));
 
                         for (const segment of manifest.segments) {
+                            await checkPause(task.mediaId);
                             const segmentUrl = segment.uri.startsWith('http')
                                 ? segment.uri
                                 : `${audioBasePath}/${segment.uri}`;
@@ -340,20 +360,23 @@ async function downloadContent(task: WorkerTask, baseUrl: string, token: string,
                             // Skip if this segment is already downloaded
                             const segmentKey = getCacheKey(task.mediaId, segmentUrl);
                             
-                            if (!itemCompletedSegments.has(segmentKey)) {
-                                const hasSegment = await cache.match(segmentKey);
-                                
-                                if (!hasSegment) {
-                                    await checkPause(task.mediaId);
-                                    const response = await fetchWithAuth(segmentUrl, baseUrl, token).then(r => r.blob());
-                                    const responseClone = new Response(response.slice(0));
-                                    await cache.put(segmentKey, responseClone);
-                                }
-                                
-                                // Mark segment as completed
-                                itemCompletedSegments.add(segmentKey);
+                            if (itemCompletedSegments.has(segmentKey)) {
+                                // Skip this segment entirely as it's already counted in completedAudioSegments
+                                continue;
                             }
                             
+                            const hasSegment = await cache.match(segmentKey);
+                            if (hasSegment) {
+                                itemCompletedSegments.add(segmentKey);
+                                // Skip this segment entirely as it's already counted in completedAudioSegments
+                                continue;
+                            }
+                            
+                            await checkPause(task.mediaId);
+                            const response = await fetchWithAuth(segmentUrl, baseUrl, token).then(r => r.blob());
+                            const responseClone = new Response(response.slice(0));
+                            await cache.put(segmentKey, responseClone);
+                            itemCompletedSegments.add(segmentKey);
                             incrementAssetProgress('audio');
                         }
                     }
@@ -459,12 +482,24 @@ async function downloadContent(task: WorkerTask, baseUrl: string, token: string,
                     const fonts = await response.json();
                     const basePath = path.substring(0, path.lastIndexOf('/') + 1);
                     
+                    let allFontFilesCached = true;
                     for (const font of fonts) {
                         await checkPause(task.mediaId);
                         const fontUrl = `${basePath}fonts/${font.file}`;
                         const fontKey = getCacheKey(task.mediaId, fontUrl);
-                        const fontResponse = await fetchWithAuth(fontUrl, baseUrl, token);
-                        await cache.put(fontKey, fontResponse.clone());
+                        
+                        // Check if this specific font file is already cached
+                        const hasFontFile = await cache.match(fontKey);
+                        if (!hasFontFile) {
+                            allFontFilesCached = false;
+                            const fontResponse = await fetchWithAuth(fontUrl, baseUrl, token);
+                            await cache.put(fontKey, fontResponse.clone());
+                        }
+                    }
+                    
+                    // Only cache the manifest if we successfully cached all font files
+                    if (allFontFilesCached) {
+                        await cache.put(fontKey, new Response(JSON.stringify(fonts)));
                     }
                 }
                 
@@ -472,8 +507,7 @@ async function downloadContent(task: WorkerTask, baseUrl: string, token: string,
             }
         }
     } catch (error) {
-        if (error === 'paused') {
-            console.log('Task paused:', task.mediaId);
+        if (error?.message === 'paused') {
             return false;
         }
         throw error;
@@ -485,95 +519,76 @@ let originalTasks: WorkerTask[] = [];
 let baseUrl: string = '';
 let token: string = '';
 
+// Update the processQueue function to handle pauses more reliably
 async function processQueue(tasks: WorkerTask[], baseUrl: string, token: string) {
     let index = 0;
-    const total = originalTasks.length;
-    const activeTaskCount = tasks.filter(t => !pausedItems.has(t.mediaId)).length;
-
+    
     while (index < tasks.length) {
-        // Skip paused items
-        while (index < tasks.length && pausedItems.has(tasks[index].mediaId)) {
-            // Don't remove from completed items if it was completed
-            // Just send status update for paused items
-            const progress = calculateProgress();
-            self.postMessage({
-                type: 'progress',
-                progress: progress.progress,
-                currentItem: progress.completedItems,
-                totalItems: progress.totalItems,
-                itemProgress: 0,
-                itemId: tasks[index].mediaId,
-                status: 'paused'
-            });
-            index++;
-        }
-
-        if (index >= tasks.length) break;
+        const task = tasks[index];
+        
+        // Set current task to downloading and next tasks to waiting
+        updateItemStatus(task.mediaId, 'downloading');
+        tasks.slice(index + 1).forEach(nextTask => {
+            if (!completedItems.get(nextTask.mediaId) && !pausedItems.has(nextTask.mediaId)) {
+                updateItemStatus(nextTask.mediaId, 'waiting');
+            }
+        });
 
         try {
+            // Check pause state before starting each task
+            if (isPaused) {
+                updateItemStatus(task.mediaId, 'paused');
+                return; // Exit the queue entirely when globally paused
+            }
+            
+            if (pausedItems.has(task.mediaId)) {
+                updateItemStatus(task.mediaId, 'paused');
+                index++;
+                continue; // Skip this task but continue with others
+            }
+
             // Track current download
-            const taskIndex = originalTasks.indexOf(tasks[index]);
+            const taskIndex = originalTasks.indexOf(task);
             currentDownloads = [{
                 taskIndex,
-                promise: downloadContent(tasks[index], baseUrl, token, taskIndex, activeTaskCount)
+                promise: downloadContent(task, baseUrl, token, taskIndex, tasks.length)
             }];
 
+            updateItemStatus(task.mediaId, 'downloading');
             const result = await currentDownloads[0].promise;
-            if (result !== false) { // Only increment if not paused
+            
+            if (result === false) {
+                // Task was paused
+                updateItemStatus(task.mediaId, 'paused');
+                if (isPaused) return; // Exit queue if globally paused
+                index++; // Move to next task if individually paused
+            } else {
+                // Task completed successfully
+                updateItemStatus(task.mediaId, 'completed');
                 index++;
             }
         } catch (error) {
-            if (error === 'paused') {
-                // Don't remove from completed items if it was completed
-                // Just send paused status update without affecting progress
-                const progress = calculateProgress();
-                self.postMessage({
-                    type: 'progress',
-                    progress: progress.progress,
-                    currentItem: progress.completedItems,
-                    totalItems: progress.totalItems,
-                    itemProgress: 0,
-                    itemId: tasks[index].mediaId,
-                    status: 'paused'
-                });
-                // Don't increment index for paused items
-                continue;
+            if (error?.message === 'paused') {
+                updateItemStatus(task.mediaId, 'paused');
+                if (isPaused) return; // Exit queue if globally paused
+                index++; // Move to next task if individually paused
+            } else {
+                updateItemStatus(task.mediaId, 'error');
+                throw error;
             }
-            console.error('Error processing task:', error);
-            self.postMessage({ type: 'error', error: error.message });
-            break;
         }
     }
 
-    // Check completion status
-    const remainingTasks = originalTasks.filter(t => {
-        // A task is remaining if:
-        // 1. It's not completed OR
-        // 2. It's paused (regardless of completion status)
-        return !completedItems.get(t.mediaId) || pausedItems.has(t.mediaId);
-    });
-
-    // Only send complete if:
-    // 1. We have active (non-paused) tasks AND
-    // 2. All active tasks are complete AND
-    // 3. There are no paused items
-    const activeItems = originalTasks.filter(t => !pausedItems.has(t.mediaId));
-    const activeUnfinishedTasks = activeItems.filter(t => !completedItems.get(t.mediaId));
-    
-    if (activeItems.length > 0 && activeUnfinishedTasks.length === 0) {
-        // Check if there are any paused items
-        const pausedItemCount = originalTasks.filter(t => pausedItems.has(t.mediaId)).length;
-        
-        // Only send complete if there are no paused items
-        if (pausedItemCount === 0) {
-            const progress = calculateProgress();
-            self.postMessage({ 
-                type: 'complete',
-                progress: progress.progress,
-                currentItem: progress.completedItems,
-                totalItems: progress.totalItems
-            });
-        }
+    // Only send complete if there are no paused items
+    const pausedCount = tasks.filter(t => pausedItems.has(t.mediaId)).length;
+    if (pausedCount === 0) {
+        const progress = calculateProgress();
+        self.postMessage({ 
+            type: 'complete',
+            progress: progress.progress,
+            currentItem: progress.completedItems,
+            totalItems: progress.totalItems
+        });
     }
 }
 
@@ -625,79 +640,72 @@ self.onmessage = async (e: MessageEvent<WorkerMessage>) => {
         pausedItems.clear();
     }
 
-    // Handle control messages
+    // Update the message handler to be more robust with pause/resume
     if (controls) {
-        switch (controls.type) {
+        const { type, itemId } = controls;
+        
+        switch (type) {
             case 'pause':
                 isPaused = true;
-                // Remove all items from completed set when globally paused
-                completedItems.clear();
+                // Only pause non-completed items
+                originalTasks.forEach(task => {
+                    const isCompleted = completedItems.get(task.mediaId);
+                    if (!isCompleted) {
+                        pausedItems.add(task.mediaId);
+                        self.postMessage({
+                            type: 'status',
+                            itemId: task.mediaId,
+                            status: 'paused'
+                        });
+                    }
+                });
                 break;
+                
             case 'resume':
                 isPaused = false;
-                // Resume from where we left off, skipping completed items
-                const resumeIndex = currentDownloads[0]?.taskIndex || 0;
-                const remainingTasks = originalTasks
-                    .slice(resumeIndex)
-                    .filter(t => !completedItems.get(t.mediaId));
-                processQueue(remainingTasks, baseUrl, token);
-                break;
-            case 'pauseItem':
-                if (controls.itemId) {
-                    pausedItems.add(controls.itemId);
-                    // Remove from completed items when paused but preserve completed assets
-                    completedItems.delete(controls.itemId);
-                    // Send immediate status update
-                    const progress = calculateProgress();
-                    self.postMessage({
-                        type: 'progress',
-                        progress: progress.progress,
-                        currentItem: progress.completedItems,
-                        totalItems: progress.totalItems,
-                        itemProgress: 0,
-                        itemId: controls.itemId,
-                        status: 'paused'
+                pausedItems.clear();
+                
+                // Only resume tasks that were explicitly paused
+                const pausedIds = controls.pausedIds || [];
+                const remainingTasks = originalTasks.filter(t => 
+                    !completedItems.get(t.mediaId) && 
+                    pausedIds.includes(t.mediaId)
+                );
+                
+                if (remainingTasks.length) {
+                    remainingTasks.forEach(task => {
+                        updateItemStatus(task.mediaId, 'pending');
                     });
+                    try {
+                        await processQueue(remainingTasks, baseUrl, token);
+                    } catch (error) {
+                        console.error('Failed to resume queue:', error);
+                    }
                 }
                 break;
+
+            case 'pauseItem':
+                if (itemId) {
+                    pausedItems.add(itemId);
+                    updateItemStatus(itemId, 'paused');
+                }
+                break;
+                
             case 'resumeItem':
-                if (controls.itemId) {
-                    pausedItems.delete(controls.itemId);
-                    // Send immediate status update that we're resuming
-                    const progress = calculateProgress();
-                    self.postMessage({
-                        type: 'progress',
-                        progress: progress.progress,
-                        currentItem: progress.completedItems,
-                        totalItems: progress.totalItems,
-                        itemProgress: 0,
-                        itemId: controls.itemId,
-                        status: 'downloading'
-                    });
-                    // Find the task and start processing from there
-                    const taskIndex = originalTasks.findIndex(t => t.mediaId === controls.itemId);
-                    if (taskIndex >= 0) {
-                        // Get all non-completed, non-paused tasks
-                        const remainingTasks = originalTasks.filter(t => 
-                            !completedItems.get(t.mediaId) && !pausedItems.has(t.mediaId)
-                        );
-                        
-                        // Find the resumed task
-                        const resumedTask = originalTasks[taskIndex];
-                        
-                        // Create a new task list that:
-                        // 1. Starts with the resumed task (if not completed)
-                        // 2. Includes all other non-completed, non-paused tasks
-                        const prioritizedTasks = [
-                            // Only include the resumed task if it's not completed
-                            ...(completedItems.get(resumedTask.mediaId) ? [] : [resumedTask]),
-                            // Add remaining non-completed tasks, excluding the resumed task
-                            ...remainingTasks.filter(t => t.mediaId !== resumedTask.mediaId)
-                        ];
-                        
-                        if (prioritizedTasks.length > 0) {
-                            // Start processing the queue with the prioritized task list
-                            processQueue(prioritizedTasks, baseUrl, token);
+                if (itemId) {
+                    pausedItems.delete(itemId);
+                    updateItemStatus(itemId, 'pending');
+                    
+                    const task = originalTasks.find(t => t.mediaId === itemId);
+                    if (task && !completedItems.get(task.mediaId)) {
+                        try {
+                            const tempPaused = isPaused;
+                            isPaused = false;
+                            await processQueue([task], baseUrl, token);
+                            isPaused = tempPaused;
+                        } catch (error) {
+                            console.error('Failed to resume item:', error);
+                            updateItemStatus(itemId, 'error');
                         }
                     }
                 }

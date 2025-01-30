@@ -21,12 +21,12 @@ interface DownloadItemProgress {
     title: string;
     image: string;
     progress: number;
-    status: 'pending' | 'downloading' | 'completed' | 'error' | 'paused';
+    status: 'pending' | 'downloading' | 'completed' | 'error' | 'paused' | 'waiting';
     children: {
         type: 'video' | 'subtitle' | 'preview' | 'font' | 'audio';
         name: string;
         progress: number;
-        status: 'pending' | 'downloading' | 'completed' | 'error' | 'paused';
+        status: 'pending' | 'downloading' | 'completed' | 'error' | 'paused' | 'waiting';
     }[];
 }
 
@@ -41,38 +41,71 @@ export function useDownloadManager() {
     let worker: Worker | null = null;
 
     function pauseDownloads() {
-        isPaused.value = true;
-        // Update all non-completed items to paused state and send individual pause commands
-        downloadQueue.value.forEach(item => {
-            if (item.status === 'downloading' || item.status === 'pending') {
-                item.status = 'paused';
-                worker?.postMessage({ controls: { action: 'pauseItem', itemId: item.id } });
-            }
-        });
+        if (!isPaused.value) {
+            worker?.postMessage({ controls: { type: 'pause' } });
+            // Only update non-completed items
+            downloadQueue.value.forEach(item => {
+                if (item.status !== 'completed') {
+                    item.status = 'paused';
+                    item.children.forEach(child => {
+                        if (child.status !== 'completed') {
+                            child.status = 'paused';
+                        }
+                    });
+                }
+            });
+            isPaused.value = true;
+        }
     }
 
     function resumeDownloads() {
-        isPaused.value = false;
-        // Update all paused items back to pending state
-        downloadQueue.value.forEach(item => {
-            if (item.status === 'paused') {
-                item.status = 'pending';
+        if (isPaused.value) {
+            // Only find items that are currently paused (not completed)
+            const pausedItems = downloadQueue.value.filter(item => item.status === 'paused');
+            if (pausedItems.length > 0) {
+                // Mark first item as pending, rest as waiting
+                pausedItems[0].status = 'pending';
+                pausedItems[0].children.forEach(child => {
+                    if (child.status === 'paused') child.status = 'pending';
+                });
+                
+                // Mark rest as waiting
+                pausedItems.slice(1).forEach(item => {
+                    item.status = 'waiting';
+                    item.children.forEach(child => {
+                        if (child.status === 'paused') child.status = 'waiting';
+                    });
+                });
+
+                worker?.postMessage({ 
+                    controls: { 
+                        type: 'resume',
+                        pausedIds: pausedItems.map(item => item.id)
+                    }
+                });
             }
-        });
-        worker?.postMessage({ controls: { action: 'resume' } });
+            isPaused.value = false;
+        }
     }
 
     function pauseItem(itemId: string) {
         const item = downloadQueue.value.find(i => i.id === itemId);
         if (item && (item.status === 'downloading' || item.status === 'pending')) {
+            worker?.postMessage({ controls: { type: 'pauseItem', itemId } });
+            // Update UI immediately for better responsiveness
             item.status = 'paused';
-            worker?.postMessage({ controls: { action: 'pauseItem', itemId } });
-            
+            item.children.forEach(child => {
+                if (child.status === 'downloading' || child.status === 'pending') {
+                    child.status = 'paused';
+                }
+            });
+
             // Check if all non-completed items are now paused
-            const hasActiveDownloads = downloadQueue.value.some(
-                i => i.status === 'downloading' || i.status === 'pending'
+            const allPaused = downloadQueue.value.every(i => 
+                i.status === 'completed' || i.status === 'paused'
             );
-            if (!hasActiveDownloads) {
+            
+            if (allPaused) {
                 isPaused.value = true;
             }
         }
@@ -81,9 +114,23 @@ export function useDownloadManager() {
     function resumeItem(itemId: string) {
         const item = downloadQueue.value.find(i => i.id === itemId);
         if (item && item.status === 'paused') {
+            worker?.postMessage({ controls: { type: 'resumeItem', itemId } });
+            // Update UI immediately for better responsiveness
             item.status = 'pending';
-            worker?.postMessage({ controls: { action: 'resume', itemId } });
-            isPaused.value = false;
+            item.children.forEach(child => {
+                if (child.status === 'paused') {
+                    child.status = 'pending';
+                }
+            });
+
+            // If any item is now active, clear the global pause state
+            const anyActive = downloadQueue.value.some(i => 
+                i.status === 'downloading' || i.status === 'pending'
+            );
+            
+            if (anyActive) {
+                isPaused.value = false;
+            }
         }
     }
 
@@ -120,7 +167,7 @@ export function useDownloadManager() {
             // Initialize download queue with new/remaining items
             downloadQueue.value = await Promise.all(playlist
                 .filter(item => !!item?.file)
-                .map(async episode => {
+                .map(async (episode, index) => {
                     // Check which assets actually exist
                     const hasSubtitles = episode.tracks?.some(t => t.kind === 'subtitles' && t.file);
                     const hasFonts = episode.tracks?.some(t => t.kind === 'fonts' && t.file);
@@ -166,8 +213,11 @@ export function useDownloadManager() {
                         title: `${episode.show}${episode.season ? ` S${pad(episode.season,2)}` : ''}${episode.episode ? `E${pad(episode.episode,2)}` : ''} - ${episode.title}`,
                         image: episode.image,
                         progress: 0,
-                        status: 'pending',
-                        children
+                        status: index === 0 ? 'pending' : 'waiting',
+                        children: children.map(child => ({
+                            ...child,
+                            status: index === 0 ? 'pending' : 'waiting'
+                        }))
                     };
                 }));
 
@@ -217,6 +267,12 @@ export function useDownloadManager() {
 
                 worker.onmessage = (e) => {
                     console.log('Worker message:', e.data);
+                    // Handle paused error message specifically
+                    if (e.data.type === 'error' && e.data.error === 'paused') {
+                        // Don't treat pause messages as errors
+                        return;
+                    }
+                    
                     const { 
                         type: msgType, 
                         progress: overallProgress, 
@@ -263,7 +319,24 @@ export function useDownloadManager() {
                     } else if (msgType === 'complete') {
                         resolve(true);
                     } else if (msgType === 'error') {
-                        reject(e.data.error);
+                        if (e.data.error === 'paused') {
+                            // Don't treat pause as an error, just resolve with false
+                            resolve(false);
+                        } else {
+                            reject(e.data.error);
+                        }
+                    } else if (msgType === 'status') {
+                        const item = downloadQueue.value.find(i => i.id === e.data.itemId);
+                        if (item && item.status !== 'completed') {  // Don't update completed items
+                            if (item.status !== e.data.status) {
+                                item.status = e.data.status;
+                                item.children.forEach(child => {
+                                    if (child.status !== 'completed') {
+                                        child.status = e.data.status;
+                                    }
+                                });
+                            }
+                        }
                     }
                 };
 
@@ -275,12 +348,20 @@ export function useDownloadManager() {
                 });
             });
 
+            return true; // Successfully completed downloads
+
         } catch (error) {
+            if (error === 'paused') {
+                console.log('Downloads paused');
+                return false; // Paused state is not an error
+            }
             console.error('Download failed:', error);
             return false;
         } finally {
-            worker?.terminate();
-            isDownloading.value = false;
+            if (!isPaused.value) { // Only cleanup if not paused
+                worker?.terminate();
+                isDownloading.value = false;
+            }
         }
     }
 
