@@ -69,10 +69,10 @@ async function downloadShow() {
                   </div>
                   <button 
                     v-if="item.status !== 'completed'"
-                    @click="item.status === 'downloading' ? pauseItem(item.id) : resumeItem(item.id)" 
+                    @click="item.status === 'downloading' || item.status === 'pending' || item.status === 'waiting' ? pauseItem(item.id) : resumeItem(item.id)" 
                     class="text-2xs px-2 py-0.5 rounded bg-neutral-800"
                   >
-                    {{ item.status === 'downloading' ? 'Pause' : 'Resume' }}
+                    {{ item.status === 'downloading' || item.status === 'pending' || item.status === 'waiting' ? 'Pause' : 'Resume' }}
                   </button>
                 </div>
                 <div class="flex gap-2">

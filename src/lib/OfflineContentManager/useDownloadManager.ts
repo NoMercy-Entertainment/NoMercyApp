@@ -94,12 +94,12 @@ export function useDownloadManager() {
 
     function pauseItem(itemId: string) {
         const item = downloadQueue.value.find(i => i.id === itemId);
-        if (item && (item.status === 'downloading' || item.status === 'pending')) {
+        if (item && (item.status === 'downloading' || item.status === 'pending' || item.status === 'waiting')) {
             worker?.postMessage({ controls: { type: 'pauseItem', itemId } });
             // Update UI immediately for better responsiveness
             item.status = 'paused';
             item.children.forEach(child => {
-                if (child.status === 'downloading' || child.status === 'pending') {
+                if (child.status === 'downloading' || child.status === 'pending' || child.status === 'waiting') {
                     child.status = 'paused';
                 }
             });
