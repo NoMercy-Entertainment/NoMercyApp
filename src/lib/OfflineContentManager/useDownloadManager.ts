@@ -40,6 +40,10 @@ export function useDownloadManager() {
     const isPaused = ref(false);
     let worker: Worker | null = null;
 
+    function updateCompletedItems() {
+        completedItems.value = downloadQueue.value.filter(item => item.status === 'completed').length;
+    }
+
     function pauseDownloads() {
         if (!isPaused.value) {
             worker?.postMessage({ controls: { type: 'pause' } });
@@ -289,7 +293,6 @@ export function useDownloadManager() {
                         // Only update progress if this isn't a new query or if it is a new query
                         if (isNewQuery || !workerNewQuery) {
                             progress.value = Math.min(overallProgress, 100);
-                            completedItems.value = current;
                         }
                         itemProgress.value = itemProg;
 
@@ -311,12 +314,14 @@ export function useDownloadManager() {
                                 item.progress = Math.round((completedAssets / item.children.length) * 100);
                                 if (item.progress === 100) {
                                     item.status = 'completed';
+                                    updateCompletedItems(); // Update completed items count
                                 } else if (status) {
                                     item.status = status;
                                 }
                             }
                         }
                     } else if (msgType === 'complete') {
+                        updateCompletedItems(); // Ensure completed items count is updated
                         resolve(true);
                     } else if (msgType === 'error') {
                         if (e.data.error === 'paused') {

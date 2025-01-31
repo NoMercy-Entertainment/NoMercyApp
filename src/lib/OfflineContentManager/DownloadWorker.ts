@@ -470,40 +470,49 @@ async function downloadContent(task: WorkerTask, baseUrl: string, token: string,
         }
 
         if (task.fontPaths?.length) {
-            updateAssetProgress('font', task.fontPaths.length);
+            let totalFontFiles = 0;
+            const fontPaths = [];
+
+            // Fetch fonts.json and count total font files
             for (const path of task.fontPaths) {
-                // Skip if this font is already downloaded
+                const response = await fetchWithAuth(path, baseUrl, token);
+                const fonts = await response.json();
+                totalFontFiles += fonts.length;
+                fontPaths.push({ path, fonts });
+            }
+
+            updateAssetProgress('font', totalFontFiles);
+
+            for (const { path, fonts } of fontPaths) {
                 const fontKey = getCacheKey(task.mediaId, path);
                 const hasFont = await cache.match(fontKey);
                 
                 if (!hasFont) {
                     await checkPause(task.mediaId);
-                    const response = await fetchWithAuth(path, baseUrl, token);
-                    const fonts = await response.json();
                     const basePath = path.substring(0, path.lastIndexOf('/') + 1);
                     
-                    let allFontFilesCached = true;
                     for (const font of fonts) {
                         await checkPause(task.mediaId);
                         const fontUrl = `${basePath}fonts/${font.file}`;
-                        const fontKey = getCacheKey(task.mediaId, fontUrl);
+                        const fontFileKey = getCacheKey(task.mediaId, fontUrl);
                         
                         // Check if this specific font file is already cached
-                        const hasFontFile = await cache.match(fontKey);
+                        const hasFontFile = await cache.match(fontFileKey);
                         if (!hasFontFile) {
-                            allFontFilesCached = false;
                             const fontResponse = await fetchWithAuth(fontUrl, baseUrl, token);
-                            await cache.put(fontKey, fontResponse.clone());
+                            await cache.put(fontFileKey, fontResponse.clone());
+                            incrementAssetProgress('font'); // Increment progress for each font file
+                        } else {
+                            incrementAssetProgress('font'); // Increment progress if font is already cached
                         }
                     }
                     
-                    // Only cache the manifest if we successfully cached all font files
-                    if (allFontFilesCached) {
-                        await cache.put(fontKey, new Response(JSON.stringify(fonts)));
-                    }
+                    // Cache the manifest after processing all font files
+                    await cache.put(fontKey, new Response(JSON.stringify(fonts)));
+                } else {
+                    // Increment progress for each font file in the cached manifest
+                    fonts.forEach(() => incrementAssetProgress('font'));
                 }
-                
-                incrementAssetProgress('font');
             }
         }
     } catch (error) {
