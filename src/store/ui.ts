@@ -5,6 +5,7 @@ import { SortOrder, SortType } from '@/types/musicPlayer';
 import { useAutoThemeColors } from '@/store/preferences';
 import { Preferences } from "@capacitor/preferences";
 import { isXmasTime } from "@/lib/dateTime";
+import i18next from "@/config/i18next";
 
 export const setupComplete = ref(false);
 
@@ -53,9 +54,10 @@ export function setLogo(value?: string | null) {
 }
 
 export const displayLanguage = ref(window.navigator.language);
-export function setDisplayLanguage(value: string) {
+export async function setDisplayLanguage(value: string) {
     displayLanguage.value = value;
     Preferences.set({ key: 'display_language', value: value }).then();
+    await i18next.changeLanguage(value);
 }
 
 interface StatusBarPlugin {

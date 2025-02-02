@@ -29,14 +29,14 @@ const props = defineProps({
     required: false,
     default: false,
   },
-  items: {
-    type: Array as PropType<Language[]>,
-    required: false,
-  },
   variant: {
     type: String as PropType<'tight' | 'dense' | 'normal'>,
     required: false,
     default: 'normal',
+  },
+  languages: {
+    type: Array as PropType<Language[]>,
+    required: false,
   },
 });
 
@@ -46,15 +46,11 @@ const selected = ref<Language[] | Language>(props.modelValue);
 const query = ref('');
 const filteredOptions = ref<Language[]>([]);
 
-const { data: languages } = useServerClient<Language[]>({
-  path: '/dashboard/configuration/languages',
-});
+const items = ref<Language[]>(props.languages ?? []);
 
-const items = ref<Language[]>(props.items ?? languages.value ?? []);
-
-watch(languages, (value) => {
-  if (!value) return;
-  items.value = value;
+watch(props, (value) => {
+  if (!value.languages) return;
+  items.value = value.languages;
 });
 
 watch(selected, (value) => {

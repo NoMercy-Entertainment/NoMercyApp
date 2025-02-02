@@ -90,7 +90,7 @@ const classes = computed(() => {
       ? ''
       : 'h-9',
     props.variant == 'default' || props.variant == 'contained'
-      ? '!bg-gradient-to-b from-[var(--color-7)] to-[var(--color-5)] hover:from-[var(--color-8)] hover:to-[var(--color-6)] active:from-[var(--color-7)] active:to-[var(--color-4)] button-filled '
+      ? '!bg-gradient-to-b from-[var(--color-11)] to-[var(--color-10)] hover:from-[var(--color-12)] hover:to-[var(--color-11)] active:from-[var(--color-10)] active:to-[var(--color-9)] dark:from-[var(--color-7)] dark:to-[var(--color-5)] dark:hover:from-[var(--color-8)] dark:hover:to-[var(--color-6)] dark:active:from-[var(--color-7)] dark:active:to-[var(--color-4)] button-filled '
       : '',
     props.variant == 'text'
       ? 'hover:outline-[rgba(var(--color-7),.1)] hover:outline-1 hover:outline text-[rgb(var(--background-auto-alpha-10))]'
@@ -120,7 +120,7 @@ const classes = computed(() => {
 <template>
 
   <label v-if="component == 'label'" :id="id" :data-variant="variant" @click="onClick" :for="htmlFor"
-    :disabled="disabled" :style="style" v-ripple :class="classes">
+    :style="style" v-ripple :class="classes" class="transition-colors duration-200">
 
     <MoooomIcon v-if="startIcon" :icon="startIcon" className="w-5" />
 
@@ -136,7 +136,7 @@ const classes = computed(() => {
     <MoooomIcon v-if="endIcon" :icon="endIcon" className="-mr-1 w-5" />
   </label>
   <a v-else-if="component == 'link'" :href="href" :id="id" :data-variant="variant" @click="onClick" :for="htmlFor"
-    :disabled="disabled" :style="style" v-ripple :class="classes">
+    :style="style" v-ripple :class="classes" class="transition-colors duration-200">
 
     <MoooomIcon v-if="startIcon" :icon="startIcon" className="w-5" />
 

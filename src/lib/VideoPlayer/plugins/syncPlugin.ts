@@ -60,7 +60,15 @@ export class SyncPlugin extends Plugin {
 			video_id: number;
 		};
 
-		const route = this.route.path.split('/');
+		let path = this.route?.path;
+		if (!path) {
+			path = window.location.hash.replace('#', '');
+		}
+		if (!path) {
+			path = location.pathname;
+		}
+
+		const route = path?.split('/');
 
 		let specialId: string | undefined;
 		let collectionId: number | undefined;
