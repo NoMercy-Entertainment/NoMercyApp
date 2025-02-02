@@ -120,12 +120,22 @@ export function useDownloadManager() {
         if (item && item.status === 'paused') {
             worker?.postMessage({ controls: { type: 'resumeItem', itemId } });
             // Update UI immediately for better responsiveness
-            item.status = 'pending';
-            item.children.forEach(child => {
-                if (child.status === 'paused') {
-                    child.status = 'pending';
-                }
-            });
+            const activeItem = downloadQueue.value.find(i => i.status === 'downloading' || i.status === 'pending');
+            if (activeItem) {
+                item.status = 'waiting';
+                item.children.forEach(child => {
+                    if (child.status === 'paused') {
+                        child.status = 'waiting';
+                    }
+                });
+            } else {
+                item.status = 'pending';
+                item.children.forEach(child => {
+                    if (child.status === 'paused') {
+                        child.status = 'pending';
+                    }
+                });
+            }
 
             // If any item is now active, clear the global pause state
             const anyActive = downloadQueue.value.some(i => 
@@ -279,8 +289,7 @@ export function useDownloadManager() {
                     
                     const { 
                         type: msgType, 
-                        progress: overallProgress, 
-                        currentItem: current, 
+                        progress: overallProgress,
                         itemProgress: itemProg, 
                         assetType, 
                         assetProgress,

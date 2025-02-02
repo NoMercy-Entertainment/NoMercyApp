@@ -1,4 +1,4 @@
-import { Parser } from 'm3u8-parser';
+import {Attributes, Manifest, Parser} from 'm3u8-parser';
 
 interface WorkerTask {
     mediaId: string;
@@ -22,22 +22,19 @@ interface WorkerMessage {
     controls?: ControlMessage;
 }
 
-interface ProgressMessage {
-    type: 'progress';
-    progress: number;      // Overall progress 0-100
-    currentItem: number;   // Current item being processed
-    totalItems: number;    // Total number of items
-    itemProgress: number;  // Progress of current item 0-100
-}
-
 interface AssetProgress {
     type: 'video' | 'audio' | 'subtitle' | 'preview' | 'font';
     total: number;
     completed: number;
 }
 
+interface CustomManifestPlaylist extends Manifest {
+    attributes: Attributes;
+    uri: string;
+}
+
 let isPaused = false;
-let pausedItems = new Set<string>();
+const pausedItems = new Set<string>();
 let cache: Cache | null = null;
 let currentDownloads: { taskIndex: number; promise: Promise<any> }[] = [];
 
@@ -106,7 +103,7 @@ async function checkCacheForCompletedSegments(
                 : `${basePath}/${segment.uri}`;
             
             const segmentKey = getCacheKey(mediaId, segmentUrl);
-            const hasSegment = await cache.match(segmentKey);
+            const hasSegment = await cache?.match(segmentKey);
             
             if (hasSegment) {
                 completedSegments.add(segmentKey);
@@ -118,7 +115,7 @@ async function checkCacheForCompletedSegments(
     return completedCount;
 }
 
-async function downloadContent(task: WorkerTask, baseUrl: string, token: string, taskIndex: number, totalActiveTasks: number) {
+async function downloadContent(task: WorkerTask, baseUrl: string, token: string) {
     if (!cache) {
         cache = await caches.open('offline-content-v1');
     }
@@ -211,7 +208,6 @@ async function downloadContent(task: WorkerTask, baseUrl: string, token: string,
         await checkPause(task.mediaId);
 
         if (task.mediaPath.includes('.m3u8')) {
-            const manifestUrl = `${baseUrl}${task.mediaPath}`;
             const manifestResponse = await fetchWithAuth(task.mediaPath, baseUrl, token);
             const manifest = await manifestResponse.text();
 
@@ -228,7 +224,7 @@ async function downloadContent(task: WorkerTask, baseUrl: string, token: string,
 
             // If we have playlists, this is a master manifest
             if (parsedManifest.playlists?.length) {
-                for (const playlist of parsedManifest.playlists) {
+                for (const playlist of parsedManifest.playlists as unknown as CustomManifestPlaylist[]) {
                     const playlistPath = playlist.uri.startsWith('http')
                         ? playlist.uri
                         : `${basePath}/${playlist.uri}`;
@@ -312,7 +308,7 @@ async function downloadContent(task: WorkerTask, baseUrl: string, token: string,
                 
                 // First pass: gather all audio manifests and count total segments
                 for (const group of Object.values(parsedManifest.mediaGroups.AUDIO)) {
-                    for (const audio of Object.values(group)) {
+                    for (const audio of Object.values(group) as unknown as CustomManifestPlaylist[]) {
                         if (!audio.uri) continue;
 
                         const audioManifestPath = audio.uri.startsWith('http')
@@ -515,7 +511,7 @@ async function downloadContent(task: WorkerTask, baseUrl: string, token: string,
                 }
             }
         }
-    } catch (error) {
+    } catch (error: any) {
         if (error?.message === 'paused') {
             return false;
         }
@@ -560,7 +556,7 @@ async function processQueue(tasks: WorkerTask[], baseUrl: string, token: string)
             const taskIndex = originalTasks.indexOf(task);
             currentDownloads = [{
                 taskIndex,
-                promise: downloadContent(task, baseUrl, token, taskIndex, tasks.length)
+                promise: downloadContent(task, baseUrl, token)
             }];
 
             updateItemStatus(task.mediaId, 'downloading');
@@ -576,7 +572,7 @@ async function processQueue(tasks: WorkerTask[], baseUrl: string, token: string)
                 updateItemStatus(task.mediaId, 'completed');
                 index++;
             }
-        } catch (error) {
+        } catch (error: any) {
             if (error?.message === 'paused') {
                 updateItemStatus(task.mediaId, 'paused');
                 if (isPaused) return; // Exit queue if globally paused
@@ -602,7 +598,7 @@ async function processQueue(tasks: WorkerTask[], baseUrl: string, token: string)
 }
 
 // Add a set to track completed items and their completion status
-let completedItems = new Map<string, boolean>(); // mediaId -> isFullyCompleted
+const completedItems = new Map<string, boolean>(); // mediaId -> isFullyCompleted
 
 // Add a function to calculate overall progress
 function calculateProgress() {
@@ -675,8 +671,10 @@ self.onmessage = async (e: MessageEvent<WorkerMessage>) => {
                 pausedItems.clear();
                 
                 // Only resume tasks that were explicitly paused
+                // eslint-disable-next-line no-case-declarations
                 const pausedIds = controls.pausedIds || [];
-                const remainingTasks = originalTasks.filter(t => 
+                // eslint-disable-next-line no-case-declarations
+                const remainingTasks = originalTasks.filter(t =>
                     !completedItems.get(t.mediaId) && 
                     pausedIds.includes(t.mediaId)
                 );
@@ -725,5 +723,5 @@ self.onmessage = async (e: MessageEvent<WorkerMessage>) => {
 
     // Initial start of queue processing - filter out any completed items
     const nonCompletedTasks = tasks.filter(t => !completedItems.get(t.mediaId));
-    processQueue(nonCompletedTasks, baseUrl, token);
+    await processQueue(nonCompletedTasks, baseUrl, token);
 };

@@ -123,6 +123,3 @@ yarn-error.log
 docs/
 dev-dist/
 vite.config.ts.*
-src/hooks/useDownloadManager.ts
-src/services/DownloadManager.ts
-src/workers/downloadWorker.ts
