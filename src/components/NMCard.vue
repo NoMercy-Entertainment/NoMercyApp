@@ -118,7 +118,7 @@ const handleClick = (item: any) => {
           class="absolute inset-0 z-0 opacity-0 group-hover/card:opacity-100 transition-all duration-300 bg-auto-1/60">
         </div>
         <p
-          class="z-10 w-auto flex-shrink-0 flex-grow-0 self-stretch text-xs font-semibold line-clamp-2 leading-[1.2] text-auto-12 empty:hidden dark:font-medium">
+          class="z-10 w-auto flex-shrink-0 flex-grow-0 self-stretch text-xs font-semibold line-clamp-2 leading-[1.2] text-auto-12 empty:hidden dark:font-medium text-wrap">
           {{ data.title }}
         </p>
       </div>

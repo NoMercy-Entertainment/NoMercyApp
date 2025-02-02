@@ -885,7 +885,8 @@ export class BaseUIPlugin extends Plugin {
                 this.player.on('time', (data) => {
                     if (data.remaining === Infinity) {
                         time.innerText = 'Live';
-                    } else if (this.player.container.classList.contains('active')) {
+                    }
+                    else if (this.player.container.classList.contains('active')) {
                         time.innerText = humanTime(data.remaining);
                     }
                 });
@@ -1568,10 +1569,9 @@ export class BaseUIPlugin extends Plugin {
                 'flex',
                 'flex-col',
                 'gap-2',
-                'group-[&.nomercyplayer.active]:translate-y-0',
                 'group-[&.nomercyplayer.paused]:translate-y-0',
                 'group-[&.nomercyplayer:has(.open)]:translate-y-0',
-                // 'group-[&.nomercyplayer:has(:focus)]:duration-0',
+                'group-[&.nomercyplayer.active]:translate-y-0',
                 'items-center',
                 'mt-auto',
                 'px-2',
@@ -1790,7 +1790,6 @@ export class BaseUIPlugin extends Plugin {
                 'group-[&.nomercyplayer.active]:translate-y-0',
                 'group-[&.nomercyplayer.paused]:translate-y-0',
                 'group-[&.nomercyplayer:has(.open)]:translate-y-0',
-                // 'group-[&.nomercyplayer:has(:focus)]:duration-0',
                 'transition-all',
                 'duration-300',
 

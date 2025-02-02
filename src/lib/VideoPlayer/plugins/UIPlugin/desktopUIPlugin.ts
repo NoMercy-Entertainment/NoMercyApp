@@ -178,15 +178,15 @@ export class DesktopUIPlugin extends BaseUIPlugin {
 	}
 
 	eventHandlers() {
-		this.player.on('controls', (showing) => {
-			if (this.player.getElement()) {
-				if (showing) {
-					this.player.getElement()?.setAttribute('active', 'true');
-				} else {
-					this.player.getElement()?.setAttribute('active', 'false');
-				}
-			}
-		});
+		// this.player.on('controls', (showing) => {
+		// 	if (this.player.getElement()) {
+		// 		if (showing) {
+		// 			this.player.getElement()?.setAttribute('active', 'true');
+		// 		} else {
+		// 			this.player.getElement()?.setAttribute('active', 'false');
+		// 		}
+		// 	}
+		// });
 
 		this.player.on('chapters', () => {
 			this.createChapterMarkers();
@@ -265,9 +265,16 @@ export class DesktopUIPlugin extends BaseUIPlugin {
 	createTouchSeekBack(parent: HTMLElement, currentTime: Position) {
 		const touchSeekBack = this.createTouchBox(parent, 'touchSeekBack', currentTime);
 		['click'].forEach((event) => {
-			touchSeekBack.addEventListener(event, this.doubleTap(() => {
-				this.player.rewindVideo();
-			}));
+			touchSeekBack.addEventListener(event, this.doubleTap(
+				() => {
+					this.player.rewindVideo();
+				},
+				() => {
+					if (this.controlsVisible) {
+						this.player.emit('hideControls');
+					}
+				}
+			));
 		});
 
 		this.createSeekRipple(touchSeekBack, 'left');
@@ -278,12 +285,12 @@ export class DesktopUIPlugin extends BaseUIPlugin {
 
 	/**
 	 * Attaches a double tap event listener to the element.
-	 * @param callback - The function to execute when a double tap event occurs.
-	 * @param callback2 - An optional function to execute when a second double tap event occurs.
+	 * @param doubleTap - The function to execute when a double tap event occurs.
+	 * @param singleTap - An optional function to execute when a second double tap event occurs.
 	 * @returns A function that detects double tap events.
 	 */
-	doubleTap(callback: (event: Event) => void, callback2?: (event2: Event) => void) {
-		const delay = this.player.options.doubleClickDelay ?? 500;
+	doubleTap(doubleTap: (event: Event) => void, singleTap?: (event2: Event) => void) {
+		const delay = this.player.options.doubleClickDelay ?? 300;
 		let lastTap = 0;
 		let timeout: NodeJS.Timeout;
 		let timeout2: NodeJS.Timeout;
@@ -292,14 +299,14 @@ export class DesktopUIPlugin extends BaseUIPlugin {
 			const tapLen = curTime - lastTap;
 			if (tapLen > 0 && tapLen < delay) {
 				event.preventDefault();
-				callback(event);
+				doubleTap(event);
 				clearTimeout(timeout2);
 			} else {
 				timeout = setTimeout(() => {
 					clearTimeout(timeout);
 				}, delay);
 				timeout2 = setTimeout(() => {
-					callback2?.(event2!);
+					singleTap?.(event2!);
 				}, delay);
 			}
 			lastTap = curTime;
@@ -310,9 +317,16 @@ export class DesktopUIPlugin extends BaseUIPlugin {
 	createTouchSeekForward(parent: HTMLElement, currentTime: Position) {
 		const touchSeekForward = this.createTouchBox(parent, 'touchSeekForward', currentTime);
 		['mouseup', 'touchend'].forEach((event) => {
-			touchSeekForward.addEventListener(event, this.doubleTap(() => {
-				this.player.forwardVideo();
-			}));
+			touchSeekForward.addEventListener(event, this.doubleTap(
+				() => {
+					this.player.forwardVideo();
+				},
+				() => {
+					if (this.controlsVisible) {
+						this.player.emit('hideControls');
+					}
+				}
+			));
 		});
 
 		this.createSeekRipple(touchSeekForward, 'right');
@@ -332,9 +346,11 @@ export class DesktopUIPlugin extends BaseUIPlugin {
 
 		['click'].forEach((event) => {
 			touchPlayback.addEventListener(event, this.doubleTap(
-				() => this.player.getFullscreen(),
 				() => {
-					(this.controlsVisible || !this.player.options.disableTouchControls) && this.player.togglePlayback();
+					this.player.toggleFullscreen();
+				},
+				() => {
+					this.controlsVisible && this.player.togglePlayback();
 				}
 			));
 		});
@@ -370,9 +386,16 @@ export class DesktopUIPlugin extends BaseUIPlugin {
 		if (!this.player.isMobile()) return;
 		const touchVolUp = this.createTouchBox(parent, 'touchVolUp', currentTime);
 		['click'].forEach((event) => {
-			touchVolUp.addEventListener(event, this.doubleTap(() => {
-				this.player.volumeUp();
-			}));
+			touchVolUp.addEventListener(event, this.doubleTap(
+				() => {
+					this.player.volumeUp();
+				},
+				() => {
+					if (this.controlsVisible) {
+						this.player.emit('hideControls');
+					}
+				}
+			));
 		});
 
 		return touchVolUp;
@@ -382,9 +405,16 @@ export class DesktopUIPlugin extends BaseUIPlugin {
 		if (!this.player.isMobile()) return;
 		const touchVolDown = this.createTouchBox(parent, 'touchVolDown', currentTime);
 		['click'].forEach((event) => {
-			touchVolDown.addEventListener(event, this.doubleTap(() => {
-				this.player.volumeDown();
-			}));
+			touchVolDown.addEventListener(event, this.doubleTap(
+				() => {
+					this.player.volumeDown();
+				},
+				() => {
+					if (this.controlsVisible) {
+						this.player.emit('hideControls');
+					}
+				}
+			));
 		});
 
 		return touchVolDown;
@@ -868,6 +898,8 @@ export class DesktopUIPlugin extends BaseUIPlugin {
 			this.player.emit('controls', false);
 
 			this.menuFrame.close();
+
+			this.player.emit('dynamicControls');
 		});
 
 		return menuHeader;
@@ -932,6 +964,8 @@ export class DesktopUIPlugin extends BaseUIPlugin {
 				this.player.emit('controls', false);
 
 				this.menuFrame.close();
+
+				this.player.emit('dynamicControls');
 			});
 		}
 
@@ -1563,6 +1597,9 @@ export class DesktopUIPlugin extends BaseUIPlugin {
 		});
 
 		this.player.on('active', (value) => {
+			setTimeout(() => {
+				this.controlsVisible = value;
+			}, (this.player.options.doubleClickDelay ?? 300) + 10);
 			if (value) return;
 			sliderPop.style.setProperty('--visibility', '0');
 		});

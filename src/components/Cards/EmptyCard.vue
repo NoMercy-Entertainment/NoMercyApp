@@ -19,7 +19,7 @@ import NoResultImage from '@/components/Images/NoResultImage.vue';
             class="absolute bottom-0 left-0 z-0 flex h-12 w-full flex-shrink-0 flex-grow-0 flex-col items-start justify-center px-2 py-1 transition-transform duration-300">
             <div class="absolute inset-0 z-0 opacity-100 transition-transform duration-300 bg-auto-1/60"></div>
             <p
-                class="z-10 w-auto flex-shrink-0 flex-grow-0 self-stretch text-xs font-semibold line-clamp-2 leading-[1.2] text-auto-12 empty:hidden dark:font-medium">
+                class="z-10 w-auto flex-shrink-0 flex-grow-0 self-stretch text-xs font-semibold line-clamp-2 leading-[1.2] text-auto-12 empty:hidden dark:font-medium text-wrap">
                 {{ $t('No items') }}
             </p>
         </div>

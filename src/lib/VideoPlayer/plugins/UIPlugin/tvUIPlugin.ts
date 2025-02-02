@@ -286,8 +286,10 @@ export class TVUIPlugin extends BaseUIPlugin {
 			if (!this.controlsVisible && value) {
 				this.playbackButton.focus();
 			}
-			this.controlsVisible = value;
 			this.player.overlay.scrollIntoView();
+			setTimeout(() => {
+				this.controlsVisible = value;
+			}, 0);
 		});
 
 		return bottomBar;

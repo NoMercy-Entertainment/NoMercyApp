@@ -50,7 +50,7 @@ const initPlayer = (value: PlaylistItem[] | undefined) => {
     playlist: value?.filter(item => !!item.id) ?? [],
 
     controlsTimeout: 3000,
-    doubleClickDelay: 500,
+    doubleClickDelay: 300,
     playbackRates: [
       0.25,
       0.5,
