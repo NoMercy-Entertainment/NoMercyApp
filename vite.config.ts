@@ -35,17 +35,7 @@ export default defineConfig({
 				navigateFallback: 'index.html',
 				runtimeCaching: [
 					{
-						urlPattern: /\.css$/,
-						handler: 'CacheFirst',
-						options: {
-							cacheName: 'css-cache-v1',
-							cacheableResponse: {
-								statuses: [0, 200]
-							}
-						}
-					},
-					{
-						urlPattern: /\.(js|css|png|jpg|jpeg|gif|svg|ico|webp|woff2?)$/,
+						urlPattern: /^https:\/\/app\.nomercy\.tv\/.*/i,
 						handler: 'StaleWhileRevalidate',
 						options: {
 							cacheName: 'static-assets-v2',
@@ -119,32 +109,6 @@ export default defineConfig({
 							}
 						}
 					},
-					// {
-					// 	// User-managed downloadable content
-					// 	urlPattern: ({ url }) => {
-					// 		const isMediaServer = /^[^.]+\.[^.]+\.nomercy\.tv/.test(url.hostname);
-					// 		const isMediaContent = url.pathname.match(/\.(mp4|webm|mp3|m4a|flac|m3u8|srt|vtt|ass|ssa|ttf|otf|woff2?|mov|mkv|m4v|ts)$/i);
-					// 		return isMediaServer && isMediaContent;
-					// 	},
-					// 	handler: 'CacheFirst',
-					// 	options: {
-					// 		cacheName: 'offline-content-v1',
-					// 		expiration: {
-					// 			maxEntries: 10000,
-					// 			maxAgeSeconds: 365 * 24 * 60 * 60 // 1 year
-					// 		},
-					// 		cacheableResponse: {
-					// 			statuses: [0, 200, 206]
-					// 		},
-					// 		rangeRequests: true,
-					// 		backgroundSync: {
-					// 			name: 'offline-content-queue',
-					// 			options: {
-					// 				maxRetentionTime: 24 * 60
-					// 			}
-					// 		}
-					// 	}
-					// }
 				],
 				maximumFileSizeToCacheInBytes: 25 * 1024 * 1024 * 1024, // 25GB per item
 			},
@@ -257,7 +221,7 @@ export default defineConfig({
 				type: 'module',
 				navigateFallback: 'index.html',
 				suppressWarnings: false,
-			}
+			},
 		}),
 		ViteCspPlugin({
 			'base-uri': [

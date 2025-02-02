@@ -43,7 +43,7 @@ import NMTrackRow from '@/components/NMTrackRow.vue';
 
 export async function setupApp(app: AppContext['app']) {
 
-    if ('serviceWorker' in navigator) {
+    if ('serviceWorker' in navigator && location.hostname !== 'localhost') {
         await navigator.serviceWorker.ready;
     }
 

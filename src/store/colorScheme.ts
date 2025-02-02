@@ -83,14 +83,14 @@ export const removeColorScheme = async () => {
 export const darkMode = ref(isDarkMode.value);
 
 watch(darkMode, async (value) => {
-	await setColorScheme(value ? 'dark' : 'light');
+	await setColorScheme?.(value ? 'dark' : 'light');
 });
 
 (async () => {
 	setTimeout(async () => {
 		const colorScheme = await checkColorScheme();
 
-		await setColorScheme(useMediaQuery('(prefers-color-scheme: dark)').value || colorScheme ? 'dark' : 'light');
+		await setColorScheme?.(useMediaQuery('(prefers-color-scheme: dark)').value || colorScheme ? 'dark' : 'light');
 
 		if (!colorScheme) {
 			return;

@@ -29,7 +29,7 @@ export const change = async (value: boolean) => {
 			(await setBackgroundColor.value)?.({ color: topNavColor.value });
 		}
 		else {
-			await setColorScheme(isDarkMode ? 'dark' : 'light');
+			await setColorScheme?.(isDarkMode ? 'dark' : 'light');
 		}
 	}
 };
