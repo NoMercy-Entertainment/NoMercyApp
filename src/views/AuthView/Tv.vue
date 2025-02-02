@@ -14,7 +14,7 @@ import { IonContent, IonPage } from "@ionic/vue";
 
 const { t } = useTranslation();
 
-const url = ref('https://dev.nomercy.tv/tv');
+const url = ref(`https://${suffix ? suffix.replace('-', '') + '.' : ''}nomercy.tv/tv`);
 const qr = ref('');
 const hasToken = ref(false);
 
@@ -106,10 +106,10 @@ const acquireToken = () => {
           <div class="flex items-start gap-4">
             <span class="whitespace-nowrap rounded-md px-3 leading-8 text-white bg-theme-600">{{ t('Step') }} 1</span>
             <div class="flex flex-col gap-2 text-lg">
-              <p>{{ t('Scan the symbol with your phone or go to') }}:</p>
-              <p class="text-2xl font-semibold whitespace-break-spaces">{{
-                url
-              }}?code={{ deviceResponse?.user_code }}</p>
+              <p>{{ t('Scan the QR with your phone or go to') }}:</p>
+              <p class="text-2xl font-semibold whitespace-break-spaces">
+                {{ url }}?code={{ deviceResponse?.user_code }}
+              </p>
             </div>
           </div>
           <div class="flex items-start gap-4">

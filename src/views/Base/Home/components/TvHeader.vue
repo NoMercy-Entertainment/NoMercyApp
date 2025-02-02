@@ -4,6 +4,7 @@ import { type PropType } from "vue";
 import type { ContinueWatching, HomeItem } from "@/types/api/base/home";
 
 import ContentRating from "@/components/Images/ContentRating.vue";
+import {currentServer} from "@/store/currentServer";
 
 defineProps({
   selected: {
@@ -17,7 +18,7 @@ defineProps({
   <div class="w-full h-full absolute left-0 top-0 bg-[#131314]" :key="selected?.id">
     <div class="w-available h-available absolute left-[202px] top-0 overflow-hidden bg-black">
       <img class="w-available h-available absolute left-[-0.39px] top-[-0.39px]"
-        :src="`https://image.tmdb.org/t/p/w1280${selected?.backdrop}`" alt="" />
+        :src="`${currentServer?.serverBaseUrl}/images/original${selected?.backdrop}?width=1280`" alt="" />
       <div class="w-available h-available absolute left-[-0.39px] top-[-0.39px]"></div>
       <div class="w-[150vw] h-[150vw] absolute left-[-30%] bottom-[-50%]" style="
                   background: radial-gradient(
