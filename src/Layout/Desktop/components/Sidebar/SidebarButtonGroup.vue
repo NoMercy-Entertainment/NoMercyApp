@@ -40,7 +40,7 @@ const classes = computed(() =>
             :class="classes">
             <MoooomIcon v-if="!!icon" :icon="icon!" class="" />
             <span
-                class="relative flex flex-shrink-0 flex-grow items-center justify-start text-sm font-semibold text-contrast">
+                class="relative flex flex-shrink-0 flex-grow items-center justify-start text-sm font-semibold">
                 {{ t(title) }}
             </span>
             <MoooomIcon icon="chevronRight"

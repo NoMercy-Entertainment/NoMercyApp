@@ -63,7 +63,7 @@ const handleKeyup = (e: KeyboardEvent) => {
 
 <template>
 	<button
-		class="relative cursor-pointer items-center text-contrast focus-visible:underline focus-visible:underline-offset-2"
+		class="relative cursor-pointer items-center focus-visible:underline focus-visible:underline-offset-2"
 		:onclick="() => handleSortChange(sortingType)" :onkeyup="handleKeyup">
 		<span class="">
 			{{ t(name) }}

@@ -54,7 +54,7 @@ defineEmits(['update:modelValue']);
   <div class="pointer-events-auto relative w-auto group/selector">
     <Listbox as="div" :id="label" v-model="modelValue" :value="modelValue" :multiple="multiple" :disabled="disabled"
       class="flex flex-shrink-0 flex-grow-0 flex-col">
-      <ListboxLabel class='block select-none text-contrast space-nowrap empty:hidden' :class="{
+      <ListboxLabel class='block select-none space-nowrap empty:hidden' :class="{
         'mb-1 text-sm font-medium': variant === 'normal',
         'mb-0.5 text-sm font-medium': variant === 'dense',
         'mb-px text-xs font-thin': variant === 'tight',

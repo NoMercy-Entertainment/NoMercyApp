@@ -19,20 +19,20 @@ watch(value, (value) => {
 <template>
 	<div class='mb-8 flex select-none flex-col gap-3'>
 		<div class='flex flex-col'>
-			<p class='font-bold text-contrast'>
+			<p class='font-bold'>
 				{{ $t('Auto theme') }}
 			</p>
-			<p class='text-sm text-contrast'>
+			<p class='text-sm'>
 				{{ $t('Enables setting theme colors when loading shows or movies based on the backdrop image') }}.
 			</p>
 		</div>
 		<div class='flex transition-transform duration-150'>
 			<Toggle id="autoTheme" label="Auto theme" v-model="value" class="mr-2" />
 			<div class="flex flex-col justify-center">
-				<span class="whitespace-pre-wrap text-sm font-semibold text-contrast">
+				<span class="whitespace-pre-wrap text-sm font-semibold">
 					{{ $t('Enabled') }}
 				</span>
-				<span class="h-5 whitespace-pre-wrap text-sm text-contrast empty:hidden"></span>
+				<span class="h-5 whitespace-pre-wrap text-sm empty:hidden"></span>
 			</div>
 		</div>
 	</div>

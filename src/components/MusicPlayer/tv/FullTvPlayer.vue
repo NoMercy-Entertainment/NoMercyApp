@@ -215,7 +215,7 @@ const ontransitionend = (e: TransitionEvent) => {
         <div :data-show-lyrics="true" class="w-full px-12 pb-12 h-full overflow-hidden">
           <div id="lyricsContainer"
             class="z-0 flex h-full w-full flex-col overflow-y-auto overflow-x-hidden scroll-smooth scrollbar-none font-bbc">
-            <div class="relative mt-6 whitespace-pre-wrap font-bold text-contrast h-available">
+            <div class="relative mt-6 whitespace-pre-wrap font-bold h-available">
               <LyricsOverlay :key="currentSong?.id" />
             </div>
           </div>

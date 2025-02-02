@@ -2,6 +2,7 @@ import Plugin from '@nomercy-entertainment/nomercy-video-player/src/plugin';
 import type { NMPlayer, PlaylistItem } from "@nomercy-entertainment/nomercy-video-player/src/types";
 
 import { useSocket } from "@/store/socket";
+import {RouteLocationNormalizedLoaded, useRoute} from "vue-router";
 
 export interface SyncPluginArgs {
 	basePath: string;
@@ -10,6 +11,7 @@ export interface SyncPluginArgs {
 
 export class SyncPlugin extends Plugin {
 	player: NMPlayer<SyncPluginArgs> = <NMPlayer<SyncPluginArgs>>{};
+	route:  RouteLocationNormalizedLoaded<string | symbol> = <RouteLocationNormalizedLoaded<string | symbol>>{};
 
 	async initialize(player: NMPlayer<SyncPluginArgs>) {
 		this.player = player;
@@ -21,6 +23,8 @@ export class SyncPlugin extends Plugin {
 		this.player.on('back', this.ended.bind(this));
 		this.player.on('ended', this.ended.bind(this));
 		this.player.on('finished', this.ended.bind(this));
+
+		this.route = useRoute();
 	}
 
 	dispose() {
@@ -32,7 +36,6 @@ export class SyncPlugin extends Plugin {
 	}
 
 	lastTimeTrigger() {
-		console.log('lastTimeTrigger');
 		const data = this.episodeData();
 
 		const socket = useSocket();
@@ -57,7 +60,7 @@ export class SyncPlugin extends Plugin {
 			video_id: number;
 		};
 
-		const route = location.hash.split('/');
+		const route = this.route.path.split('/');
 
 		let specialId: string | undefined;
 		let collectionId: number | undefined;

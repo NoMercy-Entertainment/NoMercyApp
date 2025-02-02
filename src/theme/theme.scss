@@ -186,6 +186,7 @@
   --background-auto-alpha-12: var(--background-slate-alpha-1);
 
   --color-logo: var(--background-light-slate-9);
+  --ion-text-color: var(--background-dark-slate-1) !important;
 
   @each $key, $val in colors-dark.$background-dark {
     &.background-#{$key} {
@@ -248,6 +249,7 @@
   --background-auto-alpha-12: var(--background-slate-alpha-12);
 
   --color-logo: var(--background-dark-slate-12)/ 90%;
+  --ion-text-color: var(--background-light-slate-12) !important;
 
   @each $key, $val in colors-light.$background-light {
     &.background-#{$key} {

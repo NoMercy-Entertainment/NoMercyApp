@@ -180,7 +180,7 @@ const filter = 'combined';
                           class="flex-shrink-0 flex-grow-0 text-xs font-bold uppercase text-auto-alpha-10">
                           {{ $t('Known For') }}
                         </p>
-                        <p class="text-left text-base font-medium text-contrast">
+                        <p class="text-left text-base font-medium">
                           {{ data?.known_for_department }}
                         </p>
                       </div>
@@ -190,7 +190,7 @@ const filter = 'combined';
                           class="flex-shrink-0 flex-grow-0 text-xs font-bold uppercase text-auto-alpha-10">
                           {{ $t('Known Credits') }}
                         </p>
-                        <p class="text-left text-base font-medium text-contrast">
+                        <p class="text-left text-base font-medium">
                           {{ data?.combined_credits?.cast?.length }}
                         </p>
                       </div>
@@ -200,7 +200,7 @@ const filter = 'combined';
                           class="flex-shrink-0 flex-grow-0 text-xs font-bold uppercase text-auto-alpha-10">
                           {{ $t('Gender') }}
                         </p>
-                        <p class="text-left text-base font-medium text-contrast">
+                        <p class="text-left text-base font-medium">
                           {{ gender }}
                         </p>
                       </div>
@@ -220,7 +220,7 @@ const filter = 'combined';
                             }}
                           </span>
                         </p>
-                        <p v-if="age" class="text-left text-base font-medium text-contrast">{{
+                        <p v-if="age" class="text-left text-base font-medium">{{
                           new Date(data?.birthday!).toLocaleDateString(i18next.language ?? 'en-US', {
                             year: 'numeric',
                             month: 'short',
@@ -235,7 +235,7 @@ const filter = 'combined';
                           class="flex-shrink-0 flex-grow-0 self-stretch text-xs font-bold uppercase text-auto-alpha-10">
                           {{ $t('Place of Birth') }}
                         </p>
-                        <p class="w-full self-stretch whitespace-pre-wrap text-base font-medium text-contrast">
+                        <p class="w-full self-stretch whitespace-pre-wrap text-base font-medium">
                           {{ data?.place_of_birth }}
                         </p>
                       </div>
@@ -247,7 +247,7 @@ const filter = 'combined';
                       {{ $t('Biography') }}
                     </p>
                     <p v-if="data?.biography"
-                      class="self-stretch whitespace-pre-line text-base font-medium text-contrast leading-[173%]">
+                      class="self-stretch whitespace-pre-line text-base font-medium leading-[173%]">
                       {{ breakDescription(data?.biography) }}
                     </p>
                   </div>

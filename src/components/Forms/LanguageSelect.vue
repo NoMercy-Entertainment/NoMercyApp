@@ -101,7 +101,7 @@ onMounted(() => {
   <div class="relative w-full">
     <Listbox as="div" :multiple="multiple" v-model="selected"
       @change="$emit('update:modelValue', $event.target?.value)">
-      <ListboxLabel class='block select-none text-contrast space-nowrap empty:hidden' :class="{
+      <ListboxLabel class='block select-none space-nowrap empty:hidden' :class="{
         'mb-1 text-sm font-medium': variant === 'normal',
         'mb-0.5 text-sm font-medium': variant === 'dense',
         'mb-px text-xs font-thin': variant === 'tight',
@@ -114,7 +114,7 @@ onMounted(() => {
         'h-7 min-h-7 mt-0': variant === 'tight',
       }">
         <ListboxButton
-          class="relative flex items-center w-full cursor-default rounded-md text-contrast shadow-sm sm:text-sm data-[headlessui-state='disabled']:grayscale *:data-[headlessui-state='disabled']:hidden"
+          class="relative flex items-center w-full cursor-default rounded-md shadow-sm sm:text-sm data-[headlessui-state='disabled']:grayscale *:data-[headlessui-state='disabled']:hidden"
           :class="{
             '!bg-auto-1 ring-[1.5px] ring-inset ring-auto-3 focus:outline-none focus:ring-2 focus:ring-focus data-[headlessui-state=\'open\']:ring-2 data-[headlessui-state=\'open\']:ring-focus': variant === 'normal' || variant === 'dense',
             'h-10 min-h-10 pl-3': variant === 'normal',
@@ -122,13 +122,13 @@ onMounted(() => {
             'h-5 min-h-5 pl-0': variant === 'tight',
           }">
           <span class="flex items-center self-center" v-if="!Array.isArray(selected)">
-            <img :src="`/img/flags/${selected?.iso_639_1?.toUpperCase()}.svg`" :onerror="(event: any) => {
+            <img :src="`https://pub-a68768bb5b1045f296df9ea56bd53a7f.r2.dev/flags/${selected?.iso_639_1?.toUpperCase()}.svg`" :onerror="(event: any) => {
               event.target.onerror = null;
-              event.target.src = '/img/flags/xxx.svg';
+              event.target.src = 'https://pub-a68768bb5b1045f296df9ea56bd53a7f.r2.dev/flags/xxx.svg';
             }"
               :alt="`${selected?.name != '' && selected?.name != null ? selected?.name : selected?.english_name} flag`"
               class="h-auto w-6 rounded-sm border border-auto-50 group-hover:border-theme-600" />
-            <span class="ml-3 block truncate text-left text-contrast">
+            <span class="ml-3 block truncate text-left">
               {{
                 (selected as Language)?.name != '' && (selected as Language)?.name != null ? (selected as Language)?.name
                   : (selected as Language)?.english_name
@@ -136,10 +136,10 @@ onMounted(() => {
             </span>
           </span>
           <span v-else class="flex items-center self-center">
-            <span v-if="selected?.length > 4" class="ml-3 block truncate text-left text-contrast">
+            <span v-if="selected?.length > 4" class="ml-3 block truncate text-left">
               {{ selected?.length }} {{ t('selected') }}
             </span>
-            <span v-else class="ml-3 block truncate text-left text-contrast">
+            <span v-else class="ml-3 block truncate text-left">
               {{
                 selected.map(s => s?.name != '' && s?.name != null ? s?.name : s?.english_name)?.join(', ')
               }}
@@ -177,9 +177,9 @@ onMounted(() => {
                 'h-6 min-h-6': variant === 'dense',
               }">
                 <div class="ml-2 flex items-center self-center">
-                  <img :src="`/img/flags/${language?.iso_639_1?.toUpperCase()}.svg`" :onerror="(event: any) => {
+                  <img :src="`https://pub-a68768bb5b1045f296df9ea56bd53a7f.r2.dev/flags/${language?.iso_639_1?.toUpperCase()}.svg`" :onerror="(event: any) => {
                     event.target.onerror = null;
-                    event.target.src = '/img/flags/xxx.svg';
+                    event.target.src = 'https://pub-a68768bb5b1045f296df9ea56bd53a7f.r2.dev/flags/xxx.svg';
                   }"
                     :alt="`${language.name != '' && language.name != null ? language.name : language.english_name} flag`"
                     class="h-auto w-6 rounded-sm border border-auto-1 group-hover:border-theme-600" />

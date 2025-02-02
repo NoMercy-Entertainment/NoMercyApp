@@ -1,4 +1,4 @@
-import { ref, watch } from 'vue';
+import {computed, ref, watch} from 'vue';
 import { isPlatform } from '@ionic/vue';
 import { Preferences } from '@capacitor/preferences';
 import { SafeArea } from 'capacitor-plugin-safe-area';
@@ -9,6 +9,7 @@ import type { ColorScheme } from '@/types/config';
 
 import { isDarkMode } from '@/config/global';
 import { StatusBar, Style } from "@capacitor/status-bar";
+import {topNavColor} from "@/store/colorTheme";
 
 export const setColorScheme = async (value: ColorScheme) => {
 	document.body.classList.add('scheme-transition');
@@ -18,6 +19,9 @@ export const setColorScheme = async (value: ColorScheme) => {
 		document.body.classList.remove('scheme-transition');
 		document.body.style.setProperty('--speed', '0');
 	}, 300);
+
+	darkMode.value = value === 'dark';
+	isDarkMode.value = value === 'dark';
 
 	const el = document.body.parentElement!;
 
@@ -49,14 +53,10 @@ export const setColorScheme = async (value: ColorScheme) => {
 		}
 
 		if (value === 'dark') {
-			darkMode.value = true;
-			isDarkMode.value = true;
 			NavigationBar.setColor({ color: '#000000', darkButtons: true }).then();
 			StatusBar.setBackgroundColor({ color: '#00000080' }).then();
 			StatusBar.setStyle({ style: Style.Dark }).then();
 		} else {
-			darkMode.value = false;
-			isDarkMode.value = false;
 			NavigationBar.setColor({ color: '#FFFFFF', darkButtons: true }).then();
 			StatusBar.setBackgroundColor({ color: '#FFFFFFA0' }).then();
 			StatusBar.setStyle({ style: Style.Dark }).then();
@@ -99,3 +99,23 @@ watch(darkMode, async (value) => {
 		darkMode.value = colorScheme === 'dark';
 	}, 100);
 })();
+
+const setBackgroundColor = computed(() => {
+	if (isPlatform('capacitor')) {
+		return import('@capacitor/status-bar').then(({ StatusBar }) => {
+			return StatusBar.setBackgroundColor
+		});
+	}
+	return () => { };
+});
+
+export const change = async (value: boolean) => {
+	if (isPlatform('capacitor')) {
+		if (value) {
+			(await setBackgroundColor.value)?.({ color: topNavColor.value });
+		}
+		else {
+			await setColorScheme?.(isDarkMode ? 'dark' : 'light');
+		}
+	}
+};

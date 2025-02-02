@@ -58,7 +58,7 @@ onMounted(() => {
         <div class="flex w-full flex-grow flex-col justify-between p-2 min-h-auto">
 
           <div class="mt-16 mb-4 w-full whitespace-pre-line">
-            <h5 class="relative text-center text-lg font-semibold text-contrast">
+            <h5 class="relative text-center text-lg font-semibold">
               {{ $t('Choose a server') }}
             </h5>
           </div>

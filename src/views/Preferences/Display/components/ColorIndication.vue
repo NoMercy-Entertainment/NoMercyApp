@@ -18,13 +18,13 @@ watch(value, (value) => {
 <template>
 	<div class="mb-8 flex select-none flex-col gap-3">
 		<div class="flex flex-col">
-			<p class="font-bold text-contrast">{{ $t("Color indication") }}</p>
-			<p class="text-sm text-contrast">
+			<p class="font-bold">{{ $t("Color indication") }}</p>
+			<p class="text-sm">
 				{{ $t("Easily visualize the percentage of episodes you have at your disposal.") }}
 			</p>
 		</div>
 		<div class="flex flex-col duration-150 transition-color">
-			<div class="flex duration-150 transition-color text-contrast"
+			<div class="flex duration-150 transition-color"
 				:class="value ? 'justify-between' : 'justify-around'">
 				<template v-if="value">
 					<span>0%</span>
@@ -48,8 +48,8 @@ watch(value, (value) => {
 		<div class="flex w-full gap-2">
 			<Toggle id="usePercentageColors" label="Manage" v-model="value" class="mr-2" />
 			<div class="flex flex-col justify-center">
-				<span class="whitespace-pre-wrap text-sm font-semibold text-contrast">{{ $t("Extended") }}</span>
-				<span class="h-5 whitespace-pre-wrap text-sm text-contrast empty:hidden"></span>
+				<span class="whitespace-pre-wrap text-sm font-semibold">{{ $t("Extended") }}</span>
+				<span class="h-5 whitespace-pre-wrap text-sm empty:hidden"></span>
 			</div>
 		</div>
 	</div>

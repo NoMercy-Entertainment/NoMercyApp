@@ -8,7 +8,7 @@ import BackgroundButton from "./BackgroundButton.vue";
 
 <template>
 	<div class="flex select-none flex-col gap-3">
-		<p class="font-bold text-contrast">{{ $t('Background colors') }}</p>
+		<p class="font-bold">{{ $t('Background colors') }}</p>
 		<div class="flex flex-row gap-2">
 			<div class="relative flex flex-wrap">
 				<BackgroundButton :background="background" v-for="background in backgroundColors"

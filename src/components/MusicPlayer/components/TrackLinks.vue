@@ -67,7 +67,7 @@ const handleClick = (e: Event) => {
   <div data-marquee="container" :id="`trackLink-${type}-${id}-${suffix}`" class="-ml-1 w-available">
 
     <div :data-size="musicSize" data-marquee="scroller"
-      class="mb-1 ml-1 flex w-fit flex-nowrap gap-1 overflow-clip text-xs text-contrast line-clamp-2 whitespace-break-spaces hover-animate-pause w-available sm:my-0.5 pr-2">
+      class="mb-1 ml-1 flex w-fit flex-nowrap gap-1 overflow-clip text-xs line-clamp-2 whitespace-break-spaces hover-animate-pause w-available sm:my-0.5 pr-2">
       <span v-if="title" class="flex-nowrap gap-1 whitespace-nowrap lex line-clamp-2 h-inherit">
         {{ title ? `${title} - ` : '' }}
       </span>

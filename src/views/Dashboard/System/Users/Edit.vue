@@ -126,14 +126,14 @@ watch(allowedLibraries, value => {
         <label for="allowed" class="pointer-events-auto inline-flex h-10 w-full touch-none items-center group"
           data-selected="true">
           <Toggle v-if="allowed != undefined" id="allowed" label="Manage" v-model="allowed" class="mr-2" />
-          <span class="whitespace-pre-wrap text-sm font-semibold text-contrast">
+          <span class="whitespace-pre-wrap text-sm font-semibold">
             {{ $t('Allow this user to access content') }}
           </span>
         </label>
         <label for="manage" class="pointer-events-auto inline-flex h-10 w-full touch-none items-center group"
           data-selected="true">
           <Toggle v-if="manage != undefined" id="manage" label="Manage" v-model="manage" class="mr-2" />
-          <span class="whitespace-pre-wrap text-sm font-semibold text-contrast">
+          <span class="whitespace-pre-wrap text-sm font-semibold">
             {{ $t('Allow this user to manage the server') }}
           </span>
         </label>
@@ -144,7 +144,7 @@ watch(allowedLibraries, value => {
           data-selected="true">
           <Toggle v-if="audioTranscoding != undefined" id="audioTranscoding" label="AudioTranscoding"
             v-model="audioTranscoding" class="mr-2" />
-          <span class="whitespace-pre-wrap text-sm font-semibold text-contrast">
+          <span class="whitespace-pre-wrap text-sm font-semibold">
             {{ $t('Allow audio playback that requires transcoding') }}
           </span>
         </label>
@@ -152,7 +152,7 @@ watch(allowedLibraries, value => {
           data-selected="true">
           <Toggle v-if="videoTranscoding != undefined" id="videoTranscoding" label="VideoTranscoding"
             v-model="videoTranscoding" class="mr-2" />
-          <span class="whitespace-pre-wrap text-sm font-semibold text-contrast">
+          <span class="whitespace-pre-wrap text-sm font-semibold">
             {{ $t('Allow video playback that requires transcoding') }}
           </span>
         </label>
@@ -163,7 +163,7 @@ watch(allowedLibraries, value => {
           class="pointer-events-auto inline-flex h-10 w-full touch-none items-center group" data-selected="true">
           <Toggle v-if="allowedAllLibraries != undefined" id="allowedAllLibraries" label="AllowedAllLibraries"
             v-model="allowedAllLibraries" class="mr-2" />
-          <span class="whitespace-pre-wrap text-sm font-semibold text-contrast">
+          <span class="whitespace-pre-wrap text-sm font-semibold">
             {{ $t('Enable access to all libraries') }}
           </span>
         </label>

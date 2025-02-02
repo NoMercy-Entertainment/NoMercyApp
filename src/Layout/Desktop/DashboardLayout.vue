@@ -136,7 +136,7 @@ watch(dataUpdatedAt, (value) => {
     </div>
 
     <div v-else
-      class="relative z-0 h-available flex flex-shrink-0 flex-grow flex-col overflow-clip items-start justify-start self-stretch w-available min-h-available bg-slate-light-3 dark:bg-slate-dark-2">
+      class="block relative z-0 h-available min-h-[90vh] h-px overflow-clip items-start justify-start self-stretch w-available min-h-available bg-slate-light-3 dark:bg-slate-dark-2">
       <div
         class="sticky top-0 z-10 flex flex-shrink-0 flex-grow-0 flex-col items-start justify-start gap-5 self-stretch">
         <div class="absolute inset-0 z-0 h-full w-full"></div>
@@ -177,7 +177,7 @@ watch(dataUpdatedAt, (value) => {
         </div>
       </div>
       <ScrollContainer v-else :static="true"
-        class="z-0 flex !h-sidebar+ !min-h-[calc(100vh-16rem)] w-full flex-1 overflow-y-auto overflow-x-hidden sm:p-4">
+        class="z-0 w-full flex-1 overflow-y-auto overflow-x-hidden sm:p-4">
         <div class="h-auto w-full flex-wrap content-start gap-4" :class="grid">
           <slot />
         </div>

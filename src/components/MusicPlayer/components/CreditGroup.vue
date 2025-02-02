@@ -26,7 +26,7 @@ const { t } = useTranslation();
 <template>
   <div v-if="items && items?.length > 0"
     class="relative flex w-available flex-col items-start justify-start gap-2 -mx-3">
-    <p class="text-left text-xl font-bold text-contrast ml-4">
+    <p class="text-left text-xl font-bold ml-4">
       {{ t(title) }}
     </p>
 
@@ -45,7 +45,7 @@ const { t } = useTranslation();
           <div
             class="relative flex flex-col sm:w-fit flex-wrap items-start justify-between gap-1 w-inherit overflow-clip">
             <RouterLink :to="item.link"
-              class="text-left text-base font-semibold text-contrast hover:underline line-clamp-2">
+              class="text-left text-base font-semibold hover:underline line-clamp-2">
               {{ item.title ?? item.name }}
             </RouterLink>
 
@@ -64,7 +64,7 @@ const { t } = useTranslation();
                 {{ t('as') }}
               </p>
 
-              <p class="flex w-fit flex-wrap gap-1 text-sm text-contrast whitespace-nowrap font-medium">
+              <p class="flex w-fit flex-wrap gap-1 text-sm whitespace-nowrap font-medium">
                 <template v-for="(role, index) in (item.character ?? item.job)?.split(' / ')">
                   {{
                     role.replace('(voice)', '')

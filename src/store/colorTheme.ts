@@ -1,11 +1,9 @@
-import { computed } from 'vue';
+import {computed, ref, watch} from 'vue';
 import { rgbaToHex } from '@uiw/color-convert';
-import { isPlatform } from '@ionic/vue';
 import { focusColor } from '@/store/ui';
-import { setColorScheme } from "@/store/colorScheme";
-import { isDarkMode } from "@/config/global";
+import {Preferences} from "@capacitor/preferences";
 
-const topNavColor = computed(() => {
+export const topNavColor = computed(() => {
 	return rgbaToHex({
 		r: parseInt(focusColor.value.split(' ')[0], 10) * 0.35,
 		g: parseInt(focusColor.value.split(' ')[1], 10) * 0.35,
@@ -14,22 +12,57 @@ const topNavColor = computed(() => {
 	});
 });
 
-const setBackgroundColor = computed(() => {
-	if (isPlatform('capacitor')) {
-		return import('@capacitor/status-bar').then(({ StatusBar }) => {
-			return StatusBar.setBackgroundColor
-		});
-	}
-	return () => { };
-});
+const theme = ref('violet');
+export const colorTheme = computed(() => theme.value);
+export const setColorTheme = async (value: string) => {
+	document.body.classList.add('scheme-transition');
+	document.body.style.setProperty('--speed', '300');
 
-export const change = async (value: boolean) => {
-	if (isPlatform('capacitor')) {
-		if (value) {
-			(await setBackgroundColor.value)?.({ color: topNavColor.value });
-		}
-		else {
-			await setColorScheme?.(isDarkMode ? 'dark' : 'light');
+	setTimeout(() => {
+		document.body.classList.remove('scheme-transition');
+		document.body.style.setProperty('--speed', '0');
+	}, 300);
+
+	theme.value = value;
+
+	const el = document.body.parentElement!;
+
+	for (let i = el.classList.length - 1; i >= 0; i--) {
+		const className = el.classList[i];
+		if (className.startsWith('theme')) {
+			el.classList.remove(className);
 		}
 	}
+
+	if (value) {
+		el.classList.add(`theme-${value}`);
+	} else {
+		el.classList.add('theme-system');
+	}
+
+	await Preferences.set({
+		key: 'colorTheme',
+		value: value,
+	});
 };
+
+export const checkColorTheme = async () => {
+	const { value } = await Preferences.get({ key: 'colorTheme' });
+	return value;
+};
+
+export const removeColorTheme = async () => {
+	await Preferences.remove({ key: 'colorTheme' });
+};
+
+(async () => {
+	setTimeout(async () => {
+		const colorTheme = await checkColorTheme();
+
+		if (!colorTheme) {
+			return;
+		}
+
+		await setColorTheme(colorTheme);
+	}, 10);
+})();

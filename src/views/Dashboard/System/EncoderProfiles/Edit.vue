@@ -207,7 +207,7 @@ watch(videoCodecs, value => {
     <template v-slot:cta>
     </template>
 
-    <span class="block whitespace-nowrap text-sm font-medium text-contrast">
+    <span class="block whitespace-nowrap text-sm font-medium">
       {{ $t('Profiles settings') }}
     </span>
     <div class="grid w-full grid-cols-12 gap-4" v-if="settings">
@@ -229,7 +229,7 @@ watch(videoCodecs, value => {
     <div class="flex w-full flex-col" v-if="settings">
 
       <div class="flex w-full justify-between">
-        <span class="block whitespace-nowrap text-sm font-medium text-contrast">
+        <span class="block whitespace-nowrap text-sm font-medium">
           {{ $t('Video Profiles') }}
         </span>
         <Button type="button" @click="addVideoProfile" id="addVideoProfile">Add Video Profile</Button>
@@ -292,7 +292,7 @@ watch(videoCodecs, value => {
       </template>
 
       <div class="flex w-full justify-between">
-        <span class="mt-2 block whitespace-nowrap text-sm font-medium text-contrast">
+        <span class="mt-2 block whitespace-nowrap text-sm font-medium">
           {{ $t('Audio Profiles') }}
         </span>
         <Button type="button" @click="addAudioProfile" id="addAudioProfile">Add Audio Profile</Button>
@@ -317,7 +317,7 @@ watch(videoCodecs, value => {
       </template>
 
       <div class="flex w-full justify-between">
-        <span class="mt-2 block whitespace-nowrap text-sm font-medium text-contrast">
+        <span class="mt-2 block whitespace-nowrap text-sm font-medium">
           {{ $t('Subtitle Profiles') }}
         </span>
         <Button type="button" @click="addSubtitleProfile" id="addSubtitleProfile">Add Subtitle Profile</Button>

@@ -91,16 +91,16 @@ const ringColor = ref(pickPaletteColor(props.data?.color_palette?.poster)
         <div
           class="absolute right-2 bottom-2 z-30 flex h-12 w-12 origin-center cursor-pointer items-center justify-center rounded-full border-none opacity-0 outline-transparent transitioning p-1.5 bg-theme-500 group-hover:opacity-100 hover:scale-110"
           data-target="play">
-          <PlayerIcon icon="nmPlay" class="h-14 w-14 text-contrast" />
+          <PlayerIcon icon="nmPlay" class="h-14 w-14" />
         </div>
       </div>
       <div class="flex flex-col justify-evenly gap-2 px-4 py-2 min-h-[60px]">
         <div
-          class="relative z-10 inline-block max-w-full overflow-clip text-ellipsis whitespace-nowrap align-middle text-sm font-bold text-contrast">
+          class="relative z-10 inline-block max-w-full overflow-clip text-ellipsis whitespace-nowrap align-middle text-sm font-bold">
           {{ t(data?.name) }}
         </div>
         <div v-if="data?.musicGenre_track"
-          class="overflow-hidden text-ellipsis whitespace-nowrap font-semibold line-clamp-2 text-contrast text-2xs">
+          class="overflow-hidden text-ellipsis whitespace-nowrap font-semibold line-clamp-2 text-2xs">
           {{ data?.musicGenre_track.length }} {{
             data.musicGenre_track.length > 1 ? t('Tracks') : t('Track')
           }} &nbsp;

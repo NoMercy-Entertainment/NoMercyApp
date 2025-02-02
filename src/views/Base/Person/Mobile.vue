@@ -170,7 +170,7 @@ watch(data, (value) => {
                   </span>
                 </template>
 
-                <p v-if="age" class="text-left text-base font-medium text-contrast self-center whitespace-nowrap">{{
+                <p v-if="age" class="text-left text-base font-medium self-center whitespace-nowrap">{{
                   new Date(data?.birthday!).toLocaleDateString(i18next.language ?? 'en-US', {
                     year: 'numeric',
                     month: 'short',

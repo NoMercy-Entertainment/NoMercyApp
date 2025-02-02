@@ -239,7 +239,7 @@ const continueAvailable = computed(() => {
 
       <Checkbox id="checked" class="mr-auto ml-4" name="Select all" :modelValue="checkboxState"
         @click="handleSelectAll">
-        <span class="whitespace-pre-wrap text-sm font-semibold text-contrast">
+        <span class="whitespace-pre-wrap text-sm font-semibold">
           {{ $t('Select all') }}
         </span>
       </Checkbox>

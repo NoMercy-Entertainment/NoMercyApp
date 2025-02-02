@@ -152,7 +152,7 @@
 
 <template>
     <!--  <div v-if="show"-->
-    <!--       class="flex h-screen w-screen flex-col flex-nowrap items-center justify-center gap-4 overflow-hidden p-8 text-contrast bg-auto-50">-->
+    <!--       class="flex h-screen w-screen flex-col flex-nowrap items-center justify-center gap-4 overflow-hidden p-8 bg-auto-50">-->
     <!--    <div class="mx-12 flex">-->
     <!--      <AppLogo class="h-12 w-full"/>-->
     <!--    </div>-->
@@ -197,7 +197,7 @@
     <!--          <MoooomIcon icon="dataBaseRefresh" class="w-6 h-6"/>-->
     <!--        </Button>-->
     <!--      </div>-->
-    <!--      <span class="text-center text-sm text-contrast">-->
+    <!--      <span class="text-center text-sm">-->
     <!--                {{ t('Don\'t have an account') }}? <button :onclick="() => setTab('register')"-->
     <!--                                                           class="text-theme-500" id="register">-->
     <!--                    <span>{{ t('Register') }}</span>-->
@@ -262,7 +262,7 @@
     <!--          {{ t('Register') }}-->
     <!--        </Button>-->
     <!--      </div>-->
-    <!--      <span class="text-center text-sm text-contrast">-->
+    <!--      <span class="text-center text-sm">-->
     <!--                {{ t('Already have an account') }}? <button id="login" :onclick="() => setTab('login')"-->
     <!--                                                            class="text-theme-500">-->
     <!--                    {{ t('Login') }}-->

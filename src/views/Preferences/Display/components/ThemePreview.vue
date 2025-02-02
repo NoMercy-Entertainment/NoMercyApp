@@ -23,7 +23,7 @@ const colors = computed(() => {
 	<div
 		class="mb-4 hidden sm:flex tv:!hidden xl:col-start-1 xl:col-span-2 xl:row-start-2 xl:row-span-2 2xl:col-start-1 2xl:col-span-2 2xl:row-start-2 2xl:row-span-2">
 		<div class="relative flex select-none flex-col gap-3 w-available">
-			<p class="font-bold text-contrast">{{ t('Theme preview') }}</p>
+			<p class="font-bold">{{ t('Theme preview') }}</p>
 			<div
 				class="relative flex h-auto items-start justify-start overflow-hidden rounded-2xl border-2 aspect-[16/10] bg-auto-1 border-auto-9/20">
 
