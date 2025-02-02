@@ -1,5 +1,6 @@
 import { computed, ref } from 'vue';
 import { Preferences } from '@capacitor/preferences';
+import i18next from "@/config/i18next";
 
 const autoThemeColors = ref<boolean>(true);
 export const useAutoThemeColors = computed(() => autoThemeColors.value);
@@ -89,3 +90,21 @@ export const setScreensaverDelay = (delay: number) => {
 		value: delay.toString(),
 	}).then();
 }
+
+const lang = ref(window.navigator.language.split('-')?.[0]);
+export const displayLanguage = computed(() => lang.value);
+export async function setDisplayLanguage(value: string) {
+	lang.value = value;
+	await i18next.changeLanguage(value);
+	Preferences.set({
+		key: 'display_language',
+		value: value
+	}).then();
+}
+(async () => {
+	Preferences.get({ key: 'display_language'})
+		.then(async (value) => {
+			console.log(value);
+			await setDisplayLanguage(value.value ?? window.navigator.language.split('-')?.[0]);
+		});
+})()

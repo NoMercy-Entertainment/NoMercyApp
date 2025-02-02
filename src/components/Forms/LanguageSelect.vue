@@ -5,7 +5,6 @@ import { useTranslation } from 'i18next-vue';
 import { Listbox, ListboxButton, ListboxLabel, ListboxOption, ListboxOptions } from '@headlessui/vue';
 
 import { availableTranslations } from '@/config/i18next';
-import useServerClient from '@/lib/clients/useServerClient';
 import { Language } from '@/types/api/shared';
 import MoooomIcon from '@/components/Images/icons/MoooomIcon.vue';
 
@@ -13,7 +12,7 @@ const { t } = useTranslation();
 
 const props = defineProps({
   modelValue: {
-    type: Object as PropType<Language[] | Language>,
+    type: Object as PropType<Language|undefined>,
     required: true,
   },
   name: {

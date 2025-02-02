@@ -185,7 +185,7 @@ export const randomDate = () => {
 }
 
 export const timeAgoShort = (epoch: Date | number) => {
-    const rtf = new Intl.RelativeTimeFormat(navigator.language, {
+    const rtf = new Intl.RelativeTimeFormat(navigator.language.split('-')?.[0], {
         numeric: 'auto',
         style: 'short'
     });

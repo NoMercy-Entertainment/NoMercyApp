@@ -12,7 +12,7 @@ export interface AxiosInstance<E> {
 }
 
 export default <T>(baseUrl: string, timeout?: number) => {
-	const language = localStorage.getItem('NoMercy-displayLanguage')?.replace(/"/gu, '') || navigator.language;
+	const language = localStorage.getItem('NoMercy-displayLanguage')?.replace(/"/gu, '') || navigator.language.split('-')?.[0];
 
 	const axiosInstance = axios.create({
 		headers: {

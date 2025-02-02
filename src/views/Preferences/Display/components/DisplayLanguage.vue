@@ -1,26 +1,20 @@
 <script setup lang="ts">
 import { ref, watch } from 'vue';
+import {refDebounced} from "@vueuse/core";
 
-import useServerClient from "@/lib/clients/useServerClient";
 import { Language } from "@/types/api/shared";
-import { displayLanguage, setDisplayLanguage } from "@/store/ui";
+
+import {displayLanguage, setDisplayLanguage} from "@/store/preferences";
+import {languages} from "@/config/i18next";
+
 import LanguageSelect from "@/components/Forms/LanguageSelect.vue";
 
-const { data: languages } = useServerClient<Language[]>({
-	path: '/dashboard/configuration/languages',
-});
-
-const language = ref<Language|undefined>(languages.value?.find(l => l.iso_639_1 == displayLanguage?.value || l.iso_639_1 == navigator.language.split('-')[0]));
-
-watch(languages, (value) => {
-	if (!value) return;
-	language.value = value.find(l => l.iso_639_1 == displayLanguage?.value || l.iso_639_1 == navigator.language.split('-')[0]);
-});
-
-watch(language, (value) => {
-  console.log(value?.iso_639_1);
-	if (!value) return;
-	setDisplayLanguage(value?.iso_639_1);
+const language = ref<Language>(languages?.find(l => l.iso_639_1 == displayLanguage.value)
+    ?? { iso_639_1: 'en', name: 'English', label: 'English', english_name: 'English' });
+const debouncedName = refDebounced(language, 100);
+watch(debouncedName, (value) => {
+  if (!value) return;
+  setDisplayLanguage(value?.iso_639_1);
 });
 
 </script>

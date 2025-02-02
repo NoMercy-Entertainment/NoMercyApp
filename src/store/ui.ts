@@ -3,9 +3,7 @@ import { PaletteColors, pickPaletteColor } from '@/lib/colorHelper';
 import { isPlatform } from '@ionic/vue';
 import { SortOrder, SortType } from '@/types/musicPlayer';
 import { useAutoThemeColors } from '@/store/preferences';
-import { Preferences } from "@capacitor/preferences";
 import { isXmasTime } from "@/lib/dateTime";
-import i18next from "@/config/i18next";
 
 export const setupComplete = ref(false);
 
@@ -51,13 +49,6 @@ const l = ref<string | null>();
 export const logo = computed(() => l.value);
 export function setLogo(value?: string | null) {
     l.value = value;
-}
-
-export const displayLanguage = ref(window.navigator.language);
-export async function setDisplayLanguage(value: string) {
-    displayLanguage.value = value;
-    Preferences.set({ key: 'display_language', value: value }).then();
-    await i18next.changeLanguage(value);
 }
 
 interface StatusBarPlugin {
@@ -116,7 +107,7 @@ export const hideNavBar = () => {
 }
 
 
-(() => {
+(async () => {
     if (isXmasTime()) {
         document.documentElement.classList.add('xmas');
     }
