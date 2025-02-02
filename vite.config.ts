@@ -437,6 +437,7 @@ export default defineConfig({
 		alias: {
 			'@': path.resolve(__dirname, './src'),
 			'@Icons': path.resolve(__dirname, './resources/icons'),
+			'downloadWorker': path.resolve(__dirname, './src/lib/OfflineContentManager/downloadWorker'),
 		},
 	},
 	css: {
