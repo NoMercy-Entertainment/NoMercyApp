@@ -107,7 +107,7 @@ const mouseLeave = () => {
 
 <template>
   <div
-    class="flex flex-1 h-inherit min-h-inherit max-h-[calc(100vh-6rem)] music-showing:h-[calc(100vh-11rem)] overflow-auto will-change-scroll w-full flex-col scrollbar-none group/scrollContainer transform-gpu pb-2"
+    class="flex flex-1 h-available max-h-[calc(100vh-6rem)] music-showing:h-[calc(100vh-11rem)] overflow-auto will-change-scroll w-full flex-col scrollbar-none group/scrollContainer pb-2"
     ref="element" @scroll="$emit('scroll', $event as unknown as VueScrollEvent)" @mousemove="mouseEnter"
     @mouseleave="mouseLeave" :data-music="musicVisibility">
     <slot />

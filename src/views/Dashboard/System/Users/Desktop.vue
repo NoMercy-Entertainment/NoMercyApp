@@ -10,10 +10,11 @@ import Button from '@/components/Buttons/Button.vue';
 import UserCard from './components/UserCard.vue';
 import InviteUserModal from './components/InviteUserModal.vue';
 import { currentServer } from "@/store/currentServer";
+import {ServerUser} from "@/types/auth";
 
 const inviteModalOpen = ref(false);
 
-const { data: serverUsers } = useApiClient({
+const { data: serverUsers } = useApiClient<ServerUser[]>({
   path: 'server_users',
   params: {
     server_id: currentServer.value?.id,
@@ -44,7 +45,7 @@ const closeInviteModal = () => {
           </Button>
         </template>
 
-        <template v-for="user in serverUsers">
+        <template v-for="user in [...serverUsers ?? []]?.sort((a, b) => a.name.localeCompare(b.name))" :key="user.id">
           <UserCard :data="user" />
         </template>
 
