@@ -13,7 +13,7 @@ import { setNotifications } from "@/store/notifications";
 const done = ref(false);
 
 const getLocations = (): Promise<void> => new Promise((resolve, reject) => {
-	if (servers.value.length > 0 && done.value) {
+	if (done.value) {
 		resolve();
 		return;
 	}
@@ -37,6 +37,8 @@ const getLocations = (): Promise<void> => new Promise((resolve, reject) => {
 				name: data.data.name,
 			};
 
+			done.value = true;
+
 			if (servers.value.length == 0) {
 				await router.push({ name: 'No Servers' });
 			}
@@ -49,8 +51,6 @@ const getLocations = (): Promise<void> => new Promise((resolve, reject) => {
 			else if (servers.value.length > 1) {
 				await router.push({ name: 'Select Server' });
 			}
-
-			done.value = true;
 
 			resolve();
 		})
