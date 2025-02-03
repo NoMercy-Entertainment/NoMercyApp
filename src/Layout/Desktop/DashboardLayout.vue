@@ -136,7 +136,7 @@ watch(dataUpdatedAt, (value) => {
     </div>
 
     <div v-else
-      class="block relative z-0 h-available min-h-[90vh] h-px overflow-clip items-start justify-start self-stretch w-available min-h-available bg-slate-light-3 dark:bg-slate-dark-2">
+      class="flex flex-col relative z-0 h-available min-h-[90vh] h-px overflow-clip items-start justify-start self-stretch w-available bg-slate-light-3 dark:bg-slate-dark-2">
       <div
         class="sticky top-0 z-10 flex flex-shrink-0 flex-grow-0 flex-col items-start justify-start gap-5 self-stretch">
         <div class="absolute inset-0 z-0 h-full w-full"></div>

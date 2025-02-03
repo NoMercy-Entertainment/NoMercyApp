@@ -37,10 +37,7 @@ onMounted(() => {
         <div v-if="greetingValue && videoSearchResult.length == 0"
           class="relative z-10 mt-16 flex flex-shrink-0 flex-grow-0 flex-col items-center justify-end gap-3">
           <p class="flex-shrink-0 flex-grow-0 text-7xl font-black">
-            {{ $t('Good') }}
-            <span class="" id="greeting">
-              {{ greetingValue }}
-            </span>
+            {{ $t(`Good ${greetingValue}`) }}
           </p>
           <p class="flex-shrink-0 flex-grow-0 text-3xl font-medium">
             {{ $t('What would you like to see?') }}

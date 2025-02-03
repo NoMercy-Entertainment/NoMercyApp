@@ -75,9 +75,6 @@ onMounted(() => {
 });
 
 onUnmounted(() => {
-  setPoster(null);
-  setBackground(null);
-  setColorPalette(null);
   content.value?.$el?.scrollToTop(window.innerHeight);
 });
 
@@ -110,8 +107,8 @@ router.afterEach(() => {
 
             <div
               class="flex flex-col justify-start items-start w-[280px] absolute left-0 top-0 bg-cover bg-no-repeat bg-center">
-              <TMDBImage v-if="poster ?? data?.poster" :key="poster ?? data?.poster ?? 'poster'" :autoShadow="true"
-                :path="poster ?? data?.poster" :colorPalette="data?.color_palette?.poster" :size="760" priority="high"
+              <TMDBImage v-if="data?.poster" :key="data?.poster ?? 'poster'" :autoShadow="true"
+                :path="data?.poster" :colorPalette="data?.color_palette?.poster" :size="760" priority="high"
                 :title="data?.title" aspect="poster" loading="eager"
                 className="pointer-events-none absolute -inset-1 z-20 flex h-auto scale-100 select-none items-center place-self-start overflow-hidden rounded-2xl w-available h-available max-h-available"
                 class="m-auto children:w-full scale-100 rounded-2xl max-h-available 5xl:w-inherit" type="image" />

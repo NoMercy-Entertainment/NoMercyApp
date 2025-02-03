@@ -52,7 +52,7 @@ const title = computed(() => {
 </script>
 
 <template>
-  <div v-if="poster"
+  <div v-if="data?.poster || poster"
     class="frosting flex-grow-0 flex-shrink-0 w-[280px] h-[420px] z-10 absolute left-1/2 -translate-x-1/2 overflow-clip rounded-2xl"
     :class="{
       'top-safe-offset-12': isNative,
@@ -61,7 +61,7 @@ const title = computed(() => {
 
     <div
       class="flex flex-col justify-start items-start w-[280px] absolute left-0 top-0 bg-cover bg-no-repeat bg-center">
-      <TMDBImage :key="poster ?? 'poster'" :autoShadow="true" :path="poster" :colorPalette="data?.color_palette?.poster"
+      <TMDBImage :key="poster ?? 'poster'" :autoShadow="true" :path="data?.poster ?? poster" :colorPalette="data?.color_palette?.poster"
         :size="760" priority="high" :title="title" aspect="poster" loading="eager"
         className="pointer-events-none absolute -inset-1 z-20 flex h-auto scale-100 select-none items-center place-self-start overflow-hidden w-available h-available max-h-available"
         class="m-auto children:w-full scale-100 max-h-available 5xl:w-inherit" type="image" />

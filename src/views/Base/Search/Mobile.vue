@@ -46,10 +46,7 @@ watch(showScreensaver, (value) => {
           class="relative z-10 mt-16 flex flex-shrink-0 flex-grow-0 flex-col items-center justify-end gap-3">
           <p
             class="flex-grow-0 flex-shrink-0 text-5xl font-black text-left  text-slate-light-11 dark:text-slate-dark-11">
-            {{ $t('Good') }}
-            <span class="" id="greeting">
-              {{ greetingValue }}
-            </span>
+            {{ $t(`Good ${greetingValue}`) }}
           </p>
           <p class="flex-grow-0 flex-shrink-0 w-[333px] text-2xl text-center text-[#eff7ff]/[0.62]">
             {{ $t('What would you like to see?') }}

@@ -270,8 +270,8 @@ onIonViewWillLeave(() => {
             <MoooomIcon v-if="data?.watched" icon="removeCircle" className="w-6" />
             <MoooomIcon v-else icon="addCircle" className="w-6" />
             <p class="flex-shrink-0 flex-grow-0 text-center font-medium text-[15px]">
-              <span v-if="data?.watched">{{ $t('Remove from my List') }}</span>
-              <span v-else>{{ $t('Add to my List') }}</span>
+              <span v-if="data?.watched">{{ $t('Remove from my list') }}</span>
+              <span v-else>{{ $t('Add to my list') }}</span>
             </p>
           </button>
         </div>

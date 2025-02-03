@@ -37,7 +37,7 @@ export const setColorTheme = async (value: string) => {
 	if (value) {
 		el.classList.add(`theme-${value}`);
 	} else {
-		el.classList.add('theme-system');
+		el.classList.add('theme-violet');
 	}
 
 	await Preferences.set({

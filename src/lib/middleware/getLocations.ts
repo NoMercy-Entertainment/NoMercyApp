@@ -1,7 +1,7 @@
 import apiClient from '../clients/apiClient';
 
 import servers, { setServers } from '@/store/servers';
-import { updateUserFromApi } from '@/store/user';
+import {updateUserFromApi, user} from '@/store/user';
 import { setCurrentServer } from '@/store/currentServer';
 
 import type { User } from '@/types/auth';
@@ -31,22 +31,26 @@ const getLocations = (): Promise<void> => new Promise((resolve, reject) => {
 			setMessages(data.data.receivedMessages);
 			setNotifications(data.data.notifications);
 
+			user.value = {
+				...user.value,
+				locale: data.data.locale,
+				name: data.data.name,
+			};
+
 			if (servers.value.length == 0) {
-				done.value = true;
 				await router.push({ name: 'No Servers' });
 			}
 			else if (servers.value.length == 1) {
-				done.value = true;
 				setCurrentServer(servers.value[0]);
 			}
 			else if (servers.value.length > 1 && !!localStorage.getItem('currentServer')) {
-				done.value = true;
 				setCurrentServer(servers.value.find(server => server.id == localStorage.getItem('currentServer'))!);
 			}
 			else if (servers.value.length > 1) {
-				done.value = true;
 				await router.push({ name: 'Select Server' });
 			}
+
+			done.value = true;
 
 			resolve();
 		})

@@ -61,6 +61,8 @@
   "View album": "Album weergeven",
   "Add to songs you like": "Voeg aan nummers die je leuk vind toe",
   "Add to playlist": "Voeg aan afspeellijst toe",
+  "Add to my list": "Voeg aan mijn lijst toe",
+  "Remove from my list": "Verwijder van mijn lijst",
   "Share": "Delen",
   "Copy link": "Link kopieren",
   "Embed song": "Nummer embedden",
@@ -319,5 +321,14 @@
   "Add selection": "Selectie toevoegen",
   "Select all": "Alles selecteren",
   "Add folder": "Map toevoegen",
-  "Select": "Selecteren"
+  "Select": "Selecteren",
+
+  "Good Evening": "Goedenavond",
+  "Good Afternoon": "Goedemiddag",
+  "Good Morning": "Goedemorgen",
+  "Good Night": "Goedenacht",
+  "Goodbye": "Tot ziens",
+
+  "What would you like to see?": "Wat wilt u zien?",
+  "What would you like to listen to?": "Wat wilt u luisteren?"
 }

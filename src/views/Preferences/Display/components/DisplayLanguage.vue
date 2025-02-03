@@ -10,7 +10,7 @@ import {languages} from "@/config/i18next";
 import LanguageSelect from "@/components/Forms/LanguageSelect.vue";
 
 const language = ref<Language>(languages?.find(l => l.iso_639_1 == displayLanguage.value)
-    ?? { iso_639_1: 'en', name: 'English', label: 'English', english_name: 'English' });
+    ?? { iso_639_1: 'en', name: 'English', english_name: 'English' });
 const debouncedName = refDebounced(language, 100);
 watch(debouncedName, (value) => {
   if (!value) return;
