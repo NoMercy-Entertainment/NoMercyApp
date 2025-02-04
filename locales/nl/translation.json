@@ -11,7 +11,7 @@
   "Profile": "Profiel",
   "Quick connect": "Quick connect",
   "Display": "Weergave",
-  "Display preferences": "Weergave voorkeuren",
+  "Display settings": "Weergave voorkeuren",
   "Encoder": "Encoder",
   "Subtitles": "Ondertitels",
   "Controls": "Besturing",
@@ -22,6 +22,8 @@
   "Progress": "Voortgang",
   "Speed": "Snelheid",
   "Empty": "Leeg",
+  "Choose image": "Kies afbeelding",
+  "No file chosen": "Geen bestand gekozen",
   "GPU decoder usage": "GPU decoder gebruik",
   "GPU encoder usage": "GPU encoder gebruik",
   "Memory": "Geheugen",
@@ -244,6 +246,9 @@
   "Writer": "Schrijver",
   "Rescan files": "Bestanden opnieuw scannen",
   "Refresh data": "Gegevens vernieuwen",
+
+  "Upload an image of max {{dimension}} pixels and {{size}} in size.\n We recommend a square image for best results.":
+    "Upload een afbeelding van max {{dimension}} pixels en {{size}} in grootte.\n We raden een vierkante afbeelding aan voor het beste resultaat.",
 
   "Show percentage gradient colors on cards": "Gebruik gedetaileerde kleuren voor de compleetheid indicatie",
   "Allow audio playback that requires transcoding": "Afspelen van audio toestaan ​​waarvoor transcodering vereist is",
