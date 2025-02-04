@@ -141,7 +141,7 @@ const description = "Upload an image of max {{dimension}} pixels and {{size}} in
                 {{ $t('Upload image') }}
               </Button>
 
-              <p class="self-stretch flex-grow-0 flex-shrink-0 w-full text-sm text-left text-[#9ba1a6] whitespace-pre-line">
+              <p class="self-stretch flex-grow-0 flex-shrink-0 w-full text-sm text-left text-[#9ba1a6] text-pretty">
                 {{ $t(description, {
                 dimension: '2000x2000',
                 size: '2MB',

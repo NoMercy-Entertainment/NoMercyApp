@@ -72,15 +72,17 @@ export class SyncPlugin extends Plugin {
 
 		let specialId: string | undefined;
 		let collectionId: number | undefined;
+		let tmdbId: number | undefined = current?.tmdb_id;
 		if (route.at(-3) === 'specials') {
 			specialId = route.at(-2) as string;
 		} else if (route.at(-3) === 'collection') {
 			collectionId = route.at(-2) as unknown as number;
+			tmdbId = current.id as unknown as number;
 		}
 
 		return {
 			video_id: current?.video_id,
-			tmdb_id: current?.tmdb_id,
+			tmdb_id: tmdbId,
 			playlist_type: route.at(-3),
 			special_id: specialId,
 			collection_id: collectionId,
