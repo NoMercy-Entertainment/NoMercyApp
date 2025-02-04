@@ -35,6 +35,7 @@ const getLocations = (): Promise<void> => new Promise((resolve, reject) => {
 				...user.value,
 				locale: data.data.locale,
 				name: data.data.name,
+				avatarUrl: data.data.avatarUrl,
 			};
 
 			done.value = true;

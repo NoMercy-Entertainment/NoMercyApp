@@ -24,11 +24,13 @@ defineProps({
     <div style="
         --circle-point-background-color: #fff;
         transition: height 100ms ease 0s, width 100ms ease 0s;
-        scale: 1.4;
         transform-origin: left top;
       "
-     class="rounded-full bg-[var(--circle-point-background-color)]"
-     :class="theme.title == colorTheme ? 'w-available h-available absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2' : 'w-0 h-0'">
+     class="rounded-full bg-[var(--circle-point-background-color)]  absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
+     :class="{
+        'w-5 h-5' : theme.title == colorTheme,
+        'w-0 h-0': theme.title != colorTheme
+     }">
     </div>
   </button>
 </template>

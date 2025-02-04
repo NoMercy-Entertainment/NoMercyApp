@@ -89,8 +89,11 @@ const classes = computed(() => {
     props.className?.includes('h-')
       ? ''
       : 'h-9',
-    props.variant == 'default' || props.variant == 'contained'
-      ? '!bg-gradient-to-b from-[var(--color-11)] to-[var(--color-10)] hover:from-[var(--color-12)] hover:to-[var(--color-11)] active:from-[var(--color-10)] active:to-[var(--color-9)] dark:from-[var(--color-7)] dark:to-[var(--color-5)] dark:hover:from-[var(--color-8)] dark:hover:to-[var(--color-6)] dark:active:from-[var(--color-7)] dark:active:to-[var(--color-4)] button-filled '
+    (props.variant == 'default' || props.variant == 'contained') && props.disabled
+      ? '!bg-gradient-to-b from-[var(--color-11)] to-[var(--color-10)] dark:from-[var(--color-7)] dark:to-[var(--color-5)]'
+      : '',
+    (props.variant == 'default' || props.variant == 'contained') && !props.disabled
+      ? '!bg-gradient-to-b from-[var(--color-11)] to-[var(--color-10)] hover:from-[var(--color-12)] hover:to-[var(--color-11)] dark:from-[var(--color-7)] dark:to-[var(--color-5)] active:from-[var(--color-10)] active:to-[var(--color-9)] dark:hover:from-[var(--color-8)] dark:hover:to-[var(--color-6)] dark:active:from-[var(--color-7)] dark:active:to-[var(--color-4)] button-filled'
       : '',
     props.variant == 'text'
       ? 'hover:outline-[rgba(var(--color-7),.1)] hover:outline-1 hover:outline text-[rgb(var(--background-auto-alpha-10))]'
@@ -110,7 +113,7 @@ const classes = computed(() => {
         : props.color
       : 'text-[rgb(var(--background-auto-alpha-10))]',
     props.disabled
-      ? 'grayscale cursor-not-allowed'
+      ? 'grayscale !cursor-not-allowed'
       : '',
   );
 });

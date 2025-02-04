@@ -16,6 +16,7 @@ import libraries from '@/store/Libraries';
 import { setMusicPlaylists } from '@/store/musicPlaylists';
 import { useRoute } from "vue-router";
 import ChristmasTree from "@/components/Seasonal/Christmas/ChristmasTree.vue";
+import konamiEnabled from "@/store/konami";
 
 // const {data: libraries, refetch} = useServerClient<ServerLibrary[]>({
 //   path: '/dashboard/libraries',
@@ -63,7 +64,7 @@ const isSetupRoute = computed(() => {
 });
 
 const isPreferencesRoute = computed(() => {
-  return route.path.startsWith('/preferences');
+  return route.path.startsWith('/preferences') || route.path.startsWith('/dev');
 });
 
 const handleSidebar = () => {
@@ -192,6 +193,10 @@ const libraryIconName = (type: string) => {
           <!--                         :show="isPreferencesRoute"-->
           <!--                         name="Controls"/>-->
           <!--                    end Preferences pages-->
+
+          <SidebarButton href="/dev/cast" icon="chromecast" :show="isPreferencesRoute && konamiEnabled" name="ChromeCast"/>
+          <SidebarButton href="/dev/download" icon="cloudDownload" :show="isPreferencesRoute && konamiEnabled" name="Download"/>
+          <SidebarButton href="/dev/notfound" icon="eye" :show="isPreferencesRoute && konamiEnabled" name="Not Found"/>
         </div>
       </ScrollPanel>
 

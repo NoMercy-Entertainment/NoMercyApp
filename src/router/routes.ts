@@ -52,6 +52,9 @@ import PreferencesDisplay from '@/views/Preferences/Display';
 import PreferencesProfile from '@/views/Preferences/Profile';
 import PreferencesSubtitles from '@/views/Preferences/Subtitles';
 
+import DevCast from '@/views/Dev/Cast';
+import DevDownload from '@/views/Dev/Download';
+
 // import SetupPostInstall from '@/views/Setup/PostInstall';
 import SetupSelectServer from '@/views/Setup/SelectServers';
 import SetupNoServer from '@/views/Setup/NoServers';
@@ -427,6 +430,22 @@ export const routes: Array<RouteRecordRaw> = [
 				path: 'subtitles',
 				name: 'Subtitles',
 				component: PreferencesSubtitles,
+			},
+		],
+	},
+	{
+		path: '/dev',
+		component: baseLayout.value,
+		children: [
+			{
+				path: 'cast',
+				name: 'Cast',
+				component: DevCast,
+			},
+			{
+				path: 'download',
+				name: 'Download',
+				component: DevDownload,
 			},
 		],
 	},

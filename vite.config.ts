@@ -217,7 +217,7 @@ export default defineConfig({
 			},
 			base: '/',
 			devOptions: {
-				enabled: true,
+				enabled: false,
 				type: 'module',
 				navigateFallback: 'index.html',
 				suppressWarnings: false,

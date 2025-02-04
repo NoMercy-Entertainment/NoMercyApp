@@ -1,5 +1,3 @@
-import { isPlatform } from '@ionic/vue';
-
 import { useKeycloak } from '@/lib/auth/tv-keycloak';
 import { refreshToken } from '@/lib/auth/index';
 import { user } from '@/store/user'
@@ -17,8 +15,6 @@ export const storeUserDetails = (): Promise<void> => {
 			const { isAuthenticated } = useKeycloak();
 
 			if (isAuthenticated.value) {
-				console.log('isAuthenticated');
-
 				const {
 					keycloak,
 					roles,

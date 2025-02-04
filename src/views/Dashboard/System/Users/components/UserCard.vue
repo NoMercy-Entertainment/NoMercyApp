@@ -4,6 +4,7 @@ import { type PropType } from "vue";
 import type { ServerUser } from '@/types/auth';
 
 import DashboardCard from '@/components/Cards/DashboardCard.vue';
+import Avatar from '@/components/Images/Avatar.vue';
 
 defineProps({
     data: {
