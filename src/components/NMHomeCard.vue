@@ -159,15 +159,15 @@ onIonViewWillLeave(() => {
     </div>
   </div>
   <div v-else
-    class="flex h-auto w-full flex-shrink-0 flex-grow-0 items-start justify-start gap-2 self-stretch p-6 pb-0 aspect-poster -mb-6">
+    class="flex h-auto w-full flex-shrink-0 flex-grow-0 items-start justify-start gap-2 self-stretch p-6 pb-0 aspect-poster -mb-6 max-h-[80vh]">
     <div
-      class="frosting relative flex h-auto w-full flex-grow flex-col items-center justify-end overflow-hidden rounded-lg bg-cover bg-center bg-no-repeat aspect-poster bg-focus"
+      class="frosting relative flex h-auto w-full flex-grow flex-col items-center justify-end overflow-hidden rounded-lg bg-cover bg-center bg-no-repeat aspect-poster bg-focus max-h-[75vh]"
       style="box-shadow: 0 8px 24px 0 rgba(0,0,0,0.08);">
 
       <TMDBImage v-if="data" :path="data?.poster" :title="data?.title" :colorPalette="data?.color_palette?.poster"
         :style="`--color-focus: ${ringPosterColor};`" :width="null"
-        class="children:!w-available flex sm:hidden overflow-clip border-2 border-focus rounded-lg z-0 absolute -inset-0"
-        className="relative flex h-auto aspect-poster !w-available min-h-full flex-shrink-0 flex-grow-0 items-end justify-start gap-4 self-stretch overflow-clip transition-opacity duration-700 bg-auto-50"
+        class="children:!w-available flex overflow-clip border-2 border-focus rounded-lg z-0 absolute -inset-0"
+        className="relative flex h-auto aspect-poster !w-available min-h-full flex-shrink-0 flex-grow-0 items-end justify-start gap-4 self-stretch overflow-clip transition-opacity duration-700 bg-auto-50 max-h-available"
         loading="eager">
 
       </TMDBImage>
