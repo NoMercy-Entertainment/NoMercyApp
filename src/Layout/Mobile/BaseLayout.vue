@@ -49,11 +49,11 @@ onUnmounted(() => {
       <ProfileMenu />
       <EqualizerMenu />
 
-      <FullPlayer v-if="currentSong" />
-      <MiniPlayer v-if="currentSong" />
-
       <BottomBar />
     </ion-tabs>
+
+    <FullPlayer v-if="currentSong" />
+    <MiniPlayer v-if="currentSong" />
 
     <ImageModal />
     <!--      <Toast class="z-1199" />-->

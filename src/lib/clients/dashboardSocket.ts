@@ -38,6 +38,7 @@ watch(currentServer, async (newServer) => {
 
 	if (newServer && dashboardSocketIsConnected.value) {
 		dashboardSocket.value?.connection?.stop().then();
+		dashboardSocket.value?.dispose();
 		dashboardSocket.value = new SocketClient(currentServer.value!.serverBaseUrl!, accessToken, 'dashboardHub');
 
 		dashboardSocket.value?.connection?.on('connected', connected);

@@ -13,7 +13,6 @@ import MediaLikeButton from '@/components/Buttons/MediaLikeButton.vue';
 import DeviceButton from '../components/DeviceButton.vue';
 import PlaybackButton from '../components/PlaybackButton.vue';
 import TrackLinks from '../components/TrackLinks.vue';
-import Marquee from "@/components/Marquee.vue";
 
 const focusColor = computed(() => {
   if (!useAutoThemeColors.value) return 'var(--color-theme-7)';
@@ -73,7 +72,7 @@ const { isSwiping, lengthX } = useSwipe(
 <template>
   <div @click="openFullPlayer()" v-if="!menuOpen" id="miniPlayer" ref="container"
     :style="`--color-focus: ${focusColor}`"
-    class="flex absolute bottom-0 w-available justify-between items-center self-stretch  h-14 overflow-hidden p-2 bg-slate-light-1 dark:bg-slate-dark-3 mt-auto z-0">
+    class="flex absolute w-available justify-between items-center self-stretch bottom-20 h-14 overflow-hidden p-2 bg-slate-light-1 dark:bg-slate-dark-3 mt-auto z-0">
     <div class="absolute inset-0 h-full w-full bg-gradient-to-b to-black/40 from-focus/40"></div>
     <div class="flex flex-grow items-center justify-start gap-2.5 overflow-clip w-[65%]">
       <div class="frosting relative flex w-10 min-w-10 items-start justify-start gap-2 overflow-hidden rounded">

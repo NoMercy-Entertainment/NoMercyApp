@@ -38,6 +38,7 @@ watch(currentServer, async (newServer) => {
 
 	if (newServer && castSocketIsConnected.value) {
 		castSocket.value?.connection?.stop().then();
+		castSocket.value?.dispose();
 		castSocket.value = new SocketClient(currentServer.value!.serverBaseUrl!, accessToken, 'castHub');
 
 		castSocket.value?.connection?.on('connected', connected);
