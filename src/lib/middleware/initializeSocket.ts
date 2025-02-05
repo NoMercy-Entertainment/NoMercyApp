@@ -20,6 +20,7 @@ const initializeSocket = async (): Promise<void> => {
 
 	watch([currentServer, user], async () => {
 		if (!currentServer.value || !user.value) return;
+		socketInstance.value?.connection?.stop();
 		socketInstance.value?.dispose();
 
 		const socket = new SocketClient(currentServer.value.serverBaseUrl, user.value.accessToken);
