@@ -8,10 +8,15 @@ import MoooomIcon from '@/components/Images/icons/MoooomIcon.vue';
 import KeepCounting from '@/components/KeepCounting.vue';
 import { clearNotifications } from "@/store/notifications";
 
-const props = defineProps({
+defineProps({
     data: {
         type: Object as PropType<Message>,
         required: true,
+    },
+    open: {
+      type: Boolean,
+      required: false,
+      default: false,
     },
 });
 
@@ -45,7 +50,7 @@ const handleClick = () => {
             </div>
         </div>
 
-        <button @click="handleClick">
+        <button @click="handleClick" :tabindex="open ? 0 : -1">
             <MoooomIcon icon="cross" className="w-5" />
         </button>
     </div>

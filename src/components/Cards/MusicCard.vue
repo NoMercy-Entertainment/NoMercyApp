@@ -67,7 +67,7 @@ const ringColor = ref(pickPaletteColor(props.data.color_palette?.cover)
 
 <template>
     <RouterLink v-if="data?.link"
-        class="relative flex flex-grow flex-col items-center justify-end transition-transform duration-100 group/musicCard active:scale-[98%]"
+        class="relative flex flex-grow flex-col items-center justify-end transition-transform duration-100 group/musicCard active:scale-[98%] w-full"
         :to="data.link" :style="`--color-focus: ${ringColor}`">
         <MusicCardImage :data="data" />
         <div class="flex flex-shrink-0 flex-grow-0 items-center justify-start self-stretch py-2 pr-1 pl-2">

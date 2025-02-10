@@ -29,7 +29,7 @@ onMounted(() => {
   <ion-page>
     <ion-content :fullscreen="true">
       <div :class="{
-        'w-available relative flex flex-col items-center gap-12 m-3 overflow-clip rounded-2xl transform-all duration-300 will-change-auto': true,
+        'w-available relative flex flex-col items-center gap-12 m-3 overflow-clip rounded-2xl transform-all duration-300 will-change-auto min-w-available': true,
         'h-24 min-h-24 ': videoSearchResult.length > 0,
         'h-[360px] min-h-[260px] ': videoSearchResult.length == 0
       }">
@@ -44,7 +44,7 @@ onMounted(() => {
           </p>
         </div>
         <div
-          class="relative my-auto flex w-full flex-shrink-0 flex-grow-0 items-center justify-start gap-5 self-center overflow-hidden rounded-2xl border-2 bg-black border-auto-10 sm:w-5/6"
+          class="relative my-auto flex w-full flex-shrink-0 flex-grow-0 items-center justify-start gap-5 self-center overflow-hidden rounded-2xl border-2 bg-black border-auto-10 sm:w-5/6 focus-within:border-white"
           :class="{
             'mb-16': !videoSearchResult || videoSearchResult.length == 0
           }">
@@ -56,7 +56,7 @@ onMounted(() => {
         </div>
       </div>
 
-      <div class="flex w-full flex-col gap-4 p-1 h-available sm:p-4"
+      <div class="flex w-full flex-col gap-4 p-1 h-available sm:p-4 overflow-auto"
         :class="videoSearchResult && videoSearchResult.length > 0 ? 'mt-4' : ''">
         <div class="flex flex-wrap gap-2 pb-3 sm:gap-4">
           <template v-for="item in videoSearchResult ?? []" :key="item.id">
@@ -110,3 +110,11 @@ onMounted(() => {
     </ion-content>
   </ion-page>
 </template>
+
+<style scoped>
+ion-content::part(scroll) {
+  display: flex;
+  flex-direction: column;
+  @apply h-available overflow-clip;
+}
+</style>

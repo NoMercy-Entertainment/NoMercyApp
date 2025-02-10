@@ -45,28 +45,44 @@ const onChange = async (event: SegmentCustomEvent) => {
     <ion-segment :scrollable="true" mode="ios" @ionChange="onChange">
 
       <template v-for="library in libraries?.filter(l => l.type != 'music') ?? []" :key="library.id">
-        <ion-segment-button :value="`/libraries/${library.id}`" layout="icon-start">
+        <ion-segment-button :value="`/libraries/${library.id}`" layout="icon-start" :class="{
+          'bg-focus': route.fullPath.startsWith(`/libraries/${library.id}`),
+        }">
           <MoooomIcon icon="folder" class="mr-2" />
           <ion-label>{{ library.title }}</ion-label>
         </ion-segment-button>
       </template>
 
-      <ion-segment-button value="/collection" layout="icon-start" v-if="libraries?.some?.(l => l.type === 'movie')">
+      <ion-segment-button value="/collection" layout="icon-start"
+                          v-if="libraries?.some?.(l => l.type === 'movie')" :class="{
+          'bg-focus': route.fullPath.startsWith('/collection'),
+          }"
+      >
         <MoooomIcon icon="collection1" class="mr-2" />
         <ion-label>{{ $t('Collections') }}</ion-label>
       </ion-segment-button>
 
-      <ion-segment-button value="/specials" layout="icon-start">
+      <ion-segment-button value="/specials" layout="icon-start" :class="{
+          'bg-focus': route.fullPath.startsWith('/specials'),
+          }"
+      >
         <MoooomIcon icon="sparkles" class="mr-2" />
         <ion-label>{{ $t('Specials') }}</ion-label>
       </ion-segment-button>
 
-      <ion-segment-button value="/genres" layout="icon-start" v-if="libraries?.some?.(l => l.type !== 'music')">
+      <ion-segment-button value="/genres" layout="icon-start"
+                          v-if="libraries?.some?.(l => l.type !== 'music')" :class="{
+          'bg-focus': route.fullPath.startsWith('/genres'),
+          }"
+      >
         <MoooomIcon icon="witchHat" class="mr-2" />
         <ion-label>{{ $t('Genres') }}</ion-label>
       </ion-segment-button>
 
-      <ion-segment-button value="/person" layout="icon-start">
+      <ion-segment-button value="/person" layout="icon-start" :class="{
+          'bg-focus': route.fullPath.startsWith('/person'),
+          }"
+      >
         <MoooomIcon icon="user" class="mr-2" />
         <ion-label>{{ $t('People') }}</ion-label>
       </ion-segment-button>

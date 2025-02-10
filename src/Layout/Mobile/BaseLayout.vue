@@ -20,6 +20,7 @@ import BottomBar from './components/BottomBar.vue';
 import SideFlyout from './components/SideFlyout.vue';
 import EqualizerMenu from "@/Layout/Mobile/components/menus/EqualizerMenu.vue";
 import ChristmasSnow from "@/components/Seasonal/Christmas/ChristmasSnow.vue";
+import MobileLibraryHeader from "@/views/Base/Library/components/MobileLibraryHeader.vue";
 
 const isFetching = useIsFetching();
 
@@ -42,6 +43,7 @@ onUnmounted(() => {
       <ion-progress-bar v-if="isFetching > 0" type="indeterminate"
         class="absolute mt-safe top-0 z-1199 bg-black"></ion-progress-bar>
       <ChristmasSnow />
+      <MobileLibraryHeader />
 
       <ion-router-outlet animated="false" class="pointer-events-none children:pointer-events-auto">
       </ion-router-outlet>

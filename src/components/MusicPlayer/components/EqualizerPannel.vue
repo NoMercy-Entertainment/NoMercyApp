@@ -2,7 +2,7 @@
 import {
   bands, panning, equalizerPreset,
   equalizerPresets, equalizerSliderValues,
-  handleReset, handleFullReset, handleChange, setEqualizerPreset,
+  handleReset, handleFullReset, handleChange, setEqualizerPreset, currentSong, equalizerMenuOpen,
 } from '@/store/audioPlayer';
 
 import Button from "@/components/Button.vue";
@@ -30,6 +30,7 @@ import RangeSlider from "@/components/Forms/RangeSlider.vue"
                    v-slot:default="{ min, max, step, left }"
       >
         <input type="range" v-model="panning"
+               :tabindex="equalizerMenuOpen ? 0 : -1"
                :min="min" :max="max" :step="step"
                class="!w-available"
                @input="handleChange('panning', $event)"
@@ -54,6 +55,7 @@ import RangeSlider from "@/components/Forms/RangeSlider.vue"
                          v-slot:default="{ min, max, step, left }"
             >
               <input type="range" v-model="band.gain"
+                     :tabindex="equalizerMenuOpen ? 0 : -1"
                      :min="min" :max="max" :step="step"
                      class="vertical !h-[260px] rotate-180"
                      @input="handleChange('gain', $event, band)"
@@ -74,6 +76,7 @@ import RangeSlider from "@/components/Forms/RangeSlider.vue"
                          v-slot:default="{ min, max, step, left }"
             >
               <input type="range" v-model="band.gain" :key="equalizerPreset.name"
+                     :tabindex="equalizerMenuOpen ? 0 : -1"
                      :min="min" :max="max" :step="step"
                      :disabled="equalizerPreset.name !== 'Custom'"
                      class="vertical !h-[260px] rotate-180"
@@ -94,6 +97,7 @@ import RangeSlider from "@/components/Forms/RangeSlider.vue"
         </label>
         <Select :options="equalizerPresets"
                 :model-value="equalizerPreset"
+                :tabindex="equalizerMenuOpen ? 0 : -1"
                 @update:modelValue="setEqualizerPreset($event)"
                 autocomplete="off"
                 checkmark
@@ -106,6 +110,7 @@ import RangeSlider from "@/components/Forms/RangeSlider.vue"
       </div>
       <Button class="w-20 max-h-[2.15rem]"
               @click="handleFullReset()"
+              :tabindex="equalizerMenuOpen ? 0 : -1"
               endIcon="arrowCounterClockwise"
               id="reset"
       >

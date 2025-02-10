@@ -53,7 +53,7 @@ router.beforeEach(() => {
       <slot :open="open" name="button" />
     </div>
 
-    <div :id="`_dropdown_menu_${id}`" :tabindex="open ? 0 : -1"
+    <div :id="`_dropdown_menu_${id}`"
       class="absolute w-max ml-[100%] sm:ml-[100%] mb-1 sm:mt-1 border grid transition-all duration-300 rounded-xl shadow-2xl overflow-clip grid-rows-[0fr] border-transparent right-0"
       :class="{
         'grid-rows-[1fr] border-[#e2f0fd]/4': open,

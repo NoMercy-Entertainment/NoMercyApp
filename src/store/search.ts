@@ -1,5 +1,5 @@
 import { computed, onMounted, ref, watch } from 'vue';
-import { useDebounce, useIntersectionObserver } from '@vueuse/core';
+import { refDebounced, useIntersectionObserver } from '@vueuse/core';
 
 import type { HomeDataItem } from '@/types/api/music';
 import type { Component } from '@/lib/routerHelper';
@@ -12,7 +12,7 @@ import { tmdbApiKey } from '@/config/config';
 export const musicSearchValue = ref('');
 export const musicSearchResult = computed(() => musicResult.value);
 
-const debouncedSearchValue = useDebounce(musicSearchValue, 500);
+const debouncedSearchValue = refDebounced(musicSearchValue, 500);
 const musicResult = ref<Component<HomeDataItem>[]>([]);
 
 watch(debouncedSearchValue, (value) => {
@@ -36,7 +36,7 @@ export const videoSearchValue = ref('');
 export const videoSearchResult = ref<Array<Movie | Tv | Person & any>>([]);
 export const hasMoreResults = ref(false);
 
-const debouncedVideoSearchValue = useDebounce(videoSearchValue, 500);
+const debouncedVideoSearchValue = refDebounced(videoSearchValue, 500);
 const page = ref(1);
 
 watch(debouncedVideoSearchValue, (value) => {

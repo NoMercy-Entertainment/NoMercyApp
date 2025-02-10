@@ -47,7 +47,7 @@ const { t } = useTranslation();
       <div class="flex flex-shrink-0 flex-grow items-center justify-start gap-12 overflow-clip h-full">
         <div class="relative flex flex-shrink-0 flex-grow-0 items-center justify-center gap-2 self-stretch px-1">
           <RouterLink aria-label="Home" :to="`${currentServer ? '/home' : ''}`"
-            class="relative -mr-6 flex w-48 flex-shrink-0 flex-grow-0 items-center justify-center gap-2 self-stretch px-1 pl-4 md:w-56">
+            class="relative -mr-6 my-1 flex w-48 flex-shrink-0 flex-grow-0 items-center justify-center gap-2 self-stretch px-1 pl-4 md:w-56">
             <AppLogo class="h-10 w-auto" />
           </RouterLink>
         </div>

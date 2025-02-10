@@ -62,17 +62,17 @@ const ringColor = ref(pickPaletteColor(props.data.color_palette?.cover)
 
 <template>
   <RouterLink v-if="data?.link"
-    class="relative flex flex-grow flex-col items-center justify-end transition-transform duration-100 group/musicCard active:scale-[98%]"
+    class="relative flex flex-grow flex-col items-center justify-end transition-transform duration-100 group/musicCard active:scale-[98%] w-full"
     :to="data.link" :style="`--color-focus: ${ringColor}`">
     <MusicCardImage :data="data" />
-    <div class="flex flex-shrink-0 flex-grow-0 items-center justify-start self-stretch py-2 pr-1 pl-2">
-      <div class="relative flex flex-grow flex-col items-start justify-center text-left">
-        <p class="h-6 w-full flex-shrink-0 flex-grow-0 self-stretch text-sm font-semibold line-clamp-1"
+    <div class="flex flex-shrink-0 flex-grow-0 items-center justify-start self-stretch py-2 pr-2 pl-2 overflow-clip">
+      <div class="relative flex flex-grow flex-col items-start justify-center text-left w-available overflow-clip">
+        <p class="h-6 w-full flex-shrink-0 flex-grow-0 self-stretch text-xs font-semibold line-clamp-1"
           :title="data?.name ?? (data as HomeDataItem)?.title">
           {{ data?.name ?? (data as HomeDataItem)?.title }}
         </p>
         <p
-          class="h-6 w-full flex-shrink-0 flex-grow-0 self-stretch whitespace-nowrap text-xs font-medium text-auto-10 line-clamp-1 empty:hidden dark:font-normal">
+          class="h-6 w-full flex-shrink-0 flex-grow-0 self-stretch whitespace-nowrap text-2xs font-medium text-auto-10 line-clamp-1 empty:hidden dark:font-normal">
           {{ footText }}&nbsp;
         </p>
       </div>

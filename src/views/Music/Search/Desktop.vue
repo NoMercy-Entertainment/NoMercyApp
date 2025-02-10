@@ -24,7 +24,7 @@ onMounted(() => {
   <ion-page>
     <ion-content :fullscreen="true">
       <div :class="{
-        'w-available relative flex flex-col items-center gap-12 m-3 overflow-clip rounded-2xl transform-all duration-300 will-change-auto': true,
+        'w-available relative flex flex-col items-center gap-12 m-3 overflow-clip rounded-2xl transform-all duration-300 will-change-auto min-w-available': true,
         'h-24 min-h-24 ': musicSearchResult && musicSearchResult.length > 0,
         'h-[360px] min-h-[260px] ': !musicSearchResult || musicSearchResult.length == 0
       }">
@@ -39,7 +39,7 @@ onMounted(() => {
           </p>
         </div>
         <div
-          class="relative my-auto flex w-full flex-shrink-0 flex-grow-0 items-center justify-start gap-5 self-center overflow-hidden rounded-2xl border-2 bg-white dark:bg-black border-auto-10 sm:w-3/5"
+          class="relative my-auto flex w-full flex-shrink-0 flex-grow-0 items-center justify-start gap-5 self-center overflow-hidden rounded-2xl border-2 bg-white dark:bg-black border-auto-10 sm:w-3/5 focus-within:border-white"
           :class="{
             'mb-16': !musicSearchResult
           }">

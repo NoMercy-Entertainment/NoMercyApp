@@ -32,14 +32,16 @@ const handleSelectServer = () => {
 <template>
   <DropdownMenu v-if="user" :direction="direction" className="rounded-full">
     <template v-slot:button>
-      <div class="relative mx-auto flex flex-col rounded-full size-12  border-2 border-slate-dark-5">
+      <button
+              class="relative mx-auto flex flex-col rounded-full size-12  border-2 border-slate-dark-5">
         <NoMercyAvatar :user="user" :size="40" class="absolute inset-0" />
         <span
           class="absolute rounded-full border-white bg-green-600 size-[28%] -bottom-[2%] -end-[2%] border-[0.125rem] dark:border-stone-900">
         </span>
-      </div>
+      </button>
     </template>
 
+    <template v-slot:default="{ open }">
     <div class="flex w-full flex-col items-start justify-start p-2 text-slate-dark-9 dark:text-slate-light-5"
       style="box-shadow: 0 4px 7px 0 rgba(0,0,0,0.08);">
       <div
@@ -47,7 +49,7 @@ const handleSelectServer = () => {
         <ProfileMenuServerSection />
         <div class="border-t-0 border-r-0 border-b border-l-0 border-[#e2f0fd]/4 w-full"></div>
         <div class="flex flex-shrink-0 flex-grow-0 flex-col items-start justify-start gap-1 self-stretch border-0 py-2">
-          <RouterLink to="/setup/select-servers" @click="handleSelectServer"
+          <RouterLink to="/setup/select-servers" @click="handleSelectServer" :tabindex="open ? 0 : -1"
             class="flex justify-center items-center self-stretch h-10 relative py-2.5 px-1 rounded-md border border-transparent hover:border-focus/4 active:!bg-focus/11 dark:active:!bg-focus/8 active:border-focus/4 active:hover:border-focus/4 focus:bg-focus-9 hover:!bg-focus/10 disabled:!bg-focus/2 disabled:!border-focus/2 transition-colors duration-300 hover:text-auto-12"
             data-nav-title="Switch server" name="Switch server">
             <span
@@ -64,7 +66,7 @@ const handleSelectServer = () => {
         <div class="border-t-0 border-r-0 border-b border-l-0 border-[#e2f0fd]/4 w-full"></div>
         <div class="flex flex-shrink-0 flex-grow-0 flex-col items-start justify-start gap-1 self-stretch border-0 py-2">
 
-          <RouterLink v-if="currentServer" to="/dashboard/system"
+          <RouterLink v-if="currentServer" to="/dashboard/system" :tabindex="open ? 0 : -1"
             class="flex justify-center items-center self-stretch h-10 relative py-2.5 px-1 rounded-md border border-transparent hover:border-focus/4 active:!bg-focus/11 dark:active:!bg-focus/8 active:border-focus/4 active:hover:border-focus/4 focus:bg-focus-9 hover:!bg-focus/10 disabled:!bg-focus/2 disabled:!border-focus/2 transition-colors duration-300 hover:text-auto-12"
             data-nav-title="System" name="System">
             <span
@@ -78,7 +80,7 @@ const handleSelectServer = () => {
             </span>
           </RouterLink>
 
-          <RouterLink to="/preferences/display"
+          <RouterLink to="/preferences/display" :tabindex="open ? 0 : -1"
             class="flex justify-center items-center self-stretch h-10 relative py-2.5 px-1 rounded-md border border-transparent hover:border-focus/4 active:!bg-focus/11 dark:active:!bg-focus/8 active:border-focus/4 active:hover:border-focus/4 focus:bg-focus-9 hover:!bg-focus/10 disabled:!bg-focus/2 disabled:!border-focus/2 transition-colors duration-300 hover:text-auto-12"
             data-nav-title="Preferences" name="Preferences">
             <span
@@ -92,7 +94,7 @@ const handleSelectServer = () => {
             </span>
           </RouterLink>
 
-          <button
+          <button :tabindex="open ? 0 : -1"
             class="flex justify-center items-center self-stretch h-10 relative py-2.5 px-1 rounded-md border border-transparent hover:border-focus/4 active:!bg-focus/11 dark:active:!bg-focus/8 active:border-focus/4 active:hover:border-focus/4 focus:bg-focus-9 hover:!bg-focus/10 disabled:!bg-focus/2 disabled:!border-focus/2 transition-colors duration-300"
             data-nav-title="Refresh" name="Refresh" @click="reload">
             <span
@@ -117,7 +119,7 @@ const handleSelectServer = () => {
                 </span>
               </span>
               <label class="inline-flex cursor-pointer items-center gap-3" for="ion-tg-0">
-                <Toggle :model-value="darkMode" @update:model-value="darkMode = $event" id="toggleScheme" />
+                <Toggle :model-value="darkMode" @update:model-value="darkMode = $event" id="toggleScheme" :tabindex="open ? 0 : -1" />
               </label>
             </span>
           </div>
@@ -125,7 +127,7 @@ const handleSelectServer = () => {
         </div>
         <div class="border-t-0 border-r-0 border-b border-l-0 border-[#e2f0fd]/4 w-full"></div>
         <div class="flex flex-shrink-0 flex-grow-0 flex-col items-start justify-start gap-1 self-stretch border-0 pt-2">
-          <button @click="$keycloak?.keycloak?.logout()"
+          <button @click="$keycloak?.keycloak?.logout()" :tabindex="open ? 0 : -1"
             class="flex justify-center items-center self-stretch h-10 relative py-2.5 px-1 rounded-md border border-transparent hover:border-focus/4 active:!bg-focus/11 dark:active:!bg-focus/8 active:border-focus/4 active:hover:border-focus/4 focus:bg-focus-9 hover:!bg-focus/10 disabled:!bg-focus/2 disabled:!border-focus/2 transition-colors duration-300 hover:text-auto-12"
             data-nav-title="Logout" name="Logout">
             <span
@@ -141,5 +143,6 @@ const handleSelectServer = () => {
         </div>
       </div>
     </div>
+  </template>
   </DropdownMenu>
 </template>

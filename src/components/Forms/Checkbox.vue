@@ -13,6 +13,7 @@ const props = defineProps({
 		default: null,
 	},
 	label: {
+    type: String,
 		required: false,
 	},
 	width: {
@@ -28,7 +29,7 @@ const props = defineProps({
 	color: {
 		type: String,
 		required: false,
-		default: '#5842C3',
+		default: 'hsl(from rgb(var(--color-focus)) h s 20%)',
 	},
 	onclick: {
 		type: Function as PropType<() => void>,
@@ -114,7 +115,7 @@ const svgPaths = computed(() => {
 <template>
 	<div class="relative flex select-none items-center justify-start gap-2 self-stretch border border-transparent bg-transparent"
 		@click="handleClick">
-		<input :id="id" type="checkbox" class="hidden item-selector" model-value:checked="!!modelValue" />
+		<input :id="id" type="checkbox" class="hidden item-selector" :checked="!!modelValue" />
 		<svg :id="id" :width="width" :height="height" fill="none" viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg"
 			class="relative w-[18px] h-[18px]" preserveAspectRatio="xMidYMid meet">
 			<g v-html="svgPaths"></g>

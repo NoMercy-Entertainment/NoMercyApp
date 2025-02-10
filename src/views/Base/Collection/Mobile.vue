@@ -117,7 +117,7 @@ const posterStyle = 'grid-cols-2 md:grid-cols-5 lg:grid-cols-6 xl:grid-cols-7 2x
       <MobileInfoCard :data="data" />
 
       <div
-        class="flex z-0 flex-col justify-start items-center self-stretch flex-grow overflow-hidden gap-4 will-change-auto text-slate-lightA-12/70 dark:text-slate-darkA-12/80"
+        class="flex z-0 flex-col justify-start items-center self-stretch h-auto flex-grow gap-4 will-change-auto text-slate-lightA-12/70 dark:text-slate-darkA-12/80"
         style="box-shadow: 0 2px 2px 0 rgba(0,0,0,0.16);">
         <div class="flex justify-start items-end flex-grow-0 flex-shrink-0 -mx-4 w-available h-[410px] relative gap-2">
           <div

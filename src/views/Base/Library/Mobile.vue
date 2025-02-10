@@ -99,16 +99,16 @@ const onRightClick = (event: Event, data: LibraryResponse | GenreResponse | Peop
 
 <template>
   <ion-page>
-    <ion-content :fullscreen="true" class="ion-padding ">
+    <ion-content :fullscreen="true" class="ion-padding " style="--padding-bottom: 0;">
       <div class="fixed top-0 pt-safe w-full bg-slate-light-1 dark:bg-slate-dark-3 z-1199"></div>
-      <div ref="lib" class="pt-safe-offset-10 flex h-auto w-full pr-8 overflow-auto py-0 scroll-container">
-        <div class="z-0 flex flex-col gap-4 rounded-3xl border-0 w-available scrollbar-none border-auto-3 pt-2" :class="{
+      <div ref="lib" class="pt-safe-offset-10 flex h-auto w-full pr-8 overflow-auto scroll-container">
+        <div class="z-0 flex flex-col gap-4 rounded-3xl border-0 w-available scrollbar-none border-auto-3" :class="{
           'pb-2': isNative && currentSong,
           'children:pb-4 sm:children:pb-3': !isNative && currentSong
         }" :key="router.currentRoute.value.params?.id as string">
 
           <div
-            :class="`grid w-full gap-4 scroll-smooth music-showing:pb-0 pl-1 ${useBackdropStyle ? backdropStyle : posterStyle}`">
+            :class="`grid w-full gap-4 scroll-smooth music-showing:pb-0 pl-1 py-4 ${useBackdropStyle ? backdropStyle : posterStyle}`">
             <!--        <ContextMenu ref="cardMenu" :model="items"/>-->
             <template v-if="data">
               <template v-for="(group, index) in data.pages ?? []" :key="index">

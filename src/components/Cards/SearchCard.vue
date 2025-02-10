@@ -96,10 +96,10 @@ const loadMore = ref(null);
 			</p>
 		</div>
 		<div
-			class="relative my-auto flex w-full flex-shrink-0 flex-grow-0 items-center justify-start gap-5 self-center overflow-hidden rounded-2xl border-2 bg-black border-auto-10 sm:w-5/6">
+			class="relative my-auto flex w-full flex-shrink-0 flex-grow-0 items-center justify-start gap-5 self-center overflow-hidden rounded-2xl border-2 bg-black border-auto-10 sm:w-5/6 focus-within:border-white">
 			<label class="flex w-available">
 				<input id="search" placeholder="Search for a Movie, TV Show or Actor..."
-					class="w-full flex-shrink-0 border-transparent bg-transparent px-6 py-4 text-2xl shadow-transparent flex-grow-1 focus:border-transparent focus:shadow-transparent focus:outline-none active:border-transparent [box-shadow:none] focus:[box-shadow:none]"
+					class="w-full flex-shrink-0 border-transparent bg-transparent px-6 py-4 text-2xl shadow-transparent flex-grow-1 focus:border-transparent focus:shadow-transparent active:border-transparent [box-shadow:none] focus:[box-shadow:none] focus:outline-2"
 					v-model="searchValue" name="search" type="search" />
 			</label>
 		</div>

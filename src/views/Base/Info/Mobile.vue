@@ -174,7 +174,7 @@ const processTrailer = (value: InfoResponse | undefined) => {
       :style="`--background-image: ${backgroundUrl && !backgroundUrl.includes('null') ? `url(${backgroundUrl})` : ''};`">
 
       <div
-        class="flex flex-col justify-start items-center self-stretch flex-grow overflow-hidden gap-4 will-change-auto text-slate-lightA-12/70 dark:text-slate-darkA-12/80 z-0"
+        class="flex flex-col justify-start items-center self-stretch flex-grow h-auto gap-4 will-change-auto text-slate-lightA-12/70 dark:text-slate-darkA-12/80 z-0"
         style="box-shadow: 0 2px 2px 0 rgba(0,0,0,0.16);">
         <div class="flex justify-start items-end flex-grow-0 flex-shrink-0 -mx-4 w-available h-[410px] relative gap-2">
 

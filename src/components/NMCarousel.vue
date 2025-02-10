@@ -100,7 +100,7 @@ const prev = () => {
 };
 
 const offsetBefore = window.innerWidth < 800
-  ? 10
+  ? 24
   : 20;
 
 const bp = ref<Breakpoints>();
