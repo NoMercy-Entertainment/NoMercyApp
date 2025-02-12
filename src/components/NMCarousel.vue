@@ -171,6 +171,14 @@ const focusPrevious = () => {
   });
 };
 
+const scrollToCenter = () => {
+  if(!scrollContainerElement.value || !titleEl.value) return;
+  scrollCenter(titleEl.value, scrollContainerElement.value, {
+    duration: 300,
+    margin: 2,
+  });
+};
+
 </script>
 
 <template>
@@ -184,7 +192,7 @@ const focusPrevious = () => {
         </h3>
         <slot v-else name="selector"></slot>
 
-        <button v-if="next_id" class="skip-navigation hidden sm:flex sm:absolute opacity-0 focus-within:opacity-100" @click="focusNext">
+        <button v-if="next_id" class="skip-navigation hidden sm:flex sm:absolute opacity-0 focus-within:opacity-100" @click="focusNext" @focus="scrollToCenter" >
           <span v-if="next_id == 'continue'">
             {{ $t('Back to first carousel') }}
           </span>

@@ -22,20 +22,20 @@ import { isPlatform } from "@ionic/vue";
     }"
       class="grid justify-start items-center self-stretch pr-3 sm:px-3 rounded-lg sm:hover:bg-slate-lightA-6 dark:hover:bg-slate-darkA-6 text-auto-12 group/track text-sm font-medium py-2 z-0 group/track gap-2 ">
 
-      <SortButton id="sortIndex" :aria-label="$t(''')" :sortingType="SortType.index" class="!flex justify-center" iconSpacer="absolute left-6"
+      <SortButton id="sortIndex" :aria-label="$t('Sort by index')" :sortingType="SortType.index" class="!flex justify-center" iconSpacer="absolute left-6"
         name="#" />
 
-      <SortButton :aria-label="$t('')" :sortingType="SortType.name" class="flex sm:flex" iconSpacer="w-6 h-6" name="Title" />
+      <SortButton :aria-label="$t('Sort by name')" :sortingType="SortType.name" class="flex sm:flex" iconSpacer="w-6 h-6" name="Title" />
 
-      <SortButton :aria-label="$t('')" :sortingType="SortType.album"  class="!hidden sm:!flex"
+      <SortButton :aria-label="$t('Sort by album')" :sortingType="SortType.album"  class="!hidden sm:!flex"
         :class="{
           'opacity-0': !isAlbumRoute,
           'opacity-100': isAlbumRoute
         }" iconSpacer="w-6 h-6" name="Album" />
       <!--routeIs('app.music.tracks') ? 'Date added' :-->
-      <SortButton :name="'Release date'" :aria-label="$t('')" :sortingType="SortType.date" class="!hidden sm:!flex" iconSpacer="w-6 h-6" />
+      <SortButton :name="'Release date'" :aria-label="$t('Sort by date')" :sortingType="SortType.date" class="!hidden sm:!flex" iconSpacer="w-6 h-6" />
 
-      <SortButton :aria-label="$t('')" :sortingType="SortType.duration" class="!hidden sm:!flex gap-2 flex-row-reverse pr-[4.5rem]"
+      <SortButton :aria-label="$t('Sort by duration')" :sortingType="SortType.duration" class="!hidden sm:!flex gap-2 flex-row-reverse pr-[4.5rem]"
         iconSpacer="w-6 h-6" name="Duration" />
     </span>
   </div>

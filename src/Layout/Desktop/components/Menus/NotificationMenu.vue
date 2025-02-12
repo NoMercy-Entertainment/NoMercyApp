@@ -41,7 +41,7 @@ onMounted(() => {
 <template>
   <DropdownMenu className="my-1 rounded-md" :translate="translate">
     <template v-slot:button>
-      <button :aria-label="$t('Toggle notification menu')"
+      <button :aria-label="$t('Notification menu')"
           class="relative my-1 flex flex-shrink-0 flex-grow-0 items-start justify-start gap-2 overflow-hidden rounded-md transition-colors duration-300 text-auto-12 hover:bg-focus/10 focus:bg-auto-12/2">
         <template v-if="hasUnreadNotifications">
           <div :class="`relative p-2.5 w-full h-full origin-top ${ringing ? 'animate-swing' : ''}`">

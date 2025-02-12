@@ -37,7 +37,7 @@ const handleEnter = (event: KeyboardEvent) => {
 <template>
   <DropdownMenu v-if="user" :direction="direction" className="rounded-full">
     <template v-slot:button>
-      <button :aria-label="$t('Toggle profile menu')"
+      <button :aria-label="$t('Profile menu')"
           class="relative mx-auto flex flex-col rounded-full size-12  border-2 border-slate-dark-5">
         <NoMercyAvatar :user="user" :size="40" class="absolute inset-0"/>
         <span
