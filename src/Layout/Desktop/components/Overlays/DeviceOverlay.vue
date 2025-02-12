@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, watch } from 'vue';
-import { currentSong, deviceMenuOpen, musicSize } from "@/store/audioPlayer";
+import {currentSong, deviceMenuOpen, lyricsMenuOpen, musicSize} from "@/store/audioPlayer";
 
 const emotes = [
   '😲', '😂', '😜', '🤪', '😎', '😆', '😅',
@@ -17,7 +17,7 @@ watch(deviceMenuOpen, (newVal) => {
 </script>
 
 <template>
-  <div :data-open="deviceMenuOpen" :data-size="musicSize" v-if="currentSong?.id"
+  <div :data-open="deviceMenuOpen" :data-size="musicSize" v-if="currentSong?.id" :inert="!deviceMenuOpen"
     class="absolute right-4 top-auto bottom-0 data-[open='true']:full:bottom-8 data-[open='true']:compact:bottom-20 sm:data-[open='true']:full:bottom-4 sm:data-[open='true']:compact:bottom-4 sm:bottom-4 ml-4 sm:w-1/4 sm:h-1/2 bg-slate-light-3 dark:bg-slate-dark-1 flex items-center justify-center rounded-lg transition-all duration-500 border-2 border-focus data-[open='false']:translate-y-[150%] z-[9999]">
     <div
       class="pointer-events-none absolute inset-0 flex items-center justify-center rounded-lg opacity-60 bg-auto-3/40">

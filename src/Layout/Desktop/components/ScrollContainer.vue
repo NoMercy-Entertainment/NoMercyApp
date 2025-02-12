@@ -4,10 +4,10 @@ import { VueScrollEvent } from '@/vite-env';
 
 import router from '@/router';
 import { musicVisibility } from '@/store/audioPlayer';
+import {scrollContainerElement} from "@/store/ui";
 
 const refHandle = ref<HTMLSpanElement>();
 const refBar = ref<HTMLDivElement>();
-const element = ref<HTMLDivElement>();
 const show = ref(false);
 
 defineProps({
@@ -34,7 +34,7 @@ const enable = () => {
 
   const handle = refHandle.value;
   const bar = refBar.value;
-  const container = element.value;
+  const container = scrollContainerElement.value;
 
   if (!handle || !container || !bar) return;
   container.scrollTop = 0;
@@ -107,9 +107,9 @@ const mouseLeave = () => {
 
 <template>
   <div
-    class="flex flex-1 h-available music-showing:h-[calc(100vh-11rem)] overflow-auto will-change-scroll w-full flex-col scrollbar-none group/scrollContainer pb-2"
-    ref="element" @scroll="$emit('scroll', $event as unknown as VueScrollEvent)" @mousemove="mouseEnter"
-    @mouseleave="mouseLeave" :data-music="musicVisibility">
+      class="flex flex-1 h-available music-showing:h-[calc(100vh-11rem)] overflow-auto will-change-scroll w-full flex-col scrollbar-none group/scrollContainer pb-2"
+      ref="scrollContainerElement" @scroll="$emit('scroll', $event as unknown as VueScrollEvent)" @mousemove="mouseEnter"
+      @mouseleave="mouseLeave" :data-music="musicVisibility">
     <slot />
 
     <Teleport to="body" v-if="static">

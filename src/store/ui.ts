@@ -5,6 +5,7 @@ import { SortOrder, SortType } from '@/types/musicPlayer';
 import { useAutoThemeColors } from '@/store/preferences';
 import { isXmasTime } from "@/lib/dateTime";
 
+export const scrollContainerElement = ref<HTMLDivElement>();
 export const setupComplete = ref(false);
 
 const p = ref<string | null>();

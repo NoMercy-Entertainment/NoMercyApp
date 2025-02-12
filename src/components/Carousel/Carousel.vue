@@ -12,6 +12,7 @@ import { showBackdrops } from '@/store/preferences';
 
 import MoooomIcon from '@/components/Images/icons/MoooomIcon.vue';
 import { isMobile } from '@/config/global';
+import {IonPage} from "@ionic/vue";
 
 const { t } = useTranslation();
 
@@ -120,11 +121,15 @@ onBeforeMount(() => {
     bp.value = newBp;
 });
 
+const focusMain = () => {
+  // document.querySelector<HTMLButtonElement>(`#${props.nextId}`)?.focus();
+};
+
 </script>
 
 <template>
     <div
-        class="mb-1 flex w-auto flex-shrink-0 flex-grow-0 flex-col items-start justify-start gap-2 self-stretch text-left">
+        class="mb-1 flex w-auto flex-shrink-0 flex-grow-0 flex-col items-start justify-start gap-2 self-stretch text-left relative">
         <div class="flex w-available flex-1 flex-col gap-2">
             <div class="relative ml-2 flex flex-shrink-0 flex-grow-0 items-center self-stretch">
                 <h3 v-if="title"
@@ -132,17 +137,23 @@ onBeforeMount(() => {
                     {{ t(title ?? 'Continue watching') }}
                 </h3>
                 <slot v-else name="selector"></slot>
+
+                <button class="skip-navigation hidden sm:absolute opacity:0 sm:focus-within:opacity-100" @click="focusMain">
+                  {{ $t('Skip to next carousel') }}
+                </button>
+
                 <slot name="link"></slot>
+
                 <div class="flex flex-shrink-0 flex-grow-0 items-start justify-start gap-2 pr-4 ml-auto"
                     v-if="!isMobile">
 
-                    <button :aria-label="$t('Previous slide')"
+                    <button :aria-label="$t('Previous slide')" tabindex="-1"
                         :class="`hidden sm:flex justify-center items-center p-1 rounded-lg bg-auto-alpha-7 active:scale-95 hover:bg-auto-alpha-9 transition-transform duration-300 ${backButtonEnabled ? '' : 'cursor-not-allowed opacity-50'}`"
                         :onclick="prev" v-if="hasScroll">
                         <MoooomIcon class="w-6" icon="chevronLeft" />
                     </button>
 
-                    <button :aria-label="isLastSlide ? $t('Start slide') : $t('Next slide')"
+                    <button :aria-label="isLastSlide ? $t('Start slide') : $t('Next slide')" tabindex="-1"
                         :class="`hidden sm:flex justify-center items-center p-1 rounded-lg bg-auto-alpha-7 active:scale-95 hover:bg-auto-alpha-9 transition-transform duration-300 ${hasScroll ? '' : 'cursor-not-allowed opacity-50'}`"
                         :onclick="isLastSlide ? reset : next" v-if="hasScroll">
                         <MoooomIcon :class="`w-6 ${!nextButtonEnabled && isLastSlide ? 'opacity-0' : ''}`"
@@ -163,3 +174,22 @@ onBeforeMount(() => {
         </div>
     </div>
 </template>
+
+<style scoped>
+
+.skip-navigation {
+  top: -50px;
+  left: 10px;
+  background-color: #333;
+  color: #fff;
+  padding: 10px;
+  text-decoration: none;
+  z-index: 999;
+  transition: top 0.3s;
+}
+
+.skip-navigation:focus {
+  top: 0.5rem;
+}
+
+</style>

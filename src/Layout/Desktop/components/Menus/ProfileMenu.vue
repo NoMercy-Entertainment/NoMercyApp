@@ -26,6 +26,12 @@ const handleSelectServer = () => {
   localStorage.setItem('redirectUrl', window.location.hash.replace('#', ''));
 };
 
+const handleEnter = (event: KeyboardEvent) => {
+  if (event.key === 'Enter') {
+    darkMode.value = !darkMode.value;
+  }
+};
+
 </script>
 
 <template>
@@ -60,9 +66,9 @@ const handleSelectServer = () => {
             <DropdownLink icon="paintSwatches" name="Preferences" to="/preferences/display" />
             <DropdownLink icon="arrowRefreshHorizontal" name="Refresh" :click="reload" />
 
-            <div @click="darkMode = !darkMode"
+            <div
                 class="flex justify-center items-center self-stretch h-10 relative py-2.5 px-1 rounded-md border border-transparent hover:border-focus/4 active:!bg-focus/11 dark:active:!bg-focus/8 active:border-focus/4 active:hover:border-focus/4 focus:bg-focus-9 hover:!bg-focus/10 disabled:!bg-focus/2 disabled:!border-focus/2 transition-colors duration-300 hover:text-auto-12">
-            <button tabindex="-1"
+            <button tabindex="-1" @click="darkMode = !darkMode"
                 class="relative flex w-full flex-grow items-center justify-center gap-2 px-2 text-lg font-medium text-left">
               <MoooomIcon className="" icon="moonDiagonal"/>
               <span class="relative flex flex-grow items-center justify-center gap-2 pl-2">
@@ -71,7 +77,7 @@ const handleSelectServer = () => {
                 </span>
               </span>
               <span class="inline-flex cursor-pointer items-center gap-3" >
-                <Toggle :model-value="darkMode" @update:model-value="darkMode = $event" id="toggleScheme"  />
+                <Toggle :model-value="darkMode" @update:model-value="darkMode = $event" id="toggleScheme" @keydown="handleEnter"  />
               </span>
             </button>
             </div>

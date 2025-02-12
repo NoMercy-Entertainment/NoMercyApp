@@ -53,10 +53,18 @@ const handleFocusOut = (e: FocusEvent) => {
   }
 };
 
+const handleKeyDown = (e: KeyboardEvent) => {
+  if (e.key === 'Escape') {
+    open.value = false;
+  }
+};
+
 </script>
 
 <template>
-  <div ref="menu" @focusout="handleFocusOut($event)"
+  <div ref="menu"
+       @focusout="handleFocusOut($event)"
+       @keydown="handleKeyDown($event)"
        class="relative flex h-auto items-center gap-2 z-1099 group">
     <div aria-label="Toggle dropdown menu"
       :class="twMerge('flex justify-start items-start relative gap-2 bg-transparent focus:bg-auto-2 hover:text-auto-12 transition-colors duration-300', className)"
