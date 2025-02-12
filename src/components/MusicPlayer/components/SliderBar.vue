@@ -55,6 +55,11 @@ const computedPercentage = computed(() => {
         [&::-moz-slider-thumb]:opacity-0
         group-hover:[&::-webkit-slider-thumb]:opacity-100
         group-hover:[&::-moz-slider-thumb]:opacity-100
+        focus-visible:[&::-webkit-slider-thumb]:opacity-100
+        focus-visible:[&::-moz-slider-thumb]:opacity-100
+        focus-visible:!outline
+        focus-visible:!outline-solid
+        focus-visible:!outline-white
       " :value="position" :style="{ '--left': `${computedPercentage}%` }"
       @input="$emit('update:modelValue', ($event.target as HTMLInputElement).value)" name="slider">
   </span>

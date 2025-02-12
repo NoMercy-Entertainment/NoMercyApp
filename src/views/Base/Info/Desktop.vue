@@ -324,7 +324,7 @@ const menuItems: IMenuItem[] = [
                   class="relative col-start-2 col-end-4 grid flex-shrink-0 flex-grow-0 grid-cols-3 items-start justify-start self-stretch rounded-2xl bg-gradient-to-b py-4 pr-4 from-slate-light-2/12 via-slate-light-3/12 to-slate-light-3/11 dark:from-slate-dark-2/12 dark:via-slate-dark-2/12 dark:to-slate-dark-2/11 border-auto-5/8 border-1 min-h-[23.5rem]">
                   <div v-if="data?.poster"
                     class="absolute bottom-24 z-10 col-start-1 content-center col-end-2 h-auto w-full items-start justify-start rounded-lg -top-[20rem] sm:block">
-                    <RouterLink :to="`/${data?.media_type}/${data?.id}/watch`"
+                    <RouterLink :to="`/${data?.media_type}/${data?.id}/watch`" :aria-label="$t('Play')"
                       :class="`top-3 relative h-auto m-auto mx-auto w-[65%] scale-95 cursor-default group/card block z-0 transitioning rounded-2xl aspect-poster overflow-clip select-none cover !shadow-none max-h-available  ${hasItem ? 'hover:!scale-100 hover:-translate-y-1' : ''}`"
                       data-nav="true" data-nav-r="play" data-nav-reset="true">
 
@@ -364,7 +364,7 @@ const menuItems: IMenuItem[] = [
 
                       <div class="relative flex flex-shrink-0 flex-grow-0 items-center justify-start gap-4" v-if="data">
 
-                        <RouterLink v-if="hasItem" :to="`/${data?.media_type}/${data?.id}/watch`"
+                        <RouterLink v-if="hasItem" :to="`/${data?.media_type}/${data?.id}/watch`" :aria-label="$t('Play')"
                           class="relative flex items-center justify-center gap-2 rounded-lg p-2 transition-colors duration-300 group/play hover:bg-auto-5/6">
                           <MoooomIcon icon="play"
                             className="w-6 text-slate-lightA-12/70  dark:text-slate-darkA-12/80" />
@@ -393,14 +393,14 @@ const menuItems: IMenuItem[] = [
                           </div>
                         </div>
 
-                        <button
+                        <button :aria-label="$t('Watch trailer')"
                           class="relative flex items-center justify-center gap-2 overflow-hidden rounded-lg p-2 transition-colors duration-300 hover:bg-auto-5/6"
                           @click="trailerState == true ? toggleTrailer() : null">
                           <MoooomIcon icon="film" className="w-6"
                             :style="`color: ${trailerState == true ? 'rgb(var(--color-green-8))' : 'rgb(var(--color-red-8))'}`" />
                         </button>
 
-                        <button
+                        <button :aria-label="$t('Mark as watched')"
                           class="relative flex items-center justify-center gap-2 overflow-hidden rounded-lg p-2 transition-colors duration-300 hover:bg-auto-5/6"
                           @click="toggleWatched">
                           <MoooomIcon icon="check"

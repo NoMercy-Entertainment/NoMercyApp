@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { IonPage, IonContent } from '@ionic/vue';
+import EmptyBackdrop from "@/components/Images/EmptyBackdrop.vue";
 
 </script>
 
@@ -7,6 +8,7 @@ import { IonPage, IonContent } from '@ionic/vue';
   <ion-page>
     <ion-content :fullscreen="true">
       <div class="flex flex-col justify-center items-center w-full h-full">
+        <EmptyBackdrop />
         <svg width="210" height="210" viewBox="0 0 210 210" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path opacity="0.6"
             d="M61.25 148.75H70M96.25 148.75H148.75M35 148.75L35.4349 143.966M35 148.75C35 163.247 46.7525 175 61.25 175H148.75C163.247 175 175 163.247 175 148.75M35 148.75C35 147.116 35.1493 145.517 35.4349 143.966M35.4349 143.966L41.5797 76.3735C42.8088 62.8527 54.1453 52.5 67.7219 52.5001L105 52.5002M35.4349 143.966C37.6839 131.753 48.3864 122.5 61.25 122.5H148.75C161.75 122.5 172.543 131.95 174.634 144.356M170.625 96.2502L174.634 144.356M174.634 144.356L175 148.75M174.634 144.356C174.875 145.785 175 147.253 175 148.75"

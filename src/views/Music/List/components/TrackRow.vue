@@ -83,7 +83,7 @@ const handleClick = () => {
       }" className="relative hidden h-12 w-12 overflow-hidden min-w-[3rem] sm:block"
         loading="eager" />
       <span class="flex h-full flex-col justify-evenly overflow-clip w-inherit">
-        <span class="flex h-6 flex-nowrap overflow-clip text-left line-clamp-1 w-inherit tracking-wide leading-6">
+        <span class="flex h-6 flex-nowrap overflow-clip text-left line-clamp-1 w-inherit tracking-wide leading-6 px-2 py-1 -ml-2">
           {{ data.name }}
         </span>
         <span :data-size="musicSize"
@@ -107,7 +107,7 @@ const handleClick = () => {
         'opacity-100': isAlbumRoute
       }" @click="e => e.stopPropagation()">
         <RouterLink :to="item?.link" tabindex="0" data-target="album"
-          class="flex items-center gap-1 whitespace-nowrap text-xs line-clamp-1 hover:underline focus:underline dark:font-medium text-slate-light-12/12 dark:text-slate-dark-12">
+          class="flex items-center gap-1 whitespace-nowrap font-semibold line-clamp-1 hover:underline focus:underline dark:font-medium pointer-events-auto" no-ring>
           <span class="flex whitespace-nowrap">
             <Marquee :text="item.name" />
           </span>

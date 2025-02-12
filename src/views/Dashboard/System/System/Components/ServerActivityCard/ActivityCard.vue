@@ -6,7 +6,7 @@ import type { ActivityLog } from '@/types/server';
 import type { Device } from '@/types/api/dashboard/server';
 
 import { timeAgoShort } from '@/lib/dateTime';
-import { sensorPublicIpAddresses } from '@/lib/stringArray';
+import { censorPublicIpAddresses } from '@/lib/stringArray';
 
 const props = defineProps({
   activity: {
@@ -38,7 +38,7 @@ const device = computed(() => {
   const d = props.devices?.find(d => d.id == props.activity?.device_id);
   return {
     name: d?.custom_name || d?.device || d?.device_id,
-    ip: sensorPublicIpAddresses(d?.ip),
+    ip: censorPublicIpAddresses(d?.ip),
   };
 });
 

@@ -51,7 +51,7 @@ const handleClick = () => {
   <button tabindex="0" @click="handleClick()" @contextmenu="onTrackRowRightClick($event, data)"
     :data-track-id="data?.id" data-target="track"
     class="grid justify-start items-center self-stretch rounded-lg hover:bg-slate-lightA-6 dark:hover:bg-slate-darkA-6 text-auto-12 group/track text-sm font-medium z-0 px-2 sm:py-1 group/track home-grid gap-2">
-    <span class="flex w-10 h-10 justify-center text-center min-w-10 relative">
+    <span class="flex w-10 h-10 justify-center text-center min-w-10 relative z-0">
 
       <CoverImage v-if="isMusicSearchRoute" :data="data" :size="100"
         class="absolute inset-0 group-hover/track:brightness-[25%] transition-all duration-150" :class="{

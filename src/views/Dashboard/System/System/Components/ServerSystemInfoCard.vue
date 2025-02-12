@@ -87,20 +87,20 @@ const toggleServerState = () => {
   <ServerSystemCard title="System">
 
     <template v-slot:cta>
-      <div
-        class="relative h-7 flex flex-shrink-0 flex-grow-0 items-center justify-center gap-2 overflow-hidden border-1 border-slate-light-10 dark:border-slate-dark-10 text-slate-light-12/80 dark:text-slate-dark-12/80 rounded-lg pl-1 pr-2 py-1">
+      <button
+        class="relative h-7 flex flex-shrink-0 flex-grow-0 items-center justify-center gap-2 overflow-hidden border border-solid border-slate-light-10 dark:border-slate-dark-10 text-slate-light-12/80 dark:text-slate-dark-12/80 rounded-lg pl-1 pr-2 py-1">
         <MoooomIcon icon="pause" class="w-4" />
         <p class="flex-shrink-0 flex-grow-0 text-sm">
           {{ $t('Pause') }}
         </p>
-      </div>
-      <div
-        class="relative h-7 flex flex-shrink-0 flex-grow-0 items-center justify-center gap-2 overflow-hidden border-1 border-slate-light-10 dark:border-slate-dark-10 text-slate-light-12/80 dark:text-slate-dark-12/80 rounded-lg pl-1 pr-2 py-1">
+      </button>
+      <button
+        class="relative h-7 flex flex-shrink-0 flex-grow-0 items-center justify-center gap-2 overflow-hidden border border-solid border-slate-light-10 dark:border-slate-dark-10 text-slate-light-12/80 dark:text-slate-dark-12/80 rounded-lg pl-1 pr-2 py-1">
         <MoooomIcon icon="shutdown" class="w-4" />
         <p class="flex-shrink-0 flex-grow-0 text-sm">
           {{ $t('Shutdown') }}
         </p>
-      </div>
+      </button>
     </template>
 
     <div

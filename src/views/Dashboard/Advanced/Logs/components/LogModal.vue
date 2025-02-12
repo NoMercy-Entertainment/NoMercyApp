@@ -8,7 +8,7 @@ import 'vue-json-pretty/lib/styles.css';
 import type { LogEntry } from "@/types/server";
 
 import { userTime } from "@/lib/dateTime";
-import { sensorPublicIpAddresses } from "@/lib/stringArray";
+import { censorPublicIpAddresses } from "@/lib/stringArray";
 import Modal from "@/components/Modal.vue";
 
 const props = defineProps({
@@ -40,7 +40,7 @@ const logMessage = computed(() => {
   if (!props.data) return;
 
   try {
-    return JSON.parse(sensorPublicIpAddresses(props.data.message));
+    return JSON.parse(censorPublicIpAddresses(props.data.message));
   } catch (e) {
     return props.data.message;
   }
@@ -75,7 +75,7 @@ const logMessage = computed(() => {
           <!--				<ScrollContainer>-->
 
           <VueJsonPretty class="h-fit" :data="logMessage" />
-          <!--					<span class="overflow-auto whitespace-pre text-left w-available">{{ sensorPublicIpAddresses(data.message) }}</span>-->
+          <!--					<span class="overflow-auto whitespace-pre text-left w-available">{{ censorPublicIpAddresses(data.message) }}</span>-->
           <!--				</ScrollContainer>-->
         </div>
       </div>

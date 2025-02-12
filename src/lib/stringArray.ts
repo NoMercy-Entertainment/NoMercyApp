@@ -1,7 +1,7 @@
 import { toRaw } from 'vue';
 import i18next from 'i18next';
 import { SortOrder, SortType } from '@/types/musicPlayer';
-import { siteTitle } from "@/config/config";
+import {siteTitle, suffix} from "@/config/config";
 
 export const setTitle = (arg?: string | null) => {
 	if (!arg || arg == '') {
@@ -955,13 +955,18 @@ export const isPublicIp = (ip: string) => {
 	return !ip.startsWith('192') && !ip.startsWith('10.') && !ip.startsWith('172');
 }
 
-export const sensorPublicIpAddresses = (string?: string) => {
+export const censorPublicIpAddresses = (string?: string) => {
 	if (!string) {
 		return '';
 	}
-	return string.replace(/([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3})|([0-9]{1,3}-[0-9]{1,3}-[0-9]{1,3}-[0-9]{1,3})/gu, (ip: string) => {
-		return isPublicIp(ip) ? 'XXX.XXX.XXX.XXX' : ip;
-	});
+
+	if(suffix != '') {
+		return string.replace(/([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3})|([0-9]{1,3}-[0-9]{1,3}-[0-9]{1,3}-[0-9]{1,3})/gu, (ip: string) => {
+			return isPublicIp(ip) ? 'XXX.XXX.XXX.XXX' : ip;
+		});
+	}
+
+	return string;
 }
 
 /**

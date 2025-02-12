@@ -24,7 +24,7 @@ defineProps({
 });
 
 const open = ref(false);
-const menu = ref(null);
+const menu = ref();
 
 onClickOutside(menu, () => open.value = false);
 
@@ -43,11 +43,22 @@ router.beforeEach(() => {
   open.value = false;
 });
 
+const handleFocusOut = (e: FocusEvent) => {
+  const nodes = Array.from((e.target as HTMLDivElement).querySelectorAll<HTMLDivElement>('*'));
+
+  if (nodes.some((node) => (node as any).active)) return;
+
+  if (menu.value && !menu.value.contains(e.relatedTarget as Node)) {
+    open.value = false;
+  }
+};
+
 </script>
 
 <template>
-  <div ref="menu" class="relative flex h-auto items-center gap-2 z-1099 group">
-    <div
+  <div ref="menu" @focusout="handleFocusOut($event)"
+       class="relative flex h-auto items-center gap-2 z-1099 group">
+    <div aria-label="Toggle dropdown menu"
       :class="twMerge('flex justify-start items-start relative gap-2 bg-transparent focus:bg-auto-2 hover:text-auto-12 transition-colors duration-300', className)"
       @click="handleClick">
       <slot :open="open" name="button" />
@@ -63,8 +74,8 @@ router.beforeEach(() => {
         translate,
       }">
       <div class="overflow-hidden">
-        <div
-          class="flex w-full flex-col items-start justify-start rounded-xl overflow-clip children:rounded-xl children:overflow-clip border-1 bg-slate-light-1 dark:bg-slate-dark-1 border-slate-light-7 dark:border-slate-dark-4">
+        <div role="dialog" :open="open"
+          class="flex w-full flex-col items-start justify-start rounded-xl min-w-40 min-h-20 overflow-clip children:rounded-xl children:overflow-clip border-1 bg-slate-light-1 dark:bg-slate-dark-1 border-slate-light-7 dark:border-slate-dark-4">
           <slot :open="open" />
         </div>
       </div>

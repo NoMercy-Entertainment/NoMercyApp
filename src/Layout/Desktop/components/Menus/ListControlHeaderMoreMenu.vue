@@ -23,7 +23,7 @@ defineProps({
 <template>
 	<Menu as="div" class="relative select-none z-[150]">
 		<div>
-			<MenuButton
+			<MenuButton :aria-label="$t('more')"
 				class="w-10 min-w-[2.5rem] h-10 min-h-[2.5rem] z-0 flex items-center justify-center disabled:opacity-50 disabled:text-auto-300 disabled:hover:!bg-transparent rounded-md overflow-clip hover:bg-transparent focus-visible:bg-transparent active:bg-transparent sm:focus-visible:bg-auto-400/80 sm:hover:bg-auto-5/6 pointer-events-auto">
 				<MoooomIcon icon="menuDotsHorizontal" />
 			</MenuButton>

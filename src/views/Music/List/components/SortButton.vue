@@ -62,7 +62,7 @@ const handleKeyup = (e: KeyboardEvent) => {
 </script>
 
 <template>
-	<button
+	<button no-ring
 		class="relative cursor-pointer items-center focus-visible:underline focus-visible:underline-offset-2"
 		:onclick="() => handleSortChange(sortingType)" :onkeyup="handleKeyup">
 		<span class="">

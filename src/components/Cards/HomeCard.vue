@@ -90,7 +90,7 @@ const toggleWatched = () => {
 
             <div class="flex flex-shrink-0 flex-grow-0 items-start justify-start gap-4">
 
-              <BannerButton title="" class="group/play" :href="`/${homeItem?.media_type}/${homeItem?.id}/watch`">
+              <BannerButton title="Play" class="group/play" :href="`/${homeItem?.media_type}/${homeItem?.id}/watch`">
                 <MoooomIcon class="w-7" icon="playbackSpeed" />
                 <div
                   class="absolute top-3 grid h-0 w-max flex-shrink-0 flex-grow-0 origin-bottom group-hover/play:grid-cols-1 items-center justify-start gap-1 rounded-md duration-300 bg-auto-1 grid-cols-[0fr] group-hover/play:h-[32.77px] transform-all left-[-31px] group-hover/play:top-[-38px]">
@@ -102,14 +102,14 @@ const toggleWatched = () => {
                 </div>
               </BannerButton>
 
-              <BannerButton @click="toggleWatched" title="">
+              <BannerButton @click="toggleWatched" title="Toggle watched">
                 <MoooomIcon class="w-7" icon="check"
                   :stroke="hasWatched ? 'var(--color-green-600) ' : 'currentColor'" />
               </BannerButton>
 
               <MediaLikeButton v-if="homeItem" :data="homeItem" />
 
-              <BannerButton title="" :href="`/${homeItem?.media_type}/${homeItem?.id}`">
+              <BannerButton title="Info" :href="`/${homeItem?.media_type}/${homeItem?.id}`">
                 <MoooomIcon class="w-7" icon="infoCircle" />
               </BannerButton>
             </div>
@@ -121,13 +121,13 @@ const toggleWatched = () => {
         <div class="relative flex-grow flex-col items-start justify-start gap-4 sm:hidden">
           <div v-if="homeItem" class="z-50 flex w-full justify-evenly gap-4">
 
-            <RouterLink :to="`/${homeItem?.media_type}/${homeItem?.id}/watch`"
+            <RouterLink :to="`/${homeItem?.media_type}/${homeItem?.id}/watch`" :aria-label="$t('Play')"
               class="flex h-10 w-1/2 items-center justify-between gap-2 whitespace-nowrap rounded-md pr-4 pl-3 text-black bg-auto-12 py-1.5">
               <MoooomIcon icon="playCircle" className="w-6" />
               <span class="w-full whitespace-nowrap text-center">{{ $t('Play') }}</span>
             </RouterLink>
 
-            <RouterLink :to="`/${homeItem?.media_type}/${homeItem?.id}`"
+            <RouterLink :to="`/${homeItem?.media_type}/${homeItem?.id}`" :aria-label="$t('Info')"
               class="flex justify-center items-center relative gap-2 p-2 rounded-lg hover:bg-auto-5/6 transition-colors duration-300">
               <MoooomIcon icon="add" className="w-6" />
               <span class="w-full whitespace-nowrap text-center">

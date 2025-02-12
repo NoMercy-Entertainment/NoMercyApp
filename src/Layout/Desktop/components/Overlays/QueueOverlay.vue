@@ -10,7 +10,7 @@ import { stopPropagation } from "@/lib/utils";
 </script>
 
 <template>
-  <div :data-open="queueMenuOpen"
+  <div :data-open="queueMenuOpen" :inert="!queueMenuOpen"
     class="absolute right-4 top-4 bottom-8 sm:bottom-4 overflow-clip w-available ml-4 sm:w-1/3 bg-slate-light-3 dark:bg-slate-dark-1 flex items-center justify-center rounded-lg transition-all duration-500 border-2 border-focus data-[open='false']:translate-x-[150%] z-[9999]">
     <div
       class="pointer-events-none absolute inset-0 flex items-center justify-center rounded-lg opacity-60 bg-auto-3/40">

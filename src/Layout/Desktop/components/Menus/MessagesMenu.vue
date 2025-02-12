@@ -41,7 +41,7 @@ onMounted(() => {
 <template>
     <DropdownMenu className="my-1 rounded-md" :translate="translate">
       <template v-slot:button>
-          <button
+          <button :aria-label="$t('Toggle messages menu')"
               class="relative my-1 flex flex-shrink-0 flex-grow-0 items-start justify-start gap-2 overflow-hidden rounded-md transition-colors duration-300 text-auto-12 hover:bg-focus/10 focus:bg-auto-12/2">
               <template v-if="hasUnreadMessages">
                   <div :class="`relative p-2.5 w-full h-full origin-bottom ${ringing ? 'animate-swing' : ''}`">
@@ -59,6 +59,7 @@ onMounted(() => {
 
       <template v-slot:default="{ open }">
         <div class="flex w-screen flex-col items-start justify-start p-2 max-w-[89vw] sm:max-w-md"
+             :inert="!open"
             style="box-shadow: 0 4px 7px 0 rgba(0,0,0,0.08);">
             <div
                 class="relative h-auto flex-shrink-0 flex-grow-0 flex-col items-center justify-start gap-2 self-stretch z-1099 group sm:flex">
@@ -69,7 +70,7 @@ onMounted(() => {
                             {{ $t('Messages') }}
                         </p>
 
-                        <button @click="handleClick" v-if="hasUnreadMessages" :tabindex="open ? 0 : -1"
+                        <button @click="handleClick" v-if="hasUnreadMessages"
                             class="relative flex h-5 items-center gap-2 overflow-hidden underline-offset-4 hover:underline">
                             <p class="flex-shrink-0 flex-grow-0 text-sm font-medium text-auto-10">
                                 {{ $t('Mark all as read') }}

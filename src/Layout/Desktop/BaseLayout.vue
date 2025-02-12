@@ -38,10 +38,17 @@ const backgroundUrl = computed(() => {
   return `${currentServer.value?.serverBaseUrl}/images/original${background.value}`;
 });
 
+const focusMain = () => {
+  document.querySelector<HTMLButtonElement>('main a, main button')?.focus();
+};
+
 </script>
 
 <template>
   <ion-page>
+    <button class="skip-navigation" @click="focusMain">
+      {{ $t('Skip navigation') }}
+    </button>
     <div class="contents text-auto-12" :style="focusColor ? `--color-focus: ${focusColor}` : ''">
       <Navbar />
       <div
@@ -101,4 +108,22 @@ const backgroundUrl = computed(() => {
   </ion-page>
 </template>
 
-<style scoped></style>
+<style scoped>
+
+.skip-navigation {
+  position: absolute;
+  top: -50px;
+  left: 10px;
+  background-color: #333;
+  color: #fff;
+  padding: 10px;
+  text-decoration: none;
+  z-index: 999;
+  transition: top 0.3s;
+}
+
+.skip-navigation:focus {
+  top: 0.5rem;
+}
+
+</style>

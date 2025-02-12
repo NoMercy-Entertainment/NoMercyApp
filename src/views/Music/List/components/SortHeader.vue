@@ -13,7 +13,7 @@ import { isPlatform } from "@ionic/vue";
     :class="{
       'top-safe-offset-10': isPlatform('capacitor'),
       'top-safe-offset-16': !isPlatform('capacitor')
-    }" tabindex="0">
+    }">
     <span id="sorterChild"
       class="absolute inset-0 h-10 sm:rounded-t-2xl overflow-clip w-full transition-all duration-200"></span>
     <span :class="{

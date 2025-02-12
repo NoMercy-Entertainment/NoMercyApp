@@ -2,12 +2,11 @@
 import { onMounted, onUnmounted } from 'vue';
 import { useRoute, RouterLink } from 'vue-router';
 
-import { scrollToDiv } from '@/lib/scrollHandlers';
+import {keyHandler, scrollToDiv} from '@/lib/scrollHandlers';
 import { alphaNumericRange } from '@/lib/stringArray';
-import {isMobile, isNative} from '@/config/global';
+import {isNative} from '@/config/global';
 import indexer, { setIndexerOpen } from '@/store/indexer';
 import router from '@/router';
-import {isPlatform} from "@ionic/vue";
 
 const openPaths = [
   'Libraries',
@@ -64,26 +63,25 @@ const triggerIndexer = (route: string) => {
 router.afterEach((to) => {
   setTimeout(() => {
     triggerIndexer(to.name as string ?? to.path);
-  }, 50);
+  }, 150);
 });
 
 router.beforeEach(() => {
   disableScrollableTargets();
 });
 
-const handleKeydown = (event: KeyboardEvent) => {
-  scrollToDiv(event.key.toUpperCase());
-};
-
 onMounted(() => {
+  setTimeout(() => {
+    triggerIndexer(router.currentRoute.value.name as string ?? router.currentRoute.value.path as string);
+  }, 150);
   document.addEventListener("indexer", updateScrollableTargets);
-  document.addEventListener('keydown', handleKeydown);
+  document.addEventListener('keydown', keyHandler);
 });
 
 onUnmounted(() => {
   document.removeEventListener("indexer", updateScrollableTargets);
-  document.removeEventListener('keydown', handleKeydown);
-})
+  document.removeEventListener('keydown', keyHandler);
+});
 
 </script>
 

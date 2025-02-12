@@ -31,6 +31,17 @@ a {
   color: inherit;
 }
 
+[no-ring]:focus-visible {
+  outline: none !important;
+}
+html.scheme-light *:not([no-ring]):focus-visible {
+  outline: black solid 2px;
+}
+html.scheme-dark *:not([no-ring]):focus-visible {
+  outline: white solid 1px;
+}
+
+
 /* If using React, set height on the root div as well */
 #root {
   height: -webkit-fill-available;

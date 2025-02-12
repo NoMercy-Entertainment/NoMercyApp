@@ -24,10 +24,15 @@ ion-toggle::part(track) {
   border: 0.2px solid #0000000a;
   box-shadow: 0 0.5px 2px 0 rgba(0, 0, 0, 0.24) inset;
 }
-  
+
 ion-toggle:focus::part(track) {
-  outline: 2px solid white;
   border-radius: 1rem;
+}
+html.scheme-light ion-toggle:focus::part(track) {
+  outline: 2px solid black;
+}
+html.scheme-dark ion-toggle:focus::part(track) {
+  outline: 2px solid white;
 }
 
 ion-toggle::part(track),

@@ -106,6 +106,7 @@ const rightSize = computed(() => {
 <template>
   <div id="fullPlayer"
     class="bg-slate-lightA-4 dark:bg-slate-darkA-4 hidden h-0 music-showing:h-20 flex-shrink-0 flex-grow-0 flex-row items-center justify-start gap-12 self-stretch pr-6 sidebar-closed:ml-20 sidebar-open:ml-64 rounded-lg m-2 mt-2 mb-4 pl-4 mx-5 transition-all duration-300 sm:flex 2xl:sidebar-open:ml-[16.3rem]"
+       :inert="musicVisibility == 'hidden'"
     :data-music="musicVisibility" :data-sidebar="sidebar">
     <div v-if="currentSong"
       class="flex h-full w-full items-center gap-8 music-showing:transition-all music-showing:duration-75">

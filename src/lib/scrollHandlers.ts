@@ -1,5 +1,6 @@
 import { SliderBar } from '@/lib/sliderBar';
 import { LogoResponse } from '@/types/server';
+import {alphaNumericRange} from "@/lib/stringArray";
 
 HTMLElement.prototype.sliderBar = function (player: any, callbackFn: string, getSizeFn?: string) {
     if (!(this instanceof HTMLElement) || this.dataset.type != 'slider-bar')
@@ -96,15 +97,15 @@ export const scrollToDiv = (i: string) => {
         );
     }
 
-    console.log(target);
-
     document.dispatchEvent(new CustomEvent("scrollToDiv", { detail: { top: target?.offsetTop } }));
 
     let scrollContainer =
-        document.querySelector<HTMLDivElement>('main .group\\/scrollContainer')!;
+        document.querySelector<HTMLDivElement>('.ion-page:not(.ion-page-hidden) main .group\\/scrollContainer')!;
     if (!scrollContainer) {
         scrollContainer = document.querySelector<HTMLDivElement>('ion-content .group\\/scrollContainer')!;
     }
+
+    console.log(scrollContainer, target);
 
     if (target && scrollContainer) {
         (scrollContainer as HTMLDivElement).scrollTo({
@@ -122,7 +123,7 @@ export const scrollToDiv = (i: string) => {
 };
 
 export const keyHandler = (e: KeyboardEvent) => {
-    if (e.key) {
+    if (e.key && alphaNumericRange('#', 'Z').some((x) => x == e.key.toUpperCase())) {
         scrollToDiv(e.key?.toUpperCase());
     }
 };

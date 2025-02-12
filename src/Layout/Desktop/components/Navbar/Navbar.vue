@@ -54,17 +54,11 @@ const { t } = useTranslation();
         <div class="hidden flex-shrink-0 flex-grow-0 items-center justify-start gap-1 md:!flex">
 
           <NavbarButton :href="`${currentServer ? '/home' : ''}`" v-if="shouldShowLibraryLinks" :active="isHomeRoute"
-            icon="home1">
-            {{ t('Home') }}
-          </NavbarButton>
+            icon="home1" name="Home"/>
 
-          <NavbarButton href="/libraries" v-if="shouldShowLibraryLinks" :active="isLibraryRoute" icon="folder">
-            {{ t('Libraries') }}
-          </NavbarButton>
+          <NavbarButton href="/libraries" v-if="shouldShowLibraryLinks" :active="isLibraryRoute" icon="folder" name="Libraries"/>
 
-          <NavbarButton href="/music/start" v-if="shouldShowLibraryLinks" :active="isMusicRoute" icon="noteDouble">
-            {{ t('Music') }}
-          </NavbarButton>
+          <NavbarButton href="/music/start" v-if="shouldShowLibraryLinks" :active="isMusicRoute" icon="noteDouble" name="Music"/>
         </div>
       </div>
 

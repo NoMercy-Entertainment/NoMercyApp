@@ -2,7 +2,7 @@
 import {
   bands, panning, equalizerPreset,
   equalizerPresets, equalizerSliderValues,
-  handleReset, handleFullReset, handleChange, setEqualizerPreset, currentSong, equalizerMenuOpen,
+  handleReset, handleFullReset, handleChange, setEqualizerPreset,
 } from '@/store/audioPlayer';
 
 import Button from "@/components/Button.vue";
@@ -13,7 +13,7 @@ import RangeSlider from "@/components/Forms/RangeSlider.vue"
 
 <template>
   <div
-      class="flex flex-col justify-start items-start relative gap-8 w-full h-full sm:p-8"
+       class="flex flex-col justify-start items-start relative gap-8 w-full h-full sm:p-8"
   >
     <p class="text-xl font-bold">
       {{ $t('Equaliser') }}
@@ -30,7 +30,6 @@ import RangeSlider from "@/components/Forms/RangeSlider.vue"
                    v-slot:default="{ min, max, step, left }"
       >
         <input type="range" v-model="panning"
-               :tabindex="equalizerMenuOpen ? 0 : -1"
                :min="min" :max="max" :step="step"
                class="!w-available"
                @input="handleChange('panning', $event)"
@@ -55,7 +54,6 @@ import RangeSlider from "@/components/Forms/RangeSlider.vue"
                          v-slot:default="{ min, max, step, left }"
             >
               <input type="range" v-model="band.gain"
-                     :tabindex="equalizerMenuOpen ? 0 : -1"
                      :min="min" :max="max" :step="step"
                      class="vertical !h-[260px] rotate-180"
                      @input="handleChange('gain', $event, band)"
@@ -67,7 +65,7 @@ import RangeSlider from "@/components/Forms/RangeSlider.vue"
         </template>
 
         <template v-else>
-          <div class="flex justify-start items-center h-full" >
+          <div class="flex justify-start items-center h-full">
             <RangeSlider vertical markers :value="band.gain"
                          :index="index"
                          :min="equalizerSliderValues.band.min"
@@ -76,7 +74,6 @@ import RangeSlider from "@/components/Forms/RangeSlider.vue"
                          v-slot:default="{ min, max, step, left }"
             >
               <input type="range" v-model="band.gain" :key="equalizerPreset.name"
-                     :tabindex="equalizerMenuOpen ? 0 : -1"
                      :min="min" :max="max" :step="step"
                      :disabled="equalizerPreset.name !== 'Custom'"
                      class="vertical !h-[260px] rotate-180"
@@ -97,7 +94,6 @@ import RangeSlider from "@/components/Forms/RangeSlider.vue"
         </label>
         <Select :options="equalizerPresets"
                 :model-value="equalizerPreset"
-                :tabindex="equalizerMenuOpen ? 0 : -1"
                 @update:modelValue="setEqualizerPreset($event)"
                 autocomplete="off"
                 checkmark
@@ -110,7 +106,6 @@ import RangeSlider from "@/components/Forms/RangeSlider.vue"
       </div>
       <Button class="w-20 max-h-[2.15rem]"
               @click="handleFullReset()"
-              :tabindex="equalizerMenuOpen ? 0 : -1"
               endIcon="arrowCounterClockwise"
               id="reset"
       >
@@ -124,9 +119,11 @@ import RangeSlider from "@/components/Forms/RangeSlider.vue"
 
 </template>
 
+
 <style scoped lang="scss">
 input[type="range"]:not(.vertical) {
   @apply [background-image:_-webkit-gradient(linear,_right_top,_right_bottom,_color-stop(var(--left),#ffffff80),_color-stop(var(--left),_#ffffff80))]
-dark:[background-image:_-webkit-gradient(linear,_right_top,_right_bottom,_color-stop(var(--left),#00000080),_color-stop(var(--left),_#00000080))] #{!important};
+  dark:[background-image:_-webkit-gradient(linear,_right_top,_right_bottom,_color-stop(var(--left),#00000080),_color-stop(var(--left),_#00000080))] #{!important};
 }
 </style>
+

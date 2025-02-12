@@ -9,7 +9,7 @@ import LyricItem from '@/Layout/Desktop/components/Overlays/LyricItem.vue';
 
 import { user } from '@/store/user';
 import { currentServer } from '@/store/currentServer';
-import audioPlayer, { currentSong, currentTime, lyricsMenuOpen, setHasLyrics } from '@/store/audioPlayer';
+import audioPlayer, {currentSong, currentTime, lyricsMenuOpen, queueMenuOpen, setHasLyrics} from '@/store/audioPlayer';
 
 const lyrics_container = ref<HTMLDivElement>();
 const lyrics = ref<Lyric[] | undefined | null>(currentSong.value?.lyrics);
@@ -180,7 +180,7 @@ watch(lyrics, (value) => {
 </script>
 
 <template>
-  <div :data-open="lyricsMenuOpen" id="lyricsContainer"
+  <div :data-open="lyricsMenuOpen" id="lyricsContainer" :inert="!lyricsMenuOpen"
     class="absolute inset-0 h-inherit w-inherit sm:left-auto sm:right-4 sm:top-4 sm:bottom-4 sm:w-2/3 sm:max-w-3xl flex items-center justify-center rounded-xl transition-all duration-500 sm:data-[open='false']:translate-x-[150%] sm:overflow-clip z-[9999]  tv:data-[open='false']:translate-x-[150%] tv:!w-available tv:data-[open='true']:delay-500 will-change-transform">
 
     <div

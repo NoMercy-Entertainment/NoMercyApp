@@ -42,7 +42,7 @@
  color: var(--p-select-option-selected-focus-color);
 }
 
-.p-select:not(.p-disabled).p-focus {
+.p-select:not(.p-disabled):not([no-ring]).p-focus {
   --p-select-focus-border-color: rgb(var(--color-focus));
   box-shadow: var(--p-select-focus-ring-shadow);
   outline: var(--p-select-focus-ring-width) var(--p-select-focus-ring-style) var(--p-select-focus-ring-color);

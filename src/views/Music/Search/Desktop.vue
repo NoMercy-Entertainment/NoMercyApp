@@ -39,7 +39,7 @@ onMounted(() => {
           </p>
         </div>
         <div
-          class="relative my-auto flex w-full flex-shrink-0 flex-grow-0 items-center justify-start gap-5 self-center overflow-hidden rounded-2xl border-2 bg-white dark:bg-black border-auto-10 sm:w-3/5 focus-within:border-white"
+  class="relative my-auto flex w-full flex-shrink-0 flex-grow-0 items-center justify-start gap-5 self-center overflow-hidden rounded-2xl border-2 bg-white dark:bg-black border-auto-10 sm:w-3/5 focus-within:border-white"
           :class="{
             'mb-16': !musicSearchResult
           }">

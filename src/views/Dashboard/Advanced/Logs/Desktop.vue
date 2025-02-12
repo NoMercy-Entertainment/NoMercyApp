@@ -7,7 +7,7 @@ import type { LogEntry, LogType } from "@/types/server";
 
 import useServerClient from "@/lib/clients/useServerClient";
 import serverClient from "@/lib/clients/serverClient";
-import { sensorPublicIpAddresses } from "@/lib/stringArray";
+import { censorPublicIpAddresses } from "@/lib/stringArray";
 import { userTime } from "@/lib/dateTime";
 import { connection } from "@/lib/clients/dashboardSocket";
 import DashboardLayout from "@/Layout/Desktop/DashboardLayout.vue";
@@ -226,7 +226,7 @@ const handleLevel = (value: string) => {
                 <td
                   class="relative flex flex-grow cursor-pointer items-center justify-start whitespace-nowrap px-3 text-xs line-clamp-1 w-available"
                   @click="() => openLog(log)">
-                  {{ sensorPublicIpAddresses(log.message) }}
+                  {{ censorPublicIpAddresses(log.message) }}
                 </td>
               </tr>
             </template>

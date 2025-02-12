@@ -72,7 +72,7 @@ const ringColor = ref(pickPaletteColor(props.data.color_palette?.cover)
           {{ data?.name ?? (data as HomeDataItem)?.title }}
         </p>
         <p
-          class="h-6 w-full flex-shrink-0 flex-grow-0 self-stretch whitespace-nowrap text-2xs font-medium text-auto-10 line-clamp-1 empty:hidden dark:font-normal">
+          class="h-6 w-full flex-shrink-0 flex-grow-0 self-stretch whitespace-nowrap text-2xs font-medium text-auto-11 line-clamp-1 empty:hidden dark:font-normal">
           {{ footText }}&nbsp;
         </p>
       </div>

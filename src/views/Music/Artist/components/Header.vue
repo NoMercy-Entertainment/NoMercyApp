@@ -135,8 +135,8 @@ const handlePlay = () => {
 			</div>
 		</div>
 		<div class="flex flex-shrink-0 flex-grow-0 items-center justify-start gap-2">
-			<BannerButton title="" :onclick="handlePlay">
-				<MoooomIcon v-if="isPlaying" icon="pause" className="relative h-5 w-5 text-white" />
+			<BannerButton :title="isPlaying ? $t('Pause') : $t('Play')" :onclick="handlePlay">
+				<MoooomIcon v-if="(isPlaying && isCurrentPlaylist)" icon="pause" className="relative h-5 w-5 text-white" />
 				<MoooomIcon v-else icon="play" className="relative h-5 w-5 text-white" />
 			</BannerButton>
 			<!--			<BannerButton title="">-->
@@ -158,7 +158,7 @@ const handlePlay = () => {
 			<!--			<BannerButton title="">-->
 			<!--				<MoooomIcon icon="searchMagnifyingGlass" className="relative h-5 w-5 text-white"/>-->
 			<!--			</BannerButton>-->
-			<BannerButton title="">
+			<BannerButton :title="$t('More')">
 				<MoooomIcon icon="menuDotsHorizontal" className="relative h-5 w-5 text-white" />
 			</BannerButton>
 		</div>

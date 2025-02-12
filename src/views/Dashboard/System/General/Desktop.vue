@@ -207,7 +207,9 @@ const save = () => {
           <div class="flex flex-col gap-2">
             <span class="flex gap-4">
               <label for="swagger">Open API / Swagger Ui</label>
-              <a v-if="swagger && currentServer?.serverBaseUrl" target="_blank" :href="currentServer?.serverBaseUrl"
+              <a v-if="swagger && currentServer?.serverBaseUrl" target="_blank"
+                 :aria-label="$t('Open API / Swagger Ui in a new tab')"
+                 :href="currentServer?.serverBaseUrl"
                 class="flex gap-1 items-center underline underline-offset-4 h-4 text-sm">
                 <span>{{ $t('Open') }}</span>
                 <MoooomIcon icon="shareSquare" className="size-4" color="theme" />

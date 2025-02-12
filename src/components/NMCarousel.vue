@@ -151,7 +151,7 @@ onMounted(() => {
 
         <div class="flex flex-shrink-0 flex-grow-0 items-start justify-start gap-2 pr-4 ml-auto" v-if="!isMobile">
 
-          <button v-if="hasScroll"
+          <button v-if="hasScroll" :aria-label="$t('Previous slide')"
             class="hidden sm:flex justify-center items-center p-1 rounded-lg bg-auto-alpha-7 active:scale-95 hover:bg-auto-alpha-9 transition-transform duration-300"
             :class="{
               'cursor-not-allowed opacity-50': !backButtonEnabled,
@@ -159,7 +159,7 @@ onMounted(() => {
             <MoooomIcon class="w-6" icon="chevronLeft" />
           </button>
 
-          <button v-if="hasScroll"
+          <button v-if="hasScroll" :aria-label="isLastSlide ? $t('Start slide') : $t('Next slide')"
             class="hidden sm:flex justify-center items-center p-1 rounded-lg bg-auto-alpha-7 active:scale-95 hover:bg-auto-alpha-9 transition-transform duration-300"
             :class="{
               'cursor-not-allowed opacity-50': !hasScroll,

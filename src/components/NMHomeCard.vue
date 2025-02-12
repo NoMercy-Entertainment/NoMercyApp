@@ -103,7 +103,7 @@ onIonViewWillLeave(() => {
 
             <div class="flex flex-shrink-0 flex-grow-0 items-start justify-start gap-4">
 
-              <BannerButton :href="`/${data?.media_type}/${data?.id}/watch`" title="" class="group/play">
+              <BannerButton :href="`/${data?.media_type}/${data?.id}/watch`" title="Play" class="group/play">
                 <MoooomIcon class="w-7" icon="playbackSpeed" />
 
                 <div
@@ -117,14 +117,14 @@ onIonViewWillLeave(() => {
 
               </BannerButton>
 
-              <BannerButton :onclick="toggleWatched" title="">
+              <BannerButton :onclick="toggleWatched" title="Toggle seen">
                 <MoooomIcon icon="check" class="w-7"
                   :stroke="hasWatched ? 'var(--color-green-600) ' : 'currentColor'" />
               </BannerButton>
 
               <MediaLikeButton v-if="data" :data="data" />
 
-              <BannerButton :href="`/${data?.media_type}/${data?.id}`" title="">
+              <BannerButton :href="`/${data?.media_type}/${data?.id}`" title="Info">
                 <MoooomIcon class="w-7" icon="infoCircle" />
               </BannerButton>
 
@@ -140,13 +140,13 @@ onIonViewWillLeave(() => {
         <div class="relative flex-grow flex-col items-start justify-start gap-4 sm:hidden">
           <div v-if="data" class="z-50 flex w-full justify-evenly gap-4">
 
-            <RouterLink :to="`/${data?.media_type}/${data?.id}/watch`"
+            <RouterLink :to="`/${data?.media_type}/${data?.id}/watch`" :aria-label="$t('Play')"
               class="flex h-10 w-1/2 items-center justify-between gap-2 whitespace-nowrap rounded-md pr-4 pl-3 text-black bg-auto-12 py-1.5">
               <MoooomIcon icon="playCircle" className="w-6" />
               <span class="w-full whitespace-nowrap text-center">{{ $t('Play') }}</span>
             </RouterLink>
 
-            <RouterLink :to="`/${data?.media_type}/${data?.id}`"
+            <RouterLink :to="`/${data?.media_type}/${data?.id}`" :aria-label="$t('Info')"
               class="flex justify-center items-center relative gap-2 p-2 rounded-lg hover:bg-auto-5/6 transition-colors duration-300">
               <MoooomIcon icon="add" className="w-6" />
               <span class="w-full whitespace-nowrap text-center">
