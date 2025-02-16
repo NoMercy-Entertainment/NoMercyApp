@@ -4,8 +4,8 @@
 
 <template>
   <svg
-      width="575"
-      height="575"
+      width="100%"
+      height="100%"
       viewBox="0 0 575 575"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
@@ -17,8 +17,8 @@
           id="mask0_2280_31236"
           style="mask-type:alpha"
           maskUnits="userSpaceOnUse"
-          x="-571"
-          y="-571"
+          x="-50%"
+          y="-50%"
           width="100vw"
           height="100vw"
       >
@@ -35,9 +35,11 @@
           cy="0"
           r="1"
           gradientUnits="userSpaceOnUse"
+          color-interpolation="linearRGB"
+          color-rendering="optimizeQuality"
           gradientTransform="translate(2 2) rotate(-90) scale(573)"
       >
-        <stop stop-color="rgb(var(--color-theme-6))"></stop>
+        <stop stop-color="rgb(var(--color-theme-6))" offset="0"></stop>
         <stop offset="1" stop-color="rgb(var(--color-theme-6))" stop-opacity="0"></stop>
       </radialGradient>
     </defs>

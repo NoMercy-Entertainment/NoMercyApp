@@ -26,11 +26,11 @@ onMounted(() => {
       <div :class="{
         'w-available relative flex flex-col items-center gap-12 m-3 overflow-clip rounded-2xl transform-all duration-300 will-change-auto min-w-available': true,
         'h-24 min-h-24 ': musicSearchResult && musicSearchResult.length > 0,
-        'h-[360px] min-h-[260px] ': !musicSearchResult || musicSearchResult.length == 0
+        'h-[460px] min-h-[260px] ': !musicSearchResult || musicSearchResult.length == 0
       }">
         <CosmosBg2 />
         <div v-if="greetingValue && !musicSearchResult"
-          class="relative z-10 mt-16 flex flex-shrink-0 flex-grow-0 flex-col items-center justify-end gap-3">
+          class="relative z-10 mt-8 flex flex-shrink-0 flex-grow-0 flex-col items-center justify-end gap-3">
           <p class="flex-shrink-0 flex-grow-0 text-7xl font-black">
             {{ $t(`Good ${greetingValue}`) }}
           </p>

@@ -83,11 +83,11 @@ const loadMore = ref(null);
 
 <template>
 
-	<div :class="twMerge('h-[360px] min-h-[260px] w-available relative flex flex-col items-center gap-12 m-3 overflow-clip rounded-2xl', className)"
+	<div :class="twMerge('h-[460px] min-h-[260px] w-available relative flex flex-col items-center gap-12 m-3 overflow-clip rounded-2xl', className)"
 		v-if="!isMobile">
 		<CosmosBg2 />
 		<div v-if="greeting"
-			class="relative z-10 mt-16 flex flex-shrink-0 flex-grow-0 flex-col items-center justify-end gap-3">
+			class="relative z-10 mt-8 flex flex-shrink-0 flex-grow-0 flex-col items-center justify-end gap-3">
 			<p class="flex-shrink-0 flex-grow-0 text-7xl font-black">
 				{{ $t(`Good ${greetingValue}`) }}
 			</p>

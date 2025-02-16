@@ -14,7 +14,7 @@ import useServerClient from '@/lib/clients/useServerClient';
 import { setTitle, sortByPosterAlphabetized } from '@/lib/stringArray';
 import { pickPaletteColor } from '@/lib/colorHelper';
 import serverClient from '@/lib/clients/serverClient';
-import {background, colorPalette, poster, setBackground, setColorPalette, setLogo, setPoster} from '@/store/ui';
+import {background, setBackground, setColorPalette, setLogo} from '@/store/ui';
 import { currentSong } from '@/store/audioPlayer';
 
 import ListControlHeaderMoreMenu from '@/Layout/Desktop/components/Menus/ListControlHeaderMoreMenu.vue';
@@ -32,9 +32,8 @@ import ContentRating from '@/components/Images/ContentRating.vue';
 import InfoItem from '@/views/Base/Info/components/InfoItem.vue';
 import Trailer from '@/views/Base/Info/components/Trailer.vue';
 import ScrollContainer from '@/Layout/Desktop/components/ScrollContainer.vue';
-import { convertToHumanReact } from "../../../lib/dateTime";
+import { convertToHumanReact } from "@/lib/dateTime";
 import { useTranslation } from "i18next-vue";
-import HeaderItem from "@/views/Base/Person/components/HeaderItem.vue";
 import NotFound from "@/Layout/Desktop/components/NotFound.vue";
 
 const route = useRoute();

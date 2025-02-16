@@ -74,7 +74,7 @@ const toggleRunning = () => {
   <div v-if="data"
     class="relative flex w-full flex-col items-start justify-start overflow-clip rounded-lg pt-2 group/encoderCard gap-1.5 px-2.5 pb-3.5 bg-slate-lightA-3 dark:bg-slate-darkA-3">
     <div class="relative flex w-full items-center justify-center gap-0.5">
-      <p class="w-full flex-grow text-sm font-semibold text-auto-12 line-clamp-1">
+      <p class="w-full flex-grow text-sm font-semibold text-auto-12 line-clamp-1 h-6">
         {{ data.title.replace(/NoMercy/giu, '') }}
       </p>
       <p class="flex-shrink-0 flex-grow-0 text-right text-xs font-light text-auto-alpha-10">
