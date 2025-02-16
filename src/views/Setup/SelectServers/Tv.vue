@@ -16,11 +16,7 @@ import {hideNavBar, showNavBar} from "@/store/ui";
 const handleSelectServer = (server: Server) => {
   setCurrentServer(server);
 
-  if (localStorage.getItem('redirectUrl') == 'setup/select-servers') {
-    router.replace('/home');
-  } else {
-    router.replace(localStorage.getItem('redirectUrl') || '/home');
-  }
+  router.replace('/home');
 };
 
 const queryClient = useQueryClient();

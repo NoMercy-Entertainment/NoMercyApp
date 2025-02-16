@@ -133,12 +133,12 @@ export const routes: Array<RouteRecordRaw> = [
 				component: BaseCollection
 			},
 			{
-				path: 'genres',
+				path: 'genre',
 				name: 'Genres',
 				component: BaseLibrary,
 			},
 			{
-				path: 'genres/:id',
+				path: 'genre/:id',
 				name: 'Genre',
 				component: BaseLibrary
 			},

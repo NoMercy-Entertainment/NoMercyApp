@@ -40,7 +40,7 @@ watch(priority, (value) => {
 
     <div class="relative flex flex-1 flex-grow flex-col items-start space-y-[-2px] w-full">
       <span class="flex flex-nowrap">
-        <p class="text-sm font-semibold text-auto-12 line-clamp-1 h-6">
+        <p class="text-sm font-semibold text-auto-12 line-clamp-1 h-6" :title="data.title.replace(/NoMercy/giu, '')">
           {{ data.title.replace(/NoMercy/giu, '') }}
         </p>
         <button
