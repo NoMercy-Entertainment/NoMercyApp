@@ -42,7 +42,7 @@ const isHomeRoute = computed(() => {
 
 const isLibraryRoute = computed(() => {
   return route.path.startsWith('/libraries')
-    || route.path.startsWith('/genres')
+    || route.path.startsWith('/genre')
     || route.path.startsWith('/collection')
     || route.path.startsWith('/specials')
     || route.path.startsWith('/movie')
