@@ -1,6 +1,18 @@
 <script setup lang="ts">
+import {onMounted, onUnmounted} from "vue";
 import { IonPage, IonContent } from '@ionic/vue';
+
+import {hideNavBar, showNavBar} from "@/store/ui";
+
 import EmptyBackdrop from "@/components/Images/EmptyBackdrop.vue";
+
+onMounted(() => {
+  hideNavBar();
+});
+
+onUnmounted(() => {
+  showNavBar();
+});
 </script>
 
 <template>

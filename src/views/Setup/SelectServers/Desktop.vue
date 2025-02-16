@@ -15,7 +15,12 @@ import EmptyBackdrop from "@/components/Images/EmptyBackdrop.vue";
 
 const handleSelectServer = (server: Server) => {
   setCurrentServer(server);
-  router.replace(localStorage.getItem('redirectUrl') || '/home');
+
+  if (localStorage.getItem('redirectUrl') == 'setup/select-servers') {
+    router.replace('/home');
+  } else {
+    router.replace(localStorage.getItem('redirectUrl') || '/home');
+  }
 };
 
 const queryClient = useQueryClient();

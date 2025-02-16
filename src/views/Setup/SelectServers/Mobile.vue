@@ -14,6 +14,7 @@ import EmptyBackdrop from "@/components/Images/EmptyBackdrop.vue";
 
 const handleSelectServer = (server: Server) => {
   setCurrentServer(server);
+
   router.replace('/home');
 };
 

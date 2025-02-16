@@ -8,6 +8,7 @@ import { closeMenu, menuOpen, toggleMenu } from '@/store/profileMenu';
 
 import NoMercyAvatar from '@/components/Images/NoMercyAvatar.vue';
 import { useRoute } from 'vue-router';
+import {currentServer} from "@/store/currentServer";
 
 const route = useRoute();
 
@@ -26,7 +27,7 @@ const searchUrl = computed(() => {
     'bg-sand-light-1 dark:bg-slate-dark-3': !menuOpen
   }">
 
-    <ion-tab-button tab="home" href="/home" @click="closeMenu()">
+    <ion-tab-button tab="home" href="/home" @click="closeMenu()" v-if="currentServer">
       <ion-icon aria-hidden="true" :icon="home1" />
       <ion-label>{{ $t('Home') }}</ion-label>
     </ion-tab-button>
@@ -36,12 +37,12 @@ const searchUrl = computed(() => {
       <ion-label>{{ $t('Search') }}</ion-label>
     </ion-tab-button>
 
-    <ion-tab-button tab="library" href="/libraries" @click="closeMenu()">
+    <ion-tab-button tab="library" href="/libraries" @click="closeMenu()" v-if="currentServer">
       <ion-icon aria-hidden="true" :icon="folder" class="icon" />
       <ion-label>{{ $t('Library') }}</ion-label>
     </ion-tab-button>
 
-    <ion-tab-button tab="music" href="/music/start" @click="closeMenu()">
+    <ion-tab-button tab="music" href="/music/start" @click="closeMenu()" v-if="currentServer">
       <ion-icon aria-hidden="true" :icon="noteEighthPair" />
       <ion-label>{{ $t('Music') }}</ion-label>
     </ion-tab-button>

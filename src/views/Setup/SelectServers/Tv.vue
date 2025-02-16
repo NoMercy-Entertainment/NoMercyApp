@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onMounted } from 'vue';
+import {onMounted, onUnmounted} from 'vue';
 import { IonPage, IonContent } from '@ionic/vue';
 import { useQueryClient } from '@tanstack/vue-query';
 
@@ -11,10 +11,16 @@ import { clearLibraries } from '@/store/Libraries';
 import ServerCard from '@/views/Setup/SelectServers/components/ServerCard.vue';
 import { Server } from '@/types/auth';
 import EmptyBackdrop from "@/components/Images/EmptyBackdrop.vue";
+import {hideNavBar, showNavBar} from "@/store/ui";
 
 const handleSelectServer = (server: Server) => {
   setCurrentServer(server);
-  router.replace('/home');
+
+  if (localStorage.getItem('redirectUrl') == 'setup/select-servers') {
+    router.replace('/home');
+  } else {
+    router.replace(localStorage.getItem('redirectUrl') || '/home');
+  }
 };
 
 const queryClient = useQueryClient();
@@ -25,6 +31,11 @@ onMounted(() => {
   queryClient.removeQueries();
   queryClient.clear()
   clearLibraries();
+  hideNavBar();
+});
+
+onUnmounted(() => {
+  showNavBar();
 });
 
 </script>
