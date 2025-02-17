@@ -1,15 +1,16 @@
 <script setup lang="ts">
 import { onMounted } from 'vue';
 import { IonPage, IonContent } from '@ionic/vue';
-import { useQueryClient } from '@tanstack/vue-query';
+
+import type { Server } from '@/types/auth';
 
 import router from '@/router';
 import servers from '@/store/servers';
 import { setCurrentServer } from '@/store/currentServer';
-import { clearLibraries } from '@/store/Libraries';
+import {setColorPalette} from "@/store/ui";
 
 import ServerCard from '@/views/Setup/SelectServers/components/ServerCard.vue';
-import { Server } from '@/types/auth';
+
 import EmptyBackdrop from "@/components/Images/EmptyBackdrop.vue";
 
 const handleSelectServer = (server: Server) => {
@@ -18,14 +19,9 @@ const handleSelectServer = (server: Server) => {
   router.replace('/home');
 };
 
-const queryClient = useQueryClient();
-
 onMounted(() => {
   setCurrentServer(null);
-  queryClient.invalidateQueries();
-  queryClient.removeQueries();
-  queryClient.clear()
-  clearLibraries();
+  setColorPalette(null);
 });
 
 </script>

@@ -5,6 +5,8 @@ import router from '@/router';
 import { Ref, toRaw, watch } from 'vue';
 import { useOnline } from '@vueuse/core';
 import { queryClient } from '@/config/tanstack-query';
+import {currentServer} from "@/store/currentServer";
+import {clearLibraries} from "@/store/Libraries";
 
 export interface Component<T> {
 	id: string;
@@ -58,10 +60,30 @@ export const getMutating = ({ queryKey: key, path }: { queryKey?: string[], path
 
 const onlineStatus = useOnline();
 
-watch(onlineStatus, (value) => {
+watch(onlineStatus, async (value) => {
 	if (value) {
-		queryClient.invalidateQueries();
+		await queryClient.invalidateQueries();
+		queryClient.getMutationCache().clear();
 	}
+});
+
+watch(currentServer, async () => {
+	clearLibraries();
+	queryClient.getQueriesData({ type: "all"})
+		.forEach((query) => {
+			queryClient.invalidateQueries({
+				queryKey: query,
+			});
+			queryClient.removeQueries({
+				queryKey: query,
+			});
+			queryClient.getMutationCache().clear();
+			queryClient.clear()
+		});
+	await queryClient.invalidateQueries();
+	queryClient.removeQueries();
+	queryClient.getMutationCache().clear();
+	queryClient.clear();
 });
 
 export const getQuery = <T>({ queryKey: key, path }: { queryKey?: string[], path?: string } = { queryKey: undefined, path: undefined }) => useQuery<Component<T>[]>({

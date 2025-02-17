@@ -27,6 +27,11 @@ const props = defineProps({
     required: false,
     default: false,
   },
+  disableAutoAspect: {
+    type: Boolean,
+    required: false,
+    default: false,
+  },
   context_menu_items: {
     type: Array as PropType<ContextMenuItem[]>,
     required: false,
@@ -36,9 +41,22 @@ const props = defineProps({
 
 const scrollLetter = computed(() => `scroll_${props.data.titleSort?.[0]?.toUpperCase?.()}`);
 
+const backdropStyle = computed(() => {
+  return showBackdrops.value && !props.disableAutoAspect;
+})
+
 const image = computed(() => {
   return props.data[showBackdrops.value ? 'backdrop' : 'poster'] as string;
 });
+
+const focusColor = computed(() => {
+  return props.data?.color_palette?.[backdropStyle.value ? 'backdrop' : 'poster']
+      ? pickPaletteColor(props.data?.color_palette?.[backdropStyle.value ? 'backdrop' : 'poster'])
+          .replace(/,/gu, ' ')
+          .replace(')', '')
+          .replace('rgb(', '')
+      : ''
+})
 
 const onRightClick = (event: Event) => {
   if (props.context_menu_items) {
@@ -69,14 +87,7 @@ const handleClick = (item: any) => {
   <RouterLink v-if="data?.link" :data-scroll="scrollLetter" :data-card="data?.link" @contextmenu="onRightClick($event)"
     :onclick="() => handleClick(data)" :to="data.link"
     class="group/card frosting flex flex-col h-full items-center focus-outline relative rounded-lg select-none shadow-[0px_0px_0_1px_rgb(var(--color-focus,var(--color-theme-6))/70%)] w-full z-0 bg-auto-50/70 flex-grow-0"
-    :class="showBackdrops ? 'aspect-backdrop' : 'aspect-poster'" :style="`
-            --color-focus: ${data.color_palette?.[showBackdrops ? 'backdrop' : 'poster']
-        ? pickPaletteColor(data.color_palette?.[showBackdrops ? 'backdrop' : 'poster'])
-          .replace(/,/gu, ' ')
-          .replace(')', '')
-          .replace('rgb(', '')
-        : ''};
-         `">
+    :class="showBackdrops ? 'aspect-backdrop' : 'aspect-poster'" :style="`--color-focus: ${focusColor};`">
     <div class="w-full h-full overflow-clip rounded-lg inset-0 absolute">
       <div class="backdropCard-overlay"></div>
 

@@ -73,7 +73,7 @@ const shouldDarken = ref(false);
 const brightness = ref(0);
 
 const serverImageUrl = computed(() => {
-  if (!props.path) return;
+  if (!props.path || !currentServer.value) return;
   return `${currentServer.value?.serverBaseUrl}/images/original${props.path}`;
 });
 
@@ -83,7 +83,7 @@ const tmdbImageUrl = computed(() => {
 });
 
 onMounted(() => {
-  if (props?.type != 'logo') return;
+  if (props?.type != 'logo' || serverImageUrl.value?.includes('undefined')) return;
 
   getImageBrightness(`${serverImageUrl.value}`, ({ nonTransparentBrightness }) => {
     brightness.value = nonTransparentBrightness;
@@ -95,7 +95,7 @@ onMounted(() => {
 watch(serverImageUrl, (value) => {
   if (!value) return;
 
-  if (props?.type == 'logo') return;
+  if (props?.type == 'logo' || serverImageUrl.value?.includes('undefined')) return;
 
   getImageBrightness(`${value}`, ({ nonTransparentBrightness }) => {
     brightness.value = nonTransparentBrightness;

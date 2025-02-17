@@ -344,7 +344,7 @@ export default defineConfig({
 				'script-src': false,
 				'style-src': false,
 			},
-			processFn: 'Nginx',
+			// processFn: 'Nginx',
 		}),
 		ViteMinifyPlugin(),
 		// gzipPlugin(),

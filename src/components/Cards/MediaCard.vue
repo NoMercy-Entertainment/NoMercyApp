@@ -46,19 +46,21 @@ const image = computed(() => {
     return props.data?.[backdropStyle.value ? 'backdrop' : 'poster'] as string;
 });
 
+const focusColor = computed(() => {
+  return props.data?.color_palette?.[backdropStyle.value ? 'backdrop' : 'poster']
+      ? pickPaletteColor(props.data?.color_palette?.[backdropStyle.value ? 'backdrop' : 'poster'])
+          .replace(/,/gu, ' ')
+          .replace(')', '')
+          .replace('rgb(', '')
+      : ''
+})
+
 </script>
 
 <template>
     <RouterLink v-if="data?.link" :data-scroll="scrollLetter" :to="data?.link"
         class="group/card flex flex-col h-full items-center focus-outline relative rounded-lg select-none shadow-[0px_0px_0_1px_rgb(var(--color-focus,var(--color-theme-6))/70%)] w-full z-0 bg-auto-50/70 flex-grow-0"
-        :class="backdropStyle ? 'aspect-backdrop' : 'aspect-poster'" :style="`
-            --color-focus: ${data?.color_palette?.[backdropStyle ? 'backdrop' : 'poster']
-                ? pickPaletteColor(data?.color_palette?.[backdropStyle ? 'backdrop' : 'poster'])
-                    .replace(/,/gu, ' ')
-                    .replace(')', '')
-                    .replace('rgb(', '')
-                : ''};
-         `">
+        :class="backdropStyle ? 'aspect-backdrop' : 'aspect-poster'" :style="`--color-focus: ${focusColor};`">
         <div class="w-full h-full overflow-clip rounded-lg inset-0 absolute">
             <div class="backdropCard-overlay"></div>
 

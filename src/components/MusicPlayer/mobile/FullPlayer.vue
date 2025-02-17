@@ -2,28 +2,27 @@
 import { computed, ref, watch } from 'vue';
 import { useTranslation } from 'i18next-vue';
 import { IonContent, IonModal } from '@ionic/vue';
+import { Swiper } from 'swiper';
+import { Swiper as SwiperComponent } from 'swiper/vue';
 
 import { audioPlayer, currentSong, fullPlayerModalOpen, queue } from '@/store/audioPlayer';
+import { useAutoThemeColors } from '@/store/preferences';
+import { PaletteColors, pickPaletteColor } from '@/lib/colorHelper';
+import { colorPalette, setColorPalette } from '@/store/ui';
+
+import { PlaylistItem } from '@/types/musicPlayer';
 
 import LyricsOverlay from '@/Layout/Desktop/components/Overlays/LyricsOverlay.vue';
 
+import MusicButton from '@/components/MusicPlayer/components/MusicButton.vue';
 import ProgressBarContainer from '@/components/MusicPlayer/components/ProgressBarContainer.vue';
 import CoverImage from '@/components/MusicPlayer/components/CoverImage.vue';
 import MoooomIcon from '@/components/Images/icons/MoooomIcon.vue';
+import ChristmasSnow from "@/components/Seasonal/Christmas/ChristmasSnow.vue";
 
 import TopRow from '../mobile/TopRow.vue';
 import TrackRow from '../mobile/TrackRow.vue';
 import ButtonContainer from '../mobile/ButtonContainer.vue';
-import { useAutoThemeColors } from '@/store/preferences';
-import { PaletteColors, pickPaletteColor } from '@/lib/colorHelper';
-import MusicButton from '@/components/MusicPlayer/components/MusicButton.vue';
-import { colorPalette, setColorPalette } from '@/store/ui';
-
-import { Swiper } from 'swiper';
-import { Swiper as SwiperComponent } from 'swiper/vue';
-import { PlaylistItem } from '@/types/musicPlayer';
-import ChristmasSnow from "@/components/Seasonal/Christmas/ChristmasSnow.vue";
-import NavBar from "@/Layout/Mobile/components/NavBar.vue";
 
 const { t } = useTranslation();
 
