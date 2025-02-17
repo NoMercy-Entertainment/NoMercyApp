@@ -1,12 +1,13 @@
 <script setup lang="ts">
 import { IonPage, IonContent, onIonViewWillEnter } from '@ionic/vue';
 
-import { type PropType } from 'vue';
+import {type PropType, watch} from 'vue';
 import type { HomeItem } from '@/types/api/base/home';
 import { type Component, getMutating, getMutation, getQuery, queryKey } from '@/lib/routerHelper';
 
 import router from '@/router';
 import { useRoute } from 'vue-router';
+import {currentServer} from "@/store/currentServer";
 
 const props = defineProps({
   options: {
@@ -22,11 +23,11 @@ const props = defineProps({
 const route = useRoute();
 const routeName = router.currentRoute.value.name;
 
-const isMutating = getMutating({ queryKey: props.options?.queryKey });
+const isMutating = getMutating({ queryKey: props.options?.queryKey, path: route.path });
 
-const { data: homeData } = getQuery({ queryKey: props.options.queryKey });
+const { data: homeData, refetch } = getQuery({ queryKey: props.options.queryKey, path: route.path });
 
-const { data: mutatedData, mutate } = getMutation({ queryKey: props.options.queryKey, homeData: homeData });
+const { data: mutatedData, mutate, reset } = getMutation({ queryKey: props.options.queryKey, homeData: homeData, path: route.path });
 
 onIonViewWillEnter(() => {
   if (!homeData.value) return;
@@ -35,6 +36,17 @@ onIonViewWillEnter(() => {
 
   const mutations = homeData.value?.filter?.(item => item?.update?.when == 'pageLoad') ?? [];
   mutate(mutations);
+});
+
+watch(currentServer, (value) => {
+  if (!value) {
+    mutatedData.value = undefined;
+    homeData.value = undefined;
+  }
+  else {
+    refetch();
+    reset();
+  }
 });
 
 </script>
