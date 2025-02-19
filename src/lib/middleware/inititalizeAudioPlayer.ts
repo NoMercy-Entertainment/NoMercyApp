@@ -3,6 +3,7 @@ import { watch } from 'vue';
 import { currentServer } from '@/store/currentServer';
 import { user } from '@/store/user';
 import audioPlayer from '@/store/audioPlayer';
+import { useLocalStorage } from '@vueuse/core';
 
 const initializeAudioPlayer = (): Promise<void> => {
 	if (audioPlayer.accessToken) {
@@ -20,22 +21,24 @@ const initializeAudioPlayer = (): Promise<void> => {
 		audioPlayer.setAccessToken(user.value.accessToken);
 
 		document.addEventListener('click', () => {
-			if (localStorage.getItem('supports-audio-context')) return;
+
+			const supportsAudioContext = useLocalStorage('nmplayer-supports-audio-context', false);
+			if (!supportsAudioContext) return;
 
 			const audioContext = new AudioContext();
 			// @ts-ignore
 			audioContext.onerror = () => {
-				localStorage.setItem('supports-audio-context', 'false');
+				supportsAudioContext.value = false;
 				audioContext.close().then();
 				location.reload();
 			}
 			audioContext.onstatechange = () => {
 				console.log(audioContext.state);
 				if (audioContext.state === 'running') {
-					localStorage.setItem('supports-audio-context', 'true');
+					supportsAudioContext.value = true;
 				} else if (audioContext.state === 'suspended') {
 					audioContext.close().then();
-					localStorage.setItem('supports-audio-context', 'false');
+					supportsAudioContext.value = false;
 				}
 			}
 			audioContext.getOutputTimestamp()

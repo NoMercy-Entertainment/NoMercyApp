@@ -11,8 +11,9 @@ import RepeatButton from '../components/RepeatButton.vue';
 import ShuffleButton from '../components/ShuffleButton.vue';
 import StopButton from '../components/StopButton.vue';
 import EqButton from "@/components/MusicPlayer/components/EqButton.vue";
+import { useLocalStorage } from '@vueuse/core';
 
-const supportsAudioContext = localStorage.getItem('nmplayer-supports-audio-context') === 'true';
+const supportsAudioContext = useLocalStorage('nmplayer-supports-audio-context', false);
 
 </script>
 

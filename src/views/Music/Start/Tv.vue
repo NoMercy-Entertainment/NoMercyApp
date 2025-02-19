@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onMounted, ref, watch } from 'vue';
+import { ref, watch } from 'vue';
 import { IonPage, IonContent, onIonViewDidEnter } from '@ionic/vue';
 
 import type { HomeDataItem } from '@/types/api/music';

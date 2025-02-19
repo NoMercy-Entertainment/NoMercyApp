@@ -13,10 +13,10 @@ import ServerCard from '@/views/Setup/SelectServers/components/ServerCard.vue';
 
 import EmptyBackdrop from "@/components/Images/EmptyBackdrop.vue";
 
-const handleSelectServer = (server: Server) => {
+const handleSelectServer = async (server: Server) => {
   setCurrentServer(server);
 
-  router.replace('/home');
+  await router.replace('/home');
 };
 
 onMounted(() => {

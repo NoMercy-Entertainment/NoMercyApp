@@ -1,24 +1,43 @@
 <script setup lang="ts">
+import { watch} from 'vue';
 import { IonPage, IonContent, onIonViewWillEnter } from '@ionic/vue';
 
-import type { HomeDataItem } from '@/types/api/music';
-import type { Component } from '@/lib/routerHelper';
+import {getMutating, getMutation, getQuery} from '@/lib/routerHelper';
 
-import useServerClient from '@/lib/clients/useServerClient';
+import {currentServer} from "@/store/currentServer";
+import {useRoute} from "vue-router";
+import router from "@/router";
 
-import { onMounted } from 'vue';
-import { setColorPalette } from '@/store/ui';
-import NotFound from "@/Layout/Desktop/components/NotFound.vue";
+const route = useRoute();
+const routeName = router.currentRoute.value.name;
 
-const { data, isError } = useServerClient<Component<HomeDataItem>[]>({
-  queryKey: ['music', 'home']
-});
+const isMutating = getMutating({ queryKey: ['music', 'home'], path: route.path });
 
-onMounted(() => {
-  setColorPalette(null);
-});
+const { data: homeData, refetch } = getQuery({ queryKey: ['music', 'home'], path: route.path });
+
+const { data: mutatedData, mutate, reset } = getMutation({ queryKey: ['music', 'home'], homeData: homeData, path: route.path });
+
 onIonViewWillEnter(() => {
-  setColorPalette(null);
+  if (!homeData.value) {
+    refetch();
+    return;
+  }
+
+  if (route.name !== routeName) return;
+
+  const mutations = homeData.value?.filter?.(item => item?.update?.when == 'pageLoad') ?? [];
+  mutate(mutations);
+});
+
+watch(currentServer, (value) => {
+  if (!value) {
+    mutatedData.value = undefined;
+    homeData.value = undefined;
+  }
+  else {
+    refetch();
+    reset();
+  }
 });
 
 </script>
@@ -26,11 +45,9 @@ onIonViewWillEnter(() => {
 <template>
   <ion-page>
     <ion-content :fullscreen="true">
-      <NotFound v-if="isError && !data" />
-      <template v-else-if="data">
-        <template v-for="(render, index) in data ?? []" :key="render.id">
-          <component v-if="render.component" :index="index" :is="render.component" v-bind="render.props" />
-        </template>
+      <template v-if="!isMutating && (mutatedData?.every?.(d => d.component) || homeData?.every?.(d => d.component))">
+        <component v-for="(render, index) in mutatedData ?? homeData" :index="index" :key="render.id"
+                   :is="render.component" v-bind="render.props" />
       </template>
     </ion-content>
   </ion-page>
