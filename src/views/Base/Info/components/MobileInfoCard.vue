@@ -72,7 +72,7 @@ const title = computed(() => {
     <div class="flex justify-start items-start w-[280px] absolute left-0 top-[348px] gap-4 p-4 z-40">
 
       <RouterLink :to="`${data?.link}/watch`"
-        class="flex justify-start items-center flex-grow h-10 relative overflow-hidden gap-2 px-2 py-4 rounded-[30px] bg-white/80"
+        class="frosting flex justify-start items-center flex-grow h-10 relative overflow-hidden gap-2 px-2 py-4 rounded-3xl bg-white/80"
         :disabled="!hasItem?.available" :class="{ 'opacity-70': !hasItem?.available }">
         <p class="flex-grow w-[100px] text-[15px] font-semibold text-center text-[#151718]">
           {{ $t(playbackStatus) }}
@@ -80,7 +80,7 @@ const title = computed(() => {
       </RouterLink>
 
       <button v-if="toggleTrailer" @click="toggleTrailer()"
-        class="flex justify-start items-center flex-grow h-10 relative overflow-hidden gap-2 px-2 py-4 rounded-[30px] bg-black/50  border border-solid border-slate-lightA-9 dark:border-slate-darkA-9">
+              class="frosting flex justify-start items-center flex-grow h-10 relative overflow-hidden gap-2 px-2 py-4 rounded-3xl text-slate-light-1 bg-slate-light-12">
         <p class="flex-grow w-[100px] text-[15px] font-semibold text-center">
           {{ $t(!data ? 'loading' : 'Trailer') }}
         </p>
@@ -90,12 +90,12 @@ const title = computed(() => {
 
     <div class="flex justify-end items-start w-[280px] absolute left-0 top-0 gap-2 p-4">
       <div
-        class="flex justify-start items-center flex-grow-0 flex-shrink-0 relative overflow-hidden gap-2 p-2 rounded-[30px] bg-black/[0.48] border border-black/2 w-10 h-10">
-        <MoooomIcon icon="check" className="w-6" />
+        class="flex justify-start items-center flex-grow-0 flex-shrink-0 relative overflow-hidden gap-2 p-2 rounded-3xl bg-black/[0.48] border border-black/2 w-10 h-10">
+        <MoooomIcon icon="check" className="w-6 text-white" />
       </div>
       <div
-        class="flex justify-start items-center flex-grow-0 flex-shrink-0 relative overflow-hidden gap-2 rounded-[30px] bg-black/[0.48] border border-black/2">
-        <MediaLikeButton :data="data" class="!p-0" />
+        class="flex justify-start items-center flex-grow-0 flex-shrink-0 relative overflow-hidden gap-2 rounded-3xl bg-black/[0.48] border border-black/2">
+        <MediaLikeButton :data="data" class="!p-0 text-white" />
       </div>
     </div>
   </div>

@@ -20,7 +20,7 @@ defineProps({
 
 <template>
   <ion-item v-if="isMobile && dashboardSocketIsConnected">
-    <div class="flex flex-shrink-0 flex-grow-0 flex-col items-start justify-start gap-3 self-stretch w-full">
+    <div class="flex flex-shrink-0 flex-grow-0 flex-col items-start justify-start gap-3 self-stretch w-full pt-1">
       <div
         class="relative flex flex-shrink-0 flex-grow-0 items-center justify-start gap-4 self-stretch text-slate-light-12 dark:text-slate-dark-12">
         <p class="flex-grow text-xl font-medium">

@@ -70,7 +70,7 @@ const onChange = async (event: SegmentCustomEvent) => {
         <ion-label>{{ $t('Specials') }}</ion-label>
       </ion-segment-button>
 
-      <ion-segment-button value="/genres" layout="icon-start"
+      <ion-segment-button value="/genre" layout="icon-start"
                           v-if="libraries?.some?.(l => l.type !== 'music')" :class="{
           'bg-focus': route.fullPath.startsWith('/genres'),
           }"

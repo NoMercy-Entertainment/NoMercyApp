@@ -37,10 +37,6 @@ const endTime = ref<string | 0 | null | undefined>(null);
 const interval = ref<NodeJS.Timeout | null>(null);
 
 const content = ref<VueDivElement>();
-const backgroundUrl = computed(() => {
-  // return `${tmdbImageBaseUrl}/original${background.value}`;
-  return `${currentServer.value?.serverBaseUrl}/images/original${background.value}`;
-});
 
 const { data } = useServerClient<InfoResponse>({
   keepForever: true,
@@ -68,6 +64,11 @@ watch(data, (value) => {
   }
 
   processTrailer(value);
+});
+
+const backgroundUrl = computed(() => {
+  // return `${tmdbImageBaseUrl}/original${data.value?.backdrop ?? background.value}`;
+  return `${currentServer.value?.serverBaseUrl}/images/original${data.value?.backdrop ?? background.value}`;
 });
 
 onIonViewWillEnter(() => {
@@ -176,17 +177,14 @@ const processTrailer = (value: InfoResponse | undefined) => {
       <div
         class="flex flex-col justify-start items-center self-stretch flex-grow h-auto gap-4 will-change-auto text-slate-lightA-12/70 dark:text-slate-darkA-12/80 z-0"
         style="box-shadow: 0 2px 2px 0 rgba(0,0,0,0.16);">
-        <div class="flex justify-start items-end flex-grow-0 flex-shrink-0 -mx-4 w-available h-[410px] relative gap-2">
-
-          <div class="absolute flex flex-col justify-start items-end flex-grow w-available -mx-20 h-[410px] z-10"
-            style="background: linear-gradient(0deg, rgba(0, 0, 0, 0.50) 0%, rgba(0, 0, 0, 0.50) 100%)"></div>
-
-          <TMDBImage :key="background ?? 'background'" :autoShadow="true" :path="background"
-            :colorPalette="data?.color_palette?.poster" :size="500" priority="low" :title="data?.title ?? data?.name"
-            aspect="poster" loading="eager"
-            class="absolute flex flex-col justify-start items-end flex-grow w-available -mx-20 h-[410px] bg-cover bg-top z-0 children:h-available"
-            className="bg-top max-h-available w-available !object-fill" type="image" />
-
+        <div class="flex justify-start items-end -mx-4 w-available h-[410px] relative gap-2">
+          <div
+              class="absolute flex flex-col justify-start items-end flex-grow w-available -mx-20 h-[410px] bg-cover bg-top"
+              style="background: linear-gradient(0deg, rgba(0, 0, 0, 0.50) 0%, rgba(0, 0, 0, 0.50) 100%), var(--background-image) lightgray 50% / cover no-repeat;">
+          </div>
+          <div
+              class="absolute flex flex-col justify-start items-end flex-grow w-available -mx-20 h-[410px] bg-cover dark:bg-black/50">
+          </div>
         </div>
 
         <div
@@ -198,7 +196,7 @@ const processTrailer = (value: InfoResponse | undefined) => {
           <Collapsible v-if="data?.overview" :text="data?.overview" :maxLines="3" />
 
           <div v-if="data"
-            class="flex justify-start items-center self-stretch flex-grow-0 flex-shrink-0 relative gap-2">
+            class="flex justify-start items-center self-stretch flex-grow-0 flex-shrink-0 relative gap-2 flex-wrap">
 
             <HeaderItem v-if="data?.year" title="" :data="data?.year.toString()" />
 

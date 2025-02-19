@@ -123,7 +123,7 @@ const libraryIconName = (type: string) => {
           <SidebarButton href="/collection" :show="isLibraryRoute" icon="collection1"
             v-if="libraries?.some?.(l => l.type === 'movie')" name="Collections" />
           <SidebarButton href="/specials" :show="isLibraryRoute" icon="sparkles" name="Specials" />
-          <SidebarButton href="/genres" :show="isLibraryRoute" icon="witchHat"
+          <SidebarButton href="/genre" :show="isLibraryRoute" icon="witchHat"
             v-if="libraries?.some?.(l => l.type !== 'music')" name="Genres" />
           <SidebarButton href="/person" :show="isLibraryRoute" icon="user" name="People" />
           <!--                    End Base pages-->

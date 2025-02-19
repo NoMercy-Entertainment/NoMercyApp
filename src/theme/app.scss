@@ -123,6 +123,10 @@ ion-content::part(scroll) {
   --offset-bottom: 0px;
 }
 
+ion-item::part(native) {
+  background: transparent;
+}
+
 .swiper {
   overflow-y: visible !important;
   overflow-x: clip !important;

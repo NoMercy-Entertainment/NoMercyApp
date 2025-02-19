@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { onMounted, onUnmounted, ref, watch } from 'vue';
-import { IonPage, isPlatform, onIonViewDidEnter } from '@ionic/vue';
+import { IonPage, isPlatform } from '@ionic/vue';
 
 import { currentServer } from '@/store/currentServer';
 import { user } from '@/store/user';
@@ -153,10 +153,12 @@ const initPlayer = (value: PlaylistItem[] | undefined) => {
 }
 
 watch(data, (value) => {
+  player.value?.dispose();
   initPlayer(value);
 });
 
 onMounted(() => {
+  player.value?.dispose();
   initPlayer(data.value);
 });
 

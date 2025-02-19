@@ -27,7 +27,8 @@ const { data, isError } = useServerClient<PersonResponseItem>({
 });
 
 const backgroundUrl = computed(() => {
-  return `${tmdbImageBaseUrl}/original${background.value}`;
+  if(!data.value?.known_for?.at(0)?.backdrop) return null;
+  return `${tmdbImageBaseUrl}/original${data?.value?.known_for?.at(0)?.backdrop ?? background}`;
   // return `${currentServer.value?.serverBaseUrl}/images/original${background.value}`;
 });
 
@@ -104,6 +105,11 @@ watch(data, (value) => {
     <ion-content ref="content" :fullscreen="true"
       :style="`--background-image: ${backgroundUrl && !backgroundUrl.includes('null') ? `url(${backgroundUrl})` : ''};`">
 
+      <div
+          class="flex flex-col justify-start items-center self-stretch flex-grow h-auto gap-4 will-change-auto text-slate-lightA-12/70 dark:text-slate-darkA-12/80 z-10 absolute left-0 w-full"
+          style="box-shadow: 0 2px 2px 0 rgba(0,0,0,0.16);">
+        <div class="flex justify-start items-end flex-grow-0 flex-shrink-0 -mx-4 w-available h-[410px] relative gap-2">
+
       <SwiperComponent ref="swiper" :slides-per-view="1" :loop="true" class="w-available swiper h-[420px] !absolute"
         :class="{
           'top-safe-offset-12': isNative,
@@ -122,9 +128,11 @@ watch(data, (value) => {
           </swiper-slide>
         </template>
       </SwiperComponent>
+        </div>
+      </div>
 
       <div
-        class="flex z-0 flex-col justify-start items-center self-stretch flex-grow overflow-hidden gap-4 will-change-auto text-slate-lightA-12/70 dark:text-slate-darkA-12/80"
+        class="flex flex-col justify-start items-center self-stretch flex-grow gap-4 will-change-auto text-slate-lightA-12/70 dark:text-slate-darkA-12/80 z-0"
         style="box-shadow: 0 2px 2px 0 rgba(0,0,0,0.16);">
         <div class="flex justify-start items-end -mx-4 w-available h-[410px] relative gap-2">
           <div
@@ -137,7 +145,7 @@ watch(data, (value) => {
         </div>
 
         <div
-          class="flex bg-slate-light-3 dark:bg-slate-dark-1 flex-col justify-start items-start self-stretch gap-3 pt-16 pb-5 will-change-auto w-inherit px-6">
+          class="flex bg-slate-light-3 dark:bg-slate-dark-1 flex-col justify-start items-start self-stretch gap-3 mt-16 pb-5 will-change-auto w-inherit px-6">
           <p v-if="data?.name" class="self-stretch w-[351px] text-3xl font-bold text-left z-10"
             v-html="breakTitle2(data?.name ?? ' ', 'text-lg line-clamp-2')">
           </p>

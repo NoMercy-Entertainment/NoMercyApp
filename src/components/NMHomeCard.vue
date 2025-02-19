@@ -266,21 +266,19 @@ const scrollToTop = () => {
         </div>
         <div class="flex flex-shrink-0 flex-grow-0 items-start justify-start gap-6 self-stretch p-6">
           <RouterLink :to="`/${data?.media_type}/${data?.id}/watch`"
-            class="flex justify-center items-center flex-grow h-10 relative overflow-hidden gap-3 px-6 py-4 rounded-lg bg-[#fdfeff]/[0.93] text-black">
+            class="flex justify-center items-center flex-grow h-10 relative overflow-hidden gap-3 px-6 py-4 rounded-lg text-slate-light-12 dark:text-slate-dark-12 bg-[#fdfeff]/[0.93]">
             <MoooomIcon icon="play" className="w-6" style="--fill-color:black" />
-            <p class="flex-grow-0 flex-shrink-0 text-[15px] font-medium text-center text-[rgb(var(--color-auto-2))]">
+            <p class="flex-grow-0 flex-shrink-0 text-[15px] font-medium text-center">
               {{ $t('Play') }}
             </p>
           </RouterLink>
-          <button @click="toggleWatched"
-            class="frosting flex justify-center items-center flex-grow h-10 relative gap-3 px-6 py-4 rounded-lg bg-black/50">
-            <MoooomIcon v-if="data?.watched" icon="removeCircle" className="w-6" />
-            <MoooomIcon v-else icon="addCircle" className="w-6" />
-            <p class="flex-shrink-0 flex-grow-0 text-center font-medium text-[15px]">
-              <span v-if="data?.watched">{{ $t('Remove from my list') }}</span>
-              <span v-else>{{ $t('Add to my list') }}</span>
+          <RouterLink :to="`/${data?.media_type}/${data?.id}`"
+            class="frosting flex justify-center items-center flex-grow h-10 relative gap-3 px-6 py-4 rounded-lg text-slate-light-1 bg-slate-light-12">
+            <MoooomIcon icon="infoCircle" className="w-6" />
+            <p class="flex-grow-0 flex-shrink-0 text-[15px] font-medium text-center">
+              {{ $t('Info') }}
             </p>
-          </button>
+          </RouterLink>
         </div>
       </div>
     </div>

@@ -20,9 +20,9 @@ export default i18next;
 export const availableTranslations = [
 	'en',
 	'nl',
-	'fr',
-	'de',
-	'it',
+	// 'fr',
+	// 'de',
+	// 'it',
 ];
 
 export const languages: Language[] = [
