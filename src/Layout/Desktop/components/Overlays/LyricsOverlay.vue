@@ -9,7 +9,8 @@ import LyricItem from '@/Layout/Desktop/components/Overlays/LyricItem.vue';
 
 import { user } from '@/store/user';
 import { currentServer } from '@/store/currentServer';
-import audioPlayer, {currentSong, currentTime, lyricsMenuOpen, queueMenuOpen, setHasLyrics} from '@/store/audioPlayer';
+import audioPlayer, {currentSong, currentTime, lyricsMenuOpen, setHasLyrics} from '@/store/audioPlayer';
+import {setDisableScreensaver} from "@/store/imageModal";
 
 const lyrics_container = ref<HTMLDivElement>();
 const lyrics = ref<Lyric[] | undefined | null>(currentSong.value?.lyrics);
@@ -58,9 +59,9 @@ onBeforeMount(() => {
 });
 
 onMounted(() => {
-  const container = document.querySelector<HTMLDivElement>('#lyricsContainer');
-  if (!container) return;
-  container.scrollTop = 0;
+  if (!lyrics_container.value || !lyrics.value) return;
+
+  lyrics_container.value.scrollTop = 0;
 
   const MobilePlayer = document.querySelector<HTMLDivElement>('#MobilePlayer');
   MobilePlayer?.addEventListener('scroll', setScroll);
@@ -79,8 +80,12 @@ onMounted(() => {
         });
 
       const currentLyric = lyrics_container.value?.querySelector<HTMLDivElement>(`[data-index='0']`);
-      currentLyric?.animateVerticalIntoView(lyrics_container.value);
-
+      if (currentLyric) {
+        // currentLyric?.animateVerticalIntoView(lyrics_container.value);
+        scrollCenter(currentLyric, lyrics_container.value, {
+          duration: 500,
+        });
+      }
     }
     else if (newIndex === -2) {
 
@@ -92,7 +97,10 @@ onMounted(() => {
         });
 
       const currentLyric = lyrics_container.value?.querySelector<HTMLDivElement>(`[data-index='${elements.length - 1}']`);
-      currentLyric?.animateVerticalIntoView(lyrics_container.value);
+      // currentLyric?.animateVerticalIntoView(lyrics_container.value);
+      scrollCenter(currentLyric, lyrics_container.value, {
+        duration: 500,
+      });
 
     }
   });
@@ -104,6 +112,7 @@ onUnmounted(() => {
 });
 
 watch(currentTime, (value) => {
+  if (!lyrics_container.value || !lyrics.value) return;
 
   value = value + 0.5;
 
@@ -126,7 +135,11 @@ watch(currentTime, (value) => {
   const currentLyric = lyrics_container.value?.querySelector<HTMLDivElement>(`[data-index='${newIndex}']`);
 
   if (currentLyric) {
-    currentLyric.animateVerticalIntoView(lyrics_container.value);
+    console.log('currentLyric', currentLyric);
+    // currentLyric.animateVerticalIntoView(lyrics_container.value);
+    scrollCenter(currentLyric, lyrics_container.value, {
+      duration: 500,
+    });
     currentLyric.style.opacity = '1';
     currentLyric.style.color = 'white';
   }
@@ -156,7 +169,10 @@ watch(lyrics, (value) => {
   if (currentLyric) {
     currentLyric.style.opacity = '1';
     currentLyric.style.color = 'white';
-    currentLyric?.animateVerticalIntoView(lyrics_container.value);
+    // currentLyric?.animateVerticalIntoView(lyrics_container.value);
+    scrollCenter(currentLyric, lyrics_container.value, {
+      duration: 500,
+    });
   }
   const elements = Array.from(lyrics_container.value?.querySelectorAll<HTMLDivElement>('[data-lyric]'));
 
@@ -177,18 +193,22 @@ watch(lyrics, (value) => {
   }
 });
 
+watch(lyricsMenuOpen, (value) => {
+  setDisableScreensaver(value);
+});
+
 </script>
 
 <template>
   <div :data-open="lyricsMenuOpen" id="lyricsContainer" :inert="!lyricsMenuOpen"
-    class="absolute inset-0 h-inherit w-inherit sm:left-auto sm:right-4 sm:top-4 sm:bottom-4 sm:w-2/3 sm:max-w-3xl flex items-center justify-center rounded-xl transition-all duration-500 sm:data-[open='false']:translate-x-[150%] sm:overflow-clip z-[9999]  tv:data-[open='false']:translate-x-[150%] tv:!w-available tv:data-[open='true']:delay-500 will-change-transform">
+    class="absolute inset-0 h-inherit w-inherit sm:left-auto sm:right-4 sm:top-4 sm:bottom-4 sm:w-2/3 sm:max-w-3xl tv:max-w-3/4 flex items-center justify-center rounded-xl transition-all duration-500 sm:data-[open='false']:translate-x-[150%] sm:overflow-clip z-[9999]  tv:data-[open='false']:translate-x-[150%] tv:!w-available tv:data-[open='true']:delay-500 will-change-transform">
 
     <div
       class="pointer-events-none absolute inset-0 z-0 flex items-center justify-center rounded-xl sm:bg-white/6 dark:sm:bg-black/30 tv:!bg-transparent">
     </div>
 
     <div ref="lyrics_container" :id="`lyrics_container_${id}`"
-      class="relative z-10 flex w-full flex-col overflow-auto scrollbar-none tv:overflow-clip p-4 children:transition-all duration-300 h-available sm:min-h-[calc(100vh-13rem)] gap-4 sm:gap-4 sm:p-16 text-xl sm:text-2xl">
+      class="relative z-10 flex w-full flex-col overflow-auto scrollbar-none p-4 children:transition-all duration-300 h-available sm:min-h-[calc(100vh-13rem)] gap-4 sm:gap-4 sm:p-16 text-xl sm:text-2xl tv:text-lg tv:gap-6">
 
       <template v-if="!!lyrics">
         <div class="contents" v-if="Array.isArray(lyrics)">

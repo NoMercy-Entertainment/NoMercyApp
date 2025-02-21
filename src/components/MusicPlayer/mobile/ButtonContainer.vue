@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { useLocalStorage } from '@vueuse/core';
 
 import { musicSize } from '@/store/audioPlayer';
 
@@ -10,8 +11,7 @@ import QueueButton from '../components/QueueButton.vue';
 import RepeatButton from '../components/RepeatButton.vue';
 import ShuffleButton from '../components/ShuffleButton.vue';
 import StopButton from '../components/StopButton.vue';
-import EqButton from "@/components/MusicPlayer/components/EqButton.vue";
-import { useLocalStorage } from '@vueuse/core';
+import EqButton from "../components/EqButton.vue";
 
 const supportsAudioContext = useLocalStorage('nmplayer-supports-audio-context', false);
 

@@ -132,7 +132,7 @@ const mouseLeave = () => {
     </Teleport>
 
     <div ref="refBar" v-else data-scrollbar
-      class="absolute top-0 mr-1 h-[96%] right-0 bottom-0 mt-2 mb-2 hidden rounded-full border-r-2 border-l-4 border-transparent w-3.5 group-active/scrollContainer:bg-auto-2/9 hover:bg-auto-2/9 sm:flex">
+      class="absolute top-0 mr-1 h-[92%] right-0 bottom-0 mt-2 mb-2 hidden rounded-full border-r-2 border-l-4 border-transparent w-3.5 group-active/scrollContainer:bg-auto-2/9 hover:bg-auto-2/9 sm:flex">
       <span draggable="true" data-scrollbar ref="refHandle" :class="{
         'opacity-0 group-hover/scrollContainer:opacity-100': !static && autoHide,
         '!transition-none': !show,

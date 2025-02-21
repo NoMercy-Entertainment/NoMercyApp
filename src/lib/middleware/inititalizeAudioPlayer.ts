@@ -1,9 +1,9 @@
 import { watch } from 'vue';
+import { useLocalStorage } from '@vueuse/core';
 
 import { currentServer } from '@/store/currentServer';
 import { user } from '@/store/user';
 import audioPlayer from '@/store/audioPlayer';
-import { useLocalStorage } from '@vueuse/core';
 
 const initializeAudioPlayer = (): Promise<void> => {
 	if (audioPlayer.accessToken) {
@@ -20,9 +20,9 @@ const initializeAudioPlayer = (): Promise<void> => {
 		audioPlayer.setBaseUrl(currentServer.value?.serverBaseUrl);
 		audioPlayer.setAccessToken(user.value.accessToken);
 
-		document.addEventListener('click', () => {
+		const supportsAudioContext = useLocalStorage('nmplayer-supports-audio-context', false);
 
-			const supportsAudioContext = useLocalStorage('nmplayer-supports-audio-context', false);
+		document.addEventListener('click', () => {
 			if (!supportsAudioContext) return;
 
 			const audioContext = new AudioContext();

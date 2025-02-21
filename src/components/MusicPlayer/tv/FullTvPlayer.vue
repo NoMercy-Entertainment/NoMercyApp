@@ -51,6 +51,8 @@ const backdrop = ref<HTMLDivElement>();
 
 const canvas = ref<HTMLCanvasElement>();
 
+const controlsVisible = ref(true);
+
 const showControls = () => {
   if (!item.value || !controls.value || !backdrop.value || !fullPlayerModalOpen.value) return;
 
@@ -59,6 +61,7 @@ const showControls = () => {
   setTimeout(() => {
     if (!controls.value) return;
     controls.value.style.translate = '0 0';
+    controlsVisible.value = true;
   }, 50);
 
   backdrop.value.style.setProperty('--backdrop-opacity', '0.6');
@@ -73,6 +76,7 @@ const hideControls = () => {
   setTimeout(() => {
     if (!controls.value) return;
     controls.value.style.translate = '0 100%';
+    controlsVisible.value = false;
   }, 50);
 
   backdrop.value.style.setProperty('--backdrop-opacity', '0.4');
@@ -168,12 +172,17 @@ const onKeyDown = (e: KeyboardEvent) => {
 };
 
 const ontransitionend = (e: TransitionEvent) => {
-  if (e.propertyName === 'translate') {
+  if (e.propertyName === 'translate' && controlsVisible.value) {
     const btn = document.querySelector<HTMLDivElement>('#FullTvPlayer #playback-button');
     btn?.focus();
+
+    const visualizer = document.querySelector<HTMLDivElement>('#FullTvPlayer #audio-visualizer');
+    visualizer?.scrollIntoView({
+      block: 'center',
+      inline: 'center',
+    });
   }
 };
-
 
 </script>
 
@@ -191,7 +200,7 @@ const ontransitionend = (e: TransitionEvent) => {
       }">
 
     <canvas ref="canvas" id="audio-visualizer"
-      class="absolute top-0 left-0 my-24 mx-6 h-available w-available overflow-clip"></canvas>
+      class="absolute top-0 left-0 my-24 mx-6 h-available w-available overflow-clip pointer-events-none"></canvas>
     <div id="audio-color" ref="backdrop"
       class="transform-gpu col-span-1 row-span-1 inset-0 w-full h-screen pointer-events-none bg-[var(--background)] opacity-[var(--backdrop-opacity)] transition-colors duration-1000"
       :class="{
@@ -210,12 +219,13 @@ const ontransitionend = (e: TransitionEvent) => {
     <div class="container flex w-full h-full inset-0 col-span-1 row-span-1 p-12 pb-0">
 
       <div :data-show-lyrics="lyricsMenuOpen"
-        class="flex-col absolute inset-0 w-screen flex pb-16 duration-300 delay:500 h-available overflow-clip pointer-events-none z-0">
+        class="flex-col absolute inset-0 w-screen flex transition-all duration-300 delay:500 h-available overflow-clip pointer-events-none z-0">
 
-        <div :data-show-lyrics="true" class="w-full px-12 pb-12 h-full overflow-hidden">
-          <div id="lyricsContainer"
-            class="z-0 flex h-full w-full flex-col overflow-y-auto overflow-x-hidden scroll-smooth scrollbar-none font-bbc">
-            <div class="relative mt-6 whitespace-pre-wrap font-bold h-available">
+        <div :data-show-lyrics="true" class="w-full px-0 py-16 h-full overflow-hidden transition-all"
+        >
+          <div
+            class="z-0 flex h-full w-full flex-col overflow-y-auto overflow-x-hidden scroll-smooth scrollbar-none font-bbc duration-300">
+            <div class="relative whitespace-pre-wrap font-bold h-available">
               <LyricsOverlay :key="currentSong?.id" />
             </div>
           </div>
@@ -225,6 +235,7 @@ const ontransitionend = (e: TransitionEvent) => {
       <div id="item" ref="item" class="absolute flex items-end gap-4 z-10 transform-gpu transition-all duration-500"
         :class="{
           'top-12': lyricsMenuOpen,
+          'opacity-0': !controlsVisible,
           'top-64 delay-300': !lyricsMenuOpen
         }">
         <div :data-size="musicSize" class="" :class="{

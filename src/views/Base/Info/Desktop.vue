@@ -346,7 +346,7 @@ const menuItems: IMenuItem[] = [
                   </div>
 
                   <p
-                    class="absolute bottom-4 left-6 w-full flex-shrink-0 flex-grow-0 text-sm text-slate-lightA-12/70  dark:text-slate-darkA-12/80">
+                    class="absolute bottom-4 left-6 w-full flex-shrink-0 select-none flex-grow-0 text-sm text-slate-lightA-12/70  dark:text-slate-darkA-12/80">
                     {{ $t('Data provided by The Movie Database(TMDb)') }}.
                   </p>
 
