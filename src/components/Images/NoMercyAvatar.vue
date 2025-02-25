@@ -27,7 +27,7 @@ defineProps({
 </script>
 
 <template>
-  <ion-avatar :style="`max-width:  100%; max-height: 100%;`">
+  <ion-avatar :style="`max-width: 100%; max-height: 100%;`">
     <img v-if="user && !user.avatarUrl" :alt="`${t('NoMercyAvatar for')} ${user.name}`"
       class="rounded-full object-cover object-center p-px NoMercyAvatar aspect-square"
       :src="`${baseUrl}/avatar/${md5(user.email)}?d=monsterid&fm=webp&r=pg&s=${size}&w=${size}`"

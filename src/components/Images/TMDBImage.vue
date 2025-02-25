@@ -74,12 +74,14 @@ const brightness = ref(0);
 
 const serverImageUrl = computed(() => {
   if (!props.path || !currentServer.value) return;
-  return `${currentServer.value?.serverBaseUrl}/images/original${props.path}`;
+  // return `${currentServer.value?.serverBaseUrl}/images/original${props.path}`;
+  return `/tmdb-images${props.path}`;
 });
 
 const tmdbImageUrl = computed(() => {
   if (!props.path) return;
-  return `${tmdbImageBaseUrl}/original${props.path}`;
+  // return `${tmdbImageBaseUrl}/original${props.path}`;
+  return `/tmdb-images${props.path}`;
 });
 
 onMounted(() => {
@@ -225,15 +227,15 @@ const height = computed(() => {
         'aspect-backdrop  w-available h-auto': aspect == 'backdrop',
         'w-auto h-available': aspect == null,
       }" :style="`opacity: ${opacity}; float: ${type == 'logo' ? 'right' : ''}`">
-      <!--			<source-->
-      <!--				:srcset="`${baseImageUrl}?width=${size ? (size * 2) : null}&type=avif&aspect_ratio=${aspectRatio} 1x`"-->
-      <!--				type="image/avif"-->
-      <!--			/>-->
-      <!--			<source-->
-      <!--				:srcset="`${baseImageUrl}?width=${size ? (size * 2) : null}&type=webp&aspect_ratio=${aspectRatio} 1x`"-->
-      <!--				type="image/webp"-->
-      <!--			/>-->
-      <source :srcset="`${serverImageUrl}?width=${size ? (size * 2) : null}&type=png&aspect_ratio=${aspectRatio} 1x`"
+      <source
+        :srcset="`${serverImageUrl}?width=${size ? (size) : null}&type=avif&aspect_ratio=${aspectRatio} 1x`"
+        type="image/avif"
+      />
+      <source
+        :srcset="`${serverImageUrl}?width=${size ? (size) : null}&type=webp&aspect_ratio=${aspectRatio} 1x`"
+        type="image/webp"
+      />
+      <source :srcset="`${serverImageUrl}?width=${size ? (size) : null}&type=png&aspect_ratio=${aspectRatio} 1x`"
         type="image/png" />
       <img :src="tmdbImageUrl" :width="size" :height="height" :fetchpriority="priority"
         :loading="loading == 'eager' ? 'eager' : 'lazy'" :alt="`tmdb image for ${title ?? 'image'}`"

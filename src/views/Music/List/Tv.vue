@@ -200,7 +200,7 @@ const handleClick = (song: PlaylistItem) => {
 
           </ion-col>
 
-          <ion-col size="6" @focus="handleListFocus($event)" tabindex="0" class="w-full h-available overflow-auto scroll-smooth">
+          <ion-col size="6" ref="scrollContainer" @focus="handleListFocus($event)" tabindex="0" class="w-full h-available overflow-auto scroll-smooth">
 <!--            <ScrollPanel ref="scrollContainer" -->
 <!--                         class="w-full h-available overflow-clip scroll-smooth"-->
 <!--                         :pt="{-->

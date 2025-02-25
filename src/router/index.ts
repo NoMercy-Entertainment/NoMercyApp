@@ -13,7 +13,7 @@ import { handlePromises } from '@/router/middleware/handlePromises';
 const router = createRouter({
 	history: isPlatform('capacitor')
 		? createWebHistory(import.meta.env.BASE_URL)
-		: createWebHashHistory(import.meta.env.BASE_URL),
+		: createWebHistory(import.meta.env.BASE_URL),
 	routes: routes,
 });
 

@@ -55,13 +55,13 @@ import PlayerIcon from "@/components/Images/icons/PlayerIcon.vue";
           <NavBarButton icon="noteSixteenth" href="/music/start" name="Music" :active="isMusicRoute" />
         </div>
 
-        <button class="relative flex flex-col rounded-full size-10 my-1 pointer-events-auto">
+        <RouterLink to="/setup/select-servers" class="relative flex flex-col rounded-full size-10 my-1 pointer-events-auto">
           <NoMercyAvatar :user="user" :size="40"
             class="absolute focus-visible:ring-2 ring-inset focus-visible:ring-white" />
           <span
             class="absolute rounded-full border-white bg-green-600 size-[25%] bottom-[5%] end-[5%] border-[0.125rem] dark:border-stone-900">
           </span>
-        </button>
+        </RouterLink>
 
       </div>
     </ion-toolbar>

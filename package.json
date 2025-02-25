@@ -50,7 +50,7 @@
     "@microsoft/signalr": "^8.0.7",
     "@nomercy-entertainment/media-session": "^0.1.11",
     "@nomercy-entertainment/nomercy-music-player": "^0.1.6",
-    "@nomercy-entertainment/nomercy-video-player": "^0.2.6",
+    "@nomercy-entertainment/nomercy-video-player": "^0.2.11",
     "@primevue/auto-import-resolver": "^4.0.0-beta.5",
     "@primevue/themes": "4.0.0-rc.2",
     "@tanstack/vue-query": "^5.59.17",
