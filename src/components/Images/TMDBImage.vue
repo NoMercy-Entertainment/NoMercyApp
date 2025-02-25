@@ -75,13 +75,13 @@ const brightness = ref(0);
 const serverImageUrl = computed(() => {
   if (!props.path || !currentServer.value) return;
   // return `${currentServer.value?.serverBaseUrl}/images/original${props.path}`;
-  return `/tmdb-images${props.path}`;
+  return `https://app.nomercy.tv/tmdb-images${props.path}`;
 });
 
 const tmdbImageUrl = computed(() => {
   if (!props.path) return;
   // return `${tmdbImageBaseUrl}/original${props.path}`;
-  return `/tmdb-images${props.path}`;
+  return `https://app.nomercy.tv/tmdb-images${props.path}`;
 });
 
 onMounted(() => {
