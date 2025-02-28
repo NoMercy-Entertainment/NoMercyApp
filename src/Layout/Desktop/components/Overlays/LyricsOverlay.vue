@@ -1,22 +1,24 @@
 <script setup lang="ts">
-import { nextTick, onBeforeMount, onMounted, onUnmounted, ref, watch } from 'vue';
+import { nextTick, onBeforeMount, onMounted, ref, watch } from 'vue';
 
 import type { Lyric } from "@/types/musicPlayer";
 
 import { random_string } from '@/lib/stringArray';
-import { scrollCenter } from '@/lib/utils';
-import LyricItem from '@/Layout/Desktop/components/Overlays/LyricItem.vue';
+import {scrollCenter, setupResizeListener} from '@/lib/utils';
 
 import { user } from '@/store/user';
 import { currentServer } from '@/store/currentServer';
 import audioPlayer, {currentSong, currentTime, lyricsMenuOpen, setHasLyrics} from '@/store/audioPlayer';
 import {setDisableScreensaver} from "@/store/imageModal";
 
+import LyricItem from '@/Layout/Desktop/components/Overlays/LyricItem.vue';
+
 const lyrics_container = ref<HTMLDivElement>();
 const lyrics = ref<Lyric[] | undefined | null>(currentSong.value?.lyrics);
 const id = ref(random_string(8));
-const index = ref<number>(0);
 const lastIndex = ref(-1);
+const resizeObserver = ref<ResizeObserver>();
+const currentLyric = ref<HTMLDivElement>();
 
 const fetchLyrics = (id: string) => {
   if (!id || currentSong.value?.lyrics) return;
@@ -38,16 +40,6 @@ const fetchLyrics = (id: string) => {
     });
 };
 
-const setScroll = () => {
-  const element = document.querySelector<HTMLDivElement>(`[data-index="${index.value}"]`)!;
-  const container = document.querySelector<HTMLDivElement>('#lyricsContainer');
-
-  if (!element || !container) return;
-  scrollCenter(element, container, {
-    duration: 0,
-  });
-};
-
 onBeforeMount(() => {
   lastIndex.value = -1;
 
@@ -59,14 +51,13 @@ onBeforeMount(() => {
 });
 
 onMounted(() => {
-  if (!lyrics_container.value || !lyrics.value) return;
+  if (!lyrics_container.value || !currentLyric.value) return;
 
   lyrics_container.value.scrollTop = 0;
-
-  const MobilePlayer = document.querySelector<HTMLDivElement>('#MobilePlayer');
-  MobilePlayer?.addEventListener('scroll', setScroll);
-
+  
   audioPlayer.on('seeked', (data) => {
+    if (!lyrics_container.value || !lyrics_container.value) return;
+
     const newIndex = (lyrics.value?.findIndex?.(l => l.time?.total >= data.position) ?? 0) - 1;
 
     const elements = Array.from(lyrics_container.value?.querySelectorAll<HTMLDivElement>('[data-lyric]') ?? []);
@@ -79,10 +70,9 @@ onMounted(() => {
           el.style.color = 'black';
         });
 
-      const currentLyric = lyrics_container.value?.querySelector<HTMLDivElement>(`[data-index='0']`);
-      if (currentLyric) {
-        // currentLyric?.animateVerticalIntoView(lyrics_container.value);
-        scrollCenter(currentLyric, lyrics_container.value, {
+      currentLyric.value = lyrics_container.value.querySelector<HTMLDivElement>(`[data-index='0']`)!;
+      if (currentLyric.value && lyrics_container.value) {
+        scrollCenter(currentLyric.value, lyrics_container.value, {
           duration: 500,
         });
       }
@@ -96,19 +86,14 @@ onMounted(() => {
           el.style.color = 'white';
         });
 
-      const currentLyric = lyrics_container.value?.querySelector<HTMLDivElement>(`[data-index='${elements.length - 1}']`);
-      // currentLyric?.animateVerticalIntoView(lyrics_container.value);
-      scrollCenter(currentLyric, lyrics_container.value, {
-        duration: 500,
-      });
-
+      currentLyric.value = lyrics_container.value.querySelector<HTMLDivElement>(`[data-index='${elements.length - 1}']`)!;
+      if (currentLyric.value && lyrics_container.value) {
+        scrollCenter(currentLyric.value, lyrics_container.value, {
+          duration: 500,
+        });
+      }
     }
   });
-});
-
-onUnmounted(() => {
-  const MobilePlayer = document.querySelector<HTMLDivElement>('#MobilePlayer');
-  MobilePlayer?.removeEventListener('scroll', setScroll);
 });
 
 watch(currentTime, (value) => {
@@ -132,16 +117,14 @@ watch(currentTime, (value) => {
       el.style.color = 'white';
     });
 
-  const currentLyric = lyrics_container.value?.querySelector<HTMLDivElement>(`[data-index='${newIndex}']`);
+  currentLyric.value = lyrics_container.value.querySelector<HTMLDivElement>(`[data-index='${newIndex}']`)!;
 
-  if (currentLyric) {
-    console.log('currentLyric', currentLyric);
-    // currentLyric.animateVerticalIntoView(lyrics_container.value);
-    scrollCenter(currentLyric, lyrics_container.value, {
+  if (currentLyric.value) {
+    currentLyric.value.style.opacity = '1';
+    currentLyric.value.style.color = 'white';
+    scrollCenter(currentLyric.value, lyrics_container.value, {
       duration: 500,
     });
-    currentLyric.style.opacity = '1';
-    currentLyric.style.color = 'white';
   }
 
   elements
@@ -169,7 +152,6 @@ watch(lyrics, (value) => {
   if (currentLyric) {
     currentLyric.style.opacity = '1';
     currentLyric.style.color = 'white';
-    // currentLyric?.animateVerticalIntoView(lyrics_container.value);
     scrollCenter(currentLyric, lyrics_container.value, {
       duration: 500,
     });

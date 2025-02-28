@@ -71,7 +71,7 @@ const handleClick = (e: Event) => {
       <template v-for="(item, index) in data" :key="item.id">
 
         <RouterLink :to="item.link" :onkeyup="onkeyup" tabindex="0" data-target="album" @click="handleClick($event)"
-          class="flex items-center gap-1 whitespace-nowrap font-semibold line-clamp-1 hover:underline focus:underline dark:font-medium pointer-events-auto px-2 py-1 -mx-2">
+          class="flex items-center gap-1 whitespace-nowrap font-semibold line-clamp-1 hover:underline focus:underline dark:font-medium pointer-events-auto px-2 -mx-2">
 
           <span class="flex whitespace-nowrap leading-6">
             {{ item.name }}{{ index < data.length - 1 ? ',' : '' }} </span>

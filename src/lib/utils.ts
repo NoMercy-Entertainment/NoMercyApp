@@ -71,21 +71,63 @@ export const scrollIntoView = (parent?: HTMLElement) => {
 
 	requestAnimationFrame(scrollStep);
 };
+//
+// export const scrollCenter = (el: HTMLElement, container: HTMLElement, options?: {
+// 	duration?: number;
+// 	margin?: number;
+// }
+// ) => {
+// 	if (!el || !container) return;
+// 	console.log('scroll Center', el, container);
+//
+// 	const scrollDuration = options?.duration || 60;
+// 	let margin = options?.margin;
+// 	if (container.offsetHeight < window.innerHeight * 0.6) {
+// 		margin = 0.65;
+// 	} else {
+// 		margin = 1.65;
+// 	}
+//
+// 	const elementTop = (el.getBoundingClientRect().top) + (el.getBoundingClientRect().height / 2) - (container.getBoundingClientRect().height / margin);
+//
+// 	const startingY = container.scrollTop;
+// 	const startTime = performance.now();
+//
+// 	function scrollStep(timestamp: number) {
+// 		const currentTime = timestamp - startTime;
+// 		const progress = Math.min(currentTime / scrollDuration, 1);
+//
+// 		container.scrollTo(0, Math.floor(startingY + (elementTop * progress)));
+//
+// 		if (currentTime < scrollDuration) {
+// 			requestAnimationFrame(scrollStep);
+// 		}
+// 	}
+//
+// 	requestAnimationFrame(scrollStep);
+// };
 
 export const scrollCenter = (el: HTMLElement, container: HTMLElement, options?: {
 	duration?: number;
 	margin?: number;
-}
-) => {
-	if (!el) return;
-	console.log('scroll Center', el, container);
+}) => {
+	if (!el || !container) return;
 
 	const scrollDuration = options?.duration || 60;
-	const margin = options?.margin || 1.5;
 
-	const elementTop = (el.getBoundingClientRect().top) + (el!.getBoundingClientRect().height / 2) - (container.getBoundingClientRect().height / margin);
+	const containerRect = container.getBoundingClientRect();
+	const elementRect = el.getBoundingClientRect();
 
-	// console.log('elementTop', [el.getBoundingClientRect().top, container.scrollTop]);
+	// Calculate the desired center position of the element within the container.
+	const elementCenterY = elementRect.top + elementRect.height / 2;
+	const containerCenterY = containerRect.top + containerRect.height / 2;
+
+	// Calculate the scroll offset needed to center the element.
+	const scrollOffset = elementCenterY - containerCenterY;
+
+	// Calculate the target scroll position.
+	const targetScrollTop = container.scrollTop + scrollOffset;
+
 	const startingY = container.scrollTop;
 	const startTime = performance.now();
 
@@ -93,7 +135,8 @@ export const scrollCenter = (el: HTMLElement, container: HTMLElement, options?: 
 		const currentTime = timestamp - startTime;
 		const progress = Math.min(currentTime / scrollDuration, 1);
 
-		container.scrollTo(0, Math.floor(startingY + (elementTop * progress)));
+		const newScrollTop = startingY + (targetScrollTop - startingY) * progress;
+		container.scrollTo(0, Math.floor(newScrollTop));
 
 		if (currentTime < scrollDuration) {
 			requestAnimationFrame(scrollStep);

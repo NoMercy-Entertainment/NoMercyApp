@@ -104,7 +104,6 @@ export async function setDisplayLanguage(value: string) {
 (async () => {
 	Preferences.get({ key: 'display_language'})
 		.then(async (value) => {
-			console.log(value);
 			await setDisplayLanguage(value.value ?? window.navigator.language.split('-')?.[0]);
 		});
 })()

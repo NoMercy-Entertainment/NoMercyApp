@@ -31,7 +31,8 @@ const timeout2 = ref<NodeJS.Timeout>();
 const timeout3 = ref<NodeJS.Timeout>();
 
 const imageBaseUrl = computed(() => {
-  return `${currentServer.value?.serverBaseUrl}/images/original`;
+  // return `${currentServer.value?.serverBaseUrl}/images/original`;
+  return 'https://app.nomercy.tv/tmdb-images';
 });
 
 const delay = computed(() => {

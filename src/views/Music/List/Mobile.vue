@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { onMounted, ref, watch } from 'vue';
-import { useRouter } from 'vue-router';
+import {useRoute, useRouter} from 'vue-router';
 import { IonContent, IonPage, isPlatform, onIonViewWillEnter } from '@ionic/vue';
 
 import type { ScrollCustomEvent } from '@ionic/core/dist/types/components/content/content-interface';
@@ -19,10 +19,10 @@ import TrackRow from '@/views/Music/List/components/TrackRow.vue';
 import MoooomIcon from '@/components/Images/icons/MoooomIcon.vue';
 import NotFound from "@/Layout/Desktop/components/NotFound.vue";
 
-const router = useRouter();
+const route = useRoute();
 
 const { data, isError } = useServerClient<DisplayList>({
-  path: router.currentRoute.value.fullPath,
+  path: route.fullPath,
   keepForever: true,
 });
 
@@ -115,7 +115,7 @@ const onScroll = (e: ScrollCustomEvent) => {
     <ion-content :fullscreen="true" @ionScroll="onScroll" :scrollEvents="true">
       <NotFound v-if="isError && !data" />
       <div
-        v-else-if="!router.currentRoute.value.params.id || (router.currentRoute.value.params.id && data?.id == router.currentRoute.value.params.id)"
+        v-else-if="!route.params.id || (route.params.id && data?.id == route.params.id)"
         ref="main"
         class="flex flex-col overflow-x-clip w-available h-min sm:rounded-2xl -mt-safe-offset-12 bg-[rgb(var(--background-auto))]">
         <ArtistHeader :data="data" />

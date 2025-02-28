@@ -32,7 +32,7 @@ const afterEach = (router: Router) => {
 			// }
 
 			if (location.search) {
-				history.replaceState(null, '', location.pathname);
+				router.replace({ query: {} }).then();
 			}
 			
 			setTimeout(() => {

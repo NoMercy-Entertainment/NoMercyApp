@@ -1,0 +1,28 @@
+@font-face {
+    font-family: 'ReithSans';
+    font-style: normal;
+    font-weight: 500; /* Medium */
+    font-display: swap;
+    src: url("/fonts/ReithSansMedium.woff2") format("woff2");
+}
+@font-face {
+    font-family: 'ReithSans';
+    font-style: italic;
+    font-weight: 500;
+    font-display: swap;
+    src: url("/fonts/ReithSansMediumItalic.woff2") format("woff2");
+}
+@font-face {
+    font-family: 'ReithSans';
+    font-style: normal;
+    font-weight: 800; /* ExtraBold, assuming close to 800 */
+    font-display: swap;
+    src: url("/fonts/ReithSansExtraBold.woff2") format("woff2");
+}
+@font-face {
+    font-family: 'ReithSans';
+    font-style: italic;
+    font-weight: 800;
+    font-display: swap;
+    src: url("/fonts/ReithSansExtraBoldItalic.woff2") format("woff2");
+}

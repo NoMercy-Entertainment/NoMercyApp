@@ -100,7 +100,7 @@ const description = "Upload an image of max {{dimension}} pixels and {{size}} in
 
   <ion-page>
     <ion-content :fullscreen="true">
-      <DashboardLayout :gridStyle="3" title="Profile">
+      <DashboardLayout :gridStyle="3" title="Profile" :allowAnyone="true">
         <template v-slot:cta>
           <!--          <Button id="invite" color="theme" startIcon="userAdd" @click="{}">-->
           <!--            {{ $t('Invite user') }}-->

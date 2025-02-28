@@ -123,13 +123,13 @@ watch(audioColor, (value) => {
     class="relative z-0 flex flex-col items-end justify-start text-white sm:flex-row sm:gap-9 sm:pt-12 sm:pb-8 sm:px-8"
     :class="{
       'pt-safe-offset-12 px-8 gap-4': isPlatform('capacitor'),
-      'pt-24 px-6 gap-12 sm:gap-4': !isPlatform('capacitor')
+      'pt-24 px-6 gap-2 sm:gap-12': !isPlatform('capacitor')
     }">
     <div ref="audioColor" id="audio-color" class="absolute top-0 left-0 h-full w-full overflow-clip bg-focus"></div>
     <div class="absolute top-0 left-0 h-full w-full overflow-clip bg-black/50  "></div>
     <!--        <canvas ref="canvas" id="audio-visualizer" class="absolute top-0 left-96 my-12 ml-6 mr-6 mt-full h-available w-available overflow-clip pointer-events-none"></canvas>-->
     <div
-      class="frosting relative mx-auto flex aspect-square h-amin-w-80 flex-col items-center justify-center overflow-clip rounded-xl bg-gradient-to-br min-w-64 bg-theme-7 from-theme-5 via-theme-7 to-theme-11 shadow"
+      class="frosting relative mx-auto flex aspect-square h-min w-80 flex-col items-center justify-center overflow-clip rounded-xl bg-gradient-to-br min-w-64 bg-theme-7 from-theme-5 via-theme-7 to-theme-11 shadow"
       :class="{
         '-mt-4': isPlatform('capacitor'),
         '': !isPlatform('capacitor')
@@ -141,8 +141,8 @@ watch(audioColor, (value) => {
     </div>
 
     <div v-if="data?.name"
-      class="relative mt-2 flex w-full flex-1 flex-shrink-0 flex-col items-start justify-start gap-4 flex-grow-1 sm:hidden">
-      <div class="w-full text-2xl font-semibold line-clamp-1 whitespace-pre mb-4"
+      class="relative my-4 flex w-full flex-1 flex-shrink-0 flex-col items-start justify-start gap-4 flex-grow-1 sm:hidden">
+      <div class="w-full text-2xl font-semibold whitespace-pre-line"
         v-html="breakTitle(data?.name ?? 'Songs you like', 'text-sm line-clamp-1')">
       </div>
     </div>

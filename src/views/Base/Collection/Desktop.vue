@@ -93,7 +93,7 @@ onUnmounted(() => {
         <div class="w-available">
           <FloatingBackButton />
           <div v-if="data"
-            class="w-available overflow-x-clip relative mt-12 flex flex-grow flex-col items-start justify-start gap-4 self-stretch p-4 pr-0 pb-5">
+            class="w-available overflow-x-clip relative mt-12 flex flex-grow flex-col items-start justify-start gap-4 self-stretch p-4 pb-5">
             <p class="ml-4 w-full flex-shrink-0 flex-grow-0 self-stretch text-5xl font-bold">
               {{ data?.title?.replace(/(: | en de )/, '\n') }}
             </p>

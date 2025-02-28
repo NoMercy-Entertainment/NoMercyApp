@@ -9,7 +9,7 @@ import { isPlatform } from "@ionic/vue";
 
 <template>
   <div id="sortHeaderElement"
-    class="sticky -mx-4 px-4 z-30 my-2 block h-10 content-center items-center justify-start self-stretch bg-transparent text-sm font-medium transition-all duration-200 w-available -mt-0.5 group/track sm:w-available sm:-top-px"
+    class="sticky -mx-4 px-4 z-30 mt-4 block h-10 content-center items-center justify-start self-stretch bg-transparent text-sm font-medium transition-all duration-200 w-available group/track sm:w-available sm:-top-px"
     :class="{
       'top-safe-offset-10': isPlatform('capacitor'),
       'top-safe-offset-16': !isPlatform('capacitor')

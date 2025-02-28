@@ -136,13 +136,13 @@ watch(dataUpdatedAt, (value) => {
     </div>
 
     <div v-else
-      class="flex flex-col relative z-0 h-available min-h-[92vh] sm:min-h-[90vh] h-px overflow-clip items-start justify-start self-stretch w-available bg-slate-light-2 dark:bg-slate-dark-2">
+      class="flex flex-col relative z-0 h-available min-h-[92vh] sm:min-h-[90vh] h-px overflow-clip items-start justify-start self-stretch w-available bg-slate-light-4 dark:bg-slate-dark-2">
       <div
         class="sticky top-0 z-10 flex flex-shrink-0 flex-grow-0 flex-col items-start justify-start gap-5 self-stretch">
         <div class="absolute inset-0 z-0 h-full w-full"></div>
         <!--			<Shadow type="linear"/>-->
         <div
-          class="z-10 flex h-20 items-center justify-between gap-4 self-stretch border-b px-4 py-4 border-auto-7/6 xl:px-6 bg-slate-light-2 dark:bg-slate-dark-2">
+          class="z-10 flex h-20 items-center justify-between gap-4 self-stretch border-b px-4 py-4 border-auto-7/6 xl:px-6 bg-slate-light-4 dark:bg-slate-dark-2">
           <div
             class="relative flex h-full flex-col items-start justify-center gap-1 text-slate-light-12/80 dark:text-slate-dark-12/80">
             <p class="w-auto flex-shrink-0 flex-grow-0 self-stretch whitespace-nowrap text-xl font-semibold">
@@ -163,7 +163,7 @@ watch(dataUpdatedAt, (value) => {
         </div>
       </div>
 
-      <div v-if="error" class="grid h-full w-full place-items-center bg-slate-light-2 dark:bg-slate-dark-2">
+      <div v-if="error" class="grid h-full w-full place-items-center bg-slate-light-4 dark:bg-slate-dark-2">
         <div class="relative flex flex-col items-center justify-start gap-8 overflow-hidden">
           <div class="relative flex w-full flex-col gap-4">
             <p class="text-7xl font-bold text-center text-slate-light-12/80 dark:text-slate-dark-12/80">
@@ -177,7 +177,7 @@ watch(dataUpdatedAt, (value) => {
         </div>
       </div>
       <ScrollContainer v-else :static="true"
-        class="z-0 w-full flex-1 overflow-y-auto overflow-x-hidden sm:p-4 bg-slate-light-2 dark:bg-slate-dark-2">
+        class="z-0 w-full flex-1 overflow-y-auto overflow-x-hidden sm:p-4 bg-slate-light-4 dark:bg-slate-dark-2">
         <div class="h-auto w-full flex-wrap content-start gap-4" :class="grid">
           <slot />
         </div>

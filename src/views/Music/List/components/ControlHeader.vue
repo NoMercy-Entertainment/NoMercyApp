@@ -33,7 +33,7 @@ const handleAdd = () => {
 
 <template>
     <div class="pointer-events-none absolute z-0 h-96 w-full bg-spotifyBottom bg-focus"></div>
-    <div class="flex gap-4 items-center py-4 px-4 sm:px-8 w-full pl-2 pr-4 sm:pr-16 h-20 z-40" data-index="1">
+    <div class="flex sm:gap-4 items-center py-4 px-4 sm:px-8 w-full pl-3 pr-4 sm:pr-16 h-20 z-40" data-index="1">
 
         <BigPlayButton v-if="data?.tracks" :data="data" class="hidden sm:flex" />
 

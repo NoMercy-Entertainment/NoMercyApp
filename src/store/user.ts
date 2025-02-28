@@ -26,7 +26,6 @@ export const getUser = (): User => {
 }
 
 export const setUserFromKeycloak = (keycloakUser: Keycloak): void => {
-	console.log('setUserFromKeycloak');
 	if (!keycloakUser) {
 		alert('No user found');
 		return;
@@ -54,7 +53,6 @@ export const setUserFromKeycloak = (keycloakUser: Keycloak): void => {
 }
 
 export const updateUserFromApi = (newUser: User): void => {
-	console.log('updateUserFromApi');
 	user.value = {
 		...user.value,
 		avatarUrl: newUser.avatarUrl,

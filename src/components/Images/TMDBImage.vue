@@ -1,13 +1,13 @@
 <script setup lang="ts">
-import { computed, onMounted, PropType, ref, watch } from 'vue';
+import {computed, onMounted, PropType, ref, watch} from 'vue';
 
-import type { PaletteColors } from '@/types/api/shared';
+import type {PaletteColors} from '@/types/api/shared';
 
-import { isDarkMode } from '@/config/global';
-import { getImageBrightness, hexLighter } from '@/lib/colorHelper';
-import { currentServer } from '@/store/currentServer';
-import { useAutoThemeColors } from '@/store/preferences';
-import { tmdbImageBaseUrl } from '@/config/config';
+import {isDarkMode} from '@/config/global';
+import {getImageBrightness, hexLighter} from '@/lib/colorHelper';
+import {currentServer} from '@/store/currentServer';
+import {useAutoThemeColors} from '@/store/preferences';
+import {tmdbImageBaseUrl} from '@/config/config';
 import AppLogoSquare from "@/components/Images/icons/AppLogoSquare.vue";
 
 const props = defineProps({
@@ -87,7 +87,7 @@ const tmdbImageUrl = computed(() => {
 onMounted(() => {
   if (props?.type != 'logo' || serverImageUrl.value?.includes('undefined')) return;
 
-  getImageBrightness(`${serverImageUrl.value}`, ({ nonTransparentBrightness }) => {
+  getImageBrightness(`${serverImageUrl.value}`, ({nonTransparentBrightness}) => {
     brightness.value = nonTransparentBrightness;
     shouldLighten.value = nonTransparentBrightness < 20;
     shouldDarken.value = nonTransparentBrightness > 80;
@@ -99,7 +99,7 @@ watch(serverImageUrl, (value) => {
 
   if (props?.type == 'logo' || serverImageUrl.value?.includes('undefined')) return;
 
-  getImageBrightness(`${value}`, ({ nonTransparentBrightness }) => {
+  getImageBrightness(`${value}`, ({nonTransparentBrightness}) => {
     brightness.value = nonTransparentBrightness;
     shouldLighten.value = nonTransparentBrightness < 20;
     shouldDarken.value = nonTransparentBrightness > 80;
@@ -129,9 +129,9 @@ const style = computed(() => {
     '--c-4': 'rgb(var(--color-focus) / 1%)',
 
     backgroundImage: props.type == 'logo' || !useAutoThemeColors
-      ? props.type == 'logo'
-        ? ''
-        : `
+        ? props.type == 'logo'
+            ? ''
+            : `
                     radial-gradient(
                         farthest-corner at top left,
                                 rgb(var(--color-theme-9)),
@@ -153,7 +153,7 @@ const style = computed(() => {
                         hsl(0 0% 100% / 4%) 300px
                     )
                 `
-      : `
+        : `
 				radial-gradient(
 					farthest-corner at top left,
 							${hexLighter(props.colorPalette?.lightVibrant, luminosityValue.value) ?? 'var(--c-1)'},
@@ -194,16 +194,16 @@ const remove = (e: ErrorEvent) => {
 
 const aspectRatio = computed(() => {
   return props.aspect == 'poster'
-    ? 3 / 2
-    : props.aspect == 'backdrop'
-      ? 9 / 16
-      : null;
+      ? 3 / 2
+      : props.aspect == 'backdrop'
+          ? 9 / 16
+          : null;
 });
 
 const widthClass = computed(() => {
   return props.aspect == 'poster' || props.aspect == 'backdrop'
-    ? 'w-full'
-    : 'w-auto';
+      ? 'w-full'
+      : 'w-auto';
 });
 
 const height = computed(() => {
@@ -214,51 +214,62 @@ const height = computed(() => {
 </script>
 <template>
   <div class="pointer-events-none bottom-0 mx-auto flex w-full select-none place-self-start h-available overflow-clip"
-    :class="{
+       :class="{
       'aspect-poster  w-available h-auto': aspect == 'poster',
       'aspect-backdrop  w-available h-auto': aspect == 'backdrop',
       'w-auto h-available': aspect == null,
     }" :style="style">
     <div class="absolute inset-0 h-full w-full bg-black/50  shadow" v-if="opacity == 0 && type == 'image'"></div>
     <picture v-if="!error && path && !path?.includes?.('undefined')"
-      class="pointer-events-none absolute inset-0 flex select-none flex-col items-end justify-end self-end transition-all duration-500"
-      :class="{
+             class="pointer-events-none absolute inset-0 flex select-none flex-col items-end justify-end self-end transition-all duration-500"
+             :class="{
         'aspect-poster  w-available h-auto': aspect == 'poster',
         'aspect-backdrop  w-available h-auto': aspect == 'backdrop',
         'w-auto h-available': aspect == null,
       }" :style="`opacity: ${opacity}; float: ${type == 'logo' ? 'right' : ''}`">
       <source
-        :srcset="`${serverImageUrl}?width=${size ? (size) : null}&type=avif&aspect_ratio=${aspectRatio} 1x`"
-        type="image/avif"
+          :srcset="`${serverImageUrl}?width=${size ? (size) : null}&type=avif&aspect_ratio=${aspectRatio} 1x`"
+          type="image/avif"
       />
       <source
-        :srcset="`${serverImageUrl}?width=${size ? (size) : null}&type=webp&aspect_ratio=${aspectRatio} 1x`"
-        type="image/webp"
+          :srcset="`${serverImageUrl}?width=${size ? (size) : null}&type=webp&aspect_ratio=${aspectRatio} 1x`"
+          type="image/webp"
       />
       <source :srcset="`${serverImageUrl}?width=${size ? (size) : null}&type=png&aspect_ratio=${aspectRatio} 1x`"
-        type="image/png" />
-      <img :src="tmdbImageUrl" :width="size" :height="height" :fetchpriority="priority"
-        :loading="loading == 'eager' ? 'eager' : 'lazy'" :alt="`tmdb image for ${title ?? 'image'}`"
-        class="pointer-events-auto inset-0 h-auto bg-top transition-all duration-500 max-h-available" :class="{
-          'aspect-poster  w-available h-auto': aspect == 'poster',
-          'aspect-backdrop  w-available h-auto': aspect == 'backdrop',
-          'w-available h-available': aspect == null,
-          'object-scale-down !w-auto': type == 'logo',
-          'object-cover object-top': type == 'image',
-          '[filter:drop-shadow(0px_0px_6px_black)_drop-shadow(0px_0px_6px_black)_drop-shadow(0px_0px_6px_black)]': shouldDarken,
-          [`${widthClass}`]: true,
-          [`${className}`]: true,
-        }" :style="`
-            float: ${type == 'logo' ? 'right' : ''};
-            filter: ${shouldLighten || shouldDarken
-                ? `drop-shadow(0px 0px 6px rgb(${shadow})) drop-shadow(0px 0px 6px rgb(${shadow}))`
-                : ''
-              }`" :onload="onLoaded" :onloadstart="onLoadStart" :onerror="onError" crossorigin="anonymous" />
+              type="image/png"/>
+      <img :src="tmdbImageUrl"
+           :width="size"
+           :height="height"
+           :fetchpriority="priority"
+           :loading="loading == 'eager' ? 'eager' : 'lazy'"
+           :alt="`tmdb image for ${title ?? 'image'}`"
+           :onload="onLoaded"
+           :onloadstart="onLoadStart"
+           :onerror="onError"
+           crossorigin="anonymous"
+           class="pointer-events-auto inset-0 h-auto bg-top transition-all duration-500 max-h-available"
+           :class="{
+              'aspect-poster  w-available h-auto': aspect == 'poster',
+              'aspect-backdrop  w-available h-auto': aspect == 'backdrop',
+              'w-available h-available': aspect == null,
+              'object-scale-down !w-auto': type == 'logo',
+              'object-cover object-top': type == 'image',
+              '[filter:drop-shadow(0px_0px_6px_black)_drop-shadow(0px_0px_6px_black)_drop-shadow(0px_0px_6px_black)]': shouldDarken,
+              [`${widthClass}`]: true,
+              [`${className}`]: true,
+            }"
+           :style="`
+              float: ${type == 'logo' ? 'right' : ''};
+              filter: ${shouldLighten || shouldDarken
+                  ? `drop-shadow(0px 0px 6px rgb(${shadow})) drop-shadow(0px 0px 6px rgb(${shadow}))`
+                  : ''
+           }`"
+      />
     </picture>
     <div v-else-if="type == 'image'" class="inset-0 grid aspect-video h-full w-full place-items-center place-center"
-      :class="type == 'image' ? 'bg-auto-1' : ''">
+         :class="type == 'image' ? 'bg-auto-1' : ''">
       <div class="w-full h-full inset-0 grid place-items-center place-center bg-[rgb(var(--color-logo-dark)/20%)]">
-        <AppLogoSquare class="h-auto w-3/5 max-h-[60%] -translate-y-[5%]" />
+        <AppLogoSquare class="h-auto w-3/5 max-h-[60%] -translate-y-[5%]"/>
       </div>
     </div>
   </div>

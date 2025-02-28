@@ -54,10 +54,10 @@ const getDeviceId = async () => {
 		as.value = data;
 	});
 
-	console.log({
-		appInfo: toRaw(appInfo.value),
-		deviceInfo: toRaw(deviceInfo.value),
-		batteryInfo: toRaw(batteryInfo.value)
-	});
+	// console.log({
+	// 	appInfo: toRaw(appInfo.value),
+	// 	deviceInfo: toRaw(deviceInfo.value),
+	// 	batteryInfo: toRaw(batteryInfo.value)
+	// });
 
 })();
