@@ -10,10 +10,10 @@ export interface Component {
 export type EdgeStyle = 'none' | 'depressed' | 'dropShadow'| 'textShadow' | 'raised' | 'uniform';
 
 export interface SubtitleStyle {
+	textOpacity: number;
 	fontFamily: string;
 	fontSize: number;
 	textColor: string;
-	textOpacity: number;
 	edgeStyle: EdgeStyle;
 	backgroundColor: string;
 	backgroundOpacity: number;
@@ -59,14 +59,13 @@ export const defaultSubtitleStyles: SubtitleStyle = Object.freeze({
 	fontSize: 100,
 	fontFamily: 'ReithSans, sans-serif',
 	textColor: 'white',
-	textOpacity: 1,
+	textOpacity: 100,
 	backgroundColor: 'black',
 	backgroundOpacity: 0,
 	edgeStyle: 'textShadow',
 	areaColor: 'black',
 	windowOpacity: 0
 });
-
 
 export const namedColors: Record<string, string> = {
 	"aliceblue": "#F0F8FF",

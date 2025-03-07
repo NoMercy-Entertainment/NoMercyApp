@@ -10,8 +10,10 @@ import {
     IftaLabel, InputNumber, InputText,
     MultiSelect, Ripple, ScrollPanel,
     Select, Toast, ToastService,
-    Tooltip, Textarea, Image,
+    Tooltip, Textarea, Image
 } from 'primevue';
+import { Form } from '@primevue/forms';
+import '@primeuix/styled';
 
 import { App } from '@capacitor/app';
 import { IonicVue, isPlatform, useBackButton } from '@ionic/vue';
@@ -118,6 +120,7 @@ export async function setupApp(app: AppContext['app']) {
     app.component('Toast', Toast);
     app.component('Textarea', Textarea);
     app.component('Image', Image);
+    app.component('Form', Form);
 
     router.isReady()
         .then(() => {

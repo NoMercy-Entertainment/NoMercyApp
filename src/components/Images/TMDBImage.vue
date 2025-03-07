@@ -228,14 +228,14 @@ const height = computed(() => {
         'w-auto h-available': aspect == null,
       }" :style="`opacity: ${opacity}; float: ${type == 'logo' ? 'right' : ''}`">
       <source
-          :srcset="`${serverImageUrl}?width=${size ? (size) : null}&type=avif&aspect_ratio=${aspectRatio} 1x`"
+          :srcset="`${serverImageUrl}?width=${size ? (size * 2) : null}&type=avif&aspect_ratio=${aspectRatio} 1x`"
           type="image/avif"
       />
       <source
-          :srcset="`${serverImageUrl}?width=${size ? (size) : null}&type=webp&aspect_ratio=${aspectRatio} 1x`"
+          :srcset="`${serverImageUrl}?width=${size ? (size * 2) : null}&type=webp&aspect_ratio=${aspectRatio} 1x`"
           type="image/webp"
       />
-      <source :srcset="`${serverImageUrl}?width=${size ? (size) : null}&type=png&aspect_ratio=${aspectRatio} 1x`"
+      <source :srcset="`${serverImageUrl}?width=${size ? (size * 2) : null}&type=png&aspect_ratio=${aspectRatio} 1x`"
               type="image/png"/>
       <img :src="tmdbImageUrl"
            :width="size"

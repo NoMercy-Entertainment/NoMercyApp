@@ -10,15 +10,15 @@ import KeyHandlerPlugin from '@nomercy-entertainment/nomercy-video-player/src/pl
 import type { NMPlayer, PlaylistItem, PlayerConfig, VTTData } from '@nomercy-entertainment/nomercy-video-player/src/types';
 
 // // @ts-ignore
-// import nmplayer from 'https://vscode.nomercy.tv/src/index.ts';
+// import nmplayer from 'http://localhost:5503/src/index.ts';
 // // @ts-ignore
-// import Plugin from 'https://vscode.nomercy.tv/src/plugin.ts';
+// import Plugin from 'http://localhost:5503/src/plugin.ts';
 // // @ts-ignore
-// import { OctopusPlugin } from 'https://vscode.nomercy.tv/src/plugins/octopusPlugin.ts';
+// import { OctopusPlugin } from 'http://localhost:5503/src/plugins/octopusPlugin.ts';
 // // @ts-ignore
-// import { KeyHandlerPlugin } from 'https://vscode.nomercy.tv/src/plugins/keyHandlerPlugin.ts';
+// import { KeyHandlerPlugin } from 'http://localhost:5503/src/plugins/keyHandlerPlugin.ts';
 // // @ts-ignore
-// import type {NMPlayer, PlaylistItem, PlayerConfig, VTTData} from 'https://vscode.nomercy.tv/src/index.d.ts';
+// import type {NMPlayer, PlaylistItem, PlayerConfig, VTTData} from 'http://localhost:5503/src/index.d.ts';
 
 export {
 	nmplayer,

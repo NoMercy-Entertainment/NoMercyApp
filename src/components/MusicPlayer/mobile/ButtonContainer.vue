@@ -13,7 +13,7 @@ import ShuffleButton from '../components/ShuffleButton.vue';
 import StopButton from '../components/StopButton.vue';
 import EqButton from "../components/EqButton.vue";
 
-const supportsAudioContext = useLocalStorage('nmplayer-supports-audio-context', false);
+const supportsAudioContext = useLocalStorage('nmplayer-music-supports-audio-context', false);
 
 </script>
 

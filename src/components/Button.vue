@@ -91,7 +91,7 @@ const classes = computed(() => {
       ? ''
       : 'h-9',
     props.variant == 'default' || props.variant == 'contained'
-      ? '!bg-gradient-to-b dark:from-[var(--color-7)] dark:to-[var(--color-5)] dark:hover:from-[var(--color-8)] dark:hover:to-[var(--color-6)] dark:active:from-[var(--color-7)] dark:active:to-[var(--color-4)] button-filled'
+      ? '!bg-gradient-to-b  from-[var(--color-9)] to-[var(--color-7)] hover:from-[var(--color-10)] hover:to-[var(--color-6)] active:from-[var(--color-9)] active:to-[var(--color-6)] dark:from-[var(--color-7)] dark:to-[var(--color-5)] dark:hover:from-[var(--color-8)] dark:hover:to-[var(--color-6)] dark:active:from-[var(--color-7)] dark:active:to-[var(--color-4)] button-filled'
       : '',
     props.variant == 'text'
       ? 'hover:outline-[rgba(var(--color-7),.1)] hover:outline-1 hover:outline text-[rgb(var(--background-auto-alpha-10))]'

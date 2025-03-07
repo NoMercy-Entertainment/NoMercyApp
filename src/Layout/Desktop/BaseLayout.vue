@@ -2,7 +2,6 @@
 import { computed } from 'vue';
 import { useRoute } from 'vue-router';
 import { IonPage, IonRouterOutlet, IonTabs } from '@ionic/vue';
-import { VueQueryDevtools } from '@tanstack/vue-query-devtools'
 
 import ContextMenu from 'primevue/contextmenu';
 import Toast from 'primevue/toast';
@@ -13,7 +12,6 @@ import type { MenuItem } from 'primevue/menuitem';
 import { focusColor, background } from '@/store/ui';
 import { currentServer } from '@/store/currentServer';
 import { contextMenu, contextMenuItems } from '@/store/contextMenuItems';
-import { konamiEnabledState } from '@/store/konami';
 import { cardMenu, trackContextMenuItems } from '@/store/contextMenuItems';
 
 import Indexer from '@/Layout/Indexer.vue';
@@ -26,6 +24,7 @@ import GradientBorder from './components/GradientBorder.vue';
 import QueueOverlay from './components/Overlays/QueueOverlay.vue';
 import LyricsOverlay from './components/Overlays/LyricsOverlay.vue';
 import DeviceOverlay from './components/Overlays/DeviceOverlay.vue';
+import RipperOverlay from "./components/Overlays/RipperOverlay.vue";
 
 import MusicPlayerDesktop from '@/components/MusicPlayer/MusicPlayerDesktop.vue';
 import EqualizerOverlay from "@/Layout/Desktop/components/Overlays/EqualizerOverlay.vue";
@@ -46,7 +45,7 @@ const focusMain = () => {
 
 <template>
   <ion-page>
-    <button class="skip-navigation" @click="focusMain">
+    <button @click="focusMain" class="skip-navigation absolute z-999 top-[-50px] left-2 bg-slate-light-1 dark:bg-slate-dark-1 text-white p-2 rounded-md">
       {{ $t('Skip navigation') }}
     </button>
     <div class="contents text-auto-12" :style="focusColor ? `--color-focus: ${focusColor}` : ''">
@@ -87,10 +86,13 @@ const focusMain = () => {
           <QueueOverlay />
           <DeviceOverlay />
           <EqualizerOverlay />
+          <RipperOverlay />
 
         </GradientBorder>
         <Indexer />
-        <div class="scrollbarContainer"></div>
+        <div class="scrollbarContainer">
+        <!-- the ScrollContainer teleports here -->
+        </div>
       </div>
 
       <MusicPlayerDesktop />
@@ -102,7 +104,6 @@ const focusMain = () => {
       <ConfirmDialog></ConfirmDialog>
       <ContextMenu ref="contextMenu" :model="contextMenuItems" />
 
-      <VueQueryDevtools v-if="konamiEnabledState" buttonPosition="bottom-left" />
     </div>
     <ContextMenu ref="cardMenu" :model="trackContextMenuItems as MenuItem[]" />
   </ion-page>
@@ -111,14 +112,7 @@ const focusMain = () => {
 <style scoped>
 
 .skip-navigation {
-  position: absolute;
-  top: -50px;
-  left: 10px;
-  background-color: #333;
-  color: #fff;
-  padding: 10px;
   text-decoration: none;
-  z-index: 999;
   transition: top 0.3s;
 }
 

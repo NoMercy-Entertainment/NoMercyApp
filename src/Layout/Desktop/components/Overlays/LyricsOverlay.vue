@@ -54,7 +54,7 @@ onMounted(() => {
   if (!lyrics_container.value || !currentLyric.value) return;
 
   lyrics_container.value.scrollTop = 0;
-  
+
   audioPlayer.on('seeked', (data) => {
     if (!lyrics_container.value || !lyrics_container.value) return;
 

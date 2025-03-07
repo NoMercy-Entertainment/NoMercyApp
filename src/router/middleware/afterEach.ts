@@ -1,6 +1,7 @@
 import { Router } from 'vue-router';
 import { isPlatform } from '@ionic/vue';
-// import { ignoredRedirectQueries } from '@/config/config';
+
+const removableQueries = ['code', 'state', 'session_state'];
 
 const afterEach = (router: Router) => {
 
@@ -24,22 +25,32 @@ const afterEach = (router: Router) => {
 			// 			}
 			// 		}
 			// 	}
-			//
-			// 	setTimeout(() => {
-			// 		document.querySelector<HTMLDivElement>('.ion-page .ion-page-invisible')
-			// 			?.classList.remove('ion-page-invisible');
-			// 	}, 500);
-			// }
 
-			if (location.search) {
-				router.replace({ query: {} }).then();
-			}
-			
-			setTimeout(() => {
-				document.querySelector<HTMLDivElement>('.ion-page .ion-page-invisible')
-					?.classList.remove('ion-page-invisible');
-			}, 500);
+            const query = { ...to.query };
+            let hasRemovableQuery = false;
 
+            removableQueries.forEach(param => {
+                if (query[param]) {
+                    delete query[param];
+                    hasRemovableQuery = true;
+                }
+            });
+
+            // remove trailing ? from query
+            for (const param in query) {
+                if (query[param]?.includes('?')) {
+                    query[param] = (query[param] as string)!.split('?').at(0)!;
+                }
+            }
+
+            if (hasRemovableQuery) {
+                router.replace({ query }).then();
+            }
+
+            setTimeout(() => {
+                document.querySelector<HTMLDivElement>('.ion-page .ion-page-invisible')
+                    ?.classList.remove('ion-page-invisible');
+            }, 500);
 		}
 	});
 };

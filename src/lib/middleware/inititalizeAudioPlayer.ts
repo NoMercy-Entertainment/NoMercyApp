@@ -20,7 +20,7 @@ const initializeAudioPlayer = (): Promise<void> => {
 		audioPlayer.setBaseUrl(currentServer.value?.serverBaseUrl);
 		audioPlayer.setAccessToken(user.value.accessToken);
 
-		const supportsAudioContext = useLocalStorage('nmplayer-supports-audio-context', false);
+		const supportsAudioContext = useLocalStorage('nmplayer-music-supports-audio-context', false);
 
 		document.addEventListener('click', () => {
 			if (!supportsAudioContext) return;
@@ -33,7 +33,6 @@ const initializeAudioPlayer = (): Promise<void> => {
 				location.reload();
 			}
 			audioContext.onstatechange = () => {
-				console.log(audioContext.state);
 				if (audioContext.state === 'running') {
 					supportsAudioContext.value = true;
 				} else if (audioContext.state === 'suspended') {

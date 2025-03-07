@@ -272,11 +272,11 @@ export class BaseUIPlugin extends Plugin {
                 'group-[&.nomercyplayer:not(.paused):not(.playing)]:!bg-gradient-circle-c',
                 'group-[&.nomercyplayer.buffering]:bg-gradient-circle-c',
                 'group-[&.nomercyplayer.error]:bg-gradient-circle-c',
-                'group-[&.nomercyplayer.paused]:bg-gradient-circle-c',
-                'from-black/70',
+
                 'from-15%',
-                'via-70%',
-                'via-black/70',
+                'from-black/50',
+                'via-40%',
+                'via-black/30',
                 'to-100%',
                 'to-black/0',
             ])
@@ -1574,10 +1574,6 @@ export class BaseUIPlugin extends Plugin {
                 'group-[&.nomercyplayer.active]:translate-y-0',
                 'items-center',
                 'mt-auto',
-                'px-2',
-                'lg:px-6',
-                'py-1',
-                'lg:py-4',
                 'text-center',
                 'transition-all',
                 'translate-y-full',
@@ -1591,12 +1587,13 @@ export class BaseUIPlugin extends Plugin {
             .addClasses([
                 'absolute',
                 'pointer-events-none',
-                'bottom-0',
-                'bg-gradient-to-t',
-                'via-black/20',
-                'from-black/90',
                 'pt-[10%]',
                 'w-available',
+                'bottom-0',
+                'bg-gradient-to-t',
+                'from-black/85',
+                'via-black/40',
+                'to-black/0',
             ])
             .appendTo(bottomBar);
 
@@ -1794,8 +1791,9 @@ export class BaseUIPlugin extends Plugin {
                 'duration-300',
 
                 'bg-gradient-to-b',
-                'from-black/90',
-                'via-black/50',
+                'from-black/85',
+                'via-black/40',
+                'to-black/0',
             ])
             .appendTo(parent);
     }

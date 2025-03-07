@@ -70,6 +70,25 @@ const initPlayer = (value: PlaylistItem[] | undefined) => {
     disableTouchControls: false,
     disableMediaControls: 'mediaSession' in navigator || isPlatform('capacitor'),
     renderAhead: 100,
+    customStorage: {
+      set: (key, value) => {
+        return new Promise<void>((resolve) => {
+          localStorage.setItem(key, value);
+          resolve();
+        });
+      },
+      get: (key) => {
+        return new Promise<string|null>((resolve) => {
+          resolve(localStorage.getItem(key));
+        });
+      },
+      remove: (key) => {
+        return new Promise<void>((resolve) => {
+          localStorage.removeItem(key);
+          resolve();
+        });
+      },
+    },
   }
 
   player.value?.dispose();
@@ -171,7 +190,7 @@ onUnmounted(() => {
 <template>
   <ion-page>
     <NotFound v-if="isError && !data" />
-    <Teleport v-else to="body" :keepAlive="true">
+    <Teleport v-else to="body">
       <div ref="playerContainer" class="absolute inset-0 flex h-full w-full overflow-clip bg-black z-1199" :class="{
         'mb-28': isNative,
         'mb-0': !isNative,

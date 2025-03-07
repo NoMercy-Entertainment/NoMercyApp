@@ -231,12 +231,11 @@ export class DesktopUIPlugin extends BaseUIPlugin {
 				'duration-300',
 
 				'bg-transparent',
-				'group-[&.nomercyplayer.buffering]:bg-gradient-circle-c',
-				'group-[&.nomercyplayer.error]:bg-gradient-circle-c',
-				'group-[&.nomercyplayer.paused]:bg-gradient-circle-c',
-				'from-black/50',
+				'group-[&.nomercyplayer:not(.buffering).paused]:bg-gradient-circle-c',
+
 				'from-15%',
-				'via-60%',
+				'from-black/50',
+				'via-40%',
 				'via-black/30',
 				'to-100%',
 				'to-black/0',

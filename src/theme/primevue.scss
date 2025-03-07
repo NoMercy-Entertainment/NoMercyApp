@@ -49,6 +49,11 @@
   outline-offset: var(--p-select-focus-ring-offset);
 }
 
+.p-checkbox.p-inputfield-sm {
+  --p-checkbox-sm-width: 1.25rem;
+  --p-checkbox-sm-height: 1.25rem;
+  padding: 0 !important;
+}
 .p-checkbox-checked .p-checkbox-box {
   --p-checkbox-checked-border-color: rgb(var(--color-focus));
   --p-checkbox-checked-background: rgb(var(--color-focus));

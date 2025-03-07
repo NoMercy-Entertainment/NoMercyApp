@@ -238,6 +238,7 @@ export default defineConfig({
 				'unsafe-hashes',
 				'https://www.youtube.com',
 				'https://nomercy.tv',
+				'http://localhost:5503',
 				'https://*.nomercy.tv',
 				'https://vscode.nomercy.tv',
 				'https://trailer.nomercy.tv',

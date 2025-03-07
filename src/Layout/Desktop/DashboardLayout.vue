@@ -13,6 +13,8 @@ import { setColorPalette } from '@/store/ui';
 import FloatingBackButton from '@/components/Buttons/FloatingBackButton.vue';
 import HelpButton from '@/components/Buttons/HelpButton.vue';
 import ScrollContainer from '@/Layout/Desktop/components/ScrollContainer.vue';
+import EqualizerOverlay from "@/Layout/Desktop/components/Overlays/EqualizerOverlay.vue";
+import RipperOverlay from "@/Layout/Desktop/components/Overlays/RipperOverlay.vue";
 
 const addModalOpen = defineModel({
   required: false,
@@ -68,7 +70,7 @@ const grid = computed(() => {
   } else if (props.gridStyle == 3) {
     return dashboardBigCardGrid.value;
   } else {
-    return 'flex flex-wrap';
+    return 'flex flex-wrap h-available overflow-clip';
   }
 });
 
@@ -176,7 +178,7 @@ watch(dataUpdatedAt, (value) => {
           </div>
         </div>
       </div>
-      <ScrollContainer v-else :static="true"
+      <ScrollContainer v-else :static="true" frame
         class="z-0 w-full flex-1 overflow-y-auto overflow-x-hidden sm:p-4 bg-slate-light-4 dark:bg-slate-dark-2">
         <div class="h-auto w-full flex-wrap content-start gap-4" :class="grid">
           <slot />
@@ -189,6 +191,7 @@ watch(dataUpdatedAt, (value) => {
         <slot name="actions" />
       </div>
 
+      <RipperOverlay />
     </div>
   </KeepAlive>
 </template>
