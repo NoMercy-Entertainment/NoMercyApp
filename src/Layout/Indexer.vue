@@ -4,7 +4,7 @@ import { useRoute, RouterLink } from 'vue-router';
 
 import {keyHandler, scrollToDiv} from '@/lib/scrollHandlers';
 import { alphaNumericRange } from '@/lib/stringArray';
-import {isNative} from '@/config/global';
+import {isMobile, isNative} from '@/config/global';
 import indexer, { setIndexerOpen } from '@/store/indexer';
 import router from '@/router';
 
@@ -28,28 +28,31 @@ const route = useRoute();
 
 const updateScrollableTargets = () => {
   setTimeout(() => {
-    document.getElementById('indexer')
+    document.querySelector(isMobile.value ? 'ion-tabs ion-router-outlet  div.ion-page:not(.ion-page-hidden) [indexer]' : '[indexer]')
       ?.querySelectorAll<HTMLDivElement>('[data-indexer]')
       .forEach((el) => {
-        el.classList.add('opacity-20', '!cursor-not-allowed');
 
         let target;
         if (el.dataset.indexer === '#') {
-          target = document.querySelector?.('[data-scroll]');
+          target = document.querySelector?.('ion-tabs ion-router-outlet div.ion-page:not(.ion-page-hidden) [data-scroll]');
         } else {
-          target = document.querySelector?.(`[data-scroll='scroll_${el.dataset.indexer}']`);
+          target = document.querySelector?.(`ion-tabs ion-router-outlet div.ion-page:not(.ion-page-hidden) [data-scroll='scroll_${el.dataset.indexer}']`);
         }
 
         if (!!target || isQueryPath(router.currentRoute.value.path)) {
           el.classList.remove('opacity-20', '!cursor-not-allowed');
+        } else {
+          el.classList.add('opacity-20', '!cursor-not-allowed');
         }
       });
   }, 500);
 };
 
+window.updateScrollableTargets = updateScrollableTargets;
+
 const disableScrollableTargets = () => {
-  document.getElementById?.('indexer')
-    ?.querySelectorAll('[data-indexer]')
+  document.querySelector(isMobile.value ? 'ion-tabs ion-router-outlet  div.ion-page:not(.ion-page-hidden) [indexer]' : '[indexer]')
+    ?.querySelectorAll<HTMLDivElement>('[data-indexer]')
     .forEach((el) => {
       el.classList.add('opacity-20', '!cursor-not-allowed');
     });
@@ -86,12 +89,13 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <div id="indexer"
-    class="pointer-events-none z-0 mt-safe h-available sm:h-available pb-safe-offset-32 flex flex-col items-center justify-between self-stretch overflow-clip transition-width duration-300 text-slate-dark-1 dark:text-slate-light-1 sm:-translate-x-3 pt-2"
+  <div indexer
+    class="pointer-events-none z-0 mt-safe h-available sm:h-available flex flex-col items-center justify-between self-stretch overflow-clip transition-width duration-300 text-slate-dark-1 dark:text-slate-light-1 sm:-translate-x-3 pt-2"
     :class="{
       'w-8': indexer,
       'w-0': !indexer,
       'sm:ml-2': !isNative && indexer,
+      'bottom-0': isNative,
     }">
     <template v-for="letter in alphaNumericRange('#', 'Z')" :key="letter">
       <template v-if="isQueryPath(route.path)">

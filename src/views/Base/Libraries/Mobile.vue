@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { IonPage, IonContent, onIonViewWillEnter } from '@ionic/vue';
+import {IonPage, IonContent, onIonViewWillEnter, onIonViewDidEnter} from '@ionic/vue';
 
 import {type PropType, watch} from 'vue';
 import type { HomeItem } from '@/types/api/base/home';
@@ -36,6 +36,10 @@ onIonViewWillEnter(() => {
 
   const mutations = homeData.value?.filter?.(item => item?.update?.when == 'pageLoad') ?? [];
   mutate(mutations);
+});
+
+onIonViewDidEnter(() => {
+  document.dispatchEvent(new Event('indexer'));
 });
 
 watch(currentServer, (value) => {

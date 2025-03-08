@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, onMounted, onUnmounted, ref, watch } from 'vue';
-import { useRouter } from 'vue-router';
-import { IonContent, IonPage } from '@ionic/vue';
+import {useRoute} from 'vue-router';
+import {IonContent, IonPage, onIonViewDidEnter} from '@ionic/vue';
 
 import type { LibraryResponse } from '@/types/api/base/library';
 import type { PeopleResponse, PersonResponseItem } from '@/types/api/base/person';
@@ -22,12 +22,12 @@ import PersonCard from '@/components/Cards/PersonCard.vue';
 import GenreCard from '@/components/Cards/GenreCard.vue';
 import EmptyCard from '@/components/Cards/EmptyCard.vue';
 
-const routing = useRouter();
+const route = useRoute();
 
 const { data, fetchNextPage, hasNextPage, isError } = useInfiniteServerClient<{
   data: Array<LibraryResponse | GenreResponse | PeopleResponse>
 }>({
-  queryKey: ['libraries', ((routing.currentRoute?.value?.params.id ?? routing.currentRoute?.value.name) as string)?.split('&').at(0)],
+  queryKey: ['libraries', ((route.params.id ?? route.name) as string)?.split('&').at(0)],
   limit: 20,
   keepForever: true,
 });
@@ -63,8 +63,11 @@ onUnmounted(() => {
 });
 
 const lib = ref<HTMLDivElement>();
+const id = ref();
 
 onMounted(() => {
+  id.value = route.params.id ?? route.name as string;
+
   if (hasNextPage.value && (data?.value?.pages?.length ?? 0) < 50) {
     fetchNextPage();
   }
@@ -76,6 +79,10 @@ onMounted(() => {
       behavior: 'smooth',
     });
   });
+});
+
+onIonViewDidEnter(() => {
+  document.dispatchEvent(new Event('indexer'));
 });
 
 watch(data, (value) => {
@@ -131,10 +138,13 @@ const onRightClick = (event: Event, data: LibraryResponse | GenreResponse | Peop
             </template>
           </div>
         </div>
-        <Indexer class="w-8 !-mt-4 pt-4 pb-4 mb-0 fixed right-0 bg-slate-light-1 dark:bg-slate-dark-3" :class="{
-          'h-available': !isNative,
-          'h-inherit top-24': isNative
-        }" />
+        <Indexer :id="id"
+            class="w-8 !-mt-4 pt-4 pb-4 mb-0 fixed right-0 bg-slate-light-1 dark:bg-slate-dark-3"
+           :class="{
+            'h-available': !isNative,
+            'h-inherit top-24': isNative,
+          }"
+        />
       </div>
     </ion-content>
   </ion-page>

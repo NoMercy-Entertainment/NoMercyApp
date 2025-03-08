@@ -32,7 +32,7 @@ const handleOpenApp = async () => {
 <template>
 
   <BottomFlyout :menuOpen="menuOpen" :closeMenu="closeMenu">
-    <ion-list>
+    <ion-list >
 
       <ion-item lines="inset">
         <ProfileMenuServerSection />
@@ -43,7 +43,7 @@ const handleOpenApp = async () => {
           class="flex justify-center items-center self-stretch w-full h-full flex-grow-0 flex-shrink-0 relative pl-1 py-2.5 rounded-md bg-transparent border border-transparent">
           <ion-ripple-effect />
           <div class="flex-grow-0 flex-shrink-0 w-1 h-3.5"></div>
-          <ion-icon aria-hidden="true" :icon="serverSwitch" class="w-6 h-6" />
+          <ion-icon aria-hidden="true" :icon="serverSwitch" className="size-6 min-w-6" />
           <div class="flex justify-center items-center flex-grow relative gap-2 pl-2">
             <p class="flex-grow w-full text-lg font-medium text-left">
               {{ $t('Switch server') }}
@@ -57,7 +57,7 @@ const handleOpenApp = async () => {
           class="flex justify-center items-center self-stretch w-full h-full flex-grow-0 flex-shrink-0 relative pl-1 py-2.5 rounded-md bg-transparent border border-transparent">
           <ion-ripple-effect />
           <div class="flex-grow-0 flex-shrink-0 w-1 h-3.5"></div>
-          <ion-icon aria-hidden="true" :icon="monitor" class="w-6 h-6" />
+          <ion-icon aria-hidden="true" :icon="monitor" className="size-6 min-w-6" />
           <div class="flex justify-center items-center flex-grow relative gap-2 pl-2">
             <p class="flex-grow w-full text-lg font-medium text-left">
               {{ $t('Preferences') }}
@@ -71,7 +71,7 @@ const handleOpenApp = async () => {
           class="flex justify-center items-center self-stretch w-full h-full flex-grow-0 flex-shrink-0 relative pl-1 py-2.5 rounded-md bg-transparent border border-transparent">
           <ion-ripple-effect />
           <div class="flex-grow-0 flex-shrink-0 w-1 h-3.5"></div>
-          <ion-icon aria-hidden="true" :icon="gridMasonry" class="w-6 h-6" />
+          <ion-icon aria-hidden="true" :icon="gridMasonry" className="size-6 min-w-6" />
           <div class="flex justify-center items-center flex-grow relative gap-2 pl-2">
             <p class="flex-grow w-full text-lg font-medium text-left">
               {{ $t('System') }}
@@ -81,11 +81,11 @@ const handleOpenApp = async () => {
       </ion-item>
 
       <ion-item lines="none">
-        <button @click="reload()"
+        <button no-ring @click="reload()"
           class="flex justify-center items-center self-stretch w-full h-full flex-grow-0 flex-shrink-0 relative pl-1 py-2.5 rounded-md bg-transparent border border-transparent">
           <ion-ripple-effect />
           <div class="flex-grow-0 flex-shrink-0 w-1 h-3.5"></div>
-          <ion-icon aria-hidden="true" :icon="arrowRefreshVertical" class="w-6 h-6" />
+          <ion-icon aria-hidden="true" :icon="arrowRefreshVertical" className="size-6 min-w-6" />
           <div class="flex justify-center items-center flex-grow relative gap-2 pl-2">
             <p class="flex-grow w-full text-lg font-medium text-left">
               {{ $t('Refresh') }}
@@ -95,11 +95,11 @@ const handleOpenApp = async () => {
       </ion-item>
 
       <ion-item lines="none" v-if="!isPlatform('capacitor') && isPlatform('android')">
-        <button @click="handleOpenApp"
+        <button no-ring @click="handleOpenApp"
           class="flex justify-center items-center self-stretch w-full h-full flex-grow-0 flex-shrink-0 relative pl-1 py-2.5 rounded-md bg-transparent border border-transparent">
           <ion-ripple-effect />
           <div class="flex-grow-0 flex-shrink-0 w-1 h-3.5"></div>
-          <ion-icon aria-hidden="true" :icon="phonePortrait" class="w-6 h-6" />
+          <ion-icon aria-hidden="true" :icon="phonePortrait" className="size-6 min-w-6" />
           <div class="flex justify-center items-center flex-grow relative gap-2 pl-2">
             <p class="flex-grow w-full text-lg font-medium text-left">
               {{ $t('Open in App') }}
@@ -109,26 +109,26 @@ const handleOpenApp = async () => {
       </ion-item>
 
       <ion-item lines="inset">
-        <button @click="darkMode = !darkMode"
+        <button no-ring @click="darkMode = !darkMode"
           class="flex justify-center items-center self-stretch w-available h-full flex-grow-0 flex-shrink-0 relative pl-2 py-2.5 rounded-md bg-transparent border border-transparent">
-          <ion-icon aria-hidden="true" :icon="moonDiagonal" class="w-6 h-6" />
+          <ion-icon aria-hidden="true" :icon="moonDiagonal" className="size-6 min-w-6" />
 
-          <label for="ion-tg-0" class="flex justify-center items-center flex-grow relative gap-2 px-2">
-            <span class="flex-grow w-[255px] text-lg font-medium text-left">
+          <label for="ion-tg-0" class="flex justify-center items-center flex-grow relative gap-2 px-2 w-available">
+            <span class="flex-grow w-full text-lg font-medium text-left">
               {{ $t('Dark mode') }}
             </span>
           </label>
 
-          <Toggle :model-value="darkMode" @update:model-value="darkMode = $event" />
+          <Toggle :model-value="darkMode" class="pointer-events-none" />
         </button>
       </ion-item>
 
       <ion-item lines="none">
-        <button @click="logout()"
+        <button no-ring @click="logout()"
           class="flex justify-center items-center self-stretch w-full h-full flex-grow-0 flex-shrink-0 relative pl-1 py-2.5 rounded-md bg-transparent border border-transparent">
           <ion-ripple-effect />
           <div class="flex-grow-0 flex-shrink-0 w-1 h-3.5"></div>
-          <ion-icon aria-hidden="true" :icon="doorOpen" class="w-6 h-6" />
+          <ion-icon aria-hidden="true" :icon="doorOpen" className="size-6 min-w-6" />
           <div class="flex justify-center items-center flex-grow relative gap-2 pl-2">
             <p class="flex-grow w-full text-lg font-medium text-left">
               {{ $t('Logout') }}
@@ -143,7 +143,7 @@ const handleOpenApp = async () => {
 
 <style scoped>
 ion-list {
-  @apply bg-transparent w-full;
+  @apply bg-transparent w-[96%];
 }
 
 ion-item {

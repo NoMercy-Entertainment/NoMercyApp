@@ -187,7 +187,7 @@ const scrollToCenter = () => {
     <div class="flex w-available flex-1 flex-col gap-2">
       <div class="relative ml-2 flex flex-shrink-0 flex-grow-0 items-center self-stretch tv:hidden">
         <h3 v-if="title" ref="titleEl"
-          class="text-2xl font-bold text-auto-12 mr-2 ml-1 sm:ml-3 text-slate-dark-1 dark:text-slate-light-1">
+          class="text-[20px] font-bold text-auto-12 mr-2 ml-1 sm:ml-3 text-slate-dark-1 dark:text-slate-light-1">
           {{ title }}
         </h3>
         <slot v-else name="selector"></slot>

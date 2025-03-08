@@ -616,14 +616,12 @@
         }
 
         .svg-root {
-            width: 100%;
+            width: calc(100vw - 4rem);
             max-height: 150px;
             max-width: 200px;
             position: absolute;
-            padding: 0 2rem;
-            transform: translate(-50%, -100%);
-            left: 50%;
-            top: 50%;
+            margin: 0 2rem;
+            translate: 0 -40%;
         }
 
         .parent {
@@ -643,6 +641,13 @@
             left: 0;
             bottom: 0;
             right: 0;
+        }
+
+        #app:has(.parent) {
+            position: fixed;
+            inset: 0;
+            width: 100vw;
+            height: 100vh;
         }
     </style>
 </head>

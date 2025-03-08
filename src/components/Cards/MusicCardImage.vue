@@ -28,7 +28,7 @@ defineProps({
             <div class="backdropCard-overlay"></div>
             <FavoriteImage v-if="data?.id == 'favorite'" class="" />
             <CoverImage v-else :data="data" :size="180"
-                class="absolute top-1/2 left-1/2 z-0 h-full -translate-x-1/2 -translate-y-1/2 overflow-clip rounded-lg transition-all duration-200"
+                        className="absolute top-1/2 left-1/2 z-0 h-full -translate-x-1/2 -translate-y-1/2 overflow-clip rounded-lg transition-all duration-200"
                 type="image" />
         </div>
     </template>
@@ -36,10 +36,10 @@ defineProps({
     <template v-else-if="data?.type == 'artists'">
         <div
             class="relative flex aspect-square h-auto w-full items-center justify-end gap-2 self-stretch overflow-clip rounded-2xl group-hover/musicCard:p-1 p-1.5 transition-all duration-200 bg-auto-3/7">
-            <div class="backdropCard-overlay !rounded-2xl"></div>
+            <div class="backdropCard-overlay !rounded-2xl absolute inset-0"></div>
             <FavoriteImage v-if="data?.id == 'favorite'" class="" />
             <CoverImage v-else :data="data" :size="180"
-                class="frosting absolute top-1/2 left-1/2 h-full -translate-x-1/2 -translate-y-1/2 group-hover/musicCard:rounded-xl transition-all duration-200 rounded-[0.65rem]"
+                className="frosting absolute top-1/2 left-1/2 h-full w-available -translate-x-1/2 -translate-y-1/2 group-hover/musicCard:rounded-xl transition-all duration-200 rounded-[0.65rem]"
                 type="image" />
         </div>
     </template>

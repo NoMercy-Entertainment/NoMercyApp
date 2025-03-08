@@ -111,7 +111,7 @@ const mouseLeave = () => {
 
 <template>
   <div
-      class="flex flex-1 h-available music-showing:h-[calc(100vh-11rem)] overflow-auto will-change-scroll w-full flex-col scrollbar-none pb-2"
+      class="flex flex-1 h-available music-showing:h-[calc(100vh-11rem)] overflow-auto will-change-scroll w-full flex-col scrollbar-none pb-2 scroll-container"
       :class="{
         'group/scrollContainer': !frame,
         'group/scrollContainer-frame': frame,

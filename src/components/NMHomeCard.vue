@@ -14,6 +14,7 @@ import MoooomIcon from '@/components/Images/icons/MoooomIcon.vue';
 import BannerButton from '@/components/Buttons/BannerButton.vue';
 import {scrollContainerElement, setColorPalette} from '@/store/ui';
 import { onIonViewWillEnter, onIonViewWillLeave } from "@ionic/vue";
+import CardShadow from "@/components/Cards/CardShadow.vue";
 
 const props = defineProps({
   data: {
@@ -78,15 +79,15 @@ const scrollToTop = () => {
       :colorPalette="data?.color_palette?.backdrop" :style="`--color-focus: ${ringBackdropColor};`" :width="null"
       priority="high" loading="eager"
       class="!absolute !inset-0 children:!w-available flex overflow-clip border-2 border-focus rounded-2xl"
-      className="relative flex !w-available min-h-full flex-shrink-0 flex-grow-0 items-end justify-start gap-4 self-stretch overflow-clip transition-opacity duration-700 bg-auto-1 h-full">
-    </TMDBImage>
+      className="relative flex !w-available min-h-full flex-shrink-0 flex-grow-0 items-end justify-start gap-4 self-stretch overflow-clip transition-opacity duration-700 bg-auto-1 h-full"
+    />
 
     <TMDBImage v-if="data && isMobile" :path="data?.poster" :title="data?.title"
       :colorPalette="data?.color_palette?.poster" :style="`--color-focus: ${ringPosterColor};`" :width="null"
       class="!absolute !inset-0 children:!w-available flex overflow-clip border-2 border-focus rounded-2xl"
       className="relative flex !w-available min-h-full flex-shrink-0 flex-grow-0 items-end justify-start gap-4 self-stretch overflow-clip transition-opacity duration-700 bg-auto-50 h-full"
-      loading="eager">
-    </TMDBImage>
+      loading="eager"
+    />
 
     <div
       class="pointer-events-none absolute inset-0 z-0 mt-auto h-4/5 bg-gradient-to-t from-auto-1 via-auto-1/60 bottom-0">
@@ -100,8 +101,8 @@ const scrollToTop = () => {
             <div v-if="data?.logo" class="flex h-screen max-h-40 max-w-md flex-grow">
               <TMDBImage v-if="data" :colorPalette="data?.color_palette?.backdrop" :path="data?.logo"
                 :title="data?.title" :width="500" class="relative mr-4 justify-end translate-y-[5%]"
-                className="relative h-auto w-auto self-start px-4 py-4" loading="eager" type="logo">
-              </TMDBImage>
+                className="relative h-auto w-auto self-start px-4 py-4" loading="eager" type="logo"
+              />
             </div>
 
             <p v-else class="h-screen max-h-40 w-px flex-grow content-end text-5xl font-bold">
@@ -136,7 +137,6 @@ const scrollToTop = () => {
               </BannerButton>
 
             </div>
-
           </div>
 
           <p class="max-w-4xl text-lg font-medium line-clamp-4">
@@ -150,7 +150,7 @@ const scrollToTop = () => {
             <RouterLink :to="`/${data?.media_type}/${data?.id}/watch`" :aria-label="$t('Play')" @focus="scrollToTop"
               class="flex h-10 w-1/2 items-center justify-between gap-2 whitespace-nowrap rounded-md pr-4 pl-3 text-black bg-auto-12 py-1.5">
               <MoooomIcon icon="playCircle" className="w-6" />
-              <span class="w-full whitespace-nowrap text-center">{{ $t('Play') }}</span>
+              <span class="w-full whitespace-nowrap text-black text-center">{{ $t('Play') }}</span>
             </RouterLink>
 
             <RouterLink :to="`/${data?.media_type}/${data?.id}`" :aria-label="$t('Info')" @focus="scrollToTop"
@@ -175,84 +175,13 @@ const scrollToTop = () => {
         :style="`--color-focus: ${ringPosterColor};`" :width="null"
         class="children:!w-available flex overflow-clip border-2 border-focus rounded-lg z-0 absolute -inset-0"
         className="relative flex h-auto aspect-poster !w-available min-h-full flex-shrink-0 flex-grow-0 items-end justify-start gap-4 self-stretch overflow-clip transition-opacity duration-700 bg-auto-50 max-h-available"
-        loading="eager">
+        loading="eager"
+      />
 
-      </TMDBImage>
-
-      <svg viewBox="0 0 343 178" fill="none" xmlns="http://www.w3.org/2000/svg"
-        class="absolute -inset-4 top-auto bottom-0 h-2/5 w-available blur-lg z-10" preserveAspectRatio="none">
-        <g filter="url(#filter0_bf_5147_33391)">
-          <rect width="100%" height="177" transform="matrix(1 0 0 -1 0 178)" fill="#1B1B1B" fill-opacity="0.3"></rect>
-        </g>
-        <g filter="url(#filter1_bf_5147_33391)">
-          <rect width="100%" height="161" transform="matrix(1 0 0 -1 0 178)" fill="#1B1B1B" fill-opacity="0.3"></rect>
-        </g>
-        <g filter="url(#filter2_bf_5147_33391)">
-          <rect width="100%" height="145" transform="matrix(1 0 0 -1 0 178)" fill="#1B1B1B" fill-opacity="0.3"></rect>
-        </g>
-        <g filter="url(#filter3_bf_5147_33391)">
-          <rect width="100%" height="129" transform="matrix(1 0 0 -1 0 178)" fill="#1B1B1B" fill-opacity="0.3"></rect>
-        </g>
-        <g filter="url(#filter4_bf_5147_33391)">
-          <rect width="100%" height="113" transform="matrix(1 0 0 -1 0 178)" fill="#1B1B1B" fill-opacity="0.3"></rect>
-        </g>
-        <g filter="url(#filter5_bf_5147_33391)">
-          <rect width="100%" height="97" transform="matrix(1 0 0 -1 0 178)" fill="#1B1B1B" fill-opacity="0.3"></rect>
-        </g>
-        <defs>
-          <filter id="filter0_bf_5147_33391" x="-1" y="0" width="100%" height="179" filterUnits="userSpaceOnUse"
-            color-interpolation-filters="sRGB">
-            <feFlood flood-opacity="0" result="BackgroundImageFix"></feFlood>
-            <feGaussianBlur in="BackgroundImageFix" stdDeviation="0.5"></feGaussianBlur>
-            <feComposite in2="SourceAlpha" operator="in" result="effect1_backgroundBlur_5147_33391"></feComposite>
-            <feBlend mode="normal" in="SourceGraphic" in2="effect1_backgroundBlur_5147_33391" result="shape"></feBlend>
-            <feGaussianBlur stdDeviation="0.5" result="effect2_foregroundBlur_5147_33391"></feGaussianBlur>
-          </filter>
-          <filter id="filter1_bf_5147_33391" x="-2" y="15" width="100%" height="165" filterUnits="userSpaceOnUse"
-            color-interpolation-filters="sRGB">
-            <feFlood flood-opacity="0" result="BackgroundImageFix"></feFlood>
-            <feGaussianBlur in="BackgroundImageFix" stdDeviation="1"></feGaussianBlur>
-            <feComposite in2="SourceAlpha" operator="in" result="effect1_backgroundBlur_5147_33391"></feComposite>
-            <feBlend mode="normal" in="SourceGraphic" in2="effect1_backgroundBlur_5147_33391" result="shape"></feBlend>
-            <feGaussianBlur stdDeviation="1" result="effect2_foregroundBlur_5147_33391"></feGaussianBlur>
-          </filter>
-          <filter id="filter2_bf_5147_33391" x="-3" y="30" width="100%" height="151" filterUnits="userSpaceOnUse"
-            color-interpolation-filters="sRGB">
-            <feFlood flood-opacity="0" result="BackgroundImageFix"></feFlood>
-            <feGaussianBlur in="BackgroundImageFix" stdDeviation="1.5"></feGaussianBlur>
-            <feComposite in2="SourceAlpha" operator="in" result="effect1_backgroundBlur_5147_33391"></feComposite>
-            <feBlend mode="normal" in="SourceGraphic" in2="effect1_backgroundBlur_5147_33391" result="shape"></feBlend>
-            <feGaussianBlur stdDeviation="1.5" result="effect2_foregroundBlur_5147_33391"></feGaussianBlur>
-          </filter>
-          <filter id="filter3_bf_5147_33391" x="-4" y="45" width="100%" height="137" filterUnits="userSpaceOnUse"
-            color-interpolation-filters="sRGB">
-            <feFlood flood-opacity="0" result="BackgroundImageFix"></feFlood>
-            <feGaussianBlur in="BackgroundImageFix" stdDeviation="2"></feGaussianBlur>
-            <feComposite in2="SourceAlpha" operator="in" result="effect1_backgroundBlur_5147_33391"></feComposite>
-            <feBlend mode="normal" in="SourceGraphic" in2="effect1_backgroundBlur_5147_33391" result="shape"></feBlend>
-            <feGaussianBlur stdDeviation="2" result="effect2_foregroundBlur_5147_33391"></feGaussianBlur>
-          </filter>
-          <filter id="filter4_bf_5147_33391" x="-5" y="60" width="100%" height="123" filterUnits="userSpaceOnUse"
-            color-interpolation-filters="sRGB">
-            <feFlood flood-opacity="0" result="BackgroundImageFix"></feFlood>
-            <feGaussianBlur in="BackgroundImageFix" stdDeviation="2.5"></feGaussianBlur>
-            <feComposite in2="SourceAlpha" operator="in" result="effect1_backgroundBlur_5147_33391"></feComposite>
-            <feBlend mode="normal" in="SourceGraphic" in2="effect1_backgroundBlur_5147_33391" result="shape"></feBlend>
-            <feGaussianBlur stdDeviation="2.5" result="effect2_foregroundBlur_5147_33391"></feGaussianBlur>
-          </filter>
-          <filter id="filter5_bf_5147_33391" x="-6" y="75" width="100%" height="109" filterUnits="userSpaceOnUse"
-            color-interpolation-filters="sRGB">
-            <feFlood flood-opacity="0" result="BackgroundImageFix"></feFlood>
-            <feGaussianBlur in="BackgroundImageFix" stdDeviation="3"></feGaussianBlur>
-            <feComposite in2="SourceAlpha" operator="in" result="effect1_backgroundBlur_5147_33391"></feComposite>
-            <feBlend mode="normal" in="SourceGraphic" in2="effect1_backgroundBlur_5147_33391" result="shape"></feBlend>
-            <feGaussianBlur stdDeviation="3" result="effect2_foregroundBlur_5147_33391"></feGaussianBlur>
-          </filter>
-        </defs>
-      </svg>
+      <CardShadow colored className="top-auto bottom-0 w-full" />
 
       <div
-        class="flex flex-col justify-end items-center self-stretch z-10 pt-10 bg-gradient-to-b from-[#0d0402]/0 to-[#0d0402]/60">
+        class="flex flex-col justify-end items-center self-stretch z-10 pt-10 bg-gradient-to-b from-[#0d0402]/[5%] to-[#0d0402]/60">
         <div class="relative flex flex-shrink-0 flex-grow-0 flex-col items-center justify-start gap-3 p-3"
           style="filter: drop-shadow(0px 1px 4px rgba(0,0,0,0.08));">
           <p class="w-full flex-shrink-0 flex-grow-0 text-center text-3xl font-bold">
@@ -268,7 +197,7 @@ const scrollToTop = () => {
           <RouterLink :to="`/${data?.media_type}/${data?.id}/watch`"
             class="flex justify-center items-center flex-grow h-10 relative overflow-hidden gap-3 px-6 py-4 rounded-lg text-slate-light-12 dark:text-slate-dark-12 bg-[#fdfeff]/[0.93]">
             <MoooomIcon icon="play" className="w-6" style="--fill-color:black" />
-            <p class="flex-grow-0 flex-shrink-0 text-[15px] font-medium text-center">
+            <p class="flex-grow-0 flex-shrink-0 text-[15px] text-black font-medium text-center">
               {{ $t('Play') }}
             </p>
           </RouterLink>

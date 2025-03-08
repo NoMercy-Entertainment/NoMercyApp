@@ -27,7 +27,7 @@ const isMutating = getMutating({ queryKey: props.options?.queryKey, path: route.
 
 const { data: homeData, refetch } = getQuery({ queryKey: props.options.queryKey, path: route.path });
 
-const { data: mutatedData, mutate, reset } = getMutation({ queryKey: props.options.queryKey, homeData: homeData, path: route.path });
+const { data: mutatedData, mutate, reset } = getMutation({ queryKey: props.options.queryKey, homeData: homeData });
 
 onIonViewWillEnter(() => {
   if (!homeData.value) return;

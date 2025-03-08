@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { twMerge } from 'tailwind-merge'
 
 defineProps({
   colored: {
@@ -6,12 +7,17 @@ defineProps({
     required: false,
     default: false,
   },
+  className: {
+    type: String,
+    required: false,
+    default: '',
+  },
 })
 </script>
 
 <template>
-  <svg width="280" height="123" viewBox="0 0 280 123" fill="none" xmlns="http://www.w3.org/2000/svg"
-    class="w-[280px] h-[122px] absolute left-0 top-[298px] blur-md z-20" preserveAspectRatio="none">
+  <svg width="280" height="123" viewBox="0 0 280 123" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none"
+    :class="twMerge('w-[280px] h-[122px] absolute left-0 top-[298px] blur-md z-20 z-0', className)" >
     <g filter="url(#filter0_bf_5719_22815)">
       <rect width="280" height="122" transform="matrix(1 0 0 -1 0 123)" fill="rgb(var(--color-focus))"
         fill-opacity="0.12"></rect>

@@ -40,7 +40,7 @@ const handleClick = () => {
       'width': data.width ?? '33.3333%',
     }">
 
-    <h3 v-if="title" class="text-2xl font-bold text-auto-12 mr-2 ml-1 sm:ml-3 text-slate-light-1">
+    <h3 v-if="title" class="text-[20px] font-bold text-auto-12 mr-2 ml-1 sm:ml-3 text-slate-dark-1 dark:text-slate-light-1">
       {{ title }}
     </h3>
 

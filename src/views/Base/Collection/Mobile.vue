@@ -56,9 +56,6 @@ watch(data, (value) => {
   if (value?.poster) {
     setPoster(value?.poster);
   }
-  if (value?.logo) {
-    setLogo(value?.logo);
-  }
   if (value?.color_palette?.poster) {
     setColorPalette(value?.color_palette?.poster);
   }
@@ -69,14 +66,13 @@ onIonViewWillEnter(() => {
   // trailerIndex.value = 0;
   setTitle(data?.value?.title);
 
+  document.dispatchEvent(new Event('indexer'));
+
   if (data?.value?.backdrop) {
     setBackground(data?.value?.backdrop);
   }
   if (data?.value?.poster) {
     setPoster(data?.value?.poster);
-  }
-  if (data?.value?.logo) {
-    setLogo(data?.value?.logo);
   }
   if (data?.value?.color_palette?.poster) {
     setColorPalette(data?.value?.color_palette?.poster);
@@ -196,12 +192,6 @@ const posterStyle = 'grid-cols-2 md:grid-cols-5 lg:grid-cols-6 xl:grid-cols-7 2x
 
           <ImageCarousel v-if="data?.backdrops && data?.backdrops?.length > 0" class="-mx-6"
             :colorPalette="data?.color_palette?.poster" :data="data?.backdrops" title="Backdrop" type="backdrop" />
-
-          <MediaCarousel v-if="data?.recommendations && data?.recommendations?.length > 0" class="-mx-6"
-            :colorPalette="data?.color_palette" :data="data?.recommendations" title="Recommendations" type="poster" />
-
-          <MediaCarousel v-if="data?.similar && data?.similar?.length > 0" class="-mx-6"
-            :colorPalette="data?.color_palette" :data="data?.similar" title="Similar" type="poster" />
 
         </div>
       </div>

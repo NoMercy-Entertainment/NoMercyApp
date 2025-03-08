@@ -4,7 +4,6 @@ import { watch } from 'vue';
 import { useColorMode } from '@vueuse/core';
 import {darkMode, setColorScheme} from "@/store/colorScheme";
 import {ColorScheme} from "@/types/config";
-import {isDarkMode} from "@/config/global";
 
 const scheme = useColorMode({
     attribute: 'class',

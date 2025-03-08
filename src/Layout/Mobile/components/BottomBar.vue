@@ -22,10 +22,12 @@ const searchUrl = computed(() => {
 </script>
 
 <template>
-  <ion-tab-bar slot="bottom" mode="md" selected-tab="home" :class="{
-    'bg-sand-light-1 dark:bg-slate-dark-3 hide-bg': menuOpen,
-    'bg-sand-light-1 dark:bg-slate-dark-3': !menuOpen
-  }">
+  <ion-tab-bar slot="bottom" mode="md" selected-tab="home"
+               class="w-available overflow-clip"
+               :class="{
+                'bg-sand-light-1 dark:bg-slate-dark-3 hide-bg': menuOpen,
+                'bg-sand-light-1 dark:bg-slate-dark-3': !menuOpen
+              }">
 
     <ion-tab-button tab="home" href="/home" @click="closeMenu()" v-if="currentServer">
       <ion-icon aria-hidden="true" :icon="home1" />
@@ -67,7 +69,12 @@ ion-tab-bar {
 }
 
 ion-tab-button {
-  @apply flex flex-col items-center flex-grow flex-shrink-0 bg-transparent;
+  @apply flex flex-col items-center flex-grow flex-shrink bg-transparent;
+}
+
+ion-tab-button::part(native) {
+  --padding-start: 0.25rem;
+  --padding-end: 0.25rem;
 }
 
 ion-tab-button ion-avatar x {
@@ -79,7 +86,7 @@ ion-tab-button ion-icon {
 }
 
 ion-tab-button ion-label {
-  @apply text-slate-dark-1 dark:text-slate-light-1 overflow-visible mb-1 mt-0 text-2xs;
+  @apply text-slate-dark-1 dark:text-slate-light-1 overflow-visible mb-1 mt-0 text-2xs text-center;
 }
 
 .tab-selected ion-icon {

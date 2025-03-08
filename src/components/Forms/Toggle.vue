@@ -9,8 +9,10 @@ const modelValue = defineModel({
 </script>
 
 <template>
-  <ion-toggle :checked="modelValue" @ionChange="modelValue = $event.target.checked" mode="ios"
-    @click="$event.stopPropagation()" />
+  <ion-toggle :checked="modelValue"
+              @ionChange="modelValue = $event.target.checked"
+              mode="ios"
+  />
 </template>
 
 <style scoped>
