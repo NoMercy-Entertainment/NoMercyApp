@@ -27,7 +27,7 @@ defineProps({
           }"
     >
         <span
-            class="whitespace-pre-line tv:text-4xl font-bold transition-all duration-300 ease-in-out text-md tv:leading-[48px] text-pretty w-available"
+            class="whitespace-pre-line tv:text-4xl font-bold transition-all duration-300 ease-in-out text-md tv:leading-[48px] text-pretty text-inherit w-available"
             v-if="lyric?.text !== ''">
             {{ lyric?.text }}
         </span>

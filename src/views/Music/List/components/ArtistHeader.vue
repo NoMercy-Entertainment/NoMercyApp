@@ -129,15 +129,15 @@ watch(audioColor, (value) => {
     <div class="absolute top-0 left-0 h-full w-full overflow-clip bg-black/50  "></div>
     <!--        <canvas ref="canvas" id="audio-visualizer" class="absolute top-0 left-96 my-12 ml-6 mr-6 mt-full h-available w-available overflow-clip pointer-events-none"></canvas>-->
     <div
-      class="frosting relative mx-auto flex aspect-square h-min w-80 flex-col items-center justify-center overflow-clip rounded-xl bg-gradient-to-br min-w-64 bg-theme-7 from-theme-5 via-theme-7 to-theme-11 shadow"
+      class="frosting relative mx-auto flex aspect-square w-80 max-w-[90%] flex-col items-center justify-center overflow-clip rounded-xl bg-gradient-to-br min-w-64 bg-theme-7 from-theme-5 via-theme-7 to-theme-11 shadow"
       :class="{
         '-mt-4': isPlatform('capacitor'),
         '': !isPlatform('capacitor')
       }">
       <CoverImage id="image" v-if="data?.cover" :data="data" :size="250"
-        className="aspect-square h-amin-w-80 rounded-xl min-w-80" loading="eager" />
+        className="aspect-square rounded-xl w-full" loading="eager" />
       <FavoriteImage v-else-if="data?.id" :id="data.id" :type="data.type"
-        class="aspect-square h-amin-w-80 rounded-xl min-w-80" />
+        class="aspect-square rounded-xl w-full" />
     </div>
 
     <div v-if="data?.name"

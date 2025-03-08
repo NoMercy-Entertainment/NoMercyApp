@@ -1,15 +1,14 @@
 <script setup lang="ts">
-import { onMounted, ref, watch } from 'vue';
-import {useRoute, useRouter} from 'vue-router';
-import { IonContent, IonPage, isPlatform, onIonViewWillEnter } from '@ionic/vue';
+import {onMounted, ref, watch} from 'vue';
+import {useRoute} from 'vue-router';
+import {IonContent, IonPage, isPlatform, onIonViewWillEnter, onIonViewWillLeave} from '@ionic/vue';
 
-import type { ScrollCustomEvent } from '@ionic/core/dist/types/components/content/content-interface';
 import type { DisplayList } from '@/types/api/music/musicPlayer';
 
 import { PlaylistItem, SortOrder, SortType } from '@/types/musicPlayer';
 
 import useServerClient from '@/lib/clients/useServerClient';
-import { breakTitle, breakTitle2, setTitle, sortByType } from '@/lib/stringArray';
+import { breakTitle, setTitle, sortByType } from '@/lib/stringArray';
 import { setColorPalette, setSortOrder, sortOrder, sortType } from '@/store/ui';
 
 import ControlHeader from '@/views/Music/List/components/ControlHeader.vue';
@@ -65,6 +64,7 @@ const sort = (songs: PlaylistItem[], sortType: SortType, sortOrder: SortOrder, v
 };
 
 onMounted(() => {
+  sort(data?.value?.tracks ?? [], sortType.value, sortOrder.value, filter.value);
   if (data.value?.color_palette?.cover) {
     setColorPalette(data.value?.color_palette?.cover);
   }
@@ -84,8 +84,9 @@ const handleBack = () => {
 const showScrollHeader = ref(false);
 const showScrollHeaderText = ref(false);
 const sortHeader = ref<VueDivElement>();
+const container = ref<VueDivElement>();
 
-const onScroll = (e: ScrollCustomEvent) => {
+const onScroll = () => {
   // if(window.CSS.supports('container-type', 'scroll-state')) return;
 
   const headerScrollTop = 170;
@@ -93,8 +94,10 @@ const onScroll = (e: ScrollCustomEvent) => {
   const sortHeaderTop = isPlatform('capacitor') ? 88 : 64;
 
   const top = sortHeader.value?.$el?.getBoundingClientRect().top;
-  if (!top) return;
-  console.log(top);
+  if (!top) {
+    requestAnimationFrame(onScroll);
+    return;
+  }
 
   showScrollHeader.value = top <= headerScrollTop;
   showScrollHeaderText.value = top <= headerScrollTextTop;
@@ -106,18 +109,24 @@ const onScroll = (e: ScrollCustomEvent) => {
     sortHeader.value?.$el?.classList.remove('!bg-focus');
     sortHeader.value?.$el?.firstChild?.classList.remove('!bg-slate-light-10/11', 'dark:!bg-[rgb(var(--background-auto)/79%)]');
   }
+
+  requestAnimationFrame(onScroll);
 };
+
+watch(container, () => {
+  requestAnimationFrame(onScroll);
+});
 
 </script>
 
 <template>
   <ion-page>
-    <ion-content :fullscreen="true" @ionScroll="onScroll" :scrollEvents="true">
+    <ion-content ref="container" @ionScroll="onScroll" :scrollEvents="true">
       <NotFound v-if="isError && !data" />
       <div
         v-else-if="!route.params.id || (route.params.id && data?.id == route.params.id)"
         ref="main"
-        class="flex flex-col overflow-x-clip w-available h-min sm:rounded-2xl -mt-safe-offset-12 bg-[rgb(var(--background-auto))]">
+        class="flex flex-col h-auto overflow-x-clip w-available sm:rounded-2xl -mt-safe-offset-12 bg-[rgb(var(--background-auto))]">
         <ArtistHeader :data="data" />
 
         <div class="relative z-0 flex h-auto flex-shrink-0 flex-grow flex-col items-start justify-start self-stretch">
@@ -125,13 +134,13 @@ const onScroll = (e: ScrollCustomEvent) => {
           <div class="pointer-events-none absolute z-0 h-96 w-full bg-spotifyBottom bg-focus"></div>
 
           <div id="navbar"
-            class=" fixed z-1099 -mx-2 flex gap-4 p-2 px-4 w-available sm:hidden bg-slate-light-11 dark:bg-slate-dark-1 top-0 pt-safe-offset-4 transition-all duration-400"
+            class="fixed z-1099 -mx-2 flex gap-4 p-2 px-4 w-available sm:hidden bg-slate-light-11 dark:bg-slate-dark-1 top-0 pt-safe-offset-4 transition-all duration-300"
             :class="{
               'opacity-0 pointer-events-none': !showScrollHeader,
               'opacity-100 pointer-events-auto': showScrollHeader
             }">
             <div id="navBg"
-              class="z-20 absolute flex items-center inset-0 w-available h-full bg-focus/12 dark:bg-focus transition-transform duration-300 bg-spotifyTop opacity-50 pointer-events-none">
+              class="z-20 absolute flex items-center inset-0 w-available h-full bg-focus/12 dark:bg-focus transition-all duration-300 bg-spotifyTop opacity-50 pointer-events-none">
             </div>
 
             <button @click="handleBack" class="z-30 flex h-10 w-11 items-center justify-center rounded-md">
@@ -139,7 +148,7 @@ const onScroll = (e: ScrollCustomEvent) => {
             </button>
 
             <div id="navText"
-              class="pointer-events-none whitespace-pre text-left relative z-20 line-clamp-1 h-auto self-center font-bold leading-none transition-opacity duration-300 w-[70%] overflow-clip text-xl"
+              class="pointer-events-none whitespace-pre text-left relative z-20 line-clamp-1 h-auto self-center font-bold leading-none transition-all duration-300 w-[70%] overflow-clip text-xl"
               :class="{
                 'opacity-0 pointer-events-none': !showScrollHeader,
                 'opacity-100 pointer-events-auto': showScrollHeader

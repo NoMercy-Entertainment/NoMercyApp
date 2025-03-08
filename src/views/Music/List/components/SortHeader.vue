@@ -47,7 +47,7 @@ import { isPlatform } from "@ionic/vue";
 
   >*:first-child {
     @container scroll-state(stuck: top) {
-      background: hsl(from rgb(var(--color-focus, var(--color-theme-9)) / var(--tw-bg-opacity, 1)) h 40% 30%);
+      background: hsl(from rgb(var(--color-focus, var(--color-theme-9)) / var(--tw-bg-opacity, 1)) h calc(s / 1) calc(l / 1.8));
     }
   }
 }
