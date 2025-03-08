@@ -89,11 +89,11 @@ export const scrollToDiv = (i: string) => {
 
     let target: HTMLDivElement | null = null;
     if (i == '#') {
-        target = document.querySelector<HTMLDivElement>('[data-scroll]');
+        target = document.querySelector<HTMLDivElement>('ion-tabs ion-router-outlet div.ion-page:not(.ion-page-hidden) [data-scroll]');
     }
     else {
         target = document.querySelector<HTMLDivElement>(
-            `[data-scroll='scroll_${i}']`
+            `ion-tabs ion-router-outlet div.ion-page:not(.ion-page-hidden) [data-scroll='scroll_${i}']`
         );
     }
 
