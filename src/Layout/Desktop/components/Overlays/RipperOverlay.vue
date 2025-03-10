@@ -23,7 +23,7 @@ const getDrives = async () => {
 const handleDriveState = (data: DriveState) => {
   if (data.open) {
     lastShownDisc.value = null;
-    
+
     discs.value = [
       ...discs.value?.filter((item) => item.path != data.path) ?? [],
       data,
@@ -36,16 +36,18 @@ const handleDriveState = (data: DriveState) => {
       setRipperMenuOpen(false);
     }
   }
-  else if(lastShownDisc.value !== data.label) {
-    setRipperMenuOpen(true);
-    lastShownDisc.value = data.label;
+  else  {
+    if (!lastShownDisc.value || lastShownDisc.value !== data.label || data.metadata) {
+      setRipperMenuOpen(true);
+      lastShownDisc.value = data.label;
+    }
 
     data = {
       ...data,
       metadata: {
         ...data.metadata,
         bluRay_playlists: [
-            ...data.metadata.bluRay_playlists?.map((playlist, index) => {
+            ...data.metadata?.bluRay_playlists?.map((playlist, index) => {
               if(
                   playlist.video_tracks?.some(p => p.checked) ||
                   playlist.audio_tracks?.some(p => p.checked) ||
@@ -119,7 +121,7 @@ useHubListener(connection, 'DriveState', handleDriveState);
 
 <template>
   <div :data-open="ripperMenuOpen" id="ripperContainer" :inert="!ripperMenuOpen"
-       class="absolute flex-col p-4 inset-0 h-1/5 w-inherit sm:left-auto sm:right-4 sm:top-4 sm:bottom-4 sm:w-1/3 sm:max-w-3xl tv:max-w-3/4 flex items-center justify-center rounded-xl transition-all duration-500 sm:data-[open='false']:translate-x-[150%] sm:overflow-clip z-[9999]  tv:data-[open='false']:translate-x-[150%] tv:!w-available tv:data-[open='true']:delay-500 will-change-transform bg-slate-dark-12 dark:bg-slate-dark-1">
+       class="absolute flex-col p-4 inset-0 h-1/5 sm:h-2/5 xl:h-1/5 w-inherit sm:left-auto sm:right-4 sm:top-4 sm:bottom-4 sm:w-3/5 xl:w-1/3 sm:max-w-3xl tv:max-w-3/4 flex items-center justify-center rounded-xl transition-all duration-500 sm:data-[open='false']:translate-x-[150%] sm:overflow-clip z-[9999]  tv:data-[open='false']:translate-x-[150%] tv:!w-available tv:data-[open='true']:delay-500 will-change-transform bg-slate-dark-12 dark:bg-slate-dark-1">
 
     <div class="flex w-full gap-4 justify-between text-lg font-bold">
       <span>{{ $t('Disc inserted') }}</span>

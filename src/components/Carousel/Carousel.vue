@@ -131,7 +131,7 @@ const focusMain = () => {
     <div
         class="mb-1 flex w-auto flex-shrink-0 flex-grow-0 flex-col items-start justify-start gap-2 self-stretch text-left relative">
         <div class="flex w-available flex-1 flex-col gap-2">
-            <div class="relative ml-2 flex flex-shrink-0 flex-grow-0 items-center self-stretch">
+            <div class="relative ml-2 w-full flex flex-shrink-0 flex-grow-1 items-center self-stretch max-w-screen-4xl 2xl:mr-auto">
                 <h3 v-if="title"
                     class="text-2xl font-bold text-auto-12 mr-2 ml-4 sm:ml-3 text-slate-dark-1 dark:text-slate-light-1">
                     {{ t(title ?? 'Continue watching') }}

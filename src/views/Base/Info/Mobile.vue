@@ -189,7 +189,7 @@ const processTrailer = (value: InfoResponse | undefined) => {
 
         <div
           class="flex bg-slate-light-3 dark:bg-slate-dark-1 flex-col justify-start items-start self-stretch flex-grow-0 flex-shrink-0 gap-3 pt-16 pb-5 will-change-auto w-inherit px-6">
-          <p class="self-stretch flex-grow-0 flex-shrink-0 w-[351px] text-3xl font-bold text-left z-10"
+          <p class="self-stretch flex-grow-0 flex-shrink-0 w-[351px] text-2xl font-bold text-left z-10"
             v-html="breakTitle2(data?.title || title || '', 'text-lg line-clamp-2')">
           </p>
 

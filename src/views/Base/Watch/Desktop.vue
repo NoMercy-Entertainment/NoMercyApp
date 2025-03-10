@@ -189,14 +189,14 @@ onUnmounted(() => {
 
 <template>
   <ion-page>
-    <NotFound v-if="isError && !data" />
-    <Teleport v-else to="body">
-      <div ref="playerContainer" class="absolute inset-0 flex h-full w-full overflow-clip bg-black z-1199" :class="{
-        'mb-28': isNative,
-        'mb-0': !isNative,
-      }">
+<!--    <NotFound v-if="isError && !data" />-->
+<!--    <Teleport v-else to="body">-->
+<!--      <div ref="playerContainer" class="absolute inset-0 flex h-full w-full overflow-clip bg-black z-1199" :class="{-->
+<!--        'mb-28': isNative,-->
+<!--        'mb-0': !isNative,-->
+<!--      }">-->
         <div id="player1" class="group nomercyplayer"></div>
-      </div>
-    </Teleport>
+<!--      </div>-->
+<!--    </Teleport>-->
   </ion-page>
 </template>

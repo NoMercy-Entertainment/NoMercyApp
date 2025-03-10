@@ -6,7 +6,7 @@ import { NameVal } from '@/types/api/dashboard/server';
 
 export const isTv = useMediaQuery('(width: 960px) and (height: 540px)');
 // export const isMobile = useMediaQuery('(max-width: 800px) and (orientation: portrait), (max-height: 800px) and (orientation: landscape)');
-export const isMobile = ref(isPlatform('mobile') || isPlatform('mobileweb'));
+export const isMobile = ref((isPlatform('mobile') || isPlatform('mobileweb')) && !isPlatform('ipad'));
 
 const nativeOverride = useLocalStorage('nativeOverride', false);
 

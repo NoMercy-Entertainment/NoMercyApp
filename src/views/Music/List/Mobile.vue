@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import {onMounted, ref, watch} from 'vue';
 import {useRoute} from 'vue-router';
-import {IonContent, IonPage, isPlatform, onIonViewWillEnter, onIonViewWillLeave} from '@ionic/vue';
+import {IonContent, IonPage, isPlatform, onIonViewWillEnter} from '@ionic/vue';
 
 import type { DisplayList } from '@/types/api/music/musicPlayer';
 

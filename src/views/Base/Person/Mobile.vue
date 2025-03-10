@@ -112,7 +112,7 @@ watch(data, (value) => {
 
       <SwiperComponent ref="swiper" :slides-per-view="1" :loop="true" class="w-available swiper h-[420px] !absolute"
         :class="{
-          'top-safe-offset-12': isNative,
+          'top-safe-offset-4': isNative,
           'top-12': !isNative,
         }">
         <template v-for="(item, index) in data?.images?.profiles ?? []" :key="item.id">

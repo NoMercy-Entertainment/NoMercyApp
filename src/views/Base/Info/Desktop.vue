@@ -303,12 +303,12 @@ const menuItems: IMenuItem[] = [
             <p>{{ error }}</p>
           </div>
           <div
-            class="flex flex-col gap-4 overflow-clip rounded-3xl border-0 pb-2 w-available scrollbar-none border-auto-3">
+            class="flex flex-col 5xl:flex-row gap-4 overflow-clip rounded-3xl border-0 pb-2 w-available scrollbar-none border-auto-3">
             <FloatingBackButton />
 
-            <div class="relative mx-auto w-full gap-4 rounded-lg p-4 max-w-screen-4xl">
+            <div class="relative mx-auto w-full gap-4 rounded-lg p-4 5xl:max-w-screen-2xl 5xl:ml-4 5xl:mr-auto">
 
-              <div class="z-0 flex w-full flex-grow flex-col items-end justify-start gap-2 pt-[290px]">
+              <div class="z-0 flex w-full flex-grow flex-col items-end justify-start gap-2 pt-[290px] 5xl:h-[77vh]">
 
                 <div
                   class="children:absolute relative right-1 bottom-0 col-start-1 col-end-2 flex h-auto w-auto select-none justify-end pb-2 max-w-[20vw] w-available translate-x-[4px] sm:h-40 lg:max-w-[30vw] aspect-[32/9]">
@@ -320,7 +320,7 @@ const menuItems: IMenuItem[] = [
                 </div>
 
                 <div
-                  class="relative col-start-2 col-end-4 grid flex-shrink-0 flex-grow-0 grid-cols-3 items-start justify-start self-stretch rounded-2xl bg-gradient-to-b py-4 pr-4 from-slate-light-2/12 via-slate-light-3/12 to-slate-light-3/11 dark:from-slate-dark-2/12 dark:via-slate-dark-2/12 dark:to-slate-dark-2/11 border-auto-5/8 border-1 min-h-[23.5rem]">
+                  class="relative col-start-2 col-end-4 grid flex-shrink-0 flex-grow-0 grid-cols-3 items-start justify-start self-stretch rounded-2xl bg-gradient-to-b py-4 pr-4 from-slate-light-2/12 via-slate-light-3/12 to-slate-light-3/11 dark:from-slate-dark-2/12 dark:via-slate-dark-2/12 dark:to-slate-dark-2/11 border-auto-5/8 border-1 min-h-[23.5rem] 5xl:h-full">
                   <div v-if="data?.poster"
                     class="absolute bottom-24 z-10 col-start-1 content-center col-end-2 h-auto w-full items-start justify-start rounded-lg -top-[20rem] sm:block">
                     <RouterLink :to="`/${data?.media_type}/${data?.id}/watch`" :aria-label="$t('Play')"
@@ -484,7 +484,7 @@ const menuItems: IMenuItem[] = [
                           {{ $t('External links') }}
                         </p>
                         <div
-                          class="col-span-6 col-start-3 flex w-full max-w-fit flex-wrap gap-1 self-center xl:col-start-3 2xl:col-start-2">
+                          class="col-span-6 col-start-3 flex w-full max-w-fit flex-wrap gap-1 self-center xl:col-start-3 5xl:col-start-2">
 
                           <div class="gap-1 children:whitespace-nowrap text-sm">
                             <a :href="`https://www.themoviedb.org/${data?.media_type}/${data?.id}`" target="_blank"
@@ -521,24 +521,26 @@ const menuItems: IMenuItem[] = [
 
             </div>
 
-            <SeasonCarousel v-if="data?.seasons && data?.seasons?.length > 0" :data="data?.seasons" type="backdrop" />
+            <div class="relative mx-auto w-full gap-4 rounded-lg 5xl:p-4 5xl:max-w-screen-2xl 5xl:ml-4 5xl:mr-0 5xl:pr-0 5xl:h-[91vh] 5xl:pt-[35vh] 5xl:pb-0 overflow-y-auto overflow-x-hidden scrollbar-none">
+              <SeasonCarousel v-if="data?.seasons && data?.seasons?.length > 0" :data="data?.seasons" type="backdrop" />
 
-            <PersonCarousel v-if="data?.cast && data?.cast?.length > 0" :data="data?.cast.slice(0, 50)" title="Cast" />
+              <PersonCarousel v-if="data?.cast && data?.cast?.length > 0" :data="data?.cast.slice(0, 50)" title="Cast" />
 
-            <PersonCarousel v-if="data?.crew && data?.crew?.length > 0"
-              :data="sortByPosterAlphabetized(data?.crew, 'profile', 'id').slice(0, 50)" title="Crew" />
+              <PersonCarousel v-if="data?.crew && data?.crew?.length > 0"
+                :data="sortByPosterAlphabetized(data?.crew, 'profile', 'id').slice(0, 50)" title="Crew" />
 
-            <ImageCarousel v-if="data?.posters && data?.posters?.length > 0" :data="data?.posters" title="Poster"
-              type="poster" />
+              <ImageCarousel v-if="data?.posters && data?.posters?.length > 0" :data="data?.posters" title="Poster"
+                type="poster" />
 
-            <ImageCarousel v-if="data?.backdrops && data?.backdrops?.length > 0"
-              :colorPalette="data?.color_palette?.poster" :data="data?.backdrops" title="Backdrop" type="backdrop" />
+              <ImageCarousel v-if="data?.backdrops && data?.backdrops?.length > 0"
+                :colorPalette="data?.color_palette?.poster" :data="data?.backdrops" title="Backdrop" type="backdrop" />
 
-            <MediaCarousel v-if="data?.recommendations && data?.recommendations?.length > 0"
-              :colorPalette="data?.color_palette" :data="data?.recommendations" title="Recommendations" type="poster" />
+              <MediaCarousel v-if="data?.recommendations && data?.recommendations?.length > 0"
+                :colorPalette="data?.color_palette" :data="data?.recommendations" title="Recommendations" type="poster" />
 
-            <MediaCarousel v-if="data?.similar && data?.similar?.length > 0" :colorPalette="data?.color_palette"
-              :data="data?.similar" title="Similar" type="poster" />
+              <MediaCarousel v-if="data?.similar && data?.similar?.length > 0" :colorPalette="data?.color_palette"
+                :data="data?.similar" title="Similar" type="poster" />
+            </div>
           </div>
 
 
