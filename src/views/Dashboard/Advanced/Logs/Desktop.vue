@@ -93,6 +93,7 @@ onMounted(() => {
 const currentLog = ref<LogEntry | null>(null)
 const showLogOpen = ref(false);
 const openLog = (item: LogEntry) => {
+  console.log(item);
   currentLog.value = item;
   showLogOpen.value = true;
 };
@@ -146,22 +147,24 @@ const handleLevel = (value: string) => {
                 <span>{{ $t('Limit') }} ({{ limit }})</span>
 
                 <DropdownMenu
-                  class="relative flex items-center justify-center gap-2 rounded-lg transition-colors duration-300 hover:bg-auto-5/6"
-                  translate="-translate-x-1/2">
+                    className="relative flex items-center justify-center gap-2 rounded-lg transition-colors duration-300 hover:bg-auto-5/6"
+                    translate="translate-x-1/4"
+                >
 
                   <template v-slot:button>
                     <MoooomIcon className="w-6" icon="chevronDown" />
                   </template>
-
-                  <div class="flex w-full flex-col items-start justify-between py-2 bg-auto-1">
-                    <template v-for="l in [5, 10, 20, 50, 100, 500, 1000, 2000]">
-                      <button class="flex flex-grow items-center justify-start gap-3 rounded-md px-2.5"
-                        @click="limit = l">
-                        <Checkbox :modelValue="limit == l" :label="l" />
-                      </button>
-                    </template>
-                  </div>
-
+                  <template v-slot:default>
+                    <div class="flex w-full flex-col items-start justify-between py-2 bg-auto-1">
+                      <template v-for="l in [5, 10, 20, 50, 100, 500, 1000, 2000]">
+                        <button class="flex flex-grow items-center justify-start gap-3 rounded-md px-2.5"
+                          @click="limit = l">
+                          <Checkbox :modelValue="limit == l" :label="l" />
+                          <span>{{ l }}</span>
+                        </button>
+                      </template>
+                    </div>
+                  </template>
                 </DropdownMenu>
               </th>
               <th
@@ -174,8 +177,7 @@ const handleLevel = (value: string) => {
                 class="relative flex h-11 items-center justify-between gap-3 self-stretch p-3 group/tableButton w-[120px] min-w-[120px]">
                 <span>{{ $t('Level') }}</span>
                 <DropdownMenu
-                  class="relative flex items-center justify-center gap-2 rounded-lg transition-colors duration-300 hover:bg-auto-5/6"
-                  translate="-translate-x-1/2">
+                  class="relative flex items-center justify-center gap-2 rounded-lg transition-colors duration-300 hover:bg-auto-5/6">
                   <template v-slot:button>
                     <MoooomIcon className="w-6" icon="chevronDown" />
                   </template>
@@ -185,6 +187,7 @@ const handleLevel = (value: string) => {
                       <button class="flex flex-grow items-center justify-start gap-3 rounded-md px-2.5"
                         @click="() => handleLevel(level)">
                         <Checkbox :modelValue="selectedLevels?.includes(level)" :label="level" />
+                        <span>{{ level }}</span>
                       </button>
                     </template>
                   </div>
@@ -200,7 +203,7 @@ const handleLevel = (value: string) => {
                 class="relative flex h-11 w-20 items-center justify-between gap-3 self-stretch p-3 group/tableButton min-w-20">
                 <Button id="clear" className="!py-1 !h-8" color="theme" title="Clear logs" variant="text"
                   @click="handleClear">
-                  {{ $t('clear') }}
+                  <span>{{ $t('clear') }}</span>
                 </Button>
               </th>
             </tr>
@@ -233,8 +236,7 @@ const handleLevel = (value: string) => {
           </tbody>
         </table>
 
-        <LogModal v-if="currentLog?.level" :id="currentLog?.level" :close="closeLog" :data="currentLog"
-          :name="currentLog?.level" :open="showLogOpen" />
+        <LogModal v-if="currentLog?.level" :id="currentLog?.level" :close="closeLog" :data="currentLog" :name="currentLog?.level" :open="true" />
 
       </DashboardLayout>
     </ion-content>

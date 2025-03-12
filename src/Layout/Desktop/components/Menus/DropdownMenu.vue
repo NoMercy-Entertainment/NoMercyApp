@@ -19,7 +19,7 @@ defineProps({
   translate: {
     type: String,
     required: false,
-    default: ' -translate-x-full',
+    default: 'translate-x-0',
   }
 });
 
@@ -79,7 +79,7 @@ const handleKeyDown = (e: KeyboardEvent) => {
         'grid-rows-[0fr] border-transparent': !open,
         'bottom-auto origin-top top-full': direction == 'down',
         'top-auto origin-bottom bottom-full': direction == 'up',
-        translate,
+        [translate]: true,
       }">
       <div class="overflow-hidden">
         <div role="dialog" :open="open"

@@ -11,7 +11,6 @@ import { connection } from "@/lib/clients/dashboardSocket";
 import SystemCard from '../ServerSystemCard.vue';
 import ServerEncoderTaskCard from './ServerEncoderTaskCard.vue';
 import ServerQueueTaskCard from './ServerQueueTaskCard.vue';
-import MoooomIcon from "@/components/Images/icons/MoooomIcon.vue";
 
 onMounted(() => {
   encoderData.value = [];
@@ -36,12 +35,22 @@ const handleProgress = (data: ServerEncoderProgress) => {
 };
 
 const filteredQueueData = computed(() => {
+  const filtered = queueData.value?.filter(item =>
+      !encoderData.value.find(encoder => encoder.id == item.payload_id)
+  ) ?? [];
+
   if (displayAll.value) {
-    return queueData.value?.filter(item => !encoderData.value.find(encoder => encoder.id == item.payload_id)) ?? []  }
-  else {
-    return queueData.value?.filter(item => !encoderData.value.find(encoder => encoder.id == item.payload_id))
-        ?.slice(0, 10).concat(queueData.value?.filter(item => !encoderData.value.find(encoder => encoder.id == item.payload_id))?.slice(-10)) ?? [];
+    return filtered;
   }
+
+  if (filtered.length <= 20) {
+    return filtered;
+  }
+
+  return [
+    ...filtered.slice(0, 10),
+    ...filtered.slice(-10)
+  ];
 });
 
 const handleQueue = (data: QueueResponse[]) => {

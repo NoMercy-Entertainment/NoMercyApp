@@ -57,19 +57,19 @@ export const breakpoints = (isBackdrop: boolean) => {
 				slidesPerView: 5.2,
 				slidesPerGroup: 5,
 			},
-		// 2500: !isBackdrop
-		// 	? {
-		// 		slidesPerView: location.hash.replace('#', '').startsWith('/person')
-		// 			? 10.4
-		// 			: 14.4,
-		// 		slidesPerGroup: location.hash.replace('#', '').startsWith('/person')
-		// 			? 10
-		// 			: 14,
-		// 	}
-		// 	: {
-		// 		slidesPerView: 8.12,
-		// 		slidesPerGroup: 8,
-		// 	},
+		2500: !isBackdrop
+			? {
+				slidesPerView: location.hash.replace('#', '').startsWith('/person')
+					? 10.4
+					: 14.4,
+				slidesPerGroup: location.hash.replace('#', '').startsWith('/person')
+					? 10
+					: 14,
+			}
+			: {
+				slidesPerView: 8.12,
+				slidesPerGroup: 8,
+			},
 	};
 };
 

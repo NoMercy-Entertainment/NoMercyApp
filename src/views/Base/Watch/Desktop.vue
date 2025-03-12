@@ -5,7 +5,7 @@ import { IonPage, isPlatform } from '@ionic/vue';
 import { currentServer } from '@/store/currentServer';
 import { user } from '@/store/user';
 import { setDisableScreensaver } from '@/store/imageModal';
-import { isNative } from '@/config/global';
+// import { isNative } from '@/config/global';
 
 import type {
   NMPlayer,
@@ -23,7 +23,7 @@ import {
 import router from '@/router';
 import audioPlayer from '@/store/audioPlayer';
 
-import NotFound from "@/Layout/Desktop/components/NotFound.vue";
+// import NotFound from "@/Layout/Desktop/components/NotFound.vue";
 import useServerClient from "@/lib/clients/useServerClient";
 
 const { data, isError } = useServerClient<PlaylistItem[]>({
@@ -41,7 +41,7 @@ interface MyNmPlayer extends NMPlayer {
 }
 
 const player = ref<MyNmPlayer>();
-const playerContainer = ref<HTMLDivElement>();
+// const playerContainer = ref<HTMLDivElement>();
 
 const initPlayer = (value: PlaylistItem[] | undefined) => {
 
