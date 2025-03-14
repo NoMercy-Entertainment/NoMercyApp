@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onMounted, onUnmounted, ref, watch } from 'vue';
+import {computed, onMounted, onUnmounted, ref, watch} from 'vue';
 import { useRoute } from 'vue-router';
 import axios from 'axios';
 import { IonContent, IonPage } from '@ionic/vue';
@@ -38,7 +38,7 @@ import NotFound from "@/Layout/Desktop/components/NotFound.vue";
 
 const route = useRoute();
 
-const { data, isError, error, refetch } = useServerClient<InfoResponse>({
+const { data, isError, error } = useServerClient<InfoResponse>({
   keepForever: true,
   queryKey: ['base', 'info', route.params.id],
   path: `${route.fullPath}`,
@@ -265,7 +265,7 @@ interface IMenuItem {
   title: string;
 }
 
-const menuItems: IMenuItem[] = [
+const menuItems = computed<IMenuItem[]>(() => [
   {
     icon: 'arrowRefreshHorizontal',
     onclick: handleRescan,
@@ -286,11 +286,274 @@ const menuItems: IMenuItem[] = [
     onclick: handleDelete,
     title: `Delete ${data?.value?.media_type == 'movie' ? 'movie' : 'TV show'}`,
   },
-];
+]);
 
 </script>
 
 <template>
+<!--  <ion-page>-->
+<!--    <ion-content :fullscreen="true">-->
+<!--      <NotFound v-if="isError && !data" />-->
+<!--      <ScrollContainer v-else :autoHide="true" :static="true">-->
+<!--        <div class="z-0 flex flex-col gap-4 rounded-3xl border-0 w-available scrollbar-none border-auto-3" :class="{-->
+<!--          'pb-2': isNative && currentSong,-->
+<!--          'children:pb-4 sm:children:pb-3': !isNative && currentSong-->
+<!--        }">-->
+<!--          <div v-if="isError || error" class="">-->
+<!--            <p>{{ error }}</p>-->
+<!--          </div>-->
+<!--          <div-->
+<!--            class="flex flex-col 5xl:flex-row gap-4 overflow-clip rounded-3xl border-0 pb-2 w-available scrollbar-none border-auto-3">-->
+<!--            <FloatingBackButton />-->
+
+<!--            <div class="relative mx-auto w-full gap-4 rounded-lg p-4 5xl:max-w-screen-2xl 5xl:ml-4 5xl:mr-auto">-->
+
+<!--              <div class="z-0 flex w-full flex-grow flex-col items-end justify-start gap-2 pt-[290px] 5xl:h-[77vh]">-->
+
+<!--                <div-->
+<!--                  class="children:absolute relative right-1 bottom-0 col-start-1 col-end-2 flex h-auto w-auto select-none justify-end pb-2 max-w-[20vw] w-available translate-x-[4px] sm:h-40 lg:max-w-[30vw] aspect-[32/9]">-->
+
+<!--                  <TMDBImage v-if="data?.logo" :key="data?.logo" :autoShadow="true" :path="data?.logo" :size="500"-->
+<!--                    :shadow="pickPaletteColor(data?.color_palette?.poster)" :title="data?.title"-->
+<!--                    class="pointer-events-none relative mx-auto flex h-full w-auto select-none place-self-start overflow-hidden p-4"-->
+<!--                    className="relative bottom-0 h-auto w-auto p-4" type="logo" />-->
+<!--                </div>-->
+
+<!--                <div-->
+<!--                  class="relative col-start-2 col-end-4 grid flex-shrink-0 flex-grow-0 grid-cols-3 items-start justify-start self-stretch rounded-2xl bg-gradient-to-b py-4 pr-4 from-slate-light-2/12 via-slate-light-3/12 to-slate-light-3/11 dark:from-slate-dark-2/12 dark:via-slate-dark-2/12 dark:to-slate-dark-2/11 border-auto-5/8 border-1 min-h-[23.5rem] 5xl:h-full">-->
+<!--                  <div v-if="data?.poster"-->
+<!--                    class="absolute bottom-24 z-10 col-start-1 content-center col-end-2 h-auto w-full items-start justify-start rounded-lg -top-[20rem] sm:block">-->
+<!--                    <RouterLink :to="`/${data?.media_type}/${data?.id}/watch`" :aria-label="$t('Play')"-->
+<!--                      :class="`top-3 relative h-auto m-auto mx-auto w-[65%] scale-95 cursor-default group/card block z-0 transitioning rounded-2xl aspect-poster overflow-clip select-none cover !shadow-none max-h-available  ${hasItem ? 'hover:!scale-100 hover:-translate-y-1' : ''}`"-->
+<!--                      data-nav="true" data-nav-r="play" data-nav-reset="true">-->
+
+<!--                      <TMDBImage :key="data?.poster || 'poster'" :autoShadow="true"-->
+<!--                        :path="data?.poster" :colorPalette="data?.color_palette?.poster" :size="760"-->
+<!--                        priority="high" :title="data?.title" aspect="poster"-->
+<!--                        className="pointer-events-none absolute -inset-1 z-20 flex aspect-poster scale-100 select-none items-center place-self-start overflow-hidden rounded-2xl !w-auto !h-auto max-h-available"-->
+<!--                        class="m-auto !w-auto !h-auto children:w-auto scale-100 rounded-2xl aspect-poster 5xl:w-inherit"-->
+<!--                        type="image" />-->
+
+<!--                      <span-->
+<!--                        :class="`tv:group-focus-visible/card:bg-black/3 absolute -inset-1 z-20 grid h-auto w-available items-center rounded-lg aspect-poster transition-transform duration-300 opacity-0 [background:radial-gradient(75%_50%_at_50%_50%,_rgba(0,_0,_0,_0.40)_0%,_rgba(0,_0,_0,_0.00)_100%),_rgba(0,_0,_0,_0.09)] mx-auto w-max ${hasItem ? 'group-hover/card:opacity-100' : ''}`">-->
+<!--                        <span-->
+<!--                          class="inset-0 grid group-hover/card:grid h-full w-full place-content-center group-focus-visible/card:bg-none group-hover/card:bg-none text-5xl text-transparent transition-transform duration-300 group-focus-visible/card:transitioning group-hover/card:text-auto-12">-->
+<!--                          <MoooomIcon icon="play"-->
+<!--                            className="w-20 text-slate-lightA-12/70 dark:text-slate-darkA-12/80" />-->
+<!--                        </span>-->
+<!--                      </span>-->
+<!--                    </RouterLink>-->
+<!--                  </div>-->
+
+<!--                  <p-->
+<!--                    class="absolute bottom-4 left-6 w-full flex-shrink-0 select-none flex-grow-0 text-sm text-slate-lightA-12/70  dark:text-slate-darkA-12/80">-->
+<!--                    {{ $t('Data provided by The Movie Database(TMDb)') }}.-->
+<!--                  </p>-->
+
+<!--                  <div class="col-start-2 col-end-4 flex w-full flex-grow flex-col items-start justify-start gap-4">-->
+<!--                    <div class="relative flex flex-shrink-0 flex-grow-0 items-center justify-start gap-4 self-stretch">-->
+
+<!--                      <p class="flex-grow text-5xl font-bold w-[806px] text-auto-12" style="-->
+<!--										font-size: clamp(1.25rem, 2.309vw + 0.652rem, 2rem);-->
+<!--										line-height: clamp(1.875rem, 2.54vw + 1.218rem, 2.75rem);-->
+<!--								">-->
+<!--                        {{ data?.title?.replace(/(: | en de )/, '\n') }}-->
+<!--                      </p>-->
+
+
+<!--                      <div class="relative flex flex-shrink-0 flex-grow-0 items-center justify-start gap-4" v-if="data">-->
+
+<!--                        <RouterLink v-if="hasItem" :to="`/${data?.media_type}/${data?.id}/watch`" :aria-label="$t('Play')"-->
+<!--                          class="relative flex items-center justify-center gap-2 rounded-lg p-2 transition-colors duration-300 group/play hover:bg-auto-5/6">-->
+<!--                          <MoooomIcon icon="play"-->
+<!--                            className="w-6 text-slate-lightA-12/70  dark:text-slate-darkA-12/80" />-->
+<!--                          <div-->
+<!--                            class="absolute top-3 left-1/2 -translate-x-1/2 grid h-0 w-max flex-shrink-0 flex-grow-0 origin-bottom group-hover/play:grid-cols-1 items-center justify-start duration-300 grid-cols-[0fr] group-hover/play:h-[32.77px] transform-all group-hover/play:top-[-38px] rounded-[5.46px] bg-[#3a3f42] group-hover/play:border border-[#e2f0fd]/[0.08]"-->
+<!--                            style="box-shadow: 0px 8px 12px -4px rgba(0,0,0,0.08);">-->
+<!--                            <div class="overflow-hidden">-->
+<!--                              <p class="flex-shrink-0 flex-grow-0 py-0 text-center text-xs font-bold px-2.5">-->
+<!--                                {{ $t('Ends at') }} {{ endTime }}-->
+<!--                              </p>-->
+<!--                            </div>-->
+<!--                          </div>-->
+<!--                        </RouterLink>-->
+
+<!--                        <div v-else-->
+<!--                          class="relative flex cursor-not-allowed items-center justify-center gap-2 rounded-lg p-2 transition-colors duration-300 group/play hover:bg-auto-5/6">-->
+<!--                          <MoooomIcon icon="play" className="w-6 text-red-dark-8" />-->
+
+<!--                          <div-->
+<!--                            class="absolute top-3 grid h-0 w-max flex-shrink-0 flex-grow-0 origin-bottom group-hover/play:grid-cols-1 items-center justify-start bg-black duration-300 grid-cols-[0fr] group-hover/play:h-[32.77px] transform-all left-[-31px] group-hover/play:top-[-38px] rounded-[5.46px]">-->
+<!--                            <div class="overflow-hidden">-->
+<!--                              <p class="flex-shrink-0 flex-grow-0 py-0 text-xs font-bold px-2.5">-->
+<!--                                {{ $t('Not available') }}-->
+<!--                              </p>-->
+<!--                            </div>-->
+<!--                          </div>-->
+<!--                        </div>-->
+
+<!--                        <button :aria-label="$t('Watch trailer')"-->
+<!--                          class="relative flex items-center justify-center gap-2 overflow-hidden rounded-lg p-2 transition-colors duration-300 hover:bg-auto-5/6"-->
+<!--                          @click="trailerState == true ? toggleTrailer() : null">-->
+<!--                          <MoooomIcon icon="film" className="w-6"-->
+<!--                            :style="`color: ${trailerState == true ? 'rgb(var(&#45;&#45;color-green-8))' : 'rgb(var(&#45;&#45;color-red-8))'}`" />-->
+<!--                        </button>-->
+
+<!--                        <button :aria-label="$t('Mark as watched')"-->
+<!--                          class="relative flex items-center justify-center gap-2 overflow-hidden rounded-lg p-2 transition-colors duration-300 hover:bg-auto-5/6"-->
+<!--                          @click="toggleWatched">-->
+<!--                          <MoooomIcon icon="check"-->
+<!--                            className="w-6 text-slate-lightA-12/70  dark:text-slate-darkA-12/80" />-->
+<!--                        </button>-->
+
+<!--                        <MediaLikeButton v-if="data" :data="data" />-->
+
+<!--                        <ListControlHeaderMoreMenu :items="menuItems"-->
+<!--                          class=" text-slate-lightA-12/70  dark:text-slate-darkA-12/80" />-->
+<!--                      </div>-->
+
+<!--                    </div>-->
+
+<!--                    <div class="flex flex-shrink-0 flex-grow-0 items-center justify-start gap-4 self-stretch"-->
+<!--                      v-if="data">-->
+
+<!--                      <InfoHeaderItem v-if="data?.year">-->
+<!--                        <p class="flex-shrink-0 flex-grow-0 text-sm font-bold uppercase text-auto-12">-->
+<!--                          {{ data?.year }}-->
+<!--                        </p>-->
+<!--                      </InfoHeaderItem>-->
+<!--                      <InfoHeaderItem v-if="data?.number_of_items">-->
+<!--                        <p class="flex-shrink-0 flex-grow-0 text-sm font-bold uppercase text-auto-12">-->
+<!--                          {{ data?.number_of_items }} {{ $t('ep') }}.-->
+<!--                        </p>-->
+<!--                      </InfoHeaderItem>-->
+<!--                      <InfoHeaderItem v-if="data?.duration">-->
+<!--                        <p class="flex-shrink-0 flex-grow-0 text-sm font-bold uppercase text-auto-12">-->
+<!--                          {{ convertToHumanReact(t, data?.duration, true) }}-->
+<!--                        </p>-->
+<!--                      </InfoHeaderItem>-->
+<!--                      <InfoHeaderItem v-if="data?.voteAverage">-->
+<!--                        <p class="flex-shrink-0 flex-grow-0 text-sm font-bold text-auto-12 -ml-0.5">-->
+<!--                          ⭐ ️{{ data?.voteAverage?.toFixed(0) }}/10-->
+<!--                        </p>-->
+<!--                      </InfoHeaderItem>-->
+<!--                      <div v-if="data?.content_ratings"-->
+<!--                        class="relative flex flex-shrink-0 flex-grow-0 flex-col items-start justify-start gap-1 overflow-hidden">-->
+<!--                        <ContentRating :size="8"-->
+<!--                          class="h-full min-!h-[1rem] object-scale-down rounded-lg overflow-clip children:-m-0.5"-->
+<!--                          :ratings="data?.content_ratings" />-->
+<!--                      </div>-->
+
+<!--                    </div>-->
+
+<!--                    <div-->
+<!--                      class="relative flex flex-shrink-0 flex-grow-0 flex-col items-start justify-start gap-2 self-stretch"-->
+<!--                      v-if="data">-->
+<!--                      <div class="h-px flex-shrink-0 flex-grow-0 self-stretch bg-auto-12/10"></div>-->
+<!--                      <div class="w-full flex-shrink-0 flex-grow-0 self-stretch text-lg font-medium text-auto-12 mb-4">-->
+<!--                        <div v-if="!data?.overview" class="">-->
+<!--                          <span class="">-->
+<!--                            {{ $t('We don\'t have an overview for ') }} {{ data.name }}.-->
+<!--                            {{ $t('Feel free to contribute!') }}-->
+<!--                          </span>-->
+<!--                          <a :href="`https://www.themoviedb.org/${route.params?.type}/${route.params?.id}/edit`"-->
+<!--                            class="underline underline-offset-4">-->
+<!--                            {{ $t('Contribute to TMDb') }}-->
+<!--                          </a>-->
+<!--                        </div>-->
+<!--                        {{ data?.overview }}-->
+<!--                      </div>-->
+
+<!--                      <InfoItem v-if="data?.genres" :data="data" title="Genres" keyName="genres" prefix="genres" />-->
+<!--                      <InfoItem v-if="data?.writer" :data="{ writer: [data?.writer] }" title="Writer" keyName="writer"-->
+<!--                        prefix="person" />-->
+<!--                      <InfoItem v-if="data?.creator" :data="{ creator: [data?.creator] }" title="Creator"-->
+<!--                        keyName="creator" prefix="person" />-->
+<!--                      <InfoItem v-if="data?.director" :data="{ director: [data?.director] }" title="Director"-->
+<!--                        keyName="director" prefix="person" />-->
+<!--                      <InfoItem v-if="data?.creators" :data="data" title="Creators" keyName="creators"-->
+<!--                        prefix="person" />-->
+<!--                      <InfoItem v-if="data?.directors" :data="data" title="Directors" keyName="directors"-->
+<!--                        prefix="person" />-->
+<!--                      <InfoItem v-if="data?.writers" :data="data" title="Writers" keyName="writers" prefix="person" />-->
+<!--                      <InfoItem v-if="data?.keywords" :data="data" title="Keywords" keyName="keywords" />-->
+
+<!--                      <div-->
+<!--                        class="relative grid w-full flex-shrink-0 flex-grow-0 grid-cols-7 items-start justify-start gap-1 text-slate-lightA-12/70  dark:text-slate-darkA-12/80">-->
+<!--                        <p class="grid-cols-3 text-xs font-bold uppercase">-->
+<!--                          {{ $t('External links') }}-->
+<!--                        </p>-->
+<!--                        <div-->
+<!--                          class="col-span-6 col-start-3 flex w-full max-w-fit flex-wrap gap-1 self-center xl:col-start-3 5xl:col-start-2">-->
+
+<!--                          <div class="gap-1 children:whitespace-nowrap text-sm">-->
+<!--                            <a :href="`https://www.themoviedb.org/${data?.media_type}/${data?.id}`" target="_blank"-->
+<!--                              class="inline-block underline-offset-4 hover:underline focus-visible:underline">-->
+<!--                              TheMovieDb-->
+<!--                            </a>-->
+<!--                            <span>{{ data?.external_ids?.imdb_id || data?.external_ids?.tvdb_id ? ',' : '' }}</span>-->
+<!--                          </div>-->
+
+<!--                          <div class="gap-1 children:whitespace-nowrap text-sm" v-if="data?.external_ids?.imdb_id">-->
+<!--                            <a :href="`https://www.imdb.com/title/${data?.external_ids?.imdb_id}`"-->
+<!--                              class="inline-block underline-offset-4 hover:underline focus-visible:underline"-->
+<!--                              target="_blank">-->
+<!--                              IMDb-->
+<!--                            </a>-->
+<!--                            <span>{{ data?.external_ids?.tvdb_id ? ',' : '' }}</span>-->
+<!--                          </div>-->
+
+<!--                          <div class="gap-1 children:whitespace-nowrap text-sm" v-if="data?.external_ids?.tvdb_id">-->
+<!--                            <a :href="`https://thetvdb.com/?tab=series&id=${data?.external_ids?.tvdb_id}&lid=eng`"-->
+<!--                              class="inline-block underline-offset-4 hover:underline focus-visible:underline"-->
+<!--                              target="_blank">-->
+<!--                              TheTvDb-->
+<!--                            </a>-->
+<!--                          </div>-->
+<!--                        </div>-->
+<!--                      </div>-->
+<!--                    </div>-->
+
+<!--                  </div>-->
+<!--                </div>-->
+
+<!--              </div>-->
+
+<!--            </div>-->
+
+<!--            <div class="relative mx-auto w-full gap-4 rounded-lg 5xl:p-4 5xl:max-w-screen-2xl 5xl:ml-4 5xl:mr-0 5xl:pr-0 5xl:h-[91vh] 5xl:pt-[35vh] 5xl:pb-0 overflow-y-auto overflow-x-hidden scrollbar-none">-->
+<!--              <SeasonCarousel v-if="data?.seasons && data?.seasons?.length > 0" :data="data?.seasons" type="backdrop" />-->
+
+<!--              <PersonCarousel v-if="data?.cast && data?.cast?.length > 0" :data="data?.cast.slice(0, 50)" title="Cast" />-->
+
+<!--              <PersonCarousel v-if="data?.crew && data?.crew?.length > 0"-->
+<!--                :data="sortByPosterAlphabetized(data?.crew, 'profile', 'id').slice(0, 50)" title="Crew" />-->
+
+<!--              <ImageCarousel v-if="data?.posters && data?.posters?.length > 0" :data="data?.posters" title="Poster"-->
+<!--                type="poster" />-->
+
+<!--              <ImageCarousel v-if="data?.backdrops && data?.backdrops?.length > 0"-->
+<!--                :colorPalette="data?.color_palette?.poster" :data="data?.backdrops" title="Backdrop" type="backdrop" />-->
+
+<!--              <MediaCarousel v-if="data?.recommendations && data?.recommendations?.length > 0"-->
+<!--                :colorPalette="data?.color_palette" :data="data?.recommendations" title="Recommendations" type="poster" />-->
+
+<!--              <MediaCarousel v-if="data?.similar && data?.similar?.length > 0" :colorPalette="data?.color_palette"-->
+<!--                :data="data?.similar" title="Similar" type="poster" />-->
+<!--            </div>-->
+<!--          </div>-->
+
+
+<!--          <Trailer v-if="data?.videos && data?.videos?.length > 0 && trailerOpen" :key="trailerIndex"-->
+<!--            :incrementTrailerIndex="incrementTrailerIndex" :index="trailerIndex" :open="trailerOpen"-->
+<!--            :title="data?.title ?? data?.name" :toggle="toggleTrailer" :videos="data?.videos"-->
+<!--            class="inset-0 h-full w-full z-999" />-->
+
+<!--        </div>-->
+<!--      </ScrollContainer>-->
+<!--    </ion-content>-->
+<!--  </ion-page>-->
+
   <ion-page>
     <ion-content :fullscreen="true">
       <NotFound v-if="isError && !data" />
@@ -303,50 +566,50 @@ const menuItems: IMenuItem[] = [
             <p>{{ error }}</p>
           </div>
           <div
-            class="flex flex-col 5xl:flex-row gap-4 overflow-clip rounded-3xl border-0 pb-2 w-available scrollbar-none border-auto-3">
+              class="flex flex-col gap-4 overflow-clip rounded-3xl border-0 pb-2 w-available scrollbar-none border-auto-3">
             <FloatingBackButton />
 
-            <div class="relative mx-auto w-full gap-4 rounded-lg p-4 5xl:max-w-screen-2xl 5xl:ml-4 5xl:mr-auto">
+            <div class="relative mx-auto w-full gap-4 rounded-lg p-4 max-w-screen-4xl">
 
-              <div class="z-0 flex w-full flex-grow flex-col items-end justify-start gap-2 pt-[290px] 5xl:h-[77vh]">
+              <div class="z-0 flex w-full flex-grow flex-col items-end justify-start gap-2 pt-[290px]">
 
                 <div
-                  class="children:absolute relative right-1 bottom-0 col-start-1 col-end-2 flex h-auto w-auto select-none justify-end pb-2 max-w-[20vw] w-available translate-x-[4px] sm:h-40 lg:max-w-[30vw] aspect-[32/9]">
+                    class="children:absolute relative right-1 bottom-0 col-start-1 col-end-2 flex h-auto w-auto select-none justify-end pb-2 max-w-[20vw] w-available translate-x-[4px] sm:h-40 lg:max-w-[30vw] aspect-[32/9]">
 
                   <TMDBImage v-if="data?.logo" :key="data?.logo" :autoShadow="true" :path="data?.logo" :size="500"
-                    :shadow="pickPaletteColor(data?.color_palette?.poster)" :title="data?.title"
-                    class="pointer-events-none relative mx-auto flex h-full w-auto select-none place-self-start overflow-hidden p-4"
-                    className="relative bottom-0 h-auto w-auto p-4" type="logo" />
+                             :shadow="pickPaletteColor(data?.color_palette?.poster)" :title="data?.title"
+                             class="pointer-events-none relative mx-auto flex h-full w-auto select-none place-self-start overflow-hidden p-4"
+                             className="relative bottom-0 h-auto w-auto p-4" type="logo" />
                 </div>
 
                 <div
-                  class="relative col-start-2 col-end-4 grid flex-shrink-0 flex-grow-0 grid-cols-3 items-start justify-start self-stretch rounded-2xl bg-gradient-to-b py-4 pr-4 from-slate-light-2/12 via-slate-light-3/12 to-slate-light-3/11 dark:from-slate-dark-2/12 dark:via-slate-dark-2/12 dark:to-slate-dark-2/11 border-auto-5/8 border-1 min-h-[23.5rem] 5xl:h-full">
+                    class="relative col-start-2 col-end-4 grid flex-shrink-0 flex-grow-0 grid-cols-3 items-start justify-start self-stretch rounded-2xl bg-gradient-to-b py-4 pr-4 from-slate-light-2/12 via-slate-light-3/12 to-slate-light-3/11 dark:from-slate-dark-2/12 dark:via-slate-dark-2/12 dark:to-slate-dark-2/11 border-auto-5/8 border-1 min-h-[23.5rem]">
                   <div v-if="data?.poster"
-                    class="absolute bottom-24 z-10 col-start-1 content-center col-end-2 h-auto w-full items-start justify-start rounded-lg -top-[20rem] sm:block">
+                       class="absolute bottom-24 z-10 col-start-1 content-center col-end-2 h-auto w-full items-start justify-start rounded-lg -top-[20rem] sm:block">
                     <RouterLink :to="`/${data?.media_type}/${data?.id}/watch`" :aria-label="$t('Play')"
-                      :class="`top-3 relative h-auto m-auto mx-auto w-[65%] scale-95 cursor-default group/card block z-0 transitioning rounded-2xl aspect-poster overflow-clip select-none cover !shadow-none max-h-available  ${hasItem ? 'hover:!scale-100 hover:-translate-y-1' : ''}`"
-                      data-nav="true" data-nav-r="play" data-nav-reset="true">
+                                :class="`top-3 relative h-auto m-auto mx-auto w-[65%] scale-95 cursor-default group/card block z-0 transitioning rounded-2xl aspect-poster overflow-clip select-none cover !shadow-none max-h-available  ${hasItem ? 'hover:!scale-100 hover:-translate-y-1' : ''}`"
+                                data-nav="true" data-nav-r="play" data-nav-reset="true">
 
                       <TMDBImage :key="data?.poster || 'poster'" :autoShadow="true"
-                        :path="data?.poster" :colorPalette="data?.color_palette?.poster" :size="760"
-                        priority="high" :title="data?.title" aspect="poster"
-                        className="pointer-events-none absolute -inset-1 z-20 flex aspect-poster scale-100 select-none items-center place-self-start overflow-hidden rounded-2xl !w-auto !h-auto max-h-available"
-                        class="m-auto !w-auto !h-auto children:w-auto scale-100 rounded-2xl aspect-poster 5xl:w-inherit"
-                        type="image" />
+                                 :path="data?.poster" :colorPalette="data?.color_palette?.poster" :size="760"
+                                 priority="high" :title="data?.title" aspect="poster"
+                                 className="pointer-events-none absolute -inset-1 z-20 flex aspect-poster scale-100 select-none items-center place-self-start overflow-hidden rounded-2xl !w-auto !h-auto max-h-available"
+                                 class="m-auto !w-auto !h-auto children:w-auto scale-100 rounded-2xl aspect-poster 5xl:w-inherit"
+                                 type="image" />
 
                       <span
-                        :class="`tv:group-focus-visible/card:bg-black/3 absolute -inset-1 z-20 grid h-auto w-available items-center rounded-lg aspect-poster transition-transform duration-300 opacity-0 [background:radial-gradient(75%_50%_at_50%_50%,_rgba(0,_0,_0,_0.40)_0%,_rgba(0,_0,_0,_0.00)_100%),_rgba(0,_0,_0,_0.09)] mx-auto w-max ${hasItem ? 'group-hover/card:opacity-100' : ''}`">
+                          :class="`tv:group-focus-visible/card:bg-black/3 absolute -inset-1 z-20 grid h-auto w-available items-center rounded-lg aspect-poster transition-transform duration-300 opacity-0 [background:radial-gradient(75%_50%_at_50%_50%,_rgba(0,_0,_0,_0.40)_0%,_rgba(0,_0,_0,_0.00)_100%),_rgba(0,_0,_0,_0.09)] mx-auto w-max ${hasItem ? 'group-hover/card:opacity-100' : ''}`">
                         <span
-                          class="inset-0 grid group-hover/card:grid h-full w-full place-content-center group-focus-visible/card:bg-none group-hover/card:bg-none text-5xl text-transparent transition-transform duration-300 group-focus-visible/card:transitioning group-hover/card:text-auto-12">
+                            class="inset-0 grid group-hover/card:grid h-full w-full place-content-center group-focus-visible/card:bg-none group-hover/card:bg-none text-5xl text-transparent transition-transform duration-300 group-focus-visible/card:transitioning group-hover/card:text-auto-12">
                           <MoooomIcon icon="play"
-                            className="w-20 text-slate-lightA-12/70 dark:text-slate-darkA-12/80" />
+                                      className="w-20 text-slate-lightA-12/70 dark:text-slate-darkA-12/80" />
                         </span>
                       </span>
                     </RouterLink>
                   </div>
 
                   <p
-                    class="absolute bottom-4 left-6 w-full flex-shrink-0 select-none flex-grow-0 text-sm text-slate-lightA-12/70  dark:text-slate-darkA-12/80">
+                      class="absolute bottom-4 left-6 w-full flex-shrink-0 select-none flex-grow-0 text-sm text-slate-lightA-12/70  dark:text-slate-darkA-12/80">
                     {{ $t('Data provided by The Movie Database(TMDb)') }}.
                   </p>
 
@@ -364,12 +627,12 @@ const menuItems: IMenuItem[] = [
                       <div class="relative flex flex-shrink-0 flex-grow-0 items-center justify-start gap-4" v-if="data">
 
                         <RouterLink v-if="hasItem" :to="`/${data?.media_type}/${data?.id}/watch`" :aria-label="$t('Play')"
-                          class="relative flex items-center justify-center gap-2 rounded-lg p-2 transition-colors duration-300 group/play hover:bg-auto-5/6">
+                                    class="relative flex items-center justify-center gap-2 rounded-lg p-2 transition-colors duration-300 group/play hover:bg-auto-5/6">
                           <MoooomIcon icon="play"
-                            className="w-6 text-slate-lightA-12/70  dark:text-slate-darkA-12/80" />
+                                      className="w-6 text-slate-lightA-12/70  dark:text-slate-darkA-12/80" />
                           <div
-                            class="absolute top-3 left-1/2 -translate-x-1/2 grid h-0 w-max flex-shrink-0 flex-grow-0 origin-bottom group-hover/play:grid-cols-1 items-center justify-start duration-300 grid-cols-[0fr] group-hover/play:h-[32.77px] transform-all group-hover/play:top-[-38px] rounded-[5.46px] bg-[#3a3f42] group-hover/play:border border-[#e2f0fd]/[0.08]"
-                            style="box-shadow: 0px 8px 12px -4px rgba(0,0,0,0.08);">
+                              class="absolute top-3 left-1/2 -translate-x-1/2 grid h-0 w-max flex-shrink-0 flex-grow-0 origin-bottom group-hover/play:grid-cols-1 items-center justify-start duration-300 grid-cols-[0fr] group-hover/play:h-[32.77px] transform-all group-hover/play:top-[-38px] rounded-[5.46px] bg-[#3a3f42] group-hover/play:border border-[#e2f0fd]/[0.08]"
+                              style="box-shadow: 0px 8px 12px -4px rgba(0,0,0,0.08);">
                             <div class="overflow-hidden">
                               <p class="flex-shrink-0 flex-grow-0 py-0 text-center text-xs font-bold px-2.5">
                                 {{ $t('Ends at') }} {{ endTime }}
@@ -379,11 +642,11 @@ const menuItems: IMenuItem[] = [
                         </RouterLink>
 
                         <div v-else
-                          class="relative flex cursor-not-allowed items-center justify-center gap-2 rounded-lg p-2 transition-colors duration-300 group/play hover:bg-auto-5/6">
+                             class="relative flex cursor-not-allowed items-center justify-center gap-2 rounded-lg p-2 transition-colors duration-300 group/play hover:bg-auto-5/6">
                           <MoooomIcon icon="play" className="w-6 text-red-dark-8" />
 
                           <div
-                            class="absolute top-3 grid h-0 w-max flex-shrink-0 flex-grow-0 origin-bottom group-hover/play:grid-cols-1 items-center justify-start bg-black duration-300 grid-cols-[0fr] group-hover/play:h-[32.77px] transform-all left-[-31px] group-hover/play:top-[-38px] rounded-[5.46px]">
+                              class="absolute top-3 grid h-0 w-max flex-shrink-0 flex-grow-0 origin-bottom group-hover/play:grid-cols-1 items-center justify-start bg-black duration-300 grid-cols-[0fr] group-hover/play:h-[32.77px] transform-all left-[-31px] group-hover/play:top-[-38px] rounded-[5.46px]">
                             <div class="overflow-hidden">
                               <p class="flex-shrink-0 flex-grow-0 py-0 text-xs font-bold px-2.5">
                                 {{ $t('Not available') }}
@@ -393,29 +656,29 @@ const menuItems: IMenuItem[] = [
                         </div>
 
                         <button :aria-label="$t('Watch trailer')"
-                          class="relative flex items-center justify-center gap-2 overflow-hidden rounded-lg p-2 transition-colors duration-300 hover:bg-auto-5/6"
-                          @click="trailerState == true ? toggleTrailer() : null">
+                                class="relative flex items-center justify-center gap-2 overflow-hidden rounded-lg p-2 transition-colors duration-300 hover:bg-auto-5/6"
+                                @click="trailerState == true ? toggleTrailer() : null">
                           <MoooomIcon icon="film" className="w-6"
-                            :style="`color: ${trailerState == true ? 'rgb(var(--color-green-8))' : 'rgb(var(--color-red-8))'}`" />
+                                      :style="`color: ${trailerState == true ? 'rgb(var(--color-green-8))' : 'rgb(var(--color-red-8))'}`" />
                         </button>
 
                         <button :aria-label="$t('Mark as watched')"
-                          class="relative flex items-center justify-center gap-2 overflow-hidden rounded-lg p-2 transition-colors duration-300 hover:bg-auto-5/6"
-                          @click="toggleWatched">
+                                class="relative flex items-center justify-center gap-2 overflow-hidden rounded-lg p-2 transition-colors duration-300 hover:bg-auto-5/6"
+                                @click="toggleWatched">
                           <MoooomIcon icon="check"
-                            className="w-6 text-slate-lightA-12/70  dark:text-slate-darkA-12/80" />
+                                      className="w-6 text-slate-lightA-12/70  dark:text-slate-darkA-12/80" />
                         </button>
 
                         <MediaLikeButton v-if="data" :data="data" />
 
                         <ListControlHeaderMoreMenu :items="menuItems"
-                          class=" text-slate-lightA-12/70  dark:text-slate-darkA-12/80" />
+                                                   class=" text-slate-lightA-12/70  dark:text-slate-darkA-12/80" />
                       </div>
 
                     </div>
 
                     <div class="flex flex-shrink-0 flex-grow-0 items-center justify-start gap-4 self-stretch"
-                      v-if="data">
+                         v-if="data">
 
                       <InfoHeaderItem v-if="data?.year">
                         <p class="flex-shrink-0 flex-grow-0 text-sm font-bold uppercase text-auto-12">
@@ -438,17 +701,17 @@ const menuItems: IMenuItem[] = [
                         </p>
                       </InfoHeaderItem>
                       <div v-if="data?.content_ratings"
-                        class="relative flex flex-shrink-0 flex-grow-0 flex-col items-start justify-start gap-1 overflow-hidden">
+                           class="relative flex flex-shrink-0 flex-grow-0 flex-col items-start justify-start gap-1 overflow-hidden">
                         <ContentRating :size="8"
-                          class="h-full min-!h-[1rem] object-scale-down rounded-lg overflow-clip children:-m-0.5"
-                          :ratings="data?.content_ratings" />
+                                       class="h-full min-!h-[1rem] object-scale-down rounded-lg overflow-clip children:-m-0.5"
+                                       :ratings="data?.content_ratings" />
                       </div>
 
                     </div>
 
                     <div
-                      class="relative flex flex-shrink-0 flex-grow-0 flex-col items-start justify-start gap-2 self-stretch"
-                      v-if="data">
+                        class="relative flex flex-shrink-0 flex-grow-0 flex-col items-start justify-start gap-2 self-stretch"
+                        v-if="data">
                       <div class="h-px flex-shrink-0 flex-grow-0 self-stretch bg-auto-12/10"></div>
                       <div class="w-full flex-shrink-0 flex-grow-0 self-stretch text-lg font-medium text-auto-12 mb-4">
                         <div v-if="!data?.overview" class="">
@@ -457,7 +720,7 @@ const menuItems: IMenuItem[] = [
                             {{ $t('Feel free to contribute!') }}
                           </span>
                           <a :href="`https://www.themoviedb.org/${route.params?.type}/${route.params?.id}/edit`"
-                            class="underline underline-offset-4">
+                             class="underline underline-offset-4">
                             {{ $t('Contribute to TMDb') }}
                           </a>
                         </div>
@@ -466,29 +729,29 @@ const menuItems: IMenuItem[] = [
 
                       <InfoItem v-if="data?.genres" :data="data" title="Genres" keyName="genres" prefix="genres" />
                       <InfoItem v-if="data?.writer" :data="{ writer: [data?.writer] }" title="Writer" keyName="writer"
-                        prefix="person" />
+                                prefix="person" />
                       <InfoItem v-if="data?.creator" :data="{ creator: [data?.creator] }" title="Creator"
-                        keyName="creator" prefix="person" />
+                                keyName="creator" prefix="person" />
                       <InfoItem v-if="data?.director" :data="{ director: [data?.director] }" title="Director"
-                        keyName="director" prefix="person" />
+                                keyName="director" prefix="person" />
                       <InfoItem v-if="data?.creators" :data="data" title="Creators" keyName="creators"
-                        prefix="person" />
+                                prefix="person" />
                       <InfoItem v-if="data?.directors" :data="data" title="Directors" keyName="directors"
-                        prefix="person" />
+                                prefix="person" />
                       <InfoItem v-if="data?.writers" :data="data" title="Writers" keyName="writers" prefix="person" />
                       <InfoItem v-if="data?.keywords" :data="data" title="Keywords" keyName="keywords" />
 
                       <div
-                        class="relative grid w-full flex-shrink-0 flex-grow-0 grid-cols-7 items-start justify-start gap-1 text-slate-lightA-12/70  dark:text-slate-darkA-12/80">
+                          class="relative grid w-full flex-shrink-0 flex-grow-0 grid-cols-7 items-start justify-start gap-1 text-slate-lightA-12/70  dark:text-slate-darkA-12/80">
                         <p class="grid-cols-3 text-xs font-bold uppercase">
                           {{ $t('External links') }}
                         </p>
                         <div
-                          class="col-span-6 col-start-3 flex w-full max-w-fit flex-wrap gap-1 self-center xl:col-start-3 5xl:col-start-2">
+                            class="col-span-6 col-start-3 flex w-full max-w-fit flex-wrap gap-1 self-center xl:col-start-3 2xl:col-start-2">
 
                           <div class="gap-1 children:whitespace-nowrap text-sm">
                             <a :href="`https://www.themoviedb.org/${data?.media_type}/${data?.id}`" target="_blank"
-                              class="inline-block underline-offset-4 hover:underline focus-visible:underline">
+                               class="inline-block underline-offset-4 hover:underline focus-visible:underline">
                               TheMovieDb
                             </a>
                             <span>{{ data?.external_ids?.imdb_id || data?.external_ids?.tvdb_id ? ',' : '' }}</span>
@@ -496,8 +759,8 @@ const menuItems: IMenuItem[] = [
 
                           <div class="gap-1 children:whitespace-nowrap text-sm" v-if="data?.external_ids?.imdb_id">
                             <a :href="`https://www.imdb.com/title/${data?.external_ids?.imdb_id}`"
-                              class="inline-block underline-offset-4 hover:underline focus-visible:underline"
-                              target="_blank">
+                               class="inline-block underline-offset-4 hover:underline focus-visible:underline"
+                               target="_blank">
                               IMDb
                             </a>
                             <span>{{ data?.external_ids?.tvdb_id ? ',' : '' }}</span>
@@ -505,8 +768,8 @@ const menuItems: IMenuItem[] = [
 
                           <div class="gap-1 children:whitespace-nowrap text-sm" v-if="data?.external_ids?.tvdb_id">
                             <a :href="`https://thetvdb.com/?tab=series&id=${data?.external_ids?.tvdb_id}&lid=eng`"
-                              class="inline-block underline-offset-4 hover:underline focus-visible:underline"
-                              target="_blank">
+                               class="inline-block underline-offset-4 hover:underline focus-visible:underline"
+                               target="_blank">
                               TheTvDb
                             </a>
                           </div>
@@ -521,33 +784,31 @@ const menuItems: IMenuItem[] = [
 
             </div>
 
-            <div class="relative mx-auto w-full gap-4 rounded-lg 5xl:p-4 5xl:max-w-screen-2xl 5xl:ml-4 5xl:mr-0 5xl:pr-0 5xl:h-[91vh] 5xl:pt-[35vh] 5xl:pb-0 overflow-y-auto overflow-x-hidden scrollbar-none">
-              <SeasonCarousel v-if="data?.seasons && data?.seasons?.length > 0" :data="data?.seasons" type="backdrop" />
+            <SeasonCarousel v-if="data?.seasons && data?.seasons?.length > 0" :data="data?.seasons" type="backdrop" />
 
-              <PersonCarousel v-if="data?.cast && data?.cast?.length > 0" :data="data?.cast.slice(0, 50)" title="Cast" />
+            <PersonCarousel v-if="data?.cast && data?.cast?.length > 0" :data="data?.cast.slice(0, 50)" title="Cast" />
 
-              <PersonCarousel v-if="data?.crew && data?.crew?.length > 0"
-                :data="sortByPosterAlphabetized(data?.crew, 'profile', 'id').slice(0, 50)" title="Crew" />
+            <PersonCarousel v-if="data?.crew && data?.crew?.length > 0"
+                            :data="sortByPosterAlphabetized(data?.crew, 'profile', 'id').slice(0, 50)" title="Crew" />
 
-              <ImageCarousel v-if="data?.posters && data?.posters?.length > 0" :data="data?.posters" title="Poster"
-                type="poster" />
+            <ImageCarousel v-if="data?.posters && data?.posters?.length > 0" :data="data?.posters" title="Poster"
+                           type="poster" />
 
-              <ImageCarousel v-if="data?.backdrops && data?.backdrops?.length > 0"
-                :colorPalette="data?.color_palette?.poster" :data="data?.backdrops" title="Backdrop" type="backdrop" />
+            <ImageCarousel v-if="data?.backdrops && data?.backdrops?.length > 0"
+                           :colorPalette="data?.color_palette?.poster" :data="data?.backdrops" title="Backdrop" type="backdrop" />
 
-              <MediaCarousel v-if="data?.recommendations && data?.recommendations?.length > 0"
-                :colorPalette="data?.color_palette" :data="data?.recommendations" title="Recommendations" type="poster" />
+            <MediaCarousel v-if="data?.recommendations && data?.recommendations?.length > 0"
+                           :colorPalette="data?.color_palette" :data="data?.recommendations" title="Recommendations" type="poster" />
 
-              <MediaCarousel v-if="data?.similar && data?.similar?.length > 0" :colorPalette="data?.color_palette"
-                :data="data?.similar" title="Similar" type="poster" />
-            </div>
+            <MediaCarousel v-if="data?.similar && data?.similar?.length > 0" :colorPalette="data?.color_palette"
+                           :data="data?.similar" title="Similar" type="poster" />
           </div>
 
 
           <Trailer v-if="data?.videos && data?.videos?.length > 0 && trailerOpen" :key="trailerIndex"
-            :incrementTrailerIndex="incrementTrailerIndex" :index="trailerIndex" :open="trailerOpen"
-            :title="data?.title ?? data?.name" :toggle="toggleTrailer" :videos="data?.videos"
-            class="inset-0 h-full w-full z-999" />
+                   :incrementTrailerIndex="incrementTrailerIndex" :index="trailerIndex" :open="trailerOpen"
+                   :title="data?.title ?? data?.name" :toggle="toggleTrailer" :videos="data?.videos"
+                   class="inset-0 h-full w-full z-999" />
 
         </div>
       </ScrollContainer>
