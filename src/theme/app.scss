@@ -12,6 +12,14 @@
 
 :root {
   interpolate-size: allow-keywords;
+  --color-background: rgb(var(--background-light-slate-3));
+  --background-auto: var(--background-light-slate-1);
+  --color-text: rgb(var(--background-auto-12));
+}
+
+* {
+  text-box-trim: both;
+  text-box-edge: cap alphabetic;
 }
 
 html {
@@ -63,12 +71,6 @@ ion-content::part(scroll) *,
 .scheme-transition *:not(img, .relative, .absolute, picture) {
   //transition: all calc(var(--speed) * 1ms) ease-in-out !important;
    -webkit-overflow-scrolling: touch;
-}
-
-:root {
-  --color-background: rgb(var(--background-light-slate-3));
-  --background-auto: var(--background-light-slate-1);
-  --color-text: rgb(var(--background-auto-12));
 }
 
 html.scheme-dark {

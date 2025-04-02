@@ -1,6 +1,3 @@
-<script setup lang="ts">
-</script>
-
 <template>
       <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 50 40" class=""
             style="max-width: 100%; height: 100% ">

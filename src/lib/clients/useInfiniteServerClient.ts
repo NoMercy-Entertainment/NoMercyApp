@@ -5,7 +5,7 @@ import { AxiosError } from 'axios';
 import { ErrorResponse } from '@/types/server';
 import { ServerClientProps } from '@/lib/clients/useServerClient';
 import { currentServer } from '@/store/currentServer';
-import { useRoute, useRouter } from 'vue-router';
+import { useRoute } from 'vue-router';
 
 interface InfiniteServerClientProps {
 	path?: string;
@@ -14,7 +14,6 @@ interface InfiniteServerClientProps {
 	keepForever?: boolean;
 	limit?: number;
 	version?: 'lolomo';
-	delay?: number;
 	enabled?: boolean;
 	queryKey?: string[];
 }
@@ -50,7 +49,6 @@ const useInfiniteServerClient = <T,>(options?: {
 	keepForever?: boolean;
 	enabled?: boolean;
 	refetchInterval?: number;
-	delay?: number;
 	queryKey?: QueryKey | unknown[];
 	limit?: number;
 	initialPageParam?: number;
@@ -79,30 +77,20 @@ const useInfiniteServerClient = <T,>(options?: {
 		getPreviousPageParam: (lastPage: any) => {
 			return lastPage.has_more ? lastPage.next_page - 2 : undefined;
 		},
-		queryFn: ({ pageParam = 0 }) => {
-			return new Promise((resolve, reject) => {
-				if (!currentServer.value?.serverApiUrl) return reject();
-
-				const controller = new AbortController();
-
-				setTimeout(() => {
-
-					serverClient()
-						.get(options?.path ?? route.fullPath, {
-							signal: controller.signal,
-							params: {
-								page: pageParam,
-								version: options?.version,
-								take: options?.limit ?? LIMIT,
-							},
-						})
-						.then(response => {
-							resolve(response.data);
-						})
-						.catch(reject);
-				}, options?.delay ?? 0);
-			});
-		},
+		queryFn: ({ pageParam = 0, signal }) =>
+			new Promise((resolve, reject) => serverClient()
+				.get(options?.path ?? route.fullPath, {
+					signal: signal,
+					params: {
+						page: pageParam,
+						version: options?.version,
+						take: options?.limit ?? LIMIT,
+					},
+				})
+				.then(response => {
+					resolve(response.data);
+				})
+				.catch(reject))
 	}) as Return<T>;
 };
 

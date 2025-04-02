@@ -6,6 +6,7 @@ export interface GenreResponse {
 	type: string;
 	titleSort: string;
 	origin: string;
+	link: string;
 	have_items: number;
 	media_type: string;
 	color_palette: ColorPalettes;

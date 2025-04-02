@@ -22,16 +22,15 @@ const getLibraries = (): Promise<void> => new Promise((resolve, reject) => {
 	}
 
 	serverClient()
-		.get<{ data: LibrariesResponse[] }>('/libraries')
+		.get<{ data: LibrariesResponse[] }>('libraries')
 		.then(({ data }) => {
 			setLibraries(data.data);
 			setupComplete.value = true;
 			resolve();
 		})
-		.catch((error) => {
+		.catch(() => {
 			done.value = true;
 			router.push({ name: 'Server offline' }).then(() => resolve());
-			// resolve();
 		});
 });
 

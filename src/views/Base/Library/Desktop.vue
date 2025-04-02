@@ -45,10 +45,6 @@ onMounted(() => {
   setBackground(null);
   setColorPalette(null);
 
-  if (hasNextPage.value && (data?.value?.pages?.length ?? 0) < 50) {
-    fetchNextPage();
-  }
-
   document.dispatchEvent(new Event('sidebar'));
   setTimeout(() => {
     document.dispatchEvent(new Event('indexer'));

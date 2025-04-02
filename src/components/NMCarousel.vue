@@ -59,7 +59,6 @@ const props = defineProps({
     required: true,
   },
   next_id: {
-    type: String,
     required: true,
   }
 });

@@ -32,7 +32,7 @@ const genreColor = computed(() => genreColors(props.data.title));
 </script>
 
 <template>
-    <RouterLink :data-scroll="scrollLetter" :to="data.have_items > 1 ? `/genres/${data.id}` : '#'"
+    <RouterLink :data-scroll="scrollLetter" :to="data.have_items > 1 ? data.link : '#'"
         :class="`flex flex-col relative justify-start items-center w-full h-auto aspect-poster flex-grow flex-shrink-0 overflow-hidden rounded-lg border-1-light transition-all duration-300 select-none group/card ${genreColor.bg}`">
 
         <div class="backdropCard-overlay"></div>

@@ -11,7 +11,8 @@ export interface AxiosInstance<E> {
 	patch<T = unknown, S = unknown>(url: string, data: S, config?: AxiosRequestConfig): Promise<AxiosResponse<T, E>>;
 }
 
-export default <T>(baseUrl: string, timeout?: number) => {
+export default <T>({baseUrl, timeout}: {baseUrl: string, timeout?: number}
+) => {
 	const language = localStorage.getItem('NoMercy-displayLanguage')?.replace(/"/gu, '') || navigator.language.split('-')?.[0];
 
 	const axiosInstance = axios.create({
@@ -38,12 +39,11 @@ export default <T>(baseUrl: string, timeout?: number) => {
 				.catch(() => {
 					return Promise.reject(error);
 				});
-		} else {
+		}
+		else {
 			return Promise.reject(error);
 		}
 	});
 
 	return axiosInstance as AxiosInstance<T>;
 };
-
-

@@ -3,11 +3,13 @@ import {computed, ref, watch} from 'vue';
 import type { Server } from '@/types/auth';
 import {useOnline} from "@vueuse/core";
 import client from "@/lib/clients/client";
+import {user} from "@/store/user";
 
+const { fetch: originalFetch } = window;
 const cs = ref<Server | null>(null);
 export const currentServer = computed(() => cs.value);
 
-export const setCurrentServer = (server: Server | null): void => {
+export const setCurrentServer = async (server: Server | null): Promise<void> => {
 	server?.id && localStorage.setItem('currentServer', server?.id);
 	cs.value = server;
 };
@@ -41,13 +43,13 @@ const pingServer = async (server: Server): Promise<string> => {
 	return new Promise(async (resolve) => {
 		const internalUrl = `https://${server.internal_domain}:${server.internal_port}`;
 		const externalUrl = `https://${server.external_domain}:${server.external_port}`;
-		await client(internalUrl)
+		await client({baseUrl: internalUrl})
 			.get('/api/v1/dashboard/server')
 			.then(() => {
 				resolve(internalUrl);
 				return;
 			});
-		await client(externalUrl)
+		await client({baseUrl: externalUrl})
 			.get('/api/v1/dashboard/server')
 			.then(() => {
 				resolve(externalUrl);

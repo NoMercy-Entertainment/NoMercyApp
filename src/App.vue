@@ -10,6 +10,5 @@ import { IonApp, IonRouterOutlet, isPlatform } from '@ionic/vue';
     }">
     </div>
     <ion-router-outlet animated="false" class="pointer-events-none children:pointer-events-auto" />
-
   </ion-app>
 </template>
