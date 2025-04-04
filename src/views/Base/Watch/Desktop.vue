@@ -145,6 +145,11 @@ const initPlayer = (value: PlaylistItem[] | undefined) => {
     setDisableScreensaver(false);
   });
 
+  player.value?.on('fullscreen', (value) => {
+    // @ts-ignore
+    window.external?.sendMessage(value ? 'enterFullscreen' : 'exitFullscreen');
+  });
+
   player.value?.on('ready', () => {
 
     audioPlayer.stop();

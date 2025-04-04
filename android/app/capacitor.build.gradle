@@ -9,12 +9,17 @@ android {
 
 apply from: "../capacitor-cordova-android-plugins/cordova.variables.gradle"
 dependencies {
+    implementation project(':capacitor-community-app-icon')
     implementation project(':capacitor-community-keep-awake')
+    implementation project(':capacitor-community-media')
+    implementation project(':capacitor-community-native-audio')
+    implementation project(':capacitor-community-safe-area')
+    implementation project(':capacitor-community-screen-brightness')
+    implementation project(':capacitor-community-volume-buttons')
     implementation project(':capacitor-app')
     implementation project(':capacitor-browser')
     implementation project(':capacitor-device')
     implementation project(':capacitor-haptics')
-    implementation project(':capacitor-inappbrowser')
     implementation project(':capacitor-keyboard')
     implementation project(':capacitor-preferences')
     implementation project(':capacitor-screen-orientation')

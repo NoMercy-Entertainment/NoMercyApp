@@ -188,7 +188,7 @@ onUnmounted(() => {
               sidebar-open:xl:py-6
       ">
       <div ref="trailerContainer" @click="(e: MouseEvent) => e.stopPropagation()"
-        class="relative rounded-2xl flex overflow-clip children:overflow-clip h-auto top-1/2 -translate-y-1/2 sm:translate-y-0 w-full sm:h-full children:!w-full children:!h-auto children:!aspect-video">
+        class="relative rounded-2xl flex overflow-clip children:overflow-clip h-auto top-1/2 -translate-y-1/2 w-full sm:h-full children:!w-full children:!h-auto children:!aspect-video">
         <div id="trailer" class="group nomercyplayer"></div>
       </div>
     </div>

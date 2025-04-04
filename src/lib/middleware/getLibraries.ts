@@ -26,6 +26,7 @@ const getLibraries = (): Promise<void> => new Promise((resolve, reject) => {
 		.then(({ data }) => {
 			setLibraries(data.data);
 			setupComplete.value = true;
+
 			resolve();
 		})
 		.catch(() => {
