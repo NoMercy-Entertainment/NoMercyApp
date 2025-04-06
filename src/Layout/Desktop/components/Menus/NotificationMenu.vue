@@ -23,7 +23,7 @@ const translate = computed(() => {
   // 	return '[translate:4rem_0rem] sm:[translate:0]';
   // }
 
-  return ' -translate-x-full';
+  return ' -translate-x-0';
 });
 
 onMounted(() => {

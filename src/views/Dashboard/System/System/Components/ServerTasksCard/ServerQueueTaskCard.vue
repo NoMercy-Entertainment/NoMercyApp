@@ -16,7 +16,7 @@ const props = defineProps({
 
 const priority = ref<number>(props.data.priority ?? 0);
 
-const updateProfile = async (value: number) => {
+const updatePriority = (value: number) => {
   serverClient()
     .patch(`/dashboard/tasks/queue/${props.data.id}`, {
       id: props.data.id,
@@ -27,9 +27,17 @@ const updateProfile = async (value: number) => {
     })
 };
 
+const deleteItem = () => {
+  serverClient()
+      .delete(`/dashboard/tasks/queue/${props.data.id}`)
+      .then(() => {
+        console.log('Item deleted');
+      })
+};
+
 watch(priority, (value) => {
   console.log(value);
-  updateProfile(value);
+  updatePriority(value);
 });
 
 </script>
@@ -39,11 +47,11 @@ watch(priority, (value) => {
     class="flex flex-shrink-0 flex-grow-0 items-start gap-4 self-stretch overflow-hidden rounded-lg py-4 px-4 bg-slate-lightA-3 dark:bg-slate-darkA-3 text-slate-light-12/80 dark:text-slate-dark-12/80">
 
     <div class="relative flex flex-1 flex-grow flex-col items-start space-y-[-2px] w-full">
-      <span class="flex flex-nowrap">
+      <span class="flex flex-nowrap w-full justify-between">
         <p class="text-sm font-semibold text-auto-12 line-clamp-1 h-6" :title="data.title.replace(/NoMercy/giu, '')">
           {{ data.title.replace(/NoMercy/giu, '') }}
         </p>
-        <button
+        <button @click="deleteItem"
           class="float-right flex items-center justify-center gap-2 overflow-hidden rounded-lg bg-transparent w-10 -mt-1.5 -mr-1.5 aspect-square">
           <MoooomIcon icon="cross" class="relative h-5 w-5 flex-shrink-0 flex-grow-0" />
         </button>
