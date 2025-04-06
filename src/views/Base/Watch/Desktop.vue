@@ -147,7 +147,7 @@ const initPlayer = (value: PlaylistItem[] | undefined) => {
 
   player.value?.on('fullscreen', (value) => {
     // @ts-ignore
-    window.external?.sendMessage(value ? 'enterFullscreen' : 'exitFullscreen');
+    window.external?.sendMessage?.(value ? 'enterFullscreen' : 'exitFullscreen');
   });
 
   player.value?.on('ready', () => {

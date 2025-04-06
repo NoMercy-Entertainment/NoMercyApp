@@ -26,22 +26,23 @@ const { data: configuration, refetch: invalidate } = useServerClient<Configurati
 const ready = ref<boolean>(false);
 const newConfig = ref<ConfigurationResponse>({
 	server_name: '',
-	external_server_port: 0,
-	internal_server_port: 0,
+	external_port: 0,
+	internal_port: 0,
 	queue_workers: 0,
 	cron_workers: 0,
 	data_workers: 0,
 	request_workers: 0,
 	encoder_workers: 0,
 	image_workers: 0,
+	swagger: false,
 });
 
 watch(configuration, (value) => {
 	if (!value) return;
 
 	server_name.value = value?.server_name;
-	external_server_port.value = value?.external_server_port;
-	internal_server_port.value = value?.internal_server_port;
+	external_port.value = value?.external_port;
+	internal_port.value = value?.internal_port;
 	queue_workers.value = value?.queue_workers;
 	cron_workers.value = value?.cron_workers;
 	data_workers.value = value?.data_workers;
@@ -62,14 +63,14 @@ watch(server_name, (value) => {
 	updateState(configuration, newConfig, 'server_name', value);
 });
 
-export const external_server_port = ref<Nullable<number>>(configuration.value?.external_server_port ?? 0);
-watch(external_server_port, (value) => {
-	updateState(configuration, newConfig, 'external_server_port', value);
+export const external_port = ref<Nullable<number>>(configuration.value?.external_port ?? 0);
+watch(external_port, (value) => {
+	updateState(configuration, newConfig, 'external_port', value);
 });
 
-export const internal_server_port = ref<Nullable<number>>(configuration.value?.internal_server_port ?? 0);
-watch(internal_server_port, (value) => {
-	updateState(configuration, newConfig, 'internal_server_port', value);
+export const internal_port = ref<Nullable<number>>(configuration.value?.internal_port ?? 0);
+watch(internal_port, (value) => {
+	updateState(configuration, newConfig, 'internal_port', value);
 });
 
 export const queue_workers = ref<Nullable<number>>(configuration.value?.queue_workers ?? 0);

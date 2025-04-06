@@ -109,6 +109,10 @@ export class BaseUIPlugin extends Plugin {
         this.buttons = buttons();
         this.imageBaseUrl = player.options.basePath ? '' : 'https://image.tmdb.org/t/p/w185';
         // Initialize the plugin with the player
+
+        this.player.on('play',() => {
+            this.player.emit('hide-episode-tip');
+        });
     }
 
     dispose() {
@@ -1572,11 +1576,12 @@ export class BaseUIPlugin extends Plugin {
                 'group-[&.nomercyplayer.paused]:translate-y-0',
                 'group-[&.nomercyplayer:has(.open)]:translate-y-0',
                 'group-[&.nomercyplayer.active]:translate-y-0',
+                'group-[&.nomercyplayer:has(.volume-container:hover)]:!translate-y-0',
                 'items-center',
                 'mt-auto',
                 'text-center',
                 'transition-all',
-                'translate-y-full',
+                'translate-y-[100vh]',
                 'w-available',
                 'z-10',
                 'pointer-events-none',
@@ -1770,7 +1775,7 @@ export class BaseUIPlugin extends Plugin {
         return this.player.createElement('div', 'top-bar')
             .addClasses([
                 'top-bar',
-                '-translate-y-full',
+                '-translate-y-[100vh]',
                 'absolute',
                 'flex',
                 'gap-2',
@@ -1787,6 +1792,8 @@ export class BaseUIPlugin extends Plugin {
                 'group-[&.nomercyplayer.active]:translate-y-0',
                 'group-[&.nomercyplayer.paused]:translate-y-0',
                 'group-[&.nomercyplayer:has(.open)]:translate-y-0',
+
+                'group-[&.nomercyplayer:has(.volume-container:hover)]:!translate-y-0',
                 'transition-all',
                 'duration-300',
 

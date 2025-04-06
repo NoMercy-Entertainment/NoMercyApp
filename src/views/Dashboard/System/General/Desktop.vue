@@ -11,7 +11,6 @@ import serverClient from '@/lib/clients/serverClient';
 
 import DashboardLayout from '@/Layout/Desktop/DashboardLayout.vue';
 import useServerClient from '@/lib/clients/useServerClient';
-import { Nullable } from 'vitest';
 import Toggle from "@/components/Forms/Toggle.vue";
 import { currentServer } from "@/store/currentServer";
 import MoooomIcon from "@/components/Images/icons/MoooomIcon.vue";
@@ -44,8 +43,8 @@ watch(configuration, (value) => {
   newConfig.value = <ConfigurationResponse>{};
 
   server_name.value = value?.server_name;
-  external_server_port.value = value?.external_server_port;
-  internal_server_port.value = value?.internal_server_port;
+  external_port.value = value?.external_port;
+  internal_port.value = value?.internal_port;
   queue_workers.value = value?.queue_workers;
   cron_workers.value = value?.cron_workers;
   data_workers.value = value?.data_workers;
@@ -61,8 +60,8 @@ onMounted(() => {
   newConfig.value = <ConfigurationResponse>{};
 
   server_name.value = configuration.value?.server_name;
-  external_server_port.value = configuration.value?.external_server_port;
-  internal_server_port.value = configuration.value?.internal_server_port;
+  external_port.value = configuration.value?.external_port;
+  internal_port.value = configuration.value?.internal_port;
   queue_workers.value = configuration.value?.queue_workers;
   cron_workers.value = configuration.value?.cron_workers;
   data_workers.value = configuration.value?.data_workers;
@@ -78,14 +77,14 @@ watch(server_name, (value) => {
   updateState('server_name', value);
 });
 
-const external_server_port = ref<number>(configuration.value?.external_server_port ?? 0);
-watch(external_server_port, (value) => {
-  updateState('external_server_port', value);
+const external_port = ref<number>(configuration.value?.external_port ?? 0);
+watch(external_port, (value) => {
+  updateState('external_port', value);
 });
 
-const internal_server_port = ref<number>(configuration.value?.internal_server_port ?? 0);
-watch(internal_server_port, (value) => {
-  updateState('internal_server_port', value);
+const internal_port = ref<number>(configuration.value?.internal_port ?? 0);
+watch(internal_port, (value) => {
+  updateState('internal_port', value);
 });
 
 const queue_workers = ref<number>(configuration.value?.queue_workers ?? 0);
@@ -157,13 +156,13 @@ const save = () => {
             <InputText id="server_name" v-model="server_name" class="mb-4" />
           </div>
           <div class="flex flex-col gap-2">
-            <label for="internal_server_port">Secure internal port</label>
-            <InputNumber id="internal_server_port" v-model="internal_server_port" class="mb-4" :useGrouping="false"
+            <label for="internal_port">Secure internal port</label>
+            <InputNumber id="internal_port" v-model="internal_port" class="mb-4" :useGrouping="false"
               showButtons :min="2000" />
           </div>
           <div class="flex flex-col gap-2">
-            <label for="external_server_port">Secure external port</label>
-            <InputNumber id="external_server_port" v-model="external_server_port" class="mb-4" :useGrouping="false"
+            <label for="external_port">Secure external port</label>
+            <InputNumber id="external_port" v-model="external_port" class="mb-4" :useGrouping="false"
               showButtons :min="2000" />
           </div>
         </div>

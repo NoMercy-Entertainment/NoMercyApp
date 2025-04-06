@@ -2201,6 +2201,7 @@ export class DesktopUIPlugin extends BaseUIPlugin {
 				'text-white',
 				'text-xs',
 				'z-50',
+				'group-[&.nomercyplayer:not(.active)]:!hidden',
 			])
 			.appendTo(parent);
 
