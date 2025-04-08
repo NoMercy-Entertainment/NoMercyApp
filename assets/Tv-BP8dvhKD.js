@@ -1,0 +1,2 @@
+import{aG as t,j as o,o as s,a7 as e,x as a,aI as n,bP as r,c6 as c,bO as l}from"./index-sY4kgoKl.js";const i=t({__name:"Tv",setup(p){return(u,_)=>(s(),o(n(l),null,{default:e(()=>[a(n(r),{fullscreen:!0},{default:e(()=>[a(c,{name:"Display Tv page"})]),_:1})]),_:1}))}});export{i as default};
+//# sourceMappingURL=Tv-BP8dvhKD.js.map
