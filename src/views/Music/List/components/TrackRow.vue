@@ -44,11 +44,14 @@ const setCurrentList = () => {
 };
 
 const handleClick = () => {
+  audioPlayer.setQueue([]);
+  audioPlayer.setBackLog([]);
+
+  audioPlayer.playTrack(props.data, props.displayList);
+
   if (!currentSong.value) {
     setCurrentList();
   }
-
-  audioPlayer.playTrack(props.data, props.displayList);
 };
 
 </script>

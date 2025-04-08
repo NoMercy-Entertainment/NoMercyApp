@@ -133,7 +133,7 @@ const focusMain = () => {
         <div class="flex w-available flex-1 flex-col gap-2">
             <div class="relative ml-2 w-full flex flex-shrink-0 flex-grow-1 items-center self-stretch">
                 <h3 v-if="title"
-                    class="text-2xl font-bold text-auto-12 mr-2 ml-4 sm:ml-3 text-slate-dark-1 dark:text-slate-light-1">
+                    class="text-2xl font-bold text-auto-12 mr-2 ml-1 sm:ml-3 my-2 text-slate-dark-1 dark:text-slate-light-1">
                     {{ t(title ?? 'Continue watching') }}
                 </h3>
                 <slot v-else name="selector"></slot>
@@ -148,13 +148,13 @@ const focusMain = () => {
                     v-if="!isMobile">
 
                     <button :aria-label="$t('Previous slide')" tabindex="-1"
-                        :class="`hidden sm:flex justify-center items-center p-1 rounded-lg bg-auto-alpha-7 active:scale-95 hover:bg-auto-alpha-9 transition-transform duration-300 ${backButtonEnabled ? '' : 'cursor-not-allowed opacity-50'}`"
+                        :class="`hidden sm:flex justify-center items-center p-1 rounded-lg bg-auto-alpha-9 active:scale-95 hover:bg-auto-alpha-11 transition-transform duration-300 ${backButtonEnabled ? '' : 'cursor-not-allowed opacity-50'}`"
                         :onclick="prev" v-if="hasScroll">
                         <MoooomIcon class="w-6" icon="chevronLeft" />
                     </button>
 
                     <button :aria-label="isLastSlide ? $t('Start slide') : $t('Next slide')" tabindex="-1"
-                        :class="`hidden sm:flex justify-center items-center p-1 rounded-lg bg-auto-alpha-7 active:scale-95 hover:bg-auto-alpha-9 transition-transform duration-300 ${hasScroll ? '' : 'cursor-not-allowed opacity-50'}`"
+                        :class="`hidden sm:flex justify-center items-center p-1 rounded-lg bg-auto-alpha-9 active:scale-95 hover:bg-auto-alpha-11 transition-transform duration-300 ${hasScroll ? '' : 'cursor-not-allowed opacity-50'}`"
                         :onclick="isLastSlide ? reset : next" v-if="hasScroll">
                         <MoooomIcon :class="`w-6 ${!nextButtonEnabled && isLastSlide ? 'opacity-0' : ''}`"
                             icon="chevronRight" v-if="hasScroll && !isLastSlide" />

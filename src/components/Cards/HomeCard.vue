@@ -121,19 +121,19 @@ const toggleWatched = () => {
         <div class="relative flex-grow flex-col items-start justify-start gap-4 sm:hidden">
           <div v-if="homeItem" class="z-50 flex w-full justify-evenly gap-4">
 
-            <RouterLink :to="`/${homeItem?.media_type}/${homeItem?.id}/watch`" :aria-label="$t('Play')"
+            <BannerButton :href="`/${homeItem?.media_type}/${homeItem?.id}/watch`" title="Play"
               class="flex h-10 w-1/2 items-center justify-between gap-2 whitespace-nowrap rounded-md pr-4 pl-3 text-black bg-auto-12 py-1.5">
               <MoooomIcon icon="playCircle" className="w-6" />
               <span class="w-full whitespace-nowrap text-center">{{ $t('Play') }}</span>
-            </RouterLink>
+            </BannerButton>
 
-            <RouterLink :to="`/${homeItem?.media_type}/${homeItem?.id}`" :aria-label="$t('Info')"
+            <BannerButton :href="`/${homeItem?.media_type}/${homeItem?.id}`" title="Info"
               class="flex justify-center items-center relative gap-2 p-2 rounded-lg hover:bg-auto-5/6 transition-colors duration-300">
               <MoooomIcon icon="add" className="w-6" />
               <span class="w-full whitespace-nowrap text-center">
                 {{ $t('Info') }}
               </span>
-            </RouterLink>
+            </BannerButton>
           </div>
         </div>
       </div>

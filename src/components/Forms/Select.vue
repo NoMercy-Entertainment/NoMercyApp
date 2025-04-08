@@ -69,7 +69,7 @@ defineEmits(['update:modelValue']);
         <ListboxButton
           class="relative flex items-center w-full cursor-default rounded-md  text-slate-lightA-12/70  dark:text-slate-darkA-12/80 shadow-sm sm:text-sm data-[headlessui-state='disabled']:grayscale *:last:data-[headlessui-state='disabled']:hidden"
           :class="{
-            '!bg-auto-1 ring-[1.5px] ring-inset ring-auto-3 focus:outline-none focus:ring-2 focus:ring-focus data-[headlessui-state=\'open\']:ring-2 data-[headlessui-state=\'open\']:ring-focus': variant === 'normal' || variant === 'dense',
+            '!bg-auto-1 ring-[1.5px] ring-inset ring-auto-3 focus:outline-none focus:ring-2 focus:ring-focus/70 data-[headlessui-state=\'open\']:ring-2 data-[headlessui-state=\'open\']:ring-focus/70': variant === 'normal' || variant === 'dense',
             'h-10 min-h-10 px-3': variant === 'normal',
             'h-8 min-h-8 px-2': variant === 'dense',
             'h-5 min-h-5 px-0': variant === 'tight',
@@ -106,9 +106,8 @@ defineEmits(['update:modelValue']);
             }">
             <ListboxOption v-slot="{ active, selected }" v-for="item in items"
               :key="item.title || item.name || item.label" :value="item" as="template">
-              <li class="relative flex w-full min-w-fit cursor-default select-none items-center rounded-sm" :class="{
-                '!bg-focus  text-slate-lightA-5/70  dark:text-slate-darkA-5/80 ': active,
-                ' text-slate-lightA-12/70  dark:text-slate-darkA-12/80': !active,
+              <li class="relative flex w-full min-w-fit cursor-default select-none items-center rounded-sm text-slate-lightA-12/70  dark:text-slate-darkA-12/80" :class="{
+                '!bg-focus/40': active,
                 'h-8 min-h-8': variant === 'normal',
                 'h-6 min-h-6': variant === 'dense',
               }">

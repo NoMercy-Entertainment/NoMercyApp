@@ -182,16 +182,16 @@ const scrollToCenter = () => {
 
 <template>
   <div v-if="items?.length && show" :id="`carousel_${id}`" :data-next-id="`carousel_${next_id}`" :data-previous-id="`carousel_${previous_id}`"
-    class="mt-4 mb-2 flex w-auto flex-shrink-0 flex-grow-0 flex-col items-start justify-start gap-2 self-stretch text-left">
+    class="mt-6 mb-2 flex w-auto flex-shrink-0 flex-grow-0 flex-col items-start justify-start gap-2 self-stretch text-left">
     <div class="flex w-available flex-1 flex-col gap-2">
       <div class="relative ml-2 flex flex-shrink-0 flex-grow-0 items-center self-stretch tv:hidden">
-        <h3 v-if="title" ref="titleEl"
-          class="text-[20px] font-bold text-auto-12 mr-2 ml-1 sm:ml-3 text-slate-dark-1 dark:text-slate-light-1">
+        <h3 v-if="title" ref="title"
+          class="text-2xl font-bold text-auto-12 mr-2 ml-1 sm:ml-3 my-2 text-slate-dark-1 dark:text-slate-light-1">
           {{ title }}
         </h3>
         <slot v-else name="selector"></slot>
 
-        <button v-if="next_id" class="skip-navigation hidden sm:flex sm:absolute opacity-0 focus-within:opacity-100" @click="focusNext" @focus="scrollToCenter" >
+        <button v-if="next_id" class="skip-navigation hidden sm:flex sm:absolute opacity-0 focus-visible:opacity-100" @click="focusNext" @focus="scrollToCenter" >
           <span v-if="next_id == 'continue'">
             {{ $t('Back to first carousel') }}
           </span>
@@ -218,7 +218,7 @@ const scrollToCenter = () => {
         <div class="flex flex-shrink-0 flex-grow-0 items-start justify-start gap-2 pr-4 ml-auto" v-if="!isMobile">
 
           <button v-if="hasScroll" :aria-label="$t('Previous slide')" tabindex="-1"
-            class="hidden sm:flex justify-center items-center p-1 rounded-lg bg-auto-alpha-7 active:scale-95 hover:bg-auto-alpha-9 transition-transform duration-300"
+            class="hidden sm:flex justify-center items-center p-1 rounded-lg bg-auto-alpha-9 active:scale-95 hover:bg-auto-alpha-11 transition-transform duration-300"
             :class="{
               'cursor-not-allowed opacity-50': !backButtonEnabled,
             }" :onclick="prev">
@@ -226,7 +226,7 @@ const scrollToCenter = () => {
           </button>
 
           <button v-if="hasScroll" :aria-label="isLastSlide ? $t('Start slide') : $t('Next slide')" tabindex="-1"
-            class="hidden sm:flex justify-center items-center p-1 rounded-lg bg-auto-alpha-7 active:scale-95 hover:bg-auto-alpha-9 transition-transform duration-300"
+            class="hidden sm:flex justify-center items-center p-1 rounded-lg bg-auto-alpha-9 active:scale-95 hover:bg-auto-alpha-11 transition-transform duration-300"
             :class="{
               'cursor-not-allowed opacity-50': !hasScroll,
             }" :onclick="isLastSlide ? reset : next">

@@ -185,17 +185,15 @@ onUnmounted(() => {
 
                     <MediaLikeButton v-if="data" :data="data" />
 
-                    <DropdownMenu
-                      class="relative flex items-center justify-center gap-2 overflow-hidden rounded-lg p-2 transition-colors duration-300 hover:bg-auto-5/6">
-                      >
+                    <DropdownMenu>
                       <template v-slot:button>
                         <MoooomIcon icon="menuDotsVertical" className="w-6" />
                       </template>
 
-                      <div class="flex w-full flex-col items-start justify-start bg-auto-1"
+                      <div class="flex w-full bg-auto-1"
                         style="box-shadow: 0 4px 7px 0 rgba(0,0,0,0.08);">
                         <div
-                          class="relative flex h-auto flex-shrink-0 flex-grow-0 flex-col items-center justify-start gap-2 self-stretch z-1099 group">
+                          class="relative flex flex-shrink-0 z-1099 group">
                           <div class="flex flex-col p-2">
 
                           </div>

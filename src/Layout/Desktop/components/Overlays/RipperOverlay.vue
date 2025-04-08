@@ -121,11 +121,11 @@ useHubListener(connection, 'DriveState', handleDriveState);
 
 <template>
   <div :data-open="ripperMenuOpen" id="ripperContainer" :inert="!ripperMenuOpen"
-       class="absolute flex-col p-4 inset-0 h-1/5 sm:h-2/5 xl:h-1/5 w-inherit sm:left-auto sm:right-4 sm:top-4 sm:bottom-4 sm:w-3/5 xl:w-1/3 sm:max-w-3xl tv:max-w-3/4 flex items-center justify-center rounded-xl transition-all duration-500 sm:data-[open='false']:translate-x-[150%] sm:overflow-clip z-[9999]  tv:data-[open='false']:translate-x-[150%] tv:!w-available tv:data-[open='true']:delay-500 will-change-transform bg-slate-dark-12 dark:bg-slate-dark-1">
+       class="absolute flex-col p-4 inset-0 h-1/5 sm:h-2/5 xl:h-1/5 w-inherit sm:left-auto sm:right-4 sm:top-4 sm:bottom-4 sm:w-3/5 xl:w-1/3 sm:max-w-3xl tv:max-w-3/4 flex items-center justify-center rounded-xl transition-all duration-500 data-[open='false']:translate-x-[150%] overflow-clip z-[9999] tv:data-[open='false']:translate-x-[150%] tv:!w-available tv:data-[open='true']:delay-500 will-change-transform bg-slate-dark-12 dark:bg-slate-dark-1">
 
     <div class="flex w-full gap-4 justify-between text-lg font-bold">
       <span>{{ $t('Disc inserted') }}</span>
-      <Button id="close" @click="setRipperMenuOpen(false)" variant="contained" color="theme" type="submit">
+      <Button id="close" @click.stop="setRipperMenuOpen(false)" variant="contained" color="theme" type="submit">
         {{ $t('Close') }}
       </Button>
 
@@ -136,7 +136,7 @@ useHubListener(connection, 'DriveState', handleDriveState);
         <div class="mb-6 flex w-full justify-between items-center">
           <h1 class="text-lg font-bold">{{ disc.path}}: {{ disc.label }}</h1>
 
-          <Button v-if="!!disc.metadata" id="close" @click="handleRip(disc)" variant="contained" color="theme" type="submit">
+          <Button v-if="!!disc.metadata" id="close" @click.stop="handleRip(disc)" variant="contained" color="theme" type="submit">
             {{ $t('Rip') }}
           </Button>
         </div>

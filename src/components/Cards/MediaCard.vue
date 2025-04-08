@@ -72,7 +72,7 @@ const focusColor = computed(() => {
             <template v-if="backdropStyle">
                 <div v-if="!!(data as HomeItem)?.logo" class="absolute inset-0 h-full w-full">
                     <div
-                        class="pointer-events-none absolute inset-0 z-0 mt-auto h-4/5 bg-gradient-to-t from-auto-1 via-auto-1/60">
+                        class="pointer-events-none absolute inset-0 z-0 mt-auto h-4/5 bg-gradient-to-t from-auto-1 via-auto-1/80">
                     </div>
                     <div class="absolute bottom-0 left-0 h-full max-h-24 w-full max-w-[66%]">
                         <TMDBImage :path="(data as HomeItem)?.logo" :title="data?.title"
@@ -84,11 +84,11 @@ const focusColor = computed(() => {
                 </div>
                 <div v-else class="absolute inset-0 h-full w-full">
                     <div
-                        class="pointer-events-none absolute inset-0 z-0 mt-auto h-4/5 bg-gradient-to-t from-auto-1 via-auto-1/60">
+                        class="pointer-events-none absolute inset-0 z-0 mt-auto h-4/5 bg-gradient-to-t from-auto-1 via-auto-1/80">
                     </div>
                     <div class="absolute bottom-4 left-4 w-full max-w-[66%]">
                         <p
-                            class="z-10 w-auto text-xl font-bold line-clamp-2 leading-[1.2] text-auto-12 empty:hidden dark:font-medium">
+                            class="z-10 w-auto text-2xl font-bold line-clamp-2 leading-[1.2] text-auto-12 empty:hidden dark:font-medium">
                             {{ data?.title }}
                         </p>
                     </div>
@@ -96,12 +96,12 @@ const focusColor = computed(() => {
 
             </template>
             <div v-else
-                :class="`flex flex-col justify-start items-start w-full contain-strict will-change-transform h-12 z-0 absolute overflow-clip rounded-b-lg left-0 transition-all duration-300 px-2 py-1 group-hover/card:-bottom-0 text-left ${image ? '-bottom-20' : 'bottom-0'}`">
+                :class="`flex flex-col justify-start items-start w-full contain-strict will-change-transform h-14 z-0 absolute overflow-clip rounded-b-lg left-0 transition-all duration-300 px-2 py-1 group-hover/card:-bottom-0 text-left ${image ? '-bottom-20' : 'bottom-0'}`">
                 <div
                     class="absolute inset-0 z-0 opacity-0 group-hover/card:opacity-100 transition-all duration-300 bg-auto-1/60 overflow-clip rounded-b-lg">
                 </div>
                 <p
-                    class="z-10 w-auto flex-shrink-0 flex-grow-0 self-stretch text-xs font-semibold line-clamp-2 leading-[1.2] text-auto-12 empty:hidden dark:font-medium text-wrap">
+                    class="z-10 w-auto flex-shrink-0 flex-grow-0 self-stretch text-sm font-bold line-clamp-2 leading-[1.2] text-auto-12 empty:hidden dark:font-medium text-wrap">
                     {{ data?.title }}
                 </p>
             </div>

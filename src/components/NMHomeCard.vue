@@ -94,7 +94,7 @@ const scrollToTop = () => {
     </div>
 
     <div class="flex w-full flex-grow flex-col items-end justify-end gap-2">
-      <div class="flex flex-shrink-0 flex-grow-0 items-start justify-start self-stretch rounded-3xl p-4">
+      <div class="flex flex-shrink-0 flex-grow-0 items-start justify-start self-stretch rounded-3xl p-6">
         <div class="relative flex-grow flex-col items-start justify-start gap-4">
           <div class="relative flex flex-shrink-0 flex-grow-0 items-end justify-between gap-4 self-stretch w-available">
 
@@ -139,7 +139,7 @@ const scrollToTop = () => {
             </div>
           </div>
 
-          <p class="max-w-4xl text-lg font-medium line-clamp-4">
+          <p class="max-w-4xl text-lg font-medium line-clamp-4 leading-8">
             {{ data?.overview }}
           </p>
 

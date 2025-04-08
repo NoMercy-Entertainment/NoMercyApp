@@ -48,8 +48,6 @@ const updateScrollableTargets = () => {
   }, 500);
 };
 
-window.updateScrollableTargets = updateScrollableTargets;
-
 const disableScrollableTargets = () => {
   document.querySelector(isMobile.value ? 'ion-tabs ion-router-outlet  div.ion-page:not(.ion-page-hidden) [indexer]' : '[indexer]')
     ?.querySelectorAll<HTMLDivElement>('[data-indexer]')
@@ -100,15 +98,15 @@ onUnmounted(() => {
     <template v-for="letter in alphaNumericRange('#', 'Z')" :key="letter">
       <template v-if="isQueryPath(route.path)">
         <RouterLink :to="`${letter}`" :data-indexer="letter" tabindex="-1"
-          class="pointer-events-auto relative flex size-6 cursor-pointer flex-col items-center justify-center rounded-sm hover:bg-auto-alpha-5">
-          <p class="flex-shrink-0 flex-grow-0 text-center text-xs font-semibold leading-none">
+          class="pointer-events-auto relative flex p-1.5 size-6 sm:size-10 aspect-square rounded-lg overflow-clip cursor-pointer flex-col items-center justify-center hover:bg-auto-alpha-5">
+          <p class="flex-shrink-0 flex-grow-0 text-center text-xs sm:text-base font-semibold leading-none">
             {{ letter }}
           </p>
         </RouterLink>
       </template>
       <div v-else :data-indexer="letter" tabindex="-1" @click="scrollToDiv(letter)"
-        class="pointer-events-auto relative flex size-6 cursor-pointer flex-col items-center justify-center rounded-sm hover:bg-auto-alpha-5">
-        <p class="flex-shrink-0 flex-grow-0 text-center text-xs font-semibold leading-none">
+        class="pointer-events-auto relative flex p-1.5 size-6 sm:size-10 aspect-square rounded-lg overflow-clip cursor-pointer flex-col items-center justify-center hover:bg-auto-alpha-5">
+        <p class="flex-shrink-0 flex-grow-0 text-center text-xs sm:text-base font-semibold leading-none">
           {{ letter }}
         </p>
       </div>

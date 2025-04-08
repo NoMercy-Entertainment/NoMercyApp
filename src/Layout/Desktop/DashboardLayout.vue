@@ -15,6 +15,7 @@ import HelpButton from '@/components/Buttons/HelpButton.vue';
 import ScrollContainer from '@/Layout/Desktop/components/ScrollContainer.vue';
 import EqualizerOverlay from "@/Layout/Desktop/components/Overlays/EqualizerOverlay.vue";
 import RipperOverlay from "@/Layout/Desktop/components/Overlays/RipperOverlay.vue";
+import {ripperMenuOpen} from "@/store/ripper";
 
 const addModalOpen = defineModel({
   required: false,
@@ -138,9 +139,9 @@ watch(dataUpdatedAt, (value) => {
     </div>
 
     <div v-else
-      class="flex flex-col relative z-0 h-available min-h-[92vh] sm:min-h-[90vh] h-px overflow-clip items-start justify-start self-stretch w-available bg-slate-light-4 dark:bg-slate-dark-2">
+      class="flex flex-col relative z-0 h-available min-h-[92vh] sm:min-h-[92.8vh] h-px overflow-clip items-start justify-start self-stretch w-available bg-slate-light-4 dark:bg-slate-dark-2">
       <div
-        class="sticky top-0 z-10 flex flex-shrink-0 flex-grow-0 flex-col items-start justify-start gap-5 self-stretch">
+        class="sticky top-0 z-10 flex flex-shrink-0 flex-grow-0 flex-col items-start justify-start gap-5 self-stretch" :inert="ripperMenuOpen">
         <div class="absolute inset-0 z-0 h-full w-full"></div>
         <!--			<Shadow type="linear"/>-->
         <div
