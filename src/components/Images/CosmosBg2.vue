@@ -19,24 +19,26 @@ const calculateTranslation = (index: number, total: number) => {
   const centerIndex = Math.floor(total / 2);
   const distance = Math.abs(index - centerIndex);
   const maxDistance = centerIndex;
-  const factor = 24;
+  const factor = 32;
   return -Math.pow(distance / maxDistance, 2) * factor * maxDistance;
 };
 
 </script>
 
 <template>
-  <div class="absolute inset-0 flex w-full h-full bg-black/12 dark:bg-black z-0 overflow-clip items-center justify-center">
+  <div class="absolute inset-0 flex w-full h-full bg-white dark:bg-black z-0 overflow-clip items-center justify-center">
     <div
       class="absolute inset-0 z-0 flex h-full w-full to-transparent bg-gradient-circle-t from-focus dark:from-focus/8 from-10%">
     </div>
-    <div class="absolute top-[40%] sm:top-1/2 z-10 flex w-fit mx-auto max-w-available">
-      <div class="flex h-full w-auto -translate-x-1/3 flex-nowrap gap-6 sm:-translate-x-0">
+    <div class="absolute top-[40%] sm:top-[50%] z-10 flex w-fit mx-auto max-w-available">
+      <div class="flex h-full w-auto -translate-x-1/3 flex-nowrap gap-2 sm:gap-14 sm:-translate-x-0">
         <template v-for="(image, index) in images" :key="image">
-          <div class="z-10 h-auto w-36 rounded-lg aspect-poster sm:w-[14.285%]" :style="{
-            transform: `rotate(${calculateRotation(index, images.length)}deg) translateY(${calculateTranslation(index, images.length)}px)`,
-          }">
-            <img :src="`https://media.themoviedb.org/t/p/w220_and_h330_face${image}`" alt="" class="h-full w-full"
+          <div class="z-10 h-auto w-36 rounded-lg aspect-poster sm:w-full"
+               :style="{
+                  transform: `rotate(${calculateRotation(index, images.length)}deg) translateY(${calculateTranslation(index, images.length)}px)`,
+                }"
+          >
+            <img :src="`https://media.themoviedb.org/t/p/w300${image}`" alt="" class="h-full w-full"
               :style="{
                 maskImage: `linear-gradient(180deg,
 											rgba(255, 255, 255, 0.00) 10%,

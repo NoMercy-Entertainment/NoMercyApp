@@ -182,7 +182,7 @@ const scrollToCenter = () => {
 
 <template>
   <div v-if="items?.length && show" :id="`carousel_${id}`" :data-next-id="`carousel_${next_id}`" :data-previous-id="`carousel_${previous_id}`"
-    class="mt-6 mb-2 flex w-auto flex-shrink-0 flex-grow-0 flex-col items-start justify-start gap-2 self-stretch text-left">
+    class="mt-2 sm:mt-6 mb-2 flex w-auto flex-shrink-0 flex-grow-0 flex-col items-start justify-start gap-2 self-stretch text-left">
     <div class="flex w-available flex-1 flex-col gap-2">
       <div class="relative ml-2 flex flex-shrink-0 flex-grow-0 items-center self-stretch tv:hidden">
         <h3 v-if="title" ref="title"

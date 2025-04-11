@@ -14,6 +14,7 @@ export interface FileItem {
 	parsed: Parsed;
 	match: Episode | Movie | null;
 	streams: Streams;
+	tracks: number;
 }
 
 export interface Streams {

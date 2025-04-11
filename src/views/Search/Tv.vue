@@ -14,7 +14,7 @@ import { musicSearchResult, musicSearchValue } from '@/store/search';
 
       <template v-if="musicSearchResult">
         <component v-for="(render, index) in musicSearchResult ?? []" :index="index" :key="render.id"
-          :is="render.component" v-bind="render.props" />
+                   :is="render.component" v-bind="render.props" />
       </template>
 
     </ion-content>

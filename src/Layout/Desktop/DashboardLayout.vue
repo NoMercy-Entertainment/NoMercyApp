@@ -8,7 +8,7 @@ import { dashboardBigCardGrid, dashboardCardGrid, dashboardColumnGrid } from '@/
 import useMounted from '@/hooks/useMounted';
 import useServerClient from '@/lib/clients/useServerClient';
 import { dashboardSocketIsConnected, startDashboardSocket, stopDashboardSocket } from '@/lib/clients/dashboardSocket';
-import { setColorPalette } from '@/store/ui';
+import {setBackground, setColorPalette} from '@/store/ui';
 
 import FloatingBackButton from '@/components/Buttons/FloatingBackButton.vue';
 import HelpButton from '@/components/Buttons/HelpButton.vue';
@@ -101,6 +101,7 @@ const error = computed(() => {
 
 onMounted(() => {
   setColorPalette(null);
+  setBackground(null);
 });
 
 useMounted(startDashboardSocket, stopDashboardSocket, 1);

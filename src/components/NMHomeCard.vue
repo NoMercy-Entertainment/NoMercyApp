@@ -12,7 +12,7 @@ import TMDBImage from '@/components/Images/TMDBImage.vue';
 import MediaLikeButton from '@/components/Buttons/MediaLikeButton.vue';
 import MoooomIcon from '@/components/Images/icons/MoooomIcon.vue';
 import BannerButton from '@/components/Buttons/BannerButton.vue';
-import {scrollContainerElement, setColorPalette} from '@/store/ui';
+import {scrollContainerElement, setBackground, setColorPalette} from '@/store/ui';
 import { onIonViewWillEnter, onIonViewWillLeave } from "@ionic/vue";
 import CardShadow from "@/components/Cards/CardShadow.vue";
 
@@ -60,6 +60,7 @@ onIonViewWillEnter(() => {
 
 onIonViewWillLeave(() => {
   setColorPalette(null);
+  setBackground(null);
 });
 
 const scrollToTop = () => {
@@ -73,18 +74,18 @@ const scrollToTop = () => {
 
 <template>
   <div data-scroll v-if="!isMobile"
-    class="card scheme-dark relative m-4 mt-0 sm:mt-4 flex flex-shrink-0 flex-grow-0 items-end justify-start gap-4 self-stretch rounded-2xl bg-black/50 p-4 text-auto-12 h-[65vh] sm:flex-col overflow-clip">
+    class="card scheme-dark relative m-4 mt-0 sm:mt-4 flex flex-shrink-0 flex-grow-0 items-end justify-start gap-4 self-stretch rounded-md bg-black/50 p-4 text-auto-12 h-[65vh] sm:flex-col overflow-clip">
 
     <TMDBImage v-if="data && !isMobile" :path="data?.backdrop" :title="data?.title"
       :colorPalette="data?.color_palette?.backdrop" :style="`--color-focus: ${ringBackdropColor};`" :width="null"
       priority="high" loading="eager"
-      class="!absolute !inset-0 children:!w-available flex overflow-clip border-2 border-focus rounded-2xl"
+      class="!absolute !inset-0 children:!w-available flex overflow-clip border-2 border-focus rounded-md"
       className="relative flex !w-available min-h-full flex-shrink-0 flex-grow-0 items-end justify-start gap-4 self-stretch overflow-clip transition-opacity duration-700 bg-auto-1 h-full"
     />
 
     <TMDBImage v-if="data && isMobile" :path="data?.poster" :title="data?.title"
       :colorPalette="data?.color_palette?.poster" :style="`--color-focus: ${ringPosterColor};`" :width="null"
-      class="!absolute !inset-0 children:!w-available flex overflow-clip border-2 border-focus rounded-2xl"
+      class="!absolute !inset-0 children:!w-available flex overflow-clip border-2 border-focus rounded-md"
       className="relative flex !w-available min-h-full flex-shrink-0 flex-grow-0 items-end justify-start gap-4 self-stretch overflow-clip transition-opacity duration-700 bg-auto-50 h-full"
       loading="eager"
     />
@@ -94,7 +95,7 @@ const scrollToTop = () => {
     </div>
 
     <div class="flex w-full flex-grow flex-col items-end justify-end gap-2">
-      <div class="flex flex-shrink-0 flex-grow-0 items-start justify-start self-stretch rounded-3xl p-6">
+      <div class="flex flex-shrink-0 flex-grow-0 items-start justify-start self-stretch rounded-2xl p-6">
         <div class="relative flex-grow flex-col items-start justify-start gap-4">
           <div class="relative flex flex-shrink-0 flex-grow-0 items-end justify-between gap-4 self-stretch w-available">
 
@@ -139,7 +140,7 @@ const scrollToTop = () => {
             </div>
           </div>
 
-          <p class="max-w-4xl text-lg font-medium line-clamp-4 leading-8">
+          <p class="max-w-4xl text-lg font-medium line-clamp-4 leading-8 mt-4">
             {{ data?.overview }}
           </p>
 

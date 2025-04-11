@@ -8,7 +8,7 @@ import type { MusicCardPageResponse } from '@/types/musicPlayer';
 import useServerClient from '@/lib/clients/useServerClient';
 import { isNative } from '@/config/global';
 import { currentSong } from '@/store/audioPlayer';
-import { setColorPalette } from '@/store/ui';
+import {setBackground, setColorPalette} from '@/store/ui';
 
 import MusicCard from '@/components/Cards/MusicCard.vue';
 import Indexer from '@/Layout/Indexer.vue';
@@ -29,6 +29,7 @@ watch(data, () => {
 onIonViewDidEnter(() => {
   show.value = true;
   setColorPalette(null);
+  setBackground(null);
   nextTick(() => {
     document.dispatchEvent(new Event('indexer'));
   });

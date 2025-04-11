@@ -9,7 +9,7 @@ import type { PlaylistItem, SortOrder, SortType } from '@/types/musicPlayer';
 import { isNative } from '@/config/global';
 import useServerClient from '@/lib/clients/useServerClient';
 import { setTitle, sortByType } from '@/lib/stringArray';
-import { setColorPalette, setSortOrder, sortOrder, sortType } from '@/store/ui';
+import {setBackground, setColorPalette, setSortOrder, sortOrder, sortType} from '@/store/ui';
 import { currentSong } from '@/store/audioPlayer';
 
 import ControlHeader from '@/views/Music/List/components/ControlHeader.vue';
@@ -83,6 +83,7 @@ onIonViewWillLeave(() => {
     document.getElementById('navbar')!.style.display = 'flex';
   }
   setColorPalette(null);
+  setBackground(null);
 });
 
 const sortHeader = ref<VueDivElement>();

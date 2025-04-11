@@ -63,7 +63,9 @@ watch(props, (value) => {
           <Checkbox id="checked" class="absolute top-2 left-2 z-10" name="" v-model:modelValue="checked">
 
           </Checkbox>
-          <img alt="" :src="`${tmdbImageBaseUrl}/w500${(data.match as Episode)?.still}`"
+          <img alt="" v-if="!!(data.match as Episode)?.still && (data.match as Episode)?.still.startsWith('http')" :src="(data.match as Episode)?.still"
+            class="absolute inset-0 z-0 h-auto max-h-full w-full rounded-md object-scale-down p-0.5" />
+          <img alt="" v-else-if="!!(data.match as Episode)?.still" :src="`${tmdbImageBaseUrl}/w500${(data.match as Episode)?.still}`"
             class="absolute inset-0 z-0 h-auto max-h-full w-full rounded-md object-scale-down p-0.5" />
         </div>
         <div class="flex flex-grow flex-col items-start justify-start gap-1 tet-left">
@@ -83,23 +85,30 @@ watch(props, (value) => {
               {{ data.file }}
             </p>
           </div>
-          <div
+          <div v-if="data.size"
             class="relative flex items-center justify-start self-stretch gap-0.5 text-slate-light-11 dark:text-slate-dark-11">
             <MoooomIcon icon="server" className="w-3.5" />
             <p class="w-full flex-grow text-xs leading-none">
               {{ humanFileSize(data.size) }}
             </p>
           </div>
-          <div
-            class="relative flex items-center justify-start self-stretch gap-0.5 text-slate-light-11 dark:text-slate-dark-11">
+          <div v-if="data.tracks"
+               class="relative flex items-center justify-start self-stretch gap-0.5 text-slate-light-11 dark:text-slate-dark-11">
+            <MoooomIcon icon="audioFile" className="w-3.5" />
+            <p class="w-full flex-grow text-xs leading-none">
+              {{ data.tracks }}
+            </p>
+          </div>
+          <div v-if="data.streams.video?.length > 0"
+               class="relative flex items-center justify-start self-stretch gap-0.5 text-slate-light-11 dark:text-slate-dark-11">
             <MoooomIcon icon="film" className="w-3.5" />
             <p class="w-full flex-grow text-xs leading-none">
               <template v-for="(video, index) in data.streams.video">
                 {{ video.width }}x{{ video.height }}{{ index < (data.streams.video.length - 1) ? ', ' : '' }}
-                  </template>
+              </template>
             </p>
           </div>
-          <div
+          <div v-if="data.streams.audio?.length > 0"
             class="relative flex items-center justify-start self-stretch gap-0.5 text-slate-light-11 dark:text-slate-dark-11">
             <MoooomIcon icon="audioFile" className="w-3.5" />
             <p class="w-full flex-grow text-xs leading-none">
@@ -107,7 +116,7 @@ watch(props, (value) => {
                 {{ audio.language }}{{ index < (data.streams.audio.length - 1) ? ', ' : '' }} </template>
             </p>
           </div>
-          <div
+          <div v-if="data.streams.subtitle?.length > 0"
             class="relative flex items-center justify-start self-stretch gap-0.5 text-slate-light-11 dark:text-slate-dark-11">
             <MoooomIcon icon="chatBubble" className="w-3.5" />
             <p class="w-full flex-grow text-xs leading-none">

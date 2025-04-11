@@ -84,7 +84,7 @@ const toggleWatched = () => {
                 className="relative h-auto w-auto self-start px-4 py-4 !items-start" loading="eager" type="logo">
               </TMDBImage>
             </div>
-            <p v-else class="h-screen max-h-40 w-px flex-grow content-end text-5xl font-bold">
+            <p v-else class="h-screen max-h-40 w-px flex-grow content-end text-5xl font-bold mb-4">
               {{ homeItem?.title }}
             </p>
 

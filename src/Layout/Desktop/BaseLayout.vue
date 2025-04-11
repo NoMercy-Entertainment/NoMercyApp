@@ -70,7 +70,7 @@ const focusMain = () => {
               class="flex flex-col relative overflow-auto justify-start items-start w-available h-available sm:rounded-2xl flex-1 border-auto-alpha-2 !bg-cover children:scrollbar-none sm:border-3">
               <main id="main"
                 class="flex h-auto flex-1 flex-grow flex-col items-start justify-start self-stretch bg-cover bg-center bg-no-repeat min-h-available w-available scrollbar-none sm:child:border-2 sm:rounded-2xl"
-                style=" box-shadow: 0 1px 3px 0 rgba(16,24,40,0.1), 0 1px 2px 0 rgba(16,24,40,0.06); ">
+                style="box-shadow: 0 1px 3px 0 rgba(16,24,40,0.1), 0 1px 2px 0 rgba(16,24,40,0.06); ">
                 <slot v-if="$slots.default" />
                 <ion-tabs v-else>
                   <ion-router-outlet animated="false" class="pointer-events-none children:pointer-events-auto"

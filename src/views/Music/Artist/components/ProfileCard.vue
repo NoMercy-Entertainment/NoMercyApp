@@ -6,7 +6,7 @@ import type { ArtistResponse } from "@/types/api/music/artist";
 import { limitSentenceByCharacters } from "@/lib/stringArray";
 
 import CoverImage from "@/components/MusicPlayer/components/CoverImage.vue";
-import { setColorPalette } from '@/store/ui';
+import {setBackground, setColorPalette} from '@/store/ui';
 
 const props = defineProps({
   data: {
@@ -23,6 +23,7 @@ onMounted(() => {
 
 onUnmounted(() => {
   setColorPalette(null);
+  setBackground(null);
 });
 
 </script>

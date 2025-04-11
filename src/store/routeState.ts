@@ -5,7 +5,7 @@ import router from '@/router';
 
 export const searchUrl = computed(() => {
   if (isMusicRoute.value) {
-    return '/music/search';
+    return '/search?from=music';
   }
   return '/search';
 });

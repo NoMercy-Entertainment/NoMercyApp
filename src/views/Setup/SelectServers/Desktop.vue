@@ -7,7 +7,7 @@ import type {Server} from '@/types/auth';
 import router from '@/router';
 import servers from '@/store/servers';
 import {setCurrentServer} from '@/store/currentServer';
-import {setColorPalette} from "@/store/ui";
+import {setBackground, setColorPalette} from "@/store/ui";
 
 import ServerCard from '@/views/Setup/SelectServers/components/ServerCard.vue';
 
@@ -26,6 +26,7 @@ const handleSelectServer = (server: Server) => {
 onMounted(() => {
   setCurrentServer(null);
   setColorPalette(null);
+  setBackground(null);
 });
 
 </script>

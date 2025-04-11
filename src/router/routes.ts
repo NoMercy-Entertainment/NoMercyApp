@@ -15,13 +15,12 @@ import BaseInfo from '@/views/Base/Info';
 import BaseLibraries from '@/views/Base/Libraries';
 import BaseLibrary from '@/views/Base/Library';
 import BasePerson from '@/views/Base/Person';
-import BaseSearch from '@/views/Base/Search';
+import Search from '@/views/Search';
 import BaseWatch from '@/views/Base/Watch';
 
 import MusicArtist from '@/views/Music/Artist';
 import MusicCards from '@/views/Music/Cards';
 import MusicList from '@/views/Music/List';
-import MusicSearch from '@/views/Music/Search';
 import MusicStart from '@/views/Music/Start';
 
 import DashboardLogs from '@/views/Dashboard/Advanced/Logs';
@@ -94,7 +93,7 @@ export const routes: Array<RouteRecordRaw> = [
 			{
 				path: 'search',
 				name: 'Search',
-				component: BaseSearch,
+				component: Search,
 				props: {
 					type: 'all'
 				}
@@ -270,14 +269,6 @@ export const routes: Array<RouteRecordRaw> = [
 				props: {
 					type: 'tracks'
 				},
-			},
-			{
-				path: 'search',
-				name: 'Music Search',
-				component: MusicSearch,
-				props: {
-					type: 'music'
-				}
 			},
 		]
 	},

@@ -3,6 +3,8 @@ import { DeviceIcons } from '@Icons/icons';
 export interface User {
 	accessToken: string;
 	refreshToken: string;
+	refreshIn: number;
+	expiresIn: number;
 	idToken: string;
 	name: string;
 	email: string;

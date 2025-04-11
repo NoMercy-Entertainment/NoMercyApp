@@ -8,7 +8,7 @@ import useServerClient from '@/lib/clients/useServerClient';
 
 import ScrollContainer from '@/Layout/Desktop/components/ScrollContainer.vue';
 import { onMounted } from 'vue';
-import { setColorPalette } from '@/store/ui';
+import {setBackground, setColorPalette} from '@/store/ui';
 import NotFound from "@/Layout/Desktop/components/NotFound.vue";
 
 const { data, isError } = useServerClient<Component<HomeDataItem>[]>({
@@ -17,6 +17,7 @@ const { data, isError } = useServerClient<Component<HomeDataItem>[]>({
 
 onMounted(() => {
   setColorPalette(null);
+  setBackground(null);
 });
 
 </script>

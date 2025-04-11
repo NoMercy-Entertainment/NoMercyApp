@@ -7,7 +7,7 @@ import {getMutating, getMutation, getQuery} from '@/lib/routerHelper';
 import {currentServer} from "@/store/currentServer";
 import {useRoute} from "vue-router";
 import router from "@/router";
-import {setColorPalette} from "@/store/ui";
+import {setBackground, setColorPalette} from "@/store/ui";
 
 const route = useRoute();
 const routeName = router.currentRoute.value.name;
@@ -20,6 +20,7 @@ const { data: mutatedData, mutate, reset } = getMutation({ queryKey: ['music', '
 
 onIonViewWillEnter(() => {
   setColorPalette(null);
+  setBackground(null);
   
   if (!homeData.value) {
     refetch();

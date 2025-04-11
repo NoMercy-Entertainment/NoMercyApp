@@ -8,7 +8,7 @@ import { type PlaylistItem, SortOrder, SortType } from '@/types/musicPlayer';
 
 import useServerClient from '@/lib/clients/useServerClient';
 import { setTitle, sortByType } from '@/lib/stringArray';
-import { setColorPalette, setSortOrder, sortOrder, sortType } from '@/store/ui';
+import {setBackground, setColorPalette, setSortOrder, sortOrder, sortType} from '@/store/ui';
 
 import ScrollContainer from '@/Layout/Desktop/components/ScrollContainer.vue';
 
@@ -36,6 +36,7 @@ onMounted(() => {
 
 onUnmounted(() => {
   setColorPalette(null);
+  setBackground(null);
 });
 
 const displayList = ref<PlaylistItem[]>();

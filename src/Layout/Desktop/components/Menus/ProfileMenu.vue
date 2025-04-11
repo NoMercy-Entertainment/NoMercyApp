@@ -76,8 +76,8 @@ const handleEnter = (event: KeyboardEvent) => {
                   {{ $t('Dark mode') }}
                 </span>
               </span>
-              <span class="inline-flex cursor-pointer items-center gap-3" >
-                <Toggle :model-value="darkMode" @update:model-value="darkMode = $event" id="toggleScheme" @keydown="handleEnter"  />
+              <span class="inline-flex cursor-pointer items-center gap-3 pointer-events-none" >
+                <Toggle :model-value="darkMode" id="toggleScheme" />
               </span>
             </button>
             </div>

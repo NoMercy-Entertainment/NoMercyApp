@@ -10,7 +10,7 @@ import { currentSong } from '@/store/audioPlayer';
 
 import ScrollContainer from '@/Layout/Desktop/components/ScrollContainer.vue';
 import MusicCard from '@/components/Cards/MusicCard.vue';
-import { setColorPalette } from '@/store/ui';
+import {setBackground, setColorPalette} from '@/store/ui';
 import NotFound from "@/Layout/Desktop/components/NotFound.vue";
 import { MusicCardPageResponseData } from "@/types/api/music/musicPlayer";
 
@@ -29,6 +29,7 @@ watch(data, () => {
 onMounted(() => {
   show.value = true;
   setColorPalette(null);
+  setBackground(null);
   nextTick(() => {
     document.dispatchEvent(new Event('indexer'));
   });

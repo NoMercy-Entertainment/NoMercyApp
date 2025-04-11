@@ -77,7 +77,7 @@ watch(libraries, (value) => {
 });
 
 const pushFile = (file: FileItem) => {
-  if (files.value?.some(f => f.path === file.file)) {
+  if (files.value?.some(f => f.path === file.file && f.id === file.match?.id)) {
     // files.value = files.value.filter(f => f.path !== file.file);
   } else {
     files.value = [...files.value, { id: file.match?.id ?? 0, path: file.file }];
@@ -85,7 +85,7 @@ const pushFile = (file: FileItem) => {
 };
 
 const popFile = (file: FileItem) => {
-  files.value = files.value.filter(f => f.path !== file.file);
+  files.value = files.value.filter(f => f.path !== file.file && f.id !== file.match?.id);
 };
 
 const getFileList = () => {
