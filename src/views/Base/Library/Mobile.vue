@@ -54,7 +54,13 @@ const backdropStyle = 'grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 
 const posterStyle = 'grid-cols-2 md:grid-cols-5 lg:grid-cols-6 xl:grid-cols-7 2xl:grid-cols-7 3xl:grid-cols-9 4xl:grid-cols-10 5xl:grid-cols-[repeat(14,minmax(0,1fr))] tv:grid-cols-6';
 
 const useBackdropStyle = computed(() => {
-  return showBackdrops.value && data.value?.pages?.[0]?.data[0].media_type !== 'person' && data.value?.pages?.[0]?.data[0].media_type !== 'genres';
+  const firstItem = data.value?.pages?.[0]?.data?.[0];
+  return (
+      firstItem &&
+      showBackdrops.value &&
+      firstItem.media_type !== 'person' &&
+      firstItem.media_type !== 'genres'
+  );
 });
 
 onUnmounted(() => {
@@ -100,7 +106,6 @@ const onRightClick = (event: Event, data: LibraryResponse | GenreResponse | Peop
   selectedCard.value = data;
   cardMenu.value.show(event);
 };
-
 
 </script>
 

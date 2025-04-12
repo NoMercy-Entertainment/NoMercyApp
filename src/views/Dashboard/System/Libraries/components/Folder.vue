@@ -34,13 +34,21 @@ const { data: encoderProfiles } = useServerClient<EncoderProfile[]>({
 const availableQualities = computed(() => {
 	switch (props.type) {
 		case 'anime':
-			return encoderProfiles.value?.filter(encoderQualities => encoderQualities.container == 'm3u8').map(encoderQualities => toRaw(encoderQualities));
+			return encoderProfiles.value
+          ?.filter(encoderQualities => encoderQualities.container == 'm3u8')
+          .map(encoderQualities => toRaw(encoderQualities));
 		case 'movie':
-			return encoderProfiles.value?.filter(encoderQualities => encoderQualities.container == 'm3u8').map(encoderQualities => toRaw(encoderQualities));
+			return encoderProfiles.value
+          ?.filter(encoderQualities => encoderQualities.container == 'm3u8')
+          .map(encoderQualities => toRaw(encoderQualities));
 		case 'tv':
-			return encoderProfiles.value?.filter(encoderQualities => encoderQualities.container == 'm3u8').map(encoderQualities => toRaw(encoderQualities));
+			return encoderProfiles.value
+          ?.filter(encoderQualities => encoderQualities.container == 'm3u8')
+          .map(encoderQualities => toRaw(encoderQualities));
 		case 'music':
-			return [];
+			return encoderProfiles.value
+          ?.filter(encoderQualities => encoderQualities.container == 'mp3' || encoderQualities.container == 'flac')
+          .map(encoderQualities => toRaw(encoderQualities));
 		default:
 			return [];
 	}

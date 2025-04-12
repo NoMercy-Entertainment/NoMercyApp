@@ -32,7 +32,7 @@ export interface LibrariesResponse {
 export interface Folder {
 	id: string;
 	path: string;
-	encoder_profiles: string[];
+	encoder_profiles: EncoderProfile[];
 	created_at: string;
 	updated_at: string;
 }

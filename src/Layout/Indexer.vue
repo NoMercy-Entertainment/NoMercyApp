@@ -88,7 +88,7 @@ onUnmounted(() => {
 
 <template>
   <div indexer
-    class="pointer-events-none z-0 mt-safe h-available sm:h-available flex flex-col items-center justify-between self-stretch overflow-clip transition-width duration-300 text-slate-dark-1 dark:text-slate-light-1 sm:-translate-x-3 pt-2"
+    class="pointer-events-none z-0 h-available sm:h-available flex flex-col items-center justify-between self-stretch overflow-clip transition-width duration-300 text-slate-dark-1 dark:text-slate-light-1 sm:-translate-x-3 pt-2"
     :class="{
       'w-8': indexer,
       'w-0': !indexer,
@@ -98,14 +98,14 @@ onUnmounted(() => {
     <template v-for="letter in alphaNumericRange('#', 'Z')" :key="letter">
       <template v-if="isQueryPath(route.path)">
         <RouterLink :to="`${letter}`" :data-indexer="letter" tabindex="-1"
-          class="pointer-events-auto relative flex p-1.5 size-6 sm:w-8 sm:h-10 rounded-lg overflow-clip cursor-pointer flex-col items-center justify-center hover:bg-auto-alpha-5">
+          class="pointer-events-auto relative flex p-1.5 size-6 sm:size-8 aspect-square rounded-lg overflow-clip cursor-pointer flex-col items-center justify-center hover:bg-auto-alpha-5">
           <p class="flex-shrink-0 flex-grow-0 text-center text-xs sm:text-base font-semibold leading-none">
             {{ letter }}
           </p>
         </RouterLink>
       </template>
       <div v-else :data-indexer="letter" tabindex="-1" @click="scrollToDiv(letter)"
-        class="pointer-events-auto relative flex p-1.5 size-6 sm:w-8 sm:h-10 rounded-lg overflow-clip cursor-pointer flex-col items-center justify-center hover:bg-auto-alpha-5">
+        class="pointer-events-auto relative flex p-1.5 size-6 sm:size-8 aspect-square rounded-lg overflow-clip cursor-pointer flex-col items-center justify-center hover:bg-auto-alpha-5">
         <p class="flex-shrink-0 flex-grow-0 text-center text-xs sm:text-base font-semibold leading-none">
           {{ letter }}
         </p>

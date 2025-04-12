@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, onMounted, onUnmounted, ref, watch } from 'vue';
-import { IonContent, IonPage } from '@ionic/vue';
+import {IonContent, IonPage, onIonViewDidEnter} from '@ionic/vue';
 import { isNative } from '@/config/global';
 import { currentSong } from '@/store/audioPlayer';
 
@@ -19,17 +19,34 @@ import PersonCard from '@/components/Cards/PersonCard.vue';
 import GenreCard from '@/components/Cards/GenreCard.vue';
 import EmptyCard from '@/components/Cards/EmptyCard.vue';
 import ScrollContainer from '@/Layout/Desktop/components/ScrollContainer.vue';
-import { useRouter } from 'vue-router';
+import {useRoute} from 'vue-router';
 import NotFound from "@/Layout/Desktop/components/NotFound.vue";
 
-const routing = useRouter();
+const route = useRoute();
 
 const { data, fetchNextPage, hasNextPage, isError } = useInfiniteServerClient<{
   data: Array<LibraryResponse | GenreResponse | PeopleResponse>
 }>({
-  queryKey: ['libraries', routing.currentRoute?.value?.params.id ?? routing.currentRoute?.value.name],
+  queryKey: ['libraries', route?.params.id ?? route.name],
   limit: 20,
   keepForever: true,
+});
+
+onMounted(() => {
+  setTitle();
+  setBackground(null);
+  setColorPalette(null);
+  document.dispatchEvent(new Event('sidebar'));
+  setTimeout(() => {
+    document.dispatchEvent(new Event('indexer'));
+  }, 1000);
+});
+
+watch(data, (value) => {
+  if (!value) return;
+  setTimeout(() => {
+    document.dispatchEvent(new Event('indexer'));
+  }, 1000);
 });
 
 const backdropStyle = 'grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 2xl:grid-cols-4 3xl:grid-cols-5 4xl:grid-cols-5 5xl:grid-cols-9 tv:grid-cols-6';
@@ -37,18 +54,41 @@ const backdropStyle = 'grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 
 const posterStyle = 'grid-cols-2 md:grid-cols-5 lg:grid-cols-6 xl:grid-cols-7 2xl:grid-cols-7 3xl:grid-cols-9 4xl:grid-cols-10 5xl:grid-cols-[repeat(14,minmax(0,1fr))] tv:grid-cols-6';
 
 const useBackdropStyle = computed(() => {
-  return showBackdrops.value && data.value?.pages?.[0]?.data[0].media_type !== 'person' && data.value?.pages?.[0]?.data[0].media_type !== 'genres';
+  const firstItem = data.value?.pages?.[0]?.data?.[0];
+  return (
+      firstItem &&
+      showBackdrops.value &&
+      firstItem.media_type !== 'person' &&
+      firstItem.media_type !== 'genres'
+  );
 });
 
-onMounted(() => {
-  setTitle();
+onUnmounted(() => {
+  stop();
   setBackground(null);
-  setColorPalette(null);
+});
 
-  document.dispatchEvent(new Event('sidebar'));
-  setTimeout(() => {
-    document.dispatchEvent(new Event('indexer'));
-  }, 500);
+const lib = ref<HTMLDivElement>();
+const id = ref();
+
+onMounted(() => {
+  id.value = route.params.id ?? route.name as string;
+
+  if (hasNextPage.value && (data?.value?.pages?.length ?? 0) < 50) {
+    fetchNextPage();
+  }
+
+  document.addEventListener('scrollToDiv', (e: Event) => {
+    lib.value?.scrollTo({
+      // @ts-ignore
+      top: e.detail.top - 100,
+      behavior: 'smooth',
+    });
+  });
+});
+
+onIonViewDidEnter(() => {
+  document.dispatchEvent(new Event('indexer'));
 });
 
 watch(data, (value) => {
@@ -57,16 +97,6 @@ watch(data, (value) => {
   if (hasNextPage.value && value?.pages?.length < 50) {
     fetchNextPage();
   }
-
-  setTimeout(() => {
-    document.dispatchEvent(new Event('indexer'));
-  }, 500);
-});
-
-onUnmounted(() => {
-  setTitle();
-  setBackground(null);
-  setColorPalette(null);
 });
 
 const selectedCard = ref<LibraryResponse | GenreResponse | PeopleResponse>();
@@ -84,14 +114,21 @@ const onRightClick = (event: Event, data: LibraryResponse | GenreResponse | Peop
     <ion-content :fullscreen="true">
       <NotFound v-if="isError && !data?.pages" />
       <ScrollContainer v-else :autoHide="true" :static="true" :id="router.currentRoute.value.fullPath">
-        <div class="z-0 flex flex-col gap-4 rounded-3xl border-0 p-4 w-available scrollbar-none border-auto-3" :class="{
-          'pb-24': isNative && !currentSong,
-          'pb-40': isNative && currentSong,
-          'children:pb-4 sm:children:pb-3': !isNative && currentSong
-        }" :key="router.currentRoute.value.params?.id as string">
-
+        <div
+            ref="containerRef"
+            class="z-0 flex flex-col gap-4 rounded-3xl border-0 p-4 w-available scrollbar-none border-auto-3 transform-gpu will-change-auto"
+            :class="{
+            'pb-24': isNative && !currentSong,
+            'pb-40': isNative && currentSong,
+            'children:pb-4 sm:children:pb-3': !isNative && currentSong
+          }"
+            :key="router.currentRoute.value.params?.id as string"
+        >
           <div
-            :class="`grid w-full gap-4 scroll-smooth music-showing:pb-0 whitespace-pre ${useBackdropStyle ? backdropStyle : posterStyle}`">
+              :class="`grid w-full gap-4 scroll-smooth music-showing:pb-0 whitespace-pre ${
+              useBackdropStyle ? backdropStyle : posterStyle
+            }`"
+          >
             <!--        <ContextMenu ref="cardMenu" :model="items"/>-->
             <template v-for="(group, index) in data?.pages ?? []" :key="index">
               <template v-if="group.data.length > 0">
