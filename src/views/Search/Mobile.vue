@@ -2,8 +2,8 @@
 import {onMounted, ref, watch} from 'vue';
 import { IonPage, IonContent, onIonViewWillEnter, useKeyboard } from '@ionic/vue';
 import {useRoute} from "vue-router";
+import {refDebounced} from "@vueuse/core";
 
-import { parseYear } from '@/lib/dateTime';
 import {setBackground, setColorPalette} from '@/store/ui';
 import {
   search,
@@ -13,15 +13,13 @@ import {
   fetchNextPage,
   musicSearchResult,
   videoSearchResult,
-  displayResults, videoSearchValue,
 } from '@/store/search';
-
-import MoooomIcon from '@/components/Images/icons/MoooomIcon.vue';
-import AppLogoSquare from '@/components/Images/icons/AppLogoSquare.vue';
-import CosmosBg2 from '@/components/Images/CosmosBg2.vue';
 import { greetingValue } from '@/config/global';
 import { showScreensaver } from "@/store/imageModal";
-import {refDebounced} from "@vueuse/core";
+
+import MoooomIcon from '@/components/Images/icons/MoooomIcon.vue';
+import CosmosBg2 from '@/components/Images/CosmosBg2.vue';
+import SearchCard from "@/components/Cards/SearchCard.vue";
 
 const route = useRoute();
 const content = ref<VueDivElement>();
@@ -123,45 +121,7 @@ watch(debouncedKeyboardHeight, () => {
 
           <div v-if="searchType == 'video'" class="flex flex-wrap gap-2 sm:gap-4 overflow-auto">
             <template v-for="item in videoSearchResult ?? []" :key="item.id">
-
-              <RouterLink :to="`/${item.media_type}/${item.id}`"
-                class="relative flex w-full gap-4 overflow-hidden rounded-lg bg-zinc-900 p-2 sm:w-[32.67%]">
-                <img v-if="item?.backdrop_path" :src="'https://image.tmdb.org/t/p/original' + item?.backdrop_path"
-                  :alt="item?.title" class="absolute inset-0 h-full w-full object-cover" />
-
-                <div
-                  class="absolute inset-0 z-10 h-full w-full bg-gradient-to-r from-black via-black/75 to-black/40 from-25%">
-                </div>
-
-                <div class="relative z-20 h-auto w-1/4 overflow-clip rounded-sm aspect-poster bg-auto-1 sm:w-1/4">
-                  <img v-if="item?.poster_path || item?.profile_path"
-                    :src="'https://image.tmdb.org/t/p/original' + (item?.poster_path ?? item?.profile_path)"
-                    :alt="item?.title" class="absolute inset-0 h-auto w-full object-cover" />
-                  <AppLogoSquare v-else class="absolute inset-0 top-2 z-20 m-auto h-16 w-16" />
-                </div>
-
-                <div class="relative z-20 flex h-full w-px flex-1 flex-col items-start justify-start gap-1">
-                  <p class="flex-shrink-0 flex-grow-0 self-stretch text-left text-xl font-semibold line-clamp-1">
-                    {{ item?.name || item?.title }}
-                  </p>
-                  <div class="relative flex flex-shrink-0 flex-grow-0 items-center justify-start gap-2 self-stretch">
-                    <p class="flex flex-shrink-0 flex-grow-0 items-center gap-2 text-right text-base">
-                      <MoooomIcon v-if="item?.media_type === 'tv'" icon="monitor" className="h-5 w-5 sm:h-4 sm:w-4" />
-                      <MoooomIcon v-else-if="item?.media_type === 'movie'" icon="film"
-                        className="h-5 w-5 sm:h-4 sm:w-4" />
-                      <MoooomIcon v-else-if="item?.media_type === 'person'" icon="user"
-                        className="h-5 w-5 sm:h-4 sm:w-4" />
-                      <span v-if="item?.release_date || item?.first_air_date" class="sm:text-2xs">
-                        ({{ parseYear(item?.release_date ?? item?.first_air_date) }})
-                      </span>
-                    </p>
-                  </div>
-                  <p class="text-sm line-clamp-[4] sm:text-2xs sm:line-clamp-4">
-                    {{ item?.overview }}
-                  </p>
-                </div>
-              </RouterLink>
-
+              <SearchCard :item="item" />
             </template>
             <div class="z-50 mt-4 flex justify-center" ref="loadMore" v-if="hasMoreResults && videoSearchResult.length > 0">
               <button @click="fetchNextPage()" class="h-12 rounded bg-blue-500 px-4 py-2 text-white">
@@ -178,7 +138,7 @@ watch(debouncedKeyboardHeight, () => {
         </div>
 
         <div
-          class="absolute flex justify-center items-center self-center flex-grow-0 flex-shrink-0 w-available h-14 sm:w-1/2 overflow-hidden gap-2 p-1.5 rounded-[20px] border-2 bg-[#d7dbdf] border-[#eceef0] dark:bg-black dark:border-[#202425] transition-all duration-300"
+          class="absolute -mt-safe-offset-0 flex justify-center items-center self-center flex-grow-0 flex-shrink-0 w-available h-14 sm:w-1/2 overflow-hidden gap-2 p-1.5 rounded-[20px] border-2 bg-[#d7dbdf] border-[#eceef0] dark:bg-black dark:border-[#202425] transition-all duration-300"
           :style="{
             bottom: debouncedIsOpen && searchValue.length == 0
               ? `${debouncedKeyboardHeight - 80}px`

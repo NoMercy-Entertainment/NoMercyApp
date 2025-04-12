@@ -67,6 +67,7 @@ const onRightClick = (event: Event) => {
 };
 
 const handleClick = (item: any) => {
+  if(props.data?.link.includes('watch')) return;
   if (item?.backdrop) {
     setBackground(item?.backdrop);
   }

@@ -30,8 +30,8 @@
 
 .p-select-label {
   --p-select-color: rgb(21 23 24) !important;
+  --p-select-padding-x: 0.25rem !important;
 }
-
 
 .p-select-option.p-select-option-selected {
   --p-select-option-selected-background: rgb(var(--color-focus)/80%);

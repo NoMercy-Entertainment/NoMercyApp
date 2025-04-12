@@ -66,7 +66,7 @@ export default defineConfig(({command}) => {
 						},
 						{
 							urlPattern: ({url}) => {
-								return /^api(-dev)?.nomercy\.tv/.test(url.hostname);
+								return /^api.nomercy\.tv/.test(url.hostname);
 							},
 							handler: 'NetworkFirst',
 							options: {
@@ -219,7 +219,7 @@ export default defineConfig(({command}) => {
 				},
 				base: '/',
 				devOptions: {
-					enabled: false,
+					enabled: true,
 					type: 'module',
 					navigateFallback: 'index.html',
 					suppressWarnings: false,

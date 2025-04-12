@@ -69,8 +69,7 @@ watch(props, (value) => {
             class="absolute inset-0 z-0 h-auto max-h-full w-full rounded-md object-scale-down p-0.5" />
         </div>
         <div class="flex flex-grow flex-col items-start justify-start gap-1 tet-left">
-          <div class="relative flex flex-col items-start justify-center self-stretch gap-0.5">
-            <span class="self-stretch text-base font-semibold line-clamp-1 monospace w-[697px]">
+          <span class="self-stretch text-base font-semibold line-clamp-1 monospace w-[697px]">
               {{ data?.parsed?.title }}
               <template v-if="(data.match as Episode)?.episode_number">
                 S{{ pad((data.match as Episode)?.season_number) }}E{{
@@ -81,8 +80,19 @@ watch(props, (value) => {
                 ({{ data?.parsed?.year }})
               </template>
             </span>
-            <p class="w-full self-stretch text-xs font-light leading-none text-slate-light-11 dark:text-slate-dark-11">
-              {{ data.file }}
+
+          <div v-if="data.file"
+            class="relative flex items-center justify-start self-stretch gap-0.5 text-slate-light-11 dark:text-slate-dark-11">
+            <MoooomIcon icon="folder" className="w-3.5" />
+            <p class="w-full flex-grow text-xs leading-none">
+                {{ data.file }}
+            </p>
+          </div>
+          <div v-if="data?.match?.id"
+            class="relative flex items-center justify-start self-stretch gap-0.5 text-slate-light-11 dark:text-slate-dark-11">
+            <MoooomIcon icon="infoCircle" className="w-3.5" />
+            <p class="w-full flex-grow text-xs leading-none">
+                {{ data?.match?.id }}
             </p>
           </div>
           <div v-if="data.size"

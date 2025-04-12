@@ -206,15 +206,15 @@ export const greetingValue = computed(() => {
 
 	switch (true) {
 		case (now >= 6 && now < 12):
-			return 'Morning!';
+			return 'Morning';
 		case (now >= 12 && now < 16):
-			return 'Afternoon!';
+			return 'Afternoon';
 		case (now >= 16 && now < 20):
-			return 'Evening!';
+			return 'Evening';
 		case (now >= 20 || now < 6):
-			return 'Night!';
+			return 'Night';
 	}
-	return 'Day!';
+	return 'Day';
 });
 
 declare global {

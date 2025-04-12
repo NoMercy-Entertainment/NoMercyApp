@@ -8,6 +8,7 @@ import type { Movie, Person, Tv } from '@/types/api/base/info';
 import { currentServer } from '@/store/currentServer';
 import { user } from '@/store/user';
 import { tmdbApiKey } from '@/config/config';
+import i18next from "i18next";
 
 export const searchResultLoading = ref(false);
 
@@ -16,7 +17,7 @@ export const searchType = ref<'video' | 'music'>('video');
 export const musicSearchValue = ref('');
 export const musicSearchResult = computed(() => musicResult.value);
 
-const debouncedMusicSearchValue = refDebounced(musicSearchValue, 500);
+const debouncedMusicSearchValue = refDebounced(musicSearchValue, 700);
 const musicResult = ref<Component<HomeDataItem>[]>([]);
 
 watch(debouncedMusicSearchValue, (value) => {
@@ -38,7 +39,7 @@ watch(debouncedMusicSearchValue, (value) => {
 		.then(response => response.json())
 		.then(data => {
 			musicResult.value = data.data;
-			// searchResultLoading.value = false;
+			searchResultLoading.value = false;
 		});
 });
 
@@ -48,7 +49,7 @@ export const hasMoreResults = ref(false);
 export const videoSearchResult = computed(() => videoResult.value);
 
 const videoResult = ref<Array<Movie | Tv | Person & any>>([]);
-const debouncedVideoSearchValue = refDebounced(videoSearchValue, 500);
+const debouncedVideoSearchValue = refDebounced(videoSearchValue, 700);
 const page = ref(1);
 
 watch(debouncedVideoSearchValue, (value) => {
@@ -61,19 +62,19 @@ watch(debouncedVideoSearchValue, (value) => {
 	searchResultLoading.value = true;
 
 	page.value = 1; // Reset page number on new search
-	const url = `https://api.themoviedb.org/3/search/multi?api_key=${tmdbApiKey}&language=en-US&query=${value}&page=${page.value}&include_adult=false`;
+	const url = `https://api.themoviedb.org/3/search/multi?api_key=${tmdbApiKey}&language=${i18next.language}&query=${value}&page=${page.value}&include_adult=false`;
 		fetch(url)
 		.then(response => response.json())
 		.then(data => {
 			videoResult.value = data.results;
 			hasMoreResults.value = data.total_pages > 1;
-			// searchResultLoading.value = false;
+			searchResultLoading.value = false;
 		});
 });
 
 export const fetchNextPage = () => {
 	page.value += 1;
-	const url = `https://api.themoviedb.org/3/search/multi?api_key=${tmdbApiKey}&language=en-US&query=${debouncedVideoSearchValue.value}&page=${page.value}&include_adult=false`;
+	const url = `https://api.themoviedb.org/3/search/multi?api_key=${tmdbApiKey}&language=${i18next.language}&query=${debouncedVideoSearchValue.value}&page=${page.value}&include_adult=false`;
 
 	fetch(url)
 		.then(response => response.json())
