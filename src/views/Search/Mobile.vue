@@ -111,7 +111,7 @@ watch(debouncedKeyboardHeight, () => {
           </p>
         </div>
 
-        <div class="absolute top-0 mt-safe-offset-0 flex w-full flex-col gap-4 px-2 pt-2 h-full overflow-clip" :style="{
+        <div class="absolute top-0 flex w-full flex-col gap-4 px-2 pt-2 h-full overflow-clip" :style="{
           height: debouncedIsOpen && searchValue?.length == 0
             ? `calc(100vh - ${debouncedKeyboardHeight + 104}px)`
             : debouncedIsOpen && searchValue?.length > 0
@@ -150,7 +150,7 @@ watch(debouncedKeyboardHeight, () => {
           }" :class="{
               'mx-2': !debouncedIsOpen && searchValue.length == 0,
               'rounded-none': debouncedIsOpen || searchValue.length > 0,
-              'translate-y-[calc(var(--safe-area-inset-top)*-1.5)]': !debouncedIsOpen && searchValue.length == 0 && isNative
+              'translate-y-[calc(var(--safe-area-inset-top)*-1.5)]': debouncedIsOpen && searchValue.length == 0 && isNative
             }">
 
           <div
