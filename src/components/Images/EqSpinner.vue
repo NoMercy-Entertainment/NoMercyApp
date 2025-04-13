@@ -31,7 +31,7 @@ html.scheme-dark .bars {
 .bar {
   --width: 2px;
   --left: 0;
-  --space: 2px;
+  --space: 1px;
   --scale: var(--height);
   background: rgb(var(--color-focus, var(--color-theme-6)));
   bottom: -50%;

@@ -138,7 +138,7 @@ watch(debouncedKeyboardHeight, () => {
         </div>
 
         <div
-          class="absolute -mt-safe-offset-0 flex justify-center items-center self-center flex-grow-0 flex-shrink-0 w-available h-14 sm:w-1/2 overflow-hidden gap-2 p-1.5 rounded-[20px] border-2 bg-[#d7dbdf] border-[#eceef0] dark:bg-black dark:border-[#202425] transition-all duration-300"
+          class="absolute translate-y-[calc(var(--safe-area-inset-top)*-1.5)] flex justify-center items-center self-center flex-grow-0 flex-shrink-0 w-available h-14 sm:w-1/2 overflow-hidden gap-2 p-1.5 rounded-[20px] border-2 bg-[#d7dbdf] border-[#eceef0] dark:bg-black dark:border-[#202425] transition-all duration-300"
           :style="{
             bottom: debouncedIsOpen && searchValue.length == 0
               ? `${debouncedKeyboardHeight - 80}px`

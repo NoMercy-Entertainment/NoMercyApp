@@ -1,5 +1,7 @@
 <script setup lang="ts">
 
+import {isPlatform} from "@ionic/vue";
+
 const images = [
   '/prSfAi1xGrhLQNxVSUFh61xQ4Qy.jpg',
   '/pYnRJuBPEqZO1o4fcxBTgmKNHfy.jpg',
@@ -14,14 +16,14 @@ const images = [
 
 const calculateRotation = (index: number, total: number) => {
   const centerIndex = Math.floor(total / 2);
-  return -(index - centerIndex) * 7;
+  return -(index - centerIndex) * (isPlatform('mobile') ? -7 : 7);
 };
 
 const calculateTranslation = (index: number, total: number) => {
   const centerIndex = Math.floor(total / 2);
   const distance = Math.abs(index - centerIndex);
   const maxDistance = centerIndex;
-  const factor = 68;
+  const factor = (isPlatform('mobile') ? -68 : 68);
   return -Math.pow(distance / maxDistance, 2) * factor * maxDistance;
 };
 
@@ -32,7 +34,7 @@ const calculateTranslation = (index: number, total: number) => {
     <div
       class="absolute -inset-6 z-0 flex h-available w-available to-transparent bg-gradient-circle-t from-focus/8 dark:from-focus/6 from-10%">
     </div>
-    <div class="absolute top-[40%] sm:top-[49%] z-10 flex w-[2850px] min-w-[2850px] -translate-x-0 mx-auto max-w-available">
+    <div class="absolute top-[45%] sm:top-[49%] z-10 flex sm:w-[2850px] sm:min-w-[2850px] -translate-x-0 mx-auto max-w-available">
       <div class="flex h-full w-auto -translate-x-1/3 flex-nowrap gap-2 sm:gap-16 sm:-translate-x-0">
         <template v-for="(image, index) in images" :key="image">
           <div class="z-10 h-auto w-36 rounded-lg aspect-poster sm:w-full"
