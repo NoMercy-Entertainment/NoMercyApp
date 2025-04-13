@@ -150,7 +150,7 @@ watch(debouncedKeyboardHeight, () => {
           }" :class="{
               'mx-2': !debouncedIsOpen && searchValue.length == 0,
               'rounded-none': debouncedIsOpen || searchValue.length > 0,
-              'translate-y-[calc(var(--safe-area-inset-top)*-1.5)]': debouncedIsOpen && searchValue.length == 0 && isNative
+              'translate-y-[calc(var(--safe-area-inset-top)*-1.5)]': debouncedIsOpen && isNative
             }">
 
           <div
