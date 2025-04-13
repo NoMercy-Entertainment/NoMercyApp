@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import {onMounted, ref, watch} from 'vue';
-import { IonPage, IonContent, onIonViewWillEnter, useKeyboard } from '@ionic/vue';
+import {IonPage, IonContent, onIonViewWillEnter, useKeyboard, isPlatform} from '@ionic/vue';
 import {useRoute} from "vue-router";
 import {refDebounced} from "@vueuse/core";
 
@@ -14,7 +14,7 @@ import {
   musicSearchResult,
   videoSearchResult,
 } from '@/store/search';
-import { greetingValue } from '@/config/global';
+import {greetingValue, isNative} from '@/config/global';
 import { showScreensaver } from "@/store/imageModal";
 
 import MoooomIcon from '@/components/Images/icons/MoooomIcon.vue';
@@ -92,7 +92,7 @@ watch(debouncedKeyboardHeight, () => {
   <ion-page >
     <ion-content :fullscreen="true" ref="content">
       <div :class="{
-        'flex flex-grow flex-col items-center justify-start gap-12 self-stretch overflow-clip px-4 pt-8 will-change-auto': true,
+        'relative flex flex-grow flex-col items-center justify-start gap-12 self-stretch overflow-clip px-4 pt-8 will-change-auto': true,
         'mb-24': debouncedIsOpen && searchValue?.length == 0,
       }">
         <CosmosBg2 v-if="greetingValue && searchValue?.length == 0" class="!h-[90vh]" />
@@ -111,9 +111,9 @@ watch(debouncedKeyboardHeight, () => {
           </p>
         </div>
 
-        <div class="absolute top-0 flex w-full flex-col gap-4 px-2 pt-2 h-full overflow-clip" :style="{
+        <div class="absolute top-0 mt-safe-offset-0 flex w-full flex-col gap-4 px-2 pt-2 h-full overflow-clip" :style="{
           height: debouncedIsOpen && searchValue?.length == 0
-            ? `calc(100vh - ${debouncedKeyboardHeight + 100}px)`
+            ? `calc(100vh - ${debouncedKeyboardHeight + 104}px)`
             : debouncedIsOpen && searchValue?.length > 0
               ? `calc(100vh - ${debouncedKeyboardHeight + 70}px)`
               : '92%',
@@ -138,10 +138,10 @@ watch(debouncedKeyboardHeight, () => {
         </div>
 
         <div
-          class="absolute translate-y-[calc(var(--safe-area-inset-top)*-1.5)] flex justify-center items-center self-center flex-grow-0 flex-shrink-0 w-available h-14 sm:w-1/2 overflow-hidden gap-2 p-1.5 rounded-[20px] border-2 bg-[#d7dbdf] border-[#eceef0] dark:bg-black dark:border-[#202425] transition-all duration-300"
+          class="absolute flex justify-center items-center self-center flex-grow-0 flex-shrink-0 w-available h-14 sm:w-1/2 overflow-hidden gap-2 p-1.5 rounded-[20px] border-2 bg-[#d7dbdf] border-[#eceef0] dark:bg-black dark:border-[#202425] transition-all duration-300"
           :style="{
             bottom: debouncedIsOpen && searchValue.length == 0
-              ? `${debouncedKeyboardHeight - 80}px`
+              ? `${debouncedKeyboardHeight - (isPlatform('mobile') ? 180 : 80)}px`
               : debouncedIsOpen && searchValue.length > 0
                 ? `${debouncedKeyboardHeight - 80}px`
                 : !debouncedIsOpen && searchValue.length > 0
@@ -150,6 +150,7 @@ watch(debouncedKeyboardHeight, () => {
           }" :class="{
               'mx-2': !debouncedIsOpen && searchValue.length == 0,
               'rounded-none': debouncedIsOpen || searchValue.length > 0,
+              'translate-y-[calc(var(--safe-area-inset-top)*-1.5)]': !debouncedIsOpen && searchValue.length == 0 && isNative
             }">
 
           <div
