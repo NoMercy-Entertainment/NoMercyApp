@@ -207,11 +207,11 @@ export const greetingValue = computed(() => {
 	switch (true) {
 		case (now >= 6 && now < 12):
 			return 'Morning';
-		case (now >= 12 && now < 16):
+		case (now >= 12 && now < 18):
 			return 'Afternoon';
-		case (now >= 16 && now < 20):
+		case (now >= 18 && now < 24):
 			return 'Evening';
-		case (now >= 20 || now < 6):
+		case (now >= 24 || now < 6):
 			return 'Night';
 	}
 	return 'Day';

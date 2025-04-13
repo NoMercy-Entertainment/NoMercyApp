@@ -184,12 +184,11 @@ watch(debouncedKeyboardHeight, () => {
 
           <label class="flex w-available">
             <input enterkeyhint="search" id="search"
-                       :placeholder="searchType == 'video'
-                              ? 'Movie, TV Show or Person...'
-                              : 'Artist, Album or Track...'"
+                   :placeholder="searchType == 'video'
+                              ? `${$t('Movie')}, ${$t('Show')} ${$t('or')} ${$t('Person')}...`
+                              : `${$t('Artist')}, ${$t('Album')} ${$t('or')} ${$t('Track')}...`"
 
-              class="w-available flex-shrink-0 border-transparent bg-transparent mr-1 text-lg shadow-transparent flex-grow-1
-                   focus: outline-none"
+              class="w-available flex-shrink-0 border-transparent bg-transparent px-1 mr-1 text-lg shadow-transparent flex-grow-1 focus:outline-none"
               :class="{
                 '!py-1': !debouncedIsOpen,
               }" v-model="searchValue" name="search" type="search" ref="search" autocomplete="off" />
