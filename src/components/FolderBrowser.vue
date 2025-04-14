@@ -45,7 +45,7 @@ const getFolders = (folder: string) => {
     })
     .then(({ data }) => {
       showFolders.value = data.data.filter(f => f.type == 'folder');
-      directorySeparator.value = data.data?.at(0)?.path?.match(/[\\/]/gu)?.at(-1) ?? '/';
+      directorySeparator.value = data.data.at(0)?.full_path?.match(/[\\/]/gu)?.at(-1) ?? '/';
     })
     .then(() => loading.value = false);
 };
@@ -67,7 +67,7 @@ const handleGoUp = () => {
 };
 
 const handleClick = (folder: DirectoryTreeItem) => {
-  path.value = folder.path;
+  path.value = folder.full_path;
 };
 
 onMounted(() => {
@@ -99,7 +99,7 @@ onMounted(() => {
           <span class="mr-auto !ml-7">...</span>
         </div>
         <div class="relative w-full h-auto">
-          <div v-for="folder in showFolders" :key="folder.path" @click="() => handleClick(folder)"
+          <div v-for="folder in showFolders" :key="folder.full_path" @click="() => handleClick(folder)"
             class="even:bg-auto-6/2 odd:bg-auto-100 hover:bg-auto-200 border-t-0 border-b border-solid border-[rgba(34,34,34,0.9)] contain flex items-center bg-transparent text-current cursor-pointer overflow-hidden py-1 px-2 align-middle h-10 leading-6">
             <MoooomIcon icon="folder" class="h-5 w-5" />
             <span class="mr-auto !ml-7 text-sm select-none">
