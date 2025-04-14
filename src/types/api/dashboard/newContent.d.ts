@@ -5,7 +5,7 @@ export interface FileList {
 
 export interface FileItem {
 	name: string;
-	file: string;
+	path: string;
 	mode: number;
 	size: number;
 	type: string;

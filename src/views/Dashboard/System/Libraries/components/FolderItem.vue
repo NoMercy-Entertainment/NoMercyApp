@@ -81,11 +81,11 @@ watch(props, (value) => {
               </template>
             </span>
 
-          <div v-if="data.file"
+          <div v-if="data.path"
             class="relative flex items-center justify-start self-stretch gap-0.5 text-slate-light-11 dark:text-slate-dark-11">
             <MoooomIcon icon="folder" className="w-3.5" />
             <p class="w-full flex-grow text-xs leading-none">
-                {{ data.file }}
+                {{ data.path }}
             </p>
           </div>
           <div v-if="data?.match?.id"

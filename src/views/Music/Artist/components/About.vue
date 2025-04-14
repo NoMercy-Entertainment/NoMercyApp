@@ -69,13 +69,13 @@ const transformToBionic = (content: string) => {
 
 <template>
   <div v-if="activeTab"
-    class="flex flex-1 basis-0 items-start justify-start self-stretch overflow-clip px-8 py-8 w-available">
+    class="flex flex-1 basis-0 items-start justify-start self-stretch overflow-clip px-8 py-8 w-available text-white">
     <TabFrame :data="data" :activeTab="activeTab">
       <div class="flex flex-col gap-2 overflow-clip w-available max-w-[75ch]">
         <!--				<div v-for="line in transformToBionic(data.description ?? overview ?? '')?.split('\n') ?? []"-->
         <div v-for="line in (data.description ?? '')?.split('\n') ?? []" :key="line" class="flex flex-col gap-1">
           <template v-for="sentence in line.split('\n')" :key="sentence">
-            <span class="bionic-text !text-auto-6 font-semibold !text-base" v-html="sentence" />
+            <span class="bionic-text font-semibold !text-base" v-html="sentence" />
           </template>
         </div>
       </div>
