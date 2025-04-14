@@ -56,7 +56,7 @@ watch(searchType, () => {
     <ion-content :fullscreen="true">
       <div
           :class="{
-            'w-available relative flex flex-col items-center gap-10 m-3 overflow-clip rounded-2xl transform-all duration-300 will-change-auto min-w-available': true,
+            'w-available relative flex flex-col items-center gap-10 m-3 overflow-clip rounded-lg transform-all duration-300 will-change-auto min-w-available': true,
             'h-24 min-h-24 ': searchValue?.length > 0,
             'h-[480px] min-h-[480px] ': searchValue?.length == 0
           }"

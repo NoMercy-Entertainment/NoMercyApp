@@ -30,7 +30,7 @@ const calculateTranslation = (index: number, total: number) => {
 </script>
 
 <template>
-  <div class="absolute inset-0 flex w-full h-full bg-white dark:bg-black z-0 overflow-clip items-center justify-center">
+  <div class="absolute inset-0 flex w-full h-full bg-white dark:bg-black z-0 overflow-clip rounded-md items-center justify-center">
     <div
       class="absolute -inset-6 z-0 flex h-available w-available to-transparent bg-gradient-circle-t from-focus/8 dark:from-focus/6 from-10%">
     </div>

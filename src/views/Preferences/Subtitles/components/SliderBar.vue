@@ -2,7 +2,10 @@
 import {PropType} from "vue";
 import {useLocalStorage} from "@vueuse/core";
 
-import {defaultSubtitleStyles, SubtitleStyle} from "@/types/config";
+import {
+  defaultSubtitleStyles,
+} from "@/lib/VideoPlayer/plugins/UIPlugin/buttons";
+import {SubtitleStyle} from "@nomercy-entertainment/nomercy-video-player/src/types";
 
 const props = defineProps({
   title: {

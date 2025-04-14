@@ -7,9 +7,12 @@ import {
   defaultSubtitleStyles,
   edgeStyles,
   fontFamilies,
+} from "@/lib/VideoPlayer/plugins/UIPlugin/buttons";
+import {SubtitleStyle} from "@nomercy-entertainment/nomercy-video-player/src/types";
+
+import {
   getEdgeStyle,
   parseColorToHex,
-  SubtitleStyle
 } from "@/types/config";
 
 import ColorPicker from './components/ColorPicker.vue';

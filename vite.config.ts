@@ -32,7 +32,7 @@ export default defineConfig(({command}) => {
 					clientsClaim: true,
 					skipWaiting: true,
 					sourcemap: true,
-					globPatterns: ['**/*.{js,css,html,ico,png,svg,jpg,jpeg,gif,webp,woff,woff2,ttf,eot,json}'],
+					globPatterns: ['**/*.{js,css,html,ico,png,svg,jpg,jpeg,gif,webp,woff,woff2,ttf,eot,json,js.map}'],
 					globIgnores: ['**/*.webmanifest'],
 					navigateFallback: 'index.html',
 					runtimeCaching: [

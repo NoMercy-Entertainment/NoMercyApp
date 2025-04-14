@@ -38,35 +38,6 @@ export const getEdgeStyle = (edgeStyle: EdgeStyle, opacity: number): string => {
 	}
 }
 
-export const edgeStyles: readonly { name: string, value: EdgeStyle }[] = Object.freeze([
-	{ name: 'None', value: 'none' },
-	{ name: 'Depressed', value: 'depressed' },
-	{ name: 'Drop Shadow', value: 'dropShadow' },
-	{ name: 'Text Shadow', value: 'textShadow' },
-	{ name: 'Raised', value: 'raised' },
-	{ name: 'Uniform', value: 'uniform' }
-]);
-
-export const fontFamilies: readonly { name: string, value: string }[] = Object.freeze([
-	{ name: 'ReithSans', value: 'ReithSans, sans-serif' },
-	{ name: 'Arial', value: 'Arial, sans-serif' },
-	{ name: 'Courier New', value: 'Courier New, monospace' },
-	{ name: 'Georgia', value: 'Georgia, sans-serif' },
-	{ name: 'Verdana', value: 'Verdana, sans-serif' },
-]);
-
-export const defaultSubtitleStyles: SubtitleStyle = Object.freeze({
-	fontSize: 100,
-	fontFamily: 'ReithSans, sans-serif',
-	textColor: 'white',
-	textOpacity: 100,
-	backgroundColor: 'black',
-	backgroundOpacity: 0,
-	edgeStyle: 'textShadow',
-	areaColor: 'black',
-	windowOpacity: 0
-});
-
 export const namedColors: Record<string, string> = {
 	"aliceblue": "#F0F8FF",
 	"antiquewhite": "#FAEBD7",

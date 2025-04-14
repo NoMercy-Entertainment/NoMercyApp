@@ -8,8 +8,14 @@ import {
 
 import { BaseUIPlugin } from "./baseUIPlugin";
 
-import type { Chapter, PlaylistItem, Position } from '@nomercy-entertainment/nomercy-video-player/src/types';
-import type { Icon } from './buttons';
+import {Chapter, PlaylistItem, Position, SubtitleStyle} from '@nomercy-entertainment/nomercy-video-player/src/types';
+import {
+	Icon,
+	edgeStyles,
+	fontFamilies,
+	SubtitleSettingAction,
+	subtitleSettingActions, defaultSubtitleStyles
+} from './buttons';
 
 export class DesktopUIPlugin extends BaseUIPlugin {
 	topBar: HTMLDivElement = <HTMLDivElement>{};
@@ -49,14 +55,16 @@ export class DesktopUIPlugin extends BaseUIPlugin {
 		'sub-menu-content',
 		'flex',
 		'flex-col',
-		'gap-1',
 		'max-h-available',
 		'w-available',
 		'overflow-auto',
 		'min-w-52',
 	];
 
+	subtitleSettingActions: SubtitleSettingAction[] = [];
+
 	use() {
+		this.subtitleSettingActions = subtitleSettingActions(this.player);
 
 		this.topBar = this.createTopBar(this.overlay);
 
@@ -312,7 +320,6 @@ export class DesktopUIPlugin extends BaseUIPlugin {
 		};
 	}
 
-
 	createTouchSeekForward(parent: HTMLElement, currentTime: Position) {
 		const touchSeekForward = this.createTouchBox(parent, 'touchSeekForward', currentTime);
 		['mouseup', 'touchend'].forEach((event) => {
@@ -434,7 +441,6 @@ export class DesktopUIPlugin extends BaseUIPlugin {
 		return touch;
 
 	}
-
 
 	createSpeedButton(parent: HTMLDivElement, hovered = false) {
 		if (this.player.isMobile()) return;
@@ -602,7 +608,6 @@ export class DesktopUIPlugin extends BaseUIPlugin {
 		this.player.on('fullscreen', () => {
 			this.sizeMenuFrame();
 		});
-
 		this.player.on('show-menu', (showing) => {
 			this.menuOpen = showing;
 			this.lockActive = showing;
@@ -618,6 +623,9 @@ export class DesktopUIPlugin extends BaseUIPlugin {
 				menuFrame.style.display = 'none';
 				menuFrame.classList.remove('open');
 
+				this.menuFrame.classList.remove('group-[&.nomercyplayer:has(.open)]:backdrop:!hidden');
+				this.center.classList.remove('!bg-none');
+
 				this.menuFrame.close();
 			}
 			menuContent.classList.add('translate-x-0');
@@ -630,6 +638,9 @@ export class DesktopUIPlugin extends BaseUIPlugin {
 
 			this.player.emit('show-language-menu', false);
 			this.player.emit('show-subtitles-menu', false);
+			this.player.emit('hide-subtitleSettings-menu');
+			this.player.emit('show-subtitleSettings-menu', false);
+			this.player.emit('show-subtitleSetting-menu', false);
 			this.player.emit('show-quality-menu', false);
 			this.player.emit('show-speed-menu', false);
 			this.player.emit('show-playlist-menu', false);
@@ -641,12 +652,17 @@ export class DesktopUIPlugin extends BaseUIPlugin {
 				menuFrame.classList.add('open');
 				this.player.emit('show-language-menu', false);
 				this.player.emit('show-subtitles-menu', false);
+				this.player.emit('hide-subtitleSettings-menu');
+				this.player.emit('show-subtitleSettings-menu', false);
+				this.player.emit('show-subtitleSetting-menu', false);
 				this.player.emit('show-quality-menu', false);
 				this.player.emit('show-speed-menu', false);
 				this.player.emit('show-playlist-menu', false);
 				menuContent.classList.add('translate-x-0');
 				menuContent.classList.remove('sub-menu-open');
 				menuFrame.style.display = 'flex';
+				this.menuFrame.classList.remove('group-[&.nomercyplayer:has(.open)]:backdrop:!hidden');
+				this.center.classList.remove('!bg-none');
 
 				setTimeout(() => {
 					(Array.from(this.mainMenu.children).find(el =>
@@ -661,6 +677,9 @@ export class DesktopUIPlugin extends BaseUIPlugin {
 				menuFrame.classList.add('open');
 				this.player.emit('show-main-menu', false);
 				this.player.emit('show-subtitles-menu', false);
+				this.player.emit('hide-subtitleSettings-menu');
+				this.player.emit('show-subtitleSettings-menu', false);
+				this.player.emit('show-subtitleSetting-menu', false);
 				this.player.emit('show-quality-menu', false);
 				this.player.emit('show-speed-menu', false);
 				this.player.emit('show-playlist-menu', false);
@@ -677,6 +696,44 @@ export class DesktopUIPlugin extends BaseUIPlugin {
 				this.player.emit('show-main-menu', false);
 				this.player.emit('show-language-menu', false);
 				this.player.emit('show-quality-menu', false);
+				this.player.emit('hide-subtitleSettings-menu');
+				this.player.emit('show-subtitleSettings-menu', false);
+				this.player.emit('show-subtitleSetting-menu', false);
+				this.player.emit('show-speed-menu', false);
+				this.player.emit('show-playlist-menu', false);
+				menuContent.classList.remove('translate-x-0');
+				menuContent.classList.add('sub-menu-open');
+				menuFrame.style.display = 'flex';
+			}
+		});
+		this.player.on('show-subtitleSettings-menu', (property) => {
+			this.subtitleSettingsMenuOpen = property;
+			this.lockActive = !!property;
+			if (property) {
+				menuFrame.classList.add('open');
+				this.player.emit('show-main-menu', false);
+				this.player.emit('show-language-menu', false);
+				this.player.emit('show-subtitles-menu', false);
+				this.player.emit('show-quality-menu', false);
+				this.player.emit('show-subtitleSetting-menu', false);
+				this.player.emit('show-speed-menu', false);
+				this.player.emit('show-playlist-menu', false);
+				menuContent.classList.remove('translate-x-0');
+				menuContent.classList.add('sub-menu-open');
+				menuFrame.style.display = 'flex';
+			}
+		});
+		this.player.on('show-subtitleSetting-menu', (property) => {
+			this.subtitleSettingsMenuOpen = property;
+			this.lockActive = !!property;
+			if (property) {
+				menuFrame.classList.add('open');
+				this.player.emit('show-main-menu', false);
+				this.player.emit('show-language-menu', false);
+				this.player.emit('show-subtitles-menu', false);
+				this.player.emit('hide-subtitleSettings-menu');
+				this.player.emit('show-subtitleSettings-menu', false);
+				this.player.emit('show-quality-menu', false);
 				this.player.emit('show-speed-menu', false);
 				this.player.emit('show-playlist-menu', false);
 				menuContent.classList.remove('translate-x-0');
@@ -692,6 +749,9 @@ export class DesktopUIPlugin extends BaseUIPlugin {
 				this.player.emit('show-main-menu', false);
 				this.player.emit('show-language-menu', false);
 				this.player.emit('show-subtitles-menu', false);
+				this.player.emit('hide-subtitleSettings-menu');
+				this.player.emit('show-subtitleSettings-menu', false);
+				this.player.emit('show-subtitleSetting-menu', false);
 				this.player.emit('show-speed-menu', false);
 				this.player.emit('show-playlist-menu', false);
 				menuContent.classList.remove('translate-x-0');
@@ -707,6 +767,9 @@ export class DesktopUIPlugin extends BaseUIPlugin {
 				this.player.emit('show-main-menu', false);
 				this.player.emit('show-language-menu', false);
 				this.player.emit('show-subtitles-menu', false);
+				this.player.emit('hide-subtitleSettings-menu');
+				this.player.emit('show-subtitleSettings-menu', false);
+				this.player.emit('show-subtitleSetting-menu', false);
 				this.player.emit('show-quality-menu', false);
 				this.player.emit('show-playlist-menu', false);
 				menuContent.classList.remove('translate-x-0');
@@ -723,6 +786,9 @@ export class DesktopUIPlugin extends BaseUIPlugin {
 				this.player.emit('show-main-menu', false);
 				this.player.emit('show-language-menu', false);
 				this.player.emit('show-subtitles-menu', false);
+				this.player.emit('hide-subtitleSettings-menu');
+				this.player.emit('show-subtitleSettings-menu', false);
+				this.player.emit('show-subtitleSetting-menu', false);
 				this.player.emit('show-quality-menu', false);
 				this.player.emit('show-speed-menu', false);
 				menuContent.classList.remove('translate-x-0');
@@ -739,6 +805,9 @@ export class DesktopUIPlugin extends BaseUIPlugin {
 				this.player.emit('show-main-menu', false);
 				this.player.emit('show-language-menu', false);
 				this.player.emit('show-subtitles-menu', false);
+				this.player.emit('hide-subtitleSettings-menu');
+				this.player.emit('show-subtitleSettings-menu', false);
+				this.player.emit('show-subtitleSetting-menu', false);
 				this.player.emit('show-quality-menu', false);
 				this.player.emit('show-speed-menu', false);
 				this.player.emit('show-playlist-menu', false);
@@ -817,6 +886,7 @@ export class DesktopUIPlugin extends BaseUIPlugin {
 		this.player.on('translationsLoaded', () => {
 			this.createMenuButton(this.mainMenu, 'language');
 			this.createMenuButton(this.mainMenu, 'subtitles');
+			this.createMenuButton(this.mainMenu, 'subtitle settings');
 			this.createMenuButton(this.mainMenu, 'quality');
 			this.createMenuButton(this.mainMenu, 'speed');
 			this.createMenuButton(this.mainMenu, 'playlist');
@@ -862,6 +932,10 @@ export class DesktopUIPlugin extends BaseUIPlugin {
 				this.createEpisodeMenu(submenu);
 			});
 		}
+
+		this.player.once('playlist', () => {
+			this.createSubtitleSettingsMenu(submenu);
+		});
 
 		return submenu;
 	}
@@ -934,6 +1008,7 @@ export class DesktopUIPlugin extends BaseUIPlugin {
 
 				this.player.emit('show-language-menu', false);
 				this.player.emit('show-subtitles-menu', false);
+				this.player.emit('hide-subtitleSettings-menu');
 				this.player.emit('show-quality-menu', false);
 				this.player.emit('show-speed-menu', false);
 				this.player.emit('show-playlist-menu', false);
@@ -971,12 +1046,73 @@ export class DesktopUIPlugin extends BaseUIPlugin {
 		return menuHeader;
 	}
 
+	createSubtitleSettingMenuHeader(parent: HTMLDivElement, title: string) {
+		const menuHeader = this.player.createElement('div', 'menu-header')
+			.addClasses([
+				'menu-header',
+				'flex',
+				'h-9',
+				'items-center',
+				'min-h-[2.5rem]',
+				'py-2',
+				'text-white',
+				'w-available',
+			])
+			.addClasses(['border-b', 'border-gray-300/20'])
+			.appendTo(parent);
+
+		const back = this.createUiButton(
+			menuHeader,
+			'back'
+		);
+		this.createSVGElement(back, 'menu', this.buttons.chevronL, false);
+		this.player.addClasses(back, ['w-8']);
+		back.classList.remove('w-5');
+
+		back.addEventListener('click', (event) => {
+			event.stopPropagation();
+			this.player.emit('show-subtitleSettings-menu', true);
+			this.player.emit('show-subtitleSetting-menu', false);
+		});
+
+		const menuButtonText = this.player.createElement('span', 'menu-button-text')
+			.addClasses(this.menuButtonTextStyles)
+			.appendTo(menuHeader);
+
+		menuButtonText.innerText = this.player.localize(title).toTitleCase();
+
+		const close = this.createUiButton(
+			menuHeader,
+			'close'
+		);
+
+		this.createSVGElement(close, 'menu', this.buttons.close, false);
+		this.player.addClasses(close, ['ml-auto', 'w-8']);
+		close.classList.remove('w-5');
+
+		close.addEventListener('click', (event) => {
+			event.stopPropagation();
+			this.player.emit('show-menu', false);
+			this.lockActive = false;
+			this.player.emit('controls', false);
+
+			this.menuFrame.close();
+
+			this.player.emit('dynamicControls');
+		});
+
+
+		return menuHeader;
+	}
+
 	createMenuButton(parent: HTMLDivElement, item: string, hovered = false) {
-		const menuButton = this.player.createElement('button', `menu-button-${item}`)
+		const id = this.spaceToCamel(item);
+
+		const menuButton = this.player.createElement('button', `menu-button-${id}`)
 			.addClasses(this.languageMenuStyles)
 			.appendTo(parent);
 
-		if (item !== 'speed') {
+		if (id !== 'speed') {
 			menuButton.style.display = 'none';
 		}
 		else if (this.player.hasSpeeds()) {
@@ -986,9 +1122,9 @@ export class DesktopUIPlugin extends BaseUIPlugin {
 			menuButton.style.display = 'none';
 		}
 
-		this.createSVGElement(menuButton, 'menu', this.buttons[item], hovered);
+		this.createSVGElement(menuButton, 'menu', this.buttons[id], hovered);
 
-		const menuButtonText = this.player.createElement('span', `menu-button-${item}`)
+		const menuButtonText = this.player.createElement('span', `menu-button-${id}`)
 			.addClasses(this.menuButtonTextStyles)
 			.appendTo(menuButton);
 
@@ -999,11 +1135,11 @@ export class DesktopUIPlugin extends BaseUIPlugin {
 
 		menuButton.addEventListener('click', (event) => {
 			event.stopPropagation();
-			this.player.emit(`show-${item}-menu`, true);
+			this.player.emit(`show-${id}-menu`, true);
 		});
 
-		if (item === 'language') {
-			this.player.on('item', () => {
+		if (id === 'language') {
+			this.player.on('id', () => {
 				menuButton.style.display = 'none';
 			});
 			if (this.player.hasAudioTracks()) {
@@ -1017,8 +1153,8 @@ export class DesktopUIPlugin extends BaseUIPlugin {
 				}
 			});
 		}
-		else if (item === 'subtitles') {
-			this.player.on('item', () => {
+		else if (id === 'subtitles') {
+			this.player.on('id', () => {
 				menuButton.style.display = 'none';
 			});
 			if (this.player.hasCaptions()) {
@@ -1032,7 +1168,22 @@ export class DesktopUIPlugin extends BaseUIPlugin {
 				}
 			});
 		}
-		else if (item === 'quality') {
+		else if (id === 'subtitleSettings') {
+			this.player.on('id', () => {
+				menuButton.style.display = 'none';
+			});
+			if (this.player.hasCaptions()) {
+				menuButton.style.display = 'flex';
+			}
+			this.player.on('captionsList', (captions) => {
+				if (captions.length > 1) {
+					menuButton.style.display = 'flex';
+				} else {
+					menuButton.style.display = 'none';
+				}
+			});
+		}
+		else if (id === 'quality') {
 			this.player.on('item', () => {
 				menuButton.style.display = 'none';
 			});
@@ -1047,7 +1198,7 @@ export class DesktopUIPlugin extends BaseUIPlugin {
 				}
 			});
 		}
-		else if (item === 'playlist') {
+		else if (id === 'playlist') {
 			if (this.player.options.playlist && Array.isArray(this.player.options.playlist)) {
 				menuButton.style.display = 'flex';
 			}
@@ -1175,6 +1326,257 @@ export class DesktopUIPlugin extends BaseUIPlugin {
 		});
 
 		return subtitleMenu;
+	}
+
+	createSubtitleSettingMenuButton(parent: HTMLDivElement, data: {
+		label: string;
+		property: keyof SubtitleStyle | '';
+		buttonType: string;
+	}
+	) {
+
+		const subtitleSettingButton = this.player.createElement('button', `subtitleSetting-button-${this.spaceToCamel(data.label)}`)
+			.addClasses(this.languageMenuStyles)
+			.appendTo(parent);
+
+		const subtitleSettingButtonText = this.player.createElement('span', `menu-button-text-${this.spaceToCamel(data.label)}`)
+			.addClasses(this.menuButtonTextStyles)
+			.appendTo(subtitleSettingButton);
+
+		subtitleSettingButtonText.innerText = this.player.localize(data.label);
+
+		const subtitleSettingButtonValueText = this.player.createElement('span', `menu-button-text-${this.spaceToCamel(data.label)}`)
+			.addClasses(this.menuButtonSubTextStyles)
+			.appendTo(subtitleSettingButton);
+		this.player.addClasses(subtitleSettingButtonValueText, ['ml-auto']);
+
+		if(data.property) {
+			const value = this.player.subtitleStyle[data.property].toString();
+			const isNumber = !isNaN(parseInt(value, 10));
+
+			if (data.property === 'fontFamily') {
+				console.log(fontFamilies.find(f => f.value == value))
+				subtitleSettingButtonValueText.innerText = fontFamilies.find(f => f.value == value)!.name;
+			} else if (data.property === 'edgeStyle') {
+				subtitleSettingButtonValueText.innerText = edgeStyles.find(f => f.value == value)!.name;
+			}
+			else {
+				subtitleSettingButtonValueText.innerText = (value + (isNumber ? '%' : '')).toTitleCase();
+			}
+
+			const chevron = this.createSVGElement(subtitleSettingButton, 'menu', this.buttons.chevronR, false, false);
+			this.player.addClasses(chevron, ['ml-2']);
+
+			this.createSubtitleSettingMenu(parent, data);
+
+			this.player.on('set-subtitle-style', (style: SubtitleSettingAction) => {
+				if(data.property != style.property) return;
+
+				const value = this.player.subtitleStyle[style.property as keyof SubtitleStyle].toString();
+				const isNumber = !isNaN(parseInt(value, 10));
+
+				if (data.property === 'fontFamily') {
+					console.log(fontFamilies.find(f => f.value == value))
+					subtitleSettingButtonValueText.innerText = fontFamilies.find(f => f.value == value)!.name;
+				} else if (data.property === 'edgeStyle') {
+					subtitleSettingButtonValueText.innerText = edgeStyles.find(f => f.value == value)!.name;
+				}
+				else {
+					subtitleSettingButtonValueText.innerText = (value + (isNumber ? '%' : '')).toTitleCase();
+				}
+			});
+		}
+
+		subtitleSettingButton.addEventListener('click', (event) => {
+			event.stopPropagation();
+			if(data.property) {
+				this.player.emit('show-subtitleSetting-menu', data.property);
+				this.player.emit('hide-subtitleSettings-menu');
+			}
+			else {
+				this.player.setSubtitleStyle(defaultSubtitleStyles);
+			}
+		});
+
+		this.addKeyEventsToLanguageButton(subtitleSettingButton, parent);
+
+		return subtitleSettingButton;
+	}
+
+	createSubtitleSettingsMenu(parent: HTMLDivElement) {
+
+		const subtitleSettingsMenu = this.player.createElement('div', 'subtitleSettings-menu')
+			.addClasses(this.subMenuContentStyles)
+			.appendTo(parent);
+
+		this.createMenuHeader(subtitleSettingsMenu, 'subtitle settings');
+
+		const scrollContainer = this.player.createElement('div', 'subtitleSettings-scroll-container')
+			.addClasses([
+				...this.scrollContainerStyles,
+				'!w-80',
+			])
+			.appendTo(subtitleSettingsMenu);
+
+		scrollContainer.style.transform = 'translateX(0)';
+
+		this.createSubtitleSettingMenuButton(scrollContainer, {
+			label: 'Font',
+			property: 'fontFamily',
+			buttonType: 'subtitleSetting',
+		});
+		this.createSubtitleSettingMenuButton(scrollContainer, {
+			label: 'Text size',
+			property: 'fontSize',
+			buttonType: 'subtitleSetting',
+		});
+		this.createSubtitleSettingMenuButton(scrollContainer, {
+			label: 'Text color',
+			property: 'textColor',
+			buttonType: 'subtitleSetting',
+		});
+		this.createSubtitleSettingMenuButton(scrollContainer, {
+			label: 'Text opacity',
+			property: 'textOpacity',
+			buttonType: 'subtitleSetting',
+		});
+		this.createSubtitleSettingMenuButton(scrollContainer, {
+			label: 'Edge style',
+			property: 'edgeStyle',
+			buttonType: 'subtitleSetting',
+		});
+		this.createSubtitleSettingMenuButton(scrollContainer, {
+			label: 'Area color',
+			property: 'backgroundColor',
+			buttonType: 'subtitleSetting',
+		});
+		this.createSubtitleSettingMenuButton(scrollContainer, {
+			label: 'Area opacity',
+			property: 'backgroundOpacity',
+			buttonType: 'subtitleSetting',
+		});
+		this.createSubtitleSettingMenuButton(scrollContainer, {
+			label: 'Background color',
+			property: 'areaColor',
+			buttonType: 'subtitleSetting',
+		});
+		this.createSubtitleSettingMenuButton(scrollContainer, {
+			label: 'Background opacity',
+			property: 'windowOpacity',
+			buttonType: 'subtitleSetting',
+		});
+		this.createSubtitleSettingMenuButton(scrollContainer, {
+			label: 'Reset',
+			property: '',
+			buttonType: 'subtitleSetting',
+		});
+
+		this.player.on('show-subtitleSettings-menu', (property) => {
+			if (property != false) {
+				subtitleSettingsMenu.style.display = 'flex';
+				this.menuFrame.classList.add('group-[&.nomercyplayer:has(.open)]:backdrop:!hidden');
+				this.center.classList.add('!bg-none');
+
+				setTimeout(() => {
+					(scrollContainer.firstChild as HTMLButtonElement).focus();
+				}, 200);
+			} else {
+				subtitleSettingsMenu.style.display = 'none';
+			}
+		});
+
+		return subtitleSettingsMenu;
+	}
+
+	createSubtitleSettingMenu(parent: HTMLDivElement, data: {
+		label: string;
+		property: keyof SubtitleStyle | '';
+		buttonType: string;
+	}
+	) {
+
+		const subtitleSettingMenu = this.player.createElement('div', `subtitleSetting-menu-${data.property}`)
+			.addClasses(this.subMenuContentStyles)
+			.appendTo(parent.parentElement!.parentElement!);
+		subtitleSettingMenu.style.display = 'none';
+
+		this.createSubtitleSettingMenuHeader(subtitleSettingMenu, data.label);
+
+		const scrollContainer = this.player.createElement('div', `subtitleSetting-scroll-container-${data.property}`)
+			.addClasses([
+				...this.scrollContainerStyles,
+				'!w-80',
+			])
+			.appendTo(subtitleSettingMenu);
+
+		scrollContainer.style.transform = 'translateX(0)';
+
+		this.subtitleSettingActions
+			.filter(a => a.property == data.property)
+			.forEach((action) => {
+				this.createSubtitleSettingActionButton(scrollContainer, action);
+			});
+
+		this.player.on('show-subtitleSetting-menu', (property: string) => {
+			if (data.property == property) {
+				subtitleSettingMenu.style.display = 'flex';
+				this.menuFrame.classList.add('group-[&.nomercyplayer:has(.open)]:backdrop:!hidden');
+				this.center.classList.add('!bg-none');
+
+				setTimeout(() => {
+					(scrollContainer.firstChild as HTMLButtonElement).focus();
+				}, 200);
+			} else {
+				subtitleSettingMenu.style.display = 'none';
+			}
+		});
+
+		this.player.on('hide-subtitleSetting-menu', () => {
+			subtitleSettingMenu.style.display = 'none';
+		});
+
+		return scrollContainer;
+	}
+
+	createSubtitleSettingActionButton(parent: HTMLDivElement, data: SubtitleSettingAction) {
+
+		const subtitleSettingActionButton = this.player.createElement('button', `subtitleSetting-action-button-${data.property}`)
+			.addClasses(this.languageMenuStyles)
+			.appendTo(parent);
+
+		const subtitleSettingActionButtonText = this.player.createElement('span', 'menu-button-text')
+			.addClasses(this.menuButtonTextStyles)
+			.appendTo(subtitleSettingActionButton);
+
+		subtitleSettingActionButtonText.innerText = this.player.localize(data.label).toTitleCase();
+
+		const chevron = this.createSVGElement(subtitleSettingActionButton, 'checkmark', this.buttons.checkmark, false, false);
+		this.player.addClasses(chevron, ['ml-auto']);
+
+		if (data.value != this.player.getSubtitleStyle()[data.property as keyof SubtitleStyle]) {
+			chevron.classList.add('hidden');
+		}
+
+		this.player.on('set-subtitle-style', (style) => {
+			if(data.property != style.property) return;
+
+			if (data.value == style.value) {
+				chevron.classList.remove('hidden');
+			} else {
+				chevron.classList.add('hidden');
+			}
+		});
+
+		subtitleSettingActionButton.addEventListener('click', (event) => {
+				event.stopPropagation();
+				data.action(event);
+
+				this.player.emit('set-subtitle-style', data);
+			});
+
+		this.addKeyEventsToLanguageButton(subtitleSettingActionButton, parent);
+
+		return subtitleSettingActionButton;
 	}
 
 	createSpeedMenu(parent: HTMLDivElement, hovered = false) {

@@ -11,7 +11,7 @@ import {
     unique
 } from '@nomercy-entertainment/nomercy-video-player/src/helpers';
 import { buttons, type Icon } from './buttons';
-import { TimeData } from "@nomercy-entertainment/nomercy-video-player/src/types";
+import {TimeData} from "@nomercy-entertainment/nomercy-video-player/src/types";
 
 export class BaseUIPlugin extends Plugin {
     player: NMPlayer = <NMPlayer>{};
@@ -53,6 +53,7 @@ export class BaseUIPlugin extends Plugin {
     mainMenuOpen = false;
     languageMenuOpen = false;
     subtitlesMenuOpen = false;
+    subtitleSettingsMenuOpen = false;
     qualityMenuOpen = false;
     speedMenuOpen = false;
     playlistMenuOpen = false;
@@ -96,6 +97,19 @@ export class BaseUIPlugin extends Plugin {
         'text-white',
         'cursor-pointer',
         'font-semibold',
+        'pl-2',
+        'flex',
+        'gap-2',
+        'leading-[normal]',
+        'line-clamp-1',
+    ];
+
+    menuButtonSubTextStyles = [
+        'menu-button-text',
+        'text-white/60',
+        'cursor-pointer',
+        'font-semibold',
+        'text-2xs',
         'pl-2',
         'flex',
         'gap-2',
@@ -1941,6 +1955,20 @@ export class BaseUIPlugin extends Plugin {
 
         return languageButton;
     }
+
+    /**
+     * Converts a snake_case string to camelCase.
+     * @param str - The snake_case string to convert.
+     * @returns The camelCase version of the string.
+     */
+    snakeToCamel(str: string): string {
+        return str.replace(/_([a-z])/g, (_, letter) => letter.toUpperCase());
+    }
+
+    spaceToCamel(str: string): string {
+        return str.replace(/\s([a-z])/g, (_, letter) => letter.toUpperCase());
+    }
+
 
     getClosestElement(element: HTMLButtonElement, selector: string) {
 
