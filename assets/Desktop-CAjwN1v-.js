@@ -1,0 +1,2 @@
+import{aG as t,j as o,o as r,a7 as a,x as n,aI as e,bQ as s,c7 as u,bn as l,bP as c}from"./index-DoOp5yb7.js";const d=t({__name:"Desktop",setup(p){return(_,f)=>(r(),o(e(c),null,{default:a(()=>[n(e(s),{fullscreen:!0},{default:a(()=>[n(u,{name:`${e(l).currentRoute.value.name} Desktop page`},null,8,["name"])]),_:1})]),_:1}))}});export{d as default};
+//# sourceMappingURL=Desktop-CAjwN1v-.js.map
