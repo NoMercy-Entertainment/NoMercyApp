@@ -11,7 +11,7 @@ import {
     unique
 } from '@nomercy-entertainment/nomercy-video-player/src/helpers';
 import { buttons, type Icon } from './buttons';
-import {TimeData} from "@nomercy-entertainment/nomercy-video-player/src/types";
+import { TimeData } from "@nomercy-entertainment/nomercy-video-player/src/types";
 
 export class BaseUIPlugin extends Plugin {
     player: NMPlayer = <NMPlayer>{};
@@ -124,7 +124,7 @@ export class BaseUIPlugin extends Plugin {
         this.imageBaseUrl = player.options.basePath ? '' : 'https://image.tmdb.org/t/p/w185';
         // Initialize the plugin with the player
 
-        this.player.on('play',() => {
+        this.player.on('play', () => {
             this.player.emit('hide-episode-tip');
         });
     }
@@ -1540,7 +1540,6 @@ export class BaseUIPlugin extends Plugin {
                 this.menuFrame.close();
             } else {
                 this.player.emit('show-playlist-menu', true);
-                this.player.emit('switch-season', this.player.playlistItem().season);
 
                 this.menuFrame.showModal();
 

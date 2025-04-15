@@ -12,8 +12,9 @@ import serverClient from '@/lib/clients/serverClient';
 import DashboardLayout from '@/Layout/Desktop/DashboardLayout.vue';
 import useServerClient from '@/lib/clients/useServerClient';
 import Toggle from "@/components/Forms/Toggle.vue";
-import { currentServer } from "@/store/currentServer";
+import {currentServer, setCurrentServer} from "@/store/currentServer";
 import MoooomIcon from "@/components/Images/icons/MoooomIcon.vue";
+import servers, {setServers} from "@/store/servers";
 
 const { data: configuration, refetch: invalidate, error } = useServerClient<ConfigurationResponse>({
   path: '/dashboard/configuration',
@@ -75,16 +76,55 @@ onMounted(() => {
 const server_name = ref<string>(configuration.value?.server_name ?? '');
 watch(server_name, (value) => {
   updateState('server_name', value);
+  if (!currentServer.value) return;
+
+  setServers([
+    ...servers.value.filter((server) => server.id !== currentServer.value!.id),
+    {
+      ...currentServer.value,
+      server_name: value.toString(),
+    }
+  ]);
+  setCurrentServer({
+    ...currentServer.value,
+    server_name: value.toString(),
+  });
 });
 
 const external_port = ref<number>(configuration.value?.external_port ?? 0);
 watch(external_port, (value) => {
   updateState('external_port', value);
+  if (!currentServer.value) return;
+
+  setServers([
+      ...servers.value.filter((server) => server.id !== currentServer.value!.id),
+    {
+      ...currentServer.value,
+      external_port: value.toString(),
+    }
+  ]);
+  setCurrentServer({
+    ...currentServer.value,
+    external_port: value.toString(),
+  });
 });
 
 const internal_port = ref<number>(configuration.value?.internal_port ?? 0);
 watch(internal_port, (value) => {
   updateState('internal_port', value);
+  if (!currentServer.value) return;
+
+  setServers([
+    ...servers.value.filter((server) => server.id !== currentServer.value!.id),
+    {
+      ...currentServer.value,
+      internal_port: value.toString(),
+    }
+  ]);
+  setCurrentServer({
+    ...currentServer.value,
+    internal_port: value.toString(),
+  });
 });
 
 const queue_workers = ref<number>(configuration.value?.queue_workers ?? 0);

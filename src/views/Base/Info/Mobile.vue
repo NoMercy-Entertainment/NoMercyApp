@@ -3,15 +3,17 @@ import { computed, ref, watch } from 'vue';
 import { useRoute } from 'vue-router';
 import { IonContent, IonPage, IonSkeletonText, onIonViewWillEnter, onIonViewWillLeave } from '@ionic/vue';
 import axios from "axios";
+import { t } from "i18next";
 
 import type { InfoResponse } from '@/types/api/base/info';
 
-import { tmdbImageBaseUrl } from '@/config/config';
+import i18next from "@/config/i18next";
 import useServerClient from '@/lib/clients/useServerClient';
 import { breakTitle2, setTitle, sortByPosterAlphabetized } from '@/lib/stringArray';
+import { convertToHumanReact } from "@/lib/dateTime";
 import { background, setBackground, setColorPalette, setLogo, setPoster, title } from '@/store/ui';
+import { currentServer } from "@/store/currentServer";
 import router from '@/router';
-import i18next from "@/config/i18next";
 
 import ImageCarousel from '@/components/Carousel/ImageCarousel.vue';
 import PersonCarousel from '@/components/Carousel/PersonCarousel.vue';
@@ -22,10 +24,6 @@ import Trailer from "@/views/Base/Info/components/Trailer.vue";
 import HeaderItem from "@/views/Base/Person/components/HeaderItem.vue";
 import Collapsible from "@/views/Base/Person/components/Collapsible.vue";
 import MobileInfoCard from "@/views/Base/Info/components/MobileInfoCard.vue";
-import { t } from "i18next";
-import { convertToHumanReact } from "@/lib/dateTime";
-import TMDBImage from "@/components/Images/TMDBImage.vue";
-import { currentServer } from "@/store/currentServer";
 
 const route = useRoute();
 const enabled = ref(false);
