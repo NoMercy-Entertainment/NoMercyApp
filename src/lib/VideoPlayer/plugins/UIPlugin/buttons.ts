@@ -336,20 +336,20 @@ export const colors: { label: string, value: string }[] = [
 		value: 'blue'
 	},
 	{
-		label: 'Green',
-		value: 'green'
-	},
-	{
 		label: 'Cyan',
 		value: 'cyan'
 	},
 	{
-		label: 'Red',
-		value: 'red'
+		label: 'Green',
+		value: 'green'
 	},
 	{
 		label: 'Magenta',
 		value: 'magenta'
+	},
+	{
+		label: 'Red',
+		value: 'red'
 	},
 	{
 		label: 'Yellow',

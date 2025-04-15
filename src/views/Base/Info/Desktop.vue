@@ -2,6 +2,7 @@
 import {computed, onMounted, onUnmounted, ref, watch} from 'vue';
 import { useRoute } from 'vue-router';
 import axios from 'axios';
+import { useTranslation } from "i18next-vue";
 import { IonContent, IonPage } from '@ionic/vue';
 
 import type { InfoResponse } from '@/types/api/base/info';
@@ -14,6 +15,7 @@ import useServerClient from '@/lib/clients/useServerClient';
 import { setTitle, sortByPosterAlphabetized } from '@/lib/stringArray';
 import { pickPaletteColor } from '@/lib/colorHelper';
 import serverClient from '@/lib/clients/serverClient';
+import { convertToHumanReact } from "@/lib/dateTime";
 import {background, setBackground, setColorPalette, setLogo} from '@/store/ui';
 import { currentSong } from '@/store/audioPlayer';
 
@@ -32,8 +34,6 @@ import ContentRating from '@/components/Images/ContentRating.vue';
 import InfoItem from '@/views/Base/Info/components/InfoItem.vue';
 import Trailer from '@/views/Base/Info/components/Trailer.vue';
 import ScrollContainer from '@/Layout/Desktop/components/ScrollContainer.vue';
-import { convertToHumanReact } from "@/lib/dateTime";
-import { useTranslation } from "i18next-vue";
 import NotFound from "@/Layout/Desktop/components/NotFound.vue";
 import BannerButton from "@/components/Buttons/BannerButton.vue";
 
@@ -42,7 +42,7 @@ const route = useRoute();
 const { data, isError, error } = useServerClient<InfoResponse>({
   keepForever: true,
   queryKey: ['base', 'info', route.params.id],
-  path: `${route.fullPath}`,
+  path: route?.fullPath,
 });
 
 const { data: hasItem } = useServerClient<{ available: boolean; server: string; }>({

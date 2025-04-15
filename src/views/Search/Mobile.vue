@@ -164,7 +164,7 @@ watch(debouncedKeyboardHeight, () => {
                     }"
               ></div>
               <button @click="searchType = 'video'"
-                      class="flex justify-center items-center flex-grow-0 flex-shrink-0 relative gap-2 p-1 rounded-lg w-9"
+                      class="flex justify-center items-center flex-grow-0 flex-shrink-0 relative gap-2 p-1 rounded-lg w-9 h-9"
                       :class="{
                          'text-slate-dark-12': searchType == 'video',
                       }"
@@ -172,7 +172,7 @@ watch(debouncedKeyboardHeight, () => {
                 <MoooomIcon icon="film" class="h-6 w-6 flex-grow-0 flex-shrink-0 transition-all duration-150"/>
               </button>
               <button @click="searchType = 'music'"
-                      class="flex justify-center items-center flex-grow-0 flex-shrink-0 relative gap-2 p-1 rounded-lg w-9"
+                      class="flex justify-center items-center flex-grow-0 flex-shrink-0 relative gap-2 p-1 rounded-lg w-9 h-9"
                       :class="{
                          'text-slate-dark-12': searchType == 'music',
                       }"

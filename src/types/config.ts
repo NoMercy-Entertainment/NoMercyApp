@@ -1,3 +1,4 @@
+import {EdgeStyle} from "@/lib/VideoPlayer/plugins/UIPlugin/buttons";
 
 export type ColorScheme = 'dark' | 'light' | 'system';
 
@@ -5,20 +6,6 @@ export interface Component {
 	id: string;
 	component: string;
 	props: Record<string, any>;
-}
-
-export type EdgeStyle = 'none' | 'depressed' | 'dropShadow'| 'textShadow' | 'raised' | 'uniform';
-
-export interface SubtitleStyle {
-	textOpacity: number;
-	fontFamily: string;
-	fontSize: number;
-	textColor: string;
-	edgeStyle: EdgeStyle;
-	backgroundColor: string;
-	backgroundOpacity: number;
-	areaColor: string;
-	windowOpacity: number;
 }
 
 export const getEdgeStyle = (edgeStyle: EdgeStyle, opacity: number): string => {

@@ -8,7 +8,7 @@ import type { InfoResponse } from '@/types/api/base/info';
 import { tmdbImageBaseUrl } from '@/config/config';
 import useServerClient from '@/lib/clients/useServerClient';
 import { setTitle, sortByPosterAlphabetized } from '@/lib/stringArray';
-import { background, poster, setBackground, setColorPalette, setLogo, setPoster } from '@/store/ui';
+import { background, setBackground, setColorPalette, setLogo } from '@/store/ui';
 import router from '@/router';
 
 import InfoItem from '@/views/Base/Info/components/InfoItem.vue';
