@@ -1,2 +1,0 @@
-import{aG as t,j as o,o as s,a7 as e,x as a,aI as n,bQ as r,c7 as c,bP as l}from"./index-DoOp5yb7.js";const i=t({__name:"Tv",setup(p){return(u,_)=>(s(),o(n(l),null,{default:e(()=>[a(n(r),{fullscreen:!0},{default:e(()=>[a(c,{name:"Display Tv page"})]),_:1})]),_:1}))}});export{i as default};
-//# sourceMappingURL=Tv-BPyCFow2.js.map
