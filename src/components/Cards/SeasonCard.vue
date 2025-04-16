@@ -54,11 +54,11 @@ const props = defineProps({
     </div>
 
     <div class="grid w-full items-stretch gap-2 rounded-b-md p-2 transitioning text-left">
-      <p class="z-10 w-auto flex-shrink-0 flex-grow-0 self-stretch text-sm font-bold leading-5 line-clamp-1"
+      <p class="z-10 w-auto flex-shrink-0 flex-grow-0 self-stretch text-2xs sm:text-sm font-bold leading-5 h-10 line-clamp-2 sm:line-clamp-1"
         :title="`${data?.episode_number ? data?.episode_number + ' - ' : ''}${data?.title}`">
         {{ data?.episode_number ? data?.episode_number + ' - ' : '' }}{{ data?.title }}
       </p>
-      <p class="z-10 h-8 w-auto flex-shrink-0 flex-grow-0 self-stretch text-xs min-h-8 line-clamp-2 leading-[1.2] text-auto-12/80"
+      <p class="z-10 h-8 w-auto flex-shrink-0 flex-grow-0 self-stretch hidden sm:flex text-xs min-h-8 line-clamp-2 leading-[1.2] text-auto-12/80"
         :title="data?.overview">
         {{ data?.overview }}
       </p>

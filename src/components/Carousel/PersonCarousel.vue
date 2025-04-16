@@ -26,7 +26,7 @@ defineProps({
 
 <template>
 	<Carousel :title="title" :limitCardCountBy="limitCardCountBy" type="poster" :disableAutoAspect="true">
-		<swiper-slide v-for="item in data" :key="item.id" class="flex p-1 pl-0">
+		<swiper-slide v-for="item in data" :key="item.id" class="flex sm:p-1 pl-0">
 			<PersonCard :data="item" class="" />
 		</swiper-slide>
 	</Carousel>

@@ -24,6 +24,7 @@ import Trailer from "@/views/Base/Info/components/Trailer.vue";
 import HeaderItem from "@/views/Base/Person/components/HeaderItem.vue";
 import Collapsible from "@/views/Base/Person/components/Collapsible.vue";
 import MobileInfoCard from "@/views/Base/Info/components/MobileInfoCard.vue";
+import SeasonCarousel from "@/components/Carousel/SeasonCarousel.vue";
 
 const route = useRoute();
 const enabled = ref(false);
@@ -248,6 +249,9 @@ const processTrailer = (value: InfoResponse | undefined) => {
 
           <div class="self-stretch flex-grow-0 flex-shrink-0 h-px bg-slate-dark-7/[0.1] dark:bg-slate-dark-11/[0.1]">
           </div>
+
+          <SeasonCarousel v-if="data?.seasons && data?.seasons?.length > 0" :data="data?.seasons" type="backdrop"
+                          class="-mx-6" :limitCardCountBy="0" />
 
           <PersonCarousel v-if="data?.cast && data?.cast?.length > 0" class="-mx-6" :data="data?.cast" title="Cast" />
 

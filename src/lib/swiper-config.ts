@@ -9,7 +9,7 @@ export const breakpoints = (isBackdrop: boolean) => {
 				slidesPerGroup: 1,
 			}
 			: {
-				slidesPerView: 2.3,
+				slidesPerView: 2.28,
 				slidesPerGroup: 1,
 			},
 		768: !isBackdrop
@@ -54,7 +54,7 @@ export const breakpoints = (isBackdrop: boolean) => {
 				slidesPerGroup: 9,
 			}
 			: {
-				slidesPerView: 5.2,
+				slidesPerView: 5.22,
 				slidesPerGroup: 5,
 			},
 		2500: !isBackdrop
@@ -87,7 +87,7 @@ export const swiperConfig = (isBackdrop: boolean) => {
 		updateOnWindowResize: true,
 		speed: 100,
 		spaceBefore: 10,
-		slidesOffsetAfter: 24,
+		slidesOffsetAfter: 48,
 		spaceBetween: 12,
 		keyboard: true,
 		// mousewheel: true,

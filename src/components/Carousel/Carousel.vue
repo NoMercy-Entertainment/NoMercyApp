@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, onBeforeMount, PropType, ref } from 'vue';
+import {computed, PropType, ref, watch} from 'vue';
 import { useTranslation } from 'i18next-vue';
 import { Swiper } from 'swiper';
 import { Swiper as SwiperComponent } from 'swiper/vue';
@@ -12,7 +12,6 @@ import { showBackdrops } from '@/store/preferences';
 
 import MoooomIcon from '@/components/Images/icons/MoooomIcon.vue';
 import { isMobile } from '@/config/global';
-import {IonPage} from "@ionic/vue";
 
 const { t } = useTranslation();
 
@@ -43,7 +42,7 @@ const props = defineProps({
         type: Boolean,
         required: false,
         default: false,
-    }
+    },
 });
 
 const backButtonEnabled = ref(false);
@@ -92,34 +91,32 @@ const prev = () => {
     swiper.value?.$el?.swiper?.slidePrev(300);
 };
 
-const offsetBefore = window.innerWidth < 800
-    ? 24
-    : 20;
-
-const bp = ref<Breakpoints>();
-
 const backdropCards = computed(() => {
     return showBackdrops && !props.disableAutoAspect
 })
 
-onBeforeMount(() => {
-    if (!props.limitCardCountBy) {
-        bp.value = breakpoints(backdropCards.value);
-        return;
-    }
+const customSwiperConfig = computed(() => {
 
-    const newBp: Breakpoints = <Breakpoints>{};
+    const newBp: Breakpoints = breakpoints(backdropCards.value);
 
-    for (const [key, value] of mappedEntries(breakpoints(backdropCards.value))) {
+    if (props.limitCardCountBy) {
+      for (const [key, value] of mappedEntries(breakpoints(backdropCards.value))) {
         newBp[key] = {
-            ...value,
-            slidesPerView: value.slidesPerView - props.limitCardCountBy,
-            slidesPerGroup: value.slidesPerGroup - props.limitCardCountBy
+          ...value,
+          slidesPerView: value.slidesPerView - props.limitCardCountBy,
+          slidesPerGroup: value.slidesPerGroup - props.limitCardCountBy
         };
+      }
     }
 
-    bp.value = newBp;
+    return {
+      ...swiperConfig(backdropCards.value),
+      breakpoints: newBp,
+      slidesOffsetBefore: window.innerWidth < 800 ? 24 : 20,
+    };
 });
+
+watch(customSwiperConfig, value => console.log(value));
 
 const focusMain = () => {
   // document.querySelector<HTMLButtonElement>(`#${props.nextId}`)?.focus();
@@ -131,9 +128,9 @@ const focusMain = () => {
     <div
         class="mb-1 flex w-auto flex-shrink-0 flex-grow-0 flex-col items-start justify-start gap-2 self-stretch text-left relative">
         <div class="flex w-available flex-1 flex-col gap-2">
-            <div class="relative ml-2 w-full flex flex-shrink-0 flex-grow-1 items-center self-stretch">
+            <div class="relative ml-3 w-full flex flex-shrink-0 flex-grow-1 items-center self-stretch">
                 <h3 v-if="title"
-                    class="text-2xl font-bold text-auto-12 mr-2 ml-1 sm:ml-3 my-2 text-slate-dark-1 dark:text-slate-light-1">
+                    class="text-2xl font-bold text-auto-12 mr-2 ml-4 sm:ml-3 my-2 text-slate-dark-1 dark:text-slate-light-1">
                     {{ t(title ?? 'Continue watching') }}
                 </h3>
                 <slot v-else name="selector"></slot>
@@ -164,9 +161,9 @@ const focusMain = () => {
                 </div>
             </div>
             <div class="gap-3 py-1 pr-0 w-available swiper">
-                <SwiperComponent v-bind="swiperConfig(backdropCards) as any" ref="swiper"
-                    :class="`swiper-${title?.replace(/[\s&#]/gu, '-')} opacity-0`" :slidesOffsetBefore="offsetBefore"
-                    :breakpoints="bp" data-spatial-container="row" @progress="onProgress" @afterInit="afterInit"
+                <SwiperComponent v-bind="customSwiperConfig as any" ref="swiper"
+                    :class="`swiper-${title?.replace(/[\s&#]/gu, '-')} opacity-0`"
+                    data-spatial-container="row" @progress="onProgress" @afterInit="afterInit"
                     @slideChange="onSlideChange">
                     <slot />
                 </SwiperComponent>

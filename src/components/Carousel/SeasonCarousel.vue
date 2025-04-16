@@ -64,7 +64,7 @@ watch(currentSeason, reset);
         :items="seasonSelectorData" optionLabel="title" class="min-w-[21rem] ml-3" label="" variant="normal" />
     </template>
 
-    <swiper-slide v-if="currentSeason.episodes?.length == 0" class="flex p-1 pl-0">
+    <swiper-slide v-if="currentSeason.episodes?.length == 0" class="flex sm:p-1 sm:pl-0">
 
       <SeasonCard id="item-0" :key="0" :data="{
         id: 1,
@@ -82,7 +82,7 @@ watch(currentSeason, reset);
 
     </swiper-slide>
 
-    <swiper-slide v-for="item in currentSeason.episodes" v-else :key="item.id" class="flex p-1 pl-0">
+    <swiper-slide v-for="item in currentSeason.episodes" v-else :key="item.id" class="flex sm:p-1 sm:pl-0">
       <SeasonCard :id="`item-${item.id}`" :data="item" :onclick="() => handleClick(item as Episode)" />
     </swiper-slide>
   </Carousel>

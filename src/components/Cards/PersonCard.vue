@@ -46,17 +46,17 @@ const color = computed(() => {
                 :colorPalette="data?.color_palette?.profile"
                 className="h-full overflow-clip children:overflow-clip rounded-lg children:rounded-lg" />
             <div
-                class="absolute bottom-0 left-0 z-0 grid h-16 w-full items-stretch rounded-b-lg px-2 pt-2 pb-1 text-left overflow-clip">
+                class="absolute bottom-0 left-0 z-0 grid h-16 w-full items-stretch rounded-b-lg px-1 sm:px-2 py-2 text-left overflow-clip">
                 <div class="absolute inset-0 z-0 rounded-b-lg bg-auto-1/80"></div>
                 <p
-                    class="z-10 text-2xs sm:text-sm font-bold leading-none sm:leading-4 h-8 line-clamp-2 w-available text-slate-lightA-12/70  dark:text-slate-darkA-12/80">
+                    class="z-10 text-2xs sm:text-sm font-bold leading-none sm:leading-4 h-7 sm:h-8 line-clamp-2 w-available text-slate-lightA-12/70  dark:text-slate-darkA-12/80">
                     {{ data?.name }}
                     <span v-if="data.deathday"
                         class="-mr-1 text-xs sm:text-base leading-none sm:leading-4 h-7 sm:h-6">&#8224;</span>
                 </p>
                 <p :title="data?.character ?? data?.job as string"
-                    class="z-10 text-2xs sm:text-xs font-bold leading-none sm:leading-4 h-6 sm:h-9 line-clamp-2 w-available text-slate-lightA-12/60 dark:text-slate-darkA-12/70 empty:hidden dark:font-medium">
-                    {{ data?.character ?? data?.job }}
+                    class="z-10 text-2xs sm:text-xs leading-none sm:leading-4 h-6 sm:h-9 line-clamp-2 w-available text-slate-lightA-12/60 dark:text-slate-darkA-12/70 empty:hidden font-light">
+                    {{ (data?.character ?? data?.job).replace('(voice)', '') }}
                 </p>
             </div>
         </div>
