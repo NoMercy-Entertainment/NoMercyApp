@@ -437,8 +437,8 @@ const menuItems = computed<IMenuItem[]>(() => [
                       </InfoHeaderItem>
                       <div v-if="data?.content_ratings"
                            class="relative overflow-hidden">
-                        <ContentRating :size="8"
-                                       class="h-full min-!h-[1rem] object-scale-down rounded-lg overflow-clip children:-m-0.5"
+                        <ContentRating :size="6"
+                                       class="h-full min-!h-[1rem] object-scale-down rounded-lg overflow-clip"
                                        :ratings="data?.content_ratings" />
                       </div>
 

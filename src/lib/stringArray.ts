@@ -531,10 +531,9 @@ export const chunk = <T>(arr: T[], size: number) => {
 declare global {
 	interface String {
 		capitalize: () => string;
-		toTitleCase: () => string;
-		// @ts-ignore
-		toPascalCase: (string: any) => string;
-		titleCase: (lang: string | 'NL' | 'FR', withLowers: boolean) => string;
+		toPascalCase: (arg: string) => string;
+		titleCase: (lang: string, withLowers: boolean) => string;
+		toTitleCase: (lang?: string) => string;
 		toInt: () => number;
 	}
 }

@@ -1,5 +1,5 @@
-import type { PlaylistItem } from '@/types/api/music/musicPlayer';
 import type { PaletteColors } from '../shared';
+import {PlaylistItem} from "@/types/musicPlayer";
 
 export interface PlaylistsResponse {
 	type: string;
@@ -16,7 +16,7 @@ export interface Playlist {
 	blurHash: null;
 	created_at: string;
 	updated_at: string;
-	track: Song[];
+	track: PlaylistItem[];
 	origin: string;
 	type: string;
 }

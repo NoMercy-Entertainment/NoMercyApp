@@ -7,6 +7,6 @@ export default <T>(timeout?: number) => {
 		throw new Error('Server not selected');
 	}
 
-	return client<T>(`${currentServer.value.serverBaseUrl}/`, timeout);
+	return client<T>({baseUrl:`${currentServer.value.serverBaseUrl}/`, timeout});
 };
 

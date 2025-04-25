@@ -24,7 +24,8 @@
       ]
     },
     "types": [
-      "vite-plugin-pwa/client"
+      "vite-plugin-pwa/client",
+      "vue"
     ]
   },
   "include": [

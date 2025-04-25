@@ -105,10 +105,14 @@ onUnmounted(() => {
                 class="relative flex flex-shrink-0 flex-grow-0 flex-col items-start justify-start gap-4 self-stretch">
                 <div class="self-stretch h-px bg-[#e2f0fd]/4"></div>
                 <div class="flex flex-shrink-0 flex-grow-0 items-start justify-start gap-8 self-stretch pl-4">
-                  <div class="relative flex h-14 items-center justify-center gap-2">
-                    <ContentRating v-if="data?.content_ratings" :size="6"
-                      class="h-full min-!h-[1rem] object-scale-down rounded-lg overflow-clip children:-m-0.5"
-                      :ratings="data?.content_ratings" />
+                  <div class="relative flex flex-shrink-0 flex-grow-0 flex-col items-start justify-center gap-1">
+                    <p class="flex-shrink-0 flex-grow-0 text-xs font-bold uppercase text-auto-alpha-10">
+                      {{ $t('Content rating') }}
+                    </p>
+
+                      <ContentRating v-if="data?.content_ratings" :size="6"
+                                     class="h-full min-!h-[1rem] object-scale-down rounded-lg overflow-clip"
+                                     :ratings="data?.content_ratings" />
                   </div>
                   <div class="relative flex flex-shrink-0 flex-grow-0 flex-col items-start justify-center gap-1">
                     <p class="flex-shrink-0 flex-grow-0 text-xs font-bold uppercase text-auto-alpha-10">

@@ -11,7 +11,7 @@ const isMutating = useIsMutating();
 </script>
 
 <template>
-    <div id="gradientBorder" tabindex="-1"
+    <div id="gradientBorder" tabindex="-1" no-ring
         class="relative flex flex-1 overflow-clip border-transparent text-start outline-none transition-all duration-300 h-available w-available scrollbar-none sm:rounded-3xl"
         :class="{
             'sm:ml-[1.35rem]': sidebar == 'hidden',

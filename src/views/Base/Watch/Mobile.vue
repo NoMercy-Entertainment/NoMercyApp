@@ -67,6 +67,25 @@ const initPlayer = (value: PlaylistItem[] | undefined) => {
     disableTouchControls: false,
     disableMediaControls: 'mediaSession' in navigator || isPlatform('capacitor'),
     renderAhead: 100,
+    customStorage: {
+      set: (key, value) => {
+        return new Promise<void>((resolve) => {
+          localStorage.setItem(key, value);
+          resolve();
+        });
+      },
+      get: (key) => {
+        return new Promise<string|null>((resolve) => {
+          resolve(localStorage.getItem(key));
+        });
+      },
+      remove: (key) => {
+        return new Promise<void>((resolve) => {
+          localStorage.removeItem(key);
+          resolve();
+        });
+      },
+    },
   };
 
   // @ts-ignore

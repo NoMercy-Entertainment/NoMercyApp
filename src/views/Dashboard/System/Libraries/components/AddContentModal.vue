@@ -85,7 +85,7 @@ const pushFile = (file: FileItem) => {
 };
 
 const popFile = (file: FileItem) => {
-  files.value = files.value.filter(f => f.path !== file.file && f.id !== file.match?.id);
+  files.value = files.value.filter(f => f.path !== file.path && f.id !== file.match?.id);
 };
 
 const getFileList = () => {
@@ -161,7 +161,7 @@ const handleSelectAll = () => {
   if (checkboxState.value) {
     files.value = [];
   } else {
-    files.value = fileList.value.map(f => ({ id: f.match?.id ?? 0, path: f.file }));
+    files.value = fileList.value.map(f => ({ id: f.match?.id ?? 0, path: f.path }));
   }
 };
 
@@ -198,7 +198,7 @@ const continueAvailable = computed(() => {
         <div class="relative flex h-full w-full flex-col overflow-clip">
           <ScrollContainer :static="false" :autoHide="false" className="ml-2">
             <div class="flex flex-col gap-2 pb-2" v-if="fileList.length > 0">
-              <FolderItem v-for="file in fileList ?? []" :key="file.file" :data="file" :files="files"
+              <FolderItem v-for="file in fileList ?? []" :key="file.path" :data="file" :files="files"
                 :pushFile="pushFile" :popFile="popFile" />
             </div>
             <div v-else-if="!loading" class="absolute inset-0 flex h-auto w-full items-center justify-center">

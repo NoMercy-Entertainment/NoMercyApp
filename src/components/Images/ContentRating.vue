@@ -40,12 +40,9 @@ onMounted(() => {
 
 <template>
   <div v-if="rating?.iso_3166_1" class="relative flex flex-col items-start justify-center gap-1">
-    <!--		<p class="text-left text-xs font-bold uppercase">-->
-    <!--			{{ t('Age rating') }}-->
-    <!--		</p>-->
     <div id="rating-image" :style="`
-            height: ${size * 4}px;
-            width: ${size * 4}px;
+            height: ${size * 6}px;
+            width: ${size * 8}px;
         `" class="flex w-auto whitespace-nowrap text-base font-medium text-white">
       <img :alt="rating?.iso_3166_1"
         :src="`https://pub-a68768bb5b1045f296df9ea56bd53a7f.r2.dev/kijkwijzer/${rating?.iso_3166_1}/${rating?.iso_3166_1}_${rating?.rating}.svg`"

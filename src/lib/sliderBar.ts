@@ -1,8 +1,7 @@
 import PlayerCore from '@nomercy-entertainment/nomercy-music-player';
+import {PlaylistItem} from "@/types/musicPlayer";
 
-import type { Song } from "./MusicPlayer/types";
-
-export class SliderBar<S extends Song> {
+export class SliderBar<S extends PlaylistItem> {
     player: PlayerCore<S>;
     isMouseDown = false;
     isScrubbing = false;

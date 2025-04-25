@@ -4,7 +4,7 @@ import { nextTick, onBeforeMount, onMounted, ref, watch } from 'vue';
 import type { Lyric } from "@/types/musicPlayer";
 
 import { random_string } from '@/lib/stringArray';
-import {scrollCenter, setupResizeListener} from '@/lib/utils';
+import {scrollCenter} from '@/lib/utils';
 
 import { user } from '@/store/user';
 import { currentServer } from '@/store/currentServer';
@@ -17,7 +17,6 @@ const lyrics_container = ref<HTMLDivElement>();
 const lyrics = ref<Lyric[] | undefined | null>(currentSong.value?.lyrics);
 const id = ref(random_string(8));
 const lastIndex = ref(-1);
-const resizeObserver = ref<ResizeObserver>();
 const currentLyric = ref<HTMLDivElement>();
 
 const fetchLyrics = (id: string) => {
