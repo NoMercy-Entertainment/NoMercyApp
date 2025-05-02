@@ -88,7 +88,7 @@ onUnmounted(() => {
 
 <template>
   <div indexer
-    class="pointer-events-none z-0 h-available sm:h-available flex flex-col items-center justify-between self-stretch overflow-clip transition-width duration-300 text-slate-dark-1 dark:text-slate-light-1 sm:-translate-x-3 pt-2"
+    class="pointer-events-none z-0 h-available sm:h-available flex flex-col items-center justify-between self-stretch overflow-clip transition-width duration-200 text-slate-dark-1 dark:text-slate-light-1 sm:-translate-x-3 pt-2"
     :class="{
       'w-8': indexer,
       'w-0': !indexer,

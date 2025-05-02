@@ -368,7 +368,7 @@ const handleUp = (event: KeyboardEvent) => {
 <!--        <div-->
 <!--            tabindex="0" ref="top"-->
 <!--            @focus="jumpTo('#watch_now')"-->
-<!--            class="flex items-center mx-12 w-available min-h-[60vh] relative overflow-hidden rounded-2xl border-2 border-slate-light-9 transition-opacity duration-300"-->
+<!--            class="flex items-center mx-12 w-available min-h-[60vh] relative overflow-hidden rounded-2xl border-2 border-slate-light-9 transition-opacity duration-200"-->
 <!--        >-->
 <!--          <template v-for="(carousel) in homeCardData"-->
 <!--                    :key="carousel.props.title">-->

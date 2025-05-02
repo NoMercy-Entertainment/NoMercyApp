@@ -246,7 +246,7 @@ const handleClick = (song: PlaylistItem) => {
                           <ion-label tabindex="-1">
                             <div class="flex w-available overflow-clip items-end">
                               <div
-                                  class="flex items-center justify-center h-full aspect-square overflow-clip transition-width duration-300"
+                                  class="flex items-center justify-center h-full aspect-square overflow-clip transition-width duration-200"
                                   :class="{
                                   'w-0': currentSong?.id != song.id,
                                   'w-6 mr-1': currentSong?.id == song.id,

@@ -99,7 +99,7 @@ input:-webkit-autofill:active {
 
 input[type="range"] {
   @apply h-2;
-  @apply flex flex-1 outline-none transition-[background] duration-300 ease-in-out appearance-none rounded-full accent-focus [&::-webkit-slider-runnable-track]:rounded-full bg-slate-dark-9 dark:bg-slate-dark-9
+  @apply flex flex-1 outline-none transition-[background] duration-200 ease-in-out appearance-none rounded-full accent-focus [&::-webkit-slider-runnable-track]:rounded-full bg-slate-dark-9 dark:bg-slate-dark-9
     [&::-webkit-slider-thumb]:transition-all [&::-moz-slider-thumb]:transition-all
     [&::-webkit-slider-thumb]:duration-100 [&::-moz-slider-thumb]:duration-100
     [background-image:_-webkit-gradient(linear,_left_top,_right_top,_color-stop(var(--left),_rgb(var(--color-focus))),_color-stop(var(--left),_#ffffff80))]

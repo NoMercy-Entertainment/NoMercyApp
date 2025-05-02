@@ -34,10 +34,10 @@ watch(props, (value) => {
       <div class="relative grid grid-cols-4 gap-2 group/personCard">
         <div v-for="profile in data?.images?.profiles?.slice(0, 4)" :key="profile.src"
           @click="() => currentImage = profile"
-          class="relative h-auto w-full cursor-pointer overflow-clip rounded-xl transition-all duration-300 aspect-poster focus-outline">
+          class="relative h-auto w-full cursor-pointer overflow-clip rounded-xl transition-all duration-200 aspect-poster focus-outline">
 
           <div :class="profile.src == currentImage?.src ? 'opacity-0' : 'opacity-100'"
-            class="absolute inset-0 z-30 grid h-auto w-full items-center justify-center bg-black/60 group-hover/personCard:opacity-0 transition-all duration-300 aspect-poster">
+            class="absolute inset-0 z-30 grid h-auto w-full items-center justify-center bg-black/60 group-hover/personCard:opacity-0 transition-all duration-200 aspect-poster">
           </div>
 
           <TMDBImage :path="profile.src" :colorPalette="data?.color_palette?.profile" :size="182"

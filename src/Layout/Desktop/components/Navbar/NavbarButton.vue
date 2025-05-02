@@ -45,7 +45,7 @@ const styles = computed(() =>
 
 <template>
   <RouterLink :to="href" :aria-label="$t(name)"
-              class="flex relative justify-start items-center overflow-hidden rounded-md focus:bg-auto-12/4 hover:bg-focus/10 hover:text-auto-12 transition-colors duration-300 h-9 gap-1 px-2.5 py-1 lg:h-11 lg:gap-2 lg:px-3 lg:py-1.5 ripple-box"
+              class="flex relative justify-start items-center overflow-hidden rounded-md focus:bg-auto-12/4 hover:bg-focus/10 hover:text-auto-12 transition-colors duration-200 h-9 gap-1 px-2.5 py-1 lg:h-11 lg:gap-2 lg:px-3 lg:py-1.5 ripple-box"
     :class="classes" :style="styles">
     <div
       class="relative flex flex-shrink-0 flex-grow-0 flex-nowrap items-center justify-start gap-3 text-xs md:text-base">

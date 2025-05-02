@@ -34,9 +34,9 @@ const classes = computed(() =>
 </script>
 
 <template>
-    <div class="flex h-auto w-full flex-col gap-1 transition-transform duration-300 handle" v-if="show">
+    <div class="flex h-auto w-full flex-col gap-1 transition-transform duration-200 handle" v-if="show">
         <button @click="toggle"
-            class="relative h-10 flex-shrink-0 flex-grow-0 items-center justify-start gap-3 self-stretch overflow-hidden rounded-md px-3 py-2 transition-transform duration-300 group hover:bg-auto-2/6"
+            class="relative h-10 flex-shrink-0 flex-grow-0 items-center justify-start gap-3 self-stretch overflow-hidden rounded-md px-3 py-2 transition-transform duration-200 group hover:bg-auto-2/6"
             :class="classes">
             <MoooomIcon v-if="!!icon" :icon="icon!" class="" />
             <span
@@ -44,14 +44,14 @@ const classes = computed(() =>
                 {{ t(title) }}
             </span>
             <MoooomIcon icon="chevronRight"
-                :class="`transition-transform duration-300 ${open ? 'rotate-90' : 'rotate-0'}`" />
+                :class="`transition-transform duration-200 ${open ? 'rotate-90' : 'rotate-0'}`" />
         </button>
 
         <div :class="open || sidebar != 'open' ? 'grid-rows-1' : 'grid-rows-0'"
-            class="grid h-auto w-full grid-rows-1 transition-transform duration-300"
+            class="grid h-auto w-full grid-rows-1 transition-transform duration-200"
              :inert="!open"
         >
-            <div class="flex flex-col gap-1 overflow-hidden transition-transform duration-300 p-0.5">
+            <div class="flex flex-col gap-1 overflow-hidden transition-transform duration-200 p-0.5">
                 <slot />
             </div>
         </div>

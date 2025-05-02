@@ -219,12 +219,12 @@ const ontransitionend = (e: TransitionEvent) => {
     <div class="container flex w-full h-full inset-0 col-span-1 row-span-1 p-12 pb-0">
 
       <div :data-show-lyrics="lyricsMenuOpen"
-        class="flex-col absolute inset-0 w-screen flex transition-all duration-300 delay:500 h-available overflow-clip pointer-events-none z-0">
+        class="flex-col absolute inset-0 w-screen flex transition-all duration-200 delay:500 h-available overflow-clip pointer-events-none z-0">
 
         <div :data-show-lyrics="true" class="w-full px-0 py-16 h-full overflow-hidden transition-all"
         >
           <div
-            class="z-0 flex h-full w-full flex-col overflow-y-auto overflow-x-hidden scroll-smooth scrollbar-none font-bbc duration-300">
+            class="z-0 flex h-full w-full flex-col overflow-y-auto overflow-x-hidden scroll-smooth scrollbar-none font-bbc duration-200">
             <div class="relative whitespace-pre-wrap font-bold h-available">
               <LyricsOverlay :key="currentSong?.id" />
             </div>

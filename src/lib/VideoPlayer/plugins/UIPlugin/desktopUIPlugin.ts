@@ -43,7 +43,7 @@ export class DesktopUIPlugin extends BaseUIPlugin {
         'overflow-y-auto',
         'p-2',
         'transition-all',
-        'duration-300',
+        'duration-200',
         'w-available',
         'scroll-p-4',
         'scroll-snap-align-center',
@@ -236,7 +236,7 @@ export class DesktopUIPlugin extends BaseUIPlugin {
                 'z-0',
 
                 'transition-all',
-                'duration-300',
+                'duration-200',
 
                 'bg-transparent',
                 'group-[&.nomercyplayer:not(.buffering).paused]:bg-gradient-circle-c',
@@ -2295,7 +2295,7 @@ export class DesktopUIPlugin extends BaseUIPlugin {
         const button = this.player.createElement('button', `playlist-${item.id}`)
             .addClasses([
                 'playlist-menu-button',
-                'duration-300',
+                'duration-200',
                 'flex',
                 'focus-visible:outline-2',
                 'focus-visible:outline-white',

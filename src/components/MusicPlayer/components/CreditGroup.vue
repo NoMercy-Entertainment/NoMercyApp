@@ -75,7 +75,7 @@ const { t } = useTranslation();
 </div>
 
 <RouterLink :to="item.link" v-if="(item as KnownFor)?.hasItem"
-  class="relative flex items-center justify-center gap-2 rounded-lg p-2 aspect-square transition-colors duration-300 group/play hover:bg-auto-5/6">
+  class="relative flex items-center justify-center gap-2 rounded-lg p-2 aspect-square transition-colors duration-200 group/play hover:bg-auto-5/6">
   <MoooomIcon icon="play" className="h-5 w-5" />
 </RouterLink>
 </div>

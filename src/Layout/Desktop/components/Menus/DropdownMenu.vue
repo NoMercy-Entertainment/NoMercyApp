@@ -67,13 +67,13 @@ const handleKeyDown = (e: KeyboardEvent) => {
        @keydown="handleKeyDown($event)"
        class="relative flex h-auto items-center gap-2 z-1099 group">
     <div aria-label="Toggle dropdown menu"
-      :class="twMerge('flex justify-center items-center relative gap-2 bg-transparent focus:bg-auto-2 hover:text-auto-12 transition-colors duration-300', className)"
+      :class="twMerge('flex justify-center items-center relative gap-2 bg-transparent focus:bg-auto-2 hover:text-auto-12 transition-colors duration-200', className)"
       @click="handleClick">
       <slot :open="open" name="button" />
     </div>
 
     <div :id="`_dropdown_menu_${id}`"
-      class="absolute w-max ml-[100%] sm:ml-[100%] mb-1 sm:mt-1 border grid transition-all duration-300 rounded-xl shadow-2xl overflow-clip grid-rows-[0fr] border-transparent right-0"
+      class="absolute w-max ml-[100%] sm:ml-[100%] mb-1 sm:mt-1 border grid transition-all duration-200 rounded-xl shadow-2xl overflow-clip grid-rows-[0fr] border-transparent right-0"
       :class="{
         'grid-rows-[1fr] border-[#e2f0fd]/4': open,
         'grid-rows-[0fr] border-transparent': !open,

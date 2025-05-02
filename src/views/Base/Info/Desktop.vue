@@ -336,9 +336,9 @@ const menuItems = computed<IMenuItem[]>(() => [
                                  type="image" />
 
                       <span
-                          :class="`tv:group-focus-visible/card:bg-black/3 absolute -inset-1 z-20 grid h-auto w-available items-center rounded-lg aspect-poster transition-transform duration-300 opacity-0 [background:radial-gradient(75%_50%_at_50%_50%,_rgba(0,_0,_0,_0.40)_0%,_rgba(0,_0,_0,_0.00)_100%),_rgba(0,_0,_0,_0.09)] mx-auto w-max ${hasItem ? 'group-hover/card:opacity-100' : ''}`">
+                          :class="`tv:group-focus-visible/card:bg-black/3 absolute -inset-1 z-20 grid h-auto w-available items-center rounded-lg aspect-poster transition-transform duration-200 opacity-0 [background:radial-gradient(75%_50%_at_50%_50%,_rgba(0,_0,_0,_0.40)_0%,_rgba(0,_0,_0,_0.00)_100%),_rgba(0,_0,_0,_0.09)] mx-auto w-max ${hasItem ? 'group-hover/card:opacity-100' : ''}`">
                         <span
-                            class="inset-0 grid group-hover/card:grid h-full w-full place-content-center group-focus-visible/card:bg-none group-hover/card:bg-none text-5xl text-transparent transition-transform duration-300 group-focus-visible/card:transitioning group-hover/card:text-auto-12">
+                            class="inset-0 grid group-hover/card:grid h-full w-full place-content-center group-focus-visible/card:bg-none group-hover/card:bg-none text-5xl text-transparent transition-transform duration-200 group-focus-visible/card:transitioning group-hover/card:text-auto-12">
                           <MoooomIcon icon="play"
                                       className="w-20 text-slate-lightA-12/70 dark:text-slate-darkA-12/80" />
                         </span>
@@ -368,7 +368,7 @@ const menuItems = computed<IMenuItem[]>(() => [
                           <MoooomIcon icon="play"
                                       className="w-6 text-slate-lightA-12/70  dark:text-slate-darkA-12/80" />
                           <div
-                              class="absolute top-3 left-1/2 -translate-x-1/2 grid h-0 w-max flex-shrink-0 flex-grow-0 origin-bottom group-hover/play:grid-cols-1 items-center justify-start duration-300 grid-cols-[0fr] group-hover/play:h-[32.77px] transform-all group-hover/play:top-[-38px] rounded-[5.46px] bg-[#3a3f42] group-hover/play:border border-[#e2f0fd]/[0.08]"
+                              class="absolute top-3 left-1/2 -translate-x-1/2 grid h-0 w-max flex-shrink-0 flex-grow-0 origin-bottom group-hover/play:grid-cols-1 items-center justify-start duration-200 grid-cols-[0fr] group-hover/play:h-[32.77px] transform-all group-hover/play:top-[-38px] rounded-[5.46px] bg-[#3a3f42] group-hover/play:border border-[#e2f0fd]/[0.08]"
                               style="box-shadow: 0 8px 12px -4px rgba(0,0,0,0.08);">
                             <div class="overflow-hidden">
                               <p class="flex-shrink-0 flex-grow-0 py-0 text-center text-xs font-bold px-2.5">
@@ -383,7 +383,7 @@ const menuItems = computed<IMenuItem[]>(() => [
                           <MoooomIcon icon="play" className="w-6 text-red-dark-8" />
 
                           <div
-                              class="absolute top-3 grid h-0 w-max flex-shrink-0 origin-bottom group-hover/play:grid-cols-1 items-center justify-start bg-black duration-300 grid-cols-[0fr] group-hover/play:h-[32.77px] transform-all left-[-31px] group-hover/play:top-[-38px] rounded-[5.46px]">
+                              class="absolute top-3 grid h-0 w-max flex-shrink-0 origin-bottom group-hover/play:grid-cols-1 items-center justify-start bg-black duration-200 grid-cols-[0fr] group-hover/play:h-[32.77px] transform-all left-[-31px] group-hover/play:top-[-38px] rounded-[5.46px]">
                             <div class="overflow-hidden">
                               <p class="flex-shrink-0 py-0 text-xs font-bold px-2.5">
                                 {{ $t('Not available') }}

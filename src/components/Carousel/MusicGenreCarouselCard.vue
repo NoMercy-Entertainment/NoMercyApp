@@ -28,7 +28,7 @@ const ringColor = ref(pickPaletteColor(props.data?.color_palette?.poster)
 
 <template>
   <RouterLink v-if="data"
-    class="pointer-events-auto relative mr-2 w-full transition-all duration-300 group trickle-div changing focus-outline-child"
+    class="pointer-events-auto relative mr-2 w-full transition-all duration-200 group trickle-div changing focus-outline-child"
     :to="data?.link" :id="data?.id" data-card="true" :style="`--color-focus: ${ringColor};`"
     :data-scroll="`scroll_${data?.name?.[0]?.toUpperCase()}`" data-target="navigate">
     <div

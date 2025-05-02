@@ -961,7 +961,7 @@ export class BaseUIPlugin extends Plugin {
                 'w-0',
                 'rounded-full',
                 'opacity-0',
-                'duration-300',
+                'duration-200',
                 'group-hover/volume:w-20',
                 'group-hover/volume:mx-2',
                 'group-hover/volume:opacity-100',
@@ -1582,7 +1582,7 @@ export class BaseUIPlugin extends Plugin {
                 'bottom-bar',
                 'absolute',
                 'bottom-0',
-                'duration-300',
+                'duration-200',
                 'flex',
                 'flex-col',
                 'gap-2',
@@ -1808,7 +1808,7 @@ export class BaseUIPlugin extends Plugin {
 
                 'group-[&.nomercyplayer:has(.volume-container:hover)]:!translate-y-0',
                 'transition-all',
-                'duration-300',
+                'duration-200',
 
                 'bg-gradient-to-b',
                 'from-black/85',

@@ -43,7 +43,7 @@ watch(configuration, (value) => {
   if (!value) return;
   newConfig.value = <ConfigurationResponse>{};
 
-  server_name.value = value?.server_name;
+  name.value = value?.name;
   external_port.value = value?.external_port;
   internal_port.value = value?.internal_port;
   queue_workers.value = value?.queue_workers;
@@ -60,7 +60,7 @@ onMounted(() => {
   if (!configuration.value) return;
   newConfig.value = <ConfigurationResponse>{};
 
-  server_name.value = configuration.value?.server_name;
+  name.value = configuration.value?.name;
   external_port.value = configuration.value?.external_port;
   internal_port.value = configuration.value?.internal_port;
   queue_workers.value = configuration.value?.queue_workers;
@@ -73,21 +73,21 @@ onMounted(() => {
   ready.value = true;
 });
 
-const server_name = ref<string>(configuration.value?.server_name ?? '');
-watch(server_name, (value) => {
-  updateState('server_name', value);
+const name = ref<string>(configuration.value?.name ?? '');
+watch(name, (value) => {
+  updateState('name', value);
   if (!currentServer.value) return;
 
   setServers([
     ...servers.value.filter((server) => server.id !== currentServer.value!.id),
     {
       ...currentServer.value,
-      server_name: value.toString(),
+      name: value.toString(),
     }
   ]);
   setCurrentServer({
     ...currentServer.value,
-    server_name: value.toString(),
+    name: value.toString(),
   });
 });
 
@@ -192,8 +192,8 @@ const save = () => {
 
         <div v-if="ready" class="col-span-2 col-start-1 2xl:col-start-1">
           <div class="flex flex-col gap-2">
-            <label for="server_name">Server name</label>
-            <InputText id="server_name" v-model="server_name" class="mb-4" />
+            <label for="name">Server name</label>
+            <InputText id="name" v-model="name" class="mb-4" />
           </div>
           <div class="flex flex-col gap-2">
             <label for="internal_port">Secure internal port</label>

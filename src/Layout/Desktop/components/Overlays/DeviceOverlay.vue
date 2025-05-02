@@ -31,15 +31,15 @@ watch(deviceMenuOpen, (newVal) => {
       <!--            <template v-if="currentDevice" :key="currentDevice.device_id">-->
       <!--                <div class="flex w-full items-center justify-between gap-2">-->
       <!--                    <div class="flex w-full items-center justify-between gap-2">-->
-      <!--                        <div class="flex justify-center items-center w-10 h-10 rounded-full hover:bg-[#2f2f2f] active:bg-[#3f3f3f] transition-all duration-300"-->
+      <!--                        <div class="flex justify-center items-center w-10 h-10 rounded-full hover:bg-[#2f2f2f] active:bg-[#3f3f3f] transition-all duration-200"-->
       <!--                             v-show="currentDevice.type === 'desktop'">-->
       <!--                            <MoooomIcon icon="monitor" className="w-7 text-auto-12" />-->
       <!--                        </div>-->
-      <!--                        <div class="flex justify-center items-center w-10 h-10 rounded-full hover:bg-[#2f2f2f] active:bg-[#3f3f3f] transition-all duration-300"-->
+      <!--                        <div class="flex justify-center items-center w-10 h-10 rounded-full hover:bg-[#2f2f2f] active:bg-[#3f3f3f] transition-all duration-200"-->
       <!--                             v-show="currentDevice.type === 'mobile'">-->
       <!--                            <MoooomIcon icon="mobilePhone" className="w-7 text-auto-12" />-->
       <!--                        </div>-->
-      <!--                        <div class="flex justify-center items-center w-10 h-10 rounded-full hover:bg-[#2f2f2f] active:bg-[#3f3f3f] transition-all duration-300"-->
+      <!--                        <div class="flex justify-center items-center w-10 h-10 rounded-full hover:bg-[#2f2f2f] active:bg-[#3f3f3f] transition-all duration-200"-->
       <!--                             v-show="currentDevice.type === 'tv'">-->
       <!--                            <MoooomIcon icon="laptop" className="w-7 text-auto-12" />-->
       <!--                        </div>-->
@@ -72,15 +72,15 @@ watch(deviceMenuOpen, (newVal) => {
       <!--                    <div class="flex items-center justify-between gap-2">-->
       <!--                        <div class="flex h-full w-full items-center gap-2"-->
       <!--                             v-on:click="switchDevice(device)">-->
-      <!--                            <div class="flex justify-center items-center w-10 h-10 rounded-full hover:bg-[#2f2f2f] active:bg-[#3f3f3f] transition-all duration-300"-->
+      <!--                            <div class="flex justify-center items-center w-10 h-10 rounded-full hover:bg-[#2f2f2f] active:bg-[#3f3f3f] transition-all duration-200"-->
       <!--                                 v-show="device.type === 'desktop'">-->
       <!--                                <MoooomIcon icon="monitor" className="w-7 text-auto-12" />-->
       <!--                            </div>-->
-      <!--                            <div class="flex justify-center items-center w-10 h-10 rounded-full hover:bg-[#2f2f2f] active:bg-[#3f3f3f] transition-all duration-300"-->
+      <!--                            <div class="flex justify-center items-center w-10 h-10 rounded-full hover:bg-[#2f2f2f] active:bg-[#3f3f3f] transition-all duration-200"-->
       <!--                                 v-show="device.type === 'mobile'">-->
       <!--                                <MoooomIcon icon="mobilePhone" className="w-7 text-auto-12" />-->
       <!--                            </div>-->
-      <!--                            <div class="flex justify-center items-center w-10 h-10 rounded-full hover:bg-[#2f2f2f] active:bg-[#3f3f3f] transition-all duration-300"-->
+      <!--                            <div class="flex justify-center items-center w-10 h-10 rounded-full hover:bg-[#2f2f2f] active:bg-[#3f3f3f] transition-all duration-200"-->
       <!--                                 v-show="device.type === 'tv'">-->
       <!--                                <MoooomIcon icon="laptop" className="w-7 text-auto-12" />-->
       <!--                            </div>-->
@@ -96,7 +96,7 @@ watch(deviceMenuOpen, (newVal) => {
       <!--                            </div>-->
       <!--                        </div>-->
       <!--                        <button-->
-      <!--                            class="flex justify-center items-center w-10 h-10 rounded-full hover:bg-[#2f2f2f] active:bg-[#3f3f3f] transition-all duration-300">-->
+      <!--                            class="flex justify-center items-center w-10 h-10 rounded-full hover:bg-[#2f2f2f] active:bg-[#3f3f3f] transition-all duration-200">-->
       <!--                            <MoooomIcon icon="menuDotsHorizontal" className="w-7 text-auto-12" />-->
       <!--                        </button>-->
       <!--                    </div>-->

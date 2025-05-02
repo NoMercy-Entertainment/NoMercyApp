@@ -877,7 +877,7 @@ export class TVUIPlugin extends BaseUIPlugin {
 				'focus-visible:outline-2',
 				'focus-visible:outline-white',
 				'transition-all',
-				'duration-300',
+				'duration-200',
 			])
 			.appendTo(parent);
 

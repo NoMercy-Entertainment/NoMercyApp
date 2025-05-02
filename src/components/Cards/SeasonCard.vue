@@ -25,7 +25,7 @@ const props = defineProps({
 
 <template>
   <RouterLink v-if="data?.id && data?.available"
-    :class="`frosting border-0 border-[rgb(var(--color-focus))] flex flex-col h-auto items-center group/season focus-shift focus-outline transition-all duration-300 overflow-clip relative !rounded-lg select-none shadow-[0px_0px_0_1px_rgb(var(--color-focus,var(--color-theme-6))/70%)] w-full z-0 bg-auto-1/12  text-slate-lightA-12/70  dark:text-slate-darkA-12/80 ${data?.available ? 'cursor-pointer' : 'cursor-not-allowed'}`"
+    :class="`frosting border-0 border-[rgb(var(--color-focus))] flex flex-col h-auto items-center group/season focus-shift focus-outline transition-all duration-200 overflow-clip relative !rounded-lg select-none shadow-[0px_0px_0_1px_rgb(var(--color-focus,var(--color-theme-6))/70%)] w-full z-0 bg-auto-1/12  text-slate-lightA-12/70  dark:text-slate-darkA-12/80 ${data?.available ? 'cursor-pointer' : 'cursor-not-allowed'}`"
     :id="data?.id" :onfocus="scrollIntoView()" :style="`--color-focus: ${pickPaletteColor(props.data?.color_palette?.still)
       .replace(/,/gu, ' ')
       .replace(')', '')
@@ -53,8 +53,8 @@ const props = defineProps({
       </div>
     </div>
 
-    <div class="grid w-full items-stretch gap-2 rounded-b-md p-2 transitioning text-left">
-      <p class="z-10 w-auto flex-shrink-0 flex-grow-0 self-stretch text-2xs sm:text-sm font-bold leading-5 h-10 line-clamp-2 sm:line-clamp-1"
+    <div class="grid w-full items-stretch gap-1 rounded-b-md p-2 transitioning text-left">
+      <p class="z-10 w-auto flex-shrink-0 flex-grow-0 self-stretch text-2xs sm:text-sm font-bold !leading-5 h-11 line-clamp-2 sm:line-clamp-1"
         :title="`${data?.episode_number ? data?.episode_number + ' - ' : ''}${data?.title}`">
         {{ data?.episode_number ? data?.episode_number + ' - ' : '' }}{{ data?.title }}
       </p>
@@ -65,7 +65,7 @@ const props = defineProps({
     </div>
   </RouterLink>
   <div v-else-if="data?.id"
-    :class="`border-0 border-[rgb(var(--color-focus))] flex flex-col h-auto items-center group/season focus-shift focus-outline transition-all duration-300 overflow-clip relative !rounded-lg select-none shadow-[0px_0px_0_1px_rgb(var(--color-focus,var(--color-theme-6))/70%)] w-full z-0 bg-auto-1/12 ${data?.available ? 'cursor-pointer' : 'cursor-not-allowed'}`"
+    :class="`border-0 border-[rgb(var(--color-focus))] flex flex-col h-auto items-center group/season focus-shift focus-outline transition-all duration-200 overflow-clip relative !rounded-lg select-none shadow-[0px_0px_0_1px_rgb(var(--color-focus,var(--color-theme-6))/70%)] w-full z-0 bg-auto-1/12 ${data?.available ? 'cursor-pointer' : 'cursor-not-allowed'}`"
     @focus="scrollIntoView()" :style="`--color-focus: ${pickPaletteColor(props.data?.color_palette?.still)
       .replace(/,/gu, ' ')
       .replace(')', '')
@@ -93,8 +93,8 @@ const props = defineProps({
       </div>
     </div>
 
-    <div class="grid w-full items-stretch gap-2 rounded-b-md p-2 transitioning text-left">
-      <p class="z-10 w-auto flex-shrink-0 flex-grow-0 self-stretch text-sm font-bold leading-5 line-clamp-1"
+    <div class="grid w-full items-stretch gap-1 rounded-b-md p-2 transitioning text-left">
+      <p class="z-10 w-auto flex-shrink-0 flex-grow-0 self-stretch text-sm font-bold !leading-5 line-clamp-1"
         :title="`${data?.episode_number ? data?.episode_number + ' - ' : ''}${data?.title}`">
         {{ data?.episode_number ? data?.episode_number + ' - ' : '' }}{{ data?.title }}
       </p>

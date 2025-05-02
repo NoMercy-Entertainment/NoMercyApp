@@ -56,14 +56,14 @@ const { isSwiping, lengthY } = useSwipe(
 </script>
 
 <template>
-  <div class="h-screen absolute w-available flex-shrink-0 flex-grow-0 transition-colors duration-300" :class="{
+  <div class="h-screen absolute w-available flex-shrink-0 flex-grow-0 transition-colors duration-200" :class="{
     'bg-black/25 dark:bg-black/50 ': menuOpen,
     'pointer-events-none': !menuOpen,
   }"></div>
   <div
     class="fixed flex w-full flex-shrink-0 flex-grow-0 select-none bg-slate-light-1 dark:bg-slate-dark-3 flex-col items-center justify-end gap-3 overflow-hidden rounded-t-3xl rounded-tl-lg rounded-tr-lg p-2 px-0 -bottom-[125%]"
     ref="target" :style="{ bottom }" :class="{
-      'transition-bottom duration-300 ease-in-out ': !isSwiping,
+      'transition-bottom duration-200 ease-in-out ': !isSwiping,
     }">
     <div v-if="allowSwipeToClose"
       class="h-1 w-8 flex-shrink-0 flex-grow-0 bg-black/25 rounded-[360px] dark:bg-white/25"></div>

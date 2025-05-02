@@ -21,9 +21,9 @@ watch(value, (newVal) => {
 			<p class='font-bold'>{{ t('Card style') }}</p>
 		</div>
 		<div
-			class='relative mr-2 flex h-12 items-center justify-between rounded-lg border-4 border-transparent py-2 ring-1 transition-transform duration-300 bg-auto-1 ring-auto-12'>
+			class='relative mr-2 flex h-12 items-center justify-between rounded-lg border-4 border-transparent py-2 ring-1 transition-transform duration-200 bg-auto-1 ring-auto-12'>
 			<div class="
-          absolute z-0 h-10 w-1/2 transition-all duration-300 bg-gradient-to-b rounded-[4px] button-filled
+          absolute z-0 h-10 w-1/2 transition-all duration-200 bg-gradient-to-b rounded-[4px] button-filled
 
           from-[rgb(var(--color-slate-11))]
           dark:from-[rgb(var(--color-slate-7))]

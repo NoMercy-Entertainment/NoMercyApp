@@ -17,7 +17,7 @@ defineProps({
 
 <template>
     <button
-        class="flex flex-col justify-end items-center w-full overflow-hidden rounded-xl border-[1.5px] border-[#e2f0fd]/4 transition-transform duration-300 cursor-pointer max-w-[360px]">
+        class="flex flex-col justify-end items-center w-full overflow-hidden rounded-xl border-[1.5px] border-[#e2f0fd]/4 transition-transform duration-200 cursor-pointer max-w-[360px]">
         <div
             class="flex flex-col justify-start items-start self-stretch bg-auto-1 bg-[radial-gradient(81.87%_66.22%_at_0%_0%,rgba(255,255,255,0.2)_0%,rgba(255,255,255,0)_100%)] w-full h-auto aspect-video">
             <div

@@ -38,7 +38,7 @@ defineProps({
 				<template v-for="(item, index) in items" :key="index">
 
 					<MenuItem as="div" @click="item.onclick"
-						class="flex justify-center items-center self-stretch h-10 relative p-2 gap-3 rounded-sm border border-transparent hover:border-focus/4 active:bg-focus/9 active:border-focus/4 active:hover:border-focus/4 focus:bg-auto-12/2 hover:bg-focus/10 disabled:!bg-focus/2 disabled:!border-focus/2 transition-colors duration-300">
+						class="flex justify-center items-center self-stretch h-10 relative p-2 gap-3 rounded-sm border border-transparent hover:border-focus/4 active:bg-focus/9 active:border-focus/4 active:hover:border-focus/4 focus:bg-auto-12/2 hover:bg-focus/10 disabled:!bg-focus/2 disabled:!border-focus/2 transition-colors duration-200">
 					<span
 						class="relative flex w-full flex-grow items-center justify-center gap-2 text-base font-semibold">
 						<MoooomIcon :icon="item.icon" :title="item.title" />

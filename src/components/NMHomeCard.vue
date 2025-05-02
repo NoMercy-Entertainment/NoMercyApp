@@ -116,7 +116,7 @@ const scrollToTop = () => {
                 <MoooomIcon class="w-7" icon="playbackSpeed" />
 
                 <div
-                  class="absolute top-3 grid h-0 w-max flex-shrink-0 flex-grow-0 origin-bottom group-hover/play:grid-cols-1 items-center justify-start gap-1 rounded-md duration-300 bg-auto-1 grid-cols-[0fr] group-hover/play:h-[32.77px] transform-all left-[-31px] group-hover/play:top-[-38px]">
+                  class="absolute top-3 grid h-0 w-max flex-shrink-0 flex-grow-0 origin-bottom group-hover/play:grid-cols-1 items-center justify-start gap-1 rounded-md duration-200 bg-auto-1 grid-cols-[0fr] group-hover/play:h-[32.77px] transform-all left-[-31px] group-hover/play:top-[-38px]">
                   <div class="overflow-clip">
                     <p v-if="endTime" class="flex-shrink-0 flex-grow-0 text-xs font-bold px-2.5 py-0.5">
                       {{ $t('Ends at') }}
@@ -155,7 +155,7 @@ const scrollToTop = () => {
             </RouterLink>
 
             <RouterLink :to="`/${data?.media_type}/${data?.id}`" :aria-label="$t('Info')" @focus="scrollToTop"
-              class="flex justify-center items-center relative gap-2 p-2 rounded-lg hover:bg-auto-5/6 transition-colors duration-300">
+              class="flex justify-center items-center relative gap-2 p-2 rounded-lg hover:bg-auto-5/6 transition-colors duration-200">
               <MoooomIcon icon="add" className="w-6" />
               <span class="w-full whitespace-nowrap text-center">
                 {{ $t('Info') }}

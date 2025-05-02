@@ -74,7 +74,7 @@ const handleClick = () => {
 
 <template>
   <RouterLink :to="href" @click="handleClick"
-    class="flex justify-start items-center self-stretch h-11 relative gap-2 px-2.5 py-2 rounded-md border border-transparent hover:border-focus/4 active:!bg-focus/11 dark:active:!bg-focus/8 active:border-focus/4 active:hover:border-focus/4 focus:bg-focus-9 hover:!bg-focus/10 disabled:!bg-focus/2 disabled:!border-focus/2 transition-colors duration-300 hover:text-auto-12 overflow-clip"
+    class="flex justify-start items-center self-stretch h-11 relative gap-2 px-2.5 py-2 rounded-md border border-transparent hover:border-focus/4 active:!bg-focus/11 dark:active:!bg-focus/8 active:border-focus/4 active:hover:border-focus/4 focus:bg-focus-9 hover:!bg-focus/10 disabled:!bg-focus/2 disabled:!border-focus/2 transition-colors duration-200 hover:text-auto-12 overflow-clip"
     :aria-label="t(name)" :style="styles" :class="classes" v-if="show">
     <MoooomIcon v-if="!!icon" :icon="icon!" class="" />
     <!--        <CoverImage v-else-if="!!cover" :data="{cover} as Song" class="top-0 z-10 -mr-1 -ml-1 aspect-square h-8 w-8 overflow-clip object-cover min-w-8" />-->

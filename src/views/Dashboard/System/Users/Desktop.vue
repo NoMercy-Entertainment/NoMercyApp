@@ -15,9 +15,9 @@ import {ServerUser} from "@/types/auth";
 const inviteModalOpen = ref(false);
 
 const { data: serverUsers } = useApiClient<ServerUser[]>({
-  path: 'server_users',
+  path: 'server/server-users',
   params: {
-    server_id: currentServer.value?.id,
+    id: currentServer.value?.id,
   },
   queryKey: ['server_users'],
 });

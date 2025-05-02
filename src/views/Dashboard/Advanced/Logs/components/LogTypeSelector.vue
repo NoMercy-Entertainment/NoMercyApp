@@ -72,7 +72,7 @@ const toggleGroup = (group: LogType) => {
 </script>
 <template>
   <DropdownMenu
-    class="relative flex items-center justify-center gap-2 rounded-lg transition-colors duration-300 hover:bg-auto-5/6">
+    class="relative flex items-center justify-center gap-2 rounded-lg transition-colors duration-200 hover:bg-auto-5/6">
 
     <template v-slot:button>
       <MoooomIcon className="w-6" icon="chevronDown" />

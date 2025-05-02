@@ -19,7 +19,7 @@ import PlayerIcon from "@/components/Images/icons/PlayerIcon.vue";
 </script>
 
 <template>
-  <ion-header v-if="navBarVisible" mode="md" class="pt-safe transition-all duration-300 !h-[104px]">
+  <ion-header v-if="navBarVisible" mode="md" class="pt-safe transition-all duration-200 !h-[104px]">
     <ion-toolbar mode="md">
       <div class="flex justify-between items-center w-full relative px-14 h-14">
 

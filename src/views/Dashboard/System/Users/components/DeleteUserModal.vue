@@ -53,9 +53,9 @@ const handleDelete = () => {
   }
 
   apiClient()
-    .post('server/users', {
+    .post('server/server-users', {
       _method: 'delete',
-      server_id: currentServer.value?.id,
+      id: currentServer.value?.id,
       user_id: props.id,
     })
     .then(() => {

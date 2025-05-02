@@ -134,13 +134,13 @@ watch(container, () => {
           <div class="pointer-events-none absolute z-0 h-96 w-full bg-spotifyBottom bg-focus"></div>
 
           <div id="navbar"
-            class="fixed z-1099 -mx-2 flex gap-4 p-2 px-4 w-available sm:hidden bg-slate-light-11 dark:bg-slate-dark-1 top-0 pt-safe-offset-4 transition-all duration-300"
+            class="fixed z-1099 -mx-2 flex gap-4 p-2 px-4 w-available sm:hidden bg-slate-light-11 dark:bg-slate-dark-1 top-0 pt-safe-offset-4 transition-all duration-200"
             :class="{
               'opacity-0 pointer-events-none': !showScrollHeader,
               'opacity-100 pointer-events-auto': showScrollHeader
             }">
             <div id="navBg"
-              class="z-20 absolute flex items-center inset-0 w-available h-full bg-focus/12 dark:bg-focus transition-all duration-300 bg-spotifyTop opacity-50 pointer-events-none">
+              class="z-20 absolute flex items-center inset-0 w-available h-full bg-focus/12 dark:bg-focus transition-all duration-200 bg-spotifyTop opacity-50 pointer-events-none">
             </div>
 
             <button @click="handleBack" class="z-30 flex h-10 w-11 items-center justify-center rounded-md">
@@ -148,7 +148,7 @@ watch(container, () => {
             </button>
 
             <div id="navText"
-              class="pointer-events-none whitespace-pre text-left relative z-20 line-clamp-1 h-auto self-center font-bold leading-none transition-all duration-300 w-[70%] overflow-clip text-xl"
+              class="pointer-events-none whitespace-pre text-left relative z-20 line-clamp-1 h-auto self-center font-bold leading-none transition-all duration-200 w-[70%] overflow-clip text-xl"
               :class="{
                 'opacity-0 pointer-events-none': !showScrollHeader,
                 'opacity-100 pointer-events-auto': showScrollHeader

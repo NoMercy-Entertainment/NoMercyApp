@@ -65,7 +65,7 @@ const colors = computed(() => {
 
 						<div class="relative w-px flex-1 rounded-lg mb-1.5">
 							<div class="w-full h-full px-2 pt-2 gap-2.5 flex flex-col ml-auto overflow-hidden rounded-xl bg-slate-light-6 dark:bg-slate-dark-3
-								bg-cover border-2 border-transparent text-start transition-transform duration-300">
+								bg-cover border-2 border-transparent text-start transition-transform duration-200">
 
 								<div class="mx-auto h-24 w-full rounded-sm min-h-[5.5rem] bg-slate-light-11/90 dark:bg-slate-dark-1/90">
 								</div>

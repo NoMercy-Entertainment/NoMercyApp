@@ -145,7 +145,7 @@ const style = computed(() => {
     <div :class="`${className} aspect-square`" :style="style">
 
         <picture v-if="data?.cover"
-            class="aspect-square inset-0 !absolute top-0 overflow-clip z-10 h-available w-available object-cover transition-all duration-300"
+            class="aspect-square inset-0 !absolute top-0 overflow-clip z-10 h-available w-available object-cover transition-all duration-200"
             :style="`opacity: ${opacity};`">
             <source :srcset="`${baseImageUrl}?width=300&type=avif 1x`" type="image/avif" />
             <source :srcset="`${baseImageUrl}?width=${(size ?? 500)}&type=webp 1x`" type="image/webp" />

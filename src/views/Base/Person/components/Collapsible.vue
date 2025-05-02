@@ -23,7 +23,7 @@ const showMore = ref(false);
 
 <template>
   <div v-if="text" class="flex flex-col relative justify-start items-start self-stretch gap-1">
-    <p class="self-stretch relative w-inherit text-sm leading-5 font-medium text-left min-h-[3.5rem] transition-all duration-300 overflow-hidden text-pretty whitespace-pre"
+    <p class="self-stretch relative w-inherit text-sm leading-5 font-medium text-left min-h-[3.5rem] transition-all duration-200 overflow-hidden text-pretty whitespace-pre"
       :class="{
         [`max-h-[3.5rem] h-[3.5rem] line-clamp-3`]: (text?.length ?? 0) > 180 && !showMore,
         [`max-h-available h-auto line-clamp-none after:content-['']`]: showMore,

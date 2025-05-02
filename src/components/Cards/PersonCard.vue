@@ -36,7 +36,7 @@ const color = computed(() => {
 
 <template>
     <RouterLink :data-scroll="scrollLetter" v-if="data?.link" :to="data?.link"
-        class="frosting group/card border-0 border-focus focus-shift focus-outline transition-all duration-300 flex flex-col h-full items-center relative rounded-lg select-none shadow-[0px_0px_0_1px_rgb(var(--color-focus,var(--color-theme-6))/70%)] w-full z-0 bg-auto-50/70 aspect-poster flex-grow-0 [flex:1_1_162px]"
+        class="frosting group/card border-0 border-focus focus-shift focus-outline transition-all duration-200 flex flex-col h-full items-center relative rounded-lg select-none shadow-[0px_0px_0_1px_rgb(var(--color-focus,var(--color-theme-6))/70%)] w-full z-0 bg-auto-50/70 aspect-poster flex-grow-0 [flex:1_1_162px]"
         :style="`
             --color-focus: ${color};
          `">
@@ -49,13 +49,13 @@ const color = computed(() => {
                 class="absolute bottom-0 left-0 z-0 grid h-16 w-full items-stretch rounded-b-lg px-1 sm:px-2 py-2 text-left overflow-clip">
                 <div class="absolute inset-0 z-0 rounded-b-lg bg-auto-1/80"></div>
                 <p
-                    class="z-10 text-2xs sm:text-sm font-bold leading-none sm:leading-4 h-7 sm:h-8 line-clamp-2 w-available text-slate-lightA-12/70  dark:text-slate-darkA-12/80">
-                    {{ data?.name }}
+                    class="z-10 text-2xs sm:text-xs font-bold !leading-[0.8rem] h-6 sm:h-7 line-clamp-2 w-available text-slate-lightA-12/70  dark:text-slate-darkA-12/80">
+                  {{ data?.name }}
                     <span v-if="data.deathday"
-                        class="-mr-1 text-xs sm:text-base leading-none sm:leading-4 h-7 sm:h-6">&#8224;</span>
+                        class="-mr-1 text-xs leading-3 h-5">&#8224;</span>
                 </p>
                 <p :title="data?.character ?? data?.job as string"
-                    class="z-10 text-2xs sm:text-xs leading-none sm:leading-4 h-6 sm:h-9 line-clamp-2 w-available text-slate-lightA-12/60 dark:text-slate-darkA-12/70 empty:hidden font-light">
+                    class="z-10 text-2xs sm:text-2xs !leading-none h-6 sm:h-6 line-clamp-2 w-available text-slate-lightA-12/70  dark:text-slate-darkA-12/80 empty:hidden -mr-1">
                     {{ (data?.character ?? data?.job).replace('(voice)', '') }}
                 </p>
             </div>

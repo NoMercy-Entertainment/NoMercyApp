@@ -84,11 +84,11 @@ const { isSwiping, lengthX } = useSwipe(
 
 <template>
   <aside :class="{
-    'transition-left duration-300 ease-in-out ': !isSwiping,
+    'transition-left duration-200 ease-in-out ': !isSwiping,
   }" class="flex flex-col h-available absolute top-14 z-999 w-5/6 overflow-hidden"
     style="box-shadow: 0 4px 7px 0 rgba(0,0,0,0.08);" ref="target" :style="{ left }">
     <div class="fixed inset-0 top-14 w-[500%] h-screen bg-black/40 -z-10" :style="{ opacity }" :class="{
-      'transition-opacity duration-300 ease-in-out ': !isSwiping,
+      'transition-opacity duration-200 ease-in-out ': !isSwiping,
       'pointer-events-none': sidebar !== 'open'
     }" @click="closeSidebar"></div>
     <div ref="container"

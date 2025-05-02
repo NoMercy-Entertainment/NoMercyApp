@@ -145,13 +145,13 @@ const focusMain = () => {
                     v-if="!isMobile">
 
                     <button :aria-label="$t('Previous slide')" tabindex="-1"
-                        :class="`hidden sm:flex justify-center items-center p-1 rounded-lg bg-auto-alpha-9 active:scale-95 hover:bg-auto-alpha-11 transition-transform duration-300 ${backButtonEnabled ? '' : 'cursor-not-allowed opacity-50'}`"
+                        :class="`hidden sm:flex justify-center items-center p-1 rounded-lg bg-auto-alpha-9 active:scale-95 hover:bg-auto-alpha-11 transition-transform duration-200 ${backButtonEnabled ? '' : 'cursor-not-allowed opacity-50'}`"
                         :onclick="prev" v-if="hasScroll">
                         <MoooomIcon class="w-6" icon="chevronLeft" />
                     </button>
 
                     <button :aria-label="isLastSlide ? $t('Start slide') : $t('Next slide')" tabindex="-1"
-                        :class="`hidden sm:flex justify-center items-center p-1 rounded-lg bg-auto-alpha-9 active:scale-95 hover:bg-auto-alpha-11 transition-transform duration-300 ${hasScroll ? '' : 'cursor-not-allowed opacity-50'}`"
+                        :class="`hidden sm:flex justify-center items-center p-1 rounded-lg bg-auto-alpha-9 active:scale-95 hover:bg-auto-alpha-11 transition-transform duration-200 ${hasScroll ? '' : 'cursor-not-allowed opacity-50'}`"
                         :onclick="isLastSlide ? reset : next" v-if="hasScroll">
                         <MoooomIcon :class="`w-6 ${!nextButtonEnabled && isLastSlide ? 'opacity-0' : ''}`"
                             icon="chevronRight" v-if="hasScroll && !isLastSlide" />

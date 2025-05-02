@@ -25,7 +25,7 @@ const { data: configuration, refetch: invalidate } = useServerClient<Configurati
 
 const ready = ref<boolean>(false);
 const newConfig = ref<ConfigurationResponse>({
-	server_name: '',
+	name: '',
 	external_port: 0,
 	internal_port: 0,
 	queue_workers: 0,
@@ -40,7 +40,7 @@ const newConfig = ref<ConfigurationResponse>({
 watch(configuration, (value) => {
 	if (!value) return;
 
-	server_name.value = value?.server_name;
+	name.value = value?.name;
 	external_port.value = value?.external_port;
 	internal_port.value = value?.internal_port;
 	queue_workers.value = value?.queue_workers;
@@ -58,9 +58,9 @@ onMounted(() => {
 	}
 });
 
-export const server_name = ref<Nullable<string>>(configuration.value?.server_name ?? '');
-watch(server_name, (value) => {
-	updateState(configuration, newConfig, 'server_name', value);
+export const name = ref<Nullable<string>>(configuration.value?.name ?? '');
+watch(name, (value) => {
+	updateState(configuration, newConfig, 'name', value);
 });
 
 export const external_port = ref<Nullable<number>>(configuration.value?.external_port ?? 0);

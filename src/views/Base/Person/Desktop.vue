@@ -177,7 +177,7 @@ const filter = 'combined';
                       <div
                         class="relative flex w-auto flex-col items-start justify-center gap-1 sm:w-[30%] lg:w-[15%] xl:w-[15%] 2xl:w-[11%]">
                         <p v-if="data?.known_for_department"
-                          class="flex-shrink-0 flex-grow-0 text-xs font-bold uppercase text-auto-alpha-10">
+                          class="flex-shrink-0 flex-grow-0 text-xs font-bold uppercase text-auto-alpha-11">
                           {{ $t('Known For') }}
                         </p>
                         <p class="text-left text-base font-medium">
@@ -187,7 +187,7 @@ const filter = 'combined';
                       <div
                         class="relative flex w-auto flex-col items-start justify-center gap-1 sm:w-[39%] lg:w-[20%] xl:w-[20%] 2xl:w-[14%]">
                         <p v-if="data?.combined_credits?.cast"
-                          class="flex-shrink-0 flex-grow-0 text-xs font-bold uppercase text-auto-alpha-10">
+                          class="flex-shrink-0 flex-grow-0 text-xs font-bold uppercase text-auto-alpha-11">
                           {{ $t('Known Credits') }}
                         </p>
                         <p class="text-left text-base font-medium">
@@ -197,7 +197,7 @@ const filter = 'combined';
                       <div
                         class="relative flex w-auto flex-col items-start justify-start gap-1 sm:w-[25%] lg:w-[15%] xl:w-[9%]">
                         <p v-if="gender"
-                          class="flex-shrink-0 flex-grow-0 text-xs font-bold uppercase text-auto-alpha-10">
+                          class="flex-shrink-0 flex-grow-0 text-xs font-bold uppercase text-auto-alpha-11">
                           {{ $t('Gender') }}
                         </p>
                         <p class="text-left text-base font-medium">
@@ -243,7 +243,7 @@ const filter = 'combined';
                     <div class="mt-4 h-px self-stretch bg-white/10 sm:mt-0"></div>
                   </div>
                   <div class="relative flex w-full flex-col items-start justify-start gap-2">
-                    <p class="flex-shrink-0 flex-grow-0 text-xs font-bold uppercase text-auto-alpha-10">
+                    <p class="flex-shrink-0 flex-grow-0 text-xs font-bold uppercase text-auto-alpha-11">
                       {{ $t('Biography') }}
                     </p>
                     <p v-if="data?.biography"

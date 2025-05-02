@@ -98,10 +98,6 @@ const { stop } = useIntersectionObserver(
 	},
 );
 
-onMounted(() => {
-	stop();
-});
-
 export const search = ref();
 export const searchValue = ref('');
 

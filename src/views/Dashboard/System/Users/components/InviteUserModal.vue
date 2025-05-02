@@ -80,8 +80,8 @@ const handleInvite = () => {
   }
 
   apiClient()
-    .post('server/users', {
-      server_id: currentServer.value?.id,
+    .post('server/server-users', {
+      id: currentServer.value?.id,
       email: email.value,
       libraries: allowedLibraries.value?.map(l => l.id),
     })

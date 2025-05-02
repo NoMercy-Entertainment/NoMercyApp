@@ -148,9 +148,9 @@ onMounted(() => {
               'hidden': variant === 'tight',
             }">
             <MoooomIcon v-if="multiple" icon="arrowSelect"
-              className="w-5 ui-open:rotate-180 transition-transform duration-300" />
+              className="w-5 ui-open:rotate-180 transition-transform duration-200" />
             <MoooomIcon v-else icon="chevronDown"
-              className="w-5 ui-open:rotate-180 transition-transform duration-300" />
+              className="w-5 ui-open:rotate-180 transition-transform duration-200" />
           </span>
         </ListboxButton>
 

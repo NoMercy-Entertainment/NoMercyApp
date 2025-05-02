@@ -240,7 +240,7 @@ router.afterEach(() => {
 
           <div v-if="data?.overview"
             class="flex flex-col justify-start items-start self-stretch flex-grow-0 flex-shrink-0 relative gap-1">
-            <p class="self-stretch flex-grow-0 flex-shrink-0 w-[352px] text-base font-medium text-left min-h-[4rem] transition-all duration-300 overflow-hidden relative pr-3.5"
+            <p class="self-stretch flex-grow-0 flex-shrink-0 w-[352px] text-base font-medium text-left min-h-[4rem] transition-all duration-200 overflow-hidden relative pr-3.5"
               :class="{
                 [`max-h-[4em] h-[4em] after:content-['...'] after:absolute after:top-[2.8em] after:ml-[64%]`]: (data?.overview?.length ?? 0) > 170 && !showMore,
                 [`max-h-[40em] h-auto`]: showMore,

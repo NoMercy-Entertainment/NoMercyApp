@@ -33,11 +33,11 @@ const genreColor = computed(() => genreColors(props.data.title));
 
 <template>
     <RouterLink :data-scroll="scrollLetter" :to="data.have_items > 1 ? data.link : '#'"
-        :class="`flex flex-col relative justify-start items-center w-full h-auto aspect-poster flex-grow flex-shrink-0 overflow-hidden rounded-lg border-1-light transition-all duration-300 select-none group/card ${genreColor.bg}`">
+        :class="`flex flex-col relative justify-start items-center w-full h-auto aspect-poster flex-grow flex-shrink-0 overflow-hidden rounded-lg border-1-light transition-all duration-200 select-none group/card ${genreColor.bg}`">
 
         <div class="backdropCard-overlay"></div>
         <div class="relative flex flex-shrink-0 flex-grow-0 flex-col items-center justify-center h-[70%]">
-            <div :class="`flex items-center justify-center w-auto h-auto aspect-square p-4 object-cover rounded-3xl overflow-clip transition-all duration-300 ${rotate} ${genreColor.iconBg} rounded-3xl
+            <div :class="`flex items-center justify-center w-auto h-auto aspect-square p-4 object-cover rounded-3xl overflow-clip transition-all duration-200 ${rotate} ${genreColor.iconBg} rounded-3xl
             shadow-[0_1px_0_0_rgba(255,255,255,0.20)_inset,0_-1px_0_0_rgba(var(--color-slate-9)/60%)_inset,0_22px_30px_-4px_rgba(var(--color-slate-9)/70%)]
             hover:!shadow-[0_1px_0_0_rgba(255,255,255,0.20)_inset,0_-1px_0_0_rgba(var(--color-slate-11)/60%)_inset,0_22px_30px_-4px_rgba(var(--color-slate-11)/70%)]
             dark:shadow-[0_1px_0_0_rgba(255,255,255,0.20)_inset,0_-1px_0_0_rgba(var(--color-slate-1)/30%)_inset,0_22px_30px_-4px_rgba(var(--color-slate-1)/70%)]

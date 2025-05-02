@@ -67,7 +67,7 @@ const handleEnter = (event: KeyboardEvent) => {
             <DropdownLink icon="arrowRefreshHorizontal" name="Refresh" :click="reload" />
 
             <div
-                class="flex justify-center items-center self-stretch h-10 relative py-2.5 px-1 rounded-md border border-transparent hover:border-focus/4 active:!bg-focus/11 dark:active:!bg-focus/8 active:border-focus/4 active:hover:border-focus/4 focus:bg-focus-9 hover:!bg-focus/10 disabled:!bg-focus/2 disabled:!border-focus/2 transition-colors duration-300 hover:text-auto-12">
+                class="flex justify-center items-center self-stretch h-10 relative py-2.5 px-1 rounded-md border border-transparent hover:border-focus/4 active:!bg-focus/11 dark:active:!bg-focus/8 active:border-focus/4 active:hover:border-focus/4 focus:bg-focus-9 hover:!bg-focus/10 disabled:!bg-focus/2 disabled:!border-focus/2 transition-colors duration-200 hover:text-auto-12">
             <button tabindex="-1" @click="darkMode = !darkMode"
                 class="relative flex w-full flex-grow items-center justify-center gap-2 px-2 text-lg font-medium text-left">
               <MoooomIcon className="" icon="moonDiagonal"/>

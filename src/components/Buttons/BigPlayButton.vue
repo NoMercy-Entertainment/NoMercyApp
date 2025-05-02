@@ -91,7 +91,7 @@ onUnmounted(() => {
 
 <template>
   <MusicButton label="Play" v-if="audioPlayer" id="playList" :onclick="handleClick" :onkeyup="onkeyup"
-    :class="className" class="h-12 w-12 min-w-12 min-h-12 max-w-12 max-h-12 relative !rounded-full overflow-clip !bg-focus transition-all duration-300
+    :class="className" class="h-12 w-12 min-w-12 min-h-12 max-w-12 max-h-12 relative !rounded-full overflow-clip !bg-focus transition-all duration-200
                        shadow-[0_1px_0_0_rgba(255,255,255,0.20)_inset,0_-1px_0_0_rgba(var(--color-slate-9)/60%)_inset,0_22px_30px_-4px_rgba(var(--color-slate-9)/70%)]
                        dark:shadow-[0_1px_0_0_rgba(255,255,255,0.20)_inset,0_-1px_0_0_rgba(var(--color-slate-1)/30%)_inset,0_22px_30px_-4px_rgba(var(--color-slate-1)/70%)]
                        hover:shadow-[0_1px_0_0_rgba(255,255,255,0.20)_inset,0_-1px_0_0_rgba(var(--color-slate-11)/60%)_inset,0_22px_30px_-4px_rgba(var(--color-slate-11)/70%)]

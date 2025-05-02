@@ -106,7 +106,7 @@ onUnmounted(() => {
                 <div class="self-stretch h-px bg-[#e2f0fd]/4"></div>
                 <div class="flex flex-shrink-0 flex-grow-0 items-start justify-start gap-8 self-stretch pl-4">
                   <div class="relative flex flex-shrink-0 flex-grow-0 flex-col items-start justify-center gap-1">
-                    <p class="flex-shrink-0 flex-grow-0 text-xs font-bold uppercase text-auto-alpha-10">
+                    <p class="flex-shrink-0 flex-grow-0 text-xs font-bold uppercase text-auto-alpha-11">
                       {{ $t('Content rating') }}
                     </p>
 
@@ -115,7 +115,7 @@ onUnmounted(() => {
                                      :ratings="data?.content_ratings" />
                   </div>
                   <div class="relative flex flex-shrink-0 flex-grow-0 flex-col items-start justify-center gap-1">
-                    <p class="flex-shrink-0 flex-grow-0 text-xs font-bold uppercase text-auto-alpha-10">
+                    <p class="flex-shrink-0 flex-grow-0 text-xs font-bold uppercase text-auto-alpha-11">
                       {{ $t('Availability') }}
                     </p>
 
@@ -126,7 +126,7 @@ onUnmounted(() => {
                     </InfoHeaderItem>
                   </div>
                   <div class="relative flex flex-shrink-0 flex-grow-0 flex-col items-start justify-center gap-1">
-                    <p class="flex-shrink-0 flex-grow-0 text-xs font-bold uppercase text-auto-alpha-10">
+                    <p class="flex-shrink-0 flex-grow-0 text-xs font-bold uppercase text-auto-alpha-11">
                       {{ $t('Timespan') }}
                     </p>
                     <InfoHeaderItem>
@@ -137,7 +137,7 @@ onUnmounted(() => {
                     </InfoHeaderItem>
                   </div>
                   <div class="relative flex flex-shrink-0 flex-grow-0 flex-col items-start justify-center gap-1">
-                    <p class="flex-shrink-0 flex-grow-0 text-xs font-bold uppercase text-auto-alpha-10">
+                    <p class="flex-shrink-0 flex-grow-0 text-xs font-bold uppercase text-auto-alpha-11">
                       {{ $t('Total duration') }}
                     </p>
                     <InfoHeaderItem v-if="data?.total_duration">
@@ -147,7 +147,7 @@ onUnmounted(() => {
                     </InfoHeaderItem>
                   </div>
                   <div class="relative flex flex-grow flex-col items-start justify-center text-left gap-1">
-                    <p class="flex-shrink-0 flex-grow-0 text-xs font-bold uppercase text-auto-alpha-10">
+                    <p class="flex-shrink-0 flex-grow-0 text-xs font-bold uppercase text-auto-alpha-11">
                       {{ $t('Genre') }}
                     </p>
                     <div class="flex flex-shrink-0 flex-grow-0 flex-wrap self-stretch overflow-clip font-medium gap-0.5"
@@ -162,11 +162,11 @@ onUnmounted(() => {
                     v-if="data">
 
                     <RouterLink :to="`/${data?.media_type}/${data?.id}/watch`"
-                      class="relative flex items-center justify-center gap-2 rounded-lg p-2 transition-colors duration-300 group/play hover:bg-auto-5/6">
+                      class="relative flex items-center justify-center gap-2 rounded-lg p-2 transition-colors duration-200 group/play hover:bg-auto-5/6">
                       <MoooomIcon icon="play" className="w-6" />
 
                       <div
-                        class="absolute top-3 grid h-0 w-max flex-shrink-0 flex-grow-0 origin-bottom group-hover/play:grid-cols-1 items-center justify-start bg-black duration-300 grid-cols-[0fr] group-hover/play:h-[32.77px] transform-all left-[-31px] group-hover/play:top-[-38px] rounded-[5.46px]">
+                        class="absolute top-3 grid h-0 w-max flex-shrink-0 flex-grow-0 origin-bottom group-hover/play:grid-cols-1 items-center justify-start bg-black duration-200 grid-cols-[0fr] group-hover/play:h-[32.77px] transform-all left-[-31px] group-hover/play:top-[-38px] rounded-[5.46px]">
                         <div class="overflow-hidden">
                           <p class="flex-shrink-0 flex-grow-0 py-0 text-xs font-bold px-2.5">
                             {{ $t('Ends at') }}
@@ -177,12 +177,12 @@ onUnmounted(() => {
                     </RouterLink>
 
                     <!--                            <button-->
-                    <!--                                class="relative flex items-center justify-center gap-2 overflow-hidden rounded-lg p-2 transition-colors duration-300 hover:bg-auto-5/6"-->
+                    <!--                                class="relative flex items-center justify-center gap-2 overflow-hidden rounded-lg p-2 transition-colors duration-200 hover:bg-auto-5/6"-->
                     <!--                            >-->
                     <!--                                <MoooomIcon icon="film" className="w-6"/>-->
                     <!--                            </button>-->
                     <!--                            <button-->
-                    <!--                                class="relative flex items-center justify-center gap-2 overflow-hidden rounded-lg p-2 transition-colors duration-300 hover:bg-auto-5/6"-->
+                    <!--                                class="relative flex items-center justify-center gap-2 overflow-hidden rounded-lg p-2 transition-colors duration-200 hover:bg-auto-5/6"-->
                     <!--                            >-->
                     <!--                                <MoooomIcon icon="check" className="w-6"/>-->
                     <!--                            </button>-->

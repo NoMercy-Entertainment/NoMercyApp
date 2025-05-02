@@ -22,7 +22,7 @@ const isFetching = useIsFetching();
 </script>
 
 <template>
-  <ion-header class="pt-safe transition-all duration-300">
+  <ion-header class="pt-safe transition-all duration-200">
     <ion-toolbar v-if="!isPlatform('capacitor') && !isTv">
       <div
         class="pt-safe flex justify-between items-center self-stretch flex-grow-0 flex-shrink-0 h-[50px] overflow-hidden px-1 py-1.5">

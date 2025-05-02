@@ -147,7 +147,7 @@ const handleLevel = (value: string) => {
                 <span>{{ $t('Limit') }} ({{ limit }})</span>
 
                 <DropdownMenu
-                    className="relative flex items-center justify-center gap-2 rounded-lg transition-colors duration-300 hover:bg-auto-5/6"
+                    className="relative flex items-center justify-center gap-2 rounded-lg transition-colors duration-200 hover:bg-auto-5/6"
                     translate="translate-x-1/4"
                 >
 
@@ -177,7 +177,7 @@ const handleLevel = (value: string) => {
                 class="relative flex h-11 items-center justify-between gap-3 self-stretch p-3 group/tableButton w-[120px] min-w-[120px]">
                 <span>{{ $t('Level') }}</span>
                 <DropdownMenu
-                  class="relative flex items-center justify-center gap-2 rounded-lg transition-colors duration-300 hover:bg-auto-5/6">
+                  class="relative flex items-center justify-center gap-2 rounded-lg transition-colors duration-200 hover:bg-auto-5/6">
                   <template v-slot:button>
                     <MoooomIcon className="w-6" icon="chevronDown" />
                   </template>

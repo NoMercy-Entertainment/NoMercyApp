@@ -38,7 +38,7 @@ const { t } = useTranslation();
     <!--        id="toggleSidebar"-->
     <!--        v-if="sidebar != 'hidden'"-->
     <!--        @click="toggleSidebar"-->
-    <!--        class="ml-2 flex h-12 w-12 items-center justify-center rounded-md transition-transform duration-300 border-1 border-auto-alpha-5 text-auto-alpha-11 sm:hidden">-->
+    <!--        class="ml-2 flex h-12 w-12 items-center justify-center rounded-md transition-transform duration-200 border-1 border-auto-alpha-5 text-auto-alpha-11 sm:hidden">-->
     <!--      <MoooomIcon v-if="sidebar == 'open'" icon="cross" class="w-6"/>-->
     <!--      <MoooomIcon v-else-if="sidebar == 'closed'" icon="menuBurger" class="w-6"/>-->
     <!--    </button>-->

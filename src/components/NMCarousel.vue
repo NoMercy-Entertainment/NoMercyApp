@@ -218,7 +218,7 @@ const scrollToCenter = () => {
         <div class="flex flex-shrink-0 flex-grow-0 items-start justify-start gap-2 pr-4 ml-auto" v-if="!isMobile">
 
           <button v-if="hasScroll" :aria-label="$t('Previous slide')" tabindex="-1"
-            class="hidden sm:flex justify-center items-center p-1 rounded-lg bg-auto-alpha-9 active:scale-95 hover:bg-auto-alpha-11 transition-transform duration-300"
+            class="hidden sm:flex justify-center items-center p-1 rounded-lg bg-auto-alpha-9 active:scale-95 hover:bg-auto-alpha-11 transition-transform duration-200"
             :class="{
               'cursor-not-allowed opacity-50': !backButtonEnabled,
             }" :onclick="prev">
@@ -226,7 +226,7 @@ const scrollToCenter = () => {
           </button>
 
           <button v-if="hasScroll" :aria-label="isLastSlide ? $t('Start slide') : $t('Next slide')" tabindex="-1"
-            class="hidden sm:flex justify-center items-center p-1 rounded-lg bg-auto-alpha-9 active:scale-95 hover:bg-auto-alpha-11 transition-transform duration-300"
+            class="hidden sm:flex justify-center items-center p-1 rounded-lg bg-auto-alpha-9 active:scale-95 hover:bg-auto-alpha-11 transition-transform duration-200"
             :class="{
               'cursor-not-allowed opacity-50': !hasScroll,
             }" :onclick="isLastSlide ? reset : next">

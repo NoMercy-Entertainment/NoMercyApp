@@ -48,7 +48,7 @@ const focusMain = () => {
     <button @click="focusMain" class="skip-navigation absolute z-999 top-[-50px] left-2 bg-slate-light-1 dark:bg-slate-dark-1 text-white p-2 rounded-md">
       {{ $t('Skip navigation') }}
     </button>
-    <div class="contents text-auto-12" :style="focusColor ? `--color-focus: ${focusColor}` : ''">
+    <div class="contents text-auto-12">
       <Navbar />
       <div
         class=" bg-slate-light-1 dark:bg-slate-dark-1 relative z-0 flex h-px flex-1 flex-grow items-start justify-start self-stretch overflow-clip w-available h-available scrollbar-none group">
