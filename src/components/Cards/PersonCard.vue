@@ -56,7 +56,7 @@ const color = computed(() => {
                 </p>
                 <p :title="data?.character ?? data?.job as string"
                     class="z-10 text-2xs sm:text-2xs !leading-none h-6 sm:h-6 line-clamp-2 w-available text-slate-lightA-12/70  dark:text-slate-darkA-12/80 empty:hidden -mr-1">
-                    {{ (data?.character ?? data?.job).replace('(voice)', '') }}
+                    {{ (data?.character ?? data?.job)?.replace('(voice)', '') }}
                 </p>
             </div>
         </div>
