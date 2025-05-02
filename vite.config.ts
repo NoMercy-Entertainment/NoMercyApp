@@ -219,7 +219,7 @@ export default defineConfig(({command}) => {
 				},
 				base: '/',
 				devOptions: {
-					enabled: true,
+					enabled: false,
 					type: 'module',
 					navigateFallback: 'index.html',
 					suppressWarnings: false,
@@ -247,14 +247,6 @@ export default defineConfig(({command}) => {
 						'https://*.nomercy.tv:*',
 						'https://cdn.jsdelivr.net/npm/webvtt-parser@2.2.0/parser.min.js',
 						'https://www.gstatic.com',
-
-						'sha256-G3Q1p4s6LacltrOf4BnWiwdl1rEp+mmS6DwpXr5fjKg=',
-						'sha256-VA8O2hAdooB288EpSTrGLl7z3QikbWU9wwoebO/QaYk=',
-						'sha256-+5XkZFazzJo8n0iOP4ti/cLCMUudTf//Mzkb7xNPXIc=',
-						'sha256-MS6/3FCg4WjP9gwgaBGwLpRCY6fZBgwmhVCdrPrNf3E=',
-						'sha256-tQjf8gvb2ROOMapIxFvFAYBeUJ0v1HCbOcSmDNXGtDo=',
-						'sha256-+5XkZFazzJo8n0iOP4ti/cLCMUudTf//Mzkb7xNPXIc=',
-						'sha256-XC/gbdknUrCiLbZdZ8y96M9KVODooJYGbxrY7P+a1Rg=',
 						'https://static.cloudflareinsights.com',
 					],
 					'style-src': [
@@ -303,6 +295,7 @@ export default defineConfig(({command}) => {
 						'wss://localhost:*',
 						'https://pub-a68768bb5b1045f296df9ea56bd53a7f.r2.dev',
 						'https://raw.githubusercontent.com',
+						'https://o4509253570592768.ingest.de.sentry.io',
 					],
 					'frame-src': [
 						'self',
@@ -355,6 +348,9 @@ export default defineConfig(({command}) => {
 		server: {
 			port: 5502,
 			host: true,
+			allowedHosts: [
+				'app-dev.nomercy.tv',
+			],
 			headers: {
 				'Cache-Control': 'no-store',
 			},

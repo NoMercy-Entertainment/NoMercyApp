@@ -123,3 +123,6 @@ yarn-error.log
 docs/
 dev-dist/
 vite.config.ts.*
+
+# Sentry Config File
+.env.sentry-build-plugin

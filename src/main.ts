@@ -12,6 +12,7 @@ import { setUserFromKeycloak, user } from '@/store/user';
 import { registerSW } from "virtual:pwa-register";
 import { pwaMessages } from './i18n/pwa';
 
+import * as Sentry from '@sentry/vue';
 
 let redirectUri = `nomercy://home`;
 if (location.href.includes('logout')) {
@@ -196,6 +197,14 @@ if (!onlineStatus.value) {
 		import('./setupApp').then(({ setupApp }) => setupApp(app));
 	}
 }
+
+Sentry.init({
+	app,
+	dsn: import.meta.env.VITE_SENTRY_DSN,
+	// Setting this option to true will send default PII data to Sentry.
+	// For example, automatic IP address collection on events
+	sendDefaultPii: true
+});
 
 const updateSW = registerSW({
 	immediate: true,
