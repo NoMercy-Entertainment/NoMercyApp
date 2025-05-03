@@ -159,3 +159,24 @@ export async function setupApp(app: AppContext['app']) {
         location.reload();
     }
 }
+
+// const updateSW = registerSW({
+//     immediate: true,
+//     onNeedRefresh() {
+//         if (confirm(`${messages.newVersion} ${messages.updateNow}`)) {
+//             updateSW(true).then();
+//         }
+//     },
+//     onOfflineReady() {
+//         console.log('App ready to work offline')
+//     },
+//     onRegistered(registration) {
+//         console.log('SW Registered:', registration)
+//         registration?.addEventListener('message', (event) => {
+//             console.log('SW message:', event)
+//         })
+//     },
+//     onRegisterError(error) {
+//         console.error('SW registration error:', error)
+//     }
+// });

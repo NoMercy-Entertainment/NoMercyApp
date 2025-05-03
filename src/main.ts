@@ -9,8 +9,6 @@ import MobileKeycloak from '@/lib/auth/mobile-keycloak';
 import TvKeycloak from '@/lib/auth/tv-keycloak';
 import { lockPortrait } from '@/lib/utils';
 import { setUserFromKeycloak, user } from '@/store/user';
-import { registerSW } from "virtual:pwa-register";
-import { pwaMessages } from './i18n/pwa';
 
 import * as Sentry from '@sentry/vue';
 
@@ -67,6 +65,7 @@ import router from "@/router";
 import { parseToken } from './lib/auth/helpers';
 import { useOnline } from '@vueuse/core';
 
+import { pwaMessages } from './i18n/pwa';
 
 function getCurrentLanguage(): string {
 	return localStorage.getItem('language') ||
@@ -204,25 +203,4 @@ Sentry.init({
 	// Setting this option to true will send default PII data to Sentry.
 	// For example, automatic IP address collection on events
 	sendDefaultPii: true
-});
-
-const updateSW = registerSW({
-	immediate: true,
-	onNeedRefresh() {
-		if (confirm(`${messages.newVersion} ${messages.updateNow}`)) {
-			updateSW(true);
-		}
-	},
-	onOfflineReady() {
-		console.log('App ready to work offline')
-	},
-	onRegistered(registration) {
-		console.log('SW Registered:', registration)
-		registration?.addEventListener('message', (event) => {
-			console.log('SW message:', event)
-		})
-	},
-	onRegisterError(error) {
-		console.error('SW registration error:', error)
-	}
 });
