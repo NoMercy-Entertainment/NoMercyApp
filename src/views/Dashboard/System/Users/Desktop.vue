@@ -45,7 +45,7 @@ const closeInviteModal = () => {
           </Button>
         </template>
 
-        <template v-for="user in [...serverUsers ?? []]?.sort((a, b) => a.name.localeCompare(b.name))" :key="user.id">
+        <template v-for="user in [...serverUsers ?? []]?.sort((a, b) => a.name.localeCompare(b.name))" :key="user.user_id">
           <UserCard :data="user" />
         </template>
 

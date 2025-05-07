@@ -70,6 +70,8 @@ const grid = computed(() => {
     return dashboardColumnGrid.value;
   } else if (props.gridStyle == 3) {
     return dashboardBigCardGrid.value;
+  } else if (props.gridStyle == 4) {
+    return 'flex flex-wrap h-available';
   } else {
     return 'flex flex-wrap h-available overflow-clip';
   }
@@ -140,7 +142,11 @@ watch(dataUpdatedAt, (value) => {
     </div>
 
     <div v-else
-      class="flex flex-col relative z-0 h-available min-h-[92vh] sm:min-h-[92.8vh] h-px overflow-clip items-start justify-start self-stretch w-available bg-slate-light-4 dark:bg-slate-dark-2">
+         :class="{
+          ' min-h-[92vh] sm:min-h-[92.8vh]': !$slots.cta,
+          ' min-h-[92vh] sm:min-h-[90.2vh]': !!$slots.cta,
+         }"
+      class="flex flex-col relative z-0 h-available h-px overflow-clip items-start justify-start self-stretch w-available bg-slate-light-4 dark:bg-slate-dark-2">
       <div
         class="sticky top-0 z-10 flex flex-shrink-0 flex-grow-0 flex-col items-start justify-start gap-5 self-stretch" :inert="ripperMenuOpen">
         <div class="absolute inset-0 z-0 h-full w-full"></div>
