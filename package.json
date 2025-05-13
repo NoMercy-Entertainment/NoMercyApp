@@ -7,7 +7,7 @@
   "author": "NoMercy Entertainment <info@nomercy.tv>",
   "license": "none",
   "scripts": {
-    "postinstall": "patch-package && node ./scripts/patchMediaSessionPlugin.cjs",
+    "postinstall": "patch-package",
     "dev": "vite --host --force",
     "dev:android": "ionic capacitor run android -l --external --host 192.168.2.201 --port 5502",
     "dev:phone": "ionic capacitor run android -l --external --target 192.168.2.95:5555 --host 192.168.2.201 --port 5502",
