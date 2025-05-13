@@ -25,6 +25,8 @@ export class AutoSkipPlugin extends Plugin {
 		/^Outro$/ui,
 		/^Opening$/ui,
 		/^Ending$/ui,
+		/^Opening/ui,
+		/^Ending/ui,
 		/^Opening Credits$/ui,
 		/^Ending Credits$/ui,
 		/^Opening Theme$/ui,

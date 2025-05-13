@@ -16,7 +16,7 @@ defineProps({
 </script>
 
 <template>
-    <DashboardCard :route="`/dashboard/users/${data.id}`" :line1="data.name" line2="">
+    <DashboardCard :route="`/dashboard/users/${data.user_id}`" :line1="data.name" line2="">
         <template v-slot:image>
             <div
                 class="relative flex aspect-square h-auto w-full flex-col items-center justify-center overflow-clip rounded-lg bg-black">
