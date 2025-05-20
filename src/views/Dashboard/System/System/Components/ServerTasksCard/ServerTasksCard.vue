@@ -85,7 +85,7 @@ useHubListener(connection, 'disconnected', handleClear);
       </button>
     </template>
 
-    <template v-for="data in encoderData ?? []" :key="data.id">
+    <template v-for="data in encoderData.toSorted((a,b) => a.title.localeCompare(b.title)) ?? []" :key="data.id">
       <ServerEncoderTaskCard :data="data" />
     </template>
 

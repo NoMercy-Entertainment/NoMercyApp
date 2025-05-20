@@ -24,16 +24,20 @@ defineProps({
   }
 });
 
+const remove = (e: ErrorEvent) => {
+  (e.target as HTMLImageElement)?.remove();
+};
+
 </script>
 
 <template>
   <ion-avatar :style="`max-width: 100%; max-height: 100%;`">
-    <img v-if="user && !user.avatarUrl" :alt="`${t('NoMercyAvatar for')} ${user.name}`"
+    <img :onerror="remove" v-if="user && !user.avatarUrl" :alt="`${t('NoMercyAvatar for')} ${user.name}`"
       class="rounded-full object-cover object-center p-px NoMercyAvatar aspect-square"
       :src="`${baseUrl}/avatar/${md5(user.email)}?d=monsterid&fm=webp&r=pg&s=${size}&w=${size}`"
       :srcset="`${baseUrl}/avatar/${md5(user.email)}?d=monsterid&fm=webp&r=pg&s=${size * 2}&w=${size * 2}`"
       :height="`${size}`" :width="`${size}`" crossorigin="anonymous" />
-    <img v-else-if="user" :alt="`${t('NoMercyAvatar for')} ${user.name}`"
+    <img :onerror="remove" v-else-if="user" :alt="`${t('NoMercyAvatar for')} ${user.name}`"
       class="rounded-full object-cover object-center p-px NoMercyAvatar aspect-square" :src="user.avatarUrl"
       :height="`${size}`" :width="`${size}`" crossorigin="anonymous" />
   </ion-avatar>

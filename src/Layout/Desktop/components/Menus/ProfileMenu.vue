@@ -11,6 +11,7 @@ import NoMercyAvatar from '@/components/Images/NoMercyAvatar.vue';
 import MoooomIcon from '@/components/Images/icons/MoooomIcon.vue';
 import Toggle from '@/components/Forms/Toggle.vue';
 import DropdownLink from "@/Layout/Desktop/components/Menus/DropdownLink.vue";
+import AppLogoSquare from "@/components/Images/icons/AppLogoSquare.vue";
 
 const reload = () => window.location.reload();
 
@@ -38,7 +39,9 @@ const handleEnter = (event: KeyboardEvent) => {
   <DropdownMenu v-if="user" :direction="direction" className="rounded-full">
     <template v-slot:button>
       <button :aria-label="$t('Profile menu')"
-          class="relative mx-auto flex flex-col rounded-full size-12  border-2 border-slate-dark-5">
+          class="relative mx-auto flex flex-col rounded-full size-12  border-2  bg-black">
+        <AppLogoSquare alt="NoMercy Logo"
+                       class="absolute w-11 h-11 m-0.5 rounded-full" />
         <NoMercyAvatar :user="user" :size="40" class="absolute inset-0"/>
         <span
             class="absolute rounded-full border-white bg-green-600 size-[28%] -bottom-[2%] -end-[2%] border-[0.125rem] dark:border-stone-900">
