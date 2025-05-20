@@ -81,7 +81,7 @@ const serverImageUrl = computed(() => {
 const tmdbImageUrl = computed(() => {
   if (!props.path) return;
   // return `${tmdbImageBaseUrl}/original${props.path}`;
-  return `https://app.nomercy.tv/tmdb-images${props.path}`;
+  return `https://media.themoviedb.org/t/p/original${props.path}`;
 });
 
 onMounted(() => {
