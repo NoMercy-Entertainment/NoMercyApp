@@ -1,10 +1,12 @@
-import { computed, ref, toRaw } from 'vue';
+import {computed, ref, toRaw, watch} from 'vue';
 import { isPlatform } from '@ionic/vue';
 import { useLocalStorage, useMediaQuery } from '@vueuse/core';
 import { MoooomIcons } from '@Icons/icons';
 import { NameVal } from '@/types/api/dashboard/server';
+import {Device} from '@capacitor/device'
 
-export const isTv = useMediaQuery('(width: 960px) and (height: 540px)');
+export const deviceIsTv = useMediaQuery('(width: 960px) and (height: 540px)');
+export const isTv = useLocalStorage('isTv', deviceIsTv.value);
 // export const isMobile = useMediaQuery('(max-width: 800px) and (orientation: portrait), (max-height: 800px) and (orientation: landscape)');
 export const isMobile = ref((isPlatform('mobile') || isPlatform('mobileweb')) && !isPlatform('ipad'));
 
@@ -227,13 +229,22 @@ console.raw = (...arg: any[]) => {
 	console.log(...arg.map(a => toRaw(a)));
 };
 
-console.raw({
-	isTv: isTv.value,
-	isMobile: isMobile.value,
-	isNativeMobile: isPlatform('mobile'),
-	isWebMobile: isPlatform('mobileweb'),
-	isNative: isNative.value,
-	nativeOverride: nativeOverride.value,
-	isDarkMode: isDarkMode.value,
-	greetingValue: greetingValue.value,
-})
+(async () => {
+	const deviceInfo = await Device.getId().then((device) => device.identifier);
+	console.raw({
+		isTv: isTv.value,
+		deviceIsTv: deviceIsTv.value,
+		isMobile: isMobile.value,
+		isNativeMobile: isPlatform('mobile'),
+		isWebMobile: isPlatform('mobileweb'),
+		isNative: isNative.value,
+		nativeOverride: nativeOverride.value,
+		isDarkMode: isDarkMode.value,
+		greetingValue: greetingValue.value,
+		device_id: deviceInfo,
+	})
+})();
+
+watch(isTv, () => {
+	location.reload();
+});
