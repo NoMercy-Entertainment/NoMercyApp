@@ -1,8 +1,8 @@
-import { isMobile, isTv } from '@/config/global';
+import { isMobile, isTv, tvModeOverride } from '@/config/global';
 
 let View: () => Promise<any>;
 
-if (isTv.value) {
+if (isTv.value || tvModeOverride.value) {
 	View = () => import('./Tv.vue');
 } else if (isMobile.value) {
 	View = () => import('./Mobile.vue');

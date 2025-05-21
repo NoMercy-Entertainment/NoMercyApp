@@ -14,7 +14,7 @@ import {user} from "@/store/user";
 import NoMercyAvatar from "@/components/Images/NoMercyAvatar.vue";
 import {RouterLink} from "vue-router";
 import MoooomIcon from "@/components/Images/icons/MoooomIcon.vue";
-import {deviceIsTv, isTv} from "@/config/global";
+import {deviceIsTv, isTv, tvModeOverride} from "@/config/global";
 
 const serverList = ref<HTMLElement>();
 
@@ -66,7 +66,7 @@ watch(serverList, (value) => {
             </p>
           </div>
 
-          <div tabindex="0" @click="isTv = !isTv" v-show="!deviceIsTv"
+          <div tabindex="0" @click="tvModeOverride = !tvModeOverride" v-show="!isTv"
                       class="flex justify-center items-center ml-auto relative gap-1.5 pl-3 pr-4 py-2.5 h-10 opacity-40 rounded-full border-[1.5px] border-[#c4c7c5]">
             <MoooomIcon icon="doorOut" class="text-slate-dark-1 dark:text-slate-light-1"/>
             <span class="flex-grow-0 flex-shrink-0 opacity-80 text-sm font-medium text-center text-[#e3e3e3]">

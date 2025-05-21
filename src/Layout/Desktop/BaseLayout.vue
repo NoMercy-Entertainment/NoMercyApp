@@ -9,7 +9,7 @@ import ConfirmDialog from 'primevue/confirmdialog';
 
 import type { MenuItem } from 'primevue/menuitem';
 
-import { focusColor, background } from '@/store/ui';
+import { background } from '@/store/ui';
 import { currentServer } from '@/store/currentServer';
 import { contextMenu, contextMenuItems } from '@/store/contextMenuItems';
 import { cardMenu, trackContextMenuItems } from '@/store/contextMenuItems';

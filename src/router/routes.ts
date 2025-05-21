@@ -1,6 +1,6 @@
 import { NavigationGuardNext, RouteLocationNormalizedGeneric, RouteRecordRaw } from 'vue-router';
 import { computed } from 'vue';
-import { isMobile, isTv } from '@/config/global';
+import {isMobile, isTv, tvModeOverride} from '@/config/global';
 
 import MobileBaseLayout from '@/Layout/Mobile/BaseLayout.vue';
 import TvBaseLayout from '@/Layout/Tv/BaseLayout.vue';
@@ -63,10 +63,10 @@ import NotFound from '@/views/NotFound';
 import libraries from '@/store/Libraries';
 
 const baseLayout = computed(() => {
-	if (isMobile.value) {
-		return MobileBaseLayout;
-	} else if (isTv.value) {
+	if (isTv.value || tvModeOverride.value) {
 		return TvBaseLayout;
+	} else if (isMobile.value) {
+		return MobileBaseLayout;
 	} else {
 		return DesktopBaseLayout;
 	}

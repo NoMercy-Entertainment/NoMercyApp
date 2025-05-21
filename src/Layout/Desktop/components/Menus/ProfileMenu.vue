@@ -12,7 +12,7 @@ import MoooomIcon from '@/components/Images/icons/MoooomIcon.vue';
 import Toggle from '@/components/Forms/Toggle.vue';
 import DropdownLink from "@/Layout/Desktop/components/Menus/DropdownLink.vue";
 import AppLogoSquare from "@/components/Images/icons/AppLogoSquare.vue";
-import {deviceIsTv, isTv} from "@/config/global";
+import {deviceIsTv, isTv, tvModeOverride} from "@/config/global";
 
 const reload = () => window.location.reload();
 
@@ -87,16 +87,16 @@ const handleEnter = (event: KeyboardEvent) => {
             </div>
             <div
                 class="flex justify-center items-center self-stretch h-10 relative py-2.5 px-1 rounded-md border border-transparent hover:border-focus/4 active:!bg-focus/11 dark:active:!bg-focus/8 active:border-focus/4 active:hover:border-focus/4 focus:bg-focus-9 hover:!bg-focus/10 disabled:!bg-focus/2 disabled:!border-focus/2 transition-colors duration-200 hover:text-auto-12">
-            <button tabindex="-1" @click="isTv = !isTv" v-show="!deviceIsTv"
+            <button tabindex="-1" @click="tvModeOverride = !tvModeOverride" v-show="!isTv"
                 class="relative flex w-full flex-grow items-center justify-center gap-2 px-2 text-lg font-medium text-left">
               <MoooomIcon className="" icon="monitor"/>
               <span class="relative flex flex-grow items-center justify-center gap-2 pl-2">
                 <span class="w-full flex-grow text-lg font-medium">
-                  {{ isTv ? $t('Disable TV UI') : $t('Enable TV UI') }}
+                  {{ tvModeOverride ? $t('Disable TV mode') : $t('Enable TV mode') }}
                 </span>
               </span>
               <span class="inline-flex cursor-pointer items-center gap-3 pointer-events-none" >
-                <Toggle :model-value="isTv" id="toggleTvUI" />
+                <Toggle :model-value="tvModeOverride" id="toggleTvUI" />
               </span>
             </button>
             </div>

@@ -13,6 +13,7 @@ import { logout } from '@/lib/auth/index';
 import { closeMenu, menuOpen } from "@/store/profileMenu";
 import { Browser } from "@capacitor/browser";
 import { phonePortrait } from "ionicons/icons";
+import {isTv, tvModeOverride} from "@/config/global";
 
 const reload = () => window.location.reload();
 
@@ -108,7 +109,7 @@ const handleOpenApp = async () => {
         </button>
       </ion-item>
 
-      <ion-item lines="inset">
+      <ion-item lines="none">
         <button no-ring @click="darkMode = !darkMode"
           class="flex justify-center items-center self-stretch w-available h-full flex-grow-0 flex-shrink-0 relative pl-2 py-2.5 rounded-md bg-transparent border border-transparent">
           <ion-icon aria-hidden="true" :icon="moonDiagonal" className="size-6 min-w-6" />
@@ -120,6 +121,21 @@ const handleOpenApp = async () => {
           </label>
 
           <Toggle :model-value="darkMode" class="pointer-events-none" />
+        </button>
+      </ion-item>
+
+      <ion-item lines="inset">
+        <button no-ring @click="tvModeOverride = !tvModeOverride"
+          class="flex justify-center items-center self-stretch w-available h-full flex-grow-0 flex-shrink-0 relative pl-2 py-2.5 rounded-md bg-transparent border border-transparent">
+          <ion-icon aria-hidden="true" :icon="monitor" className="size-6 min-w-6" />
+
+          <label for="ion-tg-0" class="flex justify-center items-center flex-grow relative gap-2 px-2 w-available">
+            <span class="flex-grow w-full text-lg font-medium text-left">
+              {{ tvModeOverride ? $t('Disable TV mode') : $t('Enable TV mode') }}
+            </span>
+          </label>
+
+          <Toggle :model-value="tvModeOverride" class="pointer-events-none" />
         </button>
       </ion-item>
 
