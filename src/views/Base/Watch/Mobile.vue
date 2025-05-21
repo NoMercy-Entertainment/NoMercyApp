@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { onBeforeUnmount, onMounted, onUnmounted, ref, watch } from 'vue';
-import { IonContent, IonPage, isPlatform, onIonViewDidEnter } from '@ionic/vue';
+import { IonContent, IonPage, isPlatform } from '@ionic/vue';
 import { App } from '@capacitor/app';
 
 import { disableImmersiveMode, enableImmersiveMode, lockLandscape, lockPortrait } from '@/lib/utils';
@@ -23,7 +23,7 @@ import router from "@/router";
 import useServerClient from "@/lib/clients/useServerClient";
 import { setNavBarVisible } from "@/store/ui";
 
-const { data, isError } = useServerClient<PlaylistItem[]>({
+const { data } = useServerClient<PlaylistItem[]>({
 
 });
 
@@ -197,4 +197,7 @@ onUnmounted(() => {
 .nomercyplayer .top-bar {
   @apply pt-safe-offset-4;
 }
+.nomercyplayer #pre-screen-dialog {
+   background: #000000cc;
+ }
 </style>

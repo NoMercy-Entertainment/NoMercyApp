@@ -25,7 +25,7 @@ import { RouterLink } from "vue-router";
         <ion-icon v-if="currentServer" aria-hidden="true" :icon="link" class="w-4 h-4" />
         <ion-icon v-else aria-hidden="true" :icon="link" class="w-4 h-4" />
         <p class="flex-grow text-sm text-left text-slate-dark-3 dark:text-slate-light-3">
-          {{ currentServer?.server_name ?? $t('Not connected') }}
+          {{ currentServer?.name ?? $t('Not connected') }}
         </p>
       </div>
     </div>

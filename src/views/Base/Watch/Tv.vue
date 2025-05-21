@@ -208,4 +208,7 @@ onUnmounted(() => {
 .nomercyplayer .top-bar {
   padding-top: calc(var(--safe-area-inset-top, 0px) + 1rem);
 }
+.nomercyplayer #pre-screen-dialog {
+  background: #000000cc;
+}
 </style>

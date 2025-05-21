@@ -26,7 +26,7 @@ import audioPlayer from '@/store/audioPlayer';
 // import NotFound from "@/Layout/Desktop/components/NotFound.vue";
 import useServerClient from "@/lib/clients/useServerClient";
 
-const { data, isError } = useServerClient<PlaylistItem[]>({
+const { data } = useServerClient<PlaylistItem[]>({
 
 });
 
@@ -205,3 +205,9 @@ onUnmounted(() => {
 <!--    </Teleport>-->
   </ion-page>
 </template>
+
+<style>
+.nomercyplayer #pre-screen-dialog {
+  background: #000000cc;
+}
+</style>
