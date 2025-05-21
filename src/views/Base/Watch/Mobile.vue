@@ -197,7 +197,7 @@ onUnmounted(() => {
 .nomercyplayer .top-bar {
   @apply pt-safe-offset-4;
 }
-.nomercyplayer #pre-screen-dialog {
+.nomercyplayer dialog {
    background: #000000cc;
  }
 </style>

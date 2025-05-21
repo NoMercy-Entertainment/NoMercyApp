@@ -207,7 +207,7 @@ onUnmounted(() => {
 </template>
 
 <style>
-.nomercyplayer #pre-screen-dialog {
+.nomercyplayer dialog {
   background: #000000cc;
 }
 </style>
