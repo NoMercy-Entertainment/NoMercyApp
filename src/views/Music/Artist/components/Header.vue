@@ -1,20 +1,20 @@
 <script setup lang="ts">
-import { computed, onMounted, onUnmounted, PropType, ref } from "vue";
+import { computed, onMounted, PropType, ref } from "vue";
 import { useRoute } from 'vue-router';
 
 import type { ArtistResponse } from "@/types/api/music/artist";
 
 import { calculateDuration } from "@/lib/dateTime";
 import { stringFormat } from "@/lib/stringArray";
-import { setColorPalette } from '@/store/ui';
 
 import { currentServer } from '@/store/currentServer';
-import { audioPlayer, currentPlaylist, currentSong, isPlaying, setCurrentPlaylist } from '@/store/audioPlayer';
+import audioPlayer, { currentPlaylist, isPlaying } from '@/store/audioPlayer';
 import { isSongRoute } from '@/store/routeState';
 
 import MoooomIcon from "@/components/Images/icons/MoooomIcon.vue";
 import BannerButton from "@/components/Buttons/BannerButton.vue";
 import MediaLikeButton from '@/components/Buttons/MediaLikeButton.vue';
+import {musicSocketConnection} from "@/store/musicSocket";
 
 const route = useRoute();
 
@@ -44,46 +44,16 @@ const backdrop = computed(() => {
 	return currentServer.value?.serverBaseUrl + '' + image?.src;
 });
 
-// const logo = computed(() => {
-//     const image = props.data?.images?.find(image => image.type === 'hdLogo');
-//     if (!image) return;
-//     return serverLocation.value?.serverBaseUrl + '' + image?.src;
-// });
-
-const isCurrentPlaylist = computed(() => {
-	return currentPlaylist.value === route.fullPath;
-});
-
-const setCurrentList = () => {
-	setCurrentPlaylist(route.fullPath);
+const handleClick = () => {
+  musicSocketConnection.value?.invoke('StartPlaybackCommand',
+      props.data?.type.replace(/s$/u, ''),
+      props.data?.id,
+      props.data?.tracks.at(0)?.id,
+  );
+  audioPlayer.playTrack(props.data.tracks.at(0)!, props.data.tracks);
 };
 
-const handlePlay = () => {
-
-	if (props.data?.tracks?.[0]) {
-		if (isCurrentPlaylist.value) {
-			if (isPlaying.value) {
-				audioPlayer.pause();
-			} else {
-				audioPlayer.play();
-			}
-		} else {
-			audioPlayer.setQueue([]);
-			audioPlayer.setBackLog([]);
-
-			const song = props.data.tracks.find(track => track.id == currentSong.value?.id);
-
-			if (currentSong.value?.id && song) {
-				audioPlayer.playTrack(song, props.data?.tracks ?? []);
-			} else {
-				audioPlayer.playTrack(props.data?.tracks?.[0], props.data?.tracks ?? []);
-			}
-
-			setCurrentList();
-		}
-	}
-};
-
+const playlistName = computed(() => `${props.data?.type?.replace(/s$/u, '')}/${props.data?.id}`);
 
 </script>
 
@@ -135,8 +105,8 @@ const handlePlay = () => {
 			</div>
 		</div>
 		<div class="flex flex-shrink-0 flex-grow-0 items-center justify-start gap-2">
-			<BannerButton :title="isPlaying ? $t('Pause') : $t('Play')" :onclick="handlePlay">
-				<MoooomIcon v-if="(isPlaying && isCurrentPlaylist)" icon="pause" className="relative h-5 w-5 text-white" />
+			<BannerButton :title="isPlaying ? $t('Pause') : $t('Play')" :onclick="handleClick">
+				<MoooomIcon v-if="(isPlaying && currentPlaylist == playlistName)" icon="pause" className="relative h-5 w-5 text-white" />
 				<MoooomIcon v-else icon="play" className="relative h-5 w-5 text-white" />
 			</BannerButton>
 			<!--			<BannerButton title="">-->

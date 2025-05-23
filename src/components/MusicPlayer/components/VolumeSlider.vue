@@ -1,25 +1,30 @@
 <script setup lang="ts">
 import { ref, watch } from 'vue';
 
-import audioPlayer from '@/store/audioPlayer';
+import {audioPlayer, volume} from '@/store/audioPlayer';
 
 import SliderBar from '@/components/MusicPlayer/components/SliderBar.vue';
+import {musicSocketConnection} from "@/store/musicSocket";
+import {useDebounce} from "@vueuse/core/index";
 
-const volumePercentage = ref<number>(audioPlayer.volume ?? 0);
+const seekValue = ref(0);
+const debouncedSeekValue = useDebounce(seekValue, 50);
 
-function calculateLogVolume(sliderValue: number, p = 1.5) {
-  const normalizedValue = sliderValue / 100;
-  return Math.pow(normalizedValue, p) * 100;
-}
-
-watch(volumePercentage, (value) => {
-  const volume = calculateLogVolume(value);
-  audioPlayer.setVolume(volume);
+watch(debouncedSeekValue, (value) => {
+  musicSocketConnection.value?.invoke('ChangeVolumeCommand',
+      value,
+  );
 });
+
+const seek = (value: number) => {
+  seekValue.value = value;
+  volume.value = value;
+  audioPlayer.setVolume(seekValue.value);
+};
 
 </script>
 
 <template>
-  <SliderBar :percentage="volumePercentage" :position="volumePercentage"
-    @input="volumePercentage = Number(($event.target as HTMLInputElement).value)" :min="0" :step="1" :max="100" />
+  <SliderBar :percentage="volume" :value="volume" :min="0" :step="1" :max="100"
+    @input="seek(Number(($event.target as HTMLInputElement).value))" />
 </template>

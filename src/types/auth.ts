@@ -1,5 +1,3 @@
-import { DeviceIcons } from '@Icons/icons';
-
 export interface User {
 	accessToken: string;
 	refreshToken: string;
@@ -17,23 +15,38 @@ export interface User {
 	receivedMessages: Message[];
 	sendMessages: Message[];
 	notifications: Message[];
+	features: {
+		[key: string]: boolean;
+	};
 }
 
 export interface Server {
-	id: string;
-	user_id: string;
-	server_name: string;
-	server_version: string;
-	platform: keyof typeof DeviceIcons;
-	online: boolean;
-	external_ip: string;
-	internal_ip: string;
-	internal_port: string;
-	external_port: string;
+	is_owner:        boolean;
+	id:              string;
+	name:            string;
+	platform:        string;
+	version:         string;
+	owner_details:   OwnerDetails;
+	online:          boolean;
+	auto_connect:    boolean;
+	external_port:   string;
+	internal_port:   string;
+	port:            string;
+	domain:          string;
+	public_domain:   string;
+	external_ip:     string;
+	internal_ip:     string;
+	user_id:         null;
 	internal_domain: string;
 	external_domain: string;
-	serverApiUrl: string;
-	serverBaseUrl: string;
+	serverApiUrl:    string;
+	serverBaseUrl:   string;
+}
+
+export interface OwnerDetails {
+	id:      null;
+	name:    string;
+	address: string;
 }
 
 export type Message = {

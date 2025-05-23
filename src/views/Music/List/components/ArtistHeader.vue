@@ -120,7 +120,7 @@ watch(audioColor, (value) => {
 
 <template>
   <div id="artist-header"
-    class="relative z-0 flex flex-col items-end justify-start text-white sm:flex-row sm:gap-9 sm:pt-12 sm:pb-8 sm:px-8"
+    class="relative z-0 flex flex-col items-end justify-start text-white sm:flex-row sm:gap-9 sm:pt-8 sm:pb-8 sm:px-8"
     :class="{
       'pt-safe-offset-12 px-8 gap-4': isPlatform('capacitor'),
       'pt-24 px-6 gap-2 sm:gap-12': !isPlatform('capacitor')

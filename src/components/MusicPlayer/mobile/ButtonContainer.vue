@@ -12,6 +12,8 @@ import RepeatButton from '../components/RepeatButton.vue';
 import ShuffleButton from '../components/ShuffleButton.vue';
 import StopButton from '../components/StopButton.vue';
 import EqButton from "../components/EqButton.vue";
+import DeviceOverlay from "@/Layout/Desktop/components/Overlays/DeviceOverlay.vue";
+import QueueOverlay from "@/Layout/Desktop/components/Overlays/QueueOverlay.vue";
 
 const supportsAudioContext = useLocalStorage('nmplayer-music-supports-audio-context', false);
 
@@ -31,10 +33,12 @@ const supportsAudioContext = useLocalStorage('nmplayer-music-supports-audio-cont
         <NextButton />
         <RepeatButton />
     </div>
-    <div class="z-0 mb-12 flex h-12 w-full justify-between px-6 gap-2" :data-size="musicSize">
-        <DeviceButton />
+    <div class="z-0 mb-12 flex h-12 w-full justify-between px-6 gap-2 z-10" :data-size="musicSize">
+        <DeviceButton ref="deviceOverlay" />
         <StopButton class="ml-auto" />
         <EqButton v-if="supportsAudioContext" />
-        <QueueButton />
+        <QueueButton ref="queueOverlay"/>
+        <DeviceOverlay />
+        <QueueOverlay />
     </div>
 </template>

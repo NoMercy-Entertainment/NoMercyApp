@@ -1,12 +1,13 @@
 <script setup lang="ts">
-import { computed, onUnmounted, PropType, ref, watch } from 'vue';
+import { computed, PropType } from 'vue';
 
 import type { AlbumResponse, ArtistResponse, DisplayList } from '@/types/api/music/musicPlayer';
-import audioPlayer, { currentPlaylist, currentSong, setCurrentPlaylist, isPlaying } from '@/store/audioPlayer';
+import audioPlayer, {currentPlaylist, isPlaying, setCurrentPlaylist} from '@/store/audioPlayer';
 
 import PlayerIcon from '@/components/Images/icons/PlayerIcon.vue';
 import MusicButton from '@/components/MusicPlayer/components/MusicButton.vue';
-import { useRoute } from 'vue-router';
+import {musicSocketConnection} from "@/store/musicSocket";
+import {user} from "@/store/user";
 
 const props = defineProps({
   data: {
@@ -24,68 +25,34 @@ const props = defineProps({
   },
 });
 
-const state = ref(false);
-
-const route = useRoute();
-
-const isCurrentPlaylist = computed(() => {
-  return currentPlaylist.value == route.path;
-});
-
-const setCurrentList = () => {
-  setCurrentPlaylist(route.path);
-};
+const playlistName = computed(() => `${props.data?.type?.replace(/s$/u, '')}/${props.data?.id}`);
 
 const handleClick = () => {
+  if (!props.data?.tracks) return;
 
-  if (props.data?.tracks?.[0]) {
-    if (isCurrentPlaylist.value) {
-      if (isPlaying.value && isCurrentPlaylist.value) {
-        audioPlayer.pause();
-      } else {
-        audioPlayer.play();
-      }
-    } else {
-      audioPlayer.setQueue([]);
-      audioPlayer.setBackLog([]);
-
-      const song = props.data.tracks.find(track => track.id == currentSong.value?.id);
-
-      if (currentSong.value?.id && song) {
-        audioPlayer.playTrack(song, props.data?.tracks ?? []);
-      } else {
-        audioPlayer.playTrack(props.data?.tracks?.[0], props.data?.tracks ?? []);
-      }
-
-      setCurrentList();
-      state.value = audioPlayer.isPlaying ?? false;
+  if (!user.value.features?.nomercyConnect) {
+    if (currentPlaylist.value === playlistName.value) {
+      audioPlayer.togglePlayback();
+      return;
     }
+    audioPlayer.playTrack(props.data.tracks.at(0)!, props.data.tracks);
+    setCurrentPlaylist(playlistName.value);
+    return;
   }
+
+  musicSocketConnection.value?.invoke('StartPlaybackCommand',
+      props.data.type.replace(/s$/u, ''),
+      props.data.id,
+      props.data.tracks.at(0)?.id,
+  );
+  if (currentPlaylist.value === playlistName.value) {
+    audioPlayer.togglePlayback();
+    return;
+  }
+  audioPlayer.playTrack(props.data.tracks.at(0)!, props.data.tracks);
+  setCurrentPlaylist(playlistName.value);
 };
 
-const setIsPlaying = () => {
-  if (isCurrentPlaylist.value) {
-    state.value = audioPlayer.isPlaying ?? false;
-  }
-};
-
-watch(currentPlaylist, () => {
-  if (isCurrentPlaylist.value) {
-    state.value = audioPlayer.isPlaying ?? false;
-  }
-});
-
-onUnmounted(() => {
-  setIsPlaying();
-
-  audioPlayer.on?.('play', setIsPlaying);
-  audioPlayer.on?.('pause', setIsPlaying);
-});
-
-onUnmounted(() => {
-  audioPlayer.off('play', setIsPlaying);
-  audioPlayer.off('pause', setIsPlaying);
-});
 
 </script>
 
@@ -99,7 +66,7 @@ onUnmounted(() => {
                        active:!bg-focus focus-visible:!bg-focus hover:!bg-focus dark:active:!bg-focus dark:focus-visible:!bg-focus dark:sm:hover:!bg-focus
                        active:!shadow-none
                        active:!dark:shadow-none">
-    <PlayerIcon icon="nmPause" v-if="(isPlaying && isCurrentPlaylist)" class="h-8 w-8 text-white" />
+    <PlayerIcon icon="nmPause" v-if="isPlaying && currentPlaylist == playlistName" class="h-8 w-8 text-white" />
     <PlayerIcon icon="nmPlay" v-else class="h-8 w-8 text-white" />
   </MusicButton>
 </template>

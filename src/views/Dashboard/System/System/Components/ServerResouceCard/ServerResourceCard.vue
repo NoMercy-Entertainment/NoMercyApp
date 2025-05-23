@@ -176,7 +176,7 @@ const chartOptions = computed(() => {
         labels: {
           color: textColor,
         },
-        position: legendPosition.value,
+        value: legendPosition.value,
         onClick() {
           legendPosition.value = positionOptions[(positionOptions.indexOf(legendPosition.value) + 1) % positionOptions.length];
         },

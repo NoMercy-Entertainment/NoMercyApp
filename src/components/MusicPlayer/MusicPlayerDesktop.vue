@@ -26,6 +26,7 @@ import VolumeContainer from './components/VolumeContainer.vue';
 import LyricsButton from './components/LyricsButton.vue';
 import Marquee from '@/components/Marquee.vue';
 import EqButton from "@/components/MusicPlayer/components/EqButton.vue";
+import {user} from "@/store/user";
 const dataAttribute = ref<any>();
 const shouldSubmitPlayback = ref(true);
 
@@ -67,7 +68,10 @@ onMounted(() => {
   audioPlayer.on?.('time', (data) => {
     if (Math.floor(data.percentage) == 50 && shouldSubmitPlayback.value) {
       shouldSubmitPlayback.value = false;
-      submitPlayback();
+
+      if (!user.value.features?.nomercyConnect) {
+        submitPlayback();
+      }
     }
   });
 });

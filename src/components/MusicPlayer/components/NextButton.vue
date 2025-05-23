@@ -1,12 +1,21 @@
 <script setup lang="ts">
 
+import {musicSocketConnection} from "@/store/musicSocket";
+import {user} from "@/store/user";
+import audioPlayer from "@/store/audioPlayer";
+
 import MusicButton from './MusicButton.vue';
-import audioPlayer from '@/store/audioPlayer';
 import PlayerIcon from '@/components/Images/icons/PlayerIcon.vue';
 
-const handleClick = (e?: MouseEvent) => {
-  e?.stopPropagation();
-  audioPlayer.next();
+const handleClick = () => {
+  if (!user.value.features?.nomercyConnect) {
+    audioPlayer.next();
+    return;
+  }
+  musicSocketConnection.value?.invoke('PlaybackCommand',
+      'next',
+      null
+  );
 };
 </script>
 

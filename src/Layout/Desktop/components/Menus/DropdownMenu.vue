@@ -65,7 +65,7 @@ const handleKeyDown = (e: KeyboardEvent) => {
   <div ref="menu"
        @focusout="handleFocusOut($event)"
        @keydown="handleKeyDown($event)"
-       class="relative flex h-auto items-center gap-2 z-1099 group">
+       class="relative flex h-auto items-center gap-2 group">
     <div aria-label="Toggle dropdown menu"
       :class="twMerge('flex justify-center items-center relative gap-2 bg-transparent focus:bg-auto-2 hover:text-auto-12 transition-colors duration-200', className)"
       @click="handleClick">

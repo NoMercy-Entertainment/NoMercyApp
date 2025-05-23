@@ -4,10 +4,11 @@ import { useRoute } from 'vue-router';
 import i18next from 'i18next';
 
 import type { PlaylistItem } from '@/types/musicPlayer';
-import { onTrackRowRightClick } from '@/store/contextMenuItems';
 
 import { isMobile } from '@/config/global';
-import { audioPlayer, currentSong, isPlaying, musicSize, setCurrentPlaylist } from '@/store/audioPlayer';
+import {musicSocketConnection} from "@/store/musicSocket";
+import { currentSong, isPlaying, musicSize, audioPlayer } from '@/store/audioPlayer';
+import { onTrackRowRightClick } from '@/store/contextMenuItems';
 
 import EqSpinner from '@/components/Images/EqSpinner.vue';
 import MoooomIcon from '@/components/Images/icons/MoooomIcon.vue';
@@ -39,19 +40,13 @@ const route = useRoute();
 const isAlbumRoute = computed(() => route.path.startsWith('/music/album'));
 const isArtistRoute = computed(() => route.path.startsWith('/music/artist'));
 
-const setCurrentList = () => {
-  setCurrentPlaylist(route.fullPath);
-};
-
 const handleClick = () => {
-  audioPlayer.setQueue([]);
-  audioPlayer.setBackLog([]);
-
+  musicSocketConnection.value?.invoke('StartPlaybackCommand',
+    isAlbumRoute.value ? 'album' : 'artist',
+    isAlbumRoute.value ? props.data?.album_track.at(0)?.id : props.data?.artist_track.at(0)?.id,
+    props.data.id,
+  );
   audioPlayer.playTrack(props.data, props.displayList);
-
-  if (!currentSong.value) {
-    setCurrentList();
-  }
 };
 
 </script>

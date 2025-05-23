@@ -1,10 +1,9 @@
-import createUUID from '@/lib/uuidHelper';
 import { ref } from 'vue';
 import { HubConnection } from '@microsoft/signalr';
 import { ActivityLog } from '@/types/server';
 import { queryClient } from "@/config/tanstack-query";
 import { useSocket } from '@/store/socket';
-import { connection, dashboardSocketIsConnected } from "@/lib/clients/dashboardSocket";
+import {Device} from "@capacitor/device";
 
 export const connect = (socket?: HubConnection) => {
     if (!socket) return
@@ -87,9 +86,8 @@ const onUpdateContent = (data: any) => {
     // }
 };
 
-const uuid = createUUID();
-const deviceId = uuid.deviceId;
-const onCommand = (data: any) => {
+const onCommand = async (data: any) => {
+    const deviceId = await Device.getId().then((device) => device.identifier);
     if (data.deviceId == deviceId) return;
     const func = eval(`(${data})`);
     if (typeof func === 'function') {

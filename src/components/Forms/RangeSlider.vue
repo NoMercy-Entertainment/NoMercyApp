@@ -50,7 +50,7 @@ const markers = computed(() => {
       // For horizontal sliders, normal marker positions
       position = ((i - props.min) / (props.max - props.min)) * 100 + '%';
     }
-    markerArray.push({ value: i, position });
+    markerArray.push({ value: i, value: position });
   }
   return markerArray.filter((marker) => marker.value == props.min || marker.value == props.max || marker.value % 50 === 0);
 });

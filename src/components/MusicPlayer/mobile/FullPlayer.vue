@@ -1,16 +1,24 @@
 <script setup lang="ts">
-import { computed, ref, watch } from 'vue';
-import { useTranslation } from 'i18next-vue';
-import { IonContent, IonModal } from '@ionic/vue';
-import { Swiper } from 'swiper';
-import { Swiper as SwiperComponent } from 'swiper/vue';
+import {computed, ref, watch} from 'vue';
+import {useTranslation} from 'i18next-vue';
+import {IonContent, IonModal} from '@ionic/vue';
+import {Swiper} from 'swiper';
+import {Swiper as SwiperComponent} from 'swiper/vue';
 
-import { audioPlayer, currentSong, fullPlayerModalOpen, queue } from '@/store/audioPlayer';
-import { useAutoThemeColors } from '@/store/preferences';
-import { PaletteColors, pickPaletteColor } from '@/lib/colorHelper';
-import { colorPalette, setColorPalette } from '@/store/ui';
+import {
+  audioPlayer,
+  currentPlaylist,
+  currentSong,
+  fullPlayerModalOpen,
+  queue,
+  setFullPlayerModalOpen,
+  setMusicSize
+} from '@/store/audioPlayer';
+import {useAutoThemeColors} from '@/store/preferences';
+import {PaletteColors, pickPaletteColor} from '@/lib/colorHelper';
+import {colorPalette, setColorPalette} from '@/store/ui';
 
-import { PlaylistItem } from '@/types/musicPlayer';
+import {PlaylistItem, SizeState} from '@/types/musicPlayer';
 
 import LyricsOverlay from '@/Layout/Desktop/components/Overlays/LyricsOverlay.vue';
 
@@ -117,7 +125,7 @@ const handleExpand = () => {
 };
 
 const onWillDismiss = async () => {
-  fullPlayerModalOpen.value = false;
+  setFullPlayerModalOpen(false);
 };
 
 </script>
@@ -129,18 +137,18 @@ const onWillDismiss = async () => {
       <ChristmasSnow />
 
       <div
-        class="relative z-0 pt-safe-offset-4 flex h-screen min-h-screen flex-col items-center justify-between gap-2 w-inherit scrollbar-none text-slate-light-12 dark:text-slate-dark-12">
+        class="relative z-0 pt-safe-offset-4 flex h-screen min-h-screen flex-col items-center justify-between gap-2 w-inherit scrollbar-none text-slate-light-12 dark:text-slate-dark-12 overflow-clip">
         <div class="pointer-events-none absolute inset-0 w-full  bg-spotifyBottom bg-focus transition-all duration-500">
         </div>
 
         <TopRow class="pt-safe px-6" />
 
         <SwiperComponent ref="swiper" :slides-per-view="1" :initialSlide="currentFullPlaylistItem" :loop="true"
-          @touchEnd="handleSwiperChange" class="w-available swiper">
+          @touchEnd="handleSwiperChange" class="w-available swiper isolate z-0" :key="currentPlaylist!">
           <template v-for="(item, index) in fullPlaylist ?? []" :key="item.id">
             <swiper-slide class="h-full" :data-index="index" :data-id="item.id">
               <div class="frosting w-available max-w-2xl h-auto aspect-square shadow mx-6 relative items-center flex">
-                <CoverImage :data="item" :loading="index == currentFullPlaylistItem ? 'eager' : loading"
+                <CoverImage :key="item.id" :data="item" :loading="index == currentFullPlaylistItem ? 'eager' : loading"
                   className="pointer-events-none relative aspect-square h-auto overflow-clip rounded-md w-inherit shadow" />
               </div>
             </swiper-slide>

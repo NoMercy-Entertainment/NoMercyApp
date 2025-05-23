@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import {computed, type PropType} from 'vue';
+import {type PropType} from 'vue';
 
 import type { ColorPalettes } from '@/types/api/shared';
 import type { Artist } from '@/types/api/music/artist';
@@ -7,9 +7,9 @@ import type { Artist } from '@/types/api/music/artist';
 import CoverImage from '@/components/MusicPlayer/components/CoverImage.vue';
 import TrackLinks from '@/views/Music/List/components/TrackLinks.vue';
 import BigPlayButton from '@/components/Buttons/BigPlayButton.vue';
-import audioPlayer, {currentPlaylist, isPlaying} from "@/store/audioPlayer";
 import {PlaylistItem} from "@/types/musicPlayer";
-import {useRoute} from "vue-router";
+import {musicSocketConnection} from "@/store/musicSocket";
+import audioPlayer from "@/store/audioPlayer";
 
 const props = defineProps({
   title: {
@@ -19,6 +19,7 @@ const props = defineProps({
   },
   data: {
     type: Object as PropType<{
+      id: string;
       title: string;
       artists: Artist[];
       cover: string;
@@ -31,28 +32,14 @@ const props = defineProps({
   },
 });
 
-const route = useRoute();
-
-const isCurrentPlaylist = computed(() => {
-  return currentPlaylist.value == route.path;
-});
-
 const handleClick = () => {
-  if (props.data?.track) {
-    if (isCurrentPlaylist.value) {
-      if (isPlaying.value && isCurrentPlaylist.value) {
-        audioPlayer.pause();
-      } else {
-        audioPlayer.play();
-      }
-    } else {
-      audioPlayer.setQueue([]);
-      audioPlayer.setBackLog([]);
-
-      currentPlaylist.value = route.path;
-      audioPlayer.playTrack(props.data.track, []);
-    }
-  }
+  if (!props.data?.track) return;
+  musicSocketConnection.value?.invoke('StartPlaybackCommand',
+      props.data?.type.replace(/s$/u, ''),
+      props.data?.id,
+      props.data?.track?.id,
+  );
+  audioPlayer.playTrack(props.data.track);
 };
 
 </script>

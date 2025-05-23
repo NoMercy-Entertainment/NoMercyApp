@@ -29,7 +29,7 @@ defineProps({
   },
 });
 
-const timeChoice = ref<'duration' | 'remaining'>(localStorage.getItem('timeChoise') as 'duration' | 'remaining' || 'remaining');
+const timeChoice = ref<'duration' | 'remaining'>(localStorage.getItem('timeChoice') as 'duration' | 'remaining' || 'remaining');
 
 const toggleTimeChoice = () => {
   if (timeChoice.value === 'duration') {
@@ -37,7 +37,7 @@ const toggleTimeChoice = () => {
   } else {
     timeChoice.value = 'duration';
   }
-  localStorage.setItem('timeChoise', timeChoice.value);
+  localStorage.setItem('timeChoice', timeChoice.value);
 };
 
 </script>

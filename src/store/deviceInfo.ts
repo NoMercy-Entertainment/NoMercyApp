@@ -1,10 +1,10 @@
-import { computed, ref, toRaw } from 'vue';
+import { computed, ref } from 'vue';
 
 import { App as android, type AppInfo, type AppState } from '@capacitor/app';
 import { BatteryInfo, Device, DeviceInfo } from '@capacitor/device';
 import { Preferences } from '@capacitor/preferences';
 import { isPlatform } from '@ionic/vue';
-import createUUID from "@/lib/uuidHelper";
+import {ClientInfo, makeDeviceInfo} from "@/lib/clients/socketClient/device";
 
 const ai = ref<AppInfo>();
 export const appInfo = computed(() => ai.value);
@@ -12,13 +12,14 @@ export const appInfo = computed(() => ai.value);
 const di = ref<DeviceInfo>();
 export const deviceInfo = computed(() => di.value);
 
+const ci = ref<ClientInfo>();
+export const clientInfo = computed(() => ci.value);
+
 const bi = ref<BatteryInfo>();
 export const batteryInfo = computed(() => bi.value);
 
 const as = ref<AppState>();
 export const appState = computed(() => as.value);
-
-const deviceUid = createUUID();
 
 export const deviceName = ref('');
 export function setDeviceName(value: string) {
@@ -26,7 +27,8 @@ export function setDeviceName(value: string) {
 	Preferences.set({ key: 'deviceName', value: value }).then();
 }
 const getDeviceName = async () => {
-	const deviceName = (await Preferences.get({ key: 'deviceName' })).value ?? deviceInfo.value?.name ?? deviceUid.deviceId;
+	const deviceId = await Device.getId().then((device) => device.identifier);
+	const deviceName = (await Preferences.get({ key: 'deviceName' })).value ?? deviceInfo.value?.name ?? deviceId;
 	setDeviceName(deviceName);
 }
 
@@ -36,12 +38,13 @@ export function setDeviceId(value: string) {
 	Preferences.set({ key: 'deviceId', value: value }).then();
 }
 const getDeviceId = async () => {
-	const deviceId = (await Preferences.get({ key: 'deviceId' })).value ?? deviceUid.deviceId;
+	const deviceId = await Device.getId().then((device) => device.identifier);
 	setDeviceId(deviceId);
 }
 
 (async () => {
 	di.value = await Device.getInfo();
+	ci.value = await makeDeviceInfo();
 
 	await getDeviceName();
 	await getDeviceId();

@@ -99,6 +99,9 @@ export interface Device {
 	ip: string;
 	activity_logs: ActivityLog[];
 
+	is_active: boolean;
+	volume_percent: number;
+
 	created_at?: number;
 	updated_at?: number;
 }

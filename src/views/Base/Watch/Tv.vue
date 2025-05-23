@@ -211,4 +211,7 @@ onUnmounted(() => {
 .nomercyplayer dialog {
   background: #000000cc;
 }
+.nomercyplayer #slider-bar {
+  background: #ffffff50
+}
 </style>

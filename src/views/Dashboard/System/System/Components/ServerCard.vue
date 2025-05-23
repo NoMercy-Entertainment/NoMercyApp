@@ -36,7 +36,7 @@ defineProps({
             <div class="relative flex flex-grow flex-col items-start justify-center text-left">
               <p
                 class="flex-shrink-0 flex-grow-0 self-stretch text-sm font-semibold  text-slate-light-12 dark:text-slate-dark-12 line-clamp-1">
-                {{ server.server_name }}
+                {{ server.name }}
               </p>
               <p class="flex-shrink-0 flex-grow-0 self-stretch text-xs text-auto-alpha-10">
                 {{ server.internal_ip }}

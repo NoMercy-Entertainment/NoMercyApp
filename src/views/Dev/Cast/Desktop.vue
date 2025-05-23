@@ -582,7 +582,7 @@ const setPlaylistItem = (value: number) => {
 
           <div class="flex gap-4 w-1/3 min-w-96 items-center">
             <span class="font-mono">{{ currentTimeHuman }}</span>
-            <SliderBar :percentage="percentage" :position="currentTime" :min="0" :max="duration"
+            <SliderBar :percentage="percentage" :value="currentTime" :min="0" :max="duration"
               @input="seek(Number(($event.target as HTMLInputElement).value))" />
             <span class="font-mono">{{ remainingTimeHuman }}</span>
           </div>
@@ -595,7 +595,7 @@ const setPlaylistItem = (value: number) => {
               <MoooomIcon icon="volumeTwo" v-else class="h-6 w-6" />
             </MusicButton>
 
-            <SliderBar :percentage="volume" :position="volume"
+            <SliderBar :percentage="volume" :value="volume"
               @input="volume = Number(($event.target as HTMLInputElement).value)" :min="0" :step="1" :max="100" />
           </div>
 

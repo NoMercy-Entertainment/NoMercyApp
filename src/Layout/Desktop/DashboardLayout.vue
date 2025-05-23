@@ -13,7 +13,6 @@ import {setBackground, setColorPalette} from '@/store/ui';
 import FloatingBackButton from '@/components/Buttons/FloatingBackButton.vue';
 import HelpButton from '@/components/Buttons/HelpButton.vue';
 import ScrollContainer from '@/Layout/Desktop/components/ScrollContainer.vue';
-import EqualizerOverlay from "@/Layout/Desktop/components/Overlays/EqualizerOverlay.vue";
 import RipperOverlay from "@/Layout/Desktop/components/Overlays/RipperOverlay.vue";
 import {ripperMenuOpen} from "@/store/ripper";
 
@@ -53,6 +52,10 @@ const props = defineProps({
     type: Boolean,
     required: false,
     default: false,
+  },
+  styles: {
+    type: String,
+    required: false,
   },
 });
 
@@ -143,10 +146,10 @@ watch(dataUpdatedAt, (value) => {
 
     <div v-else
          :class="{
-          ' min-h-[92vh] sm:min-h-[92.8vh]': !$slots.cta,
-          ' min-h-[92vh] sm:min-h-[90.2vh]': !!$slots.cta,
+          ' min-h-[92vh] sm:min-h-[92.75vh]': !$slots.cta,
+          ' min-h-[92vh] sm:min-h-[90.1vh]': !!$slots.cta,
          }"
-      class="flex flex-col relative z-0 h-available h-px overflow-clip items-start justify-start self-stretch w-available bg-slate-light-4 dark:bg-slate-dark-2">
+      class="flex flex-col relative z-0 flex-1*- h-available h-px overflow-clip items-start justify-start self-stretch w-available bg-slate-light-4 dark:bg-slate-dark-2">
       <div
         class="sticky top-0 z-10 flex flex-shrink-0 flex-grow-0 flex-col items-start justify-start gap-5 self-stretch" :inert="ripperMenuOpen">
         <div class="absolute inset-0 z-0 h-full w-full"></div>
@@ -188,7 +191,7 @@ watch(dataUpdatedAt, (value) => {
       </div>
       <ScrollContainer v-else :static="true" frame
         class="z-0 w-full flex-1 overflow-y-auto overflow-x-hidden sm:p-4 bg-slate-light-4 dark:bg-slate-dark-2">
-        <div class="h-auto w-full flex-wrap content-start gap-4" :class="grid">
+        <div class="h-auto w-full flex-wrap content-start gap-4 flex-1" :style="styles" :class="grid">
           <slot />
         </div>
       </ScrollContainer>

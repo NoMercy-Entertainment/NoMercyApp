@@ -1,4 +1,5 @@
 import {EdgeStyle} from "@/lib/VideoPlayer/plugins/UIPlugin/buttons";
+import {Message, Server} from "@/types/auth";
 
 export type ColorScheme = 'dark' | 'light' | 'system';
 
@@ -7,6 +8,29 @@ export interface Component {
 	component: string;
 	props: Record<string, any>;
 }
+
+export interface AppConfig {
+	status: string;
+	data:   AppConfigData;
+}
+
+export interface AppConfigData {
+	id:            string;
+	name:          string;
+	email:         string;
+	currentServer: null;
+	locale:        string;
+	avatarUrl:     string;
+	admin:         string;
+	moderator:     number;
+	servers:       Server[];
+	messages:	   Message[];
+	notifications: Message[];
+	features: {
+		[key: string]: boolean;
+	};
+}
+
 
 export const getEdgeStyle = (edgeStyle: EdgeStyle, opacity: number): string => {
 	switch (edgeStyle) {

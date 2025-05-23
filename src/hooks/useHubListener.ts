@@ -18,7 +18,7 @@ const useHubListener = (
 		}, 1000);
 	};
 
-	const stopResourceMonitoring = async () => {
+	const disconnectFromHub = async () => {
 		try {
 			connection.value?.off(eventName, callback);
 		} catch (err) {
@@ -26,7 +26,7 @@ const useHubListener = (
 		}
 	};
 
-	useMounted(connectToHub, stopResourceMonitoring);
+	useMounted(connectToHub, disconnectFromHub);
 }
 
 export default useHubListener;

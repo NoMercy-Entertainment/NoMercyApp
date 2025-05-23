@@ -1,15 +1,25 @@
 // noinspection JSUnusedGlobalSymbols
 
 import { ref, toRaw } from 'vue';
-import { createAnimation, modalController } from '@ionic/vue';
+import {createAnimation, isPlatform, modalController} from '@ionic/vue';
+import {
+	VolumeButtons,
+	VolumeButtonsCallback,
+	VolumeButtonsOptions,
+	VolumeButtonsResult
+} from "@capacitor-community/volume-buttons";
+import MusicPlayer from '@nomercy-entertainment/nomercy-music-player';
+import { RepeatState, type EQBand, type EqualizerPreset, type EQSliderValues } from '@nomercy-entertainment/nomercy-music-player/src/types';
 
 import { SizeState, VisibilityState, type PlaylistItem } from '@/types/musicPlayer';
+import {Device} from "@/types/server";
 
-import MusicPlayer from '@nomercy-entertainment/nomercy-music-player';
-
-import { RepeatState, type EQBand, type EqualizerPreset, type EQSliderValues } from '@nomercy-entertainment/nomercy-music-player/src/types';
 import { onDoubleClick } from "@/lib/utils";
 import { siteTitle } from "@/config/config";
+
+import {deviceId} from "@/store/deviceInfo";
+import {musicSocketConnection} from "@/store/musicSocket";
+import {user} from "@/store/user";
 
 export const audioPlayer = new MusicPlayer<PlaylistItem>({
 	motionConfig: {
@@ -26,6 +36,7 @@ export const audioPlayer = new MusicPlayer<PlaylistItem>({
 	],
 	siteTitle,
 	expose: true,
+	disableAutoPlayback: user.value.features?.nomercyConnect ?? false,
 });
 export default audioPlayer;
 
@@ -66,16 +77,26 @@ const modalOpen = ref<boolean>(false);
 export const fullPlayerModalOpen = ref<boolean>(modalOpen.value);
 export const setFullPlayerModalOpen = (value: boolean): void => {
 	fullPlayerModalOpen.value = value;
+	if (value) {
+		setMusicSize(SizeState.full);
+	} else {
+		setMusicSize(SizeState.compact);
+	}
 };
 export const toggleFullPlayerModalOpen = (): void => {
 	modalOpen.value = !modalOpen.value;
 };
 export const openFullPlayer = (): void => {
 	fullPlayerModalOpen.value = true;
+	setMusicSize(SizeState.full);
 };
 export const closeFullPlayer = (): void => {
 	fullPlayerModalOpen.value = false;
+	setMusicSize(SizeState.compact);
 };
+
+export const connectedDevices = ref<Device[]>([]);
+export const currentDeviceId = ref<string | null>(null);
 
 export const currentTime = ref<number>(0);
 export const duration = ref<number>(0);
@@ -313,18 +334,29 @@ equalizerSliderValues.value = audioPlayer.equalizerSliderValues;
 equalizerPreset.value = audioPlayer.equalizerPresets
 	.find(preset => preset.name == 'Flat') ?? equalizerPresets.value[0];
 
+let lastTime = 0;
 audioPlayer.on('time', (timeState) => {
 	currentTime.value = timeState.position;
 	duration.value = timeState.duration;
 	remainingTime.value = timeState.remaining;
 	percentage.value = timeState.percentage;
+
+	if(currentDeviceId.value == deviceId.value && timeState.position - lastTime > 5) {
+		lastTime = timeState.position;
+		musicSocketConnection.value?.invoke('CurrentTimeCommand', timeState.position);
+	}
 });
 audioPlayer.on('song', (data) => {
 	currentSong.value = data;
+	lastTime = 0;
 	if (data) {
 		musicVisibility.value = VisibilityState.showing;
 	} else {
 		musicVisibility.value = VisibilityState.hidden;
+		lyricsMenuOpen.value = false;
+		queueMenuOpen.value = false;
+		deviceMenuOpen.value = false;
+		equalizerMenuOpen.value = false;
 	}
 });
 
@@ -361,3 +393,20 @@ audioPlayer.on('repeat', (value) => {
 audioPlayer.on('volume', (value) => {
 	volume.value = value;
 });
+
+if (isPlatform('capacitor')) {
+	VolumeButtons.clearWatch().then();
+	const options: VolumeButtonsOptions = {};
+	const callback: VolumeButtonsCallback = (result: VolumeButtonsResult, err?: any) => {
+		console.log(result.direction, err);
+		audioPlayer.setVolume(result.direction === 'up' ? volume.value + 10 : volume.value - 10);
+	};
+
+	options.disableSystemVolumeHandler = false;
+	options.suppressVolumeIndicator = false;
+
+	VolumeButtons.watchVolume(options, callback).then();
+	VolumeButtons.isWatching().then((result) => {
+		console.log(result);
+	});
+}

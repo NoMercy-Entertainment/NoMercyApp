@@ -1,9 +1,12 @@
 <script setup lang="ts">
 import { onMounted } from 'vue';
-
-import MusicButton from './MusicButton.vue';
 import { useCycleList } from '@vueuse/core';
-import audioPlayer from '@/store/audioPlayer';
+
+import audioPlayer, {isRepeating} from '@/store/audioPlayer';
+import {musicSocketConnection} from "@/store/musicSocket";
+import {user} from "@/store/user";
+import MusicButton from './MusicButton.vue';
+
 import PlayerIcon from '@/components/Images/icons/PlayerIcon.vue';
 
 const states = [
@@ -26,15 +29,22 @@ onMounted(() => {
 
 const handleClick = (e?: MouseEvent) => {
   e?.stopPropagation();
-  next();
-  audioPlayer.repeat(state.value);
+  if (!user.value.features?.nomercyConnect) {
+    next();
+    audioPlayer.repeat(state.value);
+    return;
+  }
+  musicSocketConnection.value?.invoke('PlaybackCommand',
+      'repeat',
+      null
+  );
 };
 </script>
 
 <template>
-  <MusicButton :label="`repeat ${state}`" :key="state" :onclick="handleClick">
-    <PlayerIcon icon="nmRepeatHalftone" v-if="state == 'off'" class="h-6 w-6" />
-    <PlayerIcon icon="nmRepeat" v-else-if="state == 'one'" class="h-6 w-6 text-focus" />
-    <PlayerIcon icon="nmRepeatdoublearrowHalftone" v-else-if="state == 'all'" class="h-6 w-6 text-focus" />
+  <MusicButton :label="`repeat ${isRepeating}`" :key="isRepeating" :onclick="handleClick">
+    <PlayerIcon icon="nmRepeatHalftone" v-if="isRepeating == 'off'" class="h-6 w-6" />
+    <PlayerIcon icon="nmRepeat" v-else-if="isRepeating == 'one'" class="h-6 w-6 text-focus" />
+    <PlayerIcon icon="nmRepeatdoublearrowHalftone" v-else-if="isRepeating == 'all'" class="h-6 w-6 text-focus" />
   </MusicButton>
 </template>

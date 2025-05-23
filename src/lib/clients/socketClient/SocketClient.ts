@@ -5,14 +5,15 @@ import {
     LogLevel,
 } from '@microsoft/signalr';
 
-import { deviceInfo } from '@/lib/clients/socketClient/device';
 import { connect, onConnect, onDisconnect } from '@/lib/clients/socketClient/events';
+import {ClientInfo} from "@/lib/clients/socketClient/device";
+import {clientInfo} from "@/store/deviceInfo";
 
 export class SocketClient {
     public connection: HubConnection | null = null;
     private accessToken: string;
     private baseUrl: string;
-    private deviceInfo: ReturnType<typeof deviceInfo> = deviceInfo();
+    private clientInfo: ClientInfo = clientInfo.value!;
     private keepAliveInterval: number = 10;
     private endpoint: string;
 
@@ -27,7 +28,7 @@ export class SocketClient {
     dispose = async () => {
         if (!this.connection) return;
 
-        // await this.connection.stop();
+        await this.connection.stop();
     }
 
     setup = async () => {
@@ -78,15 +79,16 @@ export class SocketClient {
     }
 
     private urlBuilder() {
-        const urlParams = new URLSearchParams([
-            ['client_id', this.deviceInfo.id],
-            ['client_name', this.deviceInfo.name],
-            ['client_type', this.deviceInfo.type ?? 'web'],
-            ['client_version', this.deviceInfo.version],
-            ['client_os', this.deviceInfo.os],
-            ['client_browser', this.deviceInfo.browser],
-            ['client_device', this.deviceInfo.device],
-        ]);
+        const urlParams = new URLSearchParams({
+            client_id: this.clientInfo.id,
+            client_name: this.clientInfo.name,
+            client_type: this.clientInfo.type ?? 'web',
+            client_version: this.clientInfo.version,
+            client_os: this.clientInfo.os,
+            client_browser: this.clientInfo.browser,
+            client_device: this.clientInfo.device,
+            client_volume: this.clientInfo.volume_percent.toString(),
+        });
 
         return `&${urlParams.toString()}`;
     }

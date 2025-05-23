@@ -7,19 +7,20 @@ import { IonPage, IonProgressBar, IonRouterOutlet, IonTabs, isPlatform, } from '
 
 import { lockPortrait, unlockOrientation } from '@/lib/utils';
 import { closeMenu } from '@/store/profileMenu';
-import { currentSong } from '@/store/audioPlayer';
+import {currentSong} from '@/store/audioPlayer';
 
 import ImageModal from '@/Layout/ImageModal.vue';
 import Screensaver from '@/Layout/Screensaver.vue';
+import EqualizerMenu from "@/Layout/Mobile/components/menus/EqualizerMenu.vue";
+import DeviceOverlay from "@/Layout/Desktop/components/Overlays/DeviceOverlay.vue";
 
 import FullPlayer from '@/components/MusicPlayer/mobile/FullPlayer.vue';
 import MiniPlayer from '@/components/MusicPlayer/mobile/MiniPlayer.vue';
+import ChristmasSnow from "@/components/Seasonal/Christmas/ChristmasSnow.vue";
 
 import ProfileMenu from './components/menus/ProfileMenu.vue';
 import BottomBar from './components/BottomBar.vue';
 import SideFlyout from './components/SideFlyout.vue';
-import EqualizerMenu from "@/Layout/Mobile/components/menus/EqualizerMenu.vue";
-import ChristmasSnow from "@/components/Seasonal/Christmas/ChristmasSnow.vue";
 import MobileLibraryHeader from "@/views/Base/Library/components/MobileLibraryHeader.vue";
 
 const isFetching = useIsFetching();
@@ -50,12 +51,13 @@ onUnmounted(() => {
 
       <ProfileMenu />
       <EqualizerMenu />
+      <DeviceOverlay class="!z-10" :ignoreElRef="[]" />
 
       <BottomBar />
     </ion-tabs>
 
     <FullPlayer v-if="currentSong" />
-    <MiniPlayer v-if="currentSong" />
+    <MiniPlayer />
 
     <ImageModal />
     <!--      <Toast class="z-1199" />-->

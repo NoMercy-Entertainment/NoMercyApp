@@ -1,14 +1,14 @@
 import apiClient from '../clients/apiClient';
 
 import servers, { setServers } from '@/store/servers';
-import {updateUserFromApi, user} from '@/store/user';
+import {user} from '@/store/user';
 import { setCurrentServer } from '@/store/currentServer';
 
-import type { User } from '@/types/auth';
 import { ref } from 'vue';
 import router from '@/router';
-import { setMessages } from "@/store/messages";
-import { setNotifications } from "@/store/notifications";
+import {AppConfig} from "@/types/config";
+import {setMessages} from "@/store/messages";
+import {setNotifications} from "@/store/notifications";
 
 const done = ref(false);
 
@@ -19,23 +19,23 @@ const getLocations = async (): Promise<void> => new Promise((resolve, reject) =>
 	}
 
 	apiClient()
-		.get<{ data: User }>('/app_config')
+		.get<AppConfig>('/app_config')
 		.then(async ({ data }) => {
 
 			if (!data?.data) reject('No data returned from API');
 
-			updateUserFromApi(data.data);
-
 			setServers(data.data.servers);
 
-			setMessages(data.data.receivedMessages);
-			setNotifications(data.data.notifications);
+			setMessages(data.data.messages ?? []);
+			setNotifications(data.data.notifications ?? []);
 
 			user.value = {
 				...user.value,
 				locale: data.data.locale,
 				name: data.data.name,
 				avatarUrl: data.data.avatarUrl,
+				features: data.data.features,
+				moderator: !!data.data.moderator,
 			};
 
 			done.value = true;

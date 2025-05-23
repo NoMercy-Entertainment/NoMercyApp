@@ -105,8 +105,6 @@ export const scrollToDiv = (i: string) => {
         scrollContainer = document.querySelector<HTMLDivElement>('.ion-page:not(.ion-page-hidden) ion-content .scroll-container')!;
     }
 
-    console.log(scrollContainer, target);
-
     if (target && scrollContainer) {
         (scrollContainer as HTMLDivElement).scrollTo({
             top: target.offsetTop - 120,
