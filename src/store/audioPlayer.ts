@@ -1,6 +1,6 @@
 // noinspection JSUnusedGlobalSymbols
 
-import { ref, toRaw } from 'vue';
+import {ref, toRaw, watch} from 'vue';
 import {createAnimation, isPlatform, modalController} from '@ionic/vue';
 import {
 	VolumeButtons,
@@ -18,7 +18,6 @@ import { onDoubleClick } from "@/lib/utils";
 import { siteTitle } from "@/config/config";
 
 import {deviceId} from "@/store/deviceInfo";
-import {musicSocketConnection} from "@/store/musicSocket";
 import {user} from "@/store/user";
 
 export const audioPlayer = new MusicPlayer<PlaylistItem>({
@@ -38,6 +37,11 @@ export const audioPlayer = new MusicPlayer<PlaylistItem>({
 	expose: true,
 	disableAutoPlayback: user.value.features?.nomercyConnect ?? false,
 });
+
+watch(user, value => {
+	audioPlayer.setAutoPlayback(value.features?.nomercyConnect ?? false);
+});
+
 export default audioPlayer;
 
 export const lyricsMenuOpen = ref<boolean>(false);
@@ -343,7 +347,7 @@ audioPlayer.on('time', (timeState) => {
 
 	if(currentDeviceId.value == deviceId.value && timeState.position - lastTime > 5) {
 		lastTime = timeState.position;
-		musicSocketConnection.value?.invoke('CurrentTimeCommand', timeState.position);
+		// musicSocketConnection.value?.invoke('CurrentTimeCommand', timeState.position);
 	}
 });
 audioPlayer.on('song', (data) => {

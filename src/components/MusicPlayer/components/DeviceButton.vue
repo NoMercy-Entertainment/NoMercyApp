@@ -25,13 +25,9 @@ const currentDevice = computed(() => connectedDevices.value.find(d => d.device_i
 </script>
 
 <template>
-  <div data-target="devices" v-if="user.features?.nomercyConnect"
-       class="flex items-center h-10 rounded-full !text-xs focus-visible:bg-transparent active:bg-transparent hover:bg-transparent"
-       :data-current_device="currentDeviceId">
-    <MusicButton label="Playing on this device" :onclick="handleClick">
-      <MoooomIcon icon="devices" class="h-6 w-6 text-focus" v-if="deviceMenuOpen"/>
-      <MoooomIcon icon="devices" class="h-6 w-6" v-else/>
-    </MusicButton>
+  <MusicButton data-target="devices" v-if="user.features?.nomercyConnect" label="Playing on this device" :onclick="handleClick" className="!w-min !min-w-min flex gap-2 items-center" :data-current_device="currentDeviceId">
+    <MoooomIcon icon="devices" class="h-6 w-6 text-focus" v-if="deviceMenuOpen"/>
+    <MoooomIcon icon="devices" class="h-6 w-6" v-else/>
     <p :data-size="musicSize" v-if="!noName"
        class="text-auto-900 flex sm:hidden compact:hidden pointer-events-none !text-sm min-w-full whitespace-nowrap pl-2 pr-8 max-w-64">
       {{
@@ -40,5 +36,5 @@ const currentDevice = computed(() => connectedDevices.value.find(d => d.device_i
             : currentDevice?.custom_name ?? currentDevice?.name
       }}
     </p>
-  </div>
+  </MusicButton>
 </template>

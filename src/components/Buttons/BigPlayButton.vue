@@ -2,12 +2,19 @@
 import { computed, PropType } from 'vue';
 
 import type { AlbumResponse, ArtistResponse, DisplayList } from '@/types/api/music/musicPlayer';
-import audioPlayer, {currentPlaylist, isPlaying, setCurrentPlaylist} from '@/store/audioPlayer';
+import audioPlayer, {
+  currentDeviceId,
+  currentPlaylist,
+  currentSong,
+  isPlaying,
+  setCurrentPlaylist
+} from '@/store/audioPlayer';
 
 import PlayerIcon from '@/components/Images/icons/PlayerIcon.vue';
 import MusicButton from '@/components/MusicPlayer/components/MusicButton.vue';
 import {musicSocketConnection} from "@/store/musicSocket";
 import {user} from "@/store/user";
+import {deviceId} from "@/store/deviceInfo";
 
 const props = defineProps({
   data: {
@@ -40,10 +47,19 @@ const handleClick = () => {
     return;
   }
 
+  if(!currentDeviceId.value) {
+    musicSocketConnection.value?.invoke('ChangeDeviceCommand', deviceId.value)
+        .then(() => {
+          console.log('Switched to device:', deviceId.value);
+        })
+        .catch((error) => {
+          console.error('Error switching device:', error);
+        });
+  }
   musicSocketConnection.value?.invoke('StartPlaybackCommand',
       props.data.type.replace(/s$/u, ''),
       props.data.id,
-      props.data.tracks.at(0)?.id,
+      currentSong.value?.id ?? props.data.tracks.at(0)?.id,
   );
   if (currentPlaylist.value === playlistName.value) {
     audioPlayer.togglePlayback();

@@ -74,7 +74,7 @@ export class SocketClient {
             .withKeepAliveInterval(this.keepAliveInterval * 1000)
             .withAutomaticReconnect()
             .withStatefulReconnect()
-            .configureLogging(LogLevel.Error)
+            .configureLogging(LogLevel.Critical)
             .build();
     }
 

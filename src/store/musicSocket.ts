@@ -38,6 +38,14 @@ watch(si, value => {
 	value?.connection?.on('ChangeDevice', handleBroadcastStatus);
 
 	value?.connection?.invoke('Devices').then(handleConnectedDevicesState);
+
+	window.addEventListener('beforeunload', () => {
+		value?.connection?.stop();
+	}, { once: true });
+
+	window.addEventListener('unload', () => {
+		value?.connection?.stop();
+	}, { once: true });
 });
 
 const connected = () => {
@@ -87,16 +95,16 @@ export const handlePlayerState = (data: any) => {
 			return;
 		}
 
-		// const offset = (Date.now() - state.timestamp) / 1000;
-		// const seekValue = state.progress_ms >= 1
-		// 	? (state.progress_ms + offset) / 1000
-		// 	: state.progress_ms / 1000;
-		const seekValue = state.progress_ms / 1000;
+		const offset = (Date.now() - state.timestamp) / 1000;
+		const seekValue = state.progress_ms >= 1
+			? (state.progress_ms + offset) / 1000
+			: state.progress_ms / 1000;
+		// const seekValue = state.progress_ms / 1000;
 
 		currentDeviceId.value = state.device_id;
 		setCurrentPlaylist(state.current_list);
 
-		if(state.device_id == deviceId.value) {
+		if(state.device_id == deviceId.value && !state.muted_state) {
 			audioPlayer.unmute();
 		} else {
 			audioPlayer.mute();
@@ -105,6 +113,11 @@ export const handlePlayerState = (data: any) => {
 		audioPlayer.repeat(state.repeat_state);
 		audioPlayer.shuffle(state.shuffle_state);
 
+		if (state.volume_percentage < 0) state.volume_percentage = 0;
+		if (state.volume_percentage > 100) state.volume_percentage = 100;
+
+		audioPlayer.setVolume(state.volume_percentage);
+
 		if(currentSong.value?.id != state.item?.id) {
 			audioPlayer.setQueue([]);
 			audioPlayer.setBackLog([]);
@@ -112,29 +125,28 @@ export const handlePlayerState = (data: any) => {
 			audioPlayer.setCurrentSong(state.item);
 			audioPlayer.setQueue(state.playlist);
 
-			setTimeout(() => {
+			if (state.device_id && state.is_playing) {
+				audioPlayer.play().then();
+			} else {
+				audioPlayer.pause();
+			}
+
+			audioPlayer.once('song', () => {
+				audioPlayer.seek(seekValue);
+
 				if (state.device_id && state.is_playing) {
 					audioPlayer.play().then();
 				} else {
 					audioPlayer.pause();
 				}
-
-				setTimeout(() => {
-					audioPlayer.seek(seekValue);
-				}, 300);
-			}, 500);
+			});
 		}
 
 		if(state.device_id == deviceId.value) {
 			(!currentTime.value || Math.abs(currentTime.value - seekValue) > 0.75) && audioPlayer.seek(seekValue);
-		} else if(state.device_id !== deviceId.value) {
+		} else {
 			audioPlayer.seek(seekValue);
 		}
-
-		if (state.volume_percentage < 0) state.volume_percentage = 0;
-		if (state.volume_percentage > 100) state.volume_percentage = 100;
-
-		audioPlayer.setVolume(state.volume_percentage);
 
 		if (state.device_id && state.is_playing) {
 			audioPlayer.play().then();
