@@ -8,7 +8,7 @@ import { currentServer } from '@/store/currentServer';
 import { user } from '@/store/user';
 import { setDisableScreensaver } from '@/store/imageModal';
 
-import type { NMPlayer, PlaylistItem, PlayerConfig } from '@/lib/VideoPlayer';
+import type {NMPlayer, PlayerConfig, NMPlaylistItem} from '@/lib/VideoPlayer';
 import {
   AutoSkipPlugin,
   TVUIPlugin,
@@ -23,28 +23,16 @@ import router from "@/router";
 import { hideNavBar, setNavBarVisible, showNavBar } from "@/store/ui";
 import useServerClient from "@/lib/clients/useServerClient";
 
-interface MyNmPlayer extends NMPlayer {
-  showInProduction: () => boolean;
-  getPlaylistItem: () => PlaylistItem & {
-    tmdb_id: number,
-    special_id: number,
-    video_type: string,
-    video_id: number;
-  };
-}
+const { data } = useServerClient<NMPlaylistItem[]>();
 
-const { data } = useServerClient<PlaylistItem[]>({
-
-});
-
-const player = ref<MyNmPlayer>();
+const player = ref<NMPlayer<NMPlaylistItem>>();
 
 const goBack = () => {
   player.value?.emit('back-button');
   player.value?.emit('back-button-hyjack');
 }
 
-const initPlayer = (value: PlaylistItem[] | undefined) => {
+const initPlayer = (value: NMPlaylistItem[] | undefined) => {
 
   const config: PlayerConfig = {
     muted: false,
@@ -92,8 +80,6 @@ const initPlayer = (value: PlaylistItem[] | undefined) => {
       },
     },
   };
-
-  player.value?.dispose();
 
   // @ts-ignore
   player.value = nmplayer('player1')

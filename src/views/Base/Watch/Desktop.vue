@@ -10,7 +10,7 @@ import { setDisableScreensaver } from '@/store/imageModal';
 import type {
   NMPlayer,
   PlaylistItem,
-  PlayerConfig
+  PlayerConfig, NMPlaylistItem
 } from '@/lib/VideoPlayer';
 import {
   nmplayer,
@@ -23,27 +23,13 @@ import {
 import router from '@/router';
 import audioPlayer from '@/store/audioPlayer';
 
-// import NotFound from "@/Layout/Desktop/components/NotFound.vue";
 import useServerClient from "@/lib/clients/useServerClient";
 
-const { data } = useServerClient<PlaylistItem[]>({
+const { data } = useServerClient<NMPlaylistItem[]>();
 
-});
+const player = ref<NMPlayer<NMPlaylistItem>>();
 
-interface MyNmPlayer extends NMPlayer {
-  showInProduction: () => boolean;
-  getPlaylistItem: () => PlaylistItem & {
-    tmdb_id: number,
-    special_id: number,
-    video_type: string,
-    video_id: number;
-  };
-}
-
-const player = ref<MyNmPlayer>();
-// const playerContainer = ref<HTMLDivElement>();
-
-const initPlayer = (value: PlaylistItem[] | undefined) => {
+const initPlayer = (value: NMPlaylistItem[] | undefined) => {
 
   const config: PlayerConfig = {
     muted: false,
@@ -91,11 +77,8 @@ const initPlayer = (value: PlaylistItem[] | undefined) => {
     },
   }
 
-  player.value?.dispose();
-
   // @ts-ignore
-  player.value = nmplayer('player1')
-    .setup(config);
+  player.value = nmplayer('player1').setup(config);
 
   player.value?.once('back', () => {
     router.back();
@@ -194,15 +177,7 @@ onUnmounted(() => {
 
 <template>
   <ion-page>
-<!--    <NotFound v-if="isError && !data" />-->
-<!--    <Teleport v-else to="body">-->
-<!--      <div ref="playerContainer" class="absolute inset-0 flex h-full w-full overflow-clip bg-black z-1199" :class="{-->
-<!--        'mb-28': isNative,-->
-<!--        'mb-0': !isNative,-->
-<!--      }">-->
-        <div id="player1" class="group nomercyplayer"></div>
-<!--      </div>-->
-<!--    </Teleport>-->
+    <div id="player1" class="group nomercyplayer"></div>
   </ion-page>
 </template>
 

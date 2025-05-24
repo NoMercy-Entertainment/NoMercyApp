@@ -1,12 +1,14 @@
+import {RouteLocationNormalizedLoaded, useRoute} from "vue-router";
 import Plugin from '@nomercy-entertainment/nomercy-video-player/src/plugin';
 import type { NMPlayer, PlaylistItem } from "@nomercy-entertainment/nomercy-video-player/src/types";
 
 import { useSocket } from "@/store/socket";
-import {RouteLocationNormalizedLoaded, useRoute} from "vue-router";
+import type {NMPlaylistItem} from "@/lib/VideoPlayer";
 
 export interface SyncPluginArgs {
 	basePath: string;
 	accessToken: string,
+	playlist: NMPlaylistItem[]
 }
 
 export class SyncPlugin extends Plugin {
@@ -43,9 +45,15 @@ export class SyncPlugin extends Plugin {
 	}
 
 	ended() {
-		if (this.player.isLastPlaylistItem()) {
+		const progress = (this.player.getCurrentTime() / this.player.getDuration()) * 100;
+		// and progress is 90% for a tv show and 80% for a movie
+		if (this.player.isLastPlaylistItem() && this.player.playlistItem()?.playlist_type === 'tv' && progress >= 90) {
 			const socket = useSocket();
-			socket?.invoke('RemoveWatched', this.episodeData());
+			socket?.invoke('RemoveWatched', this.episodeData()).then();
+		}
+		else if (this.player.isLastPlaylistItem() && this.player.playlistItem()?.playlist_type === 'movie' && progress >= 80) {
+			const socket = useSocket();
+			socket?.invoke('RemoveWatched', this.episodeData()).then();
 		}
 
 		this.dispose();

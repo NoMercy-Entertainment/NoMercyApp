@@ -4,8 +4,10 @@ import Plugin from '@nomercy-entertainment/nomercy-video-player/src/plugin';
 import { NMPlayer } from '@nomercy-entertainment/nomercy-video-player/src/types';
 
 import { groupBy } from '@/lib/stringArray';
+import type {NMPlaylistItem} from "@/lib/VideoPlayer";
 
 export interface AutoSkipPluginArgs {
+	playlist: NMPlaylistItem[]
 }
 
 export class AutoSkipPlugin extends Plugin {

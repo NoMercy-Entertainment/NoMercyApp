@@ -137,8 +137,8 @@ const onWillDismiss = async () => {
       <ChristmasSnow />
 
       <div
-        class="relative z-0 pt-safe-offset-4 flex h-screen min-h-screen flex-col items-center justify-between gap-2 w-inherit scrollbar-none text-slate-light-12 dark:text-slate-dark-12 overflow-clip">
-        <div class="pointer-events-none absolute inset-0 w-full  bg-spotifyBottom bg-focus transition-all duration-500">
+        class="relative z-0 pt-safe-offset-0 flex h-screen min-h-screen flex-col items-center justify-between gap-2 w-inherit scrollbar-none text-slate-light-12 dark:text-slate-dark-12 overflow-clip">
+        <div class="pointer-events-none absolute inset-0 w-full bg-spotifyBottom bg-focus transition-all duration-500">
         </div>
 
         <TopRow class="pt-safe px-6" />
@@ -154,14 +154,6 @@ const onWillDismiss = async () => {
             </swiper-slide>
           </template>
         </SwiperComponent>
-
-        <!--        <div class="w-full max-w-2xl h-auto aspect-square shadow">-->
-        <!--          <CoverImage-->
-        <!--              :data="currentSong"-->
-        <!--              v-if="currentSong"-->
-        <!--              :size="320"-->
-        <!--              className="pointer-events-none relative aspect-square h-auto overflow-clip rounded-md w-inherit shadow"/>-->
-        <!--        </div>-->
 
         <TrackRow class=" px-6" />
 

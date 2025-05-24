@@ -14,7 +14,7 @@ export class SocketClient {
     private accessToken: string;
     private baseUrl: string;
     private clientInfo: ClientInfo = clientInfo.value!;
-    private keepAliveInterval: number = 10;
+    private keepAliveInterval: number = 5;
     private endpoint: string;
 
     constructor(baseUrl: string, accessToken: string, endpoint: string = 'socket') {
@@ -68,7 +68,7 @@ export class SocketClient {
         return new HubConnectionBuilder()
             .withUrl(`${this.baseUrl}/${this.endpoint}`, {
                 accessTokenFactory: () => this.accessToken + urlString,
-                skipNegotiation: true,
+                // skipNegotiation: true,
                 transport: HttpTransportType.WebSockets,
             })
             .withKeepAliveInterval(this.keepAliveInterval * 1000)

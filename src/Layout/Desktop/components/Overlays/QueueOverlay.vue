@@ -71,7 +71,7 @@ const handleClick = (song: PlaylistItem) => {
         <p class="text-lg font-semibold">
           {{ $t('Now Playing') }}
         </p>
-        <RouterLink v-if="currentPlaylist" :to="currentPlaylist"
+        <RouterLink v-if="currentPlaylist" :to="'/music/' + currentPlaylist"
                     class="text-sm font-semibold flex gap-1 items-center hover:underline underline-offset-2">
           <span>{{ $t('View Playlist') }}</span>
           <MoooomIcon :icon="MoooomIcons.shareSquare" className="w-4 h-4"/>

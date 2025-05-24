@@ -11,6 +11,7 @@ const initializeMusicSocket = async (): Promise<void> => {
 	}
 
 	if (!currentServer.value || !user.value || !user.value.features?.nomercyConnect) {
+		user.value.features ??= {};
 		user.value.features.nomercyConnect = false
 		return Promise.resolve();
 	}

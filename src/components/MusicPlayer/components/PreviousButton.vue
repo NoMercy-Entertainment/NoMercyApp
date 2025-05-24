@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import {user} from "@/store/user";
 import audioPlayer from "@/store/audioPlayer";
+import {musicSocketConnection} from "@/store/musicSocket";
 
 import MusicButton from './MusicButton.vue';
 import PlayerIcon from '@/components/Images/icons/PlayerIcon.vue';

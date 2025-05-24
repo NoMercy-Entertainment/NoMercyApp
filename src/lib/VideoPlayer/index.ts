@@ -20,6 +20,17 @@ import type { NMPlayer, PlaylistItem, PlayerConfig, VTTData } from '@nomercy-ent
 // // @ts-ignore
 // import type {NMPlayer, PlaylistItem, PlayerConfig, VTTData} from 'http://localhost:5503/src/index.d.ts';
 
+export interface NMPlaylistItem extends PlaylistItem {
+	origin:        string;
+	video_id:      string;
+	tmdb_id:       number;
+	video_type:    string;
+	playlist_type: string;
+	fonts:         any[];
+	fontsFile:     string;
+	episode_id:    number;
+}
+
 export {
 	nmplayer,
 	SyncPlugin,

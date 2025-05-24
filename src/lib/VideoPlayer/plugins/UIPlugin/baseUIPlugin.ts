@@ -13,8 +13,16 @@ import {
 import { buttons, type Icon } from './buttons';
 import { TimeData } from "@nomercy-entertainment/nomercy-video-player/src/types";
 
+import type {NMPlaylistItem} from "@/lib/VideoPlayer";
+
+export interface BaseUIPluginArgs {
+    basePath: string;
+    accessToken: string,
+    playlist: NMPlaylistItem[]
+}
+
 export class BaseUIPlugin extends Plugin {
-    player: NMPlayer = <NMPlayer>{};
+    player: NMPlayer<BaseUIPluginArgs> = <NMPlayer<BaseUIPluginArgs>>{};
     overlay: HTMLDivElement = <HTMLDivElement>{};
     buttons: Icon = <Icon>{};
 
@@ -117,7 +125,7 @@ export class BaseUIPlugin extends Plugin {
         'line-clamp-1',
     ];
 
-    initialize(player: NMPlayer) {
+    initialize(player: NMPlayer<BaseUIPluginArgs>) {
         this.player = player;
         this.overlay = player.overlay;
         this.buttons = buttons();

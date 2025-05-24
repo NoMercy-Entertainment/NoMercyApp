@@ -9,7 +9,7 @@ import { currentServer } from '@/store/currentServer';
 import { user } from '@/store/user';
 import { setDisableScreensaver } from '@/store/imageModal';
 
-import type { NMPlayer, PlaylistItem, PlayerConfig } from '@/lib/VideoPlayer';
+import type {NMPlayer, PlayerConfig, NMPlaylistItem} from '@/lib/VideoPlayer';
 import {
   AutoSkipPlugin,
   DesktopUIPlugin,
@@ -23,23 +23,11 @@ import router from "@/router";
 import useServerClient from "@/lib/clients/useServerClient";
 import { setNavBarVisible } from "@/store/ui";
 
-const { data } = useServerClient<PlaylistItem[]>({
+const { data } = useServerClient<NMPlaylistItem[]>();
 
-});
+const player = ref<NMPlayer<NMPlaylistItem>>();
 
-interface MyNmPlayer extends NMPlayer {
-  showInProduction: () => boolean;
-  getPlaylistItem: () => PlaylistItem & {
-    tmdb_id: number,
-    special_id: number,
-    video_type: string,
-    video_id: number;
-  };
-}
-
-const player = ref<MyNmPlayer>();
-
-const initPlayer = (value: PlaylistItem[] | undefined) => {
+const initPlayer = (value: NMPlaylistItem[] | undefined) => {
 
   const config: PlayerConfig = {
     muted: false,
