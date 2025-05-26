@@ -1,6 +1,5 @@
 <script setup lang="ts">
-import {onMounted, ref, watch} from "vue";
-import {ScrollPanel} from "primevue";
+import {computed, onMounted, ref, watch} from "vue";
 import {useRoute} from "vue-router";
 import {
   IonPage, IonContent, IonGrid,
@@ -17,14 +16,23 @@ import {breakTitle2} from "@/lib/stringArray";
 import BigPlayButton from "@/components/Buttons/BigPlayButton.vue";
 import MusicButton from "@/components/MusicPlayer/components/MusicButton.vue";
 import TrackLinks from "@/components/MusicPlayer/components/TrackLinks.vue";
-import {audioPlayer, currentSong, isPlaying, openFullPlayer, setCurrentPlaylist} from "@/store/audioPlayer";
+import {
+  audioPlayer, currentDeviceId,
+  currentPlaylist,
+  currentSong,
+  isPlaying,
+  openFullPlayer,
+  setCurrentPlaylist
+} from "@/store/audioPlayer";
 import {PlaylistItem} from "@/types/musicPlayer";
 import {focusColor, setColorPalette} from "@/store/ui";
 import {currentServer} from "@/store/currentServer";
 import EqSpinner from "@/components/Images/EqSpinner.vue";
 import MediaLikeButton from "@/components/Buttons/MediaLikeButton.vue";
 import Marquee from "@/components/Marquee.vue";
-import {scrollCenter} from "@/lib/utils";
+import {user} from "@/store/user";
+import {musicSocketConnection} from "@/store/musicSocket";
+import {deviceId} from "@/store/deviceInfo";
 
 const route = useRoute();
 
@@ -127,13 +135,41 @@ const setCurrentList = () => {
   setCurrentPlaylist(route.fullPath);
 };
 
+const playlistName = computed(() => `${data.value?.type?.replace(/s$/u, '')}/${data.value?.id}`);
+
 const handleClick = (song: PlaylistItem) => {
-  if (!currentSong.value) {
-    setCurrentList();
+  if (!data.value?.tracks) return;
+
+  if (!user.value.features?.nomercyConnect) {
+    if (currentPlaylist.value === playlistName.value) {
+      audioPlayer.togglePlayback();
+      return;
+    }
+    audioPlayer.playTrack(song!, data.value?.tracks);
+    setCurrentPlaylist(playlistName.value);
+    return;
   }
 
-  audioPlayer.playTrack(song, data.value?.tracks ?? []);
-  openFullPlayer()
+  if(!currentDeviceId.value) {
+    musicSocketConnection.value?.invoke('ChangeDeviceCommand', deviceId.value)
+        .then(() => {
+          console.log('Switched to device:', deviceId.value);
+        })
+        .catch((error) => {
+          console.error('Error switching device:', error);
+        });
+  }
+  musicSocketConnection.value?.invoke('StartPlaybackCommand',
+      data.value?.type.replace(/s$/u, ''),
+      data.value?.id,
+      currentSong.value?.id ?? song?.id,
+  );
+  if (currentPlaylist.value === playlistName.value) {
+    audioPlayer.togglePlayback();
+    return;
+  }
+  audioPlayer.playTrack(song!, data.value?.tracks);
+  setCurrentPlaylist(playlistName.value);
 };
 
 </script>
@@ -147,7 +183,7 @@ const handleClick = (song: PlaylistItem) => {
         <div class="w-available h-available absolute left-[202px] top-0 overflow-hidden bg-focus">
           <img
               class="w-available h-available absolute left-[-0.39px] top-[-0.39px] opacity-40 object-cover object-center"
-              :src="`${currentServer?.serverBaseUrl}${data?.cover}`" alt=""/>
+              :src="`${currentServer?.serverBaseUrl}${data?.backdrop ?? data?.cover}`" alt=""/>
           <div class="w-[150vw] h-[150vw] absolute left-[-30%] bottom-[-50%]" style="
                   background: radial-gradient(
                     closest-side,

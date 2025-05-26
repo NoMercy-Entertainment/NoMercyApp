@@ -21,6 +21,7 @@ import CoverImage from '@/components/MusicPlayer/components/CoverImage.vue';
 import ButtonContainer from './ButtonContainer.vue';
 import TMDBImage from "@/components/Images/TMDBImage.vue";
 import {currentServer} from "@/store/currentServer";
+import {pickPaletteColor} from "@/lib/colorHelper";
 
 defineProps({
   data: {
@@ -190,35 +191,18 @@ const ontransitionend = (e: TransitionEvent) => {
 
 <template>
   <div id="FullTvPlayer"
+       :style="`--color-focus: ${pickPaletteColor(currentSong?.color_palette?.backdrop ?? currentSong?.artist_track?.at(0)?.color_palette?.cover ?? currentSong?.color_palette?.cover)}`"
        class="top-0 grid grid-cols-1 transform-gpu grid-rows-1 left-0 h-screen w-screen overflow-hidden transition-transform will-change-transform duration-500 z-[1299] bg-slate-dark-1"
        :class="{
       'translate-y-0 duration-500': fullPlayerModalOpen,
       'translate-y-full': !fullPlayerModalOpen,
     }" @click="togglePlayerSize">
-        <img v-if="currentSong?.backdrop || currentSong?.cover" :src="`${currentServer?.serverBaseUrl}${currentSong?.backdrop ?? currentSong?.cover}`" alt=""
+        <img v-if="currentSong?.backdrop || currentSong?.artist_track?.at(0)?.cover || currentSong?.cover"
+             :src="`${currentServer?.serverBaseUrl}${currentSong?.backdrop ?? currentSong?.artist_track?.at(0)?.cover ?? currentSong?.cover}`" alt=""
           class="transform-gpu pointer-events-none inset-0 h-screen w-screen transition-opacity col-span-1 row-span-1" :class="{
             'opacity-0': isDarkMode,
             'opacity-100': !isDarkMode,
           }">
-<!--    <TMDBImage v-if="currentSong?.backdrop" :path="currentSong?.backdrop" :aspectRatio="null"-->
-<!--               :size="1920"-->
-<!--               :loading="'eager'"-->
-<!--               class="transform-gpu pointer-events-none inset-0 h-auto w-screen aspect-square transition-opacity col-span-1 row-span-1"-->
-<!--               :class="{-->
-<!--        'opacity-0': isDarkMode,-->
-<!--        'opacity-100': !isDarkMode,-->
-<!--      }"/>-->
-<!--    <CoverImage-->
-<!--        :key="currentSong?.id"-->
-<!--        :data="currentSong"-->
-<!--        :size="1920"-->
-<!--        alt=""-->
-<!--        class="transform-gpu pointer-events-none inset-0 h-auto w-screen aspect-square transition-opacity col-span-1 row-span-1"-->
-<!--        :class="{-->
-<!--        'opacity-0': isDarkMode,-->
-<!--        'opacity-100': !isDarkMode,-->
-<!--      }"/>-->
-
     <canvas ref="canvas" id="audio-visualizer"
             class="absolute top-0 left-0 my-24 mx-6 h-available w-available overflow-clip pointer-events-none"></canvas>
     <div id="audio-color" ref="backdrop"

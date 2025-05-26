@@ -147,7 +147,7 @@ const handleClick = (song: PlaylistItem) => {
         <div class="w-available h-available absolute left-[202px] top-0 overflow-hidden bg-focus">
           <img
               class="w-available h-available absolute left-[-0.39px] top-[-0.39px] opacity-40 object-cover object-center"
-              :src="`${currentServer?.serverBaseUrl}${data?.cover}`" alt=""/>
+              :src="`${currentServer?.serverBaseUrl}${data?.backdrop ?? data?.cover}`" alt=""/>
           <div class="w-[150vw] h-[150vw] absolute left-[-30%] bottom-[-50%]" style="
                   background: radial-gradient(
                     closest-side,
