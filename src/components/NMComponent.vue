@@ -9,6 +9,11 @@ import { setBackground, setColorPalette } from '@/store/ui';
 import { useOnline } from '@vueuse/core';
 
 const props = defineProps({
+  path: {
+    type: String,
+    required: false,
+    default: undefined,
+  },
   options: {
     type: Object as PropType<Component<HomeItem>[] & { queryKey: string[], path?: string }>,
     required: false,
@@ -21,9 +26,9 @@ const props = defineProps({
 
 const queryKey = props.options.queryKey ?? qk();
 
-const isMutating = getMutating({ queryKey });
+const isMutating = getMutating({ queryKey, path: props.path });
 
-const { data: homeData } = getQuery({ queryKey });
+const { data: homeData } = getQuery({ queryKey, path: props.path });
 
 const { data: mutatedData, mutate } = getMutation({ queryKey, homeData: homeData });
 

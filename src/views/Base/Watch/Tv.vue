@@ -114,6 +114,8 @@ const initPlayer = (value: NMPlaylistItem[] | undefined) => {
   });
 
   player.value?.once('back', () => {
+    player.value?.dispose();
+    router.back();
   });
 
   player.value?.on('playlistComplete', () => {

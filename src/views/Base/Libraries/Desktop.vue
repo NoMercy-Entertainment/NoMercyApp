@@ -1,19 +1,25 @@
 <script setup lang="ts">
-import { IonPage, IonContent } from '@ionic/vue';
-import ExploreContainer from '@/components/ExploreContainer.vue';
-import {setBackground, setColorPalette} from '@/store/ui';
 import { onMounted } from 'vue';
+import { IonContent, IonPage } from '@ionic/vue';
+import { setTitle } from '@/lib/stringArray';
+import { setBackground, setColorPalette } from '@/store/ui';
+
+import ScrollContainer from '@/Layout/Desktop/components/ScrollContainer.vue';
+import NMComponent from '@/components/NMComponent.vue';
 
 onMounted(() => {
-  setColorPalette(null);
+  setTitle();
   setBackground(null);
+  setColorPalette(null);
 });
-</script>
 
+</script>
 <template>
   <ion-page>
     <ion-content :fullscreen="true">
-      <ExploreContainer :name="`Libraries Desktop page`" />
+      <ScrollContainer :autoHide="true" :static="true">
+        <NMComponent />
+      </ScrollContainer>
     </ion-content>
   </ion-page>
 </template>
