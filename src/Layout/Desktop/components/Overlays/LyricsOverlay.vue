@@ -182,14 +182,14 @@ watch(lyricsMenuOpen, (value) => {
 
 <template>
   <div :data-open="lyricsMenuOpen" id="lyricsContainer" :inert="!lyricsMenuOpen"
-    class="absolute inset-0 h-inherit w-inherit sm:left-auto sm:right-4 sm:top-4 sm:bottom-4 sm:w-2/3 sm:max-w-3xl tv:max-w-3/4 flex items-center justify-center rounded-xl transition-all duration-500 sm:data-[open='false']:translate-x-[150%] sm:overflow-clip z-[9999]  tv:data-[open='false']:translate-x-[150%] tv:!w-available tv:data-[open='true']:delay-500 will-change-transform">
+    class="absolute inset-0 h-inherit w-inherit sm:left-auto sm:right-4 sm:top-4 sm:bottom-4 sm:w-2/3 sm:max-w-3xl tv:max-w-3/4 flex items-center justify-center rounded-xl transition-all duration-500 sm:data-[open='false']:translate-x-[150%] sm:overflow-clip z-[9999] tv:-translate-x-[5%] tv:!w-available tv:data-[open='true']:delay-500 will-change-transform">
 
     <div
       class="pointer-events-none absolute inset-0 z-0 flex items-center justify-center rounded-xl sm:bg-white/6 dark:sm:bg-black/30 tv:!bg-transparent">
     </div>
 
     <div ref="lyrics_container" :id="`lyrics_container_${id}`"
-      class="relative z-10 flex w-full flex-col overflow-auto scrollbar-none p-4 children:transition-all duration-200 h-available sm:min-h-[calc(100vh-13rem)] gap-4 sm:gap-4 sm:p-16 text-xl sm:text-2xl tv:text-lg tv:gap-6">
+      class="relative z-10 flex w-full flex-col overflow-auto scrollbar-none p-4 children:transition-all duration-200 h-available sm:min-h-[calc(100vh-13rem)] gap-4 sm:gap-4 sm:p-16 text-xl sm:text-2xl tv:text-lg tv:p-4 tv:pt-28 tv:gap-3 tv:mt-2">
 
       <template v-if="!!lyrics">
         <div class="contents" v-if="Array.isArray(lyrics)">

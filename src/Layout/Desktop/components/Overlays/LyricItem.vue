@@ -20,7 +20,7 @@ defineProps({
 
 <template>
     <span data-lyric :data-index="index ?? -1" :id="typeof lyric != 'undefined' ? lyric?.time?.total.toString() : '-1'"
-        class="tv:min-h-28 flex flex-col justify-center items-center gap-2 h-auto w-available transition-all duration-200 ease-in-out"
+        class="tv:min-h-24 flex flex-col justify-center items-center gap-2 h-auto w-available transition-all duration-200 ease-in-out"
           :class="{
             'text-black': lyric?.time?.total,
             '!text-white': !lyric?.time?.total,

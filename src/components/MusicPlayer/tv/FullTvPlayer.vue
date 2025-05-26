@@ -225,7 +225,7 @@ const ontransitionend = (e: TransitionEvent) => {
       <div :data-show-lyrics="lyricsMenuOpen"
            class="flex-col absolute inset-0 w-screen flex transition-all duration-200 delay:500 h-available overflow-clip pointer-events-none z-0">
 
-        <div :data-show-lyrics="true" class="w-full px-0 py-16 h-full overflow-hidden transition-all"
+        <div :data-show-lyrics="true" class="w-full px-0 py-16 tv:py-20 h-full overflow-hidden transition-all"
         >
           <div
               class="z-0 flex h-full w-full flex-col overflow-y-auto overflow-x-hidden scroll-smooth scrollbar-none font-bbc duration-200">
