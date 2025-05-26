@@ -42,13 +42,13 @@ defineProps({
       <RouterLink :to="`${item.link}${suffix}`" :data-card="item.id" :data-index="index"
         class="row-start-2 w-full h-auto rounded-xl bg-cover aspect-poster focus:scale-105 focus:outline outline-[2.2px] outline-white transition-transform duration-200 scroll-mb-20 scroll-mt-12 snap-center snap-mandatory"
         @focus="handleFocus($event, item)" @keydown="handleDown($event)" @keyup="handleUp($event)"
-        :style="`background-image: url('https://image.tmdb.org/t/p/w300${item.poster}')`"></RouterLink>
+        :style="`background-image: url('https://app.nomercy.tv/tmdb-images${item.poster}?width=300&type=avif&aspect_ratio=null')`"></RouterLink>
     </template>
   </div>
 
   <Teleport to=".image-preload-container">
     <template v-for="item in data?.slice(0, 7)" :key="item.id">
-      <img :src="`https://image.tmdb.org/t/p/w1280${item.backdrop}`" width="0" height="0" loading="eager" alt=""
+      <img :src="`https://app.nomercy.tv/tmdb-images${item.backdrop}?width=2160&type=avif&aspect_ratio=null`" width="0" height="0" loading="eager" alt=""
         class="absolute">
     </template>
   </Teleport>

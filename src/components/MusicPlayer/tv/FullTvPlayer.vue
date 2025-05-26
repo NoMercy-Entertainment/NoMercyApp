@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import { PropType, onMounted, onUnmounted, ref, watch } from 'vue';
+import {PropType, onMounted, onUnmounted, ref, watch} from 'vue';
 
-import type { DisplayList } from '@/types/api/music/musicPlayer';
-import { SizeState } from '@/types/musicPlayer';
+import type {DisplayList} from '@/types/api/music/musicPlayer';
+import {SizeState} from '@/types/musicPlayer';
 
 import audioPlayer, {
   currentSong, fullPlayerModalOpen,
@@ -19,6 +19,8 @@ import ProgressBarContainer from '@/components/MusicPlayer/components/ProgressBa
 import CoverImage from '@/components/MusicPlayer/components/CoverImage.vue';
 
 import ButtonContainer from './ButtonContainer.vue';
+import TMDBImage from "@/components/Images/TMDBImage.vue";
+import {currentServer} from "@/store/currentServer";
 
 defineProps({
   data: {
@@ -82,8 +84,8 @@ const hideControls = () => {
   backdrop.value.style.setProperty('--backdrop-opacity', '0.4');
 
   item.value.style.translate = lyricsMenuOpen.value
-    ? '0 0'
-    : '0 115%';
+      ? '0 0'
+      : '0 115%';
 };
 
 const dynamicControls = () => {
@@ -188,22 +190,40 @@ const ontransitionend = (e: TransitionEvent) => {
 
 <template>
   <div id="FullTvPlayer"
-    class="top-0 grid grid-cols-1 transform-gpu grid-rows-1 left-0 h-screen w-screen overflow-hidden transition-transform will-change-transform duration-500 z-[1299] bg-slate-dark-1"
-    :class="{
+       class="top-0 grid grid-cols-1 transform-gpu grid-rows-1 left-0 h-screen w-screen overflow-hidden transition-transform will-change-transform duration-500 z-[1299] bg-slate-dark-1"
+       :class="{
       'translate-y-0 duration-500': fullPlayerModalOpen,
       'translate-y-full': !fullPlayerModalOpen,
     }" @click="togglePlayerSize">
-    <img v-if="data?.backdrop" :src="data?.backdrop" alt=""
-      class="transform-gpu pointer-events-none inset-0 h-full w-screen transition-opacity col-span-1 row-span-1" :class="{
-        'opacity-0': isDarkMode,
-        'opacity-100': !isDarkMode,
-      }">
+        <img v-if="currentSong?.backdrop || currentSong?.cover" :src="`${currentServer?.serverBaseUrl}${currentSong?.backdrop ?? currentSong?.cover}`" alt=""
+          class="transform-gpu pointer-events-none inset-0 h-screen w-screen transition-opacity col-span-1 row-span-1" :class="{
+            'opacity-0': isDarkMode,
+            'opacity-100': !isDarkMode,
+          }">
+<!--    <TMDBImage v-if="currentSong?.backdrop" :path="currentSong?.backdrop" :aspectRatio="null"-->
+<!--               :size="1920"-->
+<!--               :loading="'eager'"-->
+<!--               class="transform-gpu pointer-events-none inset-0 h-auto w-screen aspect-square transition-opacity col-span-1 row-span-1"-->
+<!--               :class="{-->
+<!--        'opacity-0': isDarkMode,-->
+<!--        'opacity-100': !isDarkMode,-->
+<!--      }"/>-->
+<!--    <CoverImage-->
+<!--        :key="currentSong?.id"-->
+<!--        :data="currentSong"-->
+<!--        :size="1920"-->
+<!--        alt=""-->
+<!--        class="transform-gpu pointer-events-none inset-0 h-auto w-screen aspect-square transition-opacity col-span-1 row-span-1"-->
+<!--        :class="{-->
+<!--        'opacity-0': isDarkMode,-->
+<!--        'opacity-100': !isDarkMode,-->
+<!--      }"/>-->
 
     <canvas ref="canvas" id="audio-visualizer"
-      class="absolute top-0 left-0 my-24 mx-6 h-available w-available overflow-clip pointer-events-none"></canvas>
+            class="absolute top-0 left-0 my-24 mx-6 h-available w-available overflow-clip pointer-events-none"></canvas>
     <div id="audio-color" ref="backdrop"
-      class="transform-gpu col-span-1 row-span-1 inset-0 w-full h-screen pointer-events-none bg-[var(--background)] opacity-[var(--backdrop-opacity)] transition-colors duration-1000"
-      :class="{
+         class="transform-gpu col-span-1 row-span-1 inset-0 w-full h-screen pointer-events-none bg-[var(--background)] opacity-[var(--backdrop-opacity)] transition-colors duration-1000"
+         :class="{
         '!opacity-70': lyricsMenuOpen,
       }" :style="`
                 --backdrop-opacity: 0.6;
@@ -219,23 +239,23 @@ const ontransitionend = (e: TransitionEvent) => {
     <div class="container flex w-full h-full inset-0 col-span-1 row-span-1 p-12 pb-0">
 
       <div :data-show-lyrics="lyricsMenuOpen"
-        class="flex-col absolute inset-0 w-screen flex transition-all duration-200 delay:500 h-available overflow-clip pointer-events-none z-0">
+           class="flex-col absolute inset-0 w-screen flex transition-all duration-200 delay:500 h-available overflow-clip pointer-events-none z-0">
 
         <div :data-show-lyrics="true" class="w-full px-0 py-16 h-full overflow-hidden transition-all"
         >
           <div
-            class="z-0 flex h-full w-full flex-col overflow-y-auto overflow-x-hidden scroll-smooth scrollbar-none font-bbc duration-200">
+              class="z-0 flex h-full w-full flex-col overflow-y-auto overflow-x-hidden scroll-smooth scrollbar-none font-bbc duration-200">
             <div class="relative whitespace-pre-wrap font-bold h-available">
-              <LyricsOverlay :key="currentSong?.id" />
+              <LyricsOverlay :key="currentSong?.id"/>
             </div>
           </div>
         </div>
       </div>
 
       <div id="item" ref="item" class="absolute flex items-end gap-4 z-10 transform-gpu transition-all duration-500"
-        :class="{
+           :class="{
           'top-12': lyricsMenuOpen,
-          'opacity-0': !controlsVisible,
+          // 'opacity-0': !controlsVisible,
           'top-64 delay-300': !lyricsMenuOpen
         }">
         <div :data-size="musicSize" class="" :class="{
@@ -243,7 +263,7 @@ const ontransitionend = (e: TransitionEvent) => {
           'w-28 delay-300': !lyricsMenuOpen
         }">
           <CoverImage :data="currentSong" :size="320"
-            className="pointer-events-none relative aspect-square h-auto rounded-md w-inherit" />
+                      className="pointer-events-none relative aspect-square h-auto rounded-md w-inherit"/>
         </div>
 
         <div class="pointer-events-none relative flex flex-col gap-1 font-bold">
@@ -254,22 +274,23 @@ const ontransitionend = (e: TransitionEvent) => {
             {{ currentSong?.name }}
           </span>
           <TrackLinks v-if="currentSong" :id="currentSong.id" :data="currentSong.artist_track" tabindex="-1" noLink
-            :class="{
+                      :class="{
               'children:children:children:text-md': lyricsMenuOpen,
               'children:children:children:text-lg children:children:children:delay-500': !lyricsMenuOpen,
               'children:children:children:!no-underline': true
-            }" class="children:children:children:font-bold" type="artists" />
+            }" class="children:children:children:font-bold" type="artists"/>
         </div>
       </div>
 
       <div id="controls" ref="controls" :ontransitionend="ontransitionend"
-        class="absolute bottom-0 left-0 flex flex-col w-available h-40 items-center px-16 pt-4 mt-4 gap-4 delay-300 transform-gpu transition-all duration-500">
+           class="absolute bottom-0 left-0 flex flex-col w-available h-40 items-center px-16 pt-4 mt-4 gap-4 delay-300 transform-gpu transition-all duration-500">
 
         <ProgressBarContainer v-if="fullPlayerModalOpen"
-          class="children:!mx-0 gap-4 children:!pointer-events-none !pointer-events-none" color="white"
-          :onKeyDown="onKeyDown" variant="stacked" />
+                              class="children:!mx-0 gap-4 children:!pointer-events-none !pointer-events-none"
+                              color="white"
+                              :onKeyDown="onKeyDown" variant="stacked"/>
 
-        <ButtonContainer color="white" :data="currentSong" :toggleDarkMode="toggleDarkMode" :isDarkMode="isDarkMode" />
+        <ButtonContainer color="white" :data="currentSong" :toggleDarkMode="toggleDarkMode" :isDarkMode="isDarkMode"/>
 
       </div>
     </div>

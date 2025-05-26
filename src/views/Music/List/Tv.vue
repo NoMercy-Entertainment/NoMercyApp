@@ -296,6 +296,7 @@ ion-content > ion-grid {
   --ion-grid-padding: 4rem;
   --ion-grid-columns: 9;
   height: 100%;
+  width: 100%;
   padding: 6rem 2rem 0 4rem !important;
 }
 
