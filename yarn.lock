@@ -2061,10 +2061,10 @@
     "@capacitor/core" "^6.1.2"
     "@jofr/capacitor-media-session" "^4.0.0"
 
-"@nomercy-entertainment/nomercy-music-player@^0.2.2":
-  version "0.2.2"
-  resolved "https://registry.yarnpkg.com/@nomercy-entertainment/nomercy-music-player/-/nomercy-music-player-0.2.2.tgz#449b0c2777de37ed63fed76ad4b96c2c9a6a8146"
-  integrity sha512-Dj88D3YXiFf97GMY7CYwDPuYOvIk0KmHkeqGhoQIj3wS9oiThZix+oZe5khNKlaWDQloypfP28uKPybRruyC3Q==
+"@nomercy-entertainment/nomercy-music-player@^0.2.3":
+  version "0.2.3"
+  resolved "https://registry.yarnpkg.com/@nomercy-entertainment/nomercy-music-player/-/nomercy-music-player-0.2.3.tgz#dd08029bb5776439749c37f4bdb19912386c84ea"
+  integrity sha512-nGaCcIPs0QrJQa07jWBkoGcrr+VnWFOs8cCGJa6jo2qIuOQEcVTqUZpDa1x72Ajl/zdQQeDl/szYBnUXExmeuw==
   dependencies:
     "@ionic/vue" "^8.4.1"
     "@nomercy-entertainment/media-session" "^0.1.10"
