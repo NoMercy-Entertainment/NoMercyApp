@@ -120,7 +120,6 @@ onMounted(() => {
   audioPlayer.on('song', () => {
     dynamicControls();
   });
-
 });
 
 onUnmounted(() => {
@@ -167,7 +166,7 @@ const ontransitionend = (e: TransitionEvent) => {
 
 <template>
   <div id="FullTvPlayer"
-       :style="`--color-focus: ${pickPaletteColor(currentSong?.color_palette?.backdrop ?? currentSong?.color_palette?.cover)}`"
+       :style="`--color-focus: ${pickPaletteColor(currentSong?.color_palette?.backdrop ?? currentSong?.color_palette?.cover, 20, 160)}`"
        class="absolute top-0 grid grid-cols-1 transform-gpu grid-rows-1 left-0 h-screen w-screen overflow-hidden transition-transform will-change-transform duration-500 z-[1299] bg-slate-dark-1"
        :class="{
       'translate-y-0 duration-500': fullPlayerModalOpen,

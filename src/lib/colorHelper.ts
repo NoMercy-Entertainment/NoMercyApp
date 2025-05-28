@@ -169,28 +169,28 @@ export const hexToRGB = (hex: string) => {
 
 export const pickPaletteColor = (color_palette?: PaletteColors | null | undefined, dark = 60, light = 160): string => {
 	if (!color_palette || !color_palette.darkVibrant) {
-		return 'var(--color-theme-9)';
+		return 'var(--color-theme-7)';
 	}
 	if (!tooLight(color_palette.lightVibrant, light) && !tooDark(color_palette.lightVibrant, dark)) {
 		if (color_palette.lightVibrant!.includes('#')) {
 			const rgb = hexToRgba(color_palette.lightVibrant!);
 			return `${rgb.r} ${rgb.g} ${rgb.b}`;
 		}
-		return color_palette.lightVibrant ?? 'var(--color-theme-9)';
+		return color_palette.lightVibrant ?? 'var(--color-theme-7)';
 	}
 	if (!tooDark(color_palette.primary, dark) && !tooLight(color_palette.primary, light)) {
 		if (color_palette.primary!.includes('#')) {
 			const rgb = hexToRgba(color_palette.primary!);
 			return `${rgb.r} ${rgb.g} ${rgb.b}`;
 		}
-		return color_palette.primary ?? 'var(--color-theme-9)';
+		return color_palette.primary ?? 'var(--color-theme-7)';
 	}
 	if (!tooDark(color_palette.dominant, dark) && !tooLight(color_palette.dominant, light)) {
 		if (color_palette.dominant!.includes('#')) {
 			const rgb = hexToRgba(color_palette.dominant!);
 			return `${rgb.r} ${rgb.g} ${rgb.b}`;
 		}
-		return color_palette.dominant ?? 'var(--color-theme-9)';
+		return color_palette.dominant ?? 'var(--color-theme-7)';
 	}
 
 	if (!tooDark(color_palette.darkVibrant, dark) && !tooLight(color_palette.darkVibrant, light)) {
@@ -198,24 +198,24 @@ export const pickPaletteColor = (color_palette?: PaletteColors | null | undefine
 			const rgb = hexToRgba(color_palette.darkVibrant!);
 			return `${rgb.r} ${rgb.g} ${rgb.b}`;
 		}
-		return color_palette.darkVibrant ?? 'var(--color-theme-9)';
+		return color_palette.darkVibrant ?? 'var(--color-theme-7)';
 	}
 	if (!tooDark(color_palette.darkMuted, dark) && !tooLight(color_palette.darkMuted, light)) {
 		if (color_palette.darkMuted!.includes('#')) {
 			const rgb = hexToRgba(color_palette.darkMuted!);
 			return `${rgb.r} ${rgb.g} ${rgb.b}`;
 		}
-		return color_palette.darkMuted ?? 'var(--color-theme-9)';
+		return color_palette.darkMuted ?? 'var(--color-theme-7)';
 	}
 	if (!tooLight(color_palette.lightMuted, light) && !tooDark(color_palette.lightMuted, dark)) {
 		if (color_palette.lightMuted!.includes('#')) {
 			const rgb = hexToRgba(color_palette.lightMuted!);
 			return `${rgb.r} ${rgb.g} ${rgb.b}`;
 		}
-		return color_palette.lightMuted ?? 'var(--color-theme-9)';
+		return color_palette.lightMuted ?? 'var(--color-theme-7)';
 	}
 
-	return 'var(--color-theme-9)';
+	return 'var(--color-theme-7)';
 };
 
 export enum TailwindColors {

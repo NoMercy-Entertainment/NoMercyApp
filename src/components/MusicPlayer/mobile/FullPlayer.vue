@@ -87,7 +87,7 @@ watch(currentSong, (value) => {
 const focusColor = computed(() => {
   if (!useAutoThemeColors.value) return 'var(--color-theme-7)';
 
-  return pickPaletteColor(currentSong.value?.color_palette?.cover, 10, 160)
+  return pickPaletteColor(currentSong.value?.color_palette?.backdrop ?? currentSong.value?.color_palette?.cover, 20, 160)
     .replace(/,/gu, ' ')
     .replace('rgb(', '');
 });
