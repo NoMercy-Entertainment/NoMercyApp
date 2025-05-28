@@ -48,8 +48,7 @@ const handleResourceUpdate = (data: Resource) => {
 
 useMounted(
   () => connection.value?.invoke('StartResources'),
-  () => connection.value?.invoke('StopResources').catch(),
-);
+  () => connection.value?.invoke('StopResources').catch(), 10);
 
 useHubListener(connection, 'ResourceUpdate', handleResourceUpdate);
 

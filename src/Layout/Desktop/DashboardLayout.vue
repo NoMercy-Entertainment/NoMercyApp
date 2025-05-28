@@ -109,7 +109,7 @@ onMounted(() => {
   setBackground(null);
 });
 
-useMounted(startDashboardSocket, stopDashboardSocket, 1);
+useMounted(startDashboardSocket, stopDashboardSocket, 10);
 
 const showError = computed(() => {
   return (accessError.value?.code || isPending.value || !dashboardSocketIsConnected.value) && !props.allowAnyone;

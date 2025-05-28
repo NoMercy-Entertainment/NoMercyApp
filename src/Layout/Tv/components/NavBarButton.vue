@@ -29,8 +29,8 @@ defineProps({
 </script>
 
 <template>
-  <RouterLink :to="href"
-    class="flex justify-center items-center relative first:children:mt-0.5 gap-2 pl-2 pr-3 h-8 rounded-3xl pointer-events-auto focus:outline-none focus-visible:outline-2 focus-visible:outline-focus focus-visible:outline"
+  <RouterLink :to="href" tabindex="1"
+    class="flex justify-center items-center relative first:children:mt-0.5 gap-2 pl-2 pr-3 h-8 rounded-3xl focus:outline-none focus-visible:outline-2 focus-visible:outline-focus focus-visible:outline"
     :class="{
       'bg-focus/80': active,
       'bg-white/10': !active,

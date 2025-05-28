@@ -55,7 +55,7 @@ import PlayerIcon from "@/components/Images/icons/PlayerIcon.vue";
           <NavBarButton icon="noteSixteenth" href="/music/start" name="Music" :active="isMusicRoute" />
         </div>
 
-        <RouterLink to="/setup/select-servers" class="relative flex flex-col rounded-full bg-black size-10 my-1 pointer-events-auto">
+        <RouterLink to="/setup/select-servers" class="relative flex flex-col rounded-full bg-black size-10 my-1">
           <NoMercyAvatar :user="user" :size="40"
             class="absolute focus-visible:ring-2 ring-inset focus-visible:ring-white" />
           <span

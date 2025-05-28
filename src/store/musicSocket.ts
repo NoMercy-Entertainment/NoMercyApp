@@ -90,8 +90,11 @@ export const handlePlayerState = (data: any) => {
 
 		console.log(state);
 
-		if(!state?.item) {
+		if (!state?.item) {
 			audioPlayer.stop();
+			setTimeout(() => {
+				audioPlayer.stop();
+			}, 1000);
 			return;
 		}
 
@@ -104,7 +107,7 @@ export const handlePlayerState = (data: any) => {
 		currentDeviceId.value = state.device_id;
 		setCurrentPlaylist(state.current_list);
 
-		if(state.device_id == deviceId.value && !state.muted_state) {
+		if (state.device_id == deviceId.value && !state.muted_state) {
 			audioPlayer.unmute();
 		} else {
 			audioPlayer.mute();
@@ -118,20 +121,14 @@ export const handlePlayerState = (data: any) => {
 
 		audioPlayer.setVolume(state.volume_percentage);
 
-		if(currentSong.value?.id != state.item?.id) {
+		if (currentSong.value?.id != state.item?.id) {
 			audioPlayer.setQueue([]);
 			audioPlayer.setBackLog([]);
 
 			audioPlayer.setCurrentSong(state.item);
 			audioPlayer.setQueue(state.playlist);
 
-			if (state.device_id && state.is_playing) {
-				audioPlayer.play().then();
-			} else {
-				audioPlayer.pause();
-			}
-
-			audioPlayer.once('song', () => {
+			audioPlayer.once('duration', () => {
 				audioPlayer.seek(seekValue);
 
 				if (state.device_id && state.is_playing) {
@@ -142,7 +139,7 @@ export const handlePlayerState = (data: any) => {
 			});
 		}
 
-		if(state.device_id == deviceId.value) {
+		if (state.device_id == deviceId.value) {
 			(!currentTime.value || Math.abs(currentTime.value - seekValue) > 0.75) && audioPlayer.seek(seekValue);
 		} else {
 			audioPlayer.seek(seekValue);
@@ -154,9 +151,9 @@ export const handlePlayerState = (data: any) => {
 			audioPlayer.pause();
 		}
 	}
-};
+}
 
 const handleConnectedDevicesState = (devices: Device[]) => {
   console.log(devices);
   connectedDevices.value = devices;
-};
+}

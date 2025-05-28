@@ -21,31 +21,32 @@ const initializeAudioPlayer = (): Promise<void> => {
 		audioPlayer.setAccessToken(user.value.accessToken);
 
 		const supportsAudioContext = useLocalStorage('nmplayer-music-supports-audio-context', false);
+		supportsAudioContext.value = false;
 
-		document.addEventListener('click', () => {
-			if (!supportsAudioContext) return;
-
-			const audioContext = new AudioContext();
-			// @ts-ignore
-			audioContext.onerror = () => {
-				supportsAudioContext.value = false;
-				audioContext.close().then();
-				location.reload();
-			}
-			audioContext.onstatechange = () => {
-				if (audioContext.state === 'running') {
-					supportsAudioContext.value = true;
-				} else if (audioContext.state === 'suspended') {
-					audioContext.close().then();
-					supportsAudioContext.value = false;
-				}
-			}
-			audioContext.getOutputTimestamp()
-
-			setTimeout(() => {
-				audioContext.close().then();
-			}, 100);
-		});
+		// document.addEventListener('click', () => {
+		// 	if (!supportsAudioContext) return;
+		//
+		// 	const audioContext = new AudioContext();
+		// 	// @ts-ignore
+		// 	audioContext.onerror = () => {
+		// 		supportsAudioContext.value = false;
+		// 		audioContext.close().then();
+		// 		location.reload();
+		// 	}
+		// 	audioContext.onstatechange = () => {
+		// 		if (audioContext.state === 'running') {
+		// 			supportsAudioContext.value = true;
+		// 		} else if (audioContext.state === 'suspended') {
+		// 			audioContext.close().then();
+		// 			supportsAudioContext.value = false;
+		// 		}
+		// 	}
+		// 	audioContext.getOutputTimestamp()
+		//
+		// 	setTimeout(() => {
+		// 		audioContext.close().then();
+		// 	}, 100);
+		// });
 
 		resolve();
 

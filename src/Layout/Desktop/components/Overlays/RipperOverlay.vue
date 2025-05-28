@@ -113,7 +113,7 @@ watch(ripperSocketIsConnected, async (value) => {
   }
 });
 
-useMounted(startRipperSocket, stopRipperSocket);
+useMounted(startRipperSocket, stopRipperSocket, 10);
 
 useHubListener(connection, 'DriveState', handleDriveState);
 

@@ -36,7 +36,7 @@ const classes = computed(() =>
 <template>
     <div class="flex h-auto w-full flex-col gap-1 transition-transform duration-200 handle" v-if="show">
         <button @click="toggle"
-            class="relative h-10 flex-shrink-0 flex-grow-0 items-center justify-start gap-3 self-stretch overflow-hidden rounded-md px-3 py-2 transition-transform duration-200 group hover:bg-auto-2/6"
+            class="relative h-10 flex-shrink-0 flex-grow-0 items-center justify-start gap-3 self-stretch overflow-hidden rounded-md px-3 py-2 transition-transform duration-200 group hover:bg-neutral-200/60 dark:hover:bg-neutral-800/60"
             :class="classes">
             <MoooomIcon v-if="!!icon" :icon="icon!" class="" />
             <span

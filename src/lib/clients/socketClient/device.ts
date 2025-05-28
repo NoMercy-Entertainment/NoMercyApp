@@ -26,11 +26,11 @@ export const makeDeviceInfo = async (): Promise<ClientInfo> => {
     switch (info.platform) {
         case 'android':
             deviceType = info.platform;
-            if(isTv.value) {
-                deviceType = 'tv';
-            }
             if(isPlatform('tablet')) {
                 deviceType = 'tablet';
+            }
+            if(isTv.value) {
+                deviceType = 'tv';
             }
             break;
         case 'ios':
@@ -41,11 +41,11 @@ export const makeDeviceInfo = async (): Promise<ClientInfo> => {
             break;
         case 'web':
             deviceType = info.platform;
-            if(isPlatform('electron')) {
-                deviceType = 'desktop';
-            }
             if(isPlatform('tablet')) {
                 deviceType = 'tablet';
+            }
+            if(isPlatform('electron')) {
+                deviceType = 'desktop';
             }
             break;
         default:

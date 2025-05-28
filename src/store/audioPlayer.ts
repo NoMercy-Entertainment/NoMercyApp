@@ -19,6 +19,7 @@ import { siteTitle } from "@/config/config";
 
 import {deviceId} from "@/store/deviceInfo";
 import {user} from "@/store/user";
+import {musicSocketConnection} from "@/store/musicSocket";
 
 export const audioPlayer = new MusicPlayer<PlaylistItem>({
 	motionConfig: {
@@ -36,6 +37,86 @@ export const audioPlayer = new MusicPlayer<PlaylistItem>({
 	siteTitle,
 	expose: true,
 	disableAutoPlayback: user.value.features?.nomercyConnect ?? false,
+	actions: {
+		play: () => {
+			if (!user.value.features?.nomercyConnect) {
+				audioPlayer.play().then();
+				return;
+			}
+			if(!currentDeviceId.value) {
+				musicSocketConnection.value?.invoke('ChangeDeviceCommand', deviceId.value)
+					.then(() => {
+						console.log('Switched to device:', deviceId.value);
+					})
+					.catch((error) => {
+						console.error('Error switching device:', error);
+					});
+			}
+			musicSocketConnection.value?.invoke('PlaybackCommand',
+				'play',
+				null
+			);
+		},
+		pause: () => {
+			if (!user.value.features?.nomercyConnect) {
+				audioPlayer.pause();
+				return;
+			}
+			if(!currentDeviceId.value) {
+				musicSocketConnection.value?.invoke('ChangeDeviceCommand', deviceId.value)
+					.then(() => {
+						console.log('Switched to device:', deviceId.value);
+					})
+					.catch((error) => {
+						console.error('Error switching device:', error);
+					});
+			}
+			musicSocketConnection.value?.invoke('PlaybackCommand',
+				'pause',
+				null
+			);
+		},
+		stop: () => {
+			setLyricsMenuOpen(false);
+			setQueueMenuOpen(false);
+			setDeviceMenuOpen(false);
+			if (!user.value.features?.nomercyConnect) {
+				audioPlayer.stop();
+				return;
+			}
+			musicSocketConnection.value?.invoke('PlaybackCommand',
+				'stop',
+				null
+			);
+		},
+		previous: () => {
+			if (!user.value.features?.nomercyConnect) {
+				audioPlayer.previous();
+				return;
+			}
+			musicSocketConnection.value?.invoke('PlaybackCommand',
+				'previous',
+				null
+			);
+		},
+		next: () => {
+			if (!user.value.features?.nomercyConnect) {
+				audioPlayer.next();
+				return;
+			}
+			musicSocketConnection.value?.invoke('PlaybackCommand',
+				'next',
+				null
+			);
+		},
+		seek: (position: number) => {
+			musicSocketConnection.value?.invoke('PlaybackCommand',
+				'seek',
+				position
+			);
+			audioPlayer.seek(position);
+		},
+	},
 });
 
 watch(user, value => {

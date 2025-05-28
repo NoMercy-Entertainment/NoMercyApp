@@ -12,13 +12,12 @@ import {
   fullPlayerModalOpen,
   queue,
   setFullPlayerModalOpen,
-  setMusicSize
 } from '@/store/audioPlayer';
 import {useAutoThemeColors} from '@/store/preferences';
 import {PaletteColors, pickPaletteColor} from '@/lib/colorHelper';
 import {colorPalette, setColorPalette} from '@/store/ui';
 
-import {PlaylistItem, SizeState} from '@/types/musicPlayer';
+import {PlaylistItem} from '@/types/musicPlayer';
 
 import LyricsOverlay from '@/Layout/Desktop/components/Overlays/LyricsOverlay.vue';
 
@@ -63,11 +62,11 @@ watch(fullPlayerModalOpen, (value) => {
   if (value) {
     oldColorPalette.value = colorPalette.value;
     setTimeout(() => {
-      setColorPalette(currentSong.value?.color_palette?.cover);
+      // setColorPalette(currentSong.value?.color_palette?.cover);
       loading.value = 'eager';
     }, 50);
   } else {
-    setColorPalette(oldColorPalette.value);
+    // setColorPalette(oldColorPalette.value);
   }
 });
 
@@ -80,9 +79,9 @@ watch(currentSong, (value) => {
 
   swiper.value?.$el?.swiper.slideTo(current);
 
-  if (fullPlayerModalOpen.value) {
-    setColorPalette(value?.color_palette?.cover);
-  }
+  // if (fullPlayerModalOpen.value) {
+  //   setColorPalette(value?.color_palette?.cover);
+  // }
 });
 
 const focusColor = computed(() => {
@@ -182,11 +181,11 @@ const onWillDismiss = async () => {
   </ion-modal>
 </template>
 
-<style scoped>
+<style scoped lang="scss">
 ion-modal {
   --height: 100%;
   --ion-color-step-350: transparent;
-  @apply mt-0 -mb-safe-offset-16;
+  @apply absolute mt-0 -mb-safe-offset-16;
 }
 
 html.plt-cordova ion-content::part(scroll) {
@@ -198,7 +197,7 @@ html.plt-mobileweb:has(#miniPlayer) ion-content::part(scroll) {
 }
 
 ion-modal#fullPlayer ion-content::part(scroll) {
-  @apply pt-0
+  @apply absolute pt-0 mt-0 #{!important};
 }
 
 ion-modal::part(content) {

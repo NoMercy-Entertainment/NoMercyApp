@@ -12,10 +12,9 @@ import {setNotifications} from "@/store/notifications";
 
 const done = ref(false);
 
-const getLocations = async (): Promise<void> => new Promise((resolve, reject) => {
+const getLocations = (): Promise<void> => new Promise((resolve, reject) => {
 	if (done.value) {
-		resolve();
-		return;
+		return resolve();
 	}
 
 	apiClient()
@@ -53,7 +52,7 @@ const getLocations = async (): Promise<void> => new Promise((resolve, reject) =>
 				await router.push({ name: 'Select Server' });
 			}
 
-			resolve();
+			return resolve();
 		})
 		.catch((error) => {
 			reject(error);

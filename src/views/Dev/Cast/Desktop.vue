@@ -60,7 +60,7 @@ const currentSubtitleTrack = ref<Track | null>(null);
 const audioTracks = ref<MediaPlaylist[]>([]);
 const currentAudioTrack = ref<MediaPlaylist | null>(null);
 
-useMounted(startCastSocket, stopCastSocket);
+useMounted(startCastSocket, stopCastSocket, 10);
 
 watch(castSocketIsConnected, (value) => {
   if (value) {

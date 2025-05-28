@@ -55,24 +55,24 @@ export class TVUIPlugin extends BaseUIPlugin {
 
 		this.player.on('back-button', this.backMenu.bind(this));
 
-		document.addEventListener('keydown', (e: KeyboardEvent) => {
-			// back button
-			if (e.key == 'Backspace') {
-				this.backMenu();
-			}
-			if (e.key == 'ArrowUp') {
-				this.player.ui_resetInactivityTimer();
-			}
-			if (e.key == 'ArrowDown') {
-				this.player.ui_resetInactivityTimer();
-			}
-			if (e.key == 'ArrowLeft') {
-				this.player.ui_resetInactivityTimer();
-			}
-			if (e.key == 'ArrowRight') {
-				this.player.ui_resetInactivityTimer();
-			}
-		});
+		// document.addEventListener('keydown', (e: KeyboardEvent) => {
+		// 	// back button
+		// 	if (e.key == 'Backspace') {
+		// 		this.backMenu();
+		// 	}
+		// 	if (e.key == 'ArrowUp') {
+		// 		this.player.ui_resetInactivityTimer();
+		// 	}
+		// 	if (e.key == 'ArrowDown') {
+		// 		this.player.ui_resetInactivityTimer();
+		// 	}
+		// 	if (e.key == 'ArrowLeft') {
+		// 		this.player.ui_resetInactivityTimer();
+		// 	}
+		// 	if (e.key == 'ArrowRight') {
+		// 		this.player.ui_resetInactivityTimer();
+		// 	}
+		// });
 
 		this.player.on('pause', () => {
 			this.player.overlay.scrollIntoView();
@@ -218,7 +218,7 @@ export class TVUIPlugin extends BaseUIPlugin {
 
 		let didSlide: boolean = false;
 		[document.body].forEach((button) => {
-			(button as unknown as HTMLButtonElement)?.addEventListener('keydown', (e: KeyboardEvent) => {
+			const evt =(e: KeyboardEvent) => {
 				if (e.key == 'ArrowLeft') {
 					// eslint-disable-next-line max-len
 					if ([restartButton, nextButton, this.nextUp.firstChild, this.nextUp.lastChild].includes(e.target as HTMLButtonElement)) {
@@ -279,6 +279,10 @@ export class TVUIPlugin extends BaseUIPlugin {
 						this.player.togglePlayback();
 					}
 				}
+			};
+			(button as unknown as HTMLButtonElement)?.addEventListener('keydown', evt);
+			this.player.on('dispose', () => {
+				(button as unknown as HTMLButtonElement)?.removeEventListener('keydown', evt);
 			});
 		});
 

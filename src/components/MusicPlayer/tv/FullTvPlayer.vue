@@ -19,7 +19,6 @@ import ProgressBarContainer from '@/components/MusicPlayer/components/ProgressBa
 import CoverImage from '@/components/MusicPlayer/components/CoverImage.vue';
 
 import ButtonContainer from './ButtonContainer.vue';
-import TMDBImage from "@/components/Images/TMDBImage.vue";
 import {currentServer} from "@/store/currentServer";
 import {pickPaletteColor} from "@/lib/colorHelper";
 
@@ -52,8 +51,6 @@ const controls = ref<HTMLDivElement>();
 const item = ref<HTMLDivElement>();
 const backdrop = ref<HTMLDivElement>();
 
-const canvas = ref<HTMLCanvasElement>();
-
 const controlsVisible = ref(true);
 
 const showControls = () => {
@@ -78,7 +75,7 @@ const hideControls = () => {
   controls.value.classList.remove('delay-300');
   setTimeout(() => {
     if (!controls.value) return;
-    controls.value.style.translate = '0 100%';
+    controls.value.style.translate = '0 110%';
     controlsVisible.value = false;
   }, 50);
 
@@ -126,27 +123,6 @@ onMounted(() => {
 
 });
 
-watch(canvas, (value) => {
-  if (!value) return;
-  const context = value.getContext('2d', {
-    willReadFrequently: true,
-    desynchronized: true,
-  });
-
-  const draw = () => {
-    const sourceCanvas = audioPlayer._audioElement1?.motion?.canvas;
-    if (sourceCanvas) {
-      value.width = sourceCanvas.width;
-      value.height = sourceCanvas.height;
-      context!.clearRect(0, 0, value.width, value.height);
-      context!.drawImage(sourceCanvas, 0, 0, value.width, value.height);
-    }
-    requestAnimationFrame(draw);
-  };
-
-  draw();
-});
-
 onUnmounted(() => {
   document.removeEventListener('keydown', dynamicControls);
   document.removeEventListener('mousemove', dynamicControls);
@@ -191,22 +167,20 @@ const ontransitionend = (e: TransitionEvent) => {
 
 <template>
   <div id="FullTvPlayer"
-       :style="`--color-focus: ${pickPaletteColor(currentSong?.color_palette?.backdrop ?? currentSong?.artist_track?.at(0)?.color_palette?.cover ?? currentSong?.color_palette?.cover)}`"
-       class="top-0 grid grid-cols-1 transform-gpu grid-rows-1 left-0 h-screen w-screen overflow-hidden transition-transform will-change-transform duration-500 z-[1299] bg-slate-dark-1"
+       :style="`--color-focus: ${pickPaletteColor(currentSong?.color_palette?.backdrop ?? currentSong?.color_palette?.cover)}`"
+       class="absolute top-0 grid grid-cols-1 transform-gpu grid-rows-1 left-0 h-screen w-screen overflow-hidden transition-transform will-change-transform duration-500 z-[1299] bg-slate-dark-1"
        :class="{
       'translate-y-0 duration-500': fullPlayerModalOpen,
       'translate-y-full': !fullPlayerModalOpen,
     }" @click="togglePlayerSize">
-        <img v-if="currentSong?.backdrop || currentSong?.artist_track?.at(0)?.cover || currentSong?.cover"
-             :src="`${currentServer?.serverBaseUrl}${currentSong?.backdrop ?? currentSong?.artist_track?.at(0)?.cover ?? currentSong?.cover}`" alt=""
+        <img v-if="currentSong?.backdrop"
+             :src="`${currentServer?.serverBaseUrl}${currentSong?.backdrop}`" alt=""
           class="transform-gpu pointer-events-none inset-0 h-screen w-screen transition-opacity col-span-1 row-span-1" :class="{
             'opacity-0': isDarkMode,
             'opacity-100': !isDarkMode,
           }">
-    <canvas ref="canvas" id="audio-visualizer"
-            class="absolute top-0 left-0 my-24 mx-6 h-available w-available overflow-clip pointer-events-none"></canvas>
     <div id="audio-color" ref="backdrop"
-         class="transform-gpu col-span-1 row-span-1 inset-0 w-full h-screen pointer-events-none bg-[var(--background)] opacity-[var(--backdrop-opacity)] transition-colors duration-1000"
+         class="absolute transform-gpu col-span-1 row-span-1 inset-0 w-full h-screen pointer-events-none bg-[var(--background)] opacity-[var(--backdrop-opacity)] transition-colors duration-1000"
          :class="{
         '!opacity-70': lyricsMenuOpen,
       }" :style="`
@@ -238,9 +212,9 @@ const ontransitionend = (e: TransitionEvent) => {
 
       <div id="item" ref="item" class="absolute flex items-end gap-4 z-10 transform-gpu transition-all duration-500"
            :class="{
-          'top-12': lyricsMenuOpen,
+          'top-11': lyricsMenuOpen,
           // 'opacity-0': !controlsVisible,
-          'top-64 delay-300': !lyricsMenuOpen
+          'top-[calc(100%-18rem)] delay-300': !lyricsMenuOpen
         }">
         <div :data-size="musicSize" class="" :class="{
           'w-14': lyricsMenuOpen,

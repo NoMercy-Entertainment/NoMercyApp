@@ -48,7 +48,7 @@ watch(imageModalData, (data) => {
   if (!data) return;
 
   if (src.value == null && data.src) {
-    src.value = `${imageBaseUrl.value}${data.src}`;
+    src.value = `${imageBaseUrl.value}${data.src}?width=3840&type=avif&aspect_ratio=null`;
     logoColor.value = pickPaletteColor(data.color_palette?.image)
       ?.replace('rgb(', '')
       .replace(')', '')
@@ -64,7 +64,7 @@ watch(imageModalData, (data) => {
 
   } else if (data.src) {
     timeout2.value = setTimeout(() => {
-      src.value = `${imageBaseUrl.value}${data.src}`;
+      src.value = `${imageBaseUrl.value}${data.src}?width=3840&type=avif&aspect_ratio=null`;
       logoColor.value = pickPaletteColor(data.color_palette?.image)
         ?.replace('rgb(', '')
         .replace(')', '')
@@ -72,7 +72,7 @@ watch(imageModalData, (data) => {
 
       logoSrc.value = undefined;
       setTimeout(() => {
-        logoSrc.value = data.meta?.logo?.src;
+        logoSrc.value = `${data.meta?.logo?.src}?width=3840&type=avif&aspect_ratio=null`;
         logoAspect.value = data.meta?.logo?.aspectRatio || 1;
       }, 4000);
     }, delay.value);

@@ -26,7 +26,7 @@ const useHubListener = (
 		}
 	};
 
-	useMounted(connectToHub, disconnectFromHub);
+	useMounted(connectToHub, disconnectFromHub, 10);
 }
 
 export default useHubListener;

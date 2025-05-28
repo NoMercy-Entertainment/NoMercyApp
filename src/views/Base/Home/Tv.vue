@@ -12,10 +12,6 @@ import useInfiniteServerClient from "@/lib/clients/useInfiniteServerClient";
 import TvCarousel2 from "@/views/Base/Home/components/TvCarousel2.vue";
 import TvHeader from "@/views/Base/Home/components/TvHeader.vue";
 
-// const {data} = useServerClient<Component<HomeDataItem>[]>({
-//   queryKey: ['music', 'home']
-// });
-
 const { data: home, fetchNextPage, hasNextPage } = useInfiniteServerClient<{ data: HomeResponse[] }>({
   path: '/',
   queryKey: ['home'],

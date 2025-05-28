@@ -1,7 +1,9 @@
 <script setup lang="ts">
 import { computed, onMounted, ref } from 'vue';
+import {useLocalStorage} from "@vueuse/core";
 
 import type { PlaylistItem } from '@/types/musicPlayer';
+import {user} from "@/store/user";
 
 import serverClient from '@/lib/clients/serverClient';
 import { setTitle } from '@/lib/stringArray';
@@ -26,9 +28,10 @@ import VolumeContainer from './components/VolumeContainer.vue';
 import LyricsButton from './components/LyricsButton.vue';
 import Marquee from '@/components/Marquee.vue';
 import EqButton from "@/components/MusicPlayer/components/EqButton.vue";
-import {user} from "@/store/user";
+
 const dataAttribute = ref<any>();
 const shouldSubmitPlayback = ref(true);
+const supportsAudioContext = useLocalStorage('nmplayer-music-supports-audio-context', false);
 
 const createMusicDatasetAttribute = (data: any) => {
   if (!data) return;
@@ -156,7 +159,7 @@ const rightSize = computed(() => {
 
         <LyricsButton />
         <QueueButton />
-        <EqButton />
+        <EqButton v-if="supportsAudioContext" />
         <DeviceButton />
 
         <VolumeContainer />

@@ -58,7 +58,7 @@ export class SocketClient {
             onConnect(this.connection);
             connect(this.connection);
         } catch (err) {
-            // console.log(err);
+            console.error(err);
         }
     };
 

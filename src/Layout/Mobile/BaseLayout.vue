@@ -55,16 +55,16 @@ onUnmounted(() => {
 
       <BottomBar />
     </ion-tabs>
-
-    <FullPlayer v-if="currentSong" />
-    <MiniPlayer />
-
-    <ImageModal />
-    <!--      <Toast class="z-1199" />-->
-    <Screensaver />
-
-    <SideFlyout v-if="!isPlatform('capacitor')" />
   </ion-page>
+
+  <FullPlayer v-if="currentSong?.id" :key="(!!currentSong).toString()" />
+  <MiniPlayer />
+
+  <ImageModal />
+  <!--      <Toast class="z-1199" />-->
+  <Screensaver />
+
+  <SideFlyout v-if="!isPlatform('capacitor')" />
 </template>
 
 <style scoped>

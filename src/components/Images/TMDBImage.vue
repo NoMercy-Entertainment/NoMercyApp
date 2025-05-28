@@ -83,40 +83,6 @@ const tmdbImageUrl = computed(() => {
   // return `${tmdbImageBaseUrl}/original${props.path}`;
   return `https://media.themoviedb.org/t/p/original${props.path}`;
 });
-
-onMounted(() => {
-  if (props?.type != 'logo' || serverImageUrl.value?.includes('undefined')) return;
-
-  getImageBrightness(`${serverImageUrl.value}`, ({nonTransparentBrightness}) => {
-    brightness.value = nonTransparentBrightness;
-    shouldLighten.value = nonTransparentBrightness < 20;
-    shouldDarken.value = nonTransparentBrightness > 80;
-  });
-});
-
-watch(serverImageUrl, (value) => {
-  if (!value) return;
-
-  if (props?.type == 'logo' || serverImageUrl.value?.includes('undefined')) return;
-
-  getImageBrightness(`${value}`, ({nonTransparentBrightness}) => {
-    brightness.value = nonTransparentBrightness;
-    shouldLighten.value = nonTransparentBrightness < 20;
-    shouldDarken.value = nonTransparentBrightness > 80;
-  });
-
-  error.value = false;
-});
-
-const onLoaded = (e: Event) => {
-  opacity.value = 1;
-  props.onload?.(e as Event & { target: HTMLImageElement });
-};
-
-const onLoadStart = () => {
-  opacity.value = 0;
-};
-
 const luminosityValue = computed(() => {
   return isDarkMode.value ? 0 : 20;
 });
@@ -178,13 +144,6 @@ const style = computed(() => {
   };
 });
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const onError = (e: Event) => {
-  (e.target as HTMLImageElement).onerror = null;
-  error.value = true;
-  opacity.value = 1;
-};
-
 const remove = (e: ErrorEvent) => {
   if ((e.target as HTMLImageElement)?.parentNode?.children?.length ?? 0 > 1) {
     (e.target as HTMLImageElement)?.parentNode?.children[0].remove();
@@ -211,6 +170,47 @@ const height = computed(() => {
   return props.size * aspectRatio.value;
 });
 
+onMounted(() => {
+  if (props?.type != 'logo' || serverImageUrl.value?.includes('undefined')) return;
+
+  getImageBrightness(`${serverImageUrl.value}`, ({nonTransparentBrightness}) => {
+    brightness.value = nonTransparentBrightness;
+    shouldLighten.value = nonTransparentBrightness < 20;
+    shouldDarken.value = nonTransparentBrightness > 80;
+  });
+});
+
+watch(serverImageUrl, (value) => {
+  if (!value) return;
+
+  if (props?.type == 'logo' || serverImageUrl.value?.includes('undefined')) return;
+
+  getImageBrightness(`${value}`, ({nonTransparentBrightness}) => {
+    brightness.value = nonTransparentBrightness;
+    shouldLighten.value = nonTransparentBrightness < 20;
+    shouldDarken.value = nonTransparentBrightness > 80;
+  });
+
+  error.value = false;
+});
+
+const onLoaded = (e: Event) => {
+  opacity.value = 1;
+  props.onload?.(e as Event & { target: HTMLImageElement });
+};
+
+const onLoadStart = () => {
+  opacity.value = 0;
+};
+
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const onError = (e: Event) => {
+  (e.target as HTMLImageElement).onerror = null;
+  error.value = true;
+  opacity.value = 1;
+};
+
+
 </script>
 <template>
   <div class="pointer-events-none bottom-0 mx-auto flex w-full select-none place-self-start h-available overflow-clip"
@@ -228,15 +228,15 @@ const height = computed(() => {
         'w-auto h-available': aspect == null,
       }" :style="`opacity: ${opacity}; float: ${type == 'logo' ? 'right' : ''}`">
       <source
-          :srcset="`${serverImageUrl}?width=${size ? (size * 2) : null}&type=avif&aspect_ratio=${aspectRatio} 1x`"
+          :srcset="`${serverImageUrl} 1x`"
           type="image/avif"
       />
-      <source
-          :srcset="`${serverImageUrl}?width=${size ? (size * 2) : null}&type=webp&aspect_ratio=${aspectRatio} 1x`"
-          type="image/webp"
-      />
-      <source :srcset="`${serverImageUrl}?width=${size ? (size * 2) : null}&type=png&aspect_ratio=${aspectRatio} 1x`"
-              type="image/png"/>
+<!--      <source-->
+<!--          :srcset="`${serverImageUrl}?width=${size ? (size * 2) : null}&type=webp&aspect_ratio=${aspectRatio} 1x`"-->
+<!--          type="image/webp"-->
+<!--      />-->
+<!--      <source :srcset="`${serverImageUrl}?width=${size ? (size * 2) : null}&type=png&aspect_ratio=${aspectRatio} 1x`"-->
+<!--              type="image/png"/>-->
       <img :src="tmdbImageUrl"
            :width="size"
            :height="height"
