@@ -153,9 +153,4 @@ export async function setupApp(app: AppContext['app']) {
             router.back();
         }
     });
-
-    if (!sessionStorage.getItem('load') && isPlatform('capacitor')) {
-        sessionStorage.setItem('load', 'true');
-        location.reload();
-    }
 }

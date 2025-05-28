@@ -113,7 +113,7 @@ const onRightClick = (event: Event, data: LibraryResponse | GenreResponse | Peop
   <ion-page>
     <ion-content :fullscreen="true" class="ion-padding " style="--padding-bottom: 0;">
       <div class="fixed top-0 pt-safe w-full bg-slate-light-1 dark:bg-slate-dark-3 z-1199"></div>
-      <div ref="lib" class="pt-safe-offset-10 flex h-auto w-full pr-8 overflow-auto scroll-container">
+      <div ref="lib" class="pt-safe-offset-9 flex h-auto w-full pr-8 overflow-auto scroll-container">
         <div class="z-0 flex flex-col gap-4 rounded-3xl border-0 w-available scrollbar-none border-auto-3" :class="{
           'pb-2': isNative && currentSong,
           'children:pb-4 sm:children:pb-3': !isNative && currentSong
@@ -144,10 +144,12 @@ const onRightClick = (event: Event, data: LibraryResponse | GenreResponse | Peop
           </div>
         </div>
         <Indexer :id="id"
-            class="w-8 !-mt-4 pt-4 pb-4 mb-0 fixed right-0 bg-slate-light-1 dark:bg-slate-dark-3"
+            class="w-8 fixed right-0 bg-slate-light-1 dark:bg-slate-dark-3 transition-all duration-200"
            :class="{
             'h-available': !isNative,
             'h-inherit top-24': isNative,
+            '-mt-4 pt-4 pb-4 mb-0': !currentSong,
+            '-mt-4 pt-4 pb-4 mb-14': currentSong
           }"
         />
       </div>

@@ -166,7 +166,7 @@ ion-item::part(native) {
     @apply pt-safe ;
   }
   html.plt-cordova:has(#miniPlayer) ion-content::part(scroll) {
-    @apply pb-safe-offset-12;
+    @apply pb-safe-offset-2;
   }
 
   html.plt-mobileweb:has(#miniPlayer) ion-content::part(scroll) {

@@ -52,8 +52,7 @@ const searchUrl = computed(() => {
 
     <ion-tab-button :_on-click="toggleMenu" @click="toggleMenu()" tab="/dashboard" class="hide-bg"
       :class="{ 'tab-selected': menuOpen }">
-      <ion-icon aria-hidden="true" :icon="noteEighthPair" />
-      <div class="absolute mx-auto flex flex-col rounded-full min-h-8 size-8 top-1.5 bg-black">
+      <div class="relative mx-auto flex flex-col rounded-full min-h-8 size-8 top-1.5 mb-2 mt-2.5 bg-black" >
         <AppLogoSquare alt="NoMercy Logo"
           class="absolute w-8 h-8 rounded-full p-1.5" />
         <NoMercyAvatar :user="user" :size="52" class="absolute" />

@@ -119,7 +119,7 @@ const customSwiperConfig = computed(() => {
 watch(customSwiperConfig, value => console.log(value));
 
 const focusMain = () => {
-  // document.querySelector<HTMLButtonElement>(`#${props.nextId}`)?.focus();
+  document.querySelector<HTMLButtonElement>(`#${props.nextId}`)?.focus();
 };
 
 </script>
@@ -130,7 +130,7 @@ const focusMain = () => {
         <div class="flex w-available flex-1 flex-col gap-2">
             <div class="relative ml-3 w-full flex flex-shrink-0 flex-grow-1 items-center self-stretch">
                 <h3 v-if="title"
-                    class="text-2xl font-bold text-auto-12 mr-2 ml-4 sm:ml-3 my-2 text-slate-dark-1 dark:text-slate-light-1">
+                    class="mr-2 ml-3 sm:ml-3 my-2 text-slate-lightA-12/70 dark:text-slate-darkA-12/80 self-stretch flex-grow-0 flex-shrink-0 text-xl font-bold">
                     {{ t(title ?? 'Continue watching') }}
                 </h3>
                 <slot v-else name="selector"></slot>
