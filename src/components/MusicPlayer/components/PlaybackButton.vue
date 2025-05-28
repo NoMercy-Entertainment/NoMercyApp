@@ -8,7 +8,7 @@ import PlayerIcon from '@/components/Images/icons/PlayerIcon.vue';
 </script>
 
 <template>
-  <MusicButton label="Toggle Playback" :onclick="isPlaying ? audioPlayer.actions.pause : audioPlayer.actions.play">
+  <MusicButton label="Toggle Playback" :onclick="isPlaying ? audioPlayer?.actions?.pause : audioPlayer?.actions?.play">
     <PlayerIcon icon="nmPause" v-if="isPlaying" className="h-9 w-9"/>
     <PlayerIcon icon="nmPlay" v-else className="h-9 w-9"/>
   </MusicButton>
