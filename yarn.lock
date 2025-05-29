@@ -1119,10 +1119,10 @@
   resolved "https://registry.npmjs.org/@capacitor/screen-orientation/-/screen-orientation-6.0.3.tgz"
   integrity sha512-5R+tf+twRNnkZFGSWsQkEBz1MFyP1kzZDyqOA9rtXJlTQYNcFJWouSXEuNa+Ba6i6nEi4X83BuXVzEFJ7zDrgQ==
 
-"@capacitor/share@^7.0.1":
-  version "7.0.1"
-  resolved "https://registry.yarnpkg.com/@capacitor/share/-/share-7.0.1.tgz#1d1e6d312504703c1f34fa0de94bed14af4bcbf8"
-  integrity sha512-7GAtWrb2inEWohC8E7mx38qAX6D9yqPDDnUtJaZ8JRpo15jjFRS40Cx388M8h4NlBWjV5NU3qf1sHXnyOBSJ5g==
+"@capacitor/share@^6.0.2":
+  version "6.0.3"
+  resolved "https://registry.yarnpkg.com/@capacitor/share/-/share-6.0.3.tgz#03f613d916226e4891e6022cc89967eb1b3cd3cd"
+  integrity sha512-BkNM73Ix+yxQ7fkni8CrrGcp1kSl7u+YNoPLwWKQ1MuQ5Uav0d+CT8M67ie+3dc4jASmegnzlC6tkTmFcPTLeA==
 
 "@capacitor/splash-screen@^6.0.2":
   version "6.0.3"
