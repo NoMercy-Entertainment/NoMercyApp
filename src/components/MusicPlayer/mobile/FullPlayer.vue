@@ -131,7 +131,7 @@ const onWillDismiss = async () => {
 
 <template>
   <ion-modal :is-open="fullPlayerModalOpen" @willDismiss="onWillDismiss" :initial-breakpoint="1" :breakpoints="[0, 1]"
-    id="fullPlayer">
+             key="fullPlayer" id="fullPlayer">
     <ion-content ref="content" :fullscreen="true" :style="`--color-focus: ${focusColor}`">
       <ChristmasSnow />
 

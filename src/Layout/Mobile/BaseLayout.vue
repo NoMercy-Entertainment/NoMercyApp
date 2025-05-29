@@ -7,7 +7,7 @@ import { IonPage, IonProgressBar, IonRouterOutlet, IonTabs, isPlatform, } from '
 
 import { lockPortrait, unlockOrientation } from '@/lib/utils';
 import { closeMenu } from '@/store/profileMenu';
-import {currentSong} from '@/store/audioPlayer';
+import {currentSong, fullPlayerModalOpen} from '@/store/audioPlayer';
 
 import ImageModal from '@/Layout/ImageModal.vue';
 import Screensaver from '@/Layout/Screensaver.vue';
@@ -54,17 +54,19 @@ onUnmounted(() => {
       <DeviceOverlay class="!z-10" :ignoreElRef="[]" />
 
       <BottomBar />
+
+      <FullPlayer v-if="currentSong?.id"
+                  :key="fullPlayerModalOpen ? 'full-player-open' : 'full-player-closed'"  />
+      <MiniPlayer :key="!fullPlayerModalOpen ? 'mini-player-open' : 'mini-player-closed'"  />
+      />
+
+      <ImageModal />
+      <!--      <Toast class="z-1199" />-->
+      <Screensaver />
+
+      <SideFlyout v-if="!isPlatform('capacitor')" />
     </ion-tabs>
   </ion-page>
-
-  <FullPlayer v-if="currentSong?.id" :key="(!!currentSong).toString()" />
-  <MiniPlayer />
-
-  <ImageModal />
-  <!--      <Toast class="z-1199" />-->
-  <Screensaver />
-
-  <SideFlyout v-if="!isPlatform('capacitor')" />
 </template>
 
 <style scoped>
