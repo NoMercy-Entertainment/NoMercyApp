@@ -120,14 +120,6 @@ if (!onlineStatus.value) {
 else {
 	// Mobile Capacitor App
 	if (isPlatform('capacitor') && !isTv.value && !localStorage.getItem('access_token')) {
-
-		if (!sessionStorage.getItem('load') && isPlatform('capacitor')) {
-			setTimeout(() => {
-				sessionStorage.setItem('load', 'true');
-				location.reload();
-			}, 10);
-		}
-
 		lockPortrait().then();
 		// @ts-ignore
 		app.use(MobileKeycloak, {

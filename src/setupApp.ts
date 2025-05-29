@@ -122,6 +122,13 @@ export async function setupApp(app: AppContext['app']) {
     app.component('Image', Image);
     app.component('Form', Form);
 
+    if (!sessionStorage.getItem('load') && isPlatform('capacitor')) {
+        setTimeout(() => {
+            sessionStorage.setItem('load', 'true');
+            location.reload();
+        }, 500);
+    }
+
     router.isReady()
         .then(() => {
             app.mount('#app');
