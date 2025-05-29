@@ -229,7 +229,7 @@ const handleClick = (song: PlaylistItem) => {
 
                 <MediaLikeButton :data="data"/>
 
-                <BigPlayButton :data="data" class="w-12 h-12"/>
+                <BigPlayButton :data="data" class="w-12 h-12 ml-auto"/>
               </div>
 
             </div>

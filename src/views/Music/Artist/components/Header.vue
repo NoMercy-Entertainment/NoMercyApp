@@ -15,6 +15,7 @@ import MoooomIcon from "@/components/Images/icons/MoooomIcon.vue";
 import BannerButton from "@/components/Buttons/BannerButton.vue";
 import MediaLikeButton from '@/components/Buttons/MediaLikeButton.vue';
 import {musicSocketConnection} from "@/store/musicSocket";
+import ShareButton from "@/components/Buttons/ShareButton.vue";
 
 const route = useRoute();
 
@@ -112,6 +113,7 @@ const playlistName = computed(() => `${props.data?.type?.replace(/s$/u, '')}/${p
 			<!--			<BannerButton title="">-->
 			<!--				<MoooomIcon icon="shuffle" className="relative h-5 w-5 text-white"/>-->
 			<!--			</BannerButton>-->
+      <ShareButton class="!p-0 text-white" />
 			<MediaLikeButton v-if="data && !isSongRoute" :data="data" color="var(--color-focus)" className="h-5 w-5" />
 			<!--			<BannerButton title="">-->
 			<!--				<MoooomIcon icon="addCircle" className="relative h-5 w-5 text-white"/>-->

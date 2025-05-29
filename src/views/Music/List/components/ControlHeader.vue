@@ -11,6 +11,7 @@ import MusicButton from '@/components/MusicPlayer/components/MusicButton.vue';
 import MediaLikeButton from '@/components/Buttons/MediaLikeButton.vue';
 import { isTrackRoute } from '@/store/routeState';
 import { isPlatform } from "@ionic/vue";
+import ShareButton from "@/components/Buttons/ShareButton.vue";
 
 const props = defineProps({
     data: {
@@ -33,7 +34,7 @@ const handleAdd = () => {
 
 <template>
     <div class="pointer-events-none absolute z-0 h-96 w-full bg-spotifyBottom bg-focus"></div>
-    <div class="flex sm:gap-4 items-center py-4 px-4 sm:px-8 w-full pl-3 pr-4 sm:pr-16 h-20 z-40" data-index="1">
+    <div class="flex sm:gap-4 items-center py-4 px-4 sm:px-8 w-full pl-3 pr-4 sm:pr-10 h-20 z-40" data-index="1">
 
         <BigPlayButton v-if="data?.tracks" :data="data" class="hidden sm:flex" />
 
@@ -50,9 +51,12 @@ const handleAdd = () => {
 
         </div>
 
-        <MediaLikeButton :data="data" color="var(--color-focus)" class="sm:ml-auto" className="!w-8 !h-8" />
+        <ShareButton class="!p-0 text-white hidden sm:flex sm:ml-auto" />
+        <MediaLikeButton :data="data" color="var(--color-focus)" className="!w-8 !h-8" />
 
-        <MusicButton v-if="isTrackRoute" id="add" :onclick="handleAdd" class=" mr-8" label="add">
+      <ShareButton class="!p-0 text-white sm:hidden" />
+
+        <MusicButton v-if="isTrackRoute" id="add" :onclick="handleAdd" class="" label="add">
             <MoooomIcon icon="add" class="!w-7" />
         </MusicButton>
         <!--        <ListControlHeaderMoreMenuButton v-if="!isTrackRoute" :items="[]"/>-->

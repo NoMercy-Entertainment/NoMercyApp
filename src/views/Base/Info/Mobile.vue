@@ -200,8 +200,8 @@ const processTrailer = (value: InfoResponse | undefined) => {
             <HeaderItem v-if="data?.year" title="" :data="data?.year.toString()" />
 
             <HeaderItem v-if="data?.content_ratings.length" title="">
-              <ContentRating :size="6"
-                class="h-full min-!h-[1rem] object-scale-down rounded-lg overflow-clip children:-m-0.5"
+              <ContentRating :size="4"
+                class="h-full object-scale-down rounded-lg overflow-clip"
                 :ratings="data?.content_ratings" />
             </HeaderItem>
 

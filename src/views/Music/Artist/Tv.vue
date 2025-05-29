@@ -25,6 +25,7 @@ import EqSpinner from "@/components/Images/EqSpinner.vue";
 import MediaLikeButton from "@/components/Buttons/MediaLikeButton.vue";
 import Marquee from "@/components/Marquee.vue";
 import {scrollCenter} from "@/lib/utils";
+import ShareButton from "@/components/Buttons/ShareButton.vue";
 
 const route = useRoute();
 
@@ -193,7 +194,9 @@ const handleClick = (song: PlaylistItem) => {
 
                 <MediaLikeButton :data="data"/>
 
-                <BigPlayButton :data="data" class="w-12 h-12"/>
+                <ShareButton class="!p-0 text-white" />
+
+                <BigPlayButton :data="data" class="w-12 h-12 ml-auto"/>
               </div>
 
             </div>
@@ -266,6 +269,8 @@ const handleClick = (song: PlaylistItem) => {
                         <ion-row tabindex="-1" class="flex flex-nowrap">
 
                           <MediaLikeButton :data="song"/>
+
+                          <ShareButton class="!p-0 text-white" />
 
                           <MusicButton label="" tabindex="1" :onclick="() => { }" class="!bg-transparent mr-2">
                             <MoooomIcon icon="menuDotsHorizontal" class="text-white"/>

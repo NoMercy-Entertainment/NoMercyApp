@@ -16,6 +16,7 @@ import MediaLikeButton from "@/components/Buttons/MediaLikeButton.vue";
 import MoooomIcon from "@/components/Images/icons/MoooomIcon.vue";
 import TMDBImage from "@/components/Images/TMDBImage.vue";
 import { poster } from "@/store/ui";
+import ShareButton from "@/components/Buttons/ShareButton.vue";
 
 const route = useRoute();
 
@@ -67,7 +68,7 @@ const title = computed(() => {
         class="m-auto children:w-full scale-100 max-h-available 5xl:w-inherit" type="image" />
     </div>
 
-    <CardShadow colored />
+    <CardShadow :colored="true" />
 
     <div class="flex justify-start items-start w-[280px] absolute left-0 top-[348px] gap-4 p-4 z-40">
 
@@ -96,6 +97,10 @@ const title = computed(() => {
       <div
         class="flex justify-start items-center flex-grow-0 flex-shrink-0 relative overflow-hidden gap-2 rounded-3xl bg-black/[0.48] border border-black/2">
         <MediaLikeButton :data="data" class="!p-0 text-white" />
+      </div>
+      <div
+        class="flex justify-start items-center flex-grow-0 flex-shrink-0 relative overflow-hidden gap-2 rounded-3xl bg-black/[0.48] border border-black/2">
+        <ShareButton class="!p-0 text-white" />
       </div>
     </div>
   </div>

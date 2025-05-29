@@ -26,6 +26,7 @@ import ContentRating from '@/components/Images/ContentRating.vue';
 import { useTranslation } from 'i18next-vue';
 import InfoHeaderItem from "@/views/Base/Info/components/InfoHeaderItem.vue";
 import NotFound from "@/Layout/Desktop/components/NotFound.vue";
+import ShareButton from "@/components/Buttons/ShareButton.vue";
 
 const { t } = useTranslation();
 const router = useRouter();
@@ -188,6 +189,8 @@ onUnmounted(() => {
                     <!--                            </button>-->
 
                     <MediaLikeButton v-if="data" :data="data" />
+
+                    <ShareButton class="!p-0 text-white" />
 
                     <DropdownMenu>
                       <template v-slot:button>

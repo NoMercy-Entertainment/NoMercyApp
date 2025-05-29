@@ -136,7 +136,7 @@ const onWillDismiss = async () => {
       <ChristmasSnow />
 
       <div
-        class="relative z-0 pt-safe-offset-8 flex h-screen min-h-screen flex-col items-center justify-between gap-2 w-inherit scrollbar-none text-slate-light-12 dark:text-slate-dark-12 overflow-clip">
+        class="relative z-0 pt-safe-offset-2 flex h-screen min-h-screen flex-col items-center justify-between gap-2 w-inherit scrollbar-none text-slate-light-12 dark:text-slate-dark-12 overflow-clip">
         <div class="pointer-events-none absolute inset-0 w-full bg-spotifyBottom bg-focus transition-all duration-500">
         </div>
 

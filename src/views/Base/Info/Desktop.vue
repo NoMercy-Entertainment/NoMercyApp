@@ -36,6 +36,7 @@ import Trailer from '@/views/Base/Info/components/Trailer.vue';
 import ScrollContainer from '@/Layout/Desktop/components/ScrollContainer.vue';
 import NotFound from "@/Layout/Desktop/components/NotFound.vue";
 import BannerButton from "@/components/Buttons/BannerButton.vue";
+import ShareButton from "@/components/Buttons/ShareButton.vue";
 
 const route = useRoute();
 
@@ -404,8 +405,10 @@ const menuItems = computed<IMenuItem[]>(() => [
                                       className="w-6 text-slate-lightA-12/70  dark:text-slate-darkA-12/80" />
                         </BannerButton>
 
-                        <MediaLikeButton v-if="data" :data="data" />
+                        <ShareButton class="!p-0 text-white" />
 
+                        <MediaLikeButton v-if="data" :data="data" />
+                        
                         <ListControlHeaderMoreMenu :items="menuItems"
                                                    class=" text-slate-lightA-12/70  dark:text-slate-darkA-12/80" />
                       </div>

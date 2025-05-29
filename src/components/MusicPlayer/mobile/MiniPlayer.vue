@@ -93,10 +93,9 @@ const { isSwiping, lengthX } = useSwipe(
       </div>
     </div>
     <div class="flex items-center justify-end gap-1">
-      <DeviceButton class="pointer-events-auto" noName />
-      <MediaLikeButton :key="currentSong?.id" :data="currentSong" v-if="currentSong" color="var(--color-focus)"
-        class="pointer-events-auto flex" />
-      <PlaybackButton class="pointer-events-auto children:h-7 children:w-7" />
+      <DeviceButton noName />
+      <MediaLikeButton :key="currentSong?.id" :data="currentSong" v-if="currentSong" color="var(--color-focus)" />
+      <PlaybackButton class="children:h-7 children:w-7" />
     </div>
     <div class="absolute left-0 w-full h-0.5 top-[54px] blur-[1px]">
       <div class="absolute w-full h-0.5 left-[-1px] top-[-1px] bg-black/[0.22]"></div>
