@@ -86,7 +86,7 @@ const toggleGroup = (group: LogType) => {
         </p>
       </div>
 
-      <template v-for="group in groupBy<LogType>(logTypes?.filter(t => t.type != 'spacer') ?? [], 'type')">
+      <template v-for="group in groupBy<LogType>(logTypes?.filter((t: LogType) => t.type != 'spacer') ?? [], 'type')" :key="group[0].type">
 
         <div class="relative mt-2 -mb-1 flex items-center justify-start gap-2 self-stretch px-2.5"
           @click="() => toggleGroup(group[0])">
@@ -99,7 +99,7 @@ const toggleGroup = (group: LogType) => {
           <div class="flex-grow h-px bg-[#e2f0fd]/[0.08]"></div>
         </div>
 
-        <template v-for="logType in group">
+        <template v-for="logType in group" :key="logType.name">
           <button class="flex flex-grow items-center justify-start gap-3 rounded-md px-2.5"
             :onclick="() => handleType(logType)">
             <Checkbox :modelValue="selectedTypes?.some(st => st.name == logType.name)"

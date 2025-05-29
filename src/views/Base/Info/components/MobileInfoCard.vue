@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed, type PropType } from "vue";
 import { useRoute } from "vue-router";
+import type {ShareOptions} from "@capacitor/share";
 
 import type { LibraryResponse } from "@/types/api/base/library";
 import type { InfoResponse } from "@/types/api/base/info";
@@ -49,6 +50,12 @@ const title = computed(() => {
   // @ts-ignore
   return props.data?.title ?? props.data?.name;
 });
+
+const shareData = computed<ShareOptions>(() => ({
+  title: props.data?.title ?? '',
+  text: props.data?.overview ?? '',
+  url: 'https://app.nomercy.tv' + route.fullPath,
+}));
 
 </script>
 
@@ -100,7 +107,7 @@ const title = computed(() => {
       </div>
       <div
         class="flex justify-start items-center flex-grow-0 flex-shrink-0 relative overflow-hidden gap-2 rounded-3xl bg-black/[0.48] border border-black/2">
-        <ShareButton class="!p-0 text-white" />
+        <ShareButton :shareData="shareData" class="!p-0 text-white" />
       </div>
     </div>
   </div>

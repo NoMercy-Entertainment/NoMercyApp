@@ -57,6 +57,7 @@ const inputChange = (field: string) => {
 }
 
 const isValidEmail = computed(() => {
+  if (!email.value) return false;
   return validateEmail(email.value);
 });
 

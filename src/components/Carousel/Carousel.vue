@@ -43,6 +43,16 @@ const props = defineProps({
         required: false,
         default: false,
     },
+    nextId: {
+        type: String,
+        required: false,
+        default: 'next-carousel',
+    },
+    prevId: {
+        type: String,
+        required: false,
+        default: 'prev-carousel',
+    },
 });
 
 const backButtonEnabled = ref(false);

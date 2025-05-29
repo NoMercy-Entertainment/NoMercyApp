@@ -4,6 +4,7 @@ import { useRoute } from 'vue-router';
 import axios from 'axios';
 import { useTranslation } from "i18next-vue";
 import { IonContent, IonPage } from '@ionic/vue';
+import type {ShareOptions} from "@capacitor/share";
 
 import type { InfoResponse } from '@/types/api/base/info';
 import type { MoooomIcons } from '@Icons/icons';
@@ -290,6 +291,12 @@ const menuItems = computed<IMenuItem[]>(() => [
   },
 ]);
 
+const shareData = computed<ShareOptions>(() => ({
+  title: data.value?.title ?? '',
+  text: data.value?.overview ?? '',
+  url: 'https://app.nomercy.tv' + route.fullPath,
+}));
+
 </script>
 
 <template>
@@ -405,10 +412,10 @@ const menuItems = computed<IMenuItem[]>(() => [
                                       className="w-6 text-slate-lightA-12/70  dark:text-slate-darkA-12/80" />
                         </BannerButton>
 
-                        <ShareButton class="!p-0 text-white" />
+                        <ShareButton :shareData="shareData" class="!p-0 text-white" />
 
                         <MediaLikeButton v-if="data" :data="data" />
-                        
+
                         <ListControlHeaderMoreMenu :items="menuItems"
                                                    class=" text-slate-lightA-12/70  dark:text-slate-darkA-12/80" />
                       </div>

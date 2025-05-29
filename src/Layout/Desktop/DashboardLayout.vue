@@ -164,7 +164,7 @@ watch(dataUpdatedAt, (value) => {
             <FloatingBackButton v-if="back" position="relative" class="left-4" />
             <p v-else
               class="hidden h-8 w-auto flex-shrink-0 flex-grow-0 items-center self-stretch text-sm empty:hidden lg:flex">
-              {{ $t(description) }}
+              {{ $t(description ?? '') }}
             </p>
           </div>
 

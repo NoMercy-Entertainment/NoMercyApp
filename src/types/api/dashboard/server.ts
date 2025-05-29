@@ -138,7 +138,7 @@ export interface ServerEncoderProgress {
 }
 
 export interface ConfigurationResponse {
-	server_name: string;
+	name: string;
 	external_port: number;
 	internal_port: number;
 	queue_workers: number;

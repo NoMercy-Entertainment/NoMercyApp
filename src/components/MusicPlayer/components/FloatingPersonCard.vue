@@ -24,7 +24,7 @@ watch(props, (value) => {
     class="flex flex-col justify-start h-[calc(100%-1rem)] items-start w-40 sm:w-48 2xl:w-80 mx-auto absolute left-4 sm:left-10 top-4 rounded-2xl">
 
     <div class="sticky top-14 flex h-auto w-full flex-col gap-4">
-      <div :id="data?.id" :class="data?.deathday ? 'outline outline-white' : ''"
+      <div :id="data?.id ?? 'x'" :class="data?.deathday ? 'outline outline-white' : ''"
         class="relative z-0 block w-auto select-none overflow-clip rounded-2xl transitioning aspect-poster">
         <div class="relative flex h-full w-full flex-col">
           <TMDBImage :path="currentImage?.src ?? data?.poster" :size="180" :colorPalette="data?.color_palette?.profile"

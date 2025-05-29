@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { PropType } from 'vue';
+import {computed, PropType} from 'vue';
 
 import type { DisplayList } from '@/types/api/music/musicPlayer';
 
@@ -12,6 +12,8 @@ import MediaLikeButton from '@/components/Buttons/MediaLikeButton.vue';
 import { isTrackRoute } from '@/store/routeState';
 import { isPlatform } from "@ionic/vue";
 import ShareButton from "@/components/Buttons/ShareButton.vue";
+import type {ShareOptions} from "@capacitor/share";
+import {useRoute} from "vue-router";
 
 const props = defineProps({
     data: {
@@ -26,9 +28,16 @@ const props = defineProps({
 
 defineEmits(['filter-change']);
 
+const route = useRoute();
+
 const handleAdd = () => {
     audioPlayer.setQueue(props.data?.tracks ?? []);
 };
+
+const shareData = computed<ShareOptions>(() => ({
+  title: props.data?.name ?? '',
+  url: 'https://app.nomercy.tv' + route.fullPath,
+}));
 
 </script>
 
@@ -51,7 +60,7 @@ const handleAdd = () => {
 
         </div>
 
-        <ShareButton class="!p-0 text-white hidden sm:flex sm:ml-auto" />
+        <ShareButton :shareData="shareData" class="!p-0 text-white hidden sm:flex sm:ml-auto" />
         <MediaLikeButton :data="data" color="var(--color-focus)" className="!w-8 !h-8" />
 
       <ShareButton class="!p-0 text-white sm:hidden" />

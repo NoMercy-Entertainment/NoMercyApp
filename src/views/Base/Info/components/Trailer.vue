@@ -3,7 +3,7 @@ import { onMounted, onUnmounted, type PropType, ref, toRaw } from 'vue';
 
 import type { InfoResponse } from '@/types/api/base/info';
 
-import type { NMPlayer, PlaylistItem, SetupConfig } from '@/lib/VideoPlayer';
+import type {NMPlayer, NMPlaylistItem, PlayerConfig} from '@/lib/VideoPlayer';
 import { DesktopUIPlugin, KeyHandlerPlugin, nmplayer, } from '@/lib/VideoPlayer';
 import { closeSidebar, setSidebar, sidebar } from '@/store/sidebar';
 import { setDisableScreensaver } from '@/store/imageModal';
@@ -41,17 +41,7 @@ const props = defineProps({
 const trailerContainer = ref<HTMLElement>();
 const sidebarState = ref();
 
-interface MyNmPlayer extends NMPlayer {
-  showInProduction: () => boolean;
-  getPlaylistItem: () => PlaylistItem & {
-    tmdb_id: number,
-    special_id: number,
-    video_type: string,
-    video_id: number;
-  };
-}
-
-const trailer = ref<MyNmPlayer>();
+const trailer = ref<NMPlayer<NMPlaylistItem>>();
 
 onMounted(() => {
   sidebarState.value = sidebar.value;
@@ -62,7 +52,7 @@ onMounted(() => {
 
   if (!props.videos[props.index]?.src) return;
 
-  const config: SetupConfig = {
+  const config: PlayerConfig = {
     muted: false,
     controls: false,
     autoPlay: true,
@@ -80,6 +70,7 @@ onMounted(() => {
         description: '',
         tracks: [
           {
+            id: 1,
             label: 'full',
             file: `https://trailer.nomercy.tv/${props.videos[props.index].src}/${props.videos[props.index].src}.en.vtt`,
             language: 'eng',

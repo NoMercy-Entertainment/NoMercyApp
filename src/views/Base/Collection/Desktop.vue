@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { onMounted, onUnmounted, ref, watch } from 'vue';
-import { useRouter } from 'vue-router';
+import {computed, onMounted, onUnmounted, ref, watch} from 'vue';
+import {useRoute} from 'vue-router';
 import { IonPage, IonContent } from '@ionic/vue';
 import collect from 'collect.js';
 
@@ -27,12 +27,13 @@ import { useTranslation } from 'i18next-vue';
 import InfoHeaderItem from "@/views/Base/Info/components/InfoHeaderItem.vue";
 import NotFound from "@/Layout/Desktop/components/NotFound.vue";
 import ShareButton from "@/components/Buttons/ShareButton.vue";
+import type {ShareOptions} from "@capacitor/share";
 
 const { t } = useTranslation();
-const router = useRouter();
+const route = useRoute();
 
 const { data, isError } = useServerClient<CollectionResponse>({
-  queryKey: ['base', 'collection', router.currentRoute.value.params.id],
+  queryKey: ['base', 'collection', route.params.id],
   limit: 1000,
   keepForever: true,
 });
@@ -82,6 +83,11 @@ onUnmounted(() => {
   clearInterval(interval.value ?? undefined);
 });
 
+const shareData = computed<ShareOptions>(() => ({
+  title: data.value?.title ?? '',
+  text: data.value?.overview ?? '',
+  url: 'https://app.nomercy.tv' + route.fullPath,
+}));
 
 </script>
 
@@ -190,7 +196,7 @@ onUnmounted(() => {
 
                     <MediaLikeButton v-if="data" :data="data" />
 
-                    <ShareButton class="!p-0 text-white" />
+                    <ShareButton :shareData="shareData" class="!p-0 text-white" />
 
                     <DropdownMenu>
                       <template v-slot:button>

@@ -9,8 +9,8 @@ const handleClick = (e?: MouseEvent) => {
   e?.stopPropagation();
 
   isPlaying.value
-      ? audioPlayer?.actions?.pause()
-      : audioPlayer?.actions?.play();
+      ? audioPlayer?.actions?.pause?.()
+      : audioPlayer?.actions?.play?.();
 }
 </script>
 

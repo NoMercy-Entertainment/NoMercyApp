@@ -19,7 +19,6 @@ defineProps({
   items: {
     type: Array as PropType<Array<any> | undefined> | undefined,
     required: true,
-    default: [],
   },
   multiple: {
     type: Boolean,

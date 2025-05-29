@@ -14,7 +14,7 @@ import {user} from "@/store/user";
 import NoMercyAvatar from "@/components/Images/NoMercyAvatar.vue";
 import {RouterLink} from "vue-router";
 import MoooomIcon from "@/components/Images/icons/MoooomIcon.vue";
-import {deviceIsTv, isTv, tvModeOverride} from "@/config/global";
+import {isTv, tvModeOverride} from "@/config/global";
 
 const serverList = ref<HTMLElement>();
 

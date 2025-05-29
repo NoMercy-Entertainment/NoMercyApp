@@ -41,7 +41,7 @@ const props = defineProps({
 
 const emit = defineEmits(['update:modelValue']);
 
-const selected = ref<Language[] | Language>(props.modelValue);
+const selected = ref<Language[] | Language>(props.modelValue!);
 const query = ref('');
 const filteredOptions = ref<Language[]>([]);
 
