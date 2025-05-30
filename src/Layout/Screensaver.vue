@@ -15,7 +15,7 @@ import {
 
 const { idle, reset } = useIdle((screensaverDelay.value ?? 0) * 60 * 1000);
 
-const index = ref(0);
+const index = ref(-1);
 const interval = ref<NodeJS.Timeout | null>(null);
 
 const { data: images } = useServerClient<LogoResponse[]>({
@@ -66,5 +66,5 @@ onUnmounted(() => {
 </script>
 
 <template>
-	<i></i>
+	<i> </i>
 </template>

@@ -180,14 +180,12 @@ onUnmounted(() => {
 <template>
   <ion-page>
     <ion-content :fullscreen="true">
-      <!--      <Teleport to="body">-->
       <div class="absolute inset-0 flex h-full w-full overflow-clip bg-black z-1199" :class="{
         'mb-28': isNative,
         'mb-0': !isNative,
       }">
         <div id="player1" class="group nomercyplayer"></div>
       </div>
-      <!--      </Teleport>-->
     </ion-content>
   </ion-page>
 </template>

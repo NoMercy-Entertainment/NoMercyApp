@@ -39,7 +39,7 @@ const props = defineProps({
 </script>
 
 <template>
-  <Dialog v-model:visible="open" v-model:open="open" modal :header="$t(title, params)"
+  <Dialog :visible="open" :open="open" modal :header="$t(title, params)"
     class="w-full" :class="{
       [maxWidth]: true,
     }">
