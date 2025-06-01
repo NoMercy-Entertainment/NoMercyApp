@@ -26,30 +26,34 @@ export default defineConfig(({command}) => {
                 },
             }),
             VitePWA({
-                registerType: 'prompt',
+                registerType: 'autoUpdate',
                 strategies: 'generateSW',
                 workbox: {
-                    // 		cleanupOutdatedCaches: true,
-                    // 		clientsClaim: false,
-                    // 		skipWaiting: false,
-                    // 		sourcemap: false,
+                    cleanupOutdatedCaches: true,
+                    clientsClaim: true,
+                    skipWaiting: true,
+                    sourcemap: false,
                     // 		globPatterns: [
                     // 			'**/*.{js,css,html,ico,png,svg,jpg,jpeg,gif,webp,woff,woff2,ttf,eot,json}',
                     // 		],
                     // 		globIgnores: ['**/*.webmanifest'],
-                    // 		navigateFallback: 'index.html',
+                    navigateFallback: 'index.html',
                     runtimeCaching: [
                         {
                             urlPattern: /^https:\/\/app\.nomercy\.tv\/.*/i,
-                            handler: 'StaleWhileRevalidate',
+                            handler: 'NetworkFirst',
                             options: {
-                                cacheName: 'static-assets-v2',
+                                cacheName: 'static-assets-v3',
                                 fetchOptions: {
                                     mode: 'cors',
                                     credentials: 'same-origin',
                                 },
                                 cacheableResponse: {
                                     statuses: [0, 200]
+                                },
+                                backgroundSync: {
+                                    name: 'static-assets-v3',
+                                    options: {forceSyncFallback: true}
                                 }
                             }
                         },
@@ -57,13 +61,17 @@ export default defineConfig(({command}) => {
                             urlPattern: /^https:\/\/(cdn|storage|cdn-dev)\.nomercy\.tv\/.*/i,
                             handler: 'CacheFirst',
                             options: {
-                                cacheName: 'cdn-assets-v1',
+                                cacheName: 'cdn-assets-v3',
                                 expiration: {
                                     maxEntries: 1000,
                                     maxAgeSeconds: 60 * 60 * 24 * 30
                                 },
                                 cacheableResponse: {
                                     statuses: [0, 200]
+                                },
+                                backgroundSync: {
+                                    name: 'cdn-assets-v3',
+                                    options: {forceSyncFallback: true}
                                 }
                             }
                         },
@@ -73,28 +81,16 @@ export default defineConfig(({command}) => {
                             },
                             handler: 'NetworkFirst',
                             options: {
-                                cacheName: 'nomercy-api-v1',
+                                cacheName: 'nomercy-api-v3',
+                                cacheableResponse: {
+                                    statuses: [0, 200]
+                                },
                                 backgroundSync: {
-                                    name: 'nomercy-api-v1',
+                                    name: 'nomercy-api-v3',
                                     options: {forceSyncFallback: true}
                                 }
                             }
                         },
-						// {
-						// 	// this should match urls like https://192-168-2-123.123abc-1234abc-123abc-123abc.nomercy.tv:7626/api
-						// 	urlPattern: ({ url }) => {
-						// 		return /^[^.]+\.[^.]+\.nomercy\.tv/.test(url.hostname)
-						// 			&& url.pathname.includes('/api');
-						// 	},
-						// 	handler: 'NetworkFirst',
-						// 	options: {
-						// 		cacheName: 'mediaserver-api',
-						// 		backgroundSync: {
-						// 			name: 'mediaserver-api',
-						// 			options: { forceSyncFallback: true }
-						// 		}
-						// 	}
-						// },
                         {
                             // this should match urls like https://192-168-2-123.123abc-1234abc-123abc-123abc.nomercy.tv:7626/images
                             urlPattern: ({url}) => {
@@ -102,7 +98,7 @@ export default defineConfig(({command}) => {
                                 const isImageRequest = url.pathname.match(/\/images\/.*?\.(jpg|jpeg|png|gif|webp|avif)$/i);
                                 return isApiServer && isImageRequest;
                             },
-                            handler: 'NetworkFirst',
+                            handler: 'CacheFirst',
                             options: {
                                 cacheName: 'cover-images-v1',
                                 expiration: {
@@ -111,6 +107,10 @@ export default defineConfig(({command}) => {
                                 },
                                 cacheableResponse: {
                                     statuses: [0, 200]
+                                },
+                                backgroundSync: {
+                                    name: 'cover-images-v1',
+                                    options: {forceSyncFallback: true}
                                 }
                             }
                         },
@@ -132,7 +132,6 @@ export default defineConfig(({command}) => {
                     ],
                     theme_color: '#000000',
                     background_color: '#000000',
-                    // display_override: ['standalone', 'minimal-ui'],
                     display: 'standalone',
                     orientation: 'any',
                     scope: '/',
