@@ -165,9 +165,9 @@ ion-item::part(native) {
   ion-modal:nth-of-type(2) {
     display: none !important;
   }
-  html.plt-cordova ion-content::part(scroll) {
-    @apply pt-safe ;
-  }
+  //html.plt-cordova ion-content::part(scroll) {
+  //  @apply pt-safe ;
+  //}
   html.plt-cordova:has(#miniPlayer) ion-content::part(scroll) {
     @apply pb-safe-offset-2;
   }

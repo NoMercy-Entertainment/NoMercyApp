@@ -17,6 +17,7 @@ export interface ContextMenuItem {
 	label?: string;
 	icon?: `mooooom-${keyof typeof MoooomIcons}`;
 	command?: string | (() => any);
+	method?: string;
 	confirm?: string;
 	args?: { [arg: string]: any };
 	separator?: boolean;
@@ -33,15 +34,15 @@ export const makeContextMenu = (items: ContextMenuItem[]): (MenuItem & { icon?: 
 	return items.map((item) => {
 
 		let cmd: (url: string, data: any) => Promise<AxiosResponse<unknown, unknown>>;
-		if (item.command === 'GET') {
+		if (item.method === 'GET') {
 			cmd = getRequest;
-		} else if (item.command === 'PUT') {
+		} else if (item.method === 'PUT') {
 			cmd = putRequest;
-		} else if (item.command === 'POST') {
+		} else if (item.method === 'POST') {
 			cmd = postRequest;
-		} else if (item.command === 'PATCH') {
+		} else if (item.method === 'PATCH') {
 			cmd = patchRequest;
-		} else if (item.command === 'DELETE') {
+		} else if (item.method === 'DELETE') {
 			cmd = deleteRequest;
 		}
 		else {
@@ -51,9 +52,8 @@ export const makeContextMenu = (items: ContextMenuItem[]): (MenuItem & { icon?: 
 		return {
 			label: item.label,
 			icon: item.icon,
-			command: () => item.command
-				? cmd(item.args?.url, contextMenuContext.value)
-				: {},
+			confirm: item.confirm,
+			command: () => cmd(item.args?.url, contextMenuContext.value),
 		};
 	});
 };

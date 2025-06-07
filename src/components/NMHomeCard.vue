@@ -167,7 +167,7 @@ const scrollToTop = () => {
     </div>
   </div>
   <div v-else
-    class="flex h-auto w-full flex-shrink-0 flex-grow-0 items-start justify-start gap-2 self-stretch p-6 pb-0 aspect-poster -mb-6 max-h-[80vh]">
+    class="flex h-auto w-full flex-shrink-0 flex-grow-0 items-start justify-start gap-2 self-stretch p-6 mt-2 pb-0 aspect-poster -mb-10 max-h-[80vh]">
     <div
       class="frosting relative flex h-auto w-full flex-grow flex-col items-center justify-end overflow-hidden rounded-lg bg-cover bg-center bg-no-repeat aspect-poster bg-focus max-h-[75vh]"
       style="box-shadow: 0 8px 24px 0 rgba(0,0,0,0.08);">

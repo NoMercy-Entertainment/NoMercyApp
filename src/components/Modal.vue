@@ -1,13 +1,14 @@
 <script setup lang="ts">
+import { useTranslation } from 'i18next-vue';
 import { PropType, ref, watch } from 'vue';
 
-const open = defineModel('open', {
-  type: Boolean,
-  required: true,
-  default: false,
-});
+const { t } = useTranslation();
 
 const props = defineProps({
+  open: {
+    type: Boolean,
+    required: true,
+  },
   close: {
     type: Function as PropType<(e: Event) => any>,
     required: true,
@@ -36,11 +37,23 @@ const props = defineProps({
   }
 });
 
+const visible = ref(false);
+
+watch(props, (value) => {
+  visible.value = value.open;
+});
+
+watch(visible, (value) => {
+  if (!value) {
+    props.close(new Event('close'));
+  }
+});
+
 </script>
 
 <template>
-  <Dialog :visible="open" :open="open" modal :header="$t(title, params)"
-    class="w-full" :class="{
+  <Dialog v-model:visible="visible" v-model:open="visible" modal :header="$t(title, params)" role="dialog"
+          class="w-full" :class="{
       [maxWidth]: true,
     }">
     <ScrollPanel class="w-available h-available" :dt="{
