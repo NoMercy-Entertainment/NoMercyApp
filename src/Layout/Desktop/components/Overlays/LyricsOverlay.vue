@@ -21,6 +21,7 @@ const currentLyric = ref<HTMLDivElement>();
 
 const fetchLyrics = (id: string) => {
   if (!id || currentSong.value?.lyrics) return;
+  if(id == currentSong.value?.id) return;
 
   const lyricsUrl = `${currentServer.value?.serverApiUrl}/music/tracks/${id}/lyrics`;
 
@@ -96,7 +97,7 @@ onMounted(() => {
 });
 
 watch(currentTime, (value) => {
-  if (!lyrics_container.value || !lyrics.value) return;
+  if (!value || !lyrics_container.value || !lyrics.value) return;
 
   value = value + 0.5;
 
@@ -134,7 +135,8 @@ watch(currentTime, (value) => {
     });
 });
 
-watch(currentSong, (value) => {
+watch(currentSong, (value, oldValue) => {
+  if (value?.id === oldValue?.id) return;
   lastIndex.value = -1;
 
   if (value?.lyrics) {
@@ -144,8 +146,9 @@ watch(currentSong, (value) => {
   }
 });
 
-watch(lyrics, (value) => {
+watch(lyrics, (value, oldValue) => {
   if (!value || !lyrics_container.value) return;
+  if (value.at(0) === oldValue?.at(0)) return;
 
   const currentLyric = lyrics_container.value?.querySelector<HTMLDivElement>(`[data-index='0']`);
   if (currentLyric) {
