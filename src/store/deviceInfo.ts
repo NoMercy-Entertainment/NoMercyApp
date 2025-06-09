@@ -1,4 +1,4 @@
-import {computed, ref} from 'vue';
+import {computed, ref, toRaw} from 'vue';
 
 import {App as android, type AppInfo, type AppState} from '@capacitor/app';
 import {BatteryInfo, Device, DeviceInfo} from '@capacitor/device';
@@ -47,11 +47,11 @@ const getDeviceId = async () => {
 }
 
 (async () => {
-    di.value = await Device.getInfo();
-    ci.value = await makeDeviceInfo();
-
     await getDeviceName();
     await getDeviceId();
+
+    di.value = await Device.getInfo();
+    ci.value = await makeDeviceInfo();
 
     if (isPlatform('capacitor') && isPlatform('android')) {
         ai.value = await android.getInfo();
@@ -61,10 +61,10 @@ const getDeviceId = async () => {
         as.value = data;
     });
 
-    // console.log({
-    // 	appInfo: toRaw(appInfo.value),
-    // 	deviceInfo: toRaw(deviceInfo.value),
-    // 	batteryInfo: toRaw(batteryInfo.value)
-    // });
+    console.log({
+        appInfo: toRaw(appInfo.value),
+        deviceInfo: toRaw(deviceInfo.value),
+        batteryInfo: toRaw(batteryInfo.value)
+    });
 
 })();

@@ -33,7 +33,7 @@ const currentDevice = computed(() => connectedDevices.value.find(d => d.device_i
 
 <template>
   <div :data-open="deviceMenuOpen" :inert="!deviceMenuOpen" :data-size="musicSize" v-if="user.features?.nomercyConnect"
-       class="absolute left-auto right-4 top-auto -bottom-8 data-[open='true']:full:bottom-28 data-[open='true']:compact:bottom-16 sm:data-[open='true']:full:bottom-4 sm:data-[open='true']:compact:bottom-4 sm:bottom-4 w-available sm:w-1/4 bg-slate-light-3 dark:bg-slate-dark-1 flex items-center justify-center rounded-lg transition-all duration-500 border-2 border-focus data-[open='false']:translate-y-[200%] z-[29999] text-left">
+       class="absolute left-4 sm:left-auto right-4 top-auto -bottom-8 data-[open='true']:full:bottom-28 data-[open='true']:compact:bottom-16 sm:data-[open='true']:full:bottom-4 sm:data-[open='true']:compact:bottom-4 sm:bottom-4 w-available sm:w-1/4 bg-slate-light-3 dark:bg-slate-dark-1 flex items-center justify-center rounded-lg transition-all duration-500 border-2 border-focus data-[open='false']:translate-y-[200%] z-[29999] text-left">
     <div
         class="pointer-events-none absolute inset-0 flex items-center justify-center rounded-lg opacity-60 bg-auto-3/40">
     </div>
