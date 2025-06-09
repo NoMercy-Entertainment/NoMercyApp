@@ -124,7 +124,7 @@ const handleOpenApp = async () => {
         </button>
       </ion-item>
 
-      <ion-item lines="inset">
+      <ion-item lines="inset" v-show="!isTv && !isPlatform('mobileweb')">
         <button no-ring @click="tvModeOverride = !tvModeOverride"
           class="flex justify-center items-center self-stretch w-available h-full flex-grow-0 flex-shrink-0 relative pl-2 py-2.5 rounded-md bg-transparent border border-transparent">
           <ion-icon aria-hidden="true" :icon="monitor" className="size-6 min-w-6" />

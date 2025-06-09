@@ -10,6 +10,7 @@ import BigPlayButton from '@/components/Buttons/BigPlayButton.vue';
 import {PlaylistItem} from "@/types/musicPlayer";
 import {musicSocketConnection} from "@/store/musicSocket";
 import audioPlayer from "@/store/audioPlayer";
+import {user} from "@/store/user";
 
 const props = defineProps({
   title: {
@@ -34,12 +35,16 @@ const props = defineProps({
 
 const handleClick = () => {
   if (!props.data?.track) return;
+
+    if (!user.value.features?.nomercyConnect) {
+      audioPlayer.playTrack(props.data.track);
+      return;
+    }
   musicSocketConnection.value?.invoke('StartPlaybackCommand',
       props.data?.type.replace(/s$/u, ''),
       props.data?.id,
       props.data?.track?.id,
   );
-  audioPlayer.playTrack(props.data.track);
 };
 
 </script>

@@ -114,7 +114,7 @@ const handleClick = (song: PlaylistItem) => {
       <div class="flex w-full flex-col items-start justify-start gap-4 pb-4 relative overflow-hidden h-available">
         <ScrollContainer :autoHide="true" :static="false">
           <template v-for="song in queue" :key="song?.id">
-            <button @click="handleClick(song)"
+            <button @click="handleClick(song)" v-if="song.id !== currentSong?.id"
                     class="flex h-auto w-full items-center justify-start gap-2 rounded-lg p-2 hover:bg-auto-3/50">
               <div class="relative aspect-square h-auto w-14 cursor-pointer overflow-hidden rounded-md text-theme-4">
                 <CoverImage v-if="song" :data="song"/>

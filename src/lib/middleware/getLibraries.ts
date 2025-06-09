@@ -6,6 +6,8 @@ import libraries, { setLibraries } from '@/store/Libraries';
 import type { LibrariesResponse } from '@/types/api/base/library';
 import { setupComplete } from '@/store/ui';
 import router from "@/router";
+import {redirectUrl} from "@/store/routeState";
+import {useRoute} from "vue-router";
 
 const done = ref(false);
 
@@ -20,6 +22,9 @@ const getLibraries = (): Promise<void> => new Promise((resolve, reject) => {
 		resolve();
 		return;
 	}
+
+	const route = useRoute();
+	redirectUrl.value = route?.fullPath ?? location.pathname;
 
 	serverClient()
 		.get<{ data: LibrariesResponse[] }>('libraries')

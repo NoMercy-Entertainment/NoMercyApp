@@ -42,6 +42,7 @@ import NMMusicHomeCard from '@/components/NMMusicHomeCard.vue';
 import NMServerComponent from '@/components/NMServerComponent.vue';
 import NMTopResultCard from '@/components/NMTopResultCard.vue';
 import NMTrackRow from '@/components/NMTrackRow.vue';
+import {redirectUrl} from "@/store/routeState";
 
 export async function setupApp(app: AppContext['app']) {
 
@@ -134,14 +135,12 @@ export async function setupApp(app: AppContext['app']) {
             app.mount('#app');
 
             setTimeout(() => {
-                const redirectUrl = location.search.includes('redirectUrl')
-                    ? location.search.split('redirectUrl=')[1].split('&')[0]
-                    : undefined;
-
-                localStorage.setItem('redirectUrl', redirectUrl || localStorage.getItem('redirectUrl') || '/home');
+                if(location.search.includes('redirectUrl')) {
+                    redirectUrl.value = location.search.split('redirectUrl=')[1].split('&')[0];
+                }
 
                 if (redirectUrl) {
-                    router.push(redirectUrl).then();
+                    router.push(redirectUrl.value).then();
                 }
             }, 1000);
         });

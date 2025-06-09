@@ -3,8 +3,6 @@ import { IonPage, IonContent } from '@ionic/vue';
 import ExploreContainer from '@/components/ExploreContainer.vue';
 import router from '@/router';
 
-console.log('Desktop.vue', router.currentRoute.value);
-
 </script>
 
 <template>

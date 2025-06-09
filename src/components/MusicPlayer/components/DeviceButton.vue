@@ -30,12 +30,12 @@ const currentDevice = computed(() => connectedDevices.value.find(d => d.device_i
       data-target="devices"
       label="Playing on this device"
       :onclick="handleClick"
-      class="flex gap-2 items-center"
+      class="flex gap-2 items-center flex-nowrap"
       :data-current_device="currentDeviceId">
     <MoooomIcon icon="devices" class="h-6 w-6 text-focus" v-if="deviceMenuOpen"/>
     <MoooomIcon icon="devices" class="h-6 w-6" v-else/>
     <p :data-size="musicSize" v-if="!noName"
-       class="text-auto-900 flex sm:hidden compact:hidden pointer-events-none !text-sm min-w-full whitespace-nowrap pl-2 pr-8 max-w-64">
+       class="text-auto-900 flex sm:hidden compact:hidden pointer-events-none !text-sm min-w-full whitespace-nowrap pl-2 max-w-72">
       {{
         currentDeviceId === deviceId
             ? $t('This device')

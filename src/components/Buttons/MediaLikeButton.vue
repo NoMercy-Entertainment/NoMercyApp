@@ -1,7 +1,5 @@
 <script lang="ts" setup>
-import {PropType, ref} from 'vue';
-
-import {useQueryClient} from '@tanstack/vue-query';
+import {PropType, ref, watch} from 'vue';
 
 import type {InfoResponse} from '@/types/api/base/info';
 import type {PlaylistItem} from "@/types/musicPlayer";
@@ -9,12 +7,10 @@ import type {Collection, CollectionResponse} from "@/types/api/base/collection";
 import type {ContinueWatching, HomeItem} from "@/types/api/base/home";
 import type {LibraryResponse, StatusResponse} from '@/types/api/base/library';
 import type {ArtistResponse} from '@/types/api/music/artist';
-
+import {DisplayList} from '@/types/api/music/musicPlayer';
 
 import serverClient from '@/lib/clients/serverClient';
 
-import {DisplayList} from '@/types/api/music/musicPlayer';
-import {queryKey} from "@/lib/routerHelper";
 import MusicButton from "@/components/MusicPlayer/components/MusicButton.vue";
 import MoooomIcon from "@/components/Images/icons/MoooomIcon.vue";
 
@@ -35,7 +31,9 @@ const props = defineProps({
   },
 });
 
-const query = useQueryClient();
+watch(props, (prop) => {
+  liked.value = prop.data?.favorite;
+});
 
 const liked = ref(props.data?.favorite);
 
@@ -47,18 +45,6 @@ const handleLike = (e?: MouseEvent) => {
       })
       .then(({data}) => {
         liked.value = data.args?.[0] == 'liked' || data.args?.[1] == 'liked';
-        // showNotification({
-        // 	title: translate(data.message, ...data.args ?? []),
-        // 	type: data.status == 'ok'
-        // 		? TYPE.SUCCESS
-        // 		: TYPE.ERROR,
-        // 	visibleOnly: true,
-        // 	duration: 2000,
-        // });
-
-        query.invalidateQueries({
-          queryKey: queryKey(),
-        });
       });
 };
 
@@ -79,9 +65,8 @@ const handleLike = (e?: MouseEvent) => {
 			`"/>
     <MoooomIcon icon="heart"
                 class="absolute inset-2 transition-all duration-150"
-                :class="{
-      className
-		}" v-if="!liked"/>
+                :class="{className}"
+                v-if="!liked"/>
   </MusicButton>
 </template>
 

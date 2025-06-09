@@ -1,7 +1,7 @@
 import apiClient from '../clients/apiClient';
 
 import servers, { setServers } from '@/store/servers';
-import {user} from '@/store/user';
+import {setUser, user} from '@/store/user';
 import { setCurrentServer } from '@/store/currentServer';
 
 import { ref } from 'vue';
@@ -28,14 +28,14 @@ const getLocations = (): Promise<void> => new Promise((resolve, reject) => {
 			setMessages(data.data.messages ?? []);
 			setNotifications(data.data.notifications ?? []);
 
-			user.value = {
+			setUser({
 				...user.value,
 				locale: data.data.locale,
 				name: data.data.name,
 				avatarUrl: data.data.avatarUrl,
 				features: data.data.features,
 				moderator: !!data.data.moderator,
-			};
+			});
 
 			done.value = true;
 

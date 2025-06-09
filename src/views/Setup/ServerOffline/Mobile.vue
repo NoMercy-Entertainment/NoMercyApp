@@ -13,6 +13,7 @@ import { setMusicPlaylists } from "@/store/musicPlaylists";
 
 import ExploreContainer from '@/components/ExploreContainer.vue';
 import EmptyBackdrop from "@/components/Images/EmptyBackdrop.vue";
+import {redirectUrl} from "@/store/routeState";
 
 const { data: libraries, refetch } = useServerClient<LibrariesResponse[]>({
   path: '/libraries',
@@ -39,7 +40,7 @@ watch(libraries, async (value) => {
   setLibraries(value);
 
   if (value.length > 0) {
-    await router.replace(localStorage.getItem('redirectUrl') || '/home')
+    await router.replace(redirectUrl.value)
       .catch(() => { })
       .then(() => {
         console.log('Replaced to Home');
@@ -55,7 +56,7 @@ watch(playlists, (value) => {
 onMounted(() => {
   if (!libraries.value) return;
   if (libraries.value.length > 0) {
-    router.replace(localStorage.getItem('redirectUrl') || '/home')
+    router.replace(redirectUrl.value)
       .catch(() => { })
       .then(() => {
         console.log('Replaced to Home');

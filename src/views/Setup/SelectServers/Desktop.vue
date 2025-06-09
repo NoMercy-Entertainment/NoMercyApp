@@ -12,14 +12,15 @@ import {setBackground, setColorPalette} from "@/store/ui";
 import ServerCard from '@/views/Setup/SelectServers/components/ServerCard.vue';
 
 import EmptyBackdrop from "@/components/Images/EmptyBackdrop.vue";
+import {redirectUrl} from "@/store/routeState";
 
 const handleSelectServer = (server: Server) => {
   setCurrentServer(server);
 
-  if (localStorage.getItem('redirectUrl') == '#/setup/select-servers') {
+  if (redirectUrl.value == '/setup/select-servers') {
     router.replace('/home');
   } else {
-    router.replace(localStorage.getItem('redirectUrl') || '/home');
+    router.replace(redirectUrl.value);
   }
 };
 

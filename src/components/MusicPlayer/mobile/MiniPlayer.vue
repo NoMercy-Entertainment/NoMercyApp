@@ -1,5 +1,5 @@
 2<script setup lang="ts">
-import { computed, ref } from 'vue';
+import {computed, ref, watch} from 'vue';
 import { useSwipe } from '@vueuse/core';
 
 import { pickPaletteColor } from '@/lib/colorHelper';
@@ -94,7 +94,7 @@ const { isSwiping, lengthX } = useSwipe(
     </div>
     <div class="flex items-center justify-end gap-1">
       <DeviceButton noName />
-      <MediaLikeButton :key="currentSong?.id" :data="currentSong" v-if="currentSong" color="var(--color-focus)" />
+      <MediaLikeButton :key="currentSong?.id + currentSong?.favorite" :data="currentSong" color="var(--color-focus)" />
       <PlaybackButton class="children:h-7 children:w-7" />
     </div>
     <div class="absolute left-0 w-full h-0.5 top-[54px] blur-[1px]">

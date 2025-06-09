@@ -12,7 +12,10 @@ import MoooomIcon from '@/components/Images/icons/MoooomIcon.vue';
 import Toggle from '@/components/Forms/Toggle.vue';
 import DropdownLink from "@/Layout/Desktop/components/Menus/DropdownLink.vue";
 import AppLogoSquare from "@/components/Images/icons/AppLogoSquare.vue";
-import {deviceIsTv, isTv, tvModeOverride} from "@/config/global";
+import {isTv, tvModeOverride} from "@/config/global";
+import {isPlatform} from "@ionic/vue";
+import {redirectUrl} from "@/store/routeState";
+import {useRoute} from "vue-router";
 
 const reload = () => window.location.reload();
 
@@ -24,14 +27,9 @@ defineProps({
   }
 });
 
+const route = useRoute();
 const handleSelectServer = () => {
-  localStorage.setItem('redirectUrl', window.location.hash.replace('#', ''));
-};
-
-const handleEnter = (event: KeyboardEvent) => {
-  if (event.key === 'Enter') {
-    darkMode.value = !darkMode.value;
-  }
+  redirectUrl.value = route.fullPath;
 };
 
 </script>
@@ -85,9 +83,9 @@ const handleEnter = (event: KeyboardEvent) => {
               </span>
             </button>
             </div>
-            <div
+            <div v-show="!isTv && !isPlatform('mobileweb')"
                 class="flex justify-center items-center self-stretch h-10 relative py-2.5 px-1 rounded-md border border-transparent hover:border-focus/4 active:!bg-focus/11 dark:active:!bg-focus/8 active:border-focus/4 active:hover:border-focus/4 focus:bg-focus-9 hover:!bg-focus/10 disabled:!bg-focus/2 disabled:!border-focus/2 transition-colors duration-200 hover:text-auto-12">
-            <button tabindex="-1" @click="tvModeOverride = !tvModeOverride" v-show="!isTv"
+            <button tabindex="-1" @click="tvModeOverride = !tvModeOverride"
                 class="relative flex w-full flex-grow items-center justify-center gap-2 px-2 text-lg font-medium text-left">
               <MoooomIcon className="" icon="monitor"/>
               <span class="relative flex flex-grow items-center justify-center gap-2 pl-2">

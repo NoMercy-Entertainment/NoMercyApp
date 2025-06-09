@@ -35,11 +35,11 @@ export interface Props<T> {
 /**
  * Returns the queryKey for the query based on the url of the page.
  */
+const route  = useRoute();
 export const queryKey = (path?: string): string[] => {
-	const route = useRoute();
 	const queryKey: string[] = [];
 
-	(path ?? route.path)
+	(path ?? route?.path)
 		?.split('/')
 		.slice(1)
 		.forEach(p => {

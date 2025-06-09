@@ -2,6 +2,7 @@ import { computed } from 'vue';
 
 import libraries from '@/store/Libraries';
 import router from '@/router';
+import {useLocalStorage} from "@vueuse/core";
 
 export const searchUrl = computed(() => {
   if (isMusicRoute.value) {
@@ -10,6 +11,7 @@ export const searchUrl = computed(() => {
   return '/search';
 });
 
+export const redirectUrl = useLocalStorage('redirect-url', '/home');
 export const isSearchRoute = computed(() => router.currentRoute.value.path == '/search');
 export const isMusicSearchRoute = computed(() => router.currentRoute.value.path == '/music/search');
 

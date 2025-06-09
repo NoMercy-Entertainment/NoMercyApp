@@ -19,6 +19,7 @@ import DropdownMenu from '@/Layout/Desktop/components/Menus/DropdownMenu.vue';
 import BannerButton from '@/components/Buttons/BannerButton.vue';
 import PlayerIcon from "@/components/Images/icons/PlayerIcon.vue";
 import Marquee from "@/components/Marquee.vue";
+import {user} from "@/store/user";
 
 const props = defineProps({
   data: {
@@ -41,12 +42,15 @@ const isAlbumRoute = computed(() => route.path.startsWith('/music/album'));
 const isArtistRoute = computed(() => route.path.startsWith('/music/artist'));
 
 const handleClick = () => {
+  if (!user.value.features?.nomercyConnect) {
+    audioPlayer.playTrack(props.data, props.displayList);
+    return;
+  }
   musicSocketConnection.value?.invoke('StartPlaybackCommand',
     isAlbumRoute.value ? 'album' : 'artist',
     isAlbumRoute.value ? props.data?.album_track.at(0)?.id : props.data?.artist_track.at(0)?.id,
     props.data.id,
   );
-  audioPlayer.playTrack(props.data, props.displayList);
 };
 
 </script>
@@ -125,7 +129,7 @@ const handleClick = () => {
     <span class="flex items-center justify-end gap-2 text-end" :class="{
       'mr-6': !isMobile,
     }">
-      <MediaLikeButton :key="data.id" :data="data" color="var(--color-focus)" />
+      <MediaLikeButton :key="data.id + data?.favorite" :data="data" color="var(--color-focus)" />
       <span class="hidden sm:flex mr-4 monospace sm:mr-0">
         {{ data.duration }}
       </span>

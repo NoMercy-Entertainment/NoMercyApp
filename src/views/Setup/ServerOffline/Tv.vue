@@ -13,6 +13,7 @@ import type { Playlist } from "@/types/api/music/playlists";
 import { setMusicPlaylists } from "@/store/musicPlaylists";
 import type { LogoResponse } from "@/types/server";
 import EmptyBackdrop from "@/components/Images/EmptyBackdrop.vue";
+import {redirectUrl} from "@/store/routeState";
 
 const { data: libraries, refetch } = useServerClient<LibrariesResponse[]>({
   path: '/libraries',
@@ -39,7 +40,7 @@ watch(libraries, (value) => {
   setLibraries(value);
 
   if (value.length > 0) {
-    router.push(localStorage.getItem('redirectUrl') || '/home');
+    router.push(redirectUrl.value);
   }
 });
 
@@ -51,7 +52,7 @@ watch(playlists, (value) => {
 onMounted(() => {
   if (!libraries.value) return;
   if (libraries.value.length > 0) {
-    router.push(localStorage.getItem('redirectUrl') || '/home');
+    router.push(redirectUrl.value);
   }
 });
 

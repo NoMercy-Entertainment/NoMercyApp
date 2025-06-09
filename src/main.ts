@@ -8,7 +8,7 @@ import { keycloakConfig } from '@/config/config';
 import MobileKeycloak from '@/lib/auth/mobile-keycloak';
 import TvKeycloak from '@/lib/auth/tv-keycloak';
 import { lockPortrait } from '@/lib/utils';
-import { setUserFromKeycloak, user } from '@/store/user';
+import {setUser, setUserFromKeycloak, user} from '@/store/user';
 
 import * as Sentry from '@sentry/vue';
 
@@ -94,7 +94,7 @@ if (!onlineStatus.value) {
 
 		const tokenParsed = parseToken(accessToken);
 
-		user.value = {
+		setUser({
 			...user.value,
 			name: tokenParsed.display_name,
 			email: tokenParsed.email,
@@ -102,7 +102,7 @@ if (!onlineStatus.value) {
 			accessToken: accessToken,
 			locale: tokenParsed.locale,
 			moderator: tokenParsed.realm_access.roles.includes('nova'),
-		}
+		});
 
 		import('./setupApp').then(({ setupApp }) => setupApp(app));
 

@@ -17,6 +17,7 @@ import MediaLikeButton from '@/components/Buttons/MediaLikeButton.vue';
 import {musicSocketConnection} from "@/store/musicSocket";
 import ShareButton from "@/components/Buttons/ShareButton.vue";
 import type {ShareOptions} from "@capacitor/share";
+import {user} from "@/store/user";
 
 const route = useRoute();
 
@@ -47,12 +48,16 @@ const backdrop = computed(() => {
 });
 
 const handleClick = () => {
-  musicSocketConnection.value?.invoke('StartPlaybackCommand',
-      props.data?.type.replace(/s$/u, ''),
-      props.data?.id,
-      props.data?.tracks.at(0)?.id,
-  );
-  audioPlayer.playTrack(props.data.tracks.at(0)!, props.data.tracks);
+    if (!user.value.features?.nomercyConnect) {
+      audioPlayer.playTrack(props.data.tracks.at(0)!, props.data.tracks);
+      return;
+    }
+
+    musicSocketConnection.value?.invoke('StartPlaybackCommand',
+        props.data?.type.replace(/s$/u, ''),
+        props.data?.id,
+        props.data?.tracks.at(0)?.id,
+    );
 };
 
 const playlistName = computed(() => `${props.data?.type?.replace(/s$/u, '')}/${props.data?.id}`);

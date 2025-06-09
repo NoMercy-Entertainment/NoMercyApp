@@ -3,11 +3,19 @@ import audioPlayer from "@/store/audioPlayer";
 
 import MusicButton from './MusicButton.vue';
 import PlayerIcon from '@/components/Images/icons/PlayerIcon.vue';
+import {user} from "@/store/user";
+import {musicSocketConnection} from "@/store/musicSocket";
 
 const handleClick = (e?: MouseEvent) => {
   e?.stopPropagation();
-
-  audioPlayer?.actions?.next?.();
+  if (!user.value.features?.nomercyConnect) {
+    audioPlayer?.actions?.next?.();
+    return;
+  }
+  musicSocketConnection.value?.invoke('PlaybackCommand',
+      'next',
+      null
+  );
 }
 </script>
 

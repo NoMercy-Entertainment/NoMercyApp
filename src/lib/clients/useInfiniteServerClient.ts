@@ -24,7 +24,7 @@ export const queryKey = (options?: ServerClientProps | InfiniteServerClientProps
 	const route = useRoute();
 	const options2: string[] = [];
 
-	(options?.path ?? route.fullPath)?.split('/').slice(1).forEach(p => {
+	(options?.path ?? route.path)?.split('/').slice(1).forEach(p => {
 		if (p.includes('?')) {
 			options2.push(p.split('?')[0]);
 			options2.push(p.split('?')[1].split('=')[1]);

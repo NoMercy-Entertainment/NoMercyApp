@@ -3,9 +3,7 @@ import {computed, ref, watch} from 'vue';
 import type { Server } from '@/types/auth';
 import {useOnline} from "@vueuse/core";
 import client from "@/lib/clients/client";
-import {user} from "@/store/user";
 
-const { fetch: originalFetch } = window;
 const cs = ref<Server | null>(null);
 export const currentServer = computed(() => cs.value);
 

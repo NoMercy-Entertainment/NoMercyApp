@@ -12,7 +12,6 @@ export const ripperSocketIsConnected = ref(false);
 
 const connected = () => {
 	ripperSocketIsConnected.value = true;
-	console.log('Connected to Ripper SignalR');
 	document.dispatchEvent(new Event('ripperHub-connected'));
 
 	if (ripperSocket.value?.connection) {

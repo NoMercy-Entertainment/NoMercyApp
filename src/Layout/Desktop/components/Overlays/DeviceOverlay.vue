@@ -33,7 +33,7 @@ const currentDevice = computed(() => connectedDevices.value.find(d => d.device_i
 
 <template>
   <div :data-open="deviceMenuOpen" :inert="!deviceMenuOpen" :data-size="musicSize" v-if="user.features?.nomercyConnect"
-       class="absolute left-4 right-4 top-auto -bottom-8 data-[open='true']:full:bottom-28 data-[open='true']:compact:bottom-16 sm:data-[open='true']:full:bottom-4 sm:data-[open='true']:compact:bottom-4 sm:bottom-4 w-available sm:w-1/4 bg-slate-light-3 dark:bg-slate-dark-1 flex items-center justify-center rounded-lg transition-all duration-500 border-2 border-focus data-[open='false']:translate-y-[200%] z-[29999] text-left">
+       class="absolute left-auto right-4 top-auto -bottom-8 data-[open='true']:full:bottom-28 data-[open='true']:compact:bottom-16 sm:data-[open='true']:full:bottom-4 sm:data-[open='true']:compact:bottom-4 sm:bottom-4 w-available sm:w-1/4 bg-slate-light-3 dark:bg-slate-dark-1 flex items-center justify-center rounded-lg transition-all duration-500 border-2 border-focus data-[open='false']:translate-y-[200%] z-[29999] text-left">
     <div
         class="pointer-events-none absolute inset-0 flex items-center justify-center rounded-lg opacity-60 bg-auto-3/40">
     </div>
@@ -75,44 +75,9 @@ const currentDevice = computed(() => connectedDevices.value.find(d => d.device_i
                     : device?.custom_name ?? device?.name
               }}
             </p>
-<!--            <p class="text-xs leading-none text-auto-alpha-10 line-clamp-1">-->
-<!--              {{ decodeURIComponent(device?.os).toTitleCase() }}-->
-<!--            </p>-->
           </div>
         </button>
       </template>
-
-<!--      <template v-if="currentDevice">-->
-<!--        <div class="flex w-full items-center justify-between gap-2 px-2 py-1 rounded-md bg-[#2f2f2f]" :key="currentDevice.id"-->
-<!--             :style="`color: hsl(from rgb(var(&#45;&#45;color-focus)) h s calc(l + 25))`">-->
-<!--          <div class="flex justify-center items-center w-10 h-10 rounded-full"-->
-<!--               v-show="currentDevice.type === 'web'">-->
-<!--            <MoooomIcon icon="laptop" className="w-7 text-auto-12 text-inherit" style="&#45;&#45;stroke-width: 2"/>-->
-<!--          </div>-->
-<!--          <div class="flex justify-center items-center w-10 h-10 rounded-full"-->
-<!--               v-show="currentDevice.type === 'desktop'">-->
-<!--            <MoooomIcon icon="monitor" className="w-7 text-auto-12 text-inherit" style="&#45;&#45;stroke-width: 2"/>-->
-<!--          </div>-->
-<!--          <div class="flex justify-center items-center w-10 h-10 rounded-full"-->
-<!--               v-show="currentDevice.type === 'android' || currentDevice.type === 'ios'">-->
-<!--            <MoooomIcon icon="mobilePhone" className="w-7 text-auto-12 text-inherit" style="&#45;&#45;stroke-width: 2"/>-->
-<!--          </div>-->
-<!--          <div class="flex justify-center items-center w-10 h-10 rounded-full"-->
-<!--               v-show="currentDevice.type === 'tv'">-->
-<!--            <MoooomIcon icon="tv" className="w-7 text-auto-12 text-inherit" style="&#45;&#45;stroke-width: 2"/>-->
-<!--          </div>-->
-<!--          <div class="flex w-full flex-col gap-1">-->
-<!--            <p class="w-full font-bold text-md line-clamp-1">-->
-<!--              {{-->
-<!--                deviceId === currentDevice?.device_id-->
-<!--                    ? $t('This device')-->
-<!--                    : currentDevice?.custom_name ?? currentDevice.name-->
-<!--              }}-->
-<!--            </p>-->
-<!--          </div>-->
-<!--        </div>-->
-<!--      </template>-->
-
     </div>
   </div>
 </template>

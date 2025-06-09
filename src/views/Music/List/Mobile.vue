@@ -22,7 +22,6 @@ const route = useRoute();
 
 const { data, isError } = useServerClient<DisplayList>({
   path: route.fullPath,
-  keepForever: true,
 });
 
 const main = ref<HTMLDivElement | null>(null);
@@ -162,8 +161,9 @@ watch(container, () => {
             class="flex flex-1 flex-shrink-0 flex-col items-start justify-start self-stretch bg-slate-dark-12 dark:bg-transparent flex-grow-1 gap-0.5 sm:p-4">
             <SortHeader ref="sortHeader" :key="data?.id" />
 
-            <TrackRow v-for="(item, index) in displayList" :key="item.id" :data="item" :displayList="displayList"
-              :index="index" />
+            <template v-for="(item, index) in displayList" :key="item.id + item?.favorite">
+              <TrackRow :data="item" :displayList="displayList" :index="index" />
+            </template>
           </div>
         </div>
       </div>

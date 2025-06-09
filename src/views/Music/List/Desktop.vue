@@ -23,7 +23,6 @@ const route = useRoute();
 
 const { data, isError } = useServerClient<DisplayList>({
   path: route.fullPath,
-  keepForever: true,
 });
 
 const main = ref<HTMLDivElement | null>(null);
@@ -127,8 +126,9 @@ const onScroll = () => {
               }">
               <SortHeader ref="sortHeader" :key="data?.id" />
 
-              <TrackRow v-for="(item, index) in displayList" :key="item.id" :data="item" :displayList="displayList"
-                :index="index" />
+              <template v-for="(item, index) in displayList" :key="item.id + item?.favorite">
+                <TrackRow :data="item" :displayList="displayList" :index="index" />
+              </template>
             </div>
           </div>
         </div>

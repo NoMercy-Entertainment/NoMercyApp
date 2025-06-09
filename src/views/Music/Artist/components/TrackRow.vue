@@ -18,6 +18,7 @@ import { isAlbumRoute } from '@/store/routeState';
 import { onTrackRowRightClick } from '@/store/contextMenuItems';
 import PlayerIcon from "@/components/Images/icons/PlayerIcon.vue";
 import {musicSocketConnection} from "@/store/musicSocket";
+import {user} from "@/store/user";
 
 const props = defineProps({
   data: {
@@ -34,26 +35,17 @@ const props = defineProps({
   },
 });
 
-// const router = useRoute();
-// const setCurrentList = () => {
-//   setCurrentPlaylist(router.fullPath);
-// };
-
-// const handleClick = () => {
-//   if (!currentSong.value) {
-//     setCurrentList();
-//   }
-//
-//   audioPlayer.playTrack(props.data, props.displayList);
-// };
-
 const handleClick = () => {
+    if (!user.value.features?.nomercyConnect) {
+      audioPlayer.playTrack(props.data, props.displayList);
+      return;
+    }
+
   musicSocketConnection.value?.invoke('StartPlaybackCommand',
       isAlbumRoute.value ? 'album' : 'artist',
       isAlbumRoute.value ? props.data?.album_track.at(0)?.id : props.data?.artist_track.at(0)?.id,
       props.data.id,
   );
-  audioPlayer.playTrack(props.data, props.displayList);
 };
 
 </script>

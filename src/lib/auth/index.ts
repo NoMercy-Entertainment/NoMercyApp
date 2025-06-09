@@ -3,7 +3,7 @@ import { generatePKCE, parseToken } from './helpers';
 import apiClient from '@/lib/clients/apiClient';
 import cdnClient from '../clients/cdnClient';
 
-import { user } from '@/store/user';
+import {setUser, user} from '@/store/user';
 import { isPlatform } from '@ionic/vue';
 import { authBaseUrl } from '@/config/config';
 
@@ -11,11 +11,8 @@ const originalLocation = window.location.href.startsWith('file://')
 	? 'http://localhost:5173'
 	: window.location.origin;
 
-localStorage.setItem('client_id', 'nomercy-ui');
-localStorage.setItem('client_secret', 'BXZFX7FzoRplLuKjDrSHB04epMJbRv04');
-
-const clientId = localStorage.getItem('client_id')!;
-const clientSecret = localStorage.getItem('client_secret')!;
+const clientId = 'nomercy-ui';
+const clientSecret = 'BXZFX7FzoRplLuKjDrSHB04epMJbRv04';
 
 export default () => {
 	// eslint-disable-next-line no-async-promise-executor
@@ -164,15 +161,14 @@ function hasValidToken() {
 
 export function storeTokens(data: TokenResponse) {
 
-	console.log('storeTokens');
-	user.value = {
+	setUser({
 		...user.value,
 		refreshIn: new Date(Date.now() + (data.expires_in * 1000)).getTime(),
 		accessToken: data.access_token,
 		refreshToken: data.refresh_token,
 		idToken: data.id_token,
 		expiresIn: data.expires_in,
-	};
+	});
 
 	localStorage.setItem('access_token', data.access_token);
 	localStorage.setItem('refresh_token', data.refresh_token);
@@ -182,13 +178,13 @@ export function storeTokens(data: TokenResponse) {
 		const decodedToken = parseToken<IDToken>(data.id_token!);
 
 		console.log('decodedToken');
-		user.value = {
+		setUser({
 			...user.value,
 			name: decodedToken.display_name,
 			email: decodedToken.email,
 			id: decodedToken.sub,
 			locale: decodedToken.locale,
-		};
+		});
 
 	} catch (error) {
 		console.error(error);

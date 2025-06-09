@@ -21,7 +21,6 @@ import {
   currentPlaylist,
   currentSong,
   isPlaying,
-  openFullPlayer,
   setCurrentPlaylist
 } from "@/store/audioPlayer";
 import {PlaylistItem} from "@/types/musicPlayer";
@@ -38,7 +37,6 @@ const route = useRoute();
 
 const {data} = useServerClient<DisplayList>({
   path: route.fullPath,
-  keepForever: true,
 });
 
 onMounted(() => {
@@ -237,30 +235,8 @@ const handleClick = (song: PlaylistItem) => {
           </ion-col>
 
           <ion-col size="6" ref="scrollContainer" @focus="handleListFocus($event)" tabindex="0" class="w-full h-available overflow-auto scroll-smooth">
-<!--            <ScrollPanel ref="scrollContainer" -->
-<!--                         class="w-full h-available overflow-clip scroll-smooth"-->
-<!--                         :pt="{-->
-<!--                            barY: {-->
-<!--                              tabindex: -1,-->
-<!--                            },-->
-<!--                            contentContainer: {-->
-<!--                              tabindex: -1,-->
-<!--                            },-->
-<!--                            content: {-->
-<!--                              tabindex: -1,-->
-<!--                            },-->
-<!--                            root: {-->
-<!--                              tabindex: -1,-->
-<!--                            }-->
-<!--                         }"-->
-<!--                         :dt="{-->
-<!--                            bar: {-->
-<!--                              background: 'transparent'-->
-<!--                            }-->
-<!--                        }"-->
-<!--            >-->
               <ion-list mode="md" lines="none">
-                <template v-for="(song, index) in data?.tracks" :key="song.id">
+                <template v-for="(song, index) in data?.tracks" :key="song.id + song?.favorite">
 
                   <ion-item tabindex="-1" mode="md"
                             class="group/track focus-within:bg-white/4 rounded-md overflow-clip"
@@ -308,17 +284,11 @@ const handleClick = (song: PlaylistItem) => {
                             </MusicButton>
                           </ion-row>
                         </ion-col>
-
                       </ion-row>
-
                     </ion-grid>
-
-
                   </ion-item>
-
                 </template>
               </ion-list>
-<!--            </ScrollPanel>-->
           </ion-col>
         </ion-row>
       </ion-grid>

@@ -12,7 +12,6 @@ export const dashboardSocketIsConnected = ref(false);
 
 const connected = () => {
 	dashboardSocketIsConnected.value = true;
-	console.log('Connected to Dashboard SignalR');
 	document.dispatchEvent(new Event('dashboardHub-connected'));
 
 	if (dashboardSocket.value?.connection) {

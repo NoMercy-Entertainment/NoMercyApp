@@ -11,6 +11,7 @@ import { useKeycloak } from '@/lib/auth/tv-keycloak';
 import { suffix } from '@/config/config';
 import router from '@/router';
 import { IonContent, IonPage } from "@ionic/vue";
+import {redirectUrl} from "@/store/routeState";
 
 const { t } = useTranslation();
 
@@ -84,7 +85,7 @@ const acquireToken = () => {
       storeTokens(response.data);
       keepTokenFresh();
 
-      await router.push(localStorage.getItem('redirectUrl') || '/home');
+      await router.push(redirectUrl.value);
     })
     .catch(() => {
       setTimeout(() => {
