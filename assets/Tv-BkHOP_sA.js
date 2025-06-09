@@ -1,1 +1,0 @@
-import{aG as n,j as o,o as s,a7 as e,x as a,aI as t,bS as r,c9 as c,bQ as l}from"./index-Q4t90b9D.js";const m=n({__name:"Tv",setup(u){return(_,p)=>(s(),o(t(l),null,{default:e(()=>[a(t(r),{fullscreen:!0},{default:e(()=>[a(c,{name:"Dashboard System Tv page"})]),_:1})]),_:1}))}});export{m as default};
