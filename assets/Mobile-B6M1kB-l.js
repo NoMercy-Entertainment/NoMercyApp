@@ -1,1 +1,0 @@
-import{aG as o,j as t,o as r,a7 as e,x as a,aI as n,bS as s,c9 as l,bQ as c}from"./index-BRJGR27E.js";const i=o({__name:"Mobile",setup(u){return(_,p)=>(r(),t(n(c),null,{default:e(()=>[a(n(s),{fullscreen:!0},{default:e(()=>[a(l,{name:"Dashboard General Mobile page"})]),_:1})]),_:1}))}});export{i as default};
