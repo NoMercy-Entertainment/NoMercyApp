@@ -1,8 +1,9 @@
-import { computed, ref } from 'vue';
+import { computed } from 'vue';
 import { Preferences } from '@capacitor/preferences';
 import i18next from "@/config/i18next";
+import {useLocalStorage} from "@vueuse/core/index";
 
-const autoThemeColors = ref<boolean>(true);
+const autoThemeColors = useLocalStorage<boolean>('autoThemeColors', true);
 export const useAutoThemeColors = computed(() => autoThemeColors.value);
 (async () => {
 	const { value } = await Preferences.get({ key: 'autoThemeColors' });
@@ -24,7 +25,7 @@ export const setUseAutoThemeColors = (value: boolean) => {
 	}).then();
 }
 
-const backdrops = ref<boolean>(false);
+const backdrops = useLocalStorage<boolean>('showBackdrops', false);
 export const showBackdrops = computed(() => backdrops.value);
 (async () => {
 	const { value } = await Preferences.get({ key: 'showBackdrops' });
@@ -46,7 +47,7 @@ export const setShowBackdrops = (value: boolean) => {
 	}).then();
 }
 
-const percentageColors = ref<boolean>(true);
+const percentageColors = useLocalStorage<boolean>('percentageColors', true);
 export const usePercentageColors = computed(() => percentageColors.value);
 (async () => {
 	const { value } = await Preferences.get({ key: 'percentageColors' });
@@ -69,7 +70,7 @@ export const setUsePercentageColors = (value: boolean) => {
 	}).then();
 }
 
-const ssd = ref<number>(5);
+const ssd = useLocalStorage<number>('screensaverDelay', 5);
 export const screensaverDelay = computed(() => ssd.value);
 (async () => {
 	const { value } = await Preferences.get({ key: 'screensaverDelay' });
@@ -91,7 +92,7 @@ export const setScreensaverDelay = (delay: number) => {
 	}).then();
 }
 
-const lang = ref(window.navigator.language.split('-')?.[0]);
+const lang = useLocalStorage('displayLanguage', window.navigator.language.split('-')?.[0]);
 export const displayLanguage = computed(() => lang.value);
 export async function setDisplayLanguage(value: string) {
 	lang.value = value;

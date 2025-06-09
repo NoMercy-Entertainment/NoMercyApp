@@ -5,6 +5,7 @@ import {BatteryInfo, Device, DeviceInfo} from '@capacitor/device';
 import {Preferences} from '@capacitor/preferences';
 import {isPlatform} from '@ionic/vue';
 import {ClientInfo, makeDeviceInfo} from "@/lib/clients/socketClient/device";
+import {useLocalStorage} from "@vueuse/core";
 
 const ai = ref<AppInfo>();
 export const appInfo = computed(() => ai.value);
@@ -34,15 +35,15 @@ const getDeviceName = async () => {
     setDeviceName(deviceName);
 }
 
-export const deviceId = ref('');
+export const deviceId = useLocalStorage('deviceId', '');
 
 export function setDeviceId(value: string) {
     deviceId.value = value;
-    Preferences.set({key: 'deviceId', value: value}).then();
 }
 
 const getDeviceId = async () => {
     const deviceId = await Device.getId().then((device) => device.identifier);
+    await Preferences.set({key: 'deviceId', value: deviceId});
     setDeviceId(deviceId);
 }
 
