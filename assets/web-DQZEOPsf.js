@@ -1,1 +1,0 @@
-import{bB as o}from"./index-BzOnJQlu.js";class s extends o{async isWatching(){throw new Error("VolumeButtons is not supported on web")}async watchVolume(e,n){throw new Error("VolumeButtons is not supported on web")}async clearWatch(){throw new Error("VolumeButtons is not supported on web")}}export{s as VolumeButtonsWeb};
