@@ -1,0 +1,1 @@
+import{aG as o,j as t,o as r,a7 as a,x as n,aI as e,bS as s,c9 as l,bo as u,bQ as c}from"./index-BzOnJQlu.js";const i=o({__name:"Mobile",setup(_){return(p,f)=>(r(),t(e(c),null,{default:a(()=>[n(e(s),{fullscreen:!0},{default:a(()=>[n(l,{name:`${e(u).currentRoute.value.name} Mobile page`},null,8,["name"])]),_:1})]),_:1}))}});export{i as default};
