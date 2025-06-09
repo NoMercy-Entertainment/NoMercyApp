@@ -4,6 +4,7 @@ import { App } from "@capacitor/app";
 import WebKeycloak from '@dsb-norge/vue-keycloak-js';
 
 import { isTv } from '@/config/global';
+import '@/store/deviceInfo';
 import { keycloakConfig } from '@/config/config';
 import MobileKeycloak from '@/lib/auth/mobile-keycloak';
 import TvKeycloak from '@/lib/auth/tv-keycloak';
