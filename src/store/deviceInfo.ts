@@ -22,8 +22,7 @@ export const batteryInfo = computed(() => bi.value);
 const as = ref<AppState>();
 export const appState = computed(() => as.value);
 
-export const deviceName = ref('');
-
+export const deviceName = useLocalStorage('deviceName', '');
 export function setDeviceName(value: string) {
     deviceName.value = value;
     Preferences.set({key: 'deviceName', value: value}).then();
@@ -36,14 +35,13 @@ const getDeviceName = async () => {
 }
 
 export const deviceId = useLocalStorage('deviceId', '');
-
 export function setDeviceId(value: string) {
     deviceId.value = value;
+    Preferences.set({key: 'deviceId', value: value}).then();
 }
 
 const getDeviceId = async () => {
     const deviceId = await Device.getId().then((device) => device.identifier);
-    await Preferences.set({key: 'deviceId', value: deviceId});
     setDeviceId(deviceId);
 }
 

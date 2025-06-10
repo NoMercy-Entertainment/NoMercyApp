@@ -8,6 +8,7 @@ import type {NMPlaylistItem} from "@/lib/VideoPlayer";
 
 export interface AutoSkipPluginArgs {
 	playlist: NMPlaylistItem[]
+	chapterSkipPatterns?: RegExp[];
 }
 
 export class AutoSkipPlugin extends Plugin {

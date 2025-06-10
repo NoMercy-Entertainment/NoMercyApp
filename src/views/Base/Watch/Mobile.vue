@@ -9,7 +9,7 @@ import { currentServer } from '@/store/currentServer';
 import { user } from '@/store/user';
 import { setDisableScreensaver } from '@/store/imageModal';
 
-import type {NMPlayer, PlayerConfig, NMPlaylistItem} from '@/lib/VideoPlayer';
+import type {NMPlayer, PlayerConfig, NMPlaylistItem, PlaylistItem} from '@/lib/VideoPlayer';
 import {
   AutoSkipPlugin,
   DesktopUIPlugin,
@@ -29,7 +29,7 @@ const player = ref<NMPlayer<NMPlaylistItem>>();
 
 const initPlayer = (value: NMPlaylistItem[] | undefined) => {
 
-  const config: PlayerConfig = {
+  const config: Partial<PlayerConfig<PlaylistItem>> = {
     muted: false,
     controls: false,
     preload: 'auto',
@@ -55,25 +55,6 @@ const initPlayer = (value: NMPlaylistItem[] | undefined) => {
     disableTouchControls: false,
     disableMediaControls: 'mediaSession' in navigator || isPlatform('capacitor'),
     renderAhead: 100,
-    customStorage: {
-      set: (key, value) => {
-        return new Promise<void>((resolve) => {
-          localStorage.setItem(key, value);
-          resolve();
-        });
-      },
-      get: (key) => {
-        return new Promise<string|null>((resolve) => {
-          resolve(localStorage.getItem(key));
-        });
-      },
-      remove: (key) => {
-        return new Promise<void>((resolve) => {
-          localStorage.removeItem(key);
-          resolve();
-        });
-      },
-    },
   };
 
   // @ts-ignore

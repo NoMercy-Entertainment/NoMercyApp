@@ -15,7 +15,7 @@ import {
 } from '@/store/audioPlayer';
 import {useAutoThemeColors} from '@/store/preferences';
 import {PaletteColors, pickPaletteColor} from '@/lib/colorHelper';
-import {colorPalette, setColorPalette} from '@/store/ui';
+import {colorPalette} from '@/store/ui';
 
 import {PlaylistItem} from '@/types/musicPlayer';
 

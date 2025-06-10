@@ -1,11 +1,8 @@
 <script setup lang="ts">
 import { onMounted, onUnmounted, ref, watch } from 'vue';
-import { IonPage, isPlatform } from '@ionic/vue';
+import {IonPage, isPlatform} from '@ionic/vue';
 
-import { currentServer } from '@/store/currentServer';
-import { user } from '@/store/user';
 import { setDisableScreensaver } from '@/store/imageModal';
-// import { isNative } from '@/config/global';
 
 import type {
   NMPlayer,
@@ -24,14 +21,16 @@ import router from '@/router';
 import audioPlayer from '@/store/audioPlayer';
 
 import useServerClient from "@/lib/clients/useServerClient";
+import {currentServer} from "@/store/currentServer";
+import {user} from "@/store/user";
 
 const { data } = useServerClient<NMPlaylistItem[]>();
 
-const player = ref<NMPlayer<NMPlaylistItem>>();
+const player = ref<NMPlayer<PlaylistItem>>();
 
 const initPlayer = (value: NMPlaylistItem[] | undefined) => {
 
-  const config: PlayerConfig = {
+  const config: Partial<PlayerConfig<PlaylistItem>> = {
     muted: false,
     controls: false,
     preload: 'auto',
@@ -56,26 +55,7 @@ const initPlayer = (value: NMPlaylistItem[] | undefined) => {
     disableTouchControls: false,
     disableMediaControls: 'mediaSession' in navigator || isPlatform('capacitor'),
     renderAhead: 100,
-    customStorage: {
-      set: (key, value) => {
-        return new Promise<void>((resolve) => {
-          localStorage.setItem(key, value);
-          resolve();
-        });
-      },
-      get: (key) => {
-        return new Promise<string|null>((resolve) => {
-          resolve(localStorage.getItem(key));
-        });
-      },
-      remove: (key) => {
-        return new Promise<void>((resolve) => {
-          localStorage.removeItem(key);
-          resolve();
-        });
-      },
-    },
-  }
+  } satisfies PlayerConfig<PlaylistItem>;
 
   // @ts-ignore
   player.value = nmplayer('player1').setup(config);

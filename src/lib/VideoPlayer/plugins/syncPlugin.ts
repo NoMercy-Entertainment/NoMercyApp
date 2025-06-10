@@ -1,14 +1,12 @@
 import {RouteLocationNormalizedLoaded, useRoute} from "vue-router";
 import Plugin from '@nomercy-entertainment/nomercy-video-player/src/plugin';
-import type { NMPlayer, PlaylistItem } from "@nomercy-entertainment/nomercy-video-player/src/types";
+import type { NMPlayer } from "@nomercy-entertainment/nomercy-video-player/src/types";
 
 import { useSocket } from "@/store/socket";
 import type {NMPlaylistItem} from "@/lib/VideoPlayer";
 
 export interface SyncPluginArgs {
-	basePath: string;
-	accessToken: string,
-	playlist: NMPlaylistItem[]
+	playlist: NMPlaylistItem[];
 }
 
 export class SyncPlugin extends Plugin {
@@ -61,12 +59,7 @@ export class SyncPlugin extends Plugin {
 	}
 
 	episodeData() {
-		const current = this.player.playlistItem() as PlaylistItem & {
-			tmdb_id: number,
-			special_id: number,
-			video_type: string,
-			video_id: number;
-		};
+		const current = this.player.playlistItem();
 
 		let path = this.route?.path;
 		if (!path) {

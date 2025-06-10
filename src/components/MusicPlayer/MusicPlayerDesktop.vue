@@ -51,6 +51,8 @@ onMounted(() => {
   if (!currentServer.value) return;
 
   audioPlayer.on?.('song', (item) => {
+    if (!item) return;
+
     shouldSubmitPlayback.value = true;
 
     if (item) {
