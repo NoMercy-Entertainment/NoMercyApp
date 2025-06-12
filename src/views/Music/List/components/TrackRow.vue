@@ -117,12 +117,12 @@ const handleClick = () => {
       </span>
     </template>
     <span class="hidden sm:flex invisible max-h-12 md:visible">
-      {{
+      {{ data?.date ?
         new Date(data?.date).toLocaleDateString(i18next.language ?? 'en-US', {
           year: 'numeric',
           month: 'short',
           day: '2-digit',
-        })
+        }) : $t('Unknown')
       }}
     </span>
 

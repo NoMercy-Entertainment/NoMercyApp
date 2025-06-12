@@ -19,6 +19,7 @@ import serverClient from '@/lib/clients/serverClient';
 import { convertToHumanReact } from "@/lib/dateTime";
 import {background, setBackground, setColorPalette, setLogo} from '@/store/ui';
 import { currentSong } from '@/store/audioPlayer';
+import {currentServer} from "@/store/currentServer";
 
 import ListControlHeaderMoreMenu from '@/Layout/Desktop/components/Menus/ListControlHeaderMoreMenu.vue';
 
@@ -38,6 +39,7 @@ import ScrollContainer from '@/Layout/Desktop/components/ScrollContainer.vue';
 import NotFound from "@/Layout/Desktop/components/NotFound.vue";
 import BannerButton from "@/components/Buttons/BannerButton.vue";
 import ShareButton from "@/components/Buttons/ShareButton.vue";
+import {MenuItem} from "@headlessui/vue";
 
 const route = useRoute();
 
@@ -266,6 +268,7 @@ interface IMenuItem {
   icon: keyof typeof MoooomIcons,
   onclick: () => void;
   title: string;
+  privileged?: boolean;
 }
 
 const menuItems = computed<IMenuItem[]>(() => [
@@ -273,21 +276,25 @@ const menuItems = computed<IMenuItem[]>(() => [
     icon: 'arrowRefreshHorizontal',
     onclick: handleRescan,
     title: 'Rescan files',
+    privileged: true,
   },
   {
     icon: 'arrowRefreshHorizontal',
     onclick: handleRefresh,
     title: 'Refresh data',
+    privileged: true,
   },
   {
     icon: 'folderAdd',
     onclick: handleAdd,
     title: `Add ${data?.value?.media_type == 'movie' ? 'movie' : 'TV show'}`,
+    privileged: true,
   },
   {
     icon: 'folderRemove',
     onclick: handleDelete,
     title: `Delete ${data?.value?.media_type == 'movie' ? 'movie' : 'TV show'}`,
+    privileged: true,
   },
 ]);
 
@@ -315,9 +322,11 @@ const shareData = computed<ShareOptions>(() => ({
               class="flex flex-col gap-4 overflow-clip rounded-3xl border-0 pb-2 w-available scrollbar-none border-auto-3">
             <FloatingBackButton />
 
-            <div class="relative mx-auto w-full gap-4 rounded-lg p-4 max-w-screen-4xl">
+            <div class="flex flex-col relative mx-auto w-full gap-4 rounded-lg p-4 max-w-screen-4xl justify-end min-h-[calc(100vh-6rem)]">
 
-              <div class="z-0 flex w-full flex-grow flex-col items-end justify-start gap-2 pt-[290px]">
+              <div class="z-0 flex w-full flex-grow flex-col min-h-40">
+              </div>
+              <div class="z-0 flex w-full flex-grow flex-col items-end justify-end gap-2">
 
                 <div
                     class="children:absolute relative right-1 bottom-0 col-start-1 col-end-2 flex h-auto w-auto select-none justify-end pb-2 max-w-[20vw] w-available translate-x-[4px] sm:h-40 lg:max-w-[30vw] aspect-[32/9]">
@@ -331,9 +340,9 @@ const shareData = computed<ShareOptions>(() => ({
                 <div
                     class="relative col-start-2 col-end-4 grid flex-shrink-0 flex-grow-0 grid-cols-3 items-start justify-start self-stretch rounded-2xl bg-gradient-to-b p-6 from-slate-light-2/12 via-slate-light-3/12 to-slate-light-3/11 dark:from-slate-dark-2/12 dark:via-slate-dark-2/12 dark:to-slate-dark-2/11 border-auto-5/8 border-1 min-h-[23.5rem]">
                   <div v-if="data?.poster"
-                       class="absolute bottom-24 z-10 col-start-1 content-center col-end-2 h-auto w-full items-start justify-start rounded-lg -top-[20rem] sm:block">
+                       class="absolute bottom-20 z-10 col-start-1 content-center col-end-2 h-auto w-full items-start justify-start rounded-lg -top-[12rem] sm:block">
                     <RouterLink :to="`/${data?.media_type}/${data?.id}/watch`" :aria-label="$t('Play')"
-                                :class="`top-3 relative h-auto m-auto mx-auto w-[65%] scale-95 cursor-default group/card block z-0 transitioning rounded-2xl aspect-poster overflow-clip select-none cover !shadow-none max-h-available  ${hasItem ? 'hover:!scale-100 hover:-translate-y-1' : ''}`"
+                                :class="`relative h-auto m-auto mx-auto w-[65%] scale-95 cursor-default group/card block z-0 transitioning rounded-2xl aspect-poster overflow-clip select-none cover !shadow-none max-h-available  ${hasItem ? 'hover:!scale-100 hover:-translate-y-1' : ''}`"
                                 data-nav="true" data-nav-r="play" data-nav-reset="true">
 
                       <TMDBImage :key="data?.poster || 'poster'" :autoShadow="true"
@@ -416,8 +425,21 @@ const shareData = computed<ShareOptions>(() => ({
 
                         <MediaLikeButton v-if="data" :data="data" />
 
-                        <ListControlHeaderMoreMenu :items="menuItems"
-                                                   class=" text-slate-lightA-12/70  dark:text-slate-darkA-12/80" />
+                        <ListControlHeaderMoreMenu :items="menuItems.filter(item => !item.privileged || (item.privileged && (currentServer?.is_owner || currentServer?.is_manager)))"
+                                                   class="text-slate-lightA-12/70  dark:text-slate-darkA-12/80" >
+
+                          <MenuItem as="div"
+                                    class="flex justify-center items-center self-stretch h-10 relative p-2 gap-3 rounded-sm border border-transparent hover:border-focus/4 active:bg-focus/9 active:border-focus/4 active:hover:border-focus/4 focus:bg-auto-12/2 hover:bg-focus/10 disabled:!bg-focus/2 disabled:!border-focus/2 transition-colors duration-200">
+                            <a target="_blank" :href="`https://www.themoviedb.org/${data.media_type}/${data.id}/edit`"
+                                class="relative flex w-full flex-grow items-center justify-center gap-2 text-base font-semibold">
+                              <MoooomIcon icon="edit" />
+                              <span class="w-full whitespace-nowrap">
+                                {{ $t('Edit on TMDb') }}
+                              </span>
+                            </a>
+                          </MenuItem>
+
+                        </ListControlHeaderMoreMenu>
                       </div>
 
                     </div>

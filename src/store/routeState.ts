@@ -11,7 +11,7 @@ export const searchUrl = computed(() => {
   return '/search';
 });
 
-export const redirectUrl = useLocalStorage('redirect-url', '/home');
+export const redirectUrl = useLocalStorage('redirectUrl', '/home');
 export const isSearchRoute = computed(() => router.currentRoute.value.path == '/search');
 export const isMusicSearchRoute = computed(() => router.currentRoute.value.path == '/music/search');
 

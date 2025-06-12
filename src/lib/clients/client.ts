@@ -21,7 +21,7 @@ export default <T>({baseUrl, timeout}: {baseUrl: string, timeout?: number}
 			'Accept-Language': language,
 			Authorization: `Bearer ${user.value?.accessToken || localStorage.getItem('access_token')}`,
 		},
-		timeout: timeout,
+		timeout: timeout || 10000,
 		baseURL: baseUrl,
 	});
 

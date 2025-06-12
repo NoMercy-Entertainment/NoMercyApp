@@ -24,10 +24,12 @@ import MasonryWall from '@yeger/vue-masonry-wall'
 
 import '@/lib/scrollHandlers';
 import '@/store/deviceInfo';
+import '@/store/screensaver';
 
 import konamiEnabled from '@/store/konami';
 import i18next from '@/config/i18next';
 import { queryClient } from '@/config/tanstack-query';
+import {redirectUrl} from "@/store/routeState";
 import router from './router';
 
 import Button from '@/components/Buttons/Button.vue';
@@ -36,13 +38,14 @@ import Modal from '@/components/Modal.vue';
 import NMCard from '@/components/NMCard.vue';
 import NMCarousel from '@/components/NMCarousel.vue';
 import NMContainer from '@/components/NMContainer.vue';
+import NMGenreCard from "@/components/NMGenreCard.vue";
+import NMGrid from "@/components/NMGrid.vue";
 import NMList from '@/components/NMList.vue';
 import NMMusicCard from '@/components/NMMusicCard.vue';
 import NMMusicHomeCard from '@/components/NMMusicHomeCard.vue';
 import NMServerComponent from '@/components/NMServerComponent.vue';
 import NMTopResultCard from '@/components/NMTopResultCard.vue';
 import NMTrackRow from '@/components/NMTrackRow.vue';
-import {redirectUrl} from "@/store/routeState";
 
 export async function setupApp(app: AppContext['app']) {
 
@@ -87,9 +90,13 @@ export async function setupApp(app: AppContext['app']) {
 
     app.use(MasonryWall);
 
+    app.component('Button', Button);
+    app.component('Modal', Modal);
     app.component('NMCard', NMCard);
     app.component('NMCarousel', NMCarousel);
     app.component('NMContainer', NMContainer);
+    app.component('NMGenreCard', NMGenreCard);
+    app.component('NMGrid', NMGrid);
     app.component('NMHomeCard', HomeCard);
     app.component('NMList', NMList);
     app.component('NMMusicCard', NMMusicCard);
@@ -97,8 +104,6 @@ export async function setupApp(app: AppContext['app']) {
     app.component('NMServerComponent', NMServerComponent);
     app.component('NMTopResultCard', NMTopResultCard);
     app.component('NMTrackRow', NMTrackRow);
-    app.component('Button', Button);
-    app.component('Modal', Modal);
 
     app.component('SwiperContainer', Swiper);
     app.component('SwiperSlide', SwiperSlide);
@@ -139,7 +144,7 @@ export async function setupApp(app: AppContext['app']) {
                     redirectUrl.value = location.search.split('redirectUrl=')[1].split('&')[0];
                 }
 
-                if (redirectUrl) {
+                if (redirectUrl.value != '/home') {
                     router.push(redirectUrl.value).then();
                 }
             }, 1000);

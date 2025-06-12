@@ -94,7 +94,6 @@ const handleRip = (disc: DriveState) => {
 
 watch(ripperSocketIsConnected, async (value) => {
   if (value) {
-    console.log('Connected to ripper socket');
     await getDrives();
 
     for (const drive of discs.value ?? []) {

@@ -22,6 +22,7 @@ export interface User {
 
 export interface Server {
 	is_owner:        boolean;
+	is_manager:      boolean;
 	id:              string;
 	name:            string;
 	platform:        string;

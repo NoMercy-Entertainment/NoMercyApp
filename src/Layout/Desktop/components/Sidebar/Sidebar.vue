@@ -117,7 +117,7 @@ const libraryIconName = (type: string) => {
 
           <!--                    Base pages-->
           <template v-for="library in libraries?.filter?.(l => l.type !== 'music')" :key="library.id">
-            <SidebarButton :href="`/libraries/${library.id}`" :show="isLibraryRoute"
+            <SidebarButton :href="`/libraries${library.link}`" :show="isLibraryRoute"
               :icon="libraryIconName(library.type)" :name="library.title" />
           </template>
           <SidebarButton href="/collection" :show="isLibraryRoute" icon="collection1"

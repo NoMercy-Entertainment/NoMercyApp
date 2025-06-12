@@ -15,13 +15,14 @@ import NoMercyAvatar from "@/components/Images/NoMercyAvatar.vue";
 import {RouterLink} from "vue-router";
 import MoooomIcon from "@/components/Images/icons/MoooomIcon.vue";
 import {isTv, tvModeOverride} from "@/config/global";
+import {redirectUrl} from "@/store/routeState";
 
 const serverList = ref<HTMLElement>();
 
 const handleSelectServer = (server: Server) => {
   setCurrentServer(server);
 
-  router.replace('/home');
+  router.replace(redirectUrl.value).then();
 };
 
 onMounted(() => {

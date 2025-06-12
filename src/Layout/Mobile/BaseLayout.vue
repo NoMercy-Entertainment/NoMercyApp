@@ -10,7 +10,7 @@ import { closeMenu } from '@/store/profileMenu';
 import {currentSong, fullPlayerModalOpen} from '@/store/audioPlayer';
 
 import ImageModal from '@/Layout/ImageModal.vue';
-import Screensaver from '@/Layout/Screensaver.vue';
+// import Screensaver from '@/Layout/Screensaver.vue';
 import EqualizerMenu from "@/Layout/Mobile/components/menus/EqualizerMenu.vue";
 import DeviceOverlay from "@/Layout/Desktop/components/Overlays/DeviceOverlay.vue";
 
@@ -58,11 +58,10 @@ onUnmounted(() => {
       <FullPlayer v-if="currentSong?.id"
                   :key="fullPlayerModalOpen ? 'full-player-open' : 'full-player-closed'"  />
       <MiniPlayer :key="!fullPlayerModalOpen ? 'mini-player-open' : 'mini-player-closed'"  />
-      />
 
       <ImageModal />
       <!--      <Toast class="z-1199" />-->
-      <Screensaver />
+<!--      <Screensaver />-->
 
       <SideFlyout v-if="!isPlatform('capacitor')" />
     </ion-tabs>

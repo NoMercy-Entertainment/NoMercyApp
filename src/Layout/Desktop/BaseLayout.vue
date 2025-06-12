@@ -16,7 +16,7 @@ import { cardMenu, trackContextMenuItems } from '@/store/contextMenuItems';
 
 import Indexer from '@/Layout/Indexer.vue';
 import ImageModal from '@/Layout/ImageModal.vue';
-import Screensaver from '@/Layout/Screensaver.vue';
+// import Screensaver from '@/Layout/Screensaver.vue';
 
 import Navbar from './components/Navbar/Navbar.vue';
 import Sidebar from './components/Sidebar/Sidebar.vue';
@@ -86,7 +86,7 @@ const focusMain = () => {
           <QueueOverlay />
           <DeviceOverlay />
           <EqualizerOverlay />
-          <RipperOverlay />
+          <RipperOverlay v-if="currentServer?.is_owner || currentServer?.is_manager" />
 
         </GradientBorder>
         <Indexer />
@@ -98,7 +98,7 @@ const focusMain = () => {
       <MusicPlayerDesktop />
       <ImageModal />
       <!--      <Toast class="z-1199" />-->
-      <Screensaver />
+<!--      <Screensaver />-->
 
       <Toast />
       <ConfirmDialog></ConfirmDialog>

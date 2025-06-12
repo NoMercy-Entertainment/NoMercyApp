@@ -10,7 +10,7 @@ import {
 import { currentSong } from "@/store/audioPlayer";
 
 import ImageModal from '@/Layout/ImageModal.vue';
-import Screensaver from '@/Layout/Screensaver.vue';
+// import Screensaver from '@/Layout/Screensaver.vue';
 
 import Navbar from './components/NavBar.vue';
 import FullTvPlayer from "@/components/MusicPlayer/tv/FullTvPlayer.vue";
@@ -27,7 +27,7 @@ import FullTvPlayer from "@/components/MusicPlayer/tv/FullTvPlayer.vue";
 
     <ImageModal />
     <!--      <Toast class="z-1199" />-->
-    <Screensaver />
+<!--    <Screensaver />-->
     <FullTvPlayer v-if="currentSong" />
   </ion-page>
 </template>

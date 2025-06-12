@@ -14,6 +14,8 @@ export interface LibrariesResponse {
 	specialSeasonName: string;
 	title: string;
 	type: string;
+	pagination: string;
+	link: string;
 	order: number;
 	country: string;
 	language: string;

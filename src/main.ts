@@ -67,6 +67,7 @@ import { parseToken } from './lib/auth/helpers';
 import { useOnline } from '@vueuse/core';
 
 import { pwaMessages } from './i18n/pwa';
+import {redirectUrl} from "@/store/routeState";
 
 function getCurrentLanguage(): string {
 	return localStorage.getItem('language') ||
@@ -83,8 +84,7 @@ const refreshToken = location.search.includes('refreshToken')
 	? location.search.split('refreshToken=')[1].split('&')[0]
 	: localStorage.getItem('refresh_token') || undefined;
 
-const redirectUrl = window.location.hash.replace('#', '');
-redirectUrl && localStorage.setItem('redirectUrl', redirectUrl);
+redirectUrl.value = window.location.pathname;
 
 const onlineStatus = useOnline();
 

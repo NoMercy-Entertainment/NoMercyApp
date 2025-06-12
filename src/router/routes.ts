@@ -14,6 +14,7 @@ import BaseIndex from '@/views/Base/Home';
 import BaseInfo from '@/views/Base/Info';
 import BaseLibraries from '@/views/Base/Libraries';
 import BaseLibrary from '@/views/Base/Library';
+import PaginatedLibrary from '@/views/Base/PaginatedLibrary';
 import BasePerson from '@/views/Base/Person';
 import Search from '@/views/Search';
 import BaseWatch from '@/views/Base/Watch';
@@ -108,7 +109,7 @@ export const routes: Array<RouteRecordRaw> = [
 						next({
 							name: 'Library',
 							params: {
-								id: firstLibrary.id
+								id: firstLibrary.link.replace('/', ''),
 							}
 						});
 					} else {
@@ -117,8 +118,15 @@ export const routes: Array<RouteRecordRaw> = [
 				}
 			},
 			{
+				path: 'libraries/:id/letter/:letter',
+				name: 'Library paginated',
+				strict: true,
+				component: BaseLibrary
+			},
+			{
 				path: 'libraries/:id',
 				name: 'Library',
+				strict: true,
 				component: BaseLibrary
 			},
 			{
@@ -154,7 +162,7 @@ export const routes: Array<RouteRecordRaw> = [
 			{
 				path: 'person',
 				name: 'People',
-				component: BaseLibrary,
+				component: PaginatedLibrary,
 			},
 			{
 				path: 'person/:id',

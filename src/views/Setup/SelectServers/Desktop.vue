@@ -17,11 +17,7 @@ import {redirectUrl} from "@/store/routeState";
 const handleSelectServer = (server: Server) => {
   setCurrentServer(server);
 
-  if (redirectUrl.value == '/setup/select-servers') {
-    router.replace('/home');
-  } else {
-    router.replace(redirectUrl.value);
-  }
+  router.replace(redirectUrl.value).then();
 };
 
 onMounted(() => {

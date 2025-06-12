@@ -1,0 +1,40 @@
+import { ref } from "vue";
+import serverClient from '../clients/serverClient';
+import {currentServer, setCurrentServer} from '@/store/currentServer';
+
+import router from "@/router";
+import {PermissionsResponse} from "@/types/api/dashboard/server";
+
+const done = ref(false);
+
+const getServerPermissions = (): Promise<void> => new Promise((resolve, reject) => {
+
+	if (done.value) {
+		resolve();
+		return;
+	}
+
+	if (!currentServer.value) {
+		resolve();
+		return;
+	}
+
+	serverClient()
+		.get<PermissionsResponse>('permissions')
+		.then(({ data }) => {
+			setCurrentServer({
+				...currentServer.value!,
+				is_owner: data.owner,
+				is_manager: data.manage,
+			});
+
+			done.value = true;
+			resolve();
+		})
+		.catch(() => {
+			done.value = true;
+			router.push({ name: 'Server offline' }).then(() => resolve());
+		});
+});
+
+export default getServerPermissions;

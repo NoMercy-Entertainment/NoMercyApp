@@ -73,7 +73,7 @@ const error = (err: Error) => {
 export const handleBroadcastStatus = (data: any) => {
     if (!data) return;
     for (const e of data.events) {
-        console.raw(e);
+        // console.raw(e);
         const state = e.deviceBroadcastStatus;
 
         currentDeviceId.value = state.device_id;
@@ -93,7 +93,7 @@ export const handlePlayerState = (data: StateEvents) => {
         const state = e.event.state;
         ps.value = state;
 
-        console.log(state);
+        // console.log(state);
 
         if (!state?.item) {
             audioPlayer.stop();
@@ -167,6 +167,6 @@ export const handlePlayerState = (data: StateEvents) => {
 }
 
 const handleConnectedDevicesState = (devices: Device[]) => {
-    console.log(devices);
+    // console.log(devices);
     connectedDevices.value = devices;
 }

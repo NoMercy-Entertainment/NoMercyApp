@@ -21,7 +21,7 @@ watch(props, (value) => {
 
 <template>
   <div
-    class="flex flex-col justify-start h-[calc(100%-1rem)] items-start w-40 sm:w-48 2xl:w-80 mx-auto absolute left-4 sm:left-10 top-4 rounded-2xl">
+    class="flex flex-col justify-start h-[calc(100%-1rem)] items-start w-40 sm:w-48 2xl:w-80 mx-auto absolute left-4 sm:left-12 top-4 rounded-2xl">
 
     <div class="sticky top-14 flex h-auto w-full flex-col gap-4">
       <div :id="data?.id ?? 'x'" :class="data?.deathday ? 'outline outline-white' : ''"

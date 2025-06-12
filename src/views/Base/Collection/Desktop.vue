@@ -100,14 +100,14 @@ const shareData = computed<ShareOptions>(() => ({
         <div class="w-available">
           <FloatingBackButton />
           <div v-if="data"
-            class="w-available overflow-x-clip relative mt-12 flex flex-grow flex-col items-start justify-start gap-4 self-stretch p-4 pb-5">
-            <p class="ml-4 w-full flex-shrink-0 flex-grow-0 self-stretch text-5xl font-bold">
+            class="w-available overflow-x-clip relative mt-12 flex flex-grow flex-col items-start justify-start gap-4 self-stretch py-5">
+            <p class="ml-4 w-full flex-shrink-0 flex-grow-0 self-stretch text-5xl font-bold px-4">
               {{ data?.title?.replace(/(: | en de )/, '\n') }}
             </p>
-            <p class="ml-4 w-full flex-shrink-0 flex-grow-0 self-stretch text-lg">
+            <p class="ml-4 w-full flex-shrink-0 flex-grow-0 self-stretch text-lg px-4">
               {{ data?.overview }}
             </p>
-            <div class="flex flex-shrink-0 flex-grow-0 flex-col items-start justify-start gap-4 self-stretch">
+            <div class="flex flex-shrink-0 flex-grow-0 flex-col items-start justify-start gap-4 self-stretch px-4">
               <div
                 class="relative flex flex-shrink-0 flex-grow-0 flex-col items-start justify-start gap-4 self-stretch">
                 <div class="self-stretch h-px bg-[#e2f0fd]/4"></div>
@@ -237,7 +237,6 @@ const shareData = computed<ShareOptions>(() => ({
 
             <ImageCarousel v-if="data?.backdrops && data?.backdrops?.length > 0"
               :color-palette="data?.color_palette?.poster" :data="data?.backdrops" title="Backdrop" type="backdrop" />
-
 
           </div>
         </div>

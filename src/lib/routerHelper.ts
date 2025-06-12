@@ -35,8 +35,8 @@ export interface Props<T> {
 /**
  * Returns the queryKey for the query based on the url of the page.
  */
-const route  = useRoute();
 export const queryKey = (path?: string): string[] => {
+	const route = useRoute();
 	const queryKey: string[] = [];
 
 	(path ?? route?.path)
@@ -67,8 +67,10 @@ watch(onlineStatus, async (value) => {
 	}
 });
 
-watch(currentServer, async () => {
-	clearLibraries();
+watch(currentServer, async (value) => {
+	if (!value) {
+		clearLibraries();
+	}
 	queryClient.getQueriesData({ type: "all"})
 		.forEach((query) => {
 			queryClient.invalidateQueries({

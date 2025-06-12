@@ -54,6 +54,7 @@ watch(imageModalData, (data) => {
         .replace(/,/gu, ' ');
 
     timeout2.value = setTimeout(() => {
+      handleLoaded();
       logoSrc.value = undefined;
       setTimeout(() => {
         logoSrc.value = data.meta?.logo?.src;
@@ -63,6 +64,7 @@ watch(imageModalData, (data) => {
 
   } else if (data.src) {
     timeout2.value = setTimeout(() => {
+      handleLoaded();
       src.value = `${imageBaseUrl.value}${data.src}?width=3840&type=avif&aspect_ratio=null`;
       logoColor.value = pickPaletteColor(data.color_palette?.image)
           ?.replace('rgb(', '')

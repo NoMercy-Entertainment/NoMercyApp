@@ -52,7 +52,6 @@ export const setTemp = (temp: any) => {
 export const imageModal = ref<VNodeRef>();
 
 watch([sim, sss], ([sim, sss]) => {
-	console.log(`Image Modal: ${(sim || sss) && !dss.value}`);
 	if((sim || sss) && !dss.value){
 		document.querySelector<HTMLDialogElement>('#imageModal')?.showModal();
 	} else  {

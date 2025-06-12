@@ -4,6 +4,7 @@ import { Menu, MenuButton, MenuItems, MenuItem } from '@headlessui/vue';
 
 import type { MoooomIcons } from '@Icons/icons';
 import MoooomIcon from '@/components/Images/icons/MoooomIcon.vue';
+import DropdownLink from "@/components/MusicPlayer/components/DropdownLink.vue";
 
 
 interface IMenuItem {
@@ -35,6 +36,7 @@ defineProps({
 			leave-to-class="scale-95 transform opacity-0">
 			<MenuItems
 				class="absolute z-10 m-2 ml-8 flex w-min origin-top-right -translate-x-full flex-col gap-2 rounded-lg p-1 shadow-lg bg-slate-light-3 dark:bg-slate-dark-1 border-1 border-auto-2/11">
+        <slot/>
 				<template v-for="(item, index) in items" :key="index">
 
 					<MenuItem as="div" @click="item.onclick"

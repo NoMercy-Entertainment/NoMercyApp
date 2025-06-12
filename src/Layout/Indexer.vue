@@ -17,12 +17,14 @@ const openPaths = [
 ];
 
 const queryPaths = [
-  '/music/albums',
-  '/music/artists',
+  new RegExp('music/albums'),
+  new RegExp('music/artists'),
+  new RegExp('libraries/[a-zA-Z0-9]+'),
+  new RegExp('libraries/[a-zA-Z0-9]+/letter/[a-zA-Z0-9_]'),
 ];
 
 const indexerState = (route: string) => openPaths.some((path) => route.startsWith(path));
-const isQueryPath = (route: string) => queryPaths.some((path) => route.startsWith(path));
+const isQueryPath = (route: string) => queryPaths.some((path) => route.match(path));
 
 const route = useRoute();
 
@@ -52,7 +54,7 @@ const disableScrollableTargets = () => {
   document.querySelector(isMobile.value ? 'ion-tabs ion-router-outlet  div.ion-page:not(.ion-page-hidden) [indexer]' : '[indexer]')
     ?.querySelectorAll<HTMLDivElement>('[data-indexer]')
     .forEach((el) => {
-      el.classList.add('opacity-20', '!cursor-not-allowed');
+        el.classList.add('opacity-20', '!cursor-not-allowed');
     });
 };
 
@@ -68,7 +70,9 @@ router.afterEach((to) => {
 });
 
 router.beforeEach(() => {
-  disableScrollableTargets();
+  if (!isQueryPath(router.currentRoute.value.path)) {
+    disableScrollableTargets();
+  }
 });
 
 onMounted(() => {
@@ -97,7 +101,7 @@ onUnmounted(() => {
     }">
     <template v-for="letter in alphaNumericRange('#', 'Z')" :key="letter">
       <template v-if="isQueryPath(route.path)">
-        <RouterLink :to="`${letter}`" :data-indexer="letter" tabindex="-1"
+        <RouterLink :to="`${letter.replace('#', '_')}`" :data-indexer="letter" tabindex="-1"
           class="pointer-events-auto relative flex p-1.5 size-6 sm:size-8 aspect-square rounded-lg overflow-clip cursor-pointer flex-col items-center justify-center hover:bg-auto-alpha-5">
           <p class="flex-shrink-0 flex-grow-0 text-center text-xs sm:text-base font-semibold leading-none">
             {{ letter }}

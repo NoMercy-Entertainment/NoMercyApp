@@ -43,10 +43,10 @@ const getLocations = (): Promise<void> => new Promise((resolve, reject) => {
 				await router.push({ name: 'No Servers' });
 			}
 			else if (servers.value.length == 1) {
-				await setCurrentServer(servers.value[0]);
+				setCurrentServer(servers.value[0]);
 			}
 			else if (servers.value.length > 1 && !!localStorage.getItem('currentServer')) {
-				await setCurrentServer(servers.value.find(server => server.id == localStorage.getItem('currentServer'))!);
+				setCurrentServer(servers.value.find(server => server.id == localStorage.getItem('currentServer'))!);
 			}
 			else if (servers.value.length > 1) {
 				await router.push({ name: 'Select Server' });

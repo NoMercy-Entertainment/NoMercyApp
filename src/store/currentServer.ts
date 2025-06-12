@@ -7,7 +7,7 @@ import client from "@/lib/clients/client";
 const cs = ref<Server | null>(null);
 export const currentServer = computed(() => cs.value);
 
-export const setCurrentServer = async (server: Server | null): Promise<void> => {
+export const setCurrentServer = (server: Server | null) => {
 	server?.id && localStorage.setItem('currentServer', server?.id);
 	cs.value = server;
 };

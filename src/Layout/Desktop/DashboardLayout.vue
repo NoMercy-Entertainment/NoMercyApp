@@ -15,6 +15,7 @@ import HelpButton from '@/components/Buttons/HelpButton.vue';
 import ScrollContainer from '@/Layout/Desktop/components/ScrollContainer.vue';
 import RipperOverlay from "@/Layout/Desktop/components/Overlays/RipperOverlay.vue";
 import {ripperMenuOpen} from "@/store/ripper";
+import {currentServer} from "@/store/currentServer";
 
 const addModalOpen = defineModel({
   required: false,
@@ -202,7 +203,7 @@ watch(dataUpdatedAt, (value) => {
         <slot name="actions" />
       </div>
 
-      <RipperOverlay />
+      <RipperOverlay v-if="currentServer?.is_owner || currentServer?.is_manager" />
     </div>
   </KeepAlive>
 </template>
