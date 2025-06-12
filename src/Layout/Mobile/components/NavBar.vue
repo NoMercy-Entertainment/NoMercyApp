@@ -23,7 +23,7 @@ const isFetching = useIsFetching();
 
 <template>
   <ion-header class="pt-safe transition-all duration-200">
-    <ion-toolbar v-if="!isPlatform('capacitor') && !isTv">
+    <ion-toolbar v-if="!isPlatform('capacitor') && !isTv" class="toolbar">
       <div
         class="pt-safe flex justify-between items-center self-stretch flex-grow-0 flex-shrink-0 h-[50px] overflow-hidden px-1 py-1.5">
         <button @click="toggleSidebar" aria-label="menu"

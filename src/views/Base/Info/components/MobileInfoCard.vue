@@ -63,7 +63,7 @@ const shareData = computed<ShareOptions>(() => ({
   <div v-if="data?.poster || poster"
     class="frosting flex-grow-0 flex-shrink-0 w-[280px] h-[420px] z-10 absolute left-1/2 -translate-x-1/2 overflow-clip rounded-2xl"
     :class="{
-      'top-safe-offset-12': isNative,
+      'top-safe-offset-8': isNative,
       'top-12': !isNative,
     }">
 

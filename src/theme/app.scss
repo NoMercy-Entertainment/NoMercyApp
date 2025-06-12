@@ -179,6 +179,9 @@ ion-item::part(native) {
   html.plt-mobileweb ion-content::part(scroll) {
     --offset-top: -0rem;
   }
+  html:has(.toolbar) ion-content::part(scroll) {
+    --offset-top: -2.5rem;
+  }
 
   html.plt-mobileweb:has(ion-toolbar:first-child:nth-last-child(2) ~ *) ion-content::part(scroll) {
     --offset-top: -8rem;
