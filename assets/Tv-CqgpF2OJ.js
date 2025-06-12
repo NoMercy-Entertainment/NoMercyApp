@@ -1,1 +1,0 @@
-import{aG as t,j as o,o as r,a7 as a,x as n,aI as e,b$ as s,ci as u,bh as l,bZ as c}from"./index-BRRsWqGl.js";const i=t({__name:"Tv",setup(p){return(_,f)=>(r(),o(e(c),null,{default:a(()=>[n(e(s),{fullscreen:!0},{default:a(()=>[n(u,{name:`${e(l).currentRoute.value.name} Desktop page`},null,8,["name"])]),_:1})]),_:1}))}});export{i as default};
