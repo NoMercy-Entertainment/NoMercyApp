@@ -1,0 +1,1 @@
+import{aG as t,j as o,o as s,a7 as e,x as a,aI as n,b$ as r,ci as c,bZ as l}from"./index-DBTFZRC0.js";const i=t({__name:"Tv",setup(p){return(u,_)=>(s(),o(n(l),null,{default:e(()=>[a(n(r),{fullscreen:!0},{default:e(()=>[a(c,{name:"Display Tv page"})]),_:1})]),_:1}))}});export{i as default};
