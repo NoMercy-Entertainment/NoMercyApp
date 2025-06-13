@@ -6,8 +6,16 @@ export const greenToRed = [
 	{
 		pct: 0,
 		color: {
-			r: 0x00,
-			g: 0xff,
+			r: 0,
+			g: 0x40,
+			b: 0,
+		},
+	},
+	{
+		pct: 1,
+		color: {
+			r: 0,
+			g: 0x90,
 			b: 0,
 		},
 	},
@@ -29,9 +37,9 @@ export const greenToRed = [
 	},
 ];
 
-export const percentColors = [
+export const redToGreen = [
 	{
-		pct: 10,
+		pct: 0,
 		color: {
 			r: 0xcc,
 			g: 0,

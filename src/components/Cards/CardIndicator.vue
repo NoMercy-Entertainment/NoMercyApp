@@ -5,7 +5,7 @@ import type { InfoResponse } from "@/types/api/base/info";
 
 import { useTranslation } from "i18next-vue";
 import { episodeCounter } from "@/lib/utils";
-import { getColorFromPercent, percentColors } from "@/lib/colorHelper";
+import { getColorFromPercent, redToGreen } from "@/lib/colorHelper";
 
 const { t } = useTranslation();
 
@@ -24,7 +24,7 @@ const props = defineProps({
 const { number_of_items, have_items } = episodeCounter(props.data);
 
 const percent = have_items && number_of_items ? (have_items / number_of_items) * 100 : 0;
-const color = getColorFromPercent(percent, percentColors);
+const color = getColorFromPercent(percent, redToGreen);
 
 const isMovie = computed(() => {
     return (props.data as InfoResponse).type === 'movie';
@@ -50,7 +50,7 @@ const value = computed(() => {
         :class="{
             'bg-[#94f]': number_of_items == 1,
         }" :style="`
-            background-image: ${percentColors
+            background-image: ${redToGreen
                 ? `linear-gradient(90deg, ${color} 0%, ${color} 100%)`
                 : ''};
 				`">
@@ -60,11 +60,11 @@ const value = computed(() => {
         :class="{
             'bg-[#94f] group-hover/card:text-white': percent == 100,
             'bg-[#4b4] group-hover/card:text-white': percent >= 70 && percent < 100,
-            '!text-black sm:!text-transparent group-hover/card:!text-black group-focus-within/card:!text-black font-semibold': percent > 40 && percent < 80,
+            '!text-black sm:!text-transparent group-hover/card:!text-black group-focus-within/card:!text-black font-semibold': percent > 30 && percent < 80,
             'bg-[#fb3] sm:group-hover/card:text-white': percent > 0 && percent < 70,
             'bg-[#f44]': percent == 0,
         }" :style="`
-            background-image: ${percentColors
+            background-image: ${redToGreen
                 ? `linear-gradient(90deg, ${color} 0%, ${color} 100%)`
                 : ''};
             color: ${have_items == null ? 'transparent' : ''};

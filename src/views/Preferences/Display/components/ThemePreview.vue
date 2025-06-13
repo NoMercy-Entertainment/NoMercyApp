@@ -2,7 +2,6 @@
 import { computed } from 'vue';
 import { useTranslation } from 'i18next-vue';
 
-// import { getColorFromPercent, percentColors } from '@/lib/colorHelper';
 import AppLogo from "@/components/Images/icons/AppLogo.vue";
 import { showBackdrops } from "@/store/preferences";
 

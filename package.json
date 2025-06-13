@@ -19,7 +19,8 @@
     "preview": "vite build && vite preview --host --port=5502 ./",
     "test:e2e": "cypress run",
     "test:unit": "vitest",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "lint:fix": "eslint --fix ."
   },
   "dependencies": {
     "@awesome-cordova-plugins/android-full-screen": "^6.11.0",
@@ -102,6 +103,7 @@
     "yarn-git-install": "^0.4.7"
   },
   "devDependencies": {
+    "@antfu/eslint-config": "^4.14.1",
     "@capacitor/cli": "^6.2.0",
     "@ionic/cli": "^7.2.0",
     "@types/md5": "^2.3.5",
@@ -116,6 +118,7 @@
     "cypress": "^13.5.0",
     "eslint": "^8.35.0",
     "eslint-plugin-vue": "^9.9.0",
+    "eslint-plugin-vuejs-accessibility": "^2.4.1",
     "jsdom": "^22.1.0",
     "postcss": "^8.4.47",
     "rollup-plugin-brotli": "^3.1.0",
