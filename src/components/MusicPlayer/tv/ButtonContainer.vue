@@ -7,7 +7,7 @@ import { closeFullPlayer, currentSong, musicSize } from '@/store/audioPlayer';
 
 import LyricsButton from '@/components/MusicPlayer/components/LyricsButton.vue';
 import MediaLikeButton from "@/components/Buttons/MediaLikeButton.vue";
-import MoooomIcon from "@/components/Images/icons/MoooomIcon.vue";
+import OptimizedIcon from "@/components/OptimizedIcon.vue";
 
 import NextButton from '../components/NextButton.vue';
 import PlaybackButton from '../components/PlaybackButton.vue';
@@ -75,15 +75,15 @@ const handleQueue = (e?: MouseEvent) => {
 
             <MusicButton label="Queue" :onclick="handleQueue"
                 class="h-11 w-11 children:w-7 children:h-7 children:!fill-white">
-                <MoooomIcon icon="currentPlaylist" class="h-11 w-11" />
+                <OptimizedIcon icon="currentPlaylist" class="h-11 w-11" />
             </MusicButton>
 
             <MusicButton label="Dark mode" :onclick="toggleDarkMode"
                 class="h-11 w-11 children:w-7 children:h-7 children:!fill-white">
 
-                <MoooomIcon icon="moon" v-if="isDarkMode" class="h-11 w-11" />
+                <OptimizedIcon icon="moon" v-if="isDarkMode" class="h-11 w-11" />
 
-                <MoooomIcon v-else icon="sun" class="h-11 w-11" />
+                <OptimizedIcon v-else icon="sun" class="h-11 w-11" />
             </MusicButton>
         </div>
     </div>

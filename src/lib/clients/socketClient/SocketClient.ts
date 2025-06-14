@@ -28,7 +28,7 @@ export class SocketClient {
     dispose = async () => {
         if (!this.connection) return;
 
-        await this.connection.stop();
+        // await this.connection.stop();
     }
 
     setup = async () => {

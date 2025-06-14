@@ -8,7 +8,7 @@ import { pickPaletteColor } from '@/lib/colorHelper';
 
 import TMDBImage from '@/components/Images/TMDBImage.vue';
 import MediaLikeButton from '@/components/Buttons/MediaLikeButton.vue';
-import MoooomIcon from '@/components/Images/icons/MoooomIcon.vue';
+import OptimizedIcon from '@/components/OptimizedIcon.vue';
 import BannerButton from '@/components/Buttons/BannerButton.vue';
 import { LibraryResponse } from '@/types/api/base/library';
 import { setColorPalette } from '@/store/ui';
@@ -91,7 +91,7 @@ const toggleWatched = () => {
             <div class="flex flex-shrink-0 flex-grow-0 items-start justify-start gap-4">
 
               <BannerButton title="Play" class="group/play" :href="`/${homeItem?.media_type}/${homeItem?.id}/watch`">
-                <MoooomIcon class="w-7" icon="playbackSpeed" />
+                <OptimizedIcon class="w-7" icon="playbackSpeed" />
                 <div
                   class="absolute top-3 grid h-0 w-max flex-shrink-0 flex-grow-0 origin-bottom group-hover/play:grid-cols-1 items-center justify-start gap-1 rounded-md duration-200 bg-auto-1 grid-cols-[0fr] group-hover/play:h-[32.77px] transform-all left-[-31px] group-hover/play:top-[-38px]">
                   <div class="overflow-clip">
@@ -103,14 +103,14 @@ const toggleWatched = () => {
               </BannerButton>
 
               <BannerButton @click="toggleWatched" title="Toggle watched">
-                <MoooomIcon class="w-7" icon="check"
+                <OptimizedIcon class="w-7" icon="check"
                   :stroke="hasWatched ? 'var(--color-green-600) ' : 'currentColor'" />
               </BannerButton>
 
               <MediaLikeButton v-if="homeItem" :data="homeItem" />
 
               <BannerButton title="Info" :href="`/${homeItem?.media_type}/${homeItem?.id}`">
-                <MoooomIcon class="w-7" icon="infoCircle" />
+                <OptimizedIcon class="w-7" icon="infoCircle" />
               </BannerButton>
             </div>
           </div>
@@ -123,13 +123,13 @@ const toggleWatched = () => {
 
             <BannerButton :href="`/${homeItem?.media_type}/${homeItem?.id}/watch`" title="Play"
               class="flex h-10 w-1/2 items-center justify-between gap-2 whitespace-nowrap rounded-md pr-4 pl-3 text-black bg-auto-12 py-1.5">
-              <MoooomIcon icon="playCircle" className="w-6" />
+              <OptimizedIcon icon="playCircle" className="w-6" />
               <span class="w-full whitespace-nowrap text-center">{{ $t('Play') }}</span>
             </BannerButton>
 
             <BannerButton :href="`/${homeItem?.media_type}/${homeItem?.id}`" title="Info"
               class="flex justify-center items-center relative gap-2 p-2 rounded-lg hover:bg-auto-5/6 transition-colors duration-200">
-              <MoooomIcon icon="add" className="w-6" />
+              <OptimizedIcon icon="add" className="w-6" />
               <span class="w-full whitespace-nowrap text-center">
                 {{ $t('Info') }}
               </span>
@@ -239,14 +239,14 @@ const toggleWatched = () => {
         <div class="flex flex-shrink-0 flex-grow-0 items-start justify-start gap-6 self-stretch p-6">
           <RouterLink :to="`/${homeItem?.media_type}/${homeItem?.id}/watch`"
             class="flex justify-center items-center flex-grow h-10 relative overflow-hidden gap-3 px-6 py-4 rounded-lg bg-[#fdfeff]/[0.93] text-black">
-            <MoooomIcon icon="play" className="w-6" style="--fill-color:black" />
+            <OptimizedIcon icon="play" className="w-6" style="--fill-color:black" />
             <p class="flex-grow-0 flex-shrink-0 text-[15px] font-medium text-center text-[rgb(var(--color-auto-2))]">
               {{ $t('Play') }}
             </p>
           </RouterLink>
           <button @click="toggleWatched"
             class="flex justify-center items-center flex-grow h-10 relative overflow-hidden gap-3 px-6 py-4 rounded-lg bg-black/50 mix-blend-screen">
-            <MoooomIcon icon="addCircle" className="w-6" />
+            <OptimizedIcon icon="addCircle" className="w-6" />
             <p class="flex-shrink-0 flex-grow-0 text-center font-medium text-[15px]">
               {{ $t('My List') }}
             </p>

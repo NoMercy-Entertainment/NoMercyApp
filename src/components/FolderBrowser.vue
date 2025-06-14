@@ -6,7 +6,7 @@ import type { DirectoryTreeItem, DirectoryTreeResponse } from "@/types/api/dashb
 
 import serverClient from '@/lib/clients/serverClient';
 import ScrollContainer from "@/Layout/Desktop/components/ScrollContainer.vue";
-import MoooomIcon from "@/components/Images/icons/MoooomIcon.vue";
+import OptimizedIcon from "@/components/OptimizedIcon.vue";
 
 const { t } = useTranslation();
 
@@ -95,13 +95,13 @@ onMounted(() => {
         <div @click="handleGoUp"
           class="bg-auto-6/4 hover:bg-auto-200 border-t-0 border-b border-solid border-[rgba(34,34,34,0.9)] contain flex items-center text-current cursor-pointer overflow-hidden py-1 px-2 align-middle h-10 min-h-10 leading-6 select-none"
           :class="path == '/' ? 'opacity-50' : ''">
-          <MoooomIcon icon="returnPackage" class="mt-1 h-5 w-5" />
+          <OptimizedIcon icon="returnPackage" class="mt-1 h-5 w-5" />
           <span class="mr-auto !ml-7">...</span>
         </div>
         <div class="relative w-full h-auto">
           <div v-for="folder in showFolders" :key="folder.full_path" @click="() => handleClick(folder)"
             class="even:bg-auto-6/2 odd:bg-auto-100 hover:bg-auto-200 border-t-0 border-b border-solid border-[rgba(34,34,34,0.9)] contain flex items-center bg-transparent text-current cursor-pointer overflow-hidden py-1 px-2 align-middle h-10 leading-6">
-            <MoooomIcon icon="folder" class="h-5 w-5" />
+            <OptimizedIcon icon="folder" class="h-5 w-5" />
             <span class="mr-auto !ml-7 text-sm select-none">
               {{ folder.path.replace(/[\\\/]/u, '') }}
             </span>

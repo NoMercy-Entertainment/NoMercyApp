@@ -6,7 +6,7 @@ import {
 } from '@/store/audioPlayer';
 
 import BottomFlyout from '@/Layout/Mobile/components/BottomFlyout.vue';
-import MoooomIcon from "@/components/Images/icons/MoooomIcon.vue";
+import OptimizedIcon from "@/components/OptimizedIcon.vue";
 import EqualizerPannel from "@/components/MusicPlayer/components/EqualizerPannel.vue";
 
 const handleClose = () => {
@@ -22,7 +22,7 @@ const handleClose = () => {
         <EqualizerPannel>
           <template v-slot:button>
             <button @click="handleClose()">
-              <MoooomIcon icon="cross" class="w-6 h-6" />
+              <OptimizedIcon icon="cross" class="w-6 h-6" />
             </button>
           </template>
         </EqualizerPannel>

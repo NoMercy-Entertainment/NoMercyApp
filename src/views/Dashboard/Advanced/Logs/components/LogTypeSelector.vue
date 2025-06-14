@@ -6,7 +6,7 @@ import type { LogType } from "@/types/server";
 import { checkboxValue, groupBy } from "@/lib/stringArray";
 
 import DropdownMenu from "@/Layout/Desktop/components/Menus/DropdownMenu.vue";
-import MoooomIcon from "@/components/Images/icons/MoooomIcon.vue";
+import OptimizedIcon from "@/components/OptimizedIcon.vue";
 
 const checkboxState = ref<false | null | true>(false);
 
@@ -75,7 +75,7 @@ const toggleGroup = (group: LogType) => {
     class="relative flex items-center justify-center gap-2 rounded-lg transition-colors duration-200 hover:bg-auto-5/6">
 
     <template v-slot:button>
-      <MoooomIcon className="w-6" icon="chevronDown" />
+      <OptimizedIcon className="w-6" icon="chevronDown" />
     </template>
 
     <div class="flex flex-col gap-2 overflow-auto py-2 max-h-[60vh]">

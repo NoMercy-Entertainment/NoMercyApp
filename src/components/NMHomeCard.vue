@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { computed, onMounted, type PropType, ref } from 'vue';
+import { computed, onMounted, type PropType, ref, watch } from 'vue';
 
 import type { HomeItem } from '@/types/api/base/home';
 
@@ -10,7 +10,7 @@ import { pickPaletteColor } from '@/lib/colorHelper';
 
 import TMDBImage from '@/components/Images/TMDBImage.vue';
 import MediaLikeButton from '@/components/Buttons/MediaLikeButton.vue';
-import MoooomIcon from '@/components/Images/icons/MoooomIcon.vue';
+import OptimizedIcon from '@/components/OptimizedIcon.vue';
 import BannerButton from '@/components/Buttons/BannerButton.vue';
 import {scrollContainerElement, setBackground, setColorPalette} from '@/store/ui';
 import { onIonViewWillEnter, onIonViewWillLeave } from "@ionic/vue";
@@ -113,7 +113,7 @@ const scrollToTop = () => {
             <div class="flex flex-shrink-0 flex-grow-0 items-start justify-start gap-4">
 
               <BannerButton :href="`/${data?.media_type}/${data?.id}/watch`" title="Play" class="group/play" @focus="scrollToTop">
-                <MoooomIcon class="w-7" icon="playbackSpeed" />
+                <OptimizedIcon class="w-7" icon="playbackSpeed" />
 
                 <div
                   class="absolute top-3 grid h-0 w-max flex-shrink-0 flex-grow-0 origin-bottom group-hover/play:grid-cols-1 items-center justify-start gap-1 rounded-md duration-200 bg-auto-1 grid-cols-[0fr] group-hover/play:h-[32.77px] transform-all left-[-31px] group-hover/play:top-[-38px]">
@@ -127,14 +127,14 @@ const scrollToTop = () => {
               </BannerButton>
 
               <BannerButton :onclick="toggleWatched" title="Toggle seen" @focus="scrollToTop">
-                <MoooomIcon icon="check" class="w-7"
+                <OptimizedIcon icon="check" class="w-7"
                   :stroke="hasWatched ? 'var(--color-green-600) ' : 'currentColor'" />
               </BannerButton>
 
               <MediaLikeButton v-if="data" :data="data"  @focus="scrollToTop"/>
 
               <BannerButton :href="`/${data?.media_type}/${data?.id}`" title="Info" @focus="scrollToTop">
-                <MoooomIcon class="w-7" icon="infoCircle" />
+                <OptimizedIcon class="w-7" icon="infoCircle" />
               </BannerButton>
 
             </div>
@@ -150,13 +150,13 @@ const scrollToTop = () => {
 
             <RouterLink :to="`/${data?.media_type}/${data?.id}/watch`" :aria-label="$t('Play')" @focus="scrollToTop"
               class="flex h-10 w-1/2 items-center justify-between gap-2 whitespace-nowrap rounded-md pr-4 pl-3 text-black bg-auto-12 py-1.5">
-              <MoooomIcon icon="playCircle" className="w-6" />
+              <OptimizedIcon icon="playCircle" className="w-6" />
               <span class="w-full whitespace-nowrap text-black text-center">{{ $t('Play') }}</span>
             </RouterLink>
 
             <RouterLink :to="`/${data?.media_type}/${data?.id}`" :aria-label="$t('Info')" @focus="scrollToTop"
               class="flex justify-center items-center relative gap-2 p-2 rounded-lg hover:bg-auto-5/6 transition-colors duration-200">
-              <MoooomIcon icon="add" className="w-6" />
+              <OptimizedIcon icon="add" className="w-6" />
               <span class="w-full whitespace-nowrap text-center">
                 {{ $t('Info') }}
               </span>
@@ -197,14 +197,14 @@ const scrollToTop = () => {
         <div class="flex flex-shrink-0 flex-grow-0 items-start justify-start gap-6 self-stretch p-6">
           <RouterLink :to="`/${data?.media_type}/${data?.id}/watch`"
             class="flex justify-center items-center flex-grow h-10 relative overflow-hidden gap-3 px-6 py-4 rounded-lg text-slate-light-12 dark:text-slate-dark-12 bg-[#fdfeff]/[0.93]">
-            <MoooomIcon icon="play" className="w-6" style="--fill-color:black" />
+            <OptimizedIcon icon="play" className="w-6" style="--fill-color:black" />
             <p class="flex-grow-0 flex-shrink-0 text-[15px] text-black font-medium text-center">
               {{ $t('Play') }}
             </p>
           </RouterLink>
           <RouterLink :to="`/${data?.media_type}/${data?.id}`"
             class="frosting flex justify-center items-center flex-grow h-10 relative gap-3 px-6 py-4 rounded-lg text-slate-light-1 bg-slate-light-12">
-            <MoooomIcon icon="infoCircle" className="w-6" />
+            <OptimizedIcon icon="infoCircle" className="w-6" />
             <p class="flex-grow-0 flex-shrink-0 text-[15px] font-medium text-center">
               {{ $t('Info') }}
             </p>

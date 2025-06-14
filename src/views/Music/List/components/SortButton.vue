@@ -3,7 +3,7 @@ import { PropType } from 'vue';
 import { useTranslation } from 'i18next-vue';
 import { setSortOrder, setSortType, sortOrder, sortType } from '@/store/ui';
 import { SortOrder, SortType } from '@/types/musicPlayer';
-import MoooomIcon from '@/components/Images/icons/MoooomIcon.vue';
+import OptimizedIcon from '@/components/OptimizedIcon.vue';
 
 defineProps({
 	name: {
@@ -67,11 +67,10 @@ const handleKeyup = (e: KeyboardEvent) => {
 		:onclick="() => handleSortChange(sortingType)" :onkeyup="handleKeyup">
 		<span class="">
 			{{ t(name) }}
-		</span>
-		<MoooomIcon icon="chevronUp"
+		</span>		<OptimizedIcon icon="chevronUp"
 			v-if="sortOrder == SortOrder.asc && sortType == sortingType && sortType != SortType.index"
 			:class="`w-6 h-6 ${iconSpacer}`" />
-		<MoooomIcon icon="chevronDown"
+		<OptimizedIcon icon="chevronDown"
 			v-else-if="sortOrder == SortOrder.desc && sortType == sortingType && sortType != SortType.index"
 			:class="`w-6 h-6 ${iconSpacer}`" />
 	</button>

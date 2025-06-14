@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import {RouterLink} from "vue-router";
 
-import MoooomIcon from "@/components/Images/icons/MoooomIcon.vue";
+import OptimizedIcon from "@/components/OptimizedIcon.vue";
 import type {PropType} from "vue";
 import type {MoooomIcons} from "@Icons/icons";
 
@@ -40,7 +40,7 @@ const classes = "flex justify-center items-center self-stretch h-10 relative py-
               :name="name">
             <span
                 class="relative flex w-full flex-grow items-center justify-center gap-2 px-2 text-lg font-medium text-left">
-              <MoooomIcon :className="className" :icon="icon"/>
+              <OptimizedIcon :className="className" :icon="icon"/>
               <span class="relative flex flex-grow items-center justify-center gap-2 pl-2">
                 <span class="w-full flex-grow text-lg font-medium">
                   {{ $t(name) }}
@@ -56,7 +56,7 @@ const classes = "flex justify-center items-center self-stretch h-10 relative py-
           @click="click">
             <span
                 class="relative flex w-full flex-grow items-center justify-center gap-2 px-2 text-lg font-medium text-left">
-              <MoooomIcon :className="className" :icon="icon"/>
+              <OptimizedIcon :className="className" :icon="icon"/>
               <span class="relative flex flex-grow items-center justify-center gap-2 pl-2">
                 <span class="w-full flex-grow text-lg font-medium">
                   {{ $t(name) }}

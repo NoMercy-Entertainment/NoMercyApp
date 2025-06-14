@@ -18,7 +18,7 @@ import {greetingValue} from '@/config/global';
 
 import ScrollContainer from "@/Layout/Desktop/components/ScrollContainer.vue";
 import SearchCard from "@/components/Cards/SearchCard.vue";
-import MoooomIcon from '@/components/Images/icons/MoooomIcon.vue';
+import OptimizedIcon from '@/components/OptimizedIcon.vue';
 import CosmosBg2 from '@/components/Images/CosmosBg2.vue';
 
 const route = useRoute();
@@ -99,7 +99,7 @@ watch(searchType, () => {
                          'text-slate-dark-12': searchType == 'video',
                       }"
               >
-                <MoooomIcon icon="film" class="h-6 w-6 flex-grow-0 flex-shrink-0 transition-all duration-150"/>
+                <OptimizedIcon icon="film" class="h-6 w-6 flex-grow-0 flex-shrink-0 transition-all duration-150"/>
                 <p class="hidden sm:flex flex-grow-0 flex-shrink-0 text-xl font-semibold text-left transition-all duration-150">
                   {{ $t('Video') }}
                 </p>
@@ -110,7 +110,7 @@ watch(searchType, () => {
                          'text-slate-dark-12': searchType == 'music',
                       }"
               >
-                <MoooomIcon icon="noteDouble" class="h-6 w-6 flex-grow-0 flex-shrink-0 transition-all duration-150"/>
+                <OptimizedIcon icon="noteDouble" class="h-6 w-6 flex-grow-0 flex-shrink-0 transition-all duration-150"/>
                 <p class="hidden sm:flex flex-grow-0 flex-shrink-0 text-xl font-semibold text-left transition-all duration-150">
                   {{ $t('Music') }}
                 </p>

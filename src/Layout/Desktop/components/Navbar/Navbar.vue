@@ -10,7 +10,7 @@ import { user } from '@/store/user';
 import NotificationMenu from '@/Layout/Desktop/components/Menus/NotificationMenu.vue';
 import ProfileMenu from '@/Layout/Desktop/components/Menus/ProfileMenu.vue';
 
-import MoooomIcon from '@/components/Images/icons/MoooomIcon.vue';
+import OptimizedIcon from '@/components/OptimizedIcon.vue';
 import AppLogo from '@/components/Images/icons/AppLogo.vue';
 import NavbarButton from './NavbarButton.vue';
 import { isHomeRoute, isLibraryRoute, isMusicRoute, searchUrl } from '@/store/routeState';
@@ -67,7 +67,7 @@ const { t } = useTranslation();
         <div class="hidden flex-shrink-0 flex-grow-0 items-center justify-start gap-1 sm:flex">
           <RouterLink :to="searchUrl" aria-label="Search"
             class="relative my-1 flex flex-shrink-0 flex-grow-0 items-start justify-start gap-2 overflow-hidden rounded-md text-auto-12 p-2.5 hover:bg-focus/10 focus:bg-auto-12/2">
-            <MoooomIcon icon="searchMagnifyingGlass" class="w-6" />
+            <OptimizedIcon icon="searchMagnifyingGlass" class="w-6" />
           </RouterLink>
         </div>
 

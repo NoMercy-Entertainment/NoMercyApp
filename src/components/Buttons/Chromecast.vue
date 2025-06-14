@@ -3,7 +3,7 @@
 // import {Chromecast} from "@gameleap/capacitor-chromecast";
 
 // import {useChromecast} from "@/hooks/useChromeCast";
-// import MoooomIcon from "@/components/Images/icons/MoooomIcon.vue";
+// import OptimizedIcon from "@/components/OptimizedIcon.vue";
 
 // const { currentDevice, isCasting, config, startCasting, stopCasting } = useChromecast();
 
@@ -29,12 +29,12 @@
         <google-cast-launcher></google-cast-launcher>
 
         <button class="flex gap-2 items-center" @click="startCasting()" :disabled="isCasting">
-          <MoooomIcon icon="chromecast" className="m-2 h-6 w-auto"/>
+          <OptimizedIcon icon="chromecast" className="m-2 h-6 w-auto"/>
           <span>Start Casting</span>
         </button>
 
         <button class="flex gap-2 items-center" @click="stopCasting()" :disabled="!isCasting">
-          <MoooomIcon icon="stop" className="m-2 h-6 w-auto"/>
+          <OptimizedIcon icon="stop" className="m-2 h-6 w-auto"/>
           <span>Stop Casting</span>
         </button>
       </div>
@@ -42,7 +42,7 @@
       <div class="flex gap-4">
 
         <button class="flex gap-2 items-center" :onclick="() => Chromecast.requestSession()">
-          <MoooomIcon icon="chromecast" className="m-2 h-6 w-auto"/>
+          <OptimizedIcon icon="chromecast" className="m-2 h-6 w-auto"/>
           <span>Start Casting</span>
         </button>
         <button class="flex gap-2 items-center" :onclick="() => Chromecast.loadMedia({
@@ -50,7 +50,7 @@
             type: 'video',
             customData: config,
         })">
-          <MoooomIcon icon="play" className="m-2 h-6 w-auto"/>
+          <OptimizedIcon icon="play" className="m-2 h-6 w-auto"/>
         </button>
       </div>
     </div>

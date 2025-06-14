@@ -8,7 +8,7 @@ import { audioPlayer, currentSong, isPlaying, musicSize, setCurrentPlaylist } fr
 
 import DropdownMenu from '@/Layout/Desktop/components/Menus/DropdownMenu.vue';
 
-import MoooomIcon from '@/components/Images/icons/MoooomIcon.vue';
+import OptimizedIcon from '@/components/OptimizedIcon.vue';
 import EqSpinner from '@/components/Images/EqSpinner.vue';
 import CoverImage from '@/components/MusicPlayer/components/CoverImage.vue';
 import MediaLikeButton from '@/components/Buttons/MediaLikeButton.vue';
@@ -66,11 +66,9 @@ const handleClick = () => {
 
         <EqSpinner v-if="currentSong?.id == data.id" :playing="isPlaying"
           class="hidden group-focus-visible/track:sm:!hidden group-hover/track:sm:!hidden"
-          color="rgb(var(--color-focus))" />
-
-        <MoooomIcon v-if="currentSong?.id == data.id && isPlaying"
+          color="rgb(var(--color-focus))" />        <OptimizedIcon v-if="currentSong?.id == data.id && isPlaying"
           class="hidden h-6 w-6 group-focus-visible/track:sm:block group-hover/track:sm:block" icon="pause" />
-        <MoooomIcon v-else class="hidden h-6 w-6 group-focus-visible/track:sm:block group-hover/track:sm:block"
+        <OptimizedIcon v-else class="hidden h-6 w-6 group-focus-visible/track:sm:block group-hover/track:sm:block"
           icon="play" />
 
       </span>
@@ -124,9 +122,8 @@ const handleClick = () => {
     </span>
 
     <DropdownMenu direction="down">
-      <template v-slot:button>
-        <BannerButton class="mx-3" title="">
-          <MoooomIcon className="relative h-5 w-5" icon="menuDotsVertical" />
+      <template v-slot:button>        <BannerButton class="mx-3" title="">
+          <OptimizedIcon className="relative h-5 w-5" icon="menuDotsVertical" />
         </BannerButton>
       </template>
       Hellooo

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { type PropType } from "vue";
 
-import MoooomIcon from '@/components/Images/icons/MoooomIcon.vue';
+import OptimizedIcon from '@/components/OptimizedIcon.vue';
 
 import type {Lyric} from "@/types/musicPlayer";
 
@@ -32,7 +32,7 @@ defineProps({
             {{ lyric?.text }}
         </span>
         <span class="transition-all duration-200 ease-in-out w-available" v-if="lyric?.text === ''">
-            <MoooomIcon icon="noteDouble" class="transition-all duration-200 ease-in-out w-[1.5rem] h-[1.5rem]" />
+            <OptimizedIcon icon="noteDouble" class="transition-all duration-200 ease-in-out w-[1.5rem] h-[1.5rem]" />
         </span>
     </span>
 </template>

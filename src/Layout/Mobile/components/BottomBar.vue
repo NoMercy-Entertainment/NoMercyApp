@@ -1,24 +1,13 @@
 <script setup lang="ts">
-import { computed } from 'vue';
 import { folder, home1, noteEighthPair, searchMagnifyingGlass } from '@Icons/index';
 import { IonIcon, IonLabel, IonTabBar, IonTabButton } from '@ionic/vue';
 
 import { user } from '@/store/user';
 import { closeMenu, menuOpen, toggleMenu } from '@/store/profileMenu';
+import {currentServer} from "@/store/currentServer";
 
 import NoMercyAvatar from '@/components/Images/NoMercyAvatar.vue';
-import { useRoute } from 'vue-router';
-import {currentServer} from "@/store/currentServer";
 import AppLogoSquare from "@/components/Images/icons/AppLogoSquare.vue";
-
-const route = useRoute();
-
-const searchUrl = computed(() => {
-  if (route.path.includes('/music')) {
-    return '/music/search';
-  }
-  return '/search';
-});
 
 </script>
 
@@ -28,29 +17,27 @@ const searchUrl = computed(() => {
                :class="{
                 'bg-sand-light-1 dark:bg-slate-dark-3 hide-bg': menuOpen,
                 'bg-sand-light-1 dark:bg-slate-dark-3': !menuOpen
-              }">
-
-    <ion-tab-button tab="home" href="/home" @click="closeMenu()" v-if="currentServer">
+              }">    <ion-tab-button tab="home" href="/home" @click="closeMenu" v-if="currentServer">
       <ion-icon aria-hidden="true" :icon="home1" />
       <ion-label>{{ $t('Home') }}</ion-label>
     </ion-tab-button>
 
-    <ion-tab-button tab="search" :href="searchUrl" @click="closeMenu()">
+    <ion-tab-button tab="search" href="/search" @click="closeMenu">
       <ion-icon aria-hidden="true" :icon="searchMagnifyingGlass" />
       <ion-label>{{ $t('Search') }}</ion-label>
     </ion-tab-button>
 
-    <ion-tab-button tab="library" href="/libraries" @click="closeMenu()" v-if="currentServer">
+    <ion-tab-button tab="library" href="/libraries" @click="closeMenu" v-if="currentServer">
       <ion-icon aria-hidden="true" :icon="folder" class="icon" />
       <ion-label>{{ $t('Library') }}</ion-label>
     </ion-tab-button>
 
-    <ion-tab-button tab="music" href="/music/start" @click="closeMenu()" v-if="currentServer">
+    <ion-tab-button tab="music" href="/music/start" @click="closeMenu" v-if="currentServer">
       <ion-icon aria-hidden="true" :icon="noteEighthPair" />
       <ion-label>{{ $t('Music') }}</ion-label>
     </ion-tab-button>
 
-    <ion-tab-button :_on-click="toggleMenu" @click="toggleMenu()" tab="/dashboard" class="hide-bg"
+    <ion-tab-button :_on-click="toggleMenu" @click="toggleMenu" tab="/dashboard" class="hide-bg"
       :class="{ 'tab-selected': menuOpen }">
       <div class="relative mx-auto flex flex-col rounded-full min-h-8 size-8 top-1.5 mb-2 mt-2.5 bg-black" >
         <AppLogoSquare alt="NoMercy Logo"

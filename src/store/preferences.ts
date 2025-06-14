@@ -1,7 +1,7 @@
 import { computed } from 'vue';
 import { Preferences } from '@capacitor/preferences';
 import i18next from "@/config/i18next";
-import {useLocalStorage} from "@vueuse/core/index";
+import {useLocalStorage} from "@vueuse/core";
 
 const autoThemeColors = useLocalStorage<boolean>('autoThemeColors', true);
 export const useAutoThemeColors = computed(() => autoThemeColors.value);

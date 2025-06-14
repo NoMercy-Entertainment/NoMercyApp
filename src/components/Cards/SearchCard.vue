@@ -4,7 +4,7 @@ import {type PropType} from "vue";
 import {parseYear} from "@/lib/dateTime";
 
 import AppLogoSquare from "@/components/Images/icons/AppLogoSquare.vue";
-import MoooomIcon from "@/components/Images/icons/MoooomIcon.vue";
+import OptimizedIcon from "@/components/OptimizedIcon.vue";
 
 defineProps({
   item: {
@@ -53,11 +53,11 @@ defineProps({
       <div
           class="relative flex flex-shrink-0 flex-grow-0 items-center justify-start gap-2 self-stretch">
         <p class="flex flex-shrink-0 flex-grow-0 items-center gap-2 text-right text-base">
-          <MoooomIcon v-if="item?.media_type === 'tv'" icon="monitor"
+          <OptimizedIcon v-if="item?.media_type === 'tv'" icon="monitor"
                       className="h-5 w-5 sm:h-4 sm:w-4"/>
-          <MoooomIcon v-else-if="item?.media_type === 'movie'" icon="film"
+          <OptimizedIcon v-else-if="item?.media_type === 'movie'" icon="film"
                       className="h-5 w-5 sm:h-4 sm:w-4"/>
-          <MoooomIcon v-else-if="item?.media_type === 'person'" icon="user"
+          <OptimizedIcon v-else-if="item?.media_type === 'person'" icon="user"
                       className="h-5 w-5 sm:h-4 sm:w-4"/>
           <span v-if="item?.release_date || item?.first_air_date" class="sm:text-2xs">
                                       ({{ parseYear(item?.release_date ?? item?.first_air_date) }})

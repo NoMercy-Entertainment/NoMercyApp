@@ -33,17 +33,21 @@ export interface AppConfigData {
 
 
 export const getEdgeStyle = (edgeStyle: EdgeStyle, opacity: number): string => {
+	const color = parseColorToHex("black", opacity);
 	switch (edgeStyle) {
 		case 'depressed':
-			return `1px 1px 2px ${parseColorToHex('black', opacity)}`;
+			return `1px 1px 2px ${color}`;
 		case 'dropShadow':
-			return `2px 2px 4px ${parseColorToHex('black', opacity)}`;
+			return `2px 2px 4px ${color}`;
 		case 'raised':
-			return `-1px -1px 2px ${parseColorToHex('black', opacity)}`;
+			return `-1px -1px 2px ${color}`;
 		case 'uniform':
-			return `0px 0px 4px ${parseColorToHex('black', opacity)}`;
+			return `0px 0px 4px ${color}`;
 		case 'textShadow':
-			return `${parseColorToHex('black', opacity)} 0px 0px 4px, ${parseColorToHex('black', opacity)} 0px 0px 4px, ${parseColorToHex('black', opacity)} 0px 0px 4px, ${parseColorToHex('black', opacity)} 0px 0px 4px, ${parseColorToHex('black', opacity)} 0px 0px 4px, ${parseColorToHex('black', opacity)} 0px 0px 4px, ${parseColorToHex('black', opacity)} 0px 0px 4px`;
+			return `${color} 0px 0px 4px, ${color} 0px 0px 4px, 
+					${color} 0px 0px 4px, ${color} 0px 0px 4px, 
+					${color} 0px 0px 4px, ${color} 0px 0px 4px, 
+					${color} 0px 0px 4px`;
 		default:
 			return '';
 	}

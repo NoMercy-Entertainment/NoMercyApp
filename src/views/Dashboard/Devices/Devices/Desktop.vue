@@ -9,7 +9,7 @@ import serverClient from "@/lib/clients/serverClient";
 
 import DashboardLayout from "@/Layout/Desktop/DashboardLayout.vue";
 import ServerDeviceCard from "@/views/Dashboard/System/System/Components/ServerDeviceCard.vue";
-import MoooomIcon from "@/components/Images/icons/MoooomIcon.vue";
+import OptimizedIcon from "@/components/OptimizedIcon.vue";
 
 const query = useQueryClient();
 
@@ -53,7 +53,7 @@ const handleDelete = async () => {
         <template v-slot:cta>
           <button @click="handleDelete"
             class="relative flex h-10 flex-shrink-0 flex-grow-0 items-center justify-center gap-2 overflow-hidden rounded-lg border px-4 py-2.5 bg-theme-9 border-theme-5">
-            <MoooomIcon icon="trash" />
+            <OptimizedIcon icon="trash" />
             <p class="text-left text-xs font-semibold line-clamp-1 sm:text-sm">
               {{ $t('Delete all') }}
             </p>

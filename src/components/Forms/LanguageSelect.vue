@@ -6,7 +6,7 @@ import { Listbox, ListboxButton, ListboxLabel, ListboxOption, ListboxOptions } f
 
 import { availableTranslations } from '@/config/i18next';
 import { Language } from '@/types/api/shared';
-import MoooomIcon from '@/components/Images/icons/MoooomIcon.vue';
+import OptimizedIcon from '@/components/OptimizedIcon.vue';
 
 const { t } = useTranslation();
 
@@ -147,9 +147,9 @@ onMounted(() => {
               'h-8 min-h-8 px-2': variant === 'dense',
               'hidden': variant === 'tight',
             }">
-            <MoooomIcon v-if="multiple" icon="arrowSelect"
+            <OptimizedIcon v-if="multiple" icon="arrowSelect"
               className="w-5 ui-open:rotate-180 transition-transform duration-200" />
-            <MoooomIcon v-else icon="chevronDown"
+            <OptimizedIcon v-else icon="chevronDown"
               className="w-5 ui-open:rotate-180 transition-transform duration-200" />
           </span>
         </ListboxButton>
@@ -192,7 +192,7 @@ onMounted(() => {
                     'text-auto-50': active,
                     'text-focus': !active,
                   }">
-                  <MoooomIcon icon="check" class="h-5 w-5" aria-hidden="true" />
+                  <OptimizedIcon icon="check" class="h-5 w-5" aria-hidden="true" />
                 </span>
               </li>
             </ListboxOption>

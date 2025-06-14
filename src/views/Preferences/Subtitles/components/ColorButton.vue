@@ -3,7 +3,7 @@ import {PropType} from 'vue';
 
 defineProps({
   color: {
-    type: Object as PropType<{ label: string, color: string }>,
+    type: Object as PropType<{ label: string, value: string }>,
     required: true,
   },
   currentColor: {
@@ -19,15 +19,15 @@ defineProps({
 
 <template>
   <button :title="color?.label"
-          @click="setCurrentColor(color.color)"
+          @click="setCurrentColor(color.value)"
           class="relative box-border flex h-7 w-7 min-w-7 min-h-7 transform cursor-pointer items-center justify-center rounded-full outline-none transition-transform hover:scale-105 hover:shadow-md "
           :style="`
-              background: ${currentColor == color.color ? 'transparent' : color.color};
+              background: ${currentColor == color.value ? 'transparent' : color.value};
           `"
   >
     <span class="w-full h-full rounded-full overflow-clip"
           :style="`
-            border: 2px solid ${color.color};
+            border: 2px solid ${color.value};
          `"
     >
       <div style="
@@ -36,7 +36,7 @@ defineProps({
         "
            class="rounded-full w-5 h-5 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
            :style="`
-              background: ${color.color};
+              background: ${color.value};
            `"
       >
       </div>

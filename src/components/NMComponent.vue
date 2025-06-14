@@ -56,11 +56,6 @@ watch(onlineStatus, (value) => {
 
 watch(homeData, (value) => {
   if (!value) return;
-
-  setTitle();
-  setBackground(null);
-  setColorPalette(null);
-
   setTimeout(() => {
     document.dispatchEvent(new Event('indexer'));
   }, 1000);

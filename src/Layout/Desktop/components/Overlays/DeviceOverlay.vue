@@ -12,7 +12,7 @@ import {
 import {deviceId} from "@/store/deviceInfo";
 import {musicSocketConnection} from "@/store/musicSocket";
 
-import MoooomIcon from "@/components/Images/icons/MoooomIcon.vue";
+import OptimizedIcon from "@/components/OptimizedIcon.vue";
 import {user} from "@/store/user";
 
 const switchDevice = (device: Device) => {
@@ -52,19 +52,19 @@ const currentDevice = computed(() => connectedDevices.value.find(d => d.device_i
             @click="currentDevice?.device_id != device.device_id && switchDevice(device)">
           <div class="flex justify-center items-center w-10 h-10 rounded-full"
                v-show="device.type === 'web'">
-            <MoooomIcon icon="laptop" className="w-7 text-auto-12"/>
+            <OptimizedIcon icon="laptop" className="w-7 text-auto-12"/>
           </div>
           <div class="flex justify-center items-center w-10 h-10 rounded-full"
                v-show="device.type === 'desktop'">
-            <MoooomIcon icon="monitor" className="w-7 text-auto-12"/>
+            <OptimizedIcon icon="monitor" className="w-7 text-auto-12"/>
           </div>
           <div class="flex justify-center items-center w-10 h-10 rounded-full"
                v-show="device.type === 'android' || device.type === 'ios' || device.type === 'tablet'">
-            <MoooomIcon icon="mobilePhone" className="w-7 text-auto-12"/>
+            <OptimizedIcon icon="mobilePhone" className="w-7 text-auto-12"/>
           </div>
           <div class="flex justify-center items-center w-10 h-10 rounded-full"
                v-show="device.type === 'tv'">
-            <MoooomIcon icon="tv" className="w-7 text-auto-12"/>
+            <OptimizedIcon icon="tv" className="w-7 text-auto-12"/>
           </div>
 
           <div class="flex w-full flex-col gap-1">

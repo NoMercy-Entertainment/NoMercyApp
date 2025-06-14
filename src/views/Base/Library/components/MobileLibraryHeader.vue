@@ -11,7 +11,7 @@ import {
 import router from '@/router';
 import libraries from '@/store/Libraries';
 
-import MoooomIcon from "@/components/Images/icons/MoooomIcon.vue";
+import OptimizedIcon from "@/components/OptimizedIcon.vue";
 
 const shownRoutes = [
   '/libraries/',
@@ -45,9 +45,8 @@ router.afterEach(to => {
                             @click="() => router.push(`/libraries/${library.id}`)"
                             :class="{
                               'bg-focus': route.fullPath.startsWith(`/libraries/${library.id}`),
-                            }"
-        >
-          <MoooomIcon icon="folder" class="mr-2"/>
+                            }"        >
+          <OptimizedIcon icon="folder" class="mr-2"/>
           <ion-label>{{ library.title }}</ion-label>
         </ion-segment-button>
       </template>
@@ -58,9 +57,8 @@ router.afterEach(to => {
                           v-if="libraries?.some?.(l => l.type === 'movie')"
                           :class="{
                             'bg-focus': route.fullPath.startsWith('/collection'),
-                          }"
-      >
-        <MoooomIcon icon="collection1" class="mr-2"/>
+                          }"      >
+        <OptimizedIcon icon="collection1" class="mr-2"/>
         <ion-label>{{ $t('Collections') }}</ion-label>
       </ion-segment-button>
 
@@ -71,7 +69,7 @@ router.afterEach(to => {
                             'bg-focus': route.fullPath.startsWith('/specials'),
                           }"
       >
-        <MoooomIcon icon="sparkles" class="mr-2"/>
+        <OptimizedIcon icon="sparkles" class="mr-2"/>
         <ion-label>{{ $t('Specials') }}</ion-label>
       </ion-segment-button>
 
@@ -82,7 +80,7 @@ router.afterEach(to => {
                             'bg-focus': route.fullPath.startsWith('/genre'),
                           }"
       >
-        <MoooomIcon icon="witchHat" class="mr-2"/>
+        <OptimizedIcon icon="witchHat" class="mr-2"/>
         <ion-label>{{ $t('Genres') }}</ion-label>
       </ion-segment-button>
 
@@ -93,7 +91,7 @@ router.afterEach(to => {
                             'bg-focus': route.fullPath.startsWith('/person'),
                           }"
       >
-        <MoooomIcon icon="user" class="mr-2"/>
+        <OptimizedIcon icon="user" class="mr-2"/>
         <ion-label>{{ $t('People') }}</ion-label>
       </ion-segment-button>
     </ion-segment>

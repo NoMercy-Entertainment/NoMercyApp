@@ -11,7 +11,7 @@ import { currentServer } from '@/store/currentServer';
 import audioPlayer, { currentPlaylist, isPlaying } from '@/store/audioPlayer';
 import { isSongRoute } from '@/store/routeState';
 
-import MoooomIcon from "@/components/Images/icons/MoooomIcon.vue";
+import OptimizedIcon from "@/components/OptimizedIcon.vue";
 import BannerButton from "@/components/Buttons/BannerButton.vue";
 import MediaLikeButton from '@/components/Buttons/MediaLikeButton.vue';
 import {musicSocketConnection} from "@/store/musicSocket";
@@ -115,11 +115,10 @@ const shareData = computed<ShareOptions>(() => ({
 					</p>
 				</div>
 			</div>
-		</div>
-		<div class="flex flex-shrink-0 flex-grow-0 items-center justify-start gap-2">
+		</div>		<div class="flex flex-shrink-0 flex-grow-0 items-center justify-start gap-2">
 			<BannerButton :title="isPlaying ? $t('Pause') : $t('Play')" :onclick="handleClick">
-				<MoooomIcon v-if="(isPlaying && currentPlaylist == playlistName)" icon="pause" className="relative h-5 w-5 text-white" />
-				<MoooomIcon v-else icon="play" className="relative h-5 w-5 text-white" />
+				<OptimizedIcon v-if="(isPlaying && currentPlaylist == playlistName)" icon="pause" className="relative h-5 w-5 text-white" />
+				<OptimizedIcon v-else icon="play" className="relative h-5 w-5 text-white" />
 			</BannerButton>
 			<!--			<BannerButton title="">-->
 			<!--				<MoooomIcon icon="shuffle" className="relative h-5 w-5 text-white"/>-->
@@ -140,9 +139,8 @@ const shareData = computed<ShareOptions>(() => ({
 			<!--			</BannerButton>-->
 			<!--			<BannerButton title="">-->
 			<!--				<MoooomIcon icon="searchMagnifyingGlass" className="relative h-5 w-5 text-white"/>-->
-			<!--			</BannerButton>-->
-			<BannerButton :title="$t('More')">
-				<MoooomIcon icon="menuDotsHorizontal" className="relative h-5 w-5 text-white" />
+			<!--			</BannerButton>-->			<BannerButton :title="$t('More')">
+				<OptimizedIcon icon="menuDotsHorizontal" className="relative h-5 w-5 text-white" />
 			</BannerButton>
 		</div>
 	</div>

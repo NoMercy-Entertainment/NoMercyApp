@@ -6,7 +6,7 @@ import { IonList, IonItem } from '@ionic/vue';
 import type { KnownFor } from "@/types/api/base/person";
 import type { Crew } from "@/types/api/shared";
 
-import MoooomIcon from "@/components/Images/icons/MoooomIcon.vue";
+import OptimizedIcon from "@/components/OptimizedIcon.vue";
 
 defineProps({
   items: {
@@ -76,7 +76,7 @@ const { t } = useTranslation();
 
 <RouterLink :to="item.link" v-if="(item as KnownFor)?.hasItem"
   class="relative flex items-center justify-center gap-2 rounded-lg p-2 aspect-square transition-colors duration-200 group/play hover:bg-auto-5/6">
-  <MoooomIcon icon="play" className="h-5 w-5" />
+  <OptimizedIcon icon="play" className="h-5 w-5" />
 </RouterLink>
 </div>
 </ion-item>

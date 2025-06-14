@@ -3,7 +3,7 @@ import { computed, type PropType, ref } from "vue";
 import { useTranslation } from "i18next-vue";
 
 import type { MoooomIcons } from '@Icons/icons';
-import MoooomIcon from '@/components/Images/icons/MoooomIcon.vue';
+import OptimizedIcon from '@/components/OptimizedIcon.vue';
 import sidebar from '@/store/sidebar';
 
 const { t } = useTranslation();
@@ -38,12 +38,12 @@ const classes = computed(() =>
         <button @click="toggle"
             class="relative h-10 flex-shrink-0 flex-grow-0 items-center justify-start gap-3 self-stretch overflow-hidden rounded-md px-3 py-2 transition-transform duration-200 group hover:bg-neutral-200/60 dark:hover:bg-neutral-800/60"
             :class="classes">
-            <MoooomIcon v-if="!!icon" :icon="icon!" class="" />
+            <OptimizedIcon v-if="!!icon" :icon="icon!" class="" />
             <span
                 class="relative flex flex-shrink-0 flex-grow items-center justify-start text-sm font-semibold">
                 {{ t(title) }}
             </span>
-            <MoooomIcon icon="chevronRight"
+            <OptimizedIcon icon="chevronRight"
                 :class="`transition-transform duration-200 ${open ? 'rotate-90' : 'rotate-0'}`" />
         </button>
 

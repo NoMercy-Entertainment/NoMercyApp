@@ -15,7 +15,7 @@ import { setBackground, setColorPalette, setPoster, setTitle } from '@/store/ui'
 import Carousel from '@/components/Carousel/Carousel.vue';
 import MediaCard from '@/components/Cards/MediaCard.vue';
 import { showBackdrops } from '@/store/preferences';
-import MoooomIcon from '@/components/Images/icons/MoooomIcon.vue';
+import OptimizedIcon from '@/components/OptimizedIcon.vue';
 
 const props = defineProps({
   data: {
@@ -111,7 +111,7 @@ const onRightClick = (event: MouseEvent, item: any) => {
       <RouterLink v-if="moreLink" :to="moreLink"
         class="text-base text-slate-dark-9 dark:text-slate-light-9 flex items-center ml-auto mr-2">
         <span>{{ $t('See more') }}</span>
-        <MoooomIcon icon="chevronRight" className="w-6 mt-1" />
+        <OptimizedIcon icon="chevronRight" className="w-6 mt-1" />
       </RouterLink>
     </template>
 

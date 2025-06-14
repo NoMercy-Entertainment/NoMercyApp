@@ -1,7 +1,7 @@
 <script setup lang="ts">
 
 import MusicButton from './MusicButton.vue';
-import MoooomIcon from '@/components/Images/icons/MoooomIcon.vue';
+import OptimizedIcon from '@/components/OptimizedIcon.vue';
 import { lyricsMenuOpen, toggleLyricsMenuOpen } from '@/store/audioPlayer';
 
 const toggleLyricsButton = (e?: MouseEvent) => {
@@ -12,8 +12,7 @@ const toggleLyricsButton = (e?: MouseEvent) => {
 </script>
 
 <template>
-  <MusicButton label="Lyrics" :onclick="toggleLyricsButton">
-    <MoooomIcon icon="lyrics" class="h-6 w-6 text-focus" v-if="lyricsMenuOpen" />
-    <MoooomIcon icon="lyrics" class="h-6 w-6" v-else />
+  <MusicButton label="Lyrics" :onclick="toggleLyricsButton">    <OptimizedIcon icon="lyrics" class="h-6 w-6 text-focus" v-if="lyricsMenuOpen" />
+    <OptimizedIcon icon="lyrics" class="h-6 w-6" v-else />
   </MusicButton>
 </template>

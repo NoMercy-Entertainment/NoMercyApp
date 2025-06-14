@@ -17,7 +17,7 @@ import {
 import {greetingValue, isNative} from '@/config/global';
 import { showScreensaver } from "@/store/imageModal";
 
-import MoooomIcon from '@/components/Images/icons/MoooomIcon.vue';
+import OptimizedIcon from '@/components/OptimizedIcon.vue';
 import CosmosBg2 from '@/components/Images/CosmosBg2.vue';
 import SearchCard from "@/components/Cards/SearchCard.vue";
 
@@ -95,7 +95,7 @@ watch(debouncedKeyboardHeight, () => {
         'relative flex flex-grow flex-col items-center justify-start gap-12 self-stretch overflow-clip px-4 pt-8 will-change-auto': true,
         'mb-24': debouncedIsOpen && searchValue?.length == 0,
       }">
-        <CosmosBg2 v-if="greetingValue && searchValue?.length == 0" class="!h-[90vh]" />
+        <CosmosBg2 v-if="greetingValue && searchValue?.length == 0" />
         <div v-if="greetingValue && searchValue?.length == 0"
           class="relative z-10 mt-16 flex flex-shrink-0 flex-grow-0 flex-col items-center justify-end gap-3">
           <p
@@ -169,7 +169,7 @@ watch(debouncedKeyboardHeight, () => {
                          'text-slate-dark-12': searchType == 'video',
                       }"
               >
-                <MoooomIcon icon="film" class="h-6 w-6 flex-grow-0 flex-shrink-0 transition-all duration-150"/>
+                <OptimizedIcon icon="film" class="h-6 w-6 flex-grow-0 flex-shrink-0 transition-all duration-150"/>
               </button>
               <button @click="searchType = 'music'"
                       class="flex justify-center items-center flex-grow-0 flex-shrink-0 relative gap-2 p-1 rounded-lg w-9 h-9"
@@ -177,7 +177,7 @@ watch(debouncedKeyboardHeight, () => {
                          'text-slate-dark-12': searchType == 'music',
                       }"
               >
-                <MoooomIcon icon="noteDouble" class="h-6 w-6 flex-grow-0 flex-shrink-0 transition-all duration-150"/>
+                <OptimizedIcon icon="noteDouble" class="h-6 w-6 flex-grow-0 flex-shrink-0 transition-all duration-150"/>
               </button>
             </div>
           </div>

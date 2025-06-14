@@ -64,7 +64,7 @@ export const makeDeviceInfo = async (): Promise<ClientInfo> => {
     return {
         id: localStorage.getItem('CapacitorStorage.deviceId') ?? deviceId.value,
         browser: `${res.browser?.name} ${res.browser?.version}`,
-        os: `${info.osVersion.toLowerCase().includes(info.operatingSystem.toLowerCase()) ? '' : info.operatingSystem} ${info.osVersion}`.trim(),
+        os: `${info.model.toLowerCase().includes(info.operatingSystem.toLowerCase()) ? '' : info.operatingSystem} ${info.osVersion}`.trim(),
         device: info.manufacturer
             ? `${info.manufacturer} ${info.model}`
             : '',

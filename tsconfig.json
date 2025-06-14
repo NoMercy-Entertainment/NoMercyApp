@@ -1,17 +1,22 @@
 {
   "compilerOptions": {
-    "target": "ESNext",
+    "target": "ES2020",
     "useDefineForClassFields": true,
     "module": "ESNext",
-    "moduleResolution": "Node",
+    "moduleResolution": "bundler",
     "strict": true,
     "jsx": "preserve",
     "resolveJsonModule": true,
     "isolatedModules": true,
     "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "forceConsistentCasingInFileNames": true,
+    "allowImportingTsExtensions": true,
+    "baseUrl": ".",
     "lib": [
-      "ESNext",
-      "DOM"
+      "ES2020",
+      "DOM",
+      "DOM.Iterable"
     ],
     "skipLibCheck": true,
     "noEmit": true,
@@ -25,7 +30,8 @@
     },
     "types": [
       "vite-plugin-pwa/client",
-      "vue"
+      "vue",
+      "node"
     ]
   },
   "include": [

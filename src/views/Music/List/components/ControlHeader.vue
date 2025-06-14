@@ -6,7 +6,7 @@ import type { DisplayList } from '@/types/api/music/musicPlayer';
 import audioPlayer from '@/store/audioPlayer';
 
 import BigPlayButton from '@/components/Buttons/BigPlayButton.vue';
-import MoooomIcon from '@/components/Images/icons/MoooomIcon.vue';
+import OptimizedIcon from '@/components/OptimizedIcon.vue';
 import MusicButton from '@/components/MusicPlayer/components/MusicButton.vue';
 import MediaLikeButton from '@/components/Buttons/MediaLikeButton.vue';
 import { isTrackRoute } from '@/store/routeState';
@@ -52,10 +52,8 @@ const shareData = computed<ShareOptions>(() => ({
             <input id="search" :value="filter"
                 class="bg-transparent border-auto-12/5 border-2 rounded-md focus-visible:!border-auto-12/9 focus-visible:text-current placeholder-current p-2"
                 placeholder="Filter…" type="text"
-                v-on:input="$emit('filter-change', ($event.target as HTMLInputElement)?.value)" name="search">
-
-            <div class="absolute top-2 right-2 bottom-2 flex items-center justify-center">
-                <MoooomIcon icon="searchMagnifyingGlass" class="!w-7" />
+                v-on:input="$emit('filter-change', ($event.target as HTMLInputElement)?.value)" name="search">            <div class="absolute top-2 right-2 bottom-2 flex items-center justify-center">
+                <OptimizedIcon icon="searchMagnifyingGlass" class="!w-7" />
             </div>
 
         </div>
@@ -66,7 +64,7 @@ const shareData = computed<ShareOptions>(() => ({
       <ShareButton class="!p-0 text-white sm:hidden" />
 
         <MusicButton v-if="isTrackRoute" id="add" :onclick="handleAdd" class="" label="add">
-            <MoooomIcon icon="add" class="!w-7" />
+            <OptimizedIcon icon="add" class="!w-7" />
         </MusicButton>
         <!--        <ListControlHeaderMoreMenuButton v-if="!isTrackRoute" :items="[]"/>-->
     </div>

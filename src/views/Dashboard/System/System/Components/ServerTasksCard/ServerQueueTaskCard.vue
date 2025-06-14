@@ -3,7 +3,7 @@ import { type PropType, ref, watch } from 'vue';
 import { IonItem } from '@ionic/vue';
 
 import type { QueueResponse } from '@/types/api/dashboard/server';
-import MoooomIcon from '@/components/Images/icons/MoooomIcon.vue';
+import OptimizedIcon from '@/components/OptimizedIcon.vue';
 import serverClient from "@/lib/clients/serverClient";
 
 
@@ -50,10 +50,9 @@ watch(priority, (value) => {
       <span class="flex flex-nowrap w-full justify-between">
         <p class="text-sm font-semibold text-auto-12 line-clamp-1 h-6" :title="data.title.replace(/NoMercy/giu, '')">
           {{ data.title.replace(/NoMercy/giu, '') }}
-        </p>
-        <button @click="deleteItem"
+        </p>        <button @click="deleteItem"
           class="float-right flex items-center justify-center gap-2 overflow-hidden rounded-lg bg-transparent w-10 -mt-1.5 -mr-1.5 aspect-square">
-          <MoooomIcon icon="cross" class="relative h-5 w-5 flex-shrink-0 flex-grow-0" />
+          <OptimizedIcon icon="cross" class="relative h-5 w-5 flex-shrink-0 flex-grow-0" />
         </button>
       </span>
 

@@ -10,7 +10,7 @@ import { Breakpoints, breakpoints, swiperConfig } from "@/lib/swiper-config";
 
 import { showBackdrops } from '@/store/preferences';
 
-import MoooomIcon from '@/components/Images/icons/MoooomIcon.vue';
+import OptimizedIcon from '@/components/OptimizedIcon.vue';
 import { isMobile } from '@/config/global';
 
 const { t } = useTranslation();
@@ -157,15 +157,14 @@ const focusMain = () => {
                     <button :aria-label="$t('Previous slide')" tabindex="-1"
                         :class="`hidden sm:flex justify-center items-center p-1 rounded-lg bg-auto-alpha-9 active:scale-95 hover:bg-auto-alpha-11 transition-transform duration-200 ${backButtonEnabled ? '' : 'cursor-not-allowed opacity-50'}`"
                         :onclick="prev" v-if="hasScroll">
-                        <MoooomIcon class="w-6" icon="chevronLeft" />
+                        <OptimizedIcon class="w-6" icon="chevronLeft" />
                     </button>
 
                     <button :aria-label="isLastSlide ? $t('Start slide') : $t('Next slide')" tabindex="-1"
                         :class="`hidden sm:flex justify-center items-center p-1 rounded-lg bg-auto-alpha-9 active:scale-95 hover:bg-auto-alpha-11 transition-transform duration-200 ${hasScroll ? '' : 'cursor-not-allowed opacity-50'}`"
-                        :onclick="isLastSlide ? reset : next" v-if="hasScroll">
-                        <MoooomIcon :class="`w-6 ${!nextButtonEnabled && isLastSlide ? 'opacity-0' : ''}`"
+                        :onclick="isLastSlide ? reset : next" v-if="hasScroll">                        <OptimizedIcon :class="`w-6 ${!nextButtonEnabled && isLastSlide ? 'opacity-0' : ''}`"
                             icon="chevronRight" v-if="hasScroll && !isLastSlide" />
-                        <MoooomIcon :class="`w-6 ${isLastSlide ? '' : 'opacity-0'}`" icon="chevronLeftDouble"
+                        <OptimizedIcon :class="`w-6 ${isLastSlide ? '' : 'opacity-0'}`" icon="chevronLeftDouble"
                             v-if="hasScroll && isLastSlide" />
                     </button>
                 </div>

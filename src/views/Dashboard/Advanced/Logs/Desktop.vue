@@ -14,7 +14,7 @@ import DashboardLayout from "@/Layout/Desktop/DashboardLayout.vue";
 import useHubListener from "@/hooks/useHubListener";
 
 import DropdownMenu from "@/Layout/Desktop/components/Menus/DropdownMenu.vue";
-import MoooomIcon from "@/components/Images/icons/MoooomIcon.vue";
+import OptimizedIcon from "@/components/OptimizedIcon.vue";
 import LogModal from "@/views/Dashboard/Advanced/Logs/components/LogModal.vue";
 import LogTypeSelector from "@/views/Dashboard/Advanced/Logs/components/LogTypeSelector.vue";
 
@@ -147,12 +147,12 @@ const handleLevel = (value: string) => {
                 <span>{{ $t('Limit') }} ({{ limit }})</span>
 
                 <DropdownMenu
-                    className="relative flex items-center justify-center gap-2 rounded-lg transition-colors duration-200 hover:bg-auto-5/6"
-                    translate="translate-x-1/4"
+                  class="relative flex items-center justify-center gap-2 rounded-lg transition-colors duration-200 hover:bg-auto-5/6"
+                  translate="translate-x-1/4"
                 >
 
                   <template v-slot:button>
-                    <MoooomIcon className="w-6" icon="chevronDown" />
+                    <OptimizedIcon className="w-6" icon="chevronDown" />
                   </template>
                   <template v-slot:default>
                     <div class="flex w-full flex-col items-start justify-between py-2 bg-auto-1">
@@ -179,7 +179,7 @@ const handleLevel = (value: string) => {
                 <DropdownMenu
                   class="relative flex items-center justify-center gap-2 rounded-lg transition-colors duration-200 hover:bg-auto-5/6">
                   <template v-slot:button>
-                    <MoooomIcon className="w-6" icon="chevronDown" />
+                    <OptimizedIcon className="w-6" icon="chevronDown" />
                   </template>
 
                   <div class="flex w-full flex-col items-start justify-between py-2 bg-auto-1">
@@ -209,7 +209,7 @@ const handleLevel = (value: string) => {
             </tr>
           </thead>
 
-          <tbody class="overflow-auto divide-y divide-auto-12/5 h-available">
+          <tbody class="overflow-auto divide-y divide-auto-12/5 max-h-available flex-1">
             <template v-for="log in logs ?? []">
               <tr class="flex h-12 w-full flex-1 justify-center gap-4 odd:bg-white/[0.04]">
                 <td

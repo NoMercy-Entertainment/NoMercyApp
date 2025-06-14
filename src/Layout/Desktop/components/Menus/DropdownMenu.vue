@@ -73,7 +73,7 @@ const handleKeyDown = (e: KeyboardEvent) => {
     </div>
 
     <div :id="`_dropdown_menu_${id}`"
-      class="absolute w-max ml-[100%] sm:ml-[100%] mb-1 sm:mt-1 border grid transition-all duration-200 rounded-xl shadow-2xl overflow-clip grid-rows-[0fr] border-transparent right-0"
+      class="absolute w-max ml-[100%] sm:ml-[100%] mb-1 sm:mt-1 border grid transition-all duration-200 rounded-xl shadow-2xl overflow-clip grid-rows-[0fr] border-transparent right-0 z-10"
       :class="{
         'grid-rows-[1fr] border-[#e2f0fd]/4': open,
         'grid-rows-[0fr] border-transparent': !open,

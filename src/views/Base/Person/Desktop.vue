@@ -14,7 +14,7 @@ import { currentSong } from "@/store/audioPlayer";
 
 import SpriteIcon from "@/components/Images/icons/SpriteIcon.vue";
 import DropdownMenu from "@/Layout/Desktop/components/Menus/DropdownMenu.vue";
-import MoooomIcon from "@/components/Images/icons/MoooomIcon.vue";
+import OptimizedIcon from "@/components/OptimizedIcon.vue";
 import DropdownLink from "@/components/MusicPlayer/components/DropdownLink.vue";
 import MediaCarousel from "@/components/Carousel/MediaCarousel.vue";
 import CreditGroup from "@/components/MusicPlayer/components/CreditGroup.vue";
@@ -157,11 +157,10 @@ const filter = 'combined';
                         target="_blank">
                         <SpriteIcon icon="wikipedia" class="w-6" />
                       </a>
-                      <DropdownMenu>
-                        <template v-slot:button>
+                      <DropdownMenu>                        <template v-slot:button>
                           <div
                             class="relative flex items-center justify-center overflow-hidden rounded-lg p-1.5 sm:p-2">
-                            <MoooomIcon class="w-6 text-auto-12" icon="menuDotsVertical" />
+                            <OptimizedIcon class="w-6 text-auto-12" icon="menuDotsVertical" />
                           </div>
                         </template>
 

@@ -7,7 +7,26 @@ import { VueKeycloakInstance } from '@dsb-norge/vue-keycloak-js/dist/types';
 import { SliderBar } from '@/lib/sliderBar';
 import { SwiperRef } from 'swiper/swiper-react';
 
-declare module '*.svg'
+declare module '*.svg' {
+  const src: string;
+  export default src;
+}
+declare module '*.svg?import' {
+  const src: string;
+  export default src;
+}
+declare module '*.svg?url' {
+  const src: string;
+  export default src;
+}
+declare module '*.svg?raw' {
+  const src: string;
+  export default src;
+}
+declare module '*.svg?inline' {
+  const src: string;
+  export default src;
+}
 declare module '*.scss';
 declare module '*.jpg';
 declare module '*.webp';

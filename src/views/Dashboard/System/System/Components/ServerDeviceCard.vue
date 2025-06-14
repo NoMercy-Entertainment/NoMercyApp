@@ -19,6 +19,7 @@ const props = defineProps({
     },
 });
 
+
 let icon: keyof typeof DeviceIcons;
 switch (props.server.browser) {
     case 'android':
@@ -128,6 +129,7 @@ switch (props.server.browser) {
         break;
     default:
 }
+console.log('ServerDeviceCard', props.server.browser, icon);
 
 </script>
 
@@ -136,7 +138,7 @@ switch (props.server.browser) {
         <template v-slot:image>
             <div
                 class="flex flex-col justify-start items-start self-stretch bg-auto-1 bg-[radial-gradient(81.87%_66.22%_at_0%_0%,rgba(255,255,255,0.2)_0%,rgba(255,255,255,0)_100%)] w-full h-auto aspect-video">
-                <div v-if="icon"
+                <div
                     class="relative m-auto flex aspect-video h-auto w-full flex-shrink-0 flex-grow-0 flex-col items-center justify-center self-stretch text-auto-12 bg-focus/8">
                     <DeviceIcon :icon="icon" className="!w-[40%]" />
                 </div>

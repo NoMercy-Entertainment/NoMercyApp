@@ -1,13 +1,12 @@
+import { defineAsyncComponent } from 'vue';
 import { isMobile, isTv, tvModeOverride } from '@/config/global';
 
-let View: () => Promise<any>;
-
-if (isTv.value || tvModeOverride.value) {
-	View = () => import('./Tv.vue');
-} else if (isMobile.value) {
-	View = () => import('./Mobile.vue');
-} else {
-	View = () => import('./Desktop.vue');
-}
-
-export default View;
+export default defineAsyncComponent(() => {
+	if (isTv.value || tvModeOverride.value) {
+		return import('./Tv.vue');
+	} else if (isMobile.value) {
+		return import('./Mobile.vue');
+	} else {
+		return import('./Desktop.vue');
+	}
+});

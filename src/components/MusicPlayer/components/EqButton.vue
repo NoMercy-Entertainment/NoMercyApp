@@ -5,7 +5,7 @@ import { MoooomIcons } from "@Icons/icons";
 import { equalizerMenuOpen, toggleEqualizerMenuOpen } from "@/store/audioPlayer";
 
 import MusicButton from './MusicButton.vue';
-import MoooomIcon from "@/components/Images/icons/MoooomIcon.vue";
+import OptimizedIcon from "@/components/OptimizedIcon.vue";
 
 const handleClick = (e?: MouseEvent) => {
   e?.stopPropagation();
@@ -15,7 +15,7 @@ const handleClick = (e?: MouseEvent) => {
 
 <template>
   <MusicButton label="Equalizer" :onclick="handleClick">
-    <MoooomIcon :icon="MoooomIcons.faderOnOff" class="absolute h-7 w-7 inset-1.5" :class="{
+    <OptimizedIcon :icon="MoooomIcons.faderOnOff" class="absolute h-7 w-7 inset-1.5" :class="{
       'text-focus': equalizerMenuOpen,
     }" />
   </MusicButton>

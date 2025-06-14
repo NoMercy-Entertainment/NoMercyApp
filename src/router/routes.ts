@@ -1,69 +1,71 @@
 import { NavigationGuardNext, RouteLocationNormalizedGeneric, RouteRecordRaw } from 'vue-router';
-import { computed } from 'vue';
 import {isMobile, isTv, tvModeOverride} from '@/config/global';
-
-import MobileBaseLayout from '@/Layout/Mobile/BaseLayout.vue';
-import TvBaseLayout from '@/Layout/Tv/BaseLayout.vue';
-import DesktopBaseLayout from '@/Layout/Desktop/BaseLayout.vue';
-
-import BaseCollection from '@/views/Base/Collection';
-import AuthView from '@/views/AuthView';
-import Logout from '@/views/Logout.vue';
-
-import BaseIndex from '@/views/Base/Home';
-import BaseInfo from '@/views/Base/Info';
-import BaseLibraries from '@/views/Base/Libraries';
-import BaseLibrary from '@/views/Base/Library';
-import PaginatedLibrary from '@/views/Base/PaginatedLibrary';
-import BasePerson from '@/views/Base/Person';
-import Search from '@/views/Search';
-import BaseWatch from '@/views/Base/Watch';
-
-import MusicArtist from '@/views/Music/Artist';
-import MusicCards from '@/views/Music/Cards';
-import MusicList from '@/views/Music/List';
-import MusicStart from '@/views/Music/Start';
-
-import DashboardLogs from '@/views/Dashboard/Advanced/Logs';
-import DashboardPlugins from '@/views/Dashboard/Advanced/Plugins';
-import DashboardSchedule from '@/views/Dashboard/Advanced/Schedule';
-
-import DashboardMetadata from '@/views/Dashboard/Content/Metadata';
-import DashboardRipper from '@/views/Dashboard/Content/Ripper';
-import DashboardSpecials from '@/views/Dashboard/Content/Specials';
-
-import DashboardActivity from '@/views/Dashboard/Devices/Activity';
-import DashboardDevices from '@/views/Dashboard/Devices/Devices';
-import DashboardDlna from '@/views/Dashboard/Devices/Dlna';
-
-import DashboardEncoderProfiles from '@/views/Dashboard/System/EncoderProfiles';
-
-import DashboardGeneral from '../views/Dashboard/System/General';
-
-import DashboardLibraries from '@/views/Dashboard/System/Libraries';
-
-import DashboardNotifications from '@/views/Dashboard/System/Notifications';
-import DashboardSystem from '@/views/Dashboard/System/System';
-
-import DashboardUsers from '@/views/Dashboard/System/Users';
-
-import PreferencesControls from '@/views/Preferences/Controls';
-import PreferencesDisplay from '@/views/Preferences/Display';
-import PreferencesProfile from '@/views/Preferences/Profile';
-import PreferencesSubtitles from '@/views/Preferences/Subtitles';
-
-import DevCast from '@/views/Dev/Cast';
-import DevDownload from '@/views/Dev/Download';
-
-// import SetupPostInstall from '@/views/Setup/PostInstall';
-import SetupSelectServer from '@/views/Setup/SelectServers';
-import SetupNoServer from '@/views/Setup/NoServers';
-import SetupServerOffline from '@/views/Setup/ServerOffline';
-
-import NotFound from '@/views/NotFound';
 import libraries from '@/store/Libraries';
 
-const baseLayout = computed(() => {
+// Lazy load layouts to reduce initial bundle size
+const MobileBaseLayout = import('@/Layout/Mobile/BaseLayout.vue');
+const TvBaseLayout = import('@/Layout/Tv/BaseLayout.vue');
+const DesktopBaseLayout = import('@/Layout/Desktop/BaseLayout.vue');
+
+// Lazy load base views
+const BaseCollection = () => import('@/views/Base/Collection');
+const AuthView = () => import('@/views/AuthView');
+const Logout = () => import('@/views/Logout.vue');
+
+const BaseIndex = () => import('@/views/Base/Home');
+const BaseInfo = () => import('@/views/Base/Info');
+const BaseLibraries = () => import('@/views/Base/Libraries');
+const BaseLibrary = () => import('@/views/Base/Library');
+const PaginatedLibrary = () => import('@/views/Base/PaginatedLibrary');
+const BasePerson = () => import('@/views/Base/Person');
+const Search = () => import('@/views/Search');
+const BaseWatch = () => import('@/views/Base/Watch');
+
+// Lazy load music views (only when needed)
+const MusicArtist = () => import('@/views/Music/Artist');
+const MusicCards = () => import('@/views/Music/Cards');
+const MusicList = () => import('@/views/Music/List');
+const MusicStart = () => import('@/views/Music/Start');
+
+// Lazy load dashboard views (heavy admin components)
+const DashboardLogs = () => import('@/views/Dashboard/Advanced/Logs');
+const DashboardPlugins = () => import('@/views/Dashboard/Advanced/Plugins');
+const DashboardSchedule = () => import('@/views/Dashboard/Advanced/Schedule');
+
+const DashboardMetadata = () => import('@/views/Dashboard/Content/Metadata');
+const DashboardRipper = () => import('@/views/Dashboard/Content/Ripper');
+const DashboardSpecials = () => import('@/views/Dashboard/Content/Specials');
+
+const DashboardActivity = () => import('@/views/Dashboard/Devices/Activity');
+const DashboardDevices = () => import('@/views/Dashboard/Devices/Devices');
+const DashboardDlna = () => import('@/views/Dashboard/Devices/Dlna');
+
+const DashboardEncoderProfiles = () => import('@/views/Dashboard/System/EncoderProfiles');
+const DashboardGeneral = () => import('@/views/Dashboard/System/General');
+const DashboardLibraries = () => import('@/views/Dashboard/System/Libraries');
+const DashboardNotifications = () => import('@/views/Dashboard/System/Notifications');
+const DashboardSystem = () => import('@/views/Dashboard/System/System');
+const DashboardUsers = () => import('@/views/Dashboard/System/Users');
+
+// Lazy load preferences views
+const PreferencesControls = () => import('@/views/Preferences/Controls');
+const PreferencesDisplay = () => import('@/views/Preferences/Display');
+const PreferencesProfile = () => import('@/views/Preferences/Profile');
+const PreferencesSubtitles = () => import('@/views/Preferences/Subtitles');
+
+// Lazy load dev views
+const DevCast = () => import('@/views/Dev/Cast');
+const DevDownload = () => import('@/views/Dev/Download');
+const DevPerformanceDashboard = () => import('@/views/Dev/Performance/Dashboard.vue');
+
+// Lazy load setup views
+const SetupSelectServer = () => import('@/views/Setup/SelectServers');
+const SetupNoServer = () => import('@/views/Setup/NoServers');
+const SetupServerOffline = () => import('@/views/Setup/ServerOffline');
+
+const NotFound = () => import('@/views/NotFound');
+
+const getBaseLayout = () => {
 	if (isTv.value || tvModeOverride.value) {
 		return TvBaseLayout;
 	} else if (isMobile.value) {
@@ -71,7 +73,7 @@ const baseLayout = computed(() => {
 	} else {
 		return DesktopBaseLayout;
 	}
-});
+};
 
 export const routes: Array<RouteRecordRaw> = [
 	{
@@ -80,7 +82,7 @@ export const routes: Array<RouteRecordRaw> = [
 	},
 	{
 		path: '/',
-		component: baseLayout.value,
+		component: getBaseLayout,
 		children: [
 			{
 				path: '',
@@ -196,7 +198,7 @@ export const routes: Array<RouteRecordRaw> = [
 	},
 	{
 		path: '/music',
-		component: baseLayout.value,
+		component: getBaseLayout,
 		children: [
 			{
 				path: 'music',
@@ -282,7 +284,7 @@ export const routes: Array<RouteRecordRaw> = [
 	},
 	{
 		path: '/dashboard',
-		component: baseLayout.value,
+		component: getBaseLayout,
 		children: [
 			{
 				path: 'dashboard',
@@ -408,7 +410,7 @@ export const routes: Array<RouteRecordRaw> = [
 	},
 	{
 		path: '/preferences',
-		component: baseLayout.value,
+		component: getBaseLayout,
 		children: [
 			{
 				path: 'display',
@@ -431,10 +433,9 @@ export const routes: Array<RouteRecordRaw> = [
 				component: PreferencesSubtitles,
 			},
 		],
-	},
-	{
+	},	{
 		path: '/dev',
-		component: baseLayout.value,
+		component: getBaseLayout,
 		children: [
 			{
 				path: 'cast',
@@ -446,11 +447,16 @@ export const routes: Array<RouteRecordRaw> = [
 				name: 'Download',
 				component: DevDownload,
 			},
+			{
+				path: 'performance',
+				name: 'Performance Dashboard',
+				component: DevPerformanceDashboard,
+			},
 		],
 	},
 	{
 		path: '/setup',
-		component: baseLayout.value,
+		component: getBaseLayout,
 		children: [
 			{
 				path: 'setup',

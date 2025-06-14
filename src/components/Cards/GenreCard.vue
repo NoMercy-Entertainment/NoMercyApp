@@ -4,7 +4,7 @@ import { computed, PropType } from "vue";
 import type { GenreResponse } from "@/types/api/base/genre";
 
 import { genreColors } from "@/config/global";
-import MoooomIcon from '@/components/Images/icons/MoooomIcon.vue';
+import OptimizedIcon from '@/components/OptimizedIcon.vue';
 
 const props = defineProps({
     data: {
@@ -46,7 +46,7 @@ const genreColor = computed(() => genreColors(props.data.title));
                     background: radial-gradient(50% 50% at 50% 100%, rgba(255, 255, 255, 0.09) 0%, rgba(255, 255, 255, 0.06) 40%, rgba(255, 255, 255, 0.00) 100%), linear-gradient(180deg, rgba(255, 255, 255, 0.00) 0%, rgba(255, 255, 255, 0.12) 100%), rgba(var(--background-auto-5) / 20%);
                     background-blend-mode: normal, overlay, normal;
                 ">
-                <MoooomIcon className="w-20" :icon="genreColor['icon']" />
+                <OptimizedIcon className="w-20" :icon="genreColor['icon']" />
             </div>
         </div>
         <div class="relative flex flex-shrink-0 flex-grow-0 flex-col items-start justify-center self-stretch px-4 pb-0">

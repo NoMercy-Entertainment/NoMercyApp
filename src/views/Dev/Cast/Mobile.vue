@@ -5,7 +5,7 @@ import { IonPage, IonContent } from '@ionic/vue';
 import useMounted from "@/hooks/useMounted";
 import { connection, castSocketIsConnected, startCastSocket, stopCastSocket } from "@/lib/clients/castSocket";
 import SliderBar from "@/components/MusicPlayer/components/SliderBar.vue";
-import MoooomIcon from "@/components/Images/icons/MoooomIcon.vue";
+import OptimizedIcon from "@/components/OptimizedIcon.vue";
 import MusicButton from "@/components/MusicPlayer/components/MusicButton.vue";
 import PlayerIcon from "@/components/Images/icons/PlayerIcon.vue";
 import { TimeData, PlaylistItem, Track } from "@nomercy-entertainment/nomercy-video-player/src/types";
@@ -584,12 +584,11 @@ const setPlaylistItem = (value: number) => {
           <span class="font-mono">{{ remainingTimeHuman }}</span>
         </div>
 
-        <div class="flex gap-4 w-1/3 min-w-96 items-center">
-          <MusicButton label="Mute" :onclick="toggleMute">
-            <MoooomIcon icon="volumeMuted" v-if="isMuted" class="h-6 w-6" />
-            <MoooomIcon icon="volumeOne" v-else-if="volume == 0" class="h-6 w-6" />
-            <MoooomIcon icon="volumeThree" v-else-if="volume > 50" class="h-6 w-6" />
-            <MoooomIcon icon="volumeTwo" v-else class="h-6 w-6" />
+        <div class="flex gap-4 w-1/3 min-w-96 items-center">          <MusicButton label="Mute" :onclick="toggleMute">
+            <OptimizedIcon icon="volumeMuted" v-if="isMuted" class="h-6 w-6" />
+            <OptimizedIcon icon="volumeOne" v-else-if="volume == 0" class="h-6 w-6" />
+            <OptimizedIcon icon="volumeThree" v-else-if="volume > 50" class="h-6 w-6" />
+            <OptimizedIcon icon="volumeTwo" v-else class="h-6 w-6" />
           </MusicButton>
 
           <SliderBar :percentage="volume" :value="volume"

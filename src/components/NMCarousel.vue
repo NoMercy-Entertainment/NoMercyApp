@@ -10,7 +10,7 @@ import { isMobile } from '@/config/global';
 import { mappedEntries } from '@/lib/stringArray';
 import { Breakpoints, breakpoints, swiperConfig } from '@/lib/swiper-config';
 
-import MoooomIcon from '@/components/Images/icons/MoooomIcon.vue';
+import OptimizedIcon from '@/components/OptimizedIcon.vue';
 import {scrollCenter} from "@/lib/utils";
 import {scrollContainerElement} from "@/store/ui";
 
@@ -212,7 +212,7 @@ const scrollToCenter = () => {
         <RouterLink v-if="more_link" :to="more_link"
           class="text-base text-slate-dark-9 dark:text-slate-light-9 flex items-center ml-auto sm:ml-4 mr-2 sm:mr-auto">
           <span class="leading-none pt-0.5">{{ more_link_text }}</span>
-          <MoooomIcon icon="chevronRight" className="w-6 mt-1" />
+          <OptimizedIcon icon="chevronRight" className="w-6 mt-1" />
         </RouterLink>
 
         <div class="flex flex-shrink-0 flex-grow-0 items-start justify-start gap-2 pr-4 ml-auto" v-if="!isMobile">
@@ -222,7 +222,7 @@ const scrollToCenter = () => {
             :class="{
               'cursor-not-allowed opacity-50': !backButtonEnabled,
             }" :onclick="prev">
-            <MoooomIcon class="w-6" icon="chevronLeft" />
+            <OptimizedIcon class="w-6" icon="chevronLeft" />
           </button>
 
           <button v-if="hasScroll" :aria-label="isLastSlide ? $t('Start slide') : $t('Next slide')" tabindex="-1"
@@ -230,10 +230,10 @@ const scrollToCenter = () => {
             :class="{
               'cursor-not-allowed opacity-50': !hasScroll,
             }" :onclick="isLastSlide ? reset : next">
-            <MoooomIcon v-if="hasScroll && !isLastSlide" icon="chevronRight" class="w-6" :class="{
+            <OptimizedIcon v-if="hasScroll && !isLastSlide" icon="chevronRight" class="w-6" :class="{
               'opacity-0': !nextButtonEnabled && isLastSlide,
             }" />
-            <MoooomIcon v-if="hasScroll && isLastSlide" icon="chevronLeftDouble" class="w-6" :class="{
+            <OptimizedIcon v-if="hasScroll && isLastSlide" icon="chevronLeftDouble" class="w-6" :class="{
               'opacity-0': !isLastSlide,
             }" />
           </button>

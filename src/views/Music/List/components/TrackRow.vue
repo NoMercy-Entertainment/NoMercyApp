@@ -11,7 +11,7 @@ import { currentSong, isPlaying, musicSize, audioPlayer } from '@/store/audioPla
 import { onTrackRowRightClick } from '@/store/contextMenuItems';
 
 import EqSpinner from '@/components/Images/EqSpinner.vue';
-import MoooomIcon from '@/components/Images/icons/MoooomIcon.vue';
+import OptimizedIcon from '@/components/OptimizedIcon.vue';
 import CoverImage from '@/components/MusicPlayer/components/CoverImage.vue';
 import TrackLinks from '@/views/Music/List/components/TrackLinks.vue';
 import MediaLikeButton from '@/components/Buttons/MediaLikeButton.vue';
@@ -127,7 +127,7 @@ const handleClick = () => {
     </span>
 
     <span class="flex items-center justify-end gap-2 text-end" :class="{
-      'mr-6': !isMobile,
+      'mr-16': !isMobile,
     }">
       <MediaLikeButton :key="data.id + data?.favorite" :data="data" color="var(--color-focus)" />
       <span class="hidden sm:flex mr-4 monospace sm:mr-0">
@@ -137,7 +137,7 @@ const handleClick = () => {
       <DropdownMenu direction="down" v-if="isMobile">
         <template v-slot:button>
           <BannerButton class="" title="">
-            <MoooomIcon className="relative h-5 w-5" icon="menuDotsVertical" />
+            <OptimizedIcon className="relative h-5 w-5" icon="menuDotsVertical" />
           </BannerButton>
         </template>
         Hellooo

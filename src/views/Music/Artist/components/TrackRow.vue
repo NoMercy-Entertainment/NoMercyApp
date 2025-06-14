@@ -8,7 +8,7 @@ import { audioPlayer, currentSong, isPlaying, musicSize, setCurrentPlaylist } fr
 
 import DropdownMenu from '@/Layout/Desktop/components/Menus/DropdownMenu.vue';
 
-import MoooomIcon from '@/components/Images/icons/MoooomIcon.vue';
+import OptimizedIcon from '@/components/OptimizedIcon.vue';
 import EqSpinner from '@/components/Images/EqSpinner.vue';
 import CoverImage from '@/components/MusicPlayer/components/CoverImage.vue';
 import MediaLikeButton from '@/components/Buttons/MediaLikeButton.vue';
@@ -108,9 +108,8 @@ const handleClick = () => {
     </span>
 
     <DropdownMenu direction="down">
-      <template v-slot:button>
-        <BannerButton class="mx-3" title="">
-          <MoooomIcon className="relative h-5 w-5" icon="menuDotsVertical" />
+      <template v-slot:button>        <BannerButton class="mx-3" title="">
+          <OptimizedIcon className="relative h-5 w-5" icon="menuDotsVertical" />
         </BannerButton>
       </template>
       Hellooo

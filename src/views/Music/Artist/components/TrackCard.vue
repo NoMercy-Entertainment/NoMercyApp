@@ -4,6 +4,7 @@ import { type PropType } from "vue";
 import type { PlaylistItem } from "@/types/musicPlayer";
 
 import TrackRow from "./TrackRow.vue";
+import VirtualList from '@/components/VirtualList.vue';
 
 defineProps({
 	data: {
@@ -38,10 +39,10 @@ defineProps({
 					{{ $t('Duration') }}
 				</div>
 			</div>
-		</div>
-		<div class="flex flex-col items-start justify-start gap-1 self-stretch">
-			<template v-for="(track, index) in data ?? []" :key="track.id">
-				<TrackRow :index="index" :data="track" :displayList="data" />
+		</div>		<div class="flex flex-col items-start justify-start gap-1 self-stretch">
+			
+			<template v-for="(item, index) in data" :key="item.id + item?.favorite">
+				<TrackRow :index="index" :data="item" :displayList="data" />
 			</template>
 		</div>
 	</div>

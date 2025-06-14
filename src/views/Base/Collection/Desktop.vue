@@ -15,7 +15,7 @@ import { convertToHumanReact } from '@/lib/dateTime';
 import ScrollContainer from '@/Layout/Desktop/components/ScrollContainer.vue';
 import FloatingBackButton from '@/components/Buttons/FloatingBackButton.vue';
 import GenrePill from '@/components/Buttons/GenrePill.vue';
-import MoooomIcon from '@/components/Images/icons/MoooomIcon.vue';
+import OptimizedIcon from '@/components/OptimizedIcon.vue';
 import MediaLikeButton from '@/components/Buttons/MediaLikeButton.vue';
 import DropdownMenu from '@/Layout/Desktop/components/Menus/DropdownMenu.vue';
 import { showBackdrops } from '@/store/preferences';
@@ -170,7 +170,7 @@ const shareData = computed<ShareOptions>(() => ({
 
                     <RouterLink :to="`/${data?.media_type}/${data?.id}/watch`"
                       class="relative flex items-center justify-center gap-2 rounded-lg p-2 transition-colors duration-200 group/play hover:bg-auto-5/6">
-                      <MoooomIcon icon="play" className="w-6" />
+                      <OptimizedIcon icon="play" className="w-6" />
 
                       <div
                         class="absolute top-3 grid h-0 w-max flex-shrink-0 flex-grow-0 origin-bottom group-hover/play:grid-cols-1 items-center justify-start bg-black duration-200 grid-cols-[0fr] group-hover/play:h-[32.77px] transform-all left-[-31px] group-hover/play:top-[-38px] rounded-[5.46px]">
@@ -200,7 +200,7 @@ const shareData = computed<ShareOptions>(() => ({
 
                     <DropdownMenu>
                       <template v-slot:button>
-                        <MoooomIcon icon="menuDotsVertical" className="w-6" />
+                        <OptimizedIcon icon="menuDotsVertical" className="w-6" />
                       </template>
 
                       <div class="flex w-full bg-auto-1"

@@ -25,7 +25,7 @@ import ListControlHeaderMoreMenu from '@/Layout/Desktop/components/Menus/ListCon
 
 import FloatingBackButton from '@/components/Buttons/FloatingBackButton.vue';
 import TMDBImage from '@/components/Images/TMDBImage.vue';
-import MoooomIcon from '@/components/Images/icons/MoooomIcon.vue';
+import OptimizedIcon from '@/components/OptimizedIcon.vue';
 import MediaLikeButton from '@/components/Buttons/MediaLikeButton.vue';
 import SeasonCarousel from '@/components/Carousel/SeasonCarousel.vue';
 import PersonCarousel from '@/components/Carousel/PersonCarousel.vue';
@@ -353,10 +353,9 @@ const shareData = computed<ShareOptions>(() => ({
                                  type="image" />
 
                       <span
-                          :class="`tv:group-focus-visible/card:bg-black/3 absolute -inset-1 z-20 grid h-auto w-available items-center rounded-lg aspect-poster transition-transform duration-200 opacity-0 [background:radial-gradient(75%_50%_at_50%_50%,_rgba(0,_0,_0,_0.40)_0%,_rgba(0,_0,_0,_0.00)_100%),_rgba(0,_0,_0,_0.09)] mx-auto w-max ${hasItem ? 'group-hover/card:opacity-100' : ''}`">
-                        <span
+                          :class="`tv:group-focus-visible/card:bg-black/3 absolute -inset-1 z-20 grid h-auto w-available items-center rounded-lg aspect-poster transition-transform duration-200 opacity-0 [background:radial-gradient(75%_50%_at_50%_50%,_rgba(0,_0,_0,_0.40)_0%,_rgba(0,_0,_0,_0.00)_100%),_rgba(0,_0,_0,_0.09)] mx-auto w-max ${hasItem ? 'group-hover/card:opacity-100' : ''}`">                        <span
                             class="inset-0 grid group-hover/card:grid h-full w-full place-content-center group-focus-visible/card:bg-none group-hover/card:bg-none text-5xl text-transparent transition-transform duration-200 group-focus-visible/card:transitioning group-hover/card:text-auto-12">
-                          <MoooomIcon icon="play"
+                          <OptimizedIcon icon="play"
                                       className="w-20 text-slate-lightA-12/70 dark:text-slate-darkA-12/80" />
                         </span>
                       </span>
@@ -379,10 +378,8 @@ const shareData = computed<ShareOptions>(() => ({
                       </p>
 
 
-                      <div class="relative flex flex-shrink-0 flex-grow-0 items-center justify-start gap-4" v-if="data">
-
-                        <BannerButton v-if="hasItem" :href="`/${data?.media_type}/${data?.id}/watch`" title="Play">
-                          <MoooomIcon icon="play"
+                      <div class="relative flex flex-shrink-0 flex-grow-0 items-center justify-start gap-4" v-if="data">                        <BannerButton v-if="hasItem" :href="`/${data?.media_type}/${data?.id}/watch`" title="Play">
+                          <OptimizedIcon icon="play"
                                       className="w-6 text-slate-lightA-12/70  dark:text-slate-darkA-12/80" />
                           <div
                               class="absolute top-3 left-1/2 -translate-x-1/2 grid h-0 w-max flex-shrink-0 flex-grow-0 origin-bottom group-hover/play:grid-cols-1 items-center justify-start duration-200 grid-cols-[0fr] group-hover/play:h-[32.77px] transform-all group-hover/play:top-[-38px] rounded-[5.46px] bg-[#3a3f42] group-hover/play:border border-[#e2f0fd]/[0.08]"
@@ -393,11 +390,9 @@ const shareData = computed<ShareOptions>(() => ({
                               </p>
                             </div>
                           </div>
-                        </BannerButton>
-
-                        <div v-else
+                        </BannerButton>                        <div v-else
                              class="grid relative place-content-center w-10 h-10 active:outline outline-focus focus-visible:outline min-w-[2.5rem] z-0 justify-center disabled:opacity-50 disabled:text-auto-300 disabled:hover:!bg-transparent overflow-clip pointer-events-auto border-none focus:border-none active:border-none focus-visible:sm:ring-white focus-visible:sm:ring-2 group/button gap-2 p-2.5 items-center rounded-lg sm:bg-slate-lightA-2 dark:sm:bg-slate-darkA-2/[1%] active:sm:bg-slate-lightA-6 focus-visible:sm:bg-slate-lightA-6 hover:sm:bg-slate-lightA-6 dark:sm:active:bg-slate-darkA-6 dark:sm:focus-visible:sm:bg-slate-darkA-6 dark:sm:hover:bg-slate-darkA-6 ${isActive ? 'text-focus' : 'text-auto-12">
-                          <MoooomIcon icon="play" className="w-6 text-red-dark-8" />
+                          <OptimizedIcon icon="play" className="w-6 text-red-dark-8" />
 
                           <div
                               class="absolute top-3 grid h-0 w-max flex-shrink-0 origin-bottom group-hover/play:grid-cols-1 items-center justify-start bg-black duration-200 grid-cols-[0fr] group-hover/play:h-[32.77px] transform-all left-[-31px] group-hover/play:top-[-38px] rounded-[5.46px]">
@@ -407,17 +402,14 @@ const shareData = computed<ShareOptions>(() => ({
                               </p>
                             </div>
                           </div>
-                        </div>
-
-                        <BannerButton title="$t('Watch trailer')"
+                        </div>                        <BannerButton title="$t('Watch trailer')"
                                 @click="trailerState == true ? toggleTrailer() : null">
-                          <MoooomIcon icon="film" className="w-6"
+                          <OptimizedIcon icon="film" className="w-6"
                                       :style="`color: ${trailerState == true ? 'rgb(var(--color-green-8))' : 'rgb(var(--color-red-8))'}`" />
                         </BannerButton>
 
                         <BannerButton title="$t('Mark as watched')"
-                                @click="toggleWatched">
-                          <MoooomIcon icon="check"
+                                @click="toggleWatched">                          <OptimizedIcon icon="check"
                                       className="w-6 text-slate-lightA-12/70  dark:text-slate-darkA-12/80" />
                         </BannerButton>
 
@@ -432,7 +424,7 @@ const shareData = computed<ShareOptions>(() => ({
                                     class="flex justify-center items-center self-stretch h-10 relative p-2 gap-3 rounded-sm border border-transparent hover:border-focus/4 active:bg-focus/9 active:border-focus/4 active:hover:border-focus/4 focus:bg-auto-12/2 hover:bg-focus/10 disabled:!bg-focus/2 disabled:!border-focus/2 transition-colors duration-200">
                             <a target="_blank" :href="`https://www.themoviedb.org/${data.media_type}/${data.id}/edit`"
                                 class="relative flex w-full flex-grow items-center justify-center gap-2 text-base font-semibold">
-                              <MoooomIcon icon="edit" />
+                              <OptimizedIcon icon="edit" />
                               <span class="w-full whitespace-nowrap">
                                 {{ $t('Edit on TMDb') }}
                               </span>

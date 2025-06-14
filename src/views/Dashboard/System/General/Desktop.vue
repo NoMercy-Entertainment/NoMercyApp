@@ -13,7 +13,7 @@ import DashboardLayout from '@/Layout/Desktop/DashboardLayout.vue';
 import useServerClient from '@/lib/clients/useServerClient';
 import Toggle from "@/components/Forms/Toggle.vue";
 import {currentServer, setCurrentServer} from "@/store/currentServer";
-import MoooomIcon from "@/components/Images/icons/MoooomIcon.vue";
+import OptimizedIcon from "@/components/OptimizedIcon.vue";
 import servers, {setServers} from "@/store/servers";
 
 const { data: configuration, refetch: invalidate, error } = useServerClient<ConfigurationResponse>({
@@ -248,10 +248,9 @@ const save = () => {
               <label for="swagger">Open API / Swagger Ui</label>
               <a v-if="swagger && currentServer?.serverBaseUrl" target="_blank"
                  :aria-label="$t('Open API / Swagger Ui in a new tab')"
-                 :href="currentServer?.serverBaseUrl"
-                class="flex gap-1 items-center underline underline-offset-4 h-4 text-sm">
+                 :href="currentServer?.serverBaseUrl"                class="flex gap-1 items-center underline underline-offset-4 h-4 text-sm">
                 <span>{{ $t('Open') }}</span>
-                <MoooomIcon icon="shareSquare" className="size-4" color="theme" />
+                <OptimizedIcon icon="shareSquare" className="size-4" color="theme" />
               </a>
             </span>
             <Toggle :model-value="swagger" @update:model-value="swagger = $event" />

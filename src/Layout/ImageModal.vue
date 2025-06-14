@@ -14,7 +14,7 @@ import {
 } from '@/store/imageModal';
 import {pickPaletteColor, RGBString2hex} from '@/lib/colorHelper';
 import AppLogoSquare from '@/components/Images/icons/AppLogoSquare.vue';
-import MoooomIcon from '@/components/Images/icons/MoooomIcon.vue';
+import OptimizedIcon from '@/components/OptimizedIcon.vue';
 import TMDBImage from '@/components/Images/TMDBImage.vue';
 import {cardMenu, trackContextMenuItems} from "@/store/contextMenuItems";
 import serverClient from "@/lib/clients/serverClient";
@@ -284,7 +284,7 @@ const onRightClick = (e: MouseEvent) => {
         <button aria-hidden="true" tabindex="-1" @click="handleClose"
                 class="absolute flex transitioning top-8 right-8 w-10 min-w-[2.5rem] h-10 min-h-[2.5rem] z-0 items-center justify-center disabled:opacity-50 disabled:text-auto-3 disabled:hover:!bg-transparent rounded-full overflow-clip hover:bg-transparent focus-visible:bg-transparent active:bg-transparent sm:focus-visible:bg-auto-4/80 sm:hover:bg-auto-4/80 pointer-events-auto"
                 :class="!showButton && !showScreensaver ? 'flex' : 'hidden'">
-          <MoooomIcon icon="cross" class="h-5 w-5"/>
+          <OptimizedIcon icon="cross" class="h-5 w-5"/>
         </button>
 
         <ContextMenu ref="cardMenu" :model="trackContextMenuItems as MenuItem[]" class="!z-[999999999999999999999]"/>
@@ -313,13 +313,13 @@ const onRightClick = (e: MouseEvent) => {
           <button aria-hidden="true" tabindex="-1" data-state="closed"
                   class="z-0 flex h-10 w-10 items-center justify-center min-w-[2.5rem] min-h-[2.5rem]"
                   style="opacity: 0.3;">
-            <MoooomIcon icon="arrowLeft" class="h-8 w-8 text-white/10"/>
+            <OptimizedIcon icon="arrowLeft" class="h-8 w-8 text-white/10"/>
           </button>
           <button aria-hidden="true" tabindex="-1" data-state="closed"
                   class="z-0 flex h-10 w-10 items-center justify-center transitioning min-w-[2.5rem] min-h-[2.5rem]"
                   style="opacity: 0.3;">
 
-            <MoooomIcon icon="arrowRight" class="h-8 w-8 text-white/10"/>
+            <OptimizedIcon icon="arrowRight" class="h-8 w-8 text-white/10"/>
           </button>
         </div>
         <div class="absolute right-6 bottom-3 z-0 tv:h-12 h-20 tv:w-12 w-20 tv:right-3.5"

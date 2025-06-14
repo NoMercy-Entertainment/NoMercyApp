@@ -9,7 +9,15 @@
     <meta
             name="viewport"
             content="width=device-width, initial-scale=1.0, viewport-fit=cover"
-    />
+    />    <!-- Critical CSS for fastest initial render -->
+    <style>
+        /* Critical CSS - Reset and basic layout */
+        *,*::before,*::after{box-sizing:border-box}html,body{margin:0;padding:0;height:100%;font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;line-height:1.5;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}:root{--background:#rgb(21 23 24 / var(--tw-bg-opacity, 1));--foreground:#fafafa;--primary:#fafafa;--secondary:#27272a;--muted:#27272a;--border:#27272a;--ring:#d4d4d8}.dark{--background:rgb(21 23 24 / var(--tw-bg-opacity, 1));--foreground:#fafafa;--primary:#fafafa;--secondary:#27272a;--muted:#27272a;--border:#27272a;--ring:#d4d4d8}.light{--background:#ffffff;--foreground:#09090b;--primary:#18181b;--secondary:#f4f4f5;--muted:#f4f4f5;--border:#e4e4e7;--ring:#18181b}.loading-spinner{display:inline-block;width:20px;height:20px;border:3px solid rgba(255,255,255,0.3);border-radius:50%;border-top-color:#fff;animation:spin 1s ease-in-out infinite}@keyframes spin{to{transform:rotate(360deg)}}.flex{display:flex}.hidden{display:none}#app{height:100vh;background:var(--background);color:var(--foreground)}[v-cloak]{display:none}button{cursor:pointer}button:disabled{cursor:not-allowed;opacity:0.5}:focus-visible{outline:2px solid var(--ring);outline-offset:2px}html.scheme-dark{--background:rgb(21 23 24 / var(--tw-bg-opacity, 1));--foreground:#fafafa}html.scheme-light{--background:#ffffff;--foreground:#09090b}
+    </style>
+
+    <!-- Preload critical fonts -->
+    <link rel="preload" href="/fonts/Inter-roman.var-latin.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+    <link rel="preload" href="/fonts/mooooom-icons.woff" as="font" type="font/woff" crossorigin="anonymous">
 
     <meta name="format-detection" content="telephone=no"/>
     <meta name="msapplication-tap-highlight" content="no"/>
@@ -19,7 +27,12 @@
     <meta name="mobile-web-app-title" content="Ionic App"/>
     <meta name="mobile-web-app-status-bar-style" content="black"/>
 
-    <meta name="color-scheme" content="light dark"/>
+    <meta name="color-scheme" content="light dark"/>    <!-- Resource Hints for Performance -->
+    <link rel="dns-prefetch" href="//fonts.googleapis.com">
+    <link rel="dns-prefetch" href="//api.example.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <!-- Disable link prefetching for SPA -->
+    <meta http-equiv="x-dns-prefetch-control" content="off">
 
     <meta name="apple-mobile-web-app-title" content="NoMercy TV"/>
     <meta

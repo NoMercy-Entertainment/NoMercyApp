@@ -20,7 +20,10 @@
     "test:e2e": "cypress run",
     "test:unit": "vitest",
     "lint": "eslint .",
-    "lint:fix": "eslint --fix ."
+    "lint:fix": "eslint --fix .",
+    "analyze": "vite build --mode production && npx vite-bundle-analyzer docs",
+    "analyze:modern": "npm run analyze -- --modern",
+    "size-check": "npm run build && du -h docs/assets/*.js"
   },
   "dependencies": {
     "@awesome-cordova-plugins/android-full-screen": "^6.11.0",
@@ -100,6 +103,7 @@
     "vue-markdown-render": "^2.2.1",
     "vue-router": "^4.5.0",
     "vue3-konami-code": "^1.0.0",
+    "web-vitals": "^5.0.3",
     "yarn-git-install": "^0.4.7"
   },
   "devDependencies": {
@@ -117,8 +121,10 @@
     "autoprefixer": "^10.4.20",
     "cypress": "^13.5.0",
     "eslint": "^8.35.0",
+    "eslint-plugin-format": "^1.0.1",
     "eslint-plugin-vue": "^9.9.0",
     "eslint-plugin-vuejs-accessibility": "^2.4.1",
+    "glob": "^11.0.3",
     "jsdom": "^22.1.0",
     "postcss": "^8.4.47",
     "rollup-plugin-brotli": "^3.1.0",

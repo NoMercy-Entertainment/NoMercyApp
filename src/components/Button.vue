@@ -4,7 +4,7 @@ import { twMerge } from 'tailwind-merge';
 
 import type { MoooomIcons } from '@Icons/icons';
 
-import MoooomIcon from '@/components/Images/icons/MoooomIcon.vue';
+import OptimizedIcon from '@/components/OptimizedIcon.vue';
 
 const props = defineProps({
   id: {
@@ -123,7 +123,7 @@ const classes = computed(() => {
   <label v-if="component == 'label'" :id="id" :data-variant="variant" @click="onClick" :for="htmlFor" :style="style"
     :class="classes">
 
-    <MoooomIcon v-if="startIcon" :icon="startIcon" class="w-5" />
+    <OptimizedIcon v-if="startIcon" :icon="startIcon" class="w-5" />
 
     <span class="whitespace-nowrap leading-[100%] empty:hidden">
       <template v-if="$slots">
@@ -134,12 +134,12 @@ const classes = computed(() => {
       <span v-else-if="title">{{ title }}</span>
     </span>
 
-    <MoooomIcon v-if="endIcon" :icon="endIcon" class="-mr-1 w-5" />
+    <OptimizedIcon v-if="endIcon" :icon="endIcon" class="-mr-1 w-5" />
   </label>
   <a v-else-if="component == 'link'" :href="href" :id="id" :data-variant="variant" @click="onClick" :for="htmlFor"
     :style="style" :class="classes">
 
-    <MoooomIcon v-if="startIcon" :icon="startIcon" class="w-5" />
+    <OptimizedIcon v-if="startIcon" :icon="startIcon" class="w-5" />
 
     <span class="whitespace-nowrap leading-[100%] empty:hidden">
       <template v-if="$slots">
@@ -150,7 +150,7 @@ const classes = computed(() => {
       <span v-else-if="title">{{ title }}</span>
     </span>
 
-    <MoooomIcon v-if="endIcon" :icon="endIcon" class="-mr-1 w-5" />
+    <OptimizedIcon v-if="endIcon" :icon="endIcon" class="-mr-1 w-5" />
   </a>
   <button v-else :id="id" :data-variant="variant" @click="onClick" :disabled="disabled" type="button" :style="color == 'theme'
     ? {
@@ -170,13 +170,13 @@ const classes = computed(() => {
     : style
     " :class="classes">
 
-    <MoooomIcon v-if="startIcon" :icon="startIcon" class="w-5" />
+    <OptimizedIcon v-if="startIcon" :icon="startIcon" class="w-5" />
 
     <span class="whitespace-nowrap leading-[100%] empty:hidden">
       <slot v-if="$slots" />
       <span v-else-if="title">{{ title }}</span>
     </span>
 
-    <MoooomIcon v-if="endIcon" :icon="endIcon" class="-mr-1 w-5" />
+    <OptimizedIcon v-if="endIcon" :icon="endIcon" class="-mr-1 w-5" />
   </button>
 </template>

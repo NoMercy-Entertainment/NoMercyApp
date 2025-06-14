@@ -15,7 +15,7 @@ import { searchUrl } from '@/store/routeState';
 
 import MobileLibraryHeader from '@/views/Base/Library/components/MobileLibraryHeader.vue';
 import AppLogo from '@/components/Images/icons/AppLogo.vue';
-import MoooomIcon from '@/components/Images/icons/MoooomIcon.vue';
+import OptimizedIcon from '@/components/OptimizedIcon.vue';
 
 const isFetching = useIsFetching();
 
@@ -28,11 +28,11 @@ const isFetching = useIsFetching();
         class="pt-safe flex justify-between items-center self-stretch flex-grow-0 flex-shrink-0 h-[50px] overflow-hidden px-1 py-1.5">
         <button @click="toggleSidebar" aria-label="menu"
           class="text-slate-dark-1 dark:text-slate-light-1 flex justify-center items-center flex-grow-0 flex-shrink-0 h-14 w-14 relative overflow-hidden gap-2 p-2.5 rounded-lg bg-transparent children:absolute children:transition-opacity children:duration-100 children:inset-4">
-          <MoooomIcon icon="cross" :class="{
+          <OptimizedIcon icon="cross" :class="{
             'opacity-0': sidebar == 'closed' || sidebar == 'hidden',
             'opacity-100': sidebar == 'open',
           }" />
-          <MoooomIcon icon="menuBurger" :class="{
+          <OptimizedIcon icon="menuBurger" :class="{
             'opacity-100': sidebar == 'closed' || sidebar == 'hidden',
             'opacity-0': sidebar == 'open',
           }" />
@@ -42,7 +42,7 @@ const isFetching = useIsFetching();
         </div>
         <RouterLink :to="searchUrl" @click="closeSidebar" aria-label="search"
           class="flex justify-center items-center flex-grow-0 flex-shrink-0  h-14 w-14 relative overflow-hidden gap-2 p-2.5 rounded-lg bg-transparent">
-          <MoooomIcon icon="searchMagnifyingGlass" class="text-slate-dark-1 dark:text-slate-light-1" />
+          <OptimizedIcon icon="searchMagnifyingGlass" class="text-slate-dark-1 dark:text-slate-light-1" />
         </RouterLink>
       </div>
     </ion-toolbar>

@@ -2,7 +2,7 @@
 import { type PropType } from 'vue';
 import type { MoooomIcons } from '@Icons/icons';
 
-import MoooomIcon from '@/components/Images/icons/MoooomIcon.vue';
+import OptimizedIcon from '@/components/OptimizedIcon.vue';
 
 defineProps({
   icon: {
@@ -35,7 +35,7 @@ defineProps({
       'bg-focus/80': active,
       'bg-white/10': !active,
     }">
-    <MoooomIcon :icon="icon" className="size-5 relative" />
+    <OptimizedIcon :icon="icon" className="size-5 relative" />
     <p class="flex-grow-0 flex-shrink-0 text-xs text-left leading-none text-white mt-0.5">
       {{ $t(name) }}
     </p>

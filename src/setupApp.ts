@@ -51,6 +51,10 @@ export async function setupApp(app: AppContext['app']) {
 
     if ('serviceWorker' in navigator && location.hostname !== 'localhost' && !import.meta.env.DEV) {
         await navigator.serviceWorker.ready;
+        
+        // Set up service worker update detection
+        const { setupServiceWorkerUpdates } = await import('@/lib/serviceWorkerUpdates');
+        setupServiceWorkerUpdates();
     }
 
     app.use(router);

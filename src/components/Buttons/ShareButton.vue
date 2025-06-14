@@ -3,7 +3,7 @@ import { ref, PropType } from 'vue';
 import {useRoute} from "vue-router";
 import { Share, type ShareOptions } from '@capacitor/share';
 
-import MoooomIcon from "@/components/Images/icons/MoooomIcon.vue";
+import OptimizedIcon from "@/components/OptimizedIcon.vue";
 import MusicButton from "@/components/MusicPlayer/components/MusicButton.vue";
 import {useTranslation} from "i18next-vue";
 
@@ -44,10 +44,9 @@ const share = async () => {
 };
 </script>
 
-<template>
-  <MusicButton :onclick="share" label="Share">
-    <MoooomIcon v-if="isCopied" icon="shareSquare" class="" />
-    <MoooomIcon v-else icon="shareSquare" class="" />
+<template>  <MusicButton :onclick="share" label="Share">
+    <OptimizedIcon v-if="isCopied" icon="shareSquare" class="" />
+    <OptimizedIcon v-else icon="shareSquare" class="" />
   </MusicButton>
 </template>
 

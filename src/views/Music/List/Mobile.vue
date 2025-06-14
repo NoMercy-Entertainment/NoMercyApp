@@ -15,7 +15,7 @@ import ControlHeader from '@/views/Music/List/components/ControlHeader.vue';
 import ArtistHeader from '@/views/Music/List/components/ArtistHeader.vue';
 import SortHeader from '@/views/Music/List/components/SortHeader.vue';
 import TrackRow from '@/views/Music/List/components/TrackRow.vue';
-import MoooomIcon from '@/components/Images/icons/MoooomIcon.vue';
+import OptimizedIcon from '@/components/OptimizedIcon.vue';
 import NotFound from "@/Layout/Desktop/components/NotFound.vue";
 
 const route = useRoute();
@@ -143,7 +143,7 @@ watch(container, () => {
             </div>
 
             <button @click="handleBack" class="z-30 flex h-10 w-11 items-center justify-center rounded-md">
-              <MoooomIcon icon="arrowLeft" />
+              <OptimizedIcon icon="arrowLeft" />
             </button>
 
             <div id="navText"
@@ -158,8 +158,7 @@ watch(container, () => {
           <ControlHeader :key="data?.id" :data="data" :filter="filter" @filter-change="(e: string) => filter = e" />
 
           <div
-            class="flex flex-1 flex-shrink-0 flex-col items-start justify-start self-stretch bg-slate-dark-12 dark:bg-transparent flex-grow-1 gap-0.5 sm:p-4">
-            <SortHeader ref="sortHeader" :key="data?.id" />
+            class="flex flex-1 flex-shrink-0 flex-col items-start justify-start self-stretch bg-slate-dark-12 dark:bg-transparent flex-grow-1 gap-0.5 sm:p-4">            <SortHeader ref="sortHeader" :key="data?.id" />
 
             <template v-for="(item, index) in displayList" :key="item.id + item?.favorite">
               <TrackRow :data="item" :displayList="displayList" :index="index" />

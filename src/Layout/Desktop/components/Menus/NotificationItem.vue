@@ -4,11 +4,11 @@ import VueMarkdown from 'vue-markdown-render'
 
 import type {Message, User} from "@/types/auth";
 import NoMercyAvatar from '@/components/Images/NoMercyAvatar.vue';
-import MoooomIcon from '@/components/Images/icons/MoooomIcon.vue';
+import OptimizedIcon from '@/components/OptimizedIcon.vue';
 import KeepCounting from '@/components/KeepCounting.vue';
-import {clearNotifications} from "@/store/notifications";
+import {clearNotifications, removeNotification} from "@/store/notifications";
 
-defineProps({
+const props = defineProps({
   data: {
     type: Object as PropType<Message>,
     required: true,
@@ -24,6 +24,18 @@ const handleClick = () => {
   clearNotifications();
 }
 
+const handleUpdateAccept = () => {
+  // Trigger the service worker update
+  document.dispatchEvent(new CustomEvent('sw-update-accepted'));
+  // Remove the notification
+  removeNotification(props.data);
+}
+
+const handleUpdateDismiss = () => {
+  // Just remove the notification without updating
+  removeNotification(props.data);
+}
+
 </script>
 
 <template>
@@ -33,27 +45,45 @@ const handleClick = () => {
         }"
   >
     <NoMercyAvatar v-if="(data.from as User).email" :user="data.from as User" class="w-10 min-w-10"/>
-    <MoooomIcon v-else-if="data.type == 'notice' && data.from == 'System'" icon="wrench" className="w-10 p-2.5"/>
-    <MoooomIcon v-else-if="data.type == 'notice'" icon="infoCircle" className="w-10 p-2.5"/>
-    <MoooomIcon v-else-if="data.type == 'event'" icon="wrench" className="w-10 p-2.5"/>
-    <MoooomIcon v-else-if="data.type == 'message'" icon="emailReceived" className="w-10 p-2.5"/>
+    <OptimizedIcon v-else-if="data.type == 'update'" icon="download" className="w-10 p-2.5 text-focus"/>
+    <OptimizedIcon v-else-if="data.type == 'notice' && data.from == 'System'" icon="wrench" className="w-10 p-2.5"/>
+    <OptimizedIcon v-else-if="data.type == 'notice'" icon="infoCircle" className="w-10 p-2.5"/>
+    <OptimizedIcon v-else-if="data.type == 'event'" icon="wrench" className="w-10 p-2.5"/>
+    <OptimizedIcon v-else-if="data.type == 'message'" icon="emailReceived" className="w-10 p-2.5"/>
 
     <div class="flex flex-grow flex-col items-start justify-start gap-3">
       <div class="relative flex flex-shrink-0 flex-grow-0 flex-col items-start justify-start gap-1 self-stretch">
         <p class="flex-shrink-0 flex-grow-0 self-stretch w-available">
-          {{ (data.from as User).name ?? data.from }}
-        </p>
+          {{ data.title || ((data.from as User).name ?? data.from) }}
+        </p>        
         <div class="flex-shrink-0 flex-grow-0 self-stretch text-sm w-available text-auto-12">
           <VueMarkdown class="markdown" :source="data.body"/>
         </div>
         <p class="flex-shrink-0 flex-grow-0 self-stretch text-xs w-available">
           <KeepCounting :startTime="data.created_at" :relative="true"/>
         </p>
+        
+        <!-- Special update notification actions -->
+        <div v-if="data.type === 'update' && data.link === 'reload'" class="flex gap-2 mt-2">
+          <button 
+            @click="handleUpdateAccept"
+            class="px-3 py-1 text-xs bg-theme-5 hover:bg-theme-6 text-white rounded-md transition-colors"
+          >
+            {{ data.body }}
+          </button>
+          <button 
+            @click="handleUpdateDismiss"
+            class="px-3 py-1 text-xs bg-gray-500 hover:bg-gray-600 text-white rounded-md transition-colors"
+          >
+            Later
+          </button>
+        </div>
       </div>
     </div>
 
-    <button @click="handleClick">
-      <MoooomIcon icon="cross" className="w-5"/>
+    <!-- Regular close button for non-update notifications -->
+    <button v-if="data.type !== 'update'" @click="handleClick">
+      <OptimizedIcon icon="cross" className="w-5"/>
     </button>
   </div>
 </template>

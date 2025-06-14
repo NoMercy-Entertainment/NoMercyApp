@@ -5,7 +5,7 @@ import messagesState, { markAllMessagesRead } from '@/store/messages';
 
 import DropdownMenu from '@/Layout/Desktop/components/Menus/DropdownMenu.vue';
 import NotificationItem from '@/Layout/Desktop/components/Menus/NotificationItem.vue';
-import MoooomIcon from '@/components/Images/icons/MoooomIcon.vue';
+import OptimizedIcon from '@/components/OptimizedIcon.vue';
 
 const hasRang = ref(false);
 const ringing = ref(false);
@@ -46,12 +46,12 @@ onMounted(() => {
               <template v-if="hasUnreadMessages">
                   <div :class="`relative p-2.5 w-full h-full origin-bottom ${ringing ? 'animate-swing' : ''}`">
                       <div class="absolute top-3 right-3 h-2 w-2 rounded-full bg-red-dark-7"></div>
-                      <MoooomIcon icon="chatAlert" />
+                      <OptimizedIcon icon="chatAlert" />
                   </div>
               </template>
               <template v-else>
                   <div class="relative h-full w-full p-2.5">
-                      <MoooomIcon icon="chatBubble" />
+                      <OptimizedIcon icon="chatBubble" />
                   </div>
               </template>
           </button>

@@ -1,7 +1,7 @@
 <script setup lang='ts'>
 import { watch } from 'vue';
 import { useTranslation } from 'i18next-vue';
-import MoooomIcon from "@/components/Images/icons/MoooomIcon.vue";
+import OptimizedIcon from "@/components/OptimizedIcon.vue";
 import { setShowBackdrops, showBackdrops } from "@/store/preferences";
 import { useToggle } from "@vueuse/core";
 
@@ -35,16 +35,15 @@ watch(value, (newVal) => {
           dark:shadow-[0_1px_0_0_rgba(255,255,255,0.20)_inset,0_-1px_0_0_rgba(var(--background-auto-2)/60%)_inset,0_22px_30px_-4px_rgba(var(--background-auto-2)/70%)]
       "
 				:class="value ? 'translate-x-full' : ''">
-			</div>
-			<button class='pointer-events-auto z-10 flex w-1/2 items-center gap-2 px-4 py-1' @click="() => value = false">
+			</div>			<button class='pointer-events-auto z-10 flex w-1/2 items-center gap-2 px-4 py-1' @click="() => value = false">
 				<span class='flex h-5 w-5 items-center'>
-					<MoooomIcon icon="portrait" class="h-5 w-5" />
+					<OptimizedIcon icon="portrait" class="h-5 w-5" />
 				</span>
 				<span>Poster</span>
 			</button>
 			<button class='pointer-events-auto z-10 flex w-1/2 items-center gap-2 px-5 py-1' @click="() => value = true">
 				<span class='flex h-5 w-5 items-center'>
-					<MoooomIcon icon="landscape" class="h-5 w-5" />
+					<OptimizedIcon icon="landscape" class="h-5 w-5" />
 				</span>
 				<span>Backdrop</span>
 			</button>

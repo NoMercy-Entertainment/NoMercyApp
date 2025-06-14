@@ -7,7 +7,7 @@ import { humanFileSize, pad } from '@/lib/stringArray';
 import { tmdbImageBaseUrl } from '@/config/config';
 
 import Checkbox from '@/components/Forms/Checkbox.vue';
-import MoooomIcon from '@/components/Images/icons/MoooomIcon.vue';
+import OptimizedIcon from '@/components/OptimizedIcon.vue';
 
 const props = defineProps({
   manage: {
@@ -79,48 +79,44 @@ watch(props, (value) => {
               <template v-else-if="data?.parsed?.year">
                 ({{ data?.parsed?.year }})
               </template>
-            </span>
-
-          <div v-if="data.path"
+            </span>          <div v-if="data.path"
             class="relative flex items-center justify-start self-stretch gap-0.5 text-slate-light-11 dark:text-slate-dark-11">
-            <MoooomIcon icon="folder" className="w-3.5" />
+            <OptimizedIcon icon="folder" className="w-3.5" />
             <p class="w-full flex-grow text-xs leading-none">
                 {{ data.path }}
             </p>
           </div>
           <div v-if="data?.match?.id"
             class="relative flex items-center justify-start self-stretch gap-0.5 text-slate-light-11 dark:text-slate-dark-11">
-            <MoooomIcon icon="infoCircle" className="w-3.5" />
+            <OptimizedIcon icon="infoCircle" className="w-3.5" />
             <p class="w-full flex-grow text-xs leading-none">
                 {{ data?.match?.id }}
             </p>
-          </div>
-          <div v-if="data.size"
+          </div>          <div v-if="data.size"
             class="relative flex items-center justify-start self-stretch gap-0.5 text-slate-light-11 dark:text-slate-dark-11">
-            <MoooomIcon icon="server" className="w-3.5" />
+            <OptimizedIcon icon="server" className="w-3.5" />
             <p class="w-full flex-grow text-xs leading-none">
               {{ humanFileSize(data.size) }}
             </p>
           </div>
           <div v-if="data.tracks"
                class="relative flex items-center justify-start self-stretch gap-0.5 text-slate-light-11 dark:text-slate-dark-11">
-            <MoooomIcon icon="audioFile" className="w-3.5" />
+            <OptimizedIcon icon="audioFile" className="w-3.5" />
             <p class="w-full flex-grow text-xs leading-none">
               {{ data.tracks }}
             </p>
           </div>
           <div v-if="data.streams.video?.length > 0"
                class="relative flex items-center justify-start self-stretch gap-0.5 text-slate-light-11 dark:text-slate-dark-11">
-            <MoooomIcon icon="film" className="w-3.5" />
+            <OptimizedIcon icon="film" className="w-3.5" />
             <p class="w-full flex-grow text-xs leading-none">
               <template v-for="(video, index) in data.streams.video">
                 {{ video.width }}x{{ video.height }}{{ index < (data.streams.video.length - 1) ? ', ' : '' }}
               </template>
             </p>
-          </div>
-          <div v-if="data.streams.audio?.length > 0"
+          </div>          <div v-if="data.streams.audio?.length > 0"
             class="relative flex items-center justify-start self-stretch gap-0.5 text-slate-light-11 dark:text-slate-dark-11">
-            <MoooomIcon icon="audioFile" className="w-3.5" />
+            <OptimizedIcon icon="audioFile" className="w-3.5" />
             <p class="w-full flex-grow text-xs leading-none">
               <template v-for="(audio, index) in data.streams.audio">
                 {{ audio.language }}{{ index < (data.streams.audio.length - 1) ? ', ' : '' }} </template>
@@ -128,7 +124,7 @@ watch(props, (value) => {
           </div>
           <div v-if="data.streams.subtitle?.length > 0"
             class="relative flex items-center justify-start self-stretch gap-0.5 text-slate-light-11 dark:text-slate-dark-11">
-            <MoooomIcon icon="chatBubble" className="w-3.5" />
+            <OptimizedIcon icon="chatBubble" className="w-3.5" />
             <p class="w-full flex-grow text-xs leading-none">
               <template v-for="(subtitle, index) in data.streams.subtitle">
                 {{ subtitle.language }}{{ index < (data.streams.subtitle.length - 1) ? ', ' : '' }} </template>

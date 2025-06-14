@@ -12,7 +12,7 @@ import useServerClient from "@/lib/clients/useServerClient";
 import type {DisplayList} from "@/types/api/music/musicPlayer";
 
 import CoverImage from "@/components/MusicPlayer/components/CoverImage.vue";
-import MoooomIcon from "@/components/Images/icons/MoooomIcon.vue";
+import OptimizedIcon from "@/components/OptimizedIcon.vue";
 import {breakTitle2} from "@/lib/stringArray";
 import BigPlayButton from "@/components/Buttons/BigPlayButton.vue";
 import MusicButton from "@/components/MusicPlayer/components/MusicButton.vue";
@@ -265,10 +265,8 @@ const handleClick = (song: PlaylistItem) => {
                       <ion-col size="2" tabindex="-1" class="opacity-0 group-focus-within/track:opacity-100 -ml-2">
                         <ion-row tabindex="-1" class="flex flex-nowrap">
 
-                          <MediaLikeButton :data="song"/>
-
-                          <MusicButton label="" tabindex="1" :onclick="() => { }" class="!bg-transparent mr-2">
-                            <MoooomIcon icon="menuDotsHorizontal" class="text-white"/>
+                          <MediaLikeButton :data="song"/>                            <MusicButton label="" tabindex="1" :onclick="() => { }" class="!bg-transparent mr-2">
+                            <OptimizedIcon icon="menuDotsHorizontal" class="text-white"/>
                           </MusicButton>
                         </ion-row>
                       </ion-col>

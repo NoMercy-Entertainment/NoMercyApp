@@ -14,7 +14,7 @@ import useServerClient from "@/lib/clients/useServerClient";
 
 import CardShadow from "@/components/Cards/CardShadow.vue";
 import MediaLikeButton from "@/components/Buttons/MediaLikeButton.vue";
-import MoooomIcon from "@/components/Images/icons/MoooomIcon.vue";
+import OptimizedIcon from "@/components/OptimizedIcon.vue";
 import TMDBImage from "@/components/Images/TMDBImage.vue";
 import { poster } from "@/store/ui";
 import ShareButton from "@/components/Buttons/ShareButton.vue";
@@ -96,10 +96,9 @@ const shareData = computed<ShareOptions>(() => ({
 
     </div>
 
-    <div class="flex justify-end items-start w-[280px] absolute left-0 top-0 gap-2 p-4">
-      <div
+    <div class="flex justify-end items-start w-[280px] absolute left-0 top-0 gap-2 p-4">      <div
         class="flex justify-start items-center flex-grow-0 flex-shrink-0 relative overflow-hidden gap-2 p-2 rounded-3xl bg-black/[0.48] border border-black/2 w-10 h-10">
-        <MoooomIcon icon="check" className="w-6 text-white" />
+        <OptimizedIcon icon="check" className="w-6 text-white" />
       </div>
       <div
         class="flex justify-start items-center flex-grow-0 flex-shrink-0 relative overflow-hidden gap-2 rounded-3xl bg-black/[0.48] border border-black/2">

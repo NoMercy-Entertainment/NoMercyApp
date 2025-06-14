@@ -3,7 +3,7 @@ import { type PropType } from 'vue';
 import { useTranslation } from 'i18next-vue';
 import { Listbox, ListboxButton, ListboxLabel, ListboxOption, ListboxOptions } from '@headlessui/vue';
 
-import MoooomIcon from '@/components/Images/icons/MoooomIcon.vue';
+import OptimizedIcon from '@/components/OptimizedIcon.vue';
 
 const { t } = useTranslation();
 
@@ -87,9 +87,9 @@ defineEmits(['update:modelValue']);
               'h-8 min-h-8 px-2': variant === 'dense',
               'hidden': variant === 'tight',
             }">
-            <MoooomIcon v-if="multiple" icon="arrowSelect"
+            <OptimizedIcon v-if="multiple" icon="arrowSelect"
               className="w-5 ui-open:rotate-180 transition-transform duration-200" />
-            <MoooomIcon v-else icon="chevronDown"
+            <OptimizedIcon v-else icon="chevronDown"
               className="w-5 ui-open:rotate-180 transition-transform duration-200" />
           </span>
         </ListboxButton>
@@ -122,7 +122,7 @@ defineEmits(['update:modelValue']);
                     'text-auto-50': active,
                     'text-focus': !active,
                   }">
-                  <MoooomIcon icon="check" className="w-5" />
+                  <OptimizedIcon icon="check" className="w-5" />
                 </span>
               </li>
             </ListboxOption>

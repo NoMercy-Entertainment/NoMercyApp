@@ -15,7 +15,7 @@ import ScrollContainer from "@/Layout/Desktop/components/ScrollContainer.vue";
 import RipperPlayer from "@/views/Dashboard/Content/Ripper/components/RipperPlayer.vue";
 import Button from "@/components/Button.vue";
 import {ripperSocketIsConnected} from "@/lib/clients/ripperSocket";
-import MoooomIcon from "@/components/Images/icons/MoooomIcon.vue";
+import OptimizedIcon from "@/components/OptimizedIcon.vue";
 
 const form = ref<HTMLFormElement>();
 const locked = ref(true);
@@ -390,7 +390,7 @@ watch(discContents, async (value) => {
                               'flex': playlistIndex === 0
                            }"
                       >
-                        <MoooomIcon icon="infoCircle" className="w-6 h-6 text-gray-200 dark:text-gray-300 fill-focus"/>
+                        <OptimizedIcon icon="infoCircle" className="w-6 h-6 text-gray-200 dark:text-gray-300 fill-focus"/>
 
                         <p class="flex-grow-0 flex-shrink-0 text-2xs font-medium text-left text-[#eeecec]">
                           {{ $t('These settings will propagate to the rest of the items below') }}

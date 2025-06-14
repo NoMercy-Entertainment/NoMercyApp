@@ -4,7 +4,7 @@ import { user } from '@/store/user';
 import { currentServer } from '@/store/currentServer';
 
 import NoMercyAvatar from '@/components/Images/NoMercyAvatar.vue';
-import MoooomIcon from '@/components/Images/icons/MoooomIcon.vue';
+import OptimizedIcon from '@/components/OptimizedIcon.vue';
 
 </script>
 
@@ -18,9 +18,8 @@ import MoooomIcon from '@/components/Images/icons/MoooomIcon.vue';
                 <p class="w-48 flex-shrink-0 flex-grow-0 font-semibold">
                     {{ user.name }}
                 </p>
-                <div class="relative flex flex-shrink-0 flex-grow-0 items-center justify-start self-stretch gap-0.5">
-                    <MoooomIcon v-if="currentServer" class="w-5" icon="server" />
-                    <MoooomIcon v-else class="w-5" icon="linkBroken" />
+                <div class="relative flex flex-shrink-0 flex-grow-0 items-center justify-start self-stretch gap-0.5">                    <OptimizedIcon v-if="currentServer" class="w-5" icon="server" />
+                    <OptimizedIcon v-else class="w-5" icon="linkBroken" />
                     <p class="flex-grow text-sm w-[174px]">
                       {{ currentServer?.name ?? $t('Not connected') }}
                     </p>

@@ -16,6 +16,7 @@ import ControlHeader from '@/views/Music/List/components/ControlHeader.vue';
 import ArtistHeader from '@/views/Music/List/components/ArtistHeader.vue';
 import SortHeader from '@/views/Music/List/components/SortHeader.vue';
 import TrackRow from '@/views/Music/List/components/TrackRow.vue';
+import VirtualList from '@/components/VirtualList.vue';
 import ScrollContainer from '@/Layout/Desktop/components/ScrollContainer.vue';
 import NotFound from "@/Layout/Desktop/components/NotFound.vue";
 
@@ -37,9 +38,7 @@ watch(data, (value) => {
 
   sort(value?.tracks ?? [], sortType.value, sortOrder.value, filter.value);
 
-  if (value?.color_palette?.cover) {
-    setColorPalette(value?.color_palette?.cover);
-  }
+  setColorPalette(value?.color_palette?.cover);
 });
 
 watch(sortOrder, (value) => {
@@ -125,7 +124,6 @@ const onScroll = () => {
                 'pb-4 sm:pb-4': !isNative && currentSong
               }">
               <SortHeader ref="sortHeader" :key="data?.id" />
-
               <template v-for="(item, index) in displayList" :key="item.id + item?.favorite">
                 <TrackRow :data="item" :displayList="displayList" :index="index" />
               </template>

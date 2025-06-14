@@ -4,7 +4,6 @@ import { type PropType } from "vue";
 import { Server } from '@/types/auth';
 
 import DeviceIcon from '@/components/Images/icons/DeviceIcon.vue';
-import MoooomIcon from '@/components/Images/icons/MoooomIcon.vue';
 
 defineProps({
     server: {

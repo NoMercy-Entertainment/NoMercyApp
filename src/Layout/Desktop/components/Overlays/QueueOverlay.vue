@@ -17,7 +17,7 @@ import {stopPropagation} from "@/lib/utils";
 import {MoooomIcons} from "@Icons/icons";
 import ScrollContainer from '@/Layout/Desktop/components/ScrollContainer.vue';
 import CoverImage from '@/components/Images/CoverImage.vue';
-import MoooomIcon from "@/components/Images/icons/MoooomIcon.vue";
+import OptimizedIcon from "@/components/OptimizedIcon.vue";
 
 const handleClick = (song: PlaylistItem) => {
   if (!queue.value) return;
@@ -74,7 +74,7 @@ const handleClick = (song: PlaylistItem) => {
         <RouterLink v-if="currentPlaylist" :to="'/music/' + currentPlaylist"
                     class="text-sm font-semibold flex gap-1 items-center hover:underline underline-offset-2">
           <span>{{ $t('View Playlist') }}</span>
-          <MoooomIcon :icon="MoooomIcons.shareSquare" className="w-4 h-4"/>
+          <OptimizedIcon :icon="MoooomIcons.shareSquare" className="w-4 h-4"/>
         </RouterLink>
       </div>
 

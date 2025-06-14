@@ -7,7 +7,7 @@ import type { StatusResponse } from '@/types/api/base/library';
 
 import serverClient from '@/lib/clients/serverClient';
 
-import MoooomIcon from '@/components/Images/icons/MoooomIcon.vue';
+import OptimizedIcon from '@/components/OptimizedIcon.vue';
 import MusicButton from './MusicButton.vue';
 import audioPlayer, { currentSong } from '@/store/audioPlayer';
 
@@ -65,6 +65,6 @@ const handleClick = (e?: MouseEvent) => {
 	<MusicButton label="Favorite" :onclick="handleClick" :style="`--fill: ${color};`">
 		<slot />
 
-		<MoooomIcon icon="heart" class="h-7 w-7" v-if="data.favorite" :class="className" />
+		<OptimizedIcon icon="heart" class="h-7 w-7" v-if="data.favorite" :class="className" />
 	</MusicButton>
 </template>

@@ -24,7 +24,7 @@ import LyricsOverlay from '@/Layout/Desktop/components/Overlays/LyricsOverlay.vu
 import MusicButton from '@/components/MusicPlayer/components/MusicButton.vue';
 import ProgressBarContainer from '@/components/MusicPlayer/components/ProgressBarContainer.vue';
 import CoverImage from '@/components/MusicPlayer/components/CoverImage.vue';
-import MoooomIcon from '@/components/Images/icons/MoooomIcon.vue';
+import OptimizedIcon from '@/components/OptimizedIcon.vue';
 import ChristmasSnow from "@/components/Seasonal/Christmas/ChristmasSnow.vue";
 
 import TopRow from '../mobile/TopRow.vue';
@@ -62,11 +62,8 @@ watch(fullPlayerModalOpen, (value) => {
   if (value) {
     oldColorPalette.value = colorPalette.value;
     setTimeout(() => {
-      // setColorPalette(currentSong.value?.color_palette?.cover);
       loading.value = 'eager';
     }, 50);
-  } else {
-    // setColorPalette(oldColorPalette.value);
   }
 });
 
@@ -78,10 +75,6 @@ watch(currentSong, (value) => {
   currentFullPlaylistItem.value = current;
 
   swiper.value?.$el?.swiper.slideTo(current);
-
-  // if (fullPlayerModalOpen.value) {
-  //   setColorPalette(value?.color_palette?.cover);
-  // }
 });
 
 const focusColor = computed(() => {
@@ -163,9 +156,8 @@ const onWillDismiss = async () => {
       <div class="frosting relative mx-3 -mt-10 mb-3 rounded-2xl pt-10 pb-4 w-available bg-focus/60 shadow">
         <div class="absolute top-0 z-10 flex w-full items-center rounded-t-2xl pr-2 pl-4 font-semibold">
           <span>{{ t('Lyrics') }}</span>
-          <MusicButton label="expand" class="ml-auto" :onclick="handleExpand">
-            <MoooomIcon v-if="lyricsSize == 'full'" icon="arrowExitFullscreen" class="h-5 w-5"/>
-            <MoooomIcon v-else icon="arrowEnterFullscreen" class="h-5 w-5"/>
+          <MusicButton label="expand" class="ml-auto" :onclick="handleExpand">            <OptimizedIcon v-if="lyricsSize == 'full'" icon="arrowExitFullscreen" class="h-5 w-5"/>
+            <OptimizedIcon v-else icon="arrowEnterFullscreen" class="h-5 w-5"/>
           </MusicButton>
         </div>
         <div

@@ -13,7 +13,7 @@ import {setBackground, setColorPalette, setSortOrder, sortOrder, sortType} from 
 import ScrollContainer from '@/Layout/Desktop/components/ScrollContainer.vue';
 
 import BannerButton from '@/components/Buttons/BannerButton.vue';
-import MoooomIcon from '@/components/Images/icons/MoooomIcon.vue';
+import OptimizedIcon from '@/components/OptimizedIcon.vue';
 import Home from './components/Home.vue';
 import Albums from './components/Albums.vue';
 import Playlists from './components/Playlists.vue';
@@ -118,14 +118,13 @@ const setDisplayType = (type: 'list' | 'card') => {
           <Header v-if="data" :data="data" />
 
           <Tabs :tabs="tabs">
-            <template v-slot:extra="{ activeTab }">
-              <div v-if="activeTab === tabs[0].name"
+            <template v-slot:extra="{ activeTab }">              <div v-if="activeTab === tabs[0].name"
                 class="absolute right-4 inline-flex items-center justify-start top-[9.65px] gap-2.5">
                 <BannerButton title="List" @click="setDisplayType('list')" :isActive="displayType == 'list'">
-                  <MoooomIcon icon="bulletList" className="relative h-5 w-5" />
+                  <OptimizedIcon icon="bulletList" className="relative h-5 w-5" />
                 </BannerButton>
                 <BannerButton title="Grid" @click="setDisplayType('card')" :isActive="displayType == 'card'">
-                  <MoooomIcon icon="collection" className="relative h-5 w-5" />
+                  <OptimizedIcon icon="collection" className="relative h-5 w-5" />
                 </BannerButton>
               </div>
             </template>
