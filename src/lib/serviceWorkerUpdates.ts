@@ -32,11 +32,8 @@ export function setupServiceWorkerUpdates() {
         return;
     }
 
-    console.log('Setting up service worker update detection...');
-
     // Check for updates when service worker is ready
     navigator.serviceWorker.ready.then(registration => {
-        console.log('Service worker ready, checking for updates...');
         
         // Check if there's already an update waiting
         if (registration.waiting) {
