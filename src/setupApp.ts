@@ -48,8 +48,7 @@ import NMTopResultCard from '@/components/NMTopResultCard.vue';
 import NMTrackRow from '@/components/NMTrackRow.vue';
 
 export async function setupApp(app: AppContext['app']) {
-
-    if ('serviceWorker' in navigator && location.hostname !== 'localhost' && !import.meta.env.DEV) {
+    if ('serviceWorker' in navigator && !import.meta.env.DEV) {
         await navigator.serviceWorker.ready;
         
         // Set up service worker update detection

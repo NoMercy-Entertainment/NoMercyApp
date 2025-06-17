@@ -32,13 +32,12 @@ export default defineConfig(({ command }) => {
             // ...
           },
         },
-      }),
-      VitePWA({
-        registerType: "autoUpdate",
+      }),      VitePWA({
+        registerType: "prompt",
         workbox: {
           cleanupOutdatedCaches: true,
           clientsClaim: true,
-          skipWaiting: true, // Changed to false so we can control when to update
+          skipWaiting: false, // Allow manual control over updates
           sourcemap: false,
           // Force immediate update on new builds
           mode: env.NODE_ENV === "production" ? "production" : "development",
