@@ -29,11 +29,11 @@ console.log('Original SW size:', swContent.length, 'characters');
 // This regex matches both minified and unminified patterns
 const skipWaitingPatterns = [
     // Minified pattern (actual pattern found in production)
-    /self\.addEventListener\("message",\(e=>\{e\.data&&"SKIP_WAITING"===e\.data\.type&&self\.skipWaiting\(\)\}\)\)/g,
+    /self\.addEventListener\("message",\(e=>\{e\.data&&"SKIP_WAITING"===e\.data\.type&&self\.skipWaiting\(\)\}\)\),/g,
     // Unminified pattern (fallback)
-    /self\.addEventListener\("message",\([^)]+\)=>\{[^}]*"SKIP_WAITING"[^}]*skipWaiting\(\)[^}]*\}\)/g,
+    /self\.addEventListener\("message",\([^)]+\)=>\{[^}]*"SKIP_WAITING"[^}]*skipWaiting\(\)[^}]*\}\),/g,
     // Generic pattern for variations
-    /self\.addEventListener\("message",[^;]*"SKIP_WAITING"[^;]*skipWaiting\(\)[^;]*\)/g
+    /self\.addEventListener\("message",[^;]*"SKIP_WAITING"[^;]*skipWaiting\(\)[^;]*\),/g
 ];
 
 let patternFound = false;

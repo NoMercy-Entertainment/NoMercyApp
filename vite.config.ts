@@ -38,7 +38,7 @@ export default defineConfig(({ command }) => {
         registerType: "prompt",
         workbox: {
           cleanupOutdatedCaches: true,
-          clientsClaim: true,
+          // clientsClaim: true,
           sourcemap: false,
           mode: env.NODE_ENV === "production" ? "production" : "development",
           dontCacheBustURLsMatching: /\.\w{8}\./,
