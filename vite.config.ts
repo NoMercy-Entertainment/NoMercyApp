@@ -31,15 +31,13 @@ export default defineConfig(({ command }) => {
           transformAssetUrls: {
             // ...
           },
-        },
-      }),      VitePWA({
+        },      
+      }),
+      VitePWA({
         registerType: "prompt",
         workbox: {
-          cleanupOutdatedCaches: true,
           clientsClaim: true,
-          skipWaiting: false, // Allow manual control over updates
           sourcemap: false,
-          // Force immediate update on new builds
           mode: env.NODE_ENV === "production" ? "production" : "development",
           dontCacheBustURLsMatching: /\.\w{8}\./,
           navigateFallback: "index.html",

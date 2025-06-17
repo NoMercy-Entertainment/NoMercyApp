@@ -17,15 +17,6 @@ cleanupOutdatedCaches();
 // Claim clients immediately
 clientsClaim();
 
-// CUSTOM UPDATE HANDLING
-// Listen for messages from the client
-self.addEventListener('message', (event) => {
-  if (event.data && event.data.type === 'SKIP_WAITING') {
-    // Immediately activate the new service worker
-    self.skipWaiting();
-  }
-});
-
 // Notify clients when a new service worker is waiting
 self.addEventListener('waiting', () => {
   // Send message to all clients that an update is available
