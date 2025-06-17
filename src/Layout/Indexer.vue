@@ -19,8 +19,7 @@ const openPaths = [
 const queryPaths = [
 	new RegExp('music/albums'),
 	new RegExp('music/artists'),
-	new RegExp('libraries/[a-zA-Z0-9]+'),
-	new RegExp('libraries/[a-zA-Z0-9]+/letter/\\w'),
+	new RegExp('libraries/[a-zA-Z0-9]+/letter/[a-zA-Z0-9_]'),
 ];
 
 const indexerState = (route: string) => openPaths.some(path => route.startsWith(path));
@@ -30,7 +29,9 @@ const route = useRoute();
 
 function updateScrollableTargets() {
 	setTimeout(() => {
-		document.querySelector(isMobile.value ? 'ion-tabs ion-router-outlet  div.ion-page:not(.ion-page-hidden) [indexer]' : '[indexer]')
+		document.querySelector(isMobile.value
+			? 'ion-tabs ion-router-outlet  div.ion-page:not(.ion-page-hidden) [indexer]'
+			: '[indexer]')
 			?.querySelectorAll<HTMLDivElement>('[data-indexer]')
 			.forEach((el) => {
 				let target;
@@ -99,7 +100,6 @@ onUnmounted(() => {
 			'sm:ml-2': !isNative && indexer,
 			'bottom-0': isNative,
 		}"
-		@click="alert('hi there')"
 	>
 		<template v-for="letter in alphaNumericRange('#', 'Z')" :key="letter">
 			<template v-if="isQueryPath(route.path)">
@@ -112,14 +112,14 @@ onUnmounted(() => {
 					</p>
 				</RouterLink>
 			</template>
-			<div
+			<button
 				v-else :data-indexer="letter" tabindex="-1" class="pointer-events-auto relative flex p-1.5 size-6 sm:size-8 aspect-square rounded-lg overflow-clip cursor-pointer flex-col items-center justify-center hover:bg-auto-alpha-5"
 				@click="scrollToDiv(letter)"
 			>
 				<p class="flex-shrink-0 flex-grow-0 text-center text-xs sm:text-base font-semibold leading-none">
 					{{ letter }}
 				</p>
-			</div>
+			</button>
 		</template>
 	</div>
 </template>

@@ -394,12 +394,12 @@ export default defineConfig(({ command }) => {
             },
           ],
         },
-        // 	devOptions: {
-        // 		enabled: false,
-        // 		type: 'module',
-        // 		navigateFallback: 'index.html',
-        // 		suppressWarnings: false,
-        // 	},
+        devOptions: {
+            enabled: false,
+            type: 'module',
+            navigateFallback: 'index.html',
+            suppressWarnings: false,
+        },
       }),
       ViteCspPlugin(
         {

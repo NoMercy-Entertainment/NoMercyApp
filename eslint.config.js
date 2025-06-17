@@ -7,6 +7,8 @@ export default antfu({
 			'vue/no-deprecated-slot-attribute': 'off',
 			'vue/multi-word-component-names': 'off',
 			'vue/no-reserved-component-names': 'off',
+			'prefer-regex-literals': 'off',
+			'regexp/prefer-w': 'off',
 		},
 	},
 	typescript: {
