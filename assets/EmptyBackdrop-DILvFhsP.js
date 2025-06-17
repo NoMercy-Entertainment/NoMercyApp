@@ -1,1 +1,0 @@
-import{_ as o}from"./_plugin-vue_export-helper-DlAUqK2U.js";import{h as c,o as e}from"./vue-ionic-Cv2or74p.js";const t={},r={class:"bg"};function s(_,a){return e(),c("div",r)}const d=o(t,[["render",s],["__scopeId","data-v-100874a6"]]);export{d as E};
