@@ -42,10 +42,7 @@ export interface Folder {
 export interface LibraryResponse {
 	id: number;
 	backdrop: string;
-	favorite: boolean;
-	watched: boolean;
 	logo: null | string;
-	media_type: string;
 	number_of_items: number;
 	have_items: number;
 	overview: string;
@@ -53,11 +50,8 @@ export interface LibraryResponse {
 	poster: string;
 	title: string;
 	titleSort: string;
-	type: string;
 	year: number;
-	duration: number;
 	link: string;
-	tags: string[];
 }
 
 export interface StatusResponse<T> {

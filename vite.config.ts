@@ -179,12 +179,7 @@ export default defineConfig(({ command }) => {
             // API REQUESTS: Stale-while-revalidate strategy (matches enhanced-sw API_CACHE)
             {
               urlPattern: ({ url }) => {
-                return (
-                  /\/api\/.*$/.test(url.pathname) ||
-                  /\/auth\/.*$/.test(url.pathname) ||
-                  url.hostname.includes("api") ||
-                  /^api.nomercy\.tv/.test(url.hostname)
-                );
+                return /^api.nomercy\.tv/.test(url.hostname);
               },
               handler: "StaleWhileRevalidate",
               options: {
