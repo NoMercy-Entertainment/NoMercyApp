@@ -34,10 +34,11 @@ export default defineConfig(({ command }) => {
         },
       }),
       VitePWA({
+        strategies: "generateSW",
         registerType: "prompt",
         workbox: {
-          cleanupOutdatedCaches: false,
-          // clientsClaim: true,
+          cleanupOutdatedCaches: true,
+          clientsClaim: true,
           sourcemap: false,
           mode: env.NODE_ENV === "production" ? "production" : "development",
           dontCacheBustURLsMatching: /\.\w{8}\./,
