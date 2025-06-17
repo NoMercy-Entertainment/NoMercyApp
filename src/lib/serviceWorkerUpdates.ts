@@ -50,6 +50,8 @@ export function setupServiceWorkerUpdates() {
                 if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
                     // New version is available
                     showUpdateNotification();
+                } else if (newWorker.state === 'installed') {
+                    console.log('Service worker installed but no controller (first install)');
                 }
             });
         });
