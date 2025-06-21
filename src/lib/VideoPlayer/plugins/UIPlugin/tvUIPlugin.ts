@@ -6,8 +6,8 @@ import {
 	lineBreakShowTitle,
 } from '@nomercy-entertainment/nomercy-video-player/src/helpers';
 
-import type { Icon } from './buttons';
 import type { PlaylistItem } from '../../index';
+import {Icon} from "@nomercy-entertainment/nomercy-video-player/src/types";
 
 export class TVUIPlugin extends BaseUIPlugin {
 
@@ -55,25 +55,6 @@ export class TVUIPlugin extends BaseUIPlugin {
 
 		this.player.on('back-button', this.backMenu.bind(this));
 
-		// document.addEventListener('keydown', (e: KeyboardEvent) => {
-		// 	// back button
-		// 	if (e.key == 'Backspace') {
-		// 		this.backMenu();
-		// 	}
-		// 	if (e.key == 'ArrowUp') {
-		// 		this.player.ui_resetInactivityTimer();
-		// 	}
-		// 	if (e.key == 'ArrowDown') {
-		// 		this.player.ui_resetInactivityTimer();
-		// 	}
-		// 	if (e.key == 'ArrowLeft') {
-		// 		this.player.ui_resetInactivityTimer();
-		// 	}
-		// 	if (e.key == 'ArrowRight') {
-		// 		this.player.ui_resetInactivityTimer();
-		// 	}
-		// });
-
 		this.player.on('pause', () => {
 			this.player.overlay.scrollIntoView();
 		});
@@ -113,7 +94,7 @@ export class TVUIPlugin extends BaseUIPlugin {
 				'z-0',
 			])
 			.addClasses(['group-[&.nomercyplayer.paused.pre-screen]:hidden'])
-			.appendTo(parent);
+			.appendTo(parent).get();
 
 		const topBar = this.createTopBar(tvOverlay);
 		this.player.addClasses(topBar, [
@@ -152,7 +133,7 @@ export class TVUIPlugin extends BaseUIPlugin {
 				'pb-10',
 				'z-0',
 			])
-			.appendTo(bottomBar);
+			.appendTo(bottomBar).get();
 
 		this.createPlaybackButton(bottomRow, true);
 
@@ -165,7 +146,7 @@ export class TVUIPlugin extends BaseUIPlugin {
 				this.playbackButton.focus();
 			}
 
-			this.currentScrubTime = this.getClosestSeekableInterval();
+			this.currentScrubTime = this.player.getClosestSeekableInterval();
 		});
 
 		let activeButton = restartButton ?? nextButton;
@@ -229,10 +210,10 @@ export class TVUIPlugin extends BaseUIPlugin {
 					this.player.emit('show-seek-container', true);
 
 					if (this.shouldSlide) {
-						this.currentScrubTime = this.getClosestSeekableInterval();
+						this.currentScrubTime = this.player.getClosestSeekableInterval();
 						this.player.emit('currentScrubTime', {
 							...this.player.getTimeData(),
-							currentTime: this.getClosestSeekableInterval(),
+							currentTime: this.player.getClosestSeekableInterval(),
 						});
 						this.shouldSlide = false;
 					} else {
@@ -255,10 +236,10 @@ export class TVUIPlugin extends BaseUIPlugin {
 					this.player.emit('show-seek-container', true);
 
 					if (this.shouldSlide) {
-						this.currentScrubTime = this.getClosestSeekableInterval();
+						this.currentScrubTime = this.player.getClosestSeekableInterval();
 						this.player.emit('currentScrubTime', {
 							...this.player.getTimeData(),
-							currentTime: this.getClosestSeekableInterval(),
+							currentTime: this.player.getClosestSeekableInterval(),
 						});
 						this.shouldSlide = false;
 					} else {
@@ -321,7 +302,7 @@ export class TVUIPlugin extends BaseUIPlugin {
 				'group-[&.nomercyplayer.paused:not(.open)]:backdrop:bg-black/80',
 				'group-[&.nomercyplayer.paused:not(.open)]:backdrop:pointer-events-none',
 			])
-			.appendTo(parent);
+			.appendTo(parent).get();
 
 		this.preScreen.setAttribute('popover', 'manual');
 		this.preScreen.setAttribute('role', 'modal');
@@ -342,7 +323,7 @@ export class TVUIPlugin extends BaseUIPlugin {
 				'group-[&.nomercyplayer.paused.episode-screen]:hidden',
 				'group-[&.nomercyplayer.paused.language-screen]:hidden',
 			])
-			.appendTo(this.preScreen);
+			.appendTo(this.preScreen).get();
 
 		const leftSide = this.player.createElement('div', 'left-side')
 			.addClasses([
@@ -353,7 +334,7 @@ export class TVUIPlugin extends BaseUIPlugin {
 				'w-1/2',
 				'h-available',
 			])
-			.appendTo(preScreen);
+			.appendTo(preScreen).get();
 
 		const leftSideTop = this.createImageContainer(leftSide);
 
@@ -364,7 +345,7 @@ export class TVUIPlugin extends BaseUIPlugin {
 				'w-available',
 				'h-available',
 			])
-			.appendTo(leftSideTop);
+			.appendTo(leftSideTop).get();
 
 		const title = this.player.createElement('div', 'title')
 			.addClasses([
@@ -374,7 +355,7 @@ export class TVUIPlugin extends BaseUIPlugin {
 				'font-bold',
 				'mx-2',
 			])
-			.appendTo(overviewContainer);
+			.appendTo(overviewContainer).get();
 
 		const description = this.player.createElement('div', 'description')
 			.addClasses([
@@ -387,7 +368,7 @@ export class TVUIPlugin extends BaseUIPlugin {
 				'overflow-hidden',
 				'mx-2',
 			])
-			.appendTo(overviewContainer);
+			.appendTo(overviewContainer).get();
 
 		this.player.on('item', () => {
 			title.innerHTML = this.player.playlistItem().title.replace(this.player.playlistItem().show ?? '', '').replace('%S', this.player.localize('S'))
@@ -410,7 +391,7 @@ export class TVUIPlugin extends BaseUIPlugin {
 				'py-0.5',
 				'[*::-webkit-scrollbar]:hidden',
 			])
-			.appendTo(leftSide);
+			.appendTo(leftSide).get();
 
 		this.createTvButton(buttonContainer, 'play', null, this.player.play, this.buttons.play);
 
@@ -444,7 +425,7 @@ export class TVUIPlugin extends BaseUIPlugin {
 				'w-1/3',
 				'h-available',
 			])
-			.appendTo(preScreen);
+			.appendTo(preScreen).get();
 
 		this.player.on('audioTracks', () => {
 			if (this.player.hasAudioTracks() || this.player.hasCaptions()) {
@@ -485,7 +466,7 @@ export class TVUIPlugin extends BaseUIPlugin {
 				'group-[&.nomercyplayer.paused.episode-screen]:backdrop:bg-black/80',
 				'group-[&.nomercyplayer.paused.episode-screen]:backdrop:pointer-events-none',
 			])
-			.appendTo(parent);
+			.appendTo(parent).get();
 
 		this.episodeScreen.setAttribute('popover', 'manual');
 		this.episodeScreen.setAttribute('role', 'modal');
@@ -504,7 +485,7 @@ export class TVUIPlugin extends BaseUIPlugin {
 				'h-available',
 				'z-0',
 			])
-			.appendTo(this.episodeScreen);
+			.appendTo(this.episodeScreen).get();
 
 		const leftSide = this.player.createElement('div', 'episode-screen-left-side')
 			.addClasses([
@@ -515,7 +496,7 @@ export class TVUIPlugin extends BaseUIPlugin {
 				'w-2/5',
 				'h-available',
 			])
-			.appendTo(episodeScreen);
+			.appendTo(episodeScreen).get();
 
 		this.createImageContainer(leftSide);
 
@@ -533,7 +514,7 @@ export class TVUIPlugin extends BaseUIPlugin {
 				'py-0.5',
 				'[*::-webkit-scrollbar]:hidden',
 			])
-			.appendTo(leftSide);
+			.appendTo(leftSide).get();
 
 		this.player.once('playlist', () => {
 
@@ -545,7 +526,7 @@ export class TVUIPlugin extends BaseUIPlugin {
 					'w-3/5',
 					'h-available',
 				])
-				.appendTo(episodeScreen);
+				.appendTo(episodeScreen).get();
 
 			this.episodeScrollContainer = this.player.createElement('div', 'episode-button-container')
 				.addClasses([
@@ -561,7 +542,7 @@ export class TVUIPlugin extends BaseUIPlugin {
 					'scroll-p-4',
 					'scroll-smooth',
 				])
-				.appendTo(rightSide);
+				.appendTo(rightSide).get();
 
 			let lastSeasonButton: HTMLButtonElement = <HTMLButtonElement>{};
 			for (const season of this.player.getSeasons()) {
@@ -623,7 +604,7 @@ export class TVUIPlugin extends BaseUIPlugin {
 				'group-[&.nomercyplayer.paused.language-screen]:backdrop:bg-black/80',
 				'group-[&.nomercyplayer.paused.language-screen]:backdrop:pointer-events-none',
 			])
-			.appendTo(parent);
+			.appendTo(parent).get();
 
 		this.languageScreen.setAttribute('popover', 'manual');
 		this.languageScreen.setAttribute('role', 'modal');
@@ -640,7 +621,7 @@ export class TVUIPlugin extends BaseUIPlugin {
 				'h-available',
 				'z-0',
 			])
-			.appendTo(this.languageScreen);
+			.appendTo(this.languageScreen).get();
 
 		const leftSide = this.player.createElement('div', 'language-screen-left-side')
 			.addClasses([
@@ -651,7 +632,7 @@ export class TVUIPlugin extends BaseUIPlugin {
 				'w-2/5',
 				'h-available',
 			])
-			.appendTo(languageScreen);
+			.appendTo(languageScreen).get();
 
 		this.createImageContainer(leftSide);
 
@@ -669,7 +650,7 @@ export class TVUIPlugin extends BaseUIPlugin {
 				'outline-transparent',
 				'p-1',
 			])
-			.appendTo(leftSide);
+			.appendTo(leftSide).get();
 
 		scrollContainer.addEventListener('focus', () => {
 			scrollContainer.querySelector('button')?.focus();
@@ -685,7 +666,7 @@ export class TVUIPlugin extends BaseUIPlugin {
 				'text-left',
 				'mt-3',
 			])
-			.appendTo(scrollContainer);
+			.appendTo(scrollContainer).get();
 
 		audioTitle.innerText = this.player.localize('Audio');
 
@@ -700,7 +681,7 @@ export class TVUIPlugin extends BaseUIPlugin {
 				'py-0.5',
 				'w-available',
 			])
-			.appendTo(scrollContainer);
+			.appendTo(scrollContainer).get();
 
 		audioButtonContainer.style.paddingRight = '5rem';
 
@@ -749,7 +730,7 @@ export class TVUIPlugin extends BaseUIPlugin {
 				'text-left',
 				'mt-3',
 			])
-			.appendTo(scrollContainer);
+			.appendTo(scrollContainer).get();
 
 		subtitleTitle.innerText = this.player.localize('Subtitles');
 
@@ -765,7 +746,7 @@ export class TVUIPlugin extends BaseUIPlugin {
 				'py-0.5',
 				'w-available',
 			])
-			.appendTo(scrollContainer);
+			.appendTo(scrollContainer).get();
 
 		subtitleButtonContainer.style.paddingRight = '5rem';
 		subtitleButtonContainer.style.marginTop = '0';
@@ -804,7 +785,7 @@ export class TVUIPlugin extends BaseUIPlugin {
 				'relative',
 				'w-available',
 			])
-			.appendTo(parent);
+			.appendTo(parent).get();
 
 		const sliderProgress = this.player.createElement('div', 'slider-progress')
 			.addClasses([
@@ -819,7 +800,7 @@ export class TVUIPlugin extends BaseUIPlugin {
 				'-left-full',
 				'w-full',
 			])
-			.appendTo(this.sliderBar);
+			.appendTo(this.sliderBar).get();
 
 		this.chapterBar = this.player.createElement('div', 'chapter-progress')
 			.addClasses([
@@ -832,7 +813,7 @@ export class TVUIPlugin extends BaseUIPlugin {
 				'overflow-clip',
 				'w-available',
 			])
-			.appendTo(this.sliderBar);
+			.appendTo(this.sliderBar).get();
 
 		this.player.on('item', () => {
 			this.sliderBar.classList.add('bg-white/20');
@@ -883,7 +864,7 @@ export class TVUIPlugin extends BaseUIPlugin {
 				'transition-all',
 				'duration-200',
 			])
-			.appendTo(parent);
+			.appendTo(parent).get();
 
 		if (this.player.playlistItem().season !== 1) {
 			episodeMenuButton.style.display = 'none';
@@ -898,7 +879,7 @@ export class TVUIPlugin extends BaseUIPlugin {
 				'overflow-clip',
 				'self-center',
 			])
-			.appendTo(episodeMenuButton);
+			.appendTo(episodeMenuButton).get();
 
 		this.player.createElement('div', `episode-${item.id}-shadow`)
 			.addClasses([
@@ -911,7 +892,7 @@ export class TVUIPlugin extends BaseUIPlugin {
 				'!h-available',
 				'w-available',
 			])
-			.appendTo(leftSide);
+			.appendTo(leftSide).get();
 
 		const image = this.player.createElement('img', `episode-${item.id}-image`)
 			.addClasses([
@@ -922,7 +903,7 @@ export class TVUIPlugin extends BaseUIPlugin {
 				'object-cover',
 				'',
 			])
-			.appendTo(leftSide);
+			.appendTo(leftSide).get();
 		image.setAttribute('loading', 'lazy');
 
 		if (item.image?.startsWith('http')) {
@@ -941,7 +922,7 @@ export class TVUIPlugin extends BaseUIPlugin {
 				'flex-col',
 				'px-3',
 			])
-			.appendTo(leftSide);
+			.appendTo(leftSide).get();
 
 		const progressContainerItemBox = this.player.createElement('div', `episode-${item.id}-progress-box`)
 			.addClasses([
@@ -953,7 +934,7 @@ export class TVUIPlugin extends BaseUIPlugin {
 				'mb-1',
 				'px-1',
 			])
-			.appendTo(progressContainer);
+			.appendTo(progressContainer).get();
 
 
 		const progressContainerItemText = this.player.createElement('div', `episode-${item.id}-progress-item`)
@@ -962,7 +943,7 @@ export class TVUIPlugin extends BaseUIPlugin {
 				'text-[0.7rem]',
 				'',
 			])
-			.appendTo(progressContainerItemBox);
+			.appendTo(progressContainerItemBox).get();
 
 		if (item.episode && item.show) {
 			progressContainerItemText.innerText = `${this.player.localize('E')}${item.episode}`;
@@ -973,7 +954,7 @@ export class TVUIPlugin extends BaseUIPlugin {
 				'progress-duration',
 				'text-[0.7rem]',
 			])
-			.appendTo(progressContainerItemBox);
+			.appendTo(progressContainerItemBox).get();
 		progressContainerDurationText.innerText = item.duration?.replace(/^00:/u, '');
 
 		const sliderContainer = this.player.createElement('div', `episode-${item.id}-slider-container`)
@@ -989,7 +970,7 @@ export class TVUIPlugin extends BaseUIPlugin {
 				'relative',
 				'w-available',
 			])
-			.appendTo(progressContainer);
+			.appendTo(progressContainer).get();
 		sliderContainer.style.display = item.progress ? 'flex' : 'none';
 
 		const progressBar = this.player.createElement('div', `episode-${item.id}-progress-bar`)
@@ -1005,7 +986,7 @@ export class TVUIPlugin extends BaseUIPlugin {
 				'-left-full',
 				'w-full',
 			])
-			.appendTo(sliderContainer);
+			.appendTo(sliderContainer).get();
 
 		if (item.progress?.time) {
 			progressBar.style.transform = `translateX(${(item.progress.time / convertToSeconds(item.duration)) * 100}%`;
@@ -1028,7 +1009,7 @@ export class TVUIPlugin extends BaseUIPlugin {
 				'focus-visible:outline-white',
 				'active:outline-white',
 			])
-			.appendTo(episodeMenuButton);
+			.appendTo(episodeMenuButton).get();
 
 
 		const episodeMenuButtonTitle = this.player.createElement('span', `episode-${item.id}-title`)
@@ -1040,7 +1021,7 @@ export class TVUIPlugin extends BaseUIPlugin {
 				'text-white',
 				'',
 			])
-			.appendTo(episodeMenuButtonRightSide);
+			.appendTo(episodeMenuButtonRightSide).get();
 		episodeMenuButtonTitle.innerText = lineBreakShowTitle((item.title ?? '').replace(item.show ?? '', '').replace('%S', this.player.localize('S'))
 			.replace('%E', this.player.localize('E')));
 
@@ -1054,7 +1035,7 @@ export class TVUIPlugin extends BaseUIPlugin {
 				'overflow-hidden',
 				'text-white',
 			])
-			.appendTo(episodeMenuButtonRightSide);
+			.appendTo(episodeMenuButtonRightSide).get();
 		episodeMenuButtonOverview.innerText = limitSentenceByCharacters(item.description, 600);
 
 
@@ -1079,7 +1060,7 @@ export class TVUIPlugin extends BaseUIPlugin {
 
 			if (this.player.playlistItem().id == item.id) {
 				setTimeout(() => {
-					this.scrollCenter(episodeMenuButton, parent, {
+					this.player.scrollCenter(episodeMenuButton, parent, {
 						margin: 1,
 						duration: 100,
 					});
@@ -1131,7 +1112,7 @@ export class TVUIPlugin extends BaseUIPlugin {
 		});
 
 		episodeMenuButton.addEventListener('focus', () => {
-			this.scrollCenter(episodeMenuButton, parent, {
+			this.player.scrollCenter(episodeMenuButton, parent, {
 				margin: 2,
 				duration: 50,
 			});
@@ -1139,14 +1120,14 @@ export class TVUIPlugin extends BaseUIPlugin {
 
 		episodeMenuButton.addEventListener('click', () => {
 			if (item.episode && item.season) {
-				this.setEpisode(item.season, item.episode);
+				this.player.setEpisode(item.season, item.episode);
 			} else {
 				this.player.playlistItem(index);
 			}
 
 			this.closeEpisodeScreen();
 			this.closePreScreen();
-			this.player.play();
+			this.player.play().then();
 		});
 
 		return episodeMenuButton;
@@ -1185,11 +1166,11 @@ export class TVUIPlugin extends BaseUIPlugin {
 				'active:outline-white',
 				`${id}-button`,
 			])
-			.appendTo(parent);
+			.appendTo(parent).get();
 		button.type = 'button';
 
 		button.addEventListener('focus', () => {
-			this.scrollIntoView(button);
+			this.player.scrollIntoView(button);
 		});
 
 		button.addEventListener('keyup', (e) => {
@@ -1256,7 +1237,7 @@ export class TVUIPlugin extends BaseUIPlugin {
 				'gap-1',
 				'flex-nowrap',
 			])
-			.appendTo(button);
+			.appendTo(button).get();
 
 		const buttonTextSpan1 = this.player.createElement('span', `${id}-button-text-span-1`)
 			.addClasses([
@@ -1265,7 +1246,7 @@ export class TVUIPlugin extends BaseUIPlugin {
 				'text-sm',
 				'w-auto',
 			])
-			.appendTo(buttonText);
+			.appendTo(buttonText).get();
 
 		const buttonTextSpan2 = this.player.createElement('span', `${id}-button-text-span-2`)
 			.addClasses([
@@ -1274,7 +1255,7 @@ export class TVUIPlugin extends BaseUIPlugin {
 				'text-xs',
 				'w-min',
 			])
-			.appendTo(buttonText);
+			.appendTo(buttonText).get();
 
 		if (data.seasonName) {
 			buttonTextSpan1.innerText = data.seasonName;
@@ -1311,10 +1292,7 @@ export class TVUIPlugin extends BaseUIPlugin {
 
 		const { visibleButtons, currentButtonIndex } = buttons;
 
-		// eslint-disable-next-line no-unreachable-loop
-		for (let i = currentButtonIndex; i >= 0; i--) {
-			return visibleButtons[i - 1];
-		}
+		return visibleButtons.at(currentButtonIndex - 1);
 	}
 
 	findNextVisibleButton(element: HTMLButtonElement) {
@@ -1323,10 +1301,7 @@ export class TVUIPlugin extends BaseUIPlugin {
 
 		const { visibleButtons, currentButtonIndex } = buttons;
 
-		// eslint-disable-next-line no-unreachable-loop
-		for (let i = currentButtonIndex; i < visibleButtons.length; i++) {
-			return visibleButtons[i + 1];
-		}
+		return visibleButtons.at(visibleButtons.length);
 	}
 
 	createImageContainer(parent: HTMLElement) {
@@ -1341,7 +1316,7 @@ export class TVUIPlugin extends BaseUIPlugin {
 				'gap-2',
 				'h-auto',
 			])
-			.appendTo(parent);
+			.appendTo(parent).get();
 
 		const logoContainer = this.player.createElement('div', 'logo-container')
 			.addClasses([
@@ -1353,7 +1328,7 @@ export class TVUIPlugin extends BaseUIPlugin {
 				'h-[85px]',
 				'min-h-[85px]',
 			])
-			.appendTo(leftSideTop);
+			.appendTo(leftSideTop).get();
 
 		const fallbackText = this.player.createElement('span', 'fallbackText')
 			.addClasses([
@@ -1367,7 +1342,7 @@ export class TVUIPlugin extends BaseUIPlugin {
 				'font-bold',
 				'object-fit',
 			])
-			.appendTo(logoContainer);
+			.appendTo(logoContainer).get();
 
 		const logo = this.player.createElement('img', 'logo')
 			.addClasses([
@@ -1381,7 +1356,7 @@ export class TVUIPlugin extends BaseUIPlugin {
 				'max-h-available',
 				'',
 			])
-			.appendTo(logoContainer);
+			.appendTo(logoContainer).get();
 
 		const logoFooterContainer = this.player.createElement('div', 'left-side-top-overview')
 			.addClasses([
@@ -1390,7 +1365,7 @@ export class TVUIPlugin extends BaseUIPlugin {
 				'w-available',
 				'h-[40px]',
 			])
-			.appendTo(leftSideTop);
+			.appendTo(leftSideTop).get();
 
 		const ratingContainer = this.player.createElement('div', 'rating-container')
 			.addClasses([
@@ -1400,7 +1375,7 @@ export class TVUIPlugin extends BaseUIPlugin {
 				'w-available',
 				'text-white',
 			])
-			.appendTo(logoFooterContainer);
+			.appendTo(logoFooterContainer).get();
 
 		const year = this.player.createElement('span', 'year-text')
 			.addClasses([
@@ -1410,7 +1385,7 @@ export class TVUIPlugin extends BaseUIPlugin {
 				'font-bold',
 				'mx-2',
 			])
-			.appendTo(ratingContainer);
+			.appendTo(ratingContainer).get();
 
 		const ratingImage = this.player.createElement('img', 'rating-image')
 			.addClasses([
@@ -1419,7 +1394,7 @@ export class TVUIPlugin extends BaseUIPlugin {
 				'object-fit',
 				'invert',
 			])
-			.appendTo(ratingContainer);
+			.appendTo(ratingContainer).get();
 
 
 		const episodesCount = this.player.createElement('span', 'episodes-count-text')
@@ -1430,7 +1405,7 @@ export class TVUIPlugin extends BaseUIPlugin {
 				'font-bold',
 				'mx-2',
 			])
-			.appendTo(ratingContainer);
+			.appendTo(ratingContainer).get();
 
 		this.player.on('item', () => {
 			const image = this.player.playlistItem()?.logo;
@@ -1503,12 +1478,12 @@ export class TVUIPlugin extends BaseUIPlugin {
 				'active:outline-white',
 				`${id}-button`,
 			])
-			.appendTo(parent);
+			.appendTo(parent).get();
 		tvButton.type = 'button';
 
 		tvButton.addEventListener('focus', () => {
 			setTimeout(() => {
-				this.scrollCenter(tvButton, parent, {
+				this.player.scrollCenter(tvButton, parent, {
 					margin: 1,
 					duration: 100,
 				});
@@ -1555,7 +1530,7 @@ export class TVUIPlugin extends BaseUIPlugin {
 
 		const buttonText = this.player.createElement('span', `${id}-buttonText`)
 			.addClasses(this.menuButtonTextStyles)
-			.appendTo(tvButton);
+			.appendTo(tvButton).get();
 
 		if (!text) {
 			text = 'Play';

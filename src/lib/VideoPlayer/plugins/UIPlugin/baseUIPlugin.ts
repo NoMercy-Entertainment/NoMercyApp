@@ -1,16 +1,14 @@
-import { twMerge } from 'tailwind-merge';
 import { WebVTTParser } from 'webvtt-parser';
 
 import Plugin from '@nomercy-entertainment/nomercy-video-player/src/plugin';
-import type { NMPlayer, PreviewTime, VolumeState } from '@nomercy-entertainment/nomercy-video-player/src/types';
+import type {Icon, NMPlayer, PreviewTime, VolumeState} from '@nomercy-entertainment/nomercy-video-player/src/types';
 import {
     breakEpisodeTitle,
     breakLogoTitle,
     humanTime,
-    nearestValue,
     unique
 } from '@nomercy-entertainment/nomercy-video-player/src/helpers';
-import { buttons, type Icon } from './buttons';
+import { buttons } from './buttons';
 import { TimeData } from "@nomercy-entertainment/nomercy-video-player/src/types";
 
 import type {NMPlaylistItem} from "@/lib/VideoPlayer";
@@ -62,6 +60,7 @@ export class BaseUIPlugin extends Plugin {
     languageMenuOpen = false;
     subtitlesMenuOpen = false;
     subtitleSettingsMenuOpen = false;
+    subtitleSettingMenuOpen = false;
     qualityMenuOpen = false;
     speedMenuOpen = false;
     playlistMenuOpen = false;
@@ -125,6 +124,10 @@ export class BaseUIPlugin extends Plugin {
         'line-clamp-1',
     ];
 
+    constructor() {
+        super();
+    }
+
     initialize(player: NMPlayer<BaseUIPluginArgs>) {
         this.player = player;
         this.overlay = player.overlay;
@@ -156,127 +159,10 @@ export class BaseUIPlugin extends Plugin {
         }
     }
 
-    scrollIntoView(element: HTMLElement) {
-
-        const scrollDuration = 200;
-        const parentElement = element.parentElement as HTMLElement;
-        const elementLeft = element.getBoundingClientRect().left + (element.offsetWidth / 2) - (parentElement.offsetWidth / 2);
-        const startingX = parentElement.scrollLeft;
-        const startTime = performance.now();
-
-        function scrollStep(timestamp: number) {
-            const currentTime = timestamp - startTime;
-            const progress = Math.min(currentTime / scrollDuration, 1);
-
-            parentElement.scrollTo(startingX + elementLeft * progress, 0);
-
-            if (currentTime < scrollDuration) {
-                requestAnimationFrame(scrollStep);
-            }
-        }
-
-        requestAnimationFrame(scrollStep);
-    }
-
-    createSVGElement(parent: HTMLElement, id: string, icon: Icon['path'], hidden = false, hovered = false) {
-
-        const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-        svg.setAttribute('viewBox', '0 0 24 24');
-
-        svg.id = id;
-        this.player.addClasses(svg, twMerge([
-            `${id}-icon`,
-            'svg-size',
-            'h-5',
-            'w-5',
-            'fill-current',
-            'pointer-events-none',
-            'group-hover/button:scale-110',
-            'duration-700',
-            hidden ? 'hidden' : 'flex',
-            ...icon.classes,
-        ]).split(' '));
-
-        const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-        path.setAttribute('d', hovered ? icon.normal : icon.hover);
-
-        this.player.addClasses(path, [
-            'group-hover/button:hidden',
-            'group-hover/volume:hidden',
-        ]);
-        svg.appendChild(path);
-
-        const path2 = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-        path2.setAttribute('d', hovered ? icon.hover : icon.normal);
-        this.player.addClasses(path2, [
-            'hidden',
-            'group-hover/button:flex',
-            'group-hover/volume:flex',
-        ]);
-        svg.appendChild(path2);
-
-        if (!parent.classList.contains('menu-button') && hovered) {
-            parent.addEventListener('mouseenter', () => {
-                if (icon.title.length == 0 || (['Next', 'Previous'].includes(icon.title) && this.player.hasNextTip)) return;
-
-                if (icon.title == 'Fullscreen' && this.player.getFullscreen()) {
-                    return;
-                }
-                if (icon.title == 'Exit fullscreen' && !this.player.getFullscreen()) {
-                    return;
-                }
-                if (icon.title == 'Play' && this.player.isPlaying) {
-                    return;
-                }
-                if (icon.title == 'Pause' && !this.player.isPlaying) {
-                    return;
-                }
-                if (icon.title == 'Mute' && this.player.isMuted()) {
-                    return;
-                }
-                if (icon.title == 'Unmute' && !this.player.isMuted()) {
-                    return;
-                }
-
-                const text = `${this.player.localize(icon.title)} ${this.getButtonKeyCode(id)}`;
-
-                const playerRect = this.player.getElement().getBoundingClientRect();
-                const menuTipRect = parent.getBoundingClientRect();
-
-                let x = Math.abs(playerRect.left - (menuTipRect.left + (menuTipRect.width * 0.5)) - (text.length * 0.5));
-                const y = Math.abs(playerRect.bottom - (menuTipRect.bottom + (menuTipRect.height * 1.2)));
-
-                if (x < 35) {
-                    x = 35;
-                }
-
-                if (x > (playerRect.right - playerRect.left) - 75) {
-                    x = (playerRect.right - playerRect.left) - 75;
-                }
-
-                this.player.emit('show-tooltip', {
-                    text: text,
-                    currentTime: 'bottom',
-                    x: `${x}px`,
-                    y: `-${y}px`,
-                });
-
-            });
-
-            parent.addEventListener('mouseleave', () => {
-                this.player.emit('hide-tooltip');
-            });
-        }
-
-        parent.appendChild(svg);
-        return svg;
-
-    }
-
     modifySpinner(parent: HTMLDivElement) {
         this.loader = this.player.createElement('h2', 'loader')
             .addClasses(['loader', 'pointer-events-none'])
-            .appendTo(parent);
+            .appendTo(parent).get();
     }
 
     createSpinnerContainer(parent: HTMLDivElement) {
@@ -306,7 +192,7 @@ export class BaseUIPlugin extends Plugin {
                 'to-100%',
                 'to-black/0',
             ])
-            .appendTo(parent);
+            .appendTo(parent).get();
 
         const role = this.player.createElement('div', 'spinner-role')
             .addClasses([
@@ -316,7 +202,7 @@ export class BaseUIPlugin extends Plugin {
                 'gap-4',
                 'mt-11',
             ])
-            .appendTo(spinnerContainer);
+            .appendTo(spinnerContainer).get();
 
         role.setAttribute('role', 'status');
 
@@ -330,7 +216,7 @@ export class BaseUIPlugin extends Plugin {
                 'text-lg',
                 'font-bold',
             ])
-            .appendTo(role);
+            .appendTo(role).get();
 
         status.innerText = this.player.localize('Loading...');
 
@@ -404,53 +290,6 @@ export class BaseUIPlugin extends Plugin {
         spinner.appendChild(path2);
 
     }
-
-    getButtonKeyCode(id: string) {
-
-        switch (id) {
-            case 'play':
-            case 'pause':
-                return `(${this.player.localize('SPACE')})`;
-            case 'volumeMuted':
-            case 'volumeLow':
-            case 'volumeMedium':
-            case 'volumeHigh':
-                return '(m)';
-            case 'seekBack':
-                return '(<)';
-            case 'seekForward':
-                return '(>)';
-            case 'next':
-                return '(n)';
-            case 'theater':
-                return '(t)';
-            case 'theater-enabled':
-                return '(t)';
-            case 'pip-enter':
-            case 'pip-exit':
-                return '(i)';
-            case 'playlist':
-                return '';
-            case 'previous':
-                return '(p)';
-            case 'speed':
-                return '';
-            case 'subtitle':
-            case 'subtitled':
-                return '(v)';
-            case 'audio':
-                return '(b)';
-            case 'settings':
-                return '';
-            case 'fullscreen-enable':
-            case 'fullscreen':
-                return '(f)';
-            default:
-                return '';
-        }
-
-    }
-
     fetchPreviewTime() {
         if (this.previewTime.length === 0) {
             const imageFile = this.player.getSpriteFile();
@@ -548,59 +387,16 @@ export class BaseUIPlugin extends Plugin {
         }
     }
 
-
-    createUiButton(parent: HTMLElement, icon: string) {
-
-        const button = this.player.createElement('button', icon)
-            .addClasses([
-                'cursor-pointer',
-                '-outline-offset-2',
-                'fill-white',
-                'flex',
-                'focus-visible:fill-white',
-                'focus-visible:outline',
-                'focus-visible:outline-2',
-                'focus-visible:outline-white/20',
-                'group/button',
-                'h-10',
-                'items-center',
-                'justify-center',
-                'min-w-[40px]',
-                'p-2',
-                'pointer-events-auto',
-                'relative',
-                'rounded-full',
-                'tv:fill-white/30',
-                'w-10',
-            ])
-            .appendTo(parent);
-
-        button.ariaLabel = this.buttons[icon]?.title;
-
-        button.addEventListener('keypress', (event) => {
-            if (event.key === 'Backspace') {
-                button.blur();
-                this.player.emit('show-menu', false);
-            }
-            if (event.key === 'Escape') {
-                button.blur();
-                this.player.emit('show-menu', false);
-            }
-        });
-
-        return button;
-    }
-
     createBackButton(parent: HTMLDivElement, hovered = false) {
         if (!this.player.hasBackEventHandler) return;
 
-        const backButton = this.createUiButton(
+        const backButton = this.player.createUiButton(
             parent,
             'back'
-        );
+        ).get();
         parent.appendChild(backButton);
 
-        this.createSVGElement(backButton, 'back', this.buttons.back, false, hovered);
+        this.player.createSVGElement(backButton, 'back', this.buttons.back, false, hovered);
 
         backButton.addEventListener('click', () => {
             this.player.emit('hide-tooltip');
@@ -620,13 +416,13 @@ export class BaseUIPlugin extends Plugin {
 
     createRestartButton(parent: HTMLDivElement, hovered = false) {
 
-        const restartButton = this.createUiButton(
+        const restartButton = this.player.createUiButton(
             parent,
             'restart'
-        );
+        ).get();
         parent.appendChild(restartButton);
 
-        this.createSVGElement(restartButton, 'restart', this.buttons.restart, false, hovered);
+        this.player.createSVGElement(restartButton, 'restart', this.buttons.restart, false, hovered);
 
         restartButton.addEventListener('click', (event) => {
             event.stopPropagation();
@@ -639,14 +435,15 @@ export class BaseUIPlugin extends Plugin {
     createSettingsButton(parent: HTMLDivElement, hovered = false) {
         if (!this.player.hasSpeeds() && !this.player.hasAudioTracks() && !this.player.hasCaptions()) return;
 
-        const settingsButton = this.createUiButton(
+        const settingsButton = this.player.createUiButton(
             parent,
             'settings'
-        );
+        ).get();
 
-        this.createSVGElement(settingsButton, 'settings', this.buttons.settings, false, hovered);
+        this.player.createSVGElement(settingsButton, 'settings', this.buttons.settings, false, hovered);
 
-        settingsButton.addEventListener('click', () => {
+        settingsButton.addEventListener('click', (event) => {
+            event.stopPropagation();
             this.player.emit('hide-tooltip');
             if (this.menuOpen && this.mainMenuOpen) {
                 this.player.emit('show-menu', false);
@@ -676,13 +473,13 @@ export class BaseUIPlugin extends Plugin {
     createCloseButton(parent: HTMLDivElement, hovered = false) {
         if (!this.player.hasCloseEventHandler) return;
 
-        const closeButton = this.createUiButton(
+        const closeButton = this.player.createUiButton(
             parent,
             'close'
-        );
+        ).get();
         parent.appendChild(closeButton);
 
-        this.createSVGElement(closeButton, 'close', this.buttons.close, false, hovered);
+        this.player.createSVGElement(closeButton, 'close', this.buttons.close, false, hovered);
 
         closeButton.addEventListener('click', () => {
             this.player.emit('hide-tooltip');
@@ -701,16 +498,16 @@ export class BaseUIPlugin extends Plugin {
     }
 
     createPlaybackButton(parent: HTMLElement, hovered = false) {
-        this.playbackButton = this.createUiButton(
+        this.playbackButton = this.player.createUiButton(
             parent,
             'playback'
-        );
+        ).get();
         parent.appendChild(this.playbackButton);
 
         this.playbackButton.ariaLabel = this.buttons.play?.title;
 
-        const pausedButton = this.createSVGElement(this.playbackButton, 'paused', this.buttons.play, false, hovered);
-        const playButton = this.createSVGElement(this.playbackButton, 'playing', this.buttons.pause, true, hovered);
+        const pausedButton = this.player.createSVGElement(this.playbackButton, 'paused', this.buttons.play, false, hovered);
+        const playButton = this.player.createSVGElement(this.playbackButton, 'playing', this.buttons.pause, true, hovered);
 
         this.playbackButton.addEventListener('click', (event) => {
             event.stopPropagation();
@@ -740,12 +537,12 @@ export class BaseUIPlugin extends Plugin {
 
     createSeekBackButton(parent: HTMLDivElement, hovered = false) {
         if (this.player.isMobile()) return;
-        const seekBack = this.createUiButton(
+        const seekBack = this.player.createUiButton(
             parent,
             'seekBack'
-        );
+        ).get();
 
-        this.createSVGElement(seekBack, 'seekBack', this.buttons.seekBack, false, hovered);
+        this.player.createSVGElement(seekBack, 'seekBack', this.buttons.seekBack, false, hovered);
 
         seekBack.addEventListener('click', () => {
             this.player.emit('hide-tooltip');
@@ -766,12 +563,12 @@ export class BaseUIPlugin extends Plugin {
 
     createSeekForwardButton(parent: HTMLDivElement, hovered = false) {
         if (this.player.isMobile()) return;
-        const seekForward = this.createUiButton(
+        const seekForward = this.player.createUiButton(
             parent,
             'seekForward'
-        );
+        ).get();
 
-        this.createSVGElement(seekForward, 'seekForward', this.buttons.seekForward, false, hovered);
+        this.player.createSVGElement(seekForward, 'seekForward', this.buttons.seekForward, false, hovered);
 
         seekForward.addEventListener('click', () => {
             this.player.emit('hide-tooltip');
@@ -791,10 +588,10 @@ export class BaseUIPlugin extends Plugin {
     }
 
     createChapterBackButton(parent: HTMLDivElement, hovered = false) {
-        const chapterBack = this.createUiButton(
+        const chapterBack = this.player.createUiButton(
             parent,
             'chapterBack'
-        );
+        ).get();
         this.player.addClasses(chapterBack, ['portrait:!hidden']);
 
         this.player.on('item', () => {
@@ -809,7 +606,7 @@ export class BaseUIPlugin extends Plugin {
             }
         });
 
-        this.createSVGElement(chapterBack, 'chapterBack', this.buttons.chapterBack, false, hovered);
+        this.player.createSVGElement(chapterBack, 'chapterBack', this.buttons.chapterBack, false, hovered);
 
         chapterBack.addEventListener('click', () => {
             this.player.emit('hide-tooltip');
@@ -829,10 +626,10 @@ export class BaseUIPlugin extends Plugin {
     }
 
     createChapterForwardButton(parent: HTMLDivElement, hovered = false) {
-        const chapterForward = this.createUiButton(
+        const chapterForward = this.player.createUiButton(
             parent,
             'chapterForward'
-        );
+        ).get();
         this.player.addClasses(chapterForward, ['portrait:!hidden']);
 
         this.player.on('item', () => {
@@ -847,7 +644,7 @@ export class BaseUIPlugin extends Plugin {
             }
         });
 
-        this.createSVGElement(chapterForward, 'chapterForward', this.buttons.chapterForward, false, hovered);
+        this.player.createSVGElement(chapterForward, 'chapterForward', this.buttons.chapterForward, false, hovered);
 
         chapterForward.addEventListener('click', () => {
             this.player.emit('hide-tooltip');
@@ -880,7 +677,7 @@ export class BaseUIPlugin extends Plugin {
                 'justify-center',
                 `${type}-time`,
             ])
-            .appendTo(parent);
+            .appendTo(parent).get();
 
         time.innerText = humanTime(this.player.getDuration());
 
@@ -955,12 +752,12 @@ export class BaseUIPlugin extends Plugin {
                 'overflow-clip',
                 'pointer-events-auto',
             ])
-            .appendTo(parent);
+            .appendTo(parent).get();
 
-        const volumeButton = this.createUiButton(
+        const volumeButton = this.player.createUiButton(
             volumeContainer,
             'volume'
-        );
+        ).get();
         volumeButton.ariaLabel = this.buttons.volumeHigh?.title;
 
         const volumeSlider = this.player.createElement('input', 'volume-slider')
@@ -1000,7 +797,7 @@ export class BaseUIPlugin extends Plugin {
                 'range-thumb:shadow-sm',
                 'range-thumb:border-none',
             ])
-            .appendTo(volumeContainer);
+            .appendTo(volumeContainer).get();
 
         volumeSlider.type = 'range';
         volumeSlider.min = '0';
@@ -1009,10 +806,10 @@ export class BaseUIPlugin extends Plugin {
         volumeSlider.value = this.player.getVolume().toString();
         volumeSlider.style.backgroundSize = `${this.player.getVolume()}% 100%`;
 
-        const mutedButton = this.createSVGElement(volumeButton, 'volumeMuted', this.buttons.volumeMuted, true, hovered);
-        const lowButton = this.createSVGElement(volumeButton, 'volumeLow', this.buttons.volumeLow, true, hovered);
-        const mediumButton = this.createSVGElement(volumeButton, 'volumeMedium', this.buttons.volumeMedium, true, hovered);
-        const highButton = this.createSVGElement(volumeButton, 'volumeHigh', this.buttons.volumeHigh, false, hovered);
+        const mutedButton = this.player.createSVGElement(volumeButton, 'volumeMuted', this.buttons.volumeMuted, true, hovered);
+        const lowButton = this.player.createSVGElement(volumeButton, 'volumeLow', this.buttons.volumeLow, true, hovered);
+        const mediumButton = this.player.createSVGElement(volumeButton, 'volumeMedium', this.buttons.volumeMedium, true, hovered);
+        const highButton = this.player.createSVGElement(volumeButton, 'volumeHigh', this.buttons.volumeHigh, false, hovered);
 
         volumeButton.addEventListener('click', (event) => {
             event.stopPropagation();
@@ -1063,10 +860,10 @@ export class BaseUIPlugin extends Plugin {
 
     volumeHandle(
         data: VolumeState,
-        mutedButton: SVGSVGElement,
-        lowButton: SVGSVGElement,
-        mediumButton: SVGSVGElement,
-        highButton: SVGSVGElement
+        mutedButton: SVGElement,
+        lowButton: SVGElement,
+        mediumButton: SVGElement,
+        highButton: SVGElement
     ) {
         if (this.player.getMute() || data.volume == 0) {
             lowButton.style.display = 'none';
@@ -1091,25 +888,17 @@ export class BaseUIPlugin extends Plugin {
         }
     }
 
-    getClosestSeekableInterval() {
-        const scrubTime = this.player.getCurrentTime();
-        const interval = this.previewTime.find((interval) => {
-            return scrubTime >= interval.start && scrubTime < interval.end;
-        })!;
-        return interval?.start;
-    }
-
     createPreviousButton(parent: HTMLDivElement, hovered = false) {
-        const previousButton = this.createUiButton(
+        const previousButton = this.player.createUiButton(
             parent,
             'previous'
-        );
+        ).get();
 
         this.player.addClasses(previousButton, ['portrait:!hidden']);
 
         previousButton.style.display = 'none';
 
-        this.createSVGElement(previousButton, 'previous', this.buttons.previous, false, hovered);
+        this.player.createSVGElement(previousButton, 'previous', this.buttons.previous, false, hovered);
 
         previousButton.addEventListener('click', (event) => {
             event.stopPropagation();
@@ -1173,17 +962,17 @@ export class BaseUIPlugin extends Plugin {
     }
 
     createNextButton(parent: HTMLDivElement, hovered = false) {
-        const nextButton = this.createUiButton(
+        const nextButton = this.player.createUiButton(
             parent,
             'next'
-        );
+        ).get();
 
         this.player.addClasses(nextButton, ['portrait:!hidden']);
 
         nextButton.style.display = 'none';
         this.player.hasNextTip = true;
 
-        this.createSVGElement(nextButton, 'next', this.buttons.next, false, hovered);
+        this.player.createSVGElement(nextButton, 'next', this.buttons.next, false, hovered);
 
         nextButton.addEventListener('click', (event) => {
             event.stopPropagation();
@@ -1247,18 +1036,18 @@ export class BaseUIPlugin extends Plugin {
     }
 
     createCaptionsButton(parent: HTMLElement, hovered = false) {
-        const captionButton = this.createUiButton(
+        const captionButton = this.player.createUiButton(
             parent,
             'subtitles'
-        );
+        ).get();
 
         this.player.addClasses(captionButton, ['portrait:!hidden']);
 
         captionButton.style.display = 'none';
         captionButton.ariaLabel = this.buttons.subtitles?.title;
 
-        const offButton = this.createSVGElement(captionButton, 'subtitle', this.buttons.subtitlesOff, false, hovered);
-        const onButton = this.createSVGElement(captionButton, 'subtitled', this.buttons.subtitles, true, hovered);
+        const offButton = this.player.createSVGElement(captionButton, 'subtitle', this.buttons.subtitlesOff, false, hovered);
+        const onButton = this.player.createSVGElement(captionButton, 'subtitled', this.buttons.subtitles, true, hovered);
 
         captionButton.addEventListener('click', (event) => {
             event.stopPropagation();
@@ -1270,6 +1059,7 @@ export class BaseUIPlugin extends Plugin {
                 this.menuFrame.close();
             } else {
                 this.player.emit('show-subtitles-menu', true);
+                this.player.emit('show-subtitleSettings-menu', false);
 
                 this.menuFrame.showModal();
             }
@@ -1312,17 +1102,17 @@ export class BaseUIPlugin extends Plugin {
     }
 
     createAudioButton(parent: HTMLElement, hovered = false) {
-        const audioButton = this.createUiButton(
+        const audioButton = this.player.createUiButton(
             parent,
             'audio'
-        );
+        ).get();
 
         this.player.addClasses(audioButton, ['portrait:!hidden']);
 
         audioButton.style.display = 'none';
         audioButton.ariaLabel = this.buttons.language?.title;
 
-        this.createSVGElement(audioButton, 'audio', this.buttons.languageOff, false, hovered);
+        this.player.createSVGElement(audioButton, 'audio', this.buttons.languageOff, false, hovered);
 
         audioButton.addEventListener('click', (event) => {
             event.stopPropagation();
@@ -1369,17 +1159,17 @@ export class BaseUIPlugin extends Plugin {
     }
 
     createQualityButton(parent: HTMLElement, hovered = false) {
-        const qualityButton = this.createUiButton(
+        const qualityButton = this.player.createUiButton(
             parent,
             'quality'
-        );
+        ).get();
 
         this.player.addClasses(qualityButton, ['portrait:!hidden']);
 
         qualityButton.style.display = 'none';
 
-        const offButton = this.createSVGElement(qualityButton, 'low', this.buttons.quality, false, hovered);
-        const onButton = this.createSVGElement(qualityButton, 'high', this.buttons.quality, true, hovered);
+        const offButton = this.player.createSVGElement(qualityButton, 'low', this.buttons.quality, false, hovered);
+        const onButton = this.player.createSVGElement(qualityButton, 'high', this.buttons.quality, true, hovered);
 
         qualityButton.addEventListener('click', (event) => {
             event.stopPropagation();
@@ -1441,13 +1231,13 @@ export class BaseUIPlugin extends Plugin {
     createTheaterButton(parent: HTMLDivElement, hovered = false) {
         if (this.player.isMobile() || !this.player.hasTheaterEventHandler) return;
 
-        const theaterButton = this.createUiButton(
+        const theaterButton = this.player.createUiButton(
             parent,
             'theater'
-        );
+        ).get();
 
-        this.createSVGElement(theaterButton, 'theater', this.buttons.theater, hovered);
-        this.createSVGElement(theaterButton, 'theater-enabled', this.buttons.theaterExit, true, hovered);
+        this.player.createSVGElement(theaterButton, 'theater', this.buttons.theater, hovered);
+        this.player.createSVGElement(theaterButton, 'theater-enabled', this.buttons.theaterExit, true, hovered);
 
         theaterButton.addEventListener('click', (event) => {
             event.stopPropagation();
@@ -1490,13 +1280,13 @@ export class BaseUIPlugin extends Plugin {
     }
 
     createFullscreenButton(parent: HTMLElement, hovered = false) {
-        const fullscreenButton = this.createUiButton(
+        const fullscreenButton = this.player.createUiButton(
             parent,
             'fullscreen'
-        );
+        ).get();
 
-        this.createSVGElement(fullscreenButton, 'fullscreen', this.buttons.fullscreen, false, hovered);
-        this.createSVGElement(fullscreenButton, 'fullscreen-enabled', this.buttons.exitFullscreen, true, hovered);
+        this.player.createSVGElement(fullscreenButton, 'fullscreen', this.buttons.fullscreen, false, hovered);
+        this.player.createSVGElement(fullscreenButton, 'fullscreen-enabled', this.buttons.exitFullscreen, true, hovered);
 
         fullscreenButton.addEventListener('click', (event) => {
             event.stopPropagation();
@@ -1527,16 +1317,16 @@ export class BaseUIPlugin extends Plugin {
     }
 
     createPlaylistsButton(parent: HTMLDivElement, hovered = false) {
-        const playlistButton = this.createUiButton(
+        const playlistButton = this.player.createUiButton(
             parent,
             'playlist'
-        );
+        ).get();
 
         this.player.addClasses(playlistButton, ['portrait:!hidden']);
 
         playlistButton.style.display = 'none';
 
-        this.createSVGElement(playlistButton, 'playlist', this.buttons.playlist, false, hovered);
+        this.player.createSVGElement(playlistButton, 'playlist', this.buttons.playlist, false, hovered);
 
         playlistButton.addEventListener('click', (event) => {
             event.stopPropagation();
@@ -1607,7 +1397,7 @@ export class BaseUIPlugin extends Plugin {
                 'z-10',
                 'pointer-events-none',
             ])
-            .appendTo(parent);
+            .appendTo(parent).get();
 
         this.player.createElement('div', 'bottom-bar-shadow')
             .addClasses([
@@ -1621,7 +1411,7 @@ export class BaseUIPlugin extends Plugin {
                 'via-black/40',
                 'to-black/0',
             ])
-            .appendTo(bottomBar);
+            .appendTo(bottomBar).get();
 
         return bottomBar;
     }
@@ -1635,7 +1425,7 @@ export class BaseUIPlugin extends Plugin {
         ];
         const divider = this.player.createElement('div', 'divider')
             .addClasses(dividerStyles)
-            .appendTo(parent);
+            .appendTo(parent).get();
 
         if (content) {
             divider.innerHTML = content;
@@ -1663,7 +1453,7 @@ export class BaseUIPlugin extends Plugin {
                 '-translate-x-1/2',
                 'z-50',
             ])
-            .appendTo(parent);
+            .appendTo(parent).get();
 
         this.player.on('display-message', (val: string | null) => {
             playerMessage.style.display = 'flex';
@@ -1689,7 +1479,7 @@ export class BaseUIPlugin extends Plugin {
                 'z-40',
                 'w-available',
             ])
-            .appendTo(parent);
+            .appendTo(parent).get();
 
         const seekScrollCloneContainer = this.player.createElement('div', 'seek-scroll-clone-container')
             .addClasses([
@@ -1702,7 +1492,7 @@ export class BaseUIPlugin extends Plugin {
                 'z-10',
                 'pointer-events-none',
             ])
-            .appendTo(seekContainer);
+            .appendTo(seekContainer).get();
 
         this.thumbnailClone = this.player.createElement('div', `thumbnail-clone-${1}`)
             .addClasses([
@@ -1711,7 +1501,7 @@ export class BaseUIPlugin extends Plugin {
                 'border-4',
                 'mx-auto',
             ])
-            .appendTo(seekScrollCloneContainer);
+            .appendTo(seekScrollCloneContainer).get();
 
         const seekScrollContainer = this.player.createElement('div', 'seek-scroll-container')
             .addClasses([
@@ -1724,7 +1514,7 @@ export class BaseUIPlugin extends Plugin {
                 'gap-1.5',
                 'scrollbar-none',
             ])
-            .appendTo(seekContainer);
+            .appendTo(seekContainer).get();
 
         this.player.once('item', () => {
             this.player.on('preview-time', () => {
@@ -1743,20 +1533,20 @@ export class BaseUIPlugin extends Plugin {
                     });
 
                 this.player.once('time', () => {
-                    this.currentScrubTime = this.getClosestSeekableInterval();
+                    this.currentScrubTime = this.player.getClosestSeekableInterval();
                     this.player.emit('currentScrubTime', {
                         ...this.player.getTimeData(),
-                        currentTime: this.getClosestSeekableInterval(),
+                        currentTime: this.player.getClosestSeekableInterval(),
                     });
                 });
             });
         });
 
         this.player.on('lastTimeTrigger', () => {
-            this.currentScrubTime = this.getClosestSeekableInterval();
+            this.currentScrubTime = this.player.getClosestSeekableInterval();
             this.player.emit('currentScrubTime', {
                 ...this.player.getTimeData(),
-                currentTime: this.getClosestSeekableInterval(),
+                currentTime: this.player.getClosestSeekableInterval(),
             });
         });
 
@@ -1775,7 +1565,7 @@ export class BaseUIPlugin extends Plugin {
 
             if (!thumb) return;
 
-            this.scrollIntoView(thumb.el);
+            this.player.scrollIntoView(thumb.el);
         });
 
         this.player.on('show-seek-container', (value) => {
@@ -1823,7 +1613,7 @@ export class BaseUIPlugin extends Plugin {
                 'via-black/40',
                 'to-black/0',
             ])
-            .appendTo(parent);
+            .appendTo(parent).get();
     }
 
     createTvCurrentItem(parent: HTMLElement) {
@@ -1836,16 +1626,15 @@ export class BaseUIPlugin extends Plugin {
                 'items-end',
                 'gap-2',
             ])
-            .appendTo(parent);
+            .appendTo(parent).get();
 
         const currentItemShow = this.player.createElement('div', 'current-item-show')
             .addClasses([
                 'text-white',
                 'text-sm',
-                'whitespace-pre',
                 'font-bold',
             ])
-            .appendTo(currentItemContainer);
+            .appendTo(currentItemContainer).get();
 
         const currentItemTitleContainer = this.player.createElement('div', 'current-item-title-container')
             .addClasses([
@@ -1853,18 +1642,18 @@ export class BaseUIPlugin extends Plugin {
                 'flex-row',
                 'gap-2',
             ])
-            .appendTo(currentItemContainer);
+            .appendTo(currentItemContainer).get();
 
         const currentItemEpisode = this.player.createElement('div', 'current-item-episode')
             .addClasses([])
-            .appendTo(currentItemTitleContainer);
+            .appendTo(currentItemTitleContainer).get();
 
         const currentItemTitle = this.player.createElement('div', 'current-item-title')
             .addClasses([
                 'whitespace-pre',
                 'text-sm',
             ])
-            .appendTo(currentItemTitleContainer);
+            .appendTo(currentItemTitleContainer).get();
 
         this.player.on('item', () => {
             const item = this.player.playlistItem();
@@ -1897,11 +1686,11 @@ export class BaseUIPlugin extends Plugin {
 
         const languageButton = this.player.createElement('button', `${data.type}-button-${data.language}`)
             .addClasses(this.languageMenuStyles)
-            .appendTo(parent);
+            .appendTo(parent).get();
 
         const languageButtonText = this.player.createElement('span', 'menu-button-text')
             .addClasses(this.menuButtonTextStyles)
-            .appendTo(languageButton);
+            .appendTo(languageButton).get();
 
         if (data.buttonType == 'subtitle') {
             if (data.styled) {
@@ -1915,7 +1704,7 @@ export class BaseUIPlugin extends Plugin {
             languageButtonText.innerText = this.player.localize(data.language);
         }
 
-        const chevron = this.createSVGElement(languageButton, 'checkmark', this.buttons.checkmark, false, hovered);
+        const chevron = this.player.createSVGElement(languageButton, 'checkmark', this.buttons.checkmark, false, hovered);
         this.player.addClasses(chevron, ['ml-auto']);
 
         if (data.id > 0) {
@@ -1963,36 +1752,12 @@ export class BaseUIPlugin extends Plugin {
         return languageButton;
     }
 
-    /**
-     * Converts a snake_case string to camelCase.
-     * @param str - The snake_case string to convert.
-     * @returns The camelCase version of the string.
-     */
-    snakeToCamel(str: string): string {
-        return str.replace(/_([a-z])/g, (_, letter) => letter.toUpperCase());
-    }
-
-    spaceToCamel(str: string): string {
-        return str.replace(/\s([a-z])/g, (_, letter) => letter.toUpperCase());
-    }
-
-
-    getClosestElement(element: HTMLButtonElement, selector: string) {
-
-        const arr = Array.from(document.querySelectorAll<HTMLButtonElement>(selector)).filter(el => getComputedStyle(el).display == 'flex');
-        const originEl = element!.getBoundingClientRect();
-
-        return arr.find(el => (el.getBoundingClientRect().top + (el.getBoundingClientRect().height / 2))
-            == nearestValue(arr.map(el => (el.getBoundingClientRect().top + (el.getBoundingClientRect().height / 2)))
-                , originEl.top + (originEl.height / 2)));
-    }
-
     addKeyEventsToLanguageButton(languageButton: HTMLButtonElement, parent: HTMLDivElement) {
         languageButton.addEventListener('keypress', (e: KeyboardEvent) => {
             if (e.key == 'ArrowLeft') {
-                this.getClosestElement(languageButton, '[id^="audio-button-"]')?.focus();
+                this.player.getClosestElement(languageButton, '[id^="audio-button-"]')?.focus();
             } else if (e.key == 'ArrowRight') {
-                this.getClosestElement(languageButton, '[id^="subtitle-button-"]')?.focus();
+                this.player.getClosestElement(languageButton, '[id^="subtitle-button-"]')?.focus();
             } else if (e.key == 'ArrowUp' && !this.player.options.disableTouchControls) {
                 (languageButton.previousElementSibling as HTMLButtonElement)?.focus();
             } else if (e.key == 'ArrowDown' && !this.player.options.disableTouchControls) {
@@ -2002,7 +1767,7 @@ export class BaseUIPlugin extends Plugin {
 
         languageButton.addEventListener('focus', () => {
             setTimeout(() => {
-                this.scrollCenter(languageButton, parent.parentElement as HTMLDivElement, {
+                this.player.scrollCenter(languageButton, parent.parentElement as HTMLDivElement, {
                     margin: 1,
                     duration: 100
                 });
@@ -2070,64 +1835,6 @@ export class BaseUIPlugin extends Plugin {
             img = this.previewTime.at(-1);
         }
         return img;
-    }
-
-    getScrubTime(e: any, parent = this.sliderBar) {
-        const elementRect = parent.getBoundingClientRect();
-
-        const x = e.clientX ?? e.touches?.[0]?.clientX ?? e.changedTouches?.[0]?.clientX ?? 0;
-
-        let offsetX = x - elementRect.left;
-        if (offsetX <= 0) offsetX = 0;
-        if (offsetX >= elementRect.width) offsetX = elementRect.width;
-
-        return {
-            scrubTime: (offsetX / parent.offsetWidth) * 100,
-            scrubTimePlayer: (offsetX / parent.offsetWidth) * this.player.getDuration(),
-        };
-    }
-
-    /**
-     * Sets the current episode to play based on the given season and episode numbers.
-     * If the episode is not found in the playlist, the first item in the playlist is played.
-     * @param season - The season number of the episode to play.
-     * @param episode - The episode number to play.
-     */
-    setEpisode(season: number, episode: number) {
-        const item = this.player.getPlaylist().findIndex((l: any) => l.season == season && l.episode == episode);
-        if (item == -1) {
-            this.player.playlistItem(0);
-        } else {
-            this.player.playlistItem(item);
-        }
-        this.player.play().then();
-    }
-
-    scrollCenter(el: HTMLElement, container: HTMLElement, options?: {
-        duration?: number;
-        margin?: number;
-    }) {
-        if (!el) return;
-        const scrollDuration = options?.duration || 60;
-        const margin = options?.margin || 1.5;
-
-        const elementTop = (el.getBoundingClientRect().top) + (el!.getBoundingClientRect().height / 2) - (container.getBoundingClientRect().height / margin);
-
-        const startingY = container.scrollTop;
-        const startTime = performance.now();
-
-        function scrollStep(timestamp: number) {
-            const currentTime = timestamp - startTime;
-            const progress = Math.min(currentTime / scrollDuration, 1);
-
-            container.scrollTo(0, Math.floor(startingY + (elementTop * progress)));
-
-            if (currentTime < scrollDuration) {
-                requestAnimationFrame(scrollStep);
-            }
-        }
-
-        requestAnimationFrame(scrollStep);
     }
 
 }

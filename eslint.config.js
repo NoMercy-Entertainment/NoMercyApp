@@ -9,12 +9,14 @@ export default antfu({
 			'vue/no-reserved-component-names': 'off',
 			'prefer-regex-literals': 'off',
 			'regexp/prefer-w': 'off',
+			'vue/first-attribute-linebreak': 'off',
 		},
 	},
 	typescript: {
 		overrides: {
 			'@typescript-eslint/no-explicit-any': 'off',
 			'@typescript-eslint/ban-ts-comment': 'off',
+			'perfectionist/sort-imports': 'off',
 		},
 	},
 	js: {
