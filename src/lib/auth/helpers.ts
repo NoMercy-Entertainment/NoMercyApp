@@ -2,7 +2,8 @@ import jwtDecode from './jwt-decode';
 import type { DecodedToken } from './index.d';
 
 export function generateCodeVerifier(length: number) {
-	const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-._~';
+	const characters
+    = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-._~';
 	let result = '';
 	for (let i = 0; i < length; i++) {
 		result += characters.charAt(Math.floor(Math.random() * characters.length));
@@ -11,7 +12,6 @@ export function generateCodeVerifier(length: number) {
 }
 
 export async function generateCodeChallenge(codeVerifier: string) {
-
 	const encoder = new TextEncoder();
 	const data = encoder.encode(codeVerifier);
 	const hashBuffer = await window.crypto.subtle?.digest('SHA-256', data);
@@ -40,13 +40,12 @@ export async function generatePKCE() {
 	const codeChallenge = await generateCodeChallenge(codeVerifier);
 
 	return {
-		state: state,
-		codeVerifier: codeVerifier,
-		codeChallenge: codeChallenge,
+		state,
+		codeVerifier,
+		codeChallenge,
 	};
 }
 
 export function parseToken<T = DecodedToken>(token: string) {
-
 	return jwtDecode(token) as T;
 }

@@ -21,36 +21,36 @@ export interface User {
 }
 
 export interface Server {
-	is_owner:        boolean;
-	is_manager:      boolean;
-	id:              string;
-	name:            string;
-	platform:        string;
-	version:         string;
-	owner_details:   OwnerDetails;
-	online:          boolean;
-	auto_connect:    boolean;
-	external_port:   string;
-	internal_port:   string;
-	port:            string;
-	domain:          string;
-	public_domain:   string;
-	external_ip:     string;
-	internal_ip:     string;
-	user_id:         null;
+	is_owner: boolean;
+	is_manager: boolean;
+	id: string;
+	name: string;
+	platform: string;
+	version: string;
+	owner_details: OwnerDetails;
+	online: boolean;
+	auto_connect: boolean;
+	external_port: string;
+	internal_port: string;
+	port: string;
+	domain: string;
+	public_domain: string;
+	external_ip: string;
+	internal_ip: string;
+	user_id: null;
 	internal_domain: string;
 	external_domain: string;
-	serverApiUrl:    string;
-	serverBaseUrl:   string;
+	serverApiUrl: string;
+	serverBaseUrl: string;
 }
 
 export interface OwnerDetails {
-	id:      null;
-	name:    string;
+	id: null;
+	name: string;
 	address: string;
 }
 
-export type Message = {
+export interface Message {
 	body?: string;
 	from: User | string;
 	id: string | number;
@@ -62,11 +62,11 @@ export type Message = {
 	type: string;
 	created_at: number;
 	updated_at: number;
-};
+}
 
 export interface ServerUser {
-	id: string,
-	name: string,
-	email: string,
-	avatar: string,
+	id: string;
+	name: string;
+	email: string;
+	avatar: string;
 }

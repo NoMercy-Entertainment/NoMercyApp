@@ -8,13 +8,7 @@ import { alphaNumericRange } from '@/lib/stringArray';
 import router from '@/router';
 import indexer, { setIndexerOpen } from '@/store/indexer';
 
-const openPaths = [
-	'Libraries',
-	'Library',
-	'Collections',
-	'Albums',
-	'Artists',
-];
+const openPaths = ['Libraries', 'Library', 'Collections', 'Albums', 'Artists'];
 
 const queryPaths = [
 	new RegExp('music/albums'),
@@ -22,24 +16,35 @@ const queryPaths = [
 	new RegExp('libraries/[a-zA-Z0-9]+/letter/[a-zA-Z0-9_]'),
 ];
 
-const indexerState = (route: string) => openPaths.some(path => route.startsWith(path));
-const isQueryPath = (route: string) => queryPaths.some(path => route.match(path));
+function indexerState(route: string) {
+	return openPaths.some(path => route.startsWith(path));
+}
+function isQueryPath(route: string) {
+	return queryPaths.some(path => route.match(path));
+}
 
 const route = useRoute();
 
 function updateScrollableTargets() {
 	setTimeout(() => {
-		document.querySelector(isMobile.value
-			? 'ion-tabs ion-router-outlet  div.ion-page:not(.ion-page-hidden) [indexer]'
-			: '[indexer]')
+		document
+			.querySelector(
+				isMobile.value
+					? 'ion-tabs ion-router-outlet  div.ion-page:not(.ion-page-hidden) [indexer]'
+					: '[indexer]',
+			)
 			?.querySelectorAll<HTMLDivElement>('[data-indexer]')
 			.forEach((el) => {
 				let target;
 				if (el.dataset.indexer === '#') {
-					target = document.querySelector?.('ion-tabs ion-router-outlet div.ion-page:not(.ion-page-hidden) [data-scroll]');
+					target = document.querySelector?.(
+						'ion-tabs ion-router-outlet div.ion-page:not(.ion-page-hidden) [data-scroll]',
+					);
 				}
 				else {
-					target = document.querySelector?.(`ion-tabs ion-router-outlet div.ion-page:not(.ion-page-hidden) [data-scroll='scroll_${el.dataset.indexer}']`);
+					target = document.querySelector?.(
+						`ion-tabs ion-router-outlet div.ion-page:not(.ion-page-hidden) [data-scroll='scroll_${el.dataset.indexer}']`,
+					);
 				}
 
 				if (!!target || isQueryPath(router.currentRoute.value.path)) {
@@ -53,7 +58,12 @@ function updateScrollableTargets() {
 }
 
 function disableScrollableTargets() {
-	document.querySelector(isMobile.value ? 'ion-tabs ion-router-outlet  div.ion-page:not(.ion-page-hidden) [indexer]' : '[indexer]')
+	document
+		.querySelector(
+			isMobile.value
+				? 'ion-tabs ion-router-outlet  div.ion-page:not(.ion-page-hidden) [indexer]'
+				: '[indexer]',
+		)
 		?.querySelectorAll<HTMLDivElement>('[data-indexer]')
 		.forEach((el) => {
 			el.classList.add('opacity-20', '!cursor-not-allowed');
@@ -67,7 +77,7 @@ function triggerIndexer(route: string) {
 
 router.afterEach((to) => {
 	setTimeout(() => {
-		triggerIndexer(to.name as string ?? to.path);
+		triggerIndexer((to.name as string) ?? to.path);
 	}, 150);
 });
 
@@ -79,7 +89,10 @@ router.beforeEach(() => {
 
 onMounted(() => {
 	setTimeout(() => {
-		triggerIndexer(router.currentRoute.value.name as string ?? router.currentRoute.value.path as string);
+		triggerIndexer(
+			(router.currentRoute.value.name as string)
+			?? (router.currentRoute.value.path as string),
+		);
 	}, 150);
 	document.addEventListener('indexer', updateScrollableTargets);
 	document.addEventListener('keydown', keyHandler);
@@ -93,7 +106,8 @@ onUnmounted(() => {
 
 <template>
 	<div
-		indexer class="pointer-events-none z-0 h-available sm:h-available flex flex-col items-center justify-between self-stretch overflow-clip transition-width duration-200 text-slate-dark-1 dark:text-slate-light-1 sm:-translate-x-3 pt-2"
+		indexer
+		class="pointer-events-none z-0 h-available sm:h-available flex flex-col items-center justify-between self-stretch overflow-clip transition-width duration-200 text-slate-dark-1 dark:text-slate-light-1 sm:-translate-x-3 pt-2"
 		:class="{
 			'w-8': indexer,
 			'w-0': !indexer,
@@ -104,19 +118,28 @@ onUnmounted(() => {
 		<template v-for="letter in alphaNumericRange('#', 'Z')" :key="letter">
 			<template v-if="isQueryPath(route.path)">
 				<RouterLink
-					:to="`${letter.replace('#', '_')}`" :data-indexer="letter" tabindex="-1"
+					:to="`${letter.replace('#', '_')}`"
+					:data-indexer="letter"
+					tabindex="-1"
 					class="pointer-events-auto relative flex p-1.5 size-6 sm:size-8 aspect-square rounded-lg overflow-clip cursor-pointer flex-col items-center justify-center hover:bg-auto-alpha-5"
 				>
-					<p class="flex-shrink-0 flex-grow-0 text-center text-xs sm:text-base font-semibold leading-none">
+					<p
+						class="flex-shrink-0 flex-grow-0 text-center text-xs sm:text-base font-semibold leading-none"
+					>
 						{{ letter }}
 					</p>
 				</RouterLink>
 			</template>
 			<button
-				v-else :data-indexer="letter" tabindex="-1" class="pointer-events-auto relative flex p-1.5 size-6 sm:size-8 aspect-square rounded-lg overflow-clip cursor-pointer flex-col items-center justify-center hover:bg-auto-alpha-5"
+				v-else
+				:data-indexer="letter"
+				tabindex="-1"
+				class="pointer-events-auto relative flex p-1.5 size-6 sm:size-8 aspect-square rounded-lg overflow-clip cursor-pointer flex-col items-center justify-center hover:bg-auto-alpha-5"
 				@click="scrollToDiv(letter)"
 			>
-				<p class="flex-shrink-0 flex-grow-0 text-center text-xs sm:text-base font-semibold leading-none">
+				<p
+					class="flex-shrink-0 flex-grow-0 text-center text-xs sm:text-base font-semibold leading-none"
+				>
 					{{ letter }}
 				</p>
 			</button>

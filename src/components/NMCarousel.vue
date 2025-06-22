@@ -1,18 +1,18 @@
 <script setup lang="ts">
-import { onBeforeMount, onMounted, PropType, ref } from 'vue';
-import { Swiper } from 'swiper';
-import { Swiper as SwiperComponent, SwiperSlide } from 'swiper/vue';
-import { register } from 'swiper/element/bundle';
+import { onBeforeMount, onMounted, PropType, ref } from "vue";
+import { Swiper } from "swiper";
+import { Swiper as SwiperComponent, SwiperSlide } from "swiper/vue";
+import { register } from "swiper/element/bundle";
 
-import type { Component } from '@/types/config';
+import type { Component } from "@/types/config";
 
-import { isMobile } from '@/config/global';
-import { mappedEntries } from '@/lib/stringArray';
-import { Breakpoints, breakpoints, swiperConfig } from '@/lib/swiper-config';
+import { isMobile } from "@/config/global";
+import { mappedEntries } from "@/lib/stringArray";
+import { Breakpoints, breakpoints, swiperConfig } from "@/lib/swiper-config";
 
-import OptimizedIcon from '@/components/OptimizedIcon.vue';
-import {scrollCenter} from "@/lib/utils";
-import {scrollContainerElement} from "@/store/ui";
+import OptimizedIcon from "@/components/OptimizedIcon.vue";
+import { scrollCenter } from "@/lib/utils";
+import { scrollContainerElement } from "@/store/ui";
 
 const props = defineProps({
   title: {
@@ -26,7 +26,7 @@ const props = defineProps({
   more_link_text: {
     type: String,
     required: false,
-    default: 'See more',
+    default: "See more",
   },
   items: {
     type: Array as PropType<Array<Component>>,
@@ -34,7 +34,7 @@ const props = defineProps({
     default: [],
   },
   type: {
-    type: String as PropType<'poster' | 'backdrop'>,
+    type: String as PropType<"poster" | "backdrop">,
     required: false,
   },
   limitCardCountBy: {
@@ -60,7 +60,7 @@ const props = defineProps({
   },
   next_id: {
     required: true,
-  }
+  },
 });
 
 const show = ref(false);
@@ -72,7 +72,7 @@ const swiper = ref<VueSwiperElement>();
 const titleEl = ref<HTMLHeadingElement>();
 
 const onProgress = (swiper: Swiper, progress: number) => {
-  swiper.progress = Math.floor(((progress * 100) + 1) / 100);
+  swiper.progress = Math.floor((progress * 100 + 1) / 100);
 
   backButtonEnabled.value = !swiper.isBeginning;
   nextButtonEnabled.value = swiper.progress < 1;
@@ -81,9 +81,9 @@ const onProgress = (swiper: Swiper, progress: number) => {
 };
 
 const onSlideChange = (swiper: Swiper) => {
-  swiper.progress = Math.floor(((swiper.progress * 100) + 1) / 100);
+  swiper.progress = Math.floor((swiper.progress * 100 + 1) / 100);
 
-  swiper.el?.classList.remove('opacity-0');
+  swiper.el?.classList.remove("opacity-0");
 
   backButtonEnabled.value = !swiper.isBeginning;
   nextButtonEnabled.value = swiper.progress < 1;
@@ -93,7 +93,7 @@ const onSlideChange = (swiper: Swiper) => {
 
 const afterInit = (swiper: Swiper) => {
   setTimeout(() => {
-    swiper.el?.classList.remove('opacity-0');
+    swiper.el?.classList.remove("opacity-0");
   }, 10 * props.index);
 };
 
@@ -113,9 +113,7 @@ const prev = () => {
   swiper.value?.$el?.swiper.slidePrev(300);
 };
 
-const offsetBefore = window.innerWidth < 800
-  ? 24
-  : 20;
+const offsetBefore = window.innerWidth < 800 ? 24 : 20;
 
 const bp = ref<Breakpoints>();
 
@@ -130,8 +128,8 @@ onBeforeMount(() => {
   for (const [key, value] of mappedEntries(breakpoints(props.backdropCards))) {
     newBp[key] = {
       ...value,
-      slidesPerView: (value.slidesPerView - props.limitCardCountBy),
-      slidesPerGroup: (value.slidesPerGroup - props.limitCardCountBy),
+      slidesPerView: value.slidesPerView - props.limitCardCountBy,
+      slidesPerGroup: value.slidesPerGroup - props.limitCardCountBy,
     };
   }
 
@@ -145,11 +143,15 @@ onMounted(() => {
 });
 
 const focusNext = () => {
-  document.querySelector<HTMLButtonElement>(`#carousel_${props.next_id} button`)?.focus();
+  document
+    .querySelector<HTMLButtonElement>(`#carousel_${props.next_id} button`)
+    ?.focus();
 
-  const nextTitle = document.querySelector<HTMLHeadingElement>(`#carousel_${props.next_id} h3`);
+  const nextTitle = document.querySelector<HTMLHeadingElement>(
+    `#carousel_${props.next_id} h3`
+  );
 
-  if(!nextTitle || !scrollContainerElement.value) return;
+  if (!nextTitle || !scrollContainerElement.value) return;
 
   scrollCenter(nextTitle, scrollContainerElement.value, {
     duration: 300,
@@ -158,11 +160,15 @@ const focusNext = () => {
 };
 
 const focusPrevious = () => {
-  document.querySelector<HTMLButtonElement>(`#carousel_${props.previous_id} button`)?.focus();
+  document
+    .querySelector<HTMLButtonElement>(`#carousel_${props.previous_id} button`)
+    ?.focus();
 
-  const previousTitle = document.querySelector<HTMLHeadingElement>(`#carousel_${props.previous_id} h3`)!;
+  const previousTitle = document.querySelector<HTMLHeadingElement>(
+    `#carousel_${props.previous_id} h3`
+  )!;
 
-  if(!previousTitle || !scrollContainerElement.value) return;
+  if (!previousTitle || !scrollContainerElement.value) return;
 
   scrollCenter(previousTitle, scrollContainerElement.value, {
     duration: 300,
@@ -171,85 +177,132 @@ const focusPrevious = () => {
 };
 
 const scrollToCenter = () => {
-  if(!scrollContainerElement.value || !titleEl.value) return;
+  if (!scrollContainerElement.value || !titleEl.value) return;
   scrollCenter(titleEl.value, scrollContainerElement.value, {
     duration: 300,
     margin: 2,
   });
 };
-
 </script>
 
 <template>
-  <div v-if="items?.length && show" :id="`carousel_${id}`" :data-next-id="`carousel_${next_id}`" :data-previous-id="`carousel_${previous_id}`"
-    class="mt-2 sm:mt-6 mb-2 flex w-auto flex-shrink-0 flex-grow-0 flex-col items-start justify-start gap-2 self-stretch text-left">
+  <div
+    v-if="items?.length && show"
+    :id="`carousel_${id}`"
+    :data-next-id="`carousel_${next_id}`"
+    :data-previous-id="`carousel_${previous_id}`"
+    class="mt-2 sm:mt-6 mb-2 flex w-auto flex-shrink-0 flex-grow-0 flex-col items-start justify-start gap-2 self-stretch text-left"
+  >
     <div class="flex w-available flex-1 flex-col gap-2">
-      <div class="relative ml-2 flex flex-shrink-0 flex-grow-0 items-center self-stretch tv:hidden">
-        <h3 v-if="title" ref="title"
-          class="mr-2 ml-3 sm:ml-3 my-2 text-slate-lightA-12/70 dark:text-slate-darkA-12/80 self-stretch flex-grow-0 flex-shrink-0 text-xl font-bold">
+      <div
+        class="relative ml-2 flex flex-shrink-0 flex-grow-0 items-center self-stretch tv:hidden"
+      >
+        <h3
+          v-if="title"
+          ref="title"
+          class="mr-2 ml-3 sm:ml-3 my-2 text-slate-lightA-12/70 dark:text-slate-darkA-12/80 self-stretch flex-grow-0 flex-shrink-0 text-xl font-bold"
+        >
           {{ title }}
         </h3>
         <slot v-else name="selector"></slot>
 
-        <button v-if="next_id" class="skip-navigation hidden sm:flex sm:absolute opacity-0 focus-visible:opacity-100" @click="focusNext" @focus="scrollToCenter" >
-          <span v-if="next_id == 'continue'">
-            {{ $t('Back to first carousel') }}
+        <button
+          v-if="next_id"
+          class="skip-navigation hidden sm:flex sm:absolute opacity-0 focus-visible:opacity-100"
+          @click="focusNext"
+          @focus="scrollToCenter"
+        >
+          <span v-if="next_id === 'continue'">
+            {{ $t("Back to first carousel") }}
           </span>
           <span v-else>
-            {{ $t('Skip to next carousel') }}
+            {{ $t("Skip to next carousel") }}
           </span>
         </button>
 
-<!--        <button v-if="previous_id" class="skip-navigation hidden sm:flex sm:absolute opacity-0 focus-within:opacity-100" @click="focusPrevious">-->
-<!--          <span v-if="previous_id == 'continue'">-->
-<!--            {{ $t('Back to last carousel') }}-->
-<!--          </span>-->
-<!--          <span v-else>-->
-<!--            {{ $t('Skip to previous carousel') }}-->
-<!--          </span>-->
-<!--        </button>-->
+        <!--        <button v-if="previous_id" class="skip-navigation hidden sm:flex sm:absolute opacity-0 focus-within:opacity-100" @click="focusPrevious">-->
+        <!--          <span v-if="previous_id === 'continue'">-->
+        <!--            {{ $t('Back to last carousel') }}-->
+        <!--          </span>-->
+        <!--          <span v-else>-->
+        <!--            {{ $t('Skip to previous carousel') }}-->
+        <!--          </span>-->
+        <!--        </button>-->
 
-        <RouterLink v-if="more_link" :to="more_link"
-          class="text-base text-slate-dark-9 dark:text-slate-light-9 flex items-center ml-auto sm:ml-4 mr-2 sm:mr-auto">
+        <RouterLink
+          v-if="more_link"
+          :to="more_link"
+          class="text-base text-slate-dark-9 dark:text-slate-light-9 flex items-center ml-auto sm:ml-4 mr-2 sm:mr-auto"
+        >
           <span class="leading-none pt-0.5">{{ more_link_text }}</span>
           <OptimizedIcon icon="chevronRight" className="w-6 mt-1" />
         </RouterLink>
 
-        <div class="flex flex-shrink-0 flex-grow-0 items-start justify-start gap-2 pr-4 ml-auto" v-if="!isMobile">
-
-          <button v-if="hasScroll" :aria-label="$t('Previous slide')" tabindex="-1"
+        <div
+          class="flex flex-shrink-0 flex-grow-0 items-start justify-start gap-2 pr-4 ml-auto"
+          v-if="!isMobile"
+        >
+          <button
+            v-if="hasScroll"
+            :aria-label="$t('Previous slide')"
+            tabindex="-1"
             class="hidden sm:flex justify-center items-center p-1 rounded-lg bg-auto-alpha-9 active:scale-95 hover:bg-auto-alpha-11 transition-transform duration-200"
             :class="{
               'cursor-not-allowed opacity-50': !backButtonEnabled,
-            }" :onclick="prev">
+            }"
+            :onclick="prev"
+          >
             <OptimizedIcon class="w-6" icon="chevronLeft" />
           </button>
 
-          <button v-if="hasScroll" :aria-label="isLastSlide ? $t('Start slide') : $t('Next slide')" tabindex="-1"
+          <button
+            v-if="hasScroll"
+            :aria-label="isLastSlide ? $t('Start slide') : $t('Next slide')"
+            tabindex="-1"
             class="hidden sm:flex justify-center items-center p-1 rounded-lg bg-auto-alpha-9 active:scale-95 hover:bg-auto-alpha-11 transition-transform duration-200"
             :class="{
               'cursor-not-allowed opacity-50': !hasScroll,
-            }" :onclick="isLastSlide ? reset : next">
-            <OptimizedIcon v-if="hasScroll && !isLastSlide" icon="chevronRight" class="w-6" :class="{
-              'opacity-0': !nextButtonEnabled && isLastSlide,
-            }" />
-            <OptimizedIcon v-if="hasScroll && isLastSlide" icon="chevronLeftDouble" class="w-6" :class="{
-              'opacity-0': !isLastSlide,
-            }" />
+            }"
+            :onclick="isLastSlide ? reset : next"
+          >
+            <OptimizedIcon
+              v-if="hasScroll && !isLastSlide"
+              icon="chevronRight"
+              class="w-6"
+              :class="{
+                'opacity-0': !nextButtonEnabled && isLastSlide,
+              }"
+            />
+            <OptimizedIcon
+              v-if="hasScroll && isLastSlide"
+              icon="chevronLeftDouble"
+              class="w-6"
+              :class="{
+                'opacity-0': !isLastSlide,
+              }"
+            />
           </button>
         </div>
-
       </div>
       <div class="gap-3 py-1 pr-0 w-available swiper">
-        <SwiperComponent v-bind="swiperConfig(backdropCards) as any" ref="swiper" class="opacity-0"
-          :slidesOffsetBefore="offsetBefore" :breakpoints="bp" data-spatial-container="row" @progress="onProgress"
-          @afterInit="afterInit" @slideChange="onSlideChange">
-
-          <template v-for="(item) in items" :key="item?.id">
+        <SwiperComponent
+          v-bind="swiperConfig(backdropCards) as any"
+          ref="swiper"
+          class="opacity-0"
+          :slidesOffsetBefore="offsetBefore"
+          :breakpoints="bp"
+          data-spatial-container="row"
+          @progress="onProgress"
+          @afterInit="afterInit"
+          @slideChange="onSlideChange"
+        >
+          <template v-for="item in items" :key="item?.id">
             <swiper-slide v-if="item?.id" class="flex">
-
-              <component :key="item.id" :is="item.component" v-bind="item.props" />
-
+              <component
+                :key="item.id"
+                :is="item.component"
+                v-bind="item.props"
+              />
             </swiper-slide>
           </template>
         </SwiperComponent>
@@ -259,19 +312,17 @@ const scrollToCenter = () => {
 </template>
 
 <style scoped>
-
 .skip-navigation {
-  left: 10px;
-  background-color: #333;
-  color: #fff;
-  padding: 5px;
-  text-decoration: none;
-  z-index: 999;
-  transition: top 0.3s;
+	left: 10px;
+	background-color: #333;
+	color: #fff;
+	padding: 5px;
+	text-decoration: none;
+	z-index: 999;
+	transition: top 0.3s;
 }
 
 .skip-navigation:focus {
-  top: -100%;
+	top: -100%;
 }
-
 </style>

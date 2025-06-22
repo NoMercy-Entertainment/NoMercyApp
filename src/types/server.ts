@@ -1,18 +1,18 @@
-import { HttpStatusCode } from 'axios';
-import {
+import type { HttpStatusCode } from 'axios';
+import type {
 	ArtistLibrary,
 	EncoderProfileLibrary,
 	FolderLibrary,
 	LibraryMovie,
 	LibraryTv,
-	LibraryUser
+	LibraryUser,
 } from '@/types/api/base/library';
-import { ColorPalettes } from '@/types/api/shared';
+import type { ColorPalettes } from '@/types/api/shared';
 
 export interface ErrorResponse {
 	type: string;
 	title: string;
-	status: HttpStatusCode,
+	status: HttpStatusCode;
 	detail: string;
 	instance: string;
 	traceId: string;
@@ -84,7 +84,6 @@ export interface LogoResponse {
 		} | null;
 	} | null;
 }
-
 
 export interface Device {
 	id: string;

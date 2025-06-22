@@ -8,18 +8,17 @@ import { clearTokens } from '@/lib/auth/index';
 import ExploreContainer from '@/components/ExploreContainer.vue';
 
 onMounted(async () => {
-  clearTokens();
-  setTimeout(() => {
-    App.exitApp();
-  }, 3000);
+	clearTokens();
+	setTimeout(() => {
+		App.exitApp();
+	}, 3000);
 });
-
 </script>
 
 <template>
-  <ion-page>
-    <ion-content :fullscreen="true">
-      <ExploreContainer name="Logging out..." />
-    </ion-content>
-  </ion-page>
+	<IonPage>
+		<IonContent :fullscreen="true">
+			<ExploreContainer name="Logging out..." />
+		</IonContent>
+	</IonPage>
 </template>

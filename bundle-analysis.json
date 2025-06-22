@@ -5,7 +5,7 @@
   },
   "recommendations": [
     "Enable code splitting for routes",
-    "Lazy load heavy components", 
+    "Lazy load heavy components",
     "Optimize images with WebP/AVIF",
     "Use tree shaking for unused code",
     "Implement virtual scrolling for large lists",

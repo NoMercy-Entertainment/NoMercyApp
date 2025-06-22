@@ -1,26 +1,35 @@
 <script setup lang="ts">
 import { onMounted, ref, watch } from "vue";
-import { IonPage, IonContent } from '@ionic/vue';
+import { IonPage, IonContent } from "@ionic/vue";
 
 import useMounted from "@/hooks/useMounted";
-import { connection, castSocketIsConnected, startCastSocket, stopCastSocket } from "@/lib/clients/castSocket";
+import {
+  connection,
+  castSocketIsConnected,
+  startCastSocket,
+  stopCastSocket,
+} from "@/lib/clients/castSocket";
 import SliderBar from "@/components/MusicPlayer/components/SliderBar.vue";
 import OptimizedIcon from "@/components/OptimizedIcon.vue";
 import MusicButton from "@/components/MusicPlayer/components/MusicButton.vue";
 import PlayerIcon from "@/components/Images/icons/PlayerIcon.vue";
-import { TimeData, PlaylistItem, Track } from "@nomercy-entertainment/nomercy-video-player/src/types";
+import {
+  TimeData,
+  PlaylistItem,
+  Track,
+} from "@nomercy-entertainment/nomercy-video-player/src/types";
 import { pad } from "@/lib/stringArray";
 import type { MediaPlaylist } from "hls.js";
 
 const receivers = ref<string[]>([]);
-const currentReceiver = ref<string>('');
-const chromeCastStatus = ref<string>('');
-const mediaStatus = ref<string>('');
+const currentReceiver = ref<string>("");
+const chromeCastStatus = ref<string>("");
+const mediaStatus = ref<string>("");
 const volume = ref<number>(0);
 const isMuted = ref<boolean>(false);
 const isStandby = ref<boolean>(false);
 const isPlaying = ref<boolean>(false);
-const input = ref<string>('tv/117933');
+const input = ref<string>("tv/117933");
 
 const timeState = ref<TimeData>({
   currentTime: 0,
@@ -28,9 +37,9 @@ const timeState = ref<TimeData>({
   percentage: 0,
   remaining: 0,
   playbackRate: 1,
-  currentTimeHuman: '00:00',
-  durationHuman: '00:00',
-  remainingHuman: '00:00',
+  currentTimeHuman: "00:00",
+  durationHuman: "00:00",
+  remainingHuman: "00:00",
 });
 
 const currentTime = ref<number>(timeState.value.currentTime);
@@ -63,80 +72,88 @@ useMounted(startCastSocket, stopCastSocket);
 
 watch(castSocketIsConnected, (value) => {
   if (value) {
-    connection.value?.invoke('GetChromeCasts')
-      .then((data: string[]) => {
-        receivers.value = data;
-      });
+    connection.value?.invoke("GetChromeCasts").then((data: string[]) => {
+      receivers.value = data;
+    });
 
-    connection.value?.invoke('GetChromeCastStatus')
-      .then((data) => {
-        chromeCastStatus.value = data;
-      });
+    connection.value?.invoke("GetChromeCastStatus").then((data) => {
+      chromeCastStatus.value = data;
+    });
 
-    connection.value?.invoke('GetMediaStatus')
-      .then((data) => {
-        mediaStatus.value = data;
-      });
+    connection.value?.invoke("GetMediaStatus").then((data) => {
+      mediaStatus.value = data;
+    });
 
-    connection.value?.invoke('GetPlayerState');
+    connection.value?.invoke("GetPlayerState");
 
-    connection.value?.on('Time', (data) => {
+    connection.value?.on("Time", (data) => {
       timeState.value = data;
     });
 
-    connection.value?.on('Item', (data) => {
+    connection.value?.on("Item", (data) => {
       playlistItem.value = data;
     });
-    connection.value?.on('Play', () => {
+    connection.value?.on("Play", () => {
       isPlaying.value = true;
     });
-    connection.value?.on('Pause', () => {
+    connection.value?.on("Pause", () => {
       isPlaying.value = false;
     });
 
-    connection.value?.on('Playlist', (data) => {
+    connection.value?.on("Playlist", (data) => {
       playlist.value = data;
     });
 
-    connection.value?.on('AudioTracks', (data) => {
+    connection.value?.on("AudioTracks", (data) => {
       audioTracks.value = data;
     });
 
-    connection.value?.on('CurrentAudioTrack', (data) => {
-      currentAudioTrack.value = audioTracks.value.find(item => item.id == data)!;
+    connection.value?.on("CurrentAudioTrack", (data) => {
+      currentAudioTrack.value = audioTracks.value.find(
+        (item) => item.id === data
+      )!;
     });
 
-    connection.value?.on('SubtitleTracks', (data) => {
+    connection.value?.on("SubtitleTracks", (data) => {
       subtitleTracks.value = data;
     });
 
-    connection.value?.on('CurrentSubtitleTrack', (data) => {
+    connection.value?.on("CurrentSubtitleTrack", (data) => {
       currentSubtitleTrack.value = data;
     });
 
-    connection.value?.on('PlayerState', (state: {
-      time: TimeData,
-      volume: number,
-      muted: boolean,
-      playlist: PlaylistItem[],
-      isPlaying: boolean,
-      subtitles: Track[],
-      currentSubtitleTrack: Track,
-      audioTracks: MediaPlaylist[],
-      currentAudioTrack: number,
-    }) => {
-      console.log(state);
-      timeState.value = state.time;
-      volume.value = state.volume;
-      isMuted.value = state.muted;
-      playlist.value = state.playlist;
-      isPlaying.value = state.isPlaying;
-      subtitleTracks.value = state.subtitles;
-      currentSubtitleTrack.value = state.currentSubtitleTrack;
-      audioTracks.value = state.audioTracks;
-      currentAudioTrack.value = state.audioTracks.find(item => item.id == state.currentAudioTrack)!;
-      playlistItem.value = state.playlist.find(item => item.tracks?.some(track => track.file == state.currentSubtitleTrack.file))!;
-    });
+    connection.value?.on(
+      "PlayerState",
+      (state: {
+        time: TimeData;
+        volume: number;
+        muted: boolean;
+        playlist: PlaylistItem[];
+        isPlaying: boolean;
+        subtitles: Track[];
+        currentSubtitleTrack: Track;
+        audioTracks: MediaPlaylist[];
+        currentAudioTrack: number;
+      }) => {
+        console.log(state);
+        timeState.value = state.time;
+        volume.value = state.volume;
+        isMuted.value = state.muted;
+        playlist.value = state.playlist;
+        isPlaying.value = state.isPlaying;
+        subtitleTracks.value = state.subtitles;
+        currentSubtitleTrack.value = state.currentSubtitleTrack;
+        audioTracks.value = state.audioTracks;
+        currentAudioTrack.value = state.audioTracks.find(
+          (item) => item.id === state.currentAudioTrack
+        )!;
+        playlistItem.value = state.playlist.find((item) =>
+          item.tracks?.some(
+            (track) => track.file === state.currentSubtitleTrack.file
+          )
+        )!;
+      }
+    );
 
     // connection.value?.on('StatusChanged', (data: string) => {
     //     console.log('StatusChanged', data);
@@ -151,12 +168,12 @@ watch(castSocketIsConnected, (value) => {
 });
 
 onMounted(() => {
-  connection.value?.on('ChromeCastConnected', (data: string) => {
+  connection.value?.on("ChromeCastConnected", (data: string) => {
     receivers.value.push(data);
   });
 
-  connection.value?.on('ChromeCastDisconnected', (data: string) => {
-    receivers.value = receivers.value.filter(item => item !== data);
+  connection.value?.on("ChromeCastDisconnected", (data: string) => {
+    receivers.value = receivers.value.filter((item) => item !== data);
   });
 
   // connection.value?.on('StatusChanged', (data: string) => {
@@ -170,85 +187,92 @@ onMounted(() => {
   // });
 
   if (castSocketIsConnected.value) {
-    connection.value?.invoke('GetChromeCasts')
-      .then((data: string[]) => {
-        receivers.value = data;
-      });
+    connection.value?.invoke("GetChromeCasts").then((data: string[]) => {
+      receivers.value = data;
+    });
 
-    connection.value?.invoke('GetChromeCastStatus')
-      .then((data) => {
-        chromeCastStatus.value = data;
-      });
+    connection.value?.invoke("GetChromeCastStatus").then((data) => {
+      chromeCastStatus.value = data;
+    });
 
-    connection.value?.invoke('GetMediaStatus')
-      .then((data) => {
-        mediaStatus.value = data;
-      });
+    connection.value?.invoke("GetMediaStatus").then((data) => {
+      mediaStatus.value = data;
+    });
 
-    connection.value?.invoke('GetPlayerState');
+    connection.value?.invoke("GetPlayerState");
 
-    connection.value?.on('Time', (data) => {
+    connection.value?.on("Time", (data) => {
       timeState.value = data;
     });
 
-    connection.value?.on('Item', (data) => {
+    connection.value?.on("Item", (data) => {
       playlistItem.value = data;
     });
-    connection.value?.on('Play', () => {
+    connection.value?.on("Play", () => {
       isPlaying.value = true;
     });
-    connection.value?.on('Pause', () => {
+    connection.value?.on("Pause", () => {
       isPlaying.value = false;
     });
 
-    connection.value?.on('Playlist', (data) => {
+    connection.value?.on("Playlist", (data) => {
       playlist.value = data;
     });
 
-    connection.value?.on('AudioTracks', (data) => {
+    connection.value?.on("AudioTracks", (data) => {
       audioTracks.value = data;
     });
 
-    connection.value?.on('CurrentAudioTrack', (data) => {
-      currentAudioTrack.value = audioTracks.value.find(item => item.id == data)!;
+    connection.value?.on("CurrentAudioTrack", (data) => {
+      currentAudioTrack.value = audioTracks.value.find(
+        (item) => item.id === data
+      )!;
     });
 
-    connection.value?.on('SubtitleTracks', (data) => {
+    connection.value?.on("SubtitleTracks", (data) => {
       subtitleTracks.value = data;
     });
 
-    connection.value?.on('CurrentSubtitleTrack', (data) => {
+    connection.value?.on("CurrentSubtitleTrack", (data) => {
       currentSubtitleTrack.value = data;
     });
 
-    connection.value?.on('PlayerState', (state: {
-      time: TimeData,
-      volume: number,
-      muted: boolean,
-      playlist: PlaylistItem[],
-      isPlaying: boolean,
-      subtitles: Track[],
-      currentSubtitleTrack: Track,
-      audioTracks: MediaPlaylist[],
-      currentAudioTrack: number,
-    }) => {
-      timeState.value = state.time;
-      volume.value = state.volume;
-      isMuted.value = state.muted;
-      playlist.value = state.playlist;
-      isPlaying.value = state.isPlaying;
-      subtitleTracks.value = state.subtitles;
-      currentSubtitleTrack.value = state.currentSubtitleTrack;
-      audioTracks.value = state.audioTracks;
-      currentAudioTrack.value = state.audioTracks.find(item => item.id == state.currentAudioTrack)!;
-      playlistItem.value = state.playlist.find(item => item.tracks?.some(track => track.file == state.currentSubtitleTrack.file))!;
-    });
+    connection.value?.on(
+      "PlayerState",
+      (state: {
+        time: TimeData;
+        volume: number;
+        muted: boolean;
+        playlist: PlaylistItem[];
+        isPlaying: boolean;
+        subtitles: Track[];
+        currentSubtitleTrack: Track;
+        audioTracks: MediaPlaylist[];
+        currentAudioTrack: number;
+      }) => {
+        timeState.value = state.time;
+        volume.value = state.volume;
+        isMuted.value = state.muted;
+        playlist.value = state.playlist;
+        isPlaying.value = state.isPlaying;
+        subtitleTracks.value = state.subtitles;
+        currentSubtitleTrack.value = state.currentSubtitleTrack;
+        audioTracks.value = state.audioTracks;
+        currentAudioTrack.value = state.audioTracks.find(
+          (item) => item.id === state.currentAudioTrack
+        )!;
+        playlistItem.value = state.playlist.find((item) =>
+          item.tracks?.some(
+            (track) => track.file === state.currentSubtitleTrack.file
+          )
+        )!;
+      }
+    );
   }
-
 });
 
 watch(currentReceiver, (value) => {
-  connection.value?.invoke('SelectChromecast', value);
+  connection.value?.invoke("SelectChromecast", value);
 });
 
 watch(chromeCastStatus, (value) => {
@@ -267,48 +291,48 @@ watch(receivers, (value) => {
 });
 
 watch(volume, (value) => {
-  connection.value?.invoke('SetVolume', value);
+  connection.value?.invoke("SetVolume", value);
 });
 
 const launch = () => {
-  connection.value?.invoke('Launch');
+  connection.value?.invoke("Launch");
 };
 
 const castPlaylist = (value: string) => {
-  connection.value?.invoke('CastPlaylist', value);
+  connection.value?.invoke("CastPlaylist", value);
 };
 
 const toggleMute = () => {
   if (isMuted.value) {
-    connection.value?.invoke('SetUnMute');
+    connection.value?.invoke("SetUnMute");
   } else {
-    connection.value?.invoke('SetMute');
+    connection.value?.invoke("SetMute");
   }
 };
 
 const handlePlayback = () => {
   if (isPlaying.value) {
-    connection.value?.invoke('SetPause');
+    connection.value?.invoke("SetPause");
   } else {
-    connection.value?.invoke('SetPlay');
+    connection.value?.invoke("SetPlay");
   }
 };
 
 const handleNext = () => {
-  connection.value?.invoke('SetNext');
+  connection.value?.invoke("SetNext");
 };
 
 const handlePrevious = () => {
-  connection.value?.invoke('SetPrevious');
+  connection.value?.invoke("SetPrevious");
 };
 
 const disconnect = () => {
-  connection.value?.invoke('Disconnect');
+  connection.value?.invoke("Disconnect");
 };
 
 const seek = (value: number) => {
   percentage.value = value;
-  connection.value?.invoke('SetSeek', value);
+  connection.value?.invoke("SetSeek", value);
 };
 
 const translations = {
@@ -506,116 +530,175 @@ const translations = {
   yid: "Yiddish",
   yor: "Yoruba",
   zha: "Zhuang, Chuang",
-  zul: "Zulu"
-}
+  zul: "Zulu",
+};
 
 const setSubtitle = (value: number) => {
-  connection.value?.invoke('SetSubtitleTrack', value);
-}
+  connection.value?.invoke("SetSubtitleTrack", value);
+};
 
 const setAudio = (value: number) => {
-  connection.value?.invoke('SetAudioTrack', value);
-}
+  connection.value?.invoke("SetAudioTrack", value);
+};
 
 const setPlaylistItem = (value: number) => {
-  connection.value?.invoke('SetPlaylistItem', value);
-}
-
+  connection.value?.invoke("SetPlaylistItem", value);
+};
 </script>
 
 <template>
   <ion-page>
     <ion-content :fullscreen="true">
       <div class="flex flex-col gap-4 items-center justify-center p-4">
-        <Select v-model="currentReceiver" :options="receivers" optionLabel="" class="w-1/3 min-w-96" />
+        <Select
+          v-model="currentReceiver"
+          :options="receivers"
+          optionLabel=""
+          class="w-1/3 min-w-96"
+        />
 
         <div class="flex gap-4 w-1/3 min-w-96 items-center">
           <Button @click="launch" id="launch">
-            {{ $t('Launch') }}
+            {{ $t("Launch") }}
           </Button>
           <InputText v-model="input" class="w-full" />
           <Button @click="castPlaylist(input)" id="cast">
-            {{ $t('Cast') }}
+            {{ $t("Cast") }}
           </Button>
         </div>
 
-        <div v-if="playlistItem" class="flex flex-col gap-4 w-1/3 min-w-96 items-center justify-center">
+        <div
+          v-if="playlistItem"
+          class="flex flex-col gap-4 w-1/3 min-w-96 items-center justify-center"
+        >
           <div class="flex gap-1 items-center">
             <span>
               {{ playlistItem.show }}
             </span>
             <span v-if="playlistItem.season && playlistItem.episode">
-              - S{{ pad(playlistItem.season, 2) }}E{{ pad(playlistItem.episode, 2) }} -
+              - S{{ pad(playlistItem.season, 2) }}E{{
+                pad(playlistItem.episode, 2)
+              }}
+              -
             </span>
             <span>
               {{ playlistItem.title }}
             </span>
           </div>
 
-          <img v-if="playlistItem.image" :src="playlistItem.image" :alt="playlistItem.title"
-            class="aspect-video w-full h-auto">
+          <img
+            v-if="playlistItem.image"
+            :src="playlistItem.image"
+            :alt="playlistItem.title"
+            class="aspect-video w-full h-auto"
+          />
         </div>
 
         <div class="flex gap-4 w-1/3 min-w-96 items-center justify-center">
-
           <MusicButton label="Previous" :onclick="handlePrevious">
-            <PlayerIcon icon="nmPreviousHalftone" class="absolute h-7 w-7 inset-1.5" />
-            <PlayerIcon icon="nmPrevious" class="absolute h-7 w-7 opacity-0 group-hover/button:opacity-100 inset-1.5" />
+            <PlayerIcon
+              icon="nmPreviousHalftone"
+              class="absolute h-7 w-7 inset-1.5"
+            />
+            <PlayerIcon
+              icon="nmPrevious"
+              class="absolute h-7 w-7 opacity-0 group-hover/button:opacity-100 inset-1.5"
+            />
           </MusicButton>
 
           <MusicButton label="Toggle Playback" :onclick="handlePlayback">
-
             <PlayerIcon icon="nmPause" v-if="isPlaying" className="h-9 w-9" />
             <PlayerIcon icon="nmPlay" v-else className="h-9 w-9" />
-
           </MusicButton>
 
           <MusicButton label="Next" :onclick="handleNext">
-            <PlayerIcon icon="nmNextHalftone" class="absolute h-7 w-7 inset-1.5" />
-            <PlayerIcon icon="nmNext" class="absolute h-7 w-7 opacity-0 group-hover/button:opacity-100 inset-1.5" />
+            <PlayerIcon
+              icon="nmNextHalftone"
+              class="absolute h-7 w-7 inset-1.5"
+            />
+            <PlayerIcon
+              icon="nmNext"
+              class="absolute h-7 w-7 opacity-0 group-hover/button:opacity-100 inset-1.5"
+            />
           </MusicButton>
-
         </div>
 
         <div class="flex gap-4 w-1/3 min-w-96 items-center">
           <span class="font-mono">{{ currentTimeHuman }}</span>
-          <SliderBar :percentage="percentage" :value="currentTime" :min="0" :max="duration"
-            @input="seek(Number(($event.target as HTMLInputElement).value))" />
+          <SliderBar
+            :percentage="percentage"
+            :value="currentTime"
+            :min="0"
+            :max="duration"
+            @input="seek(Number(($event.target as HTMLInputElement).value))"
+          />
           <span class="font-mono">{{ remainingTimeHuman }}</span>
         </div>
 
-        <div class="flex gap-4 w-1/3 min-w-96 items-center">          <MusicButton label="Mute" :onclick="toggleMute">
+        <div class="flex gap-4 w-1/3 min-w-96 items-center">
+          <MusicButton label="Mute" :onclick="toggleMute">
             <OptimizedIcon icon="volumeMuted" v-if="isMuted" class="h-6 w-6" />
-            <OptimizedIcon icon="volumeOne" v-else-if="volume == 0" class="h-6 w-6" />
-            <OptimizedIcon icon="volumeThree" v-else-if="volume > 50" class="h-6 w-6" />
+            <OptimizedIcon
+              icon="volumeOne"
+              v-else-if="volume === 0"
+              class="h-6 w-6"
+            />
+            <OptimizedIcon
+              icon="volumeThree"
+              v-else-if="volume > 50"
+              class="h-6 w-6"
+            />
             <OptimizedIcon icon="volumeTwo" v-else class="h-6 w-6" />
           </MusicButton>
 
-          <SliderBar :percentage="volume" :value="volume"
-            @input="volume = Number(($event.target as HTMLInputElement).value)" :min="0" :step="1" :max="100" />
+          <SliderBar
+            :percentage="volume"
+            :value="volume"
+            @input="volume = Number(($event.target as HTMLInputElement).value)"
+            :min="0"
+            :step="1"
+            :max="100"
+          />
         </div>
 
-        <div class="flex flex-col gap-4 w-1/3 min-w-96 items-center justify-center">
-
+        <div
+          class="flex flex-col gap-4 w-1/3 min-w-96 items-center justify-center"
+        >
           <div class="flex gap-4 w-full items-center justify-center">
             <FloatLabel variant="on" class="w-full">
-              <Select v-model="currentSubtitleTrack" :options="subtitleTracks" id="subtitleTracks"
+              <Select
+                v-model="currentSubtitleTrack"
+                :options="subtitleTracks"
+                id="subtitleTracks"
                 :optionLabel="(track: Track) => `${track.language ? translations[track.language as 'off'] : ''} ${track.label?.toTitleCase()} ${track.file.endsWith('ass') ? ' - Styled' : ''}`"
-                class="w-full" @change="setSubtitle($event.value.id)" />
+                class="w-full"
+                @change="setSubtitle($event.value.id)"
+              />
               <label for="subtitleTracks">Subtitle</label>
             </FloatLabel>
 
             <FloatLabel variant="on" class="w-full">
-              <Select v-model="currentAudioTrack" :options="audioTracks" id="audioTracks"
-                :optionLabel="(track: Track) => `${track.label}`" class="w-full" @change="setAudio($event.value.id)" />
+              <Select
+                v-model="currentAudioTrack"
+                :options="audioTracks"
+                id="audioTracks"
+                :optionLabel="(track: Track) => `${track.label}`"
+                class="w-full"
+                @change="setAudio($event.value.id)"
+              />
               <label for="audioTracks">Audio</label>
             </FloatLabel>
           </div>
 
           <FloatLabel variant="on" class="w-full">
-            <Select v-model="playlistItem" id="playlist" :options="playlist"
+            <Select
+              v-model="playlistItem"
+              id="playlist"
+              :options="playlist"
               :optionLabel="(item: PlaylistItem) => `S${pad(item.season ?? 0, 2)}E${pad(item.episode ?? 0, 2)} - ${item.title}`"
-              class="w-full" @change="setPlaylistItem(playlist.indexOf($event.value))" />
+              class="w-full"
+              @change="setPlaylistItem(playlist.indexOf($event.value))"
+            />
             <label for="playlist">Playlist Item</label>
           </FloatLabel>
         </div>
@@ -629,7 +712,6 @@ const setPlaylistItem = (value: number) => {
       <!--            {{ audioTracks }}-->
       <!--            {{ subtitleTracks }}-->
       <!--        </pre>-->
-
     </ion-content>
   </ion-page>
 </template>

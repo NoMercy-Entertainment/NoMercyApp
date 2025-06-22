@@ -1,7 +1,7 @@
 import type { ColorPalettes, PaletteColors } from '../shared';
 import type { Genre } from '@/types/api/base/genre';
 import type { Album } from '@/types/api/music/album';
-import {PlaylistItem} from "@/types/musicPlayer";
+import type { PlaylistItem } from '@/types/musicPlayer';
 
 export interface ArtistResponse {
 	id: string;
@@ -53,7 +53,7 @@ export interface Count {
 export interface Image {
 	color_palette: {
 		image: PaletteColors;
-	},
+	};
 	height: number;
 	id: number;
 	iso_639_1: null;

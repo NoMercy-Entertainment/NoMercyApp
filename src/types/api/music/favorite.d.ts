@@ -1,5 +1,4 @@
-
-import { PlaylistItem } from '@/types/musicPlayer';
+import type { PlaylistItem } from '@/types/musicPlayer';
 
 export interface FavoritesResponse {
 	cover: string;

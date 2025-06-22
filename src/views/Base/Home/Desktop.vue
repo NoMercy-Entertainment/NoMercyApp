@@ -8,18 +8,18 @@ import ScrollContainer from '@/Layout/Desktop/components/ScrollContainer.vue';
 import NMComponent from '@/components/NMComponent.vue';
 
 onMounted(() => {
-  setTitle();
-  setBackground(null);
-  setColorPalette(null);
+	setTitle();
+	setBackground(null);
+	setColorPalette(null);
 });
-
 </script>
+
 <template>
-  <ion-page>
-    <ion-content :fullscreen="true">
-      <ScrollContainer :autoHide="true" :static="true">
-        <NMComponent />
-      </ScrollContainer>
-    </ion-content>
-  </ion-page>
+	<IonPage>
+		<IonContent :fullscreen="true">
+			<ScrollContainer :auto-hide="true" :static="true">
+				<NMComponent />
+			</ScrollContainer>
+		</IonContent>
+	</IonPage>
 </template>

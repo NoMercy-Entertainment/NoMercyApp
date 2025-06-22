@@ -10,6 +10,7 @@ export default antfu({
 			'prefer-regex-literals': 'off',
 			'regexp/prefer-w': 'off',
 			'vue/first-attribute-linebreak': 'off',
+			'vue-a11y/no-distracting-elements': 'off',
 		},
 	},
 	typescript: {
@@ -17,6 +18,11 @@ export default antfu({
 			'@typescript-eslint/no-explicit-any': 'off',
 			'@typescript-eslint/ban-ts-comment': 'off',
 			'perfectionist/sort-imports': 'off',
+			'antfu/top-level-function': 'off',
+			'no-async-promise-executor': 'off',
+			'no-console': 'off',
+			'ts/no-unsafe-function-type': 'off',
+			'node/prefer-global/process': 'off',
 		},
 	},
 	js: {
@@ -33,7 +39,7 @@ export default antfu({
 	formatters: {
 		css: true,
 		html: true,
-		markdown: 'prettier',
+		markdown: true,
 		svg: false,
 	},
 });

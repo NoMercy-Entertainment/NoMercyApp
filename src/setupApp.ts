@@ -61,11 +61,17 @@ import '@/store/deviceInfo';
 import '@/store/screensaver';
 
 export async function setupApp(app: AppContext['app']) {
-	if ('serviceWorker' in navigator && !import.meta.env.DEV && suffix !== '-dev') {
+	if (
+		'serviceWorker' in navigator
+		&& !import.meta.env.DEV
+		&& suffix !== '-dev'
+	) {
 		await navigator.serviceWorker.ready;
 
 		// Set up service worker update detection
-		const { setupServiceWorkerUpdates } = await import('@/lib/serviceWorkerUpdates');
+		const { setupServiceWorkerUpdates } = await import(
+			'@/lib/serviceWorkerUpdates'
+		);
 		setupServiceWorkerUpdates();
 	}
 
@@ -151,20 +157,21 @@ export async function setupApp(app: AppContext['app']) {
 		}, 500);
 	}
 
-	router.isReady()
-		.then(() => {
-			app.mount('#app');
+	router.isReady().then(() => {
+		app.mount('#app');
 
-			setTimeout(() => {
-				if (location.search.includes('redirectUrl')) {
-					redirectUrl.value = location.search.split('redirectUrl=')[1].split('&')[0];
-				}
+		setTimeout(() => {
+			if (location.search.includes('redirectUrl')) {
+				redirectUrl.value = location.search
+					.split('redirectUrl=')[1]
+					.split('&')[0];
+			}
 
-				if (redirectUrl.value != '/home') {
-					router.push(redirectUrl.value).then();
-				}
-			}, 1000);
-		});
+			if (redirectUrl.value !== '/home') {
+				router.push(redirectUrl.value).then();
+			}
+		}, 1000);
+	});
 
 	useBackButton(9999, () => {
 		document.dispatchEvent(new Event('backbutton'));

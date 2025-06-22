@@ -1,5 +1,5 @@
 import type { PaletteColors } from '../shared';
-import {PlaylistItem} from "@/types/musicPlayer";
+import type { PlaylistItem } from '@/types/musicPlayer';
 
 export interface PlaylistsResponse {
 	type: string;

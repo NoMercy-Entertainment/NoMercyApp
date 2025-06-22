@@ -5,15 +5,15 @@ import { currentServer } from '@/store/currentServer';
 
 const libraries = ref<LibrariesResponse[]>([]);
 
-export const setLibraries = (newLibraries: LibrariesResponse[]): void => {
+export function setLibraries(newLibraries: LibrariesResponse[]): void {
 	libraries.value = newLibraries;
 }
 
-export const getLibraries = (): LibrariesResponse[] => {
+export function getLibraries(): LibrariesResponse[] {
 	return libraries.value;
 }
 
-export const clearLibraries = (): void => {
+export function clearLibraries(): void {
 	libraries.value = [];
 }
 
@@ -28,6 +28,5 @@ watch(libraries, (value) => {
 watch(currentServer, (value) => {
 	if (!value) {
 		shouldShowLibraryLinks.value = false;
-		return;
 	}
 });

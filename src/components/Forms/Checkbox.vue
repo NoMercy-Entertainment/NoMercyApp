@@ -1,5 +1,4 @@
 <script setup lang="ts">
-
 import { computed, type PropType } from 'vue';
 
 const props = defineProps({
@@ -13,7 +12,7 @@ const props = defineProps({
 		default: null,
 	},
 	label: {
-    type: String,
+		type: String,
 		required: false,
 	},
 	width: {
@@ -34,12 +33,12 @@ const props = defineProps({
 	onclick: {
 		type: Function as PropType<() => void>,
 		required: false,
-	}
+	},
 });
 
 const emit = defineEmits(['update:modelValue']);
 
-const cycle = () => {
+function cycle() {
 	if (props.onclick) {
 		props.onclick?.();
 		return;
@@ -47,15 +46,17 @@ const cycle = () => {
 	let newValue;
 	if (props.modelValue === null) {
 		newValue = true;
-	} else if (props.modelValue === true) {
+	}
+	else if (props.modelValue === true) {
 		newValue = false;
-	} else {
+	}
+	else {
 		newValue = null;
 	}
 	emit('update:modelValue', newValue);
-};
+}
 
-const handleClick = () => {
+function handleClick() {
 	if (props.onclick) {
 		props.onclick?.();
 		return;
@@ -63,11 +64,12 @@ const handleClick = () => {
 	let newValue;
 	if (props.modelValue === null || props.modelValue === false) {
 		newValue = true;
-	} else if (props.modelValue === true) {
+	}
+	else if (props.modelValue === true) {
 		newValue = false;
 	}
 	emit('update:modelValue', newValue);
-};
+}
 
 const defs = computed(() => {
 	return `
@@ -109,18 +111,35 @@ const svgPaths = computed(() => {
     `;
 	}
 });
-
 </script>
 
 <template>
-	<div class="relative flex select-none items-center justify-start gap-2 self-stretch border border-transparent bg-transparent"
-		@click="handleClick">
-		<input :id="id" type="checkbox" class="hidden item-selector" :checked="!!modelValue" />
-		<svg :id="id" :width="width" :height="height" fill="none" viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg"
-			class="relative w-[18px] h-[18px]" preserveAspectRatio="xMidYMid meet">
-			<g v-html="svgPaths"></g>
+	<div
+		class="relative flex select-none items-center justify-start gap-2 self-stretch border border-transparent bg-transparent"
+		@click="handleClick"
+	>
+		<input
+			:id="id"
+			type="checkbox"
+			class="hidden item-selector"
+			:checked="!!modelValue"
+		>
+		<svg
+			:id="id"
+			:width="width"
+			:height="height"
+			fill="none"
+			viewBox="0 0 18 18"
+			xmlns="http://www.w3.org/2000/svg"
+			class="relative w-[18px] h-[18px]"
+			preserveAspectRatio="xMidYMid meet"
+		>
+			<g v-html="svgPaths" />
 		</svg>
-		<div class="relative flex flex-grow items-center justify-center gap-2 px-2" v-if="label">
+		<div
+			v-if="label"
+			class="relative flex flex-grow items-center justify-center gap-2 px-2"
+		>
 			<p class="w-full flex-grow text-sm font-medium">
 				{{ $t(label) }}
 			</p>

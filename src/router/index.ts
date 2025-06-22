@@ -1,4 +1,7 @@
-import { createRouter, createWebHashHistory, createWebHistory } from '@ionic/vue-router';
+import {
+	createRouter,
+	createWebHistory,
+} from '@ionic/vue-router';
 import { isPlatform } from '@ionic/vue';
 
 import { isTv } from '@/config/global';
@@ -14,12 +17,16 @@ const router = createRouter({
 	history: isPlatform('capacitor')
 		? createWebHistory(import.meta.env.BASE_URL)
 		: createWebHistory(import.meta.env.BASE_URL),
-	routes: routes,
+	routes,
 });
 
 router.beforeResolve(async (to, from, next) => {
-
-	if (isPlatform('capacitor') && to.name !== 'Auth' && !localStorage.getItem('refresh_token') && !user.value.accessToken) {
+	if (
+		isPlatform('capacitor')
+		&& to.name !== 'Auth'
+		&& !localStorage.getItem('refresh_token')
+		&& !user.value.accessToken
+	) {
 		const { isAuthenticated } = useKeycloak();
 		if (!isAuthenticated.value && isTv.value) {
 			return next({ name: 'Auth' });

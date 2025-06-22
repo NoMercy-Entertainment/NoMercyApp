@@ -3,12 +3,13 @@ export function loadJsonConfig<T>(url: string): Promise<T> {
 		const xhttp = new XMLHttpRequest();
 		xhttp.overrideMimeType('application/json');
 		xhttp.onreadystatechange = function () {
-			if (this.readyState == 4 && this.status == 200) {
+			if (this.readyState === 4 && this.status === 200) {
 				const jsonResponse = this.responseText;
 				const response = JSON.parse(jsonResponse);
 				resolve(response);
-			} else {
-				reject(Error(`Could not load ${url} file`));
+			}
+			else {
+				reject(new Error(`Could not load ${url} file`));
 			}
 		};
 		xhttp.open('GET', url, true);

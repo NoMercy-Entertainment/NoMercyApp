@@ -1,6 +1,6 @@
 import type { Artist } from '@/types/api/music/artist';
-import type { PlaylistItem } from "@/types/musicPlayer";
-import type { ColorPalettes } from "@/types/api/shared";
+import type { PlaylistItem } from '@/types/musicPlayer';
+import type { ColorPalettes } from '@/types/api/shared';
 
 export interface MusicCardPageResponseData {
 	id: string;

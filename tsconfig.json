@@ -1,49 +1,49 @@
 {
-  "compilerOptions": {
-    "target": "ES2020",
-    "useDefineForClassFields": true,
-    "module": "ESNext",
-    "moduleResolution": "bundler",
-    "strict": true,
-    "jsx": "preserve",
-    "resolveJsonModule": true,
-    "isolatedModules": true,
-    "esModuleInterop": true,
-    "allowSyntheticDefaultImports": true,
-    "forceConsistentCasingInFileNames": true,
-    "allowImportingTsExtensions": true,
-    "baseUrl": ".",
-    "lib": [
-      "ES2020",
-      "DOM",
-      "DOM.Iterable"
-    ],
-    "skipLibCheck": true,
-    "noEmit": true,
-    "paths": {
-      "@/*": [
-        "./src/*"
-      ],
-      "@Icons/*": [
-        "./resources/icons/*"
-      ]
-    },
-    "types": [
-      "vite-plugin-pwa/client",
-      "vue",
-      "node"
-    ]
-  },
-  "include": [
-    "src/**/*.ts",
-    "src/**/*.d.ts",
-    "src/**/*.tsx",
-    "src/**/*.vue",
-    "resources/**/*.ts"
-  ],
-  "references": [
-    {
-      "path": "./tsconfig.node.json"
-    }
-  ]
+	"compilerOptions": {
+		"target": "ES2023",
+		"jsx": "preserve",
+		"lib": [
+			"ES2020",
+			"DOM",
+			"DOM.Iterable"
+		],
+		"useDefineForClassFields": true,
+		"baseUrl": ".",
+		"module": "ESNext",
+		"moduleResolution": "bundler",
+		"paths": {
+			"@/*": [
+				"./src/*"
+			],
+			"@Icons/*": [
+				"./resources/icons/*"
+			]
+		},
+		"resolveJsonModule": true,
+		"types": [
+			"vite-plugin-pwa/client",
+			"vue",
+			"node"
+		],
+		"allowImportingTsExtensions": true,
+		"strict": true,
+		"noEmit": true,
+		"allowSyntheticDefaultImports": true,
+		"esModuleInterop": true,
+		"forceConsistentCasingInFileNames": true,
+		"isolatedModules": true,
+		"skipLibCheck": true
+	},
+	"references": [
+		{
+			"path": "./tsconfig.node.json"
+		}
+	],
+	"include": [
+		"src/**/*.ts",
+		"src/**/*.d.ts",
+		"src/**/*.tsx",
+		"src/**/*.vue",
+		"resources/**/*.ts"
+	]
 }

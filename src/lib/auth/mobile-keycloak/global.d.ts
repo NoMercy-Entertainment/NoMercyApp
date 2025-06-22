@@ -1,7 +1,7 @@
 declare global {
-  interface Window {
-    __BASEURL__: string;
-  }
+	interface Window {
+		__BASEURL__: string;
+	}
 }
 
-export { };
+export {};

@@ -1,17 +1,15 @@
 <script setup lang="ts">
-
 defineProps({
-    isActive: {
-        type: Boolean,
-        default: false,
-        required: true,
-    }
+	isActive: {
+		type: Boolean,
+		default: false,
+		required: true,
+	},
 });
-
 </script>
 
 <template>
-    <div class="contents" v-show='isActive'>
-        <slot />
-    </div>
+	<div v-show="isActive" class="contents">
+		<slot />
+	</div>
 </template>

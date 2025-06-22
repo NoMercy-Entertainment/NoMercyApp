@@ -1,17 +1,19 @@
-import {computed, ref, watch} from 'vue';
+import { computed, ref, watch } from 'vue';
 import { isPlatform } from '@ionic/vue';
 import { Preferences } from '@capacitor/preferences';
 import { SafeArea } from 'capacitor-plugin-safe-area';
 import { useMediaQuery } from '@vueuse/core';
-import { NavigationBar } from "@hugotomazi/capacitor-navigation-bar";
+import { NavigationBar } from '@hugotomazi/capacitor-navigation-bar';
 
 import type { ColorScheme } from '@/types/config';
 
 import { isDarkMode } from '@/config/global';
-import { StatusBar, Style } from "@capacitor/status-bar";
-import {topNavColor} from "@/store/colorTheme";
+import { StatusBar, Style } from '@capacitor/status-bar';
+import { topNavColor } from '@/store/colorTheme';
 
-export const setColorScheme = async (value: ColorScheme) => {
+export const darkMode = ref(isDarkMode.value);
+
+export async function setColorScheme(value: ColorScheme) {
 	document.body.classList.add('scheme-transition');
 	document.body.style.setProperty('--speed', '300');
 
@@ -34,7 +36,8 @@ export const setColorScheme = async (value: ColorScheme) => {
 
 	if (value) {
 		el.classList.add(`scheme-${value}`);
-	} else {
+	}
+	else {
 		el.classList.add('scheme-system');
 	}
 
@@ -56,7 +59,8 @@ export const setColorScheme = async (value: ColorScheme) => {
 			NavigationBar.setColor({ color: '#000000', darkButtons: true }).then();
 			StatusBar.setBackgroundColor({ color: '#00000080' }).then();
 			StatusBar.setStyle({ style: Style.Dark }).then();
-		} else {
+		}
+		else {
 			NavigationBar.setColor({ color: '#FFFFFF', darkButtons: true }).then();
 			StatusBar.setBackgroundColor({ color: '#FFFFFFA0' }).then();
 			StatusBar.setStyle({ style: Style.Dark }).then();
@@ -67,20 +71,18 @@ export const setColorScheme = async (value: ColorScheme) => {
 
 	await Preferences.set({
 		key: 'colorScheme',
-		value: value,
+		value,
 	});
-};
+}
 
-export const checkColorScheme = async () => {
+export async function checkColorScheme() {
 	const { value } = await Preferences.get({ key: 'colorScheme' });
 	return value as ColorScheme;
-};
+}
 
-export const removeColorScheme = async () => {
+export async function removeColorScheme() {
 	await Preferences.remove({ key: 'colorScheme' });
-};
-
-export const darkMode = ref(isDarkMode.value);
+}
 
 watch(darkMode, async (value) => {
 	await setColorScheme?.(value ? 'dark' : 'light');
@@ -90,7 +92,11 @@ watch(darkMode, async (value) => {
 	setTimeout(async () => {
 		const colorScheme = await checkColorScheme();
 
-		await setColorScheme?.(useMediaQuery('(prefers-color-scheme: dark)').value || colorScheme ? 'dark' : 'light');
+		await setColorScheme?.(
+			useMediaQuery('(prefers-color-scheme: dark)').value || colorScheme
+				? 'dark'
+				: 'light',
+		);
 
 		if (!colorScheme) {
 			return;
@@ -103,13 +109,13 @@ watch(darkMode, async (value) => {
 const setBackgroundColor = computed(() => {
 	if (isPlatform('capacitor')) {
 		return import('@capacitor/status-bar').then(({ StatusBar }) => {
-			return StatusBar.setBackgroundColor
+			return StatusBar.setBackgroundColor;
 		});
 	}
-	return () => { };
+	return () => {};
 });
 
-export const change = async (value: boolean) => {
+export async function change(value: boolean) {
 	if (isPlatform('capacitor')) {
 		if (value) {
 			(await setBackgroundColor.value)?.({ color: topNavColor.value });
@@ -118,4 +124,4 @@ export const change = async (value: boolean) => {
 			await setColorScheme?.(isDarkMode ? 'dark' : 'light');
 		}
 	}
-};
+}

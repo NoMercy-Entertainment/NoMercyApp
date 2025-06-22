@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { PropType } from 'vue';
+import type { PropType } from 'vue';
 import { SwiperSlide } from 'swiper/vue';
 
 import type { InfoCredit } from '@/types/api/base/info';
@@ -21,13 +21,17 @@ defineProps({
 		required: false,
 	},
 });
-
 </script>
 
 <template>
-	<Carousel :title="title" :limitCardCountBy="limitCardCountBy" type="poster" :disableAutoAspect="true">
-		<swiper-slide v-for="item in data" :key="item.id" class="flex sm:p-1 pl-0">
+	<Carousel
+		:title="title"
+		:limit-card-count-by="limitCardCountBy"
+		type="poster"
+		:disable-auto-aspect="true"
+	>
+		<SwiperSlide v-for="item in data" :key="item.id" class="flex sm:p-1 pl-0">
 			<PersonCard :data="item" class="" />
-		</swiper-slide>
+		</SwiperSlide>
 	</Carousel>
 </template>

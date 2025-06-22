@@ -1,6 +1,6 @@
 import { computed, ref } from 'vue';
-import { MenuItem } from 'primevue/menuitem';
-import { ContextMenuMethods } from 'primevue';
+import type { MenuItem } from 'primevue/menuitem';
+import type { ContextMenuMethods } from 'primevue';
 import type { MoooomIcons } from '@Icons/icons';
 import serverClient from '@/lib/clients/serverClient';
 import type { AxiosResponse } from 'axios';
@@ -25,24 +25,38 @@ export interface ContextMenuItem {
 }
 
 const getRequest = (url: string, data: any) => serverClient().get(url);
-const putRequest = (url: string, data: any) => serverClient().put(url, { data });
-const postRequest = (url: string, data: any) => serverClient().post(url, { data });
-const deleteRequest = (url: string, data: any) => serverClient().delete(url, { data });
-const patchRequest = (url: string, data: any) => serverClient().patch(url, { data });
+function putRequest(url: string, data: any) {
+	return serverClient().put(url, { data });
+}
+function postRequest(url: string, data: any) {
+	return serverClient().post(url, { data });
+}
+function deleteRequest(url: string, data: any) {
+	return serverClient().delete(url, { data });
+}
+function patchRequest(url: string, data: any) {
+	return serverClient().patch(url, { data });
+}
 
-export const makeContextMenu = (items: ContextMenuItem[]): (MenuItem & { icon?: `mooooom-${keyof typeof MoooomIcons}` })[] => {
+export function makeContextMenu(items: ContextMenuItem[]): (MenuItem & { icon?: `mooooom-${keyof typeof MoooomIcons}` })[] {
 	return items.map((item) => {
-
-		let cmd: (url: string, data: any) => Promise<AxiosResponse<unknown, unknown>>;
+		let cmd: (
+			url: string,
+			data: any
+		) => Promise<AxiosResponse<unknown, unknown>>;
 		if (item.method === 'GET') {
 			cmd = getRequest;
-		} else if (item.method === 'PUT') {
+		}
+		else if (item.method === 'PUT') {
 			cmd = putRequest;
-		} else if (item.method === 'POST') {
+		}
+		else if (item.method === 'POST') {
 			cmd = postRequest;
-		} else if (item.method === 'PATCH') {
+		}
+		else if (item.method === 'PATCH') {
 			cmd = patchRequest;
-		} else if (item.method === 'DELETE') {
+		}
+		else if (item.method === 'DELETE') {
 			cmd = deleteRequest;
 		}
 		else {
@@ -56,7 +70,7 @@ export const makeContextMenu = (items: ContextMenuItem[]): (MenuItem & { icon?: 
 			command: () => cmd(item.args?.url, contextMenuContext.value),
 		};
 	});
-};
+}
 
 export const contextMenu = ref<ContextMenuMethods>(<ContextMenuMethods>{});
 const cmi = ref<MenuItem[] | undefined>();
@@ -87,7 +101,7 @@ export const cardMenu = ref();
 
 export const selectedTrackRow = ref<PlaylistItem>();
 
-export const onTrackRowRightClick = (event: Event, data: PlaylistItem) => {
+export function onTrackRowRightClick(event: Event, data: PlaylistItem) {
 	selectedTrackRow.value = data;
 
 	const menuItems: ContextMenuItem[] = [];
@@ -101,15 +115,15 @@ export const onTrackRowRightClick = (event: Event, data: PlaylistItem) => {
 				icon: 'mooooom-add',
 				command: () => {
 					alert(selectedTrackRow.value?.id);
-				}
+				},
 			},
-		]
+		],
 	};
 
-	if (musicPlaylist.value.length == 0) {
+	if (musicPlaylist.value.length === 0) {
 		addToPlaylistItem.items!.push({
 			label: t('No playlist available'),
-			icon: 'mooooom-pause'
+			icon: 'mooooom-pause',
 		});
 	}
 
@@ -119,32 +133,37 @@ export const onTrackRowRightClick = (event: Event, data: PlaylistItem) => {
 			icon: 'mooooom-disk',
 			command: () => {
 				alert(selectedTrackRow.value?.id);
-			}
+			},
 		});
 	}
 
 	menuItems.push(addToPlaylistItem);
 
-	menuItems.push({
-		label: t('Save to your liked songs'),
-		icon: 'mooooom-heart',
-		command: () => {
-			alert(selectedTrackRow.value?.id);
-		}
-	},
+	menuItems.push(
+		{
+			label: t('Save to your liked songs'),
+			icon: 'mooooom-heart',
+			command: () => {
+				alert(selectedTrackRow.value?.id);
+			},
+		},
 		{
 			label: t('Add to queue'),
 			icon: 'mooooom-playlist1Add',
 			command: () => {
 				alert(selectedTrackRow.value?.id);
-			}
+			},
 		},
 		{
-			separator: true
+			separator: true,
 		},
 	);
 
-	if (!isAlbumRoute.value && selectedTrackRow.value?.album_track && selectedTrackRow.value?.album_track?.length < 2) {
+	if (
+		!isAlbumRoute.value
+		&& selectedTrackRow.value?.album_track
+		&& selectedTrackRow.value?.album_track?.length < 2
+	) {
 		menuItems.push({
 			label: t('Go to album'),
 			icon: 'mooooom-disk',
@@ -152,9 +171,14 @@ export const onTrackRowRightClick = (event: Event, data: PlaylistItem) => {
 				if (selectedTrackRow.value?.album_track?.[0]?.link) {
 					router.push(selectedTrackRow.value?.album_track?.[0]?.link);
 				}
-			}
+			},
 		});
-	} else if (!isAlbumRoute.value && selectedTrackRow.value?.album_track && selectedTrackRow.value?.album_track?.length > 1) {
+	}
+	else if (
+		!isAlbumRoute.value
+		&& selectedTrackRow.value?.album_track
+		&& selectedTrackRow.value?.album_track?.length > 1
+	) {
 		menuItems.push({
 			label: t('Go to album'),
 			icon: 'mooooom-disk',
@@ -162,13 +186,17 @@ export const onTrackRowRightClick = (event: Event, data: PlaylistItem) => {
 				return {
 					label: artist.name,
 					icon: 'mooooom-disk',
-					command: () => router.push(artist.link)
+					command: () => router.push(artist.link),
 				};
-			})
+			}),
 		});
 	}
 
-	if (!isArtistRoute.value && selectedTrackRow.value?.artist_track && selectedTrackRow.value?.artist_track?.length < 2) {
+	if (
+		!isArtistRoute.value
+		&& selectedTrackRow.value?.artist_track
+		&& selectedTrackRow.value?.artist_track?.length < 2
+	) {
 		menuItems.push({
 			label: t('Go to artist'),
 			icon: 'mooooom-user',
@@ -176,9 +204,14 @@ export const onTrackRowRightClick = (event: Event, data: PlaylistItem) => {
 				if (selectedTrackRow.value?.artist_track?.[0]?.link) {
 					router.push(selectedTrackRow.value?.artist_track?.[0]?.link);
 				}
-			}
+			},
 		});
-	} else if (!isArtistRoute.value && selectedTrackRow.value?.artist_track && selectedTrackRow.value?.artist_track?.length > 1) {
+	}
+	else if (
+		!isArtistRoute.value
+		&& selectedTrackRow.value?.artist_track
+		&& selectedTrackRow.value?.artist_track?.length > 1
+	) {
 		menuItems.push({
 			label: t('Go to artist'),
 			icon: 'mooooom-user',
@@ -186,15 +219,16 @@ export const onTrackRowRightClick = (event: Event, data: PlaylistItem) => {
 				return {
 					label: artist.name,
 					icon: 'mooooom-user',
-					command: () => router.push(artist.link)
+					command: () => router.push(artist.link),
 				};
-			})
+			}),
 		});
 	}
 
-	menuItems.push({
-		separator: true
-	},
+	menuItems.push(
+		{
+			separator: true,
+		},
 		{
 			label: t('Share'),
 			icon: 'mooooom-shareSquare',
@@ -202,20 +236,23 @@ export const onTrackRowRightClick = (event: Event, data: PlaylistItem) => {
 				{
 					label: t('Copy page link'),
 					icon: 'mooooom-fileCopy',
-					command: () => copyToClipboard(window.location.href)
+					command: () => copyToClipboard(window.location.href),
 				},
 				{
 					label: t('Copy track link'),
 					icon: 'mooooom-fileCopy',
-					command: () => selectedTrackRow.value
-						? copyToClipboard(`${currentServer.value?.serverBaseUrl}/${selectedTrackRow.value?.folder_id}${selectedTrackRow.value?.folder}${selectedTrackRow.value?.filename}?token=${testUserToken.value}`)
-						: {}
+					command: () =>
+						selectedTrackRow.value
+							? copyToClipboard(
+									`${currentServer.value?.serverBaseUrl}/${selectedTrackRow.value?.folder_id}${selectedTrackRow.value?.folder}${selectedTrackRow.value?.filename}?token=${testUserToken.value}`,
+								)
+							: {},
 				},
-			]
-		});
+			],
+		},
+	);
 
 	trackContextMenuItems.value = menuItems;
 
 	cardMenu.value.show(event);
-};
-
+}

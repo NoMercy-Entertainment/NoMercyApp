@@ -1,5 +1,5 @@
-import { Country, Language } from '@/types/api/shared';
-import { InfoResponse } from '@/types/api/base/info';
+import type { Country, Language } from '@/types/api/shared';
+import type { InfoResponse } from '@/types/api/base/info';
 
 export interface NameVal {
 	title: string;
@@ -112,7 +112,6 @@ export interface PermissionsResponse {
 	// user_id: string;
 	id: string;
 }
-
 
 export interface ServerEncoderProgress {
 	id: number;
@@ -295,4 +294,3 @@ export interface LabelValue {
 	label: string;
 	value: string;
 }
-

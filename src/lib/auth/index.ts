@@ -1,9 +1,14 @@
-import type { IDToken, RefreshTokenRequestData, TokenRequestData, TokenResponse } from './index.d';
+import type {
+	IDToken,
+	RefreshTokenRequestData,
+	TokenRequestData,
+	TokenResponse,
+} from './index.d';
 import { generatePKCE, parseToken } from './helpers';
 import apiClient from '@/lib/clients/apiClient';
 import cdnClient from '../clients/cdnClient';
 
-import {setUser, user} from '@/store/user';
+import { setUser, user } from '@/store/user';
 import { isPlatform } from '@ionic/vue';
 import { authBaseUrl } from '@/config/config';
 
@@ -15,9 +20,7 @@ const clientId = 'nomercy-ui';
 const clientSecret = 'BXZFX7FzoRplLuKjDrSHB04epMJbRv04';
 
 export default () => {
-	// eslint-disable-next-line no-async-promise-executor
 	return new Promise(async (resolve, reject) => {
-
 		const params = getUrlParams();
 
 		if (params?.error && params.error === 'access_denied') {
@@ -41,12 +44,12 @@ export default () => {
 
 export function getUrlParams() {
 	const params = location.href.split('?')?.[1]?.split('&');
-	if (!params) return null;
+	if (!params)
+		return null;
 
 	const result: { [key: string]: string } = {};
 
 	params.forEach((p) => {
-
 		const [key, val] = p.split('=');
 
 		result[key] = val.replace(/\+/gu, ' ');
@@ -56,9 +59,7 @@ export function getUrlParams() {
 }
 
 async function redirectToOAuth(prompt = false) {
-
 	await generatePKCE().then((pkce) => {
-
 		let redirect = `${originalLocation}/#/oauth/callback`;
 		if (isPlatform('capacitor')) {
 			redirect = 'nomercy:///logout';
@@ -71,9 +72,7 @@ async function redirectToOAuth(prompt = false) {
 			scope: 'openid profile email',
 			state: pkce.state,
 			// id_token_hint: user.value.idToken,
-			prompt: prompt
-				? 'login'
-				: 'none',
+			prompt: prompt ? 'login' : 'none',
 		}).toString();
 
 		window.location.href = `${authBaseUrl}logout?${queryParams}`;
@@ -81,29 +80,35 @@ async function redirectToOAuth(prompt = false) {
 }
 
 function requestToken() {
-	const requestCode = new URLSearchParams(window.location.hash.split('?')[1]).get('code') as string;
+	const requestCode = new URLSearchParams(
+		window.location.hash.split('?')[1],
+	).get('code') as string;
 
-	return apiClient()
-		.post<TokenResponse, TokenRequestData>(`${authBaseUrl}token`, {
+	return apiClient().post<TokenResponse, TokenRequestData>(
+		`${authBaseUrl}token`,
+		{
 			grant_type: 'authorization_code',
 			client_id: clientId,
 			client_secret: clientSecret,
 			redirect_uri: `${originalLocation}/#/oauth/callback`,
 			code: requestCode,
-		}, {
+		},
+		{
 			headers: {
 				'Accept': 'application/json',
 				'Content-Type': 'application/x-www-form-urlencoded',
 			},
-		});
+		},
+	);
 }
 
 export function refreshToken() {
 	return new Promise((resolve, reject) => {
 		setTimeout(async () => {
-			const refreshToken = location.search.split('refreshToken=')?.[1]?.split('&')?.[0]
-				?? localStorage.getItem('refresh_token')
-				?? undefined;
+			const refreshToken
+        = location.search.split('refreshToken=')?.[1]?.split('&')?.[0]
+        	?? localStorage.getItem('refresh_token')
+        	?? undefined;
 
 			if (!refreshToken) {
 				reject('refreshToken: No refresh token');
@@ -111,17 +116,21 @@ export function refreshToken() {
 			}
 
 			cdnClient()
-				.post<TokenResponse, RefreshTokenRequestData>(`${authBaseUrl}token`, {
-					grant_type: 'refresh_token',
-					client_id: clientId,
-					client_secret: clientSecret,
-					refresh_token: refreshToken,
-				}, {
-					headers: {
-						'Accept': 'application/json',
-						'Content-Type': 'application/x-www-form-urlencoded',
+				.post<TokenResponse, RefreshTokenRequestData>(
+					`${authBaseUrl}token`,
+					{
+						grant_type: 'refresh_token',
+						client_id: clientId,
+						client_secret: clientSecret,
+						refresh_token: refreshToken,
 					},
-				})
+					{
+						headers: {
+							'Accept': 'application/json',
+							'Content-Type': 'application/x-www-form-urlencoded',
+						},
+					},
+				)
 				.then((response) => {
 					storeTokens(response.data);
 					return resolve(response);
@@ -155,15 +164,13 @@ function hasToken() {
 }
 
 function hasValidToken() {
-	return hasToken()
-		&& (user.value.refreshIn - Date.now()) > 5000;
+	return hasToken() && user.value.refreshIn - Date.now() > 5000;
 }
 
 export function storeTokens(data: TokenResponse) {
-
 	setUser({
 		...user.value,
-		refreshIn: new Date(Date.now() + (data.expires_in * 1000)).getTime(),
+		refreshIn: new Date(Date.now() + data.expires_in * 1000).getTime(),
 		accessToken: data.access_token,
 		refreshToken: data.refresh_token,
 		idToken: data.id_token,
@@ -185,11 +192,10 @@ export function storeTokens(data: TokenResponse) {
 			id: decodedToken.sub,
 			locale: decodedToken.locale,
 		});
-
-	} catch (error) {
+	}
+	catch (error) {
 		console.error(error);
 	}
-
 }
 
 export function clearTokens() {
@@ -199,7 +205,6 @@ export function clearTokens() {
 }
 
 async function checkAuth(): Promise<boolean | void> {
-
 	if (!window.location.href.includes('oauth/callback')) {
 		sessionStorage.setItem('redirect', window.location.hash);
 	}
@@ -212,13 +217,15 @@ async function checkAuth(): Promise<boolean | void> {
 				storeTokens(response.data);
 
 				keepTokenFresh();
-			} catch (error) {
+			}
+			catch (error) {
 				sessionStorage.clear();
 				// location.reload();
 
 				await Promise.reject(error);
 			}
-		} else {
+		}
+		else {
 			await redirectToOAuth();
 		}
 	}
@@ -230,6 +237,6 @@ export function logout() {
 	redirectToOAuth(false).then();
 }
 
-export const isAuthenticated = () => {
+export function isAuthenticated() {
 	return !!localStorage.getItem('access_token');
-};
+}

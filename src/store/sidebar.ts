@@ -4,23 +4,23 @@ const sb = ref<'open' | 'closed' | 'hidden'>('hidden');
 
 export const sidebar = computed(() => sb.value);
 
-export const setSidebar = (state: 'open' | 'closed' | 'hidden') => {
+export function setSidebar(state: 'open' | 'closed' | 'hidden') {
 	sb.value = state;
 }
 
-export const toggleSidebar = () => {
+export function toggleSidebar() {
 	sb.value = sb.value === 'open' ? 'closed' : 'open';
-};
+}
 
-export const hideSidebar = () => {
+export function hideSidebar() {
 	sb.value = 'hidden';
 }
 
-export const openSidebar = () => {
+export function openSidebar() {
 	sb.value = 'open';
 }
 
-export const closeSidebar = () => {
+export function closeSidebar() {
 	sb.value = 'closed';
 }
 

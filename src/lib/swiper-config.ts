@@ -1,81 +1,81 @@
 // @ts-ignore
-import { SwiperOptions } from 'swiper/types/swiper-options.d';
+import type { SwiperOptions } from 'swiper/types/swiper-options.d';
 
-export const breakpoints = (isBackdrop: boolean) => {
+export function breakpoints(isBackdrop: boolean) {
 	return {
 		0: !isBackdrop
 			? {
-				slidesPerView: 3.4,
-				slidesPerGroup: 1,
-			}
+					slidesPerView: 3.4,
+					slidesPerGroup: 1,
+				}
 			: {
-				slidesPerView: 2.28,
-				slidesPerGroup: 1,
-			},
+					slidesPerView: 2.28,
+					slidesPerGroup: 1,
+				},
 		768: !isBackdrop
 			? {
-				slidesPerView: 6.3,
-				slidesPerGroup: 5,
-			}
+					slidesPerView: 6.3,
+					slidesPerGroup: 5,
+				}
 			: {
-				slidesPerView: 3.2,
-				slidesPerGroup: 3,
-			},
+					slidesPerView: 3.2,
+					slidesPerGroup: 3,
+				},
 		1194: !isBackdrop
 			? {
-				slidesPerView: 6.4,
-				slidesPerGroup: 6,
-			}
+					slidesPerView: 6.4,
+					slidesPerGroup: 6,
+				}
 			: {
-				slidesPerView: 6.4,
-				slidesPerGroup: 6,
-			},
+					slidesPerView: 6.4,
+					slidesPerGroup: 6,
+				},
 		1280: !isBackdrop
 			? {
-				slidesPerView: 7.2,
-				slidesPerGroup: 7,
-			}
+					slidesPerView: 7.2,
+					slidesPerGroup: 7,
+				}
 			: {
-				slidesPerView: 4.12,
-				slidesPerGroup: 4,
-			},
+					slidesPerView: 4.12,
+					slidesPerGroup: 4,
+				},
 		1536: !isBackdrop
 			? {
-				slidesPerView: 7.2,
-				slidesPerGroup: 7,
-			}
+					slidesPerView: 7.2,
+					slidesPerGroup: 7,
+				}
 			: {
-				slidesPerView: 4.12,
-				slidesPerGroup: 4,
-			},
+					slidesPerView: 4.12,
+					slidesPerGroup: 4,
+				},
 		1740: !isBackdrop
 			? {
-				slidesPerView: 9.4,
-				slidesPerGroup: 9,
-			}
+					slidesPerView: 9.4,
+					slidesPerGroup: 9,
+				}
 			: {
-				slidesPerView: 5.22,
-				slidesPerGroup: 5,
-			},
+					slidesPerView: 5.22,
+					slidesPerGroup: 5,
+				},
 		2500: !isBackdrop
 			? {
-				slidesPerView: location.hash.replace('#', '').startsWith('/person')
-					? 10.4
-					: 14.4,
-				slidesPerGroup: location.hash.replace('#', '').startsWith('/person')
-					? 10
-					: 14,
-			}
+					slidesPerView: location.hash.replace('#', '').startsWith('/person')
+						? 10.4
+						: 14.4,
+					slidesPerGroup: location.hash.replace('#', '').startsWith('/person')
+						? 10
+						: 14,
+				}
 			: {
-				slidesPerView: 8.12,
-				slidesPerGroup: 8,
-			},
+					slidesPerView: 8.12,
+					slidesPerGroup: 8,
+				},
 	};
-};
+}
 
 export type Breakpoints = ReturnType<typeof breakpoints>;
 
-export const swiperConfig = (isBackdrop: boolean) => {
+export function swiperConfig(isBackdrop: boolean) {
 	return {
 		breakpoints: breakpoints(isBackdrop),
 		allowTouchMove: true,
@@ -115,4 +115,4 @@ export const swiperConfig = (isBackdrop: boolean) => {
 			// });
 		},
 	} as SwiperOptions;
-};
+}

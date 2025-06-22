@@ -1,15 +1,14 @@
-import { Router } from 'vue-router';
-import {isPlatform} from "@ionic/vue";
+import type { Router } from 'vue-router';
+import { isPlatform } from '@ionic/vue';
 
 const removableQueries = ['code', 'state', 'session_state'];
 
-const beforeEach = (router: Router) => {
+function beforeEach(router: Router) {
 	return router.beforeEach((to, from, next) => {
-
 		if (!isPlatform('capacitor')) {
 			// const [hash, query] = location.hash.split('?');
 			// if (new URLSearchParams(hash.at(-1)).size > 0) {
-			// 	if (hash && hash != location.hash && !ignoredRedirectQueries.some(iq => query?.includes(iq))) {
+			// 	if (hash && hash !== location.hash && !ignoredRedirectQueries.some(iq => query?.includes(iq))) {
 			// 		localStorage.setItem('hash', hash);
 			// 		router.replace({ query: {} }).then();
 			// 	} else {
@@ -25,7 +24,7 @@ const beforeEach = (router: Router) => {
 			const query = { ...to.query };
 			let hasRemovableQuery = false;
 
-			removableQueries.forEach(param => {
+			removableQueries.forEach((param) => {
 				if (query[param]) {
 					delete query[param];
 					hasRemovableQuery = true;
@@ -45,7 +44,6 @@ const beforeEach = (router: Router) => {
 		}
 		next();
 	});
-};
+}
 
 export default beforeEach;
-

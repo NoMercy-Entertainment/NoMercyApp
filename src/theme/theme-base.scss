@@ -1,279 +1,279 @@
-@use "sass:list";
+@use 'sass:list';
 @use 'colors-light';
 @use 'colors-dark';
 
 :root {
-  --opacity-1: 0%;
-  --opacity-2: 3%;
-  --opacity-3: 6%;
-  --opacity-4: 8%;
-  --opacity-5: 10%;
-  --opacity-6: 13%;
-  --opacity-7: 17%;
-  --opacity-8: 25%;
-  --opacity-9: 40%;
-  --opacity-10: 46%;
-  --opacity-11: 60%;
-  --opacity-12: 93%;
+	--opacity-1: 0%;
+	--opacity-2: 3%;
+	--opacity-3: 6%;
+	--opacity-4: 8%;
+	--opacity-5: 10%;
+	--opacity-6: 13%;
+	--opacity-7: 17%;
+	--opacity-8: 25%;
+	--opacity-9: 40%;
+	--opacity-10: 46%;
+	--opacity-11: 60%;
+	--opacity-12: 93%;
 
-  @each $key, $val in colors-light.$colors-light {
-    --color-light-#{$key}-1: #{list.nth($val, 1)};
-    --color-light-#{$key}-2: #{list.nth($val, 2)};
-    --color-light-#{$key}-3: #{list.nth($val, 3)};
-    --color-light-#{$key}-4: #{list.nth($val, 4)};
-    --color-light-#{$key}-5: #{list.nth($val, 5)};
-    --color-light-#{$key}-6: #{list.nth($val, 6)};
-    --color-light-#{$key}-7: #{list.nth($val, 7)};
-    --color-light-#{$key}-8: #{list.nth($val, 8)};
-    --color-light-#{$key}-9: #{list.nth($val, 9)};
-    --color-light-#{$key}-10: #{list.nth($val, 10)};
-    --color-light-#{$key}-11: #{list.nth($val, 11)};
-    --color-light-#{$key}-12: #{list.nth($val, 12)};
-  }
-  @each $key, $val in colors-light.$background-light {
-    --background-light-#{$key}-1: #{list.nth($val, 1)};
-    --background-light-#{$key}-2: #{list.nth($val, 2)};
-    --background-light-#{$key}-3: #{list.nth($val, 3)};
-    --background-light-#{$key}-4: #{list.nth($val, 4)};
-    --background-light-#{$key}-5: #{list.nth($val, 5)};
-    --background-light-#{$key}-6: #{list.nth($val, 6)};
-    --background-light-#{$key}-7: #{list.nth($val, 7)};
-    --background-light-#{$key}-8: #{list.nth($val, 8)};
-    --background-light-#{$key}-9: #{list.nth($val, 9)};
-    --background-light-#{$key}-10: #{list.nth($val, 10)};
-    --background-light-#{$key}-11: #{list.nth($val, 11)};
-    --background-light-#{$key}-12: #{list.nth($val, 12)};
-  }
+	@each $key, $val in colors-light.$colors-light {
+		--color-light-#{$key}-1: #{list.nth($val, 1)};
+		--color-light-#{$key}-2: #{list.nth($val, 2)};
+		--color-light-#{$key}-3: #{list.nth($val, 3)};
+		--color-light-#{$key}-4: #{list.nth($val, 4)};
+		--color-light-#{$key}-5: #{list.nth($val, 5)};
+		--color-light-#{$key}-6: #{list.nth($val, 6)};
+		--color-light-#{$key}-7: #{list.nth($val, 7)};
+		--color-light-#{$key}-8: #{list.nth($val, 8)};
+		--color-light-#{$key}-9: #{list.nth($val, 9)};
+		--color-light-#{$key}-10: #{list.nth($val, 10)};
+		--color-light-#{$key}-11: #{list.nth($val, 11)};
+		--color-light-#{$key}-12: #{list.nth($val, 12)};
+	}
+	@each $key, $val in colors-light.$background-light {
+		--background-light-#{$key}-1: #{list.nth($val, 1)};
+		--background-light-#{$key}-2: #{list.nth($val, 2)};
+		--background-light-#{$key}-3: #{list.nth($val, 3)};
+		--background-light-#{$key}-4: #{list.nth($val, 4)};
+		--background-light-#{$key}-5: #{list.nth($val, 5)};
+		--background-light-#{$key}-6: #{list.nth($val, 6)};
+		--background-light-#{$key}-7: #{list.nth($val, 7)};
+		--background-light-#{$key}-8: #{list.nth($val, 8)};
+		--background-light-#{$key}-9: #{list.nth($val, 9)};
+		--background-light-#{$key}-10: #{list.nth($val, 10)};
+		--background-light-#{$key}-11: #{list.nth($val, 11)};
+		--background-light-#{$key}-12: #{list.nth($val, 12)};
+	}
 
-  @each $key, $val in colors-light.$colors-light-alpha {
-    --color-light-#{$key}-1: #{list.nth($val, 1)};
-    --color-light-#{$key}-2: #{list.nth($val, 2)};
-    --color-light-#{$key}-3: #{list.nth($val, 3)};
-    --color-light-#{$key}-4: #{list.nth($val, 4)};
-    --color-light-#{$key}-5: #{list.nth($val, 5)};
-    --color-light-#{$key}-6: #{list.nth($val, 6)};
-    --color-light-#{$key}-7: #{list.nth($val, 7)};
-    --color-light-#{$key}-8: #{list.nth($val, 8)};
-    --color-light-#{$key}-9: #{list.nth($val, 9)};
-    --color-light-#{$key}-10: #{list.nth($val, 10)};
-    --color-light-#{$key}-11: #{list.nth($val, 11)};
-    --color-light-#{$key}-12: #{list.nth($val, 12)};
-  }
-  @each $key, $val in colors-light.$background-light-alpha {
-    --background-light-#{$key}-1: #{list.nth($val, 1)};
-    --background-light-#{$key}-2: #{list.nth($val, 2)};
-    --background-light-#{$key}-3: #{list.nth($val, 3)};
-    --background-light-#{$key}-4: #{list.nth($val, 4)};
-    --background-light-#{$key}-5: #{list.nth($val, 5)};
-    --background-light-#{$key}-6: #{list.nth($val, 6)};
-    --background-light-#{$key}-7: #{list.nth($val, 7)};
-    --background-light-#{$key}-8: #{list.nth($val, 8)};
-    --background-light-#{$key}-9: #{list.nth($val, 9)};
-    --background-light-#{$key}-10: #{list.nth($val, 10)};
-    --background-light-#{$key}-11: #{list.nth($val, 11)};
-    --background-light-#{$key}-12: #{list.nth($val, 12)};
-  }
+	@each $key, $val in colors-light.$colors-light-alpha {
+		--color-light-#{$key}-1: #{list.nth($val, 1)};
+		--color-light-#{$key}-2: #{list.nth($val, 2)};
+		--color-light-#{$key}-3: #{list.nth($val, 3)};
+		--color-light-#{$key}-4: #{list.nth($val, 4)};
+		--color-light-#{$key}-5: #{list.nth($val, 5)};
+		--color-light-#{$key}-6: #{list.nth($val, 6)};
+		--color-light-#{$key}-7: #{list.nth($val, 7)};
+		--color-light-#{$key}-8: #{list.nth($val, 8)};
+		--color-light-#{$key}-9: #{list.nth($val, 9)};
+		--color-light-#{$key}-10: #{list.nth($val, 10)};
+		--color-light-#{$key}-11: #{list.nth($val, 11)};
+		--color-light-#{$key}-12: #{list.nth($val, 12)};
+	}
+	@each $key, $val in colors-light.$background-light-alpha {
+		--background-light-#{$key}-1: #{list.nth($val, 1)};
+		--background-light-#{$key}-2: #{list.nth($val, 2)};
+		--background-light-#{$key}-3: #{list.nth($val, 3)};
+		--background-light-#{$key}-4: #{list.nth($val, 4)};
+		--background-light-#{$key}-5: #{list.nth($val, 5)};
+		--background-light-#{$key}-6: #{list.nth($val, 6)};
+		--background-light-#{$key}-7: #{list.nth($val, 7)};
+		--background-light-#{$key}-8: #{list.nth($val, 8)};
+		--background-light-#{$key}-9: #{list.nth($val, 9)};
+		--background-light-#{$key}-10: #{list.nth($val, 10)};
+		--background-light-#{$key}-11: #{list.nth($val, 11)};
+		--background-light-#{$key}-12: #{list.nth($val, 12)};
+	}
 
-  @each $key, $val in colors-dark.$colors-dark {
-    --color-dark-#{$key}-1: #{list.nth($val, 1)};
-    --color-dark-#{$key}-2: #{list.nth($val, 2)};
-    --color-dark-#{$key}-3: #{list.nth($val, 3)};
-    --color-dark-#{$key}-4: #{list.nth($val, 4)};
-    --color-dark-#{$key}-5: #{list.nth($val, 5)};
-    --color-dark-#{$key}-6: #{list.nth($val, 6)};
-    --color-dark-#{$key}-7: #{list.nth($val, 7)};
-    --color-dark-#{$key}-8: #{list.nth($val, 8)};
-    --color-dark-#{$key}-9: #{list.nth($val, 9)};
-    --color-dark-#{$key}-10: #{list.nth($val, 10)};
-    --color-dark-#{$key}-11: #{list.nth($val, 11)};
-    --color-dark-#{$key}-12: #{list.nth($val, 12)};
-  }
-  @each $key, $val in colors-dark.$background-dark {
-    --background-dark-#{$key}-1: #{list.nth($val, 1)};
-    --background-dark-#{$key}-2: #{list.nth($val, 2)};
-    --background-dark-#{$key}-3: #{list.nth($val, 3)};
-    --background-dark-#{$key}-4: #{list.nth($val, 4)};
-    --background-dark-#{$key}-5: #{list.nth($val, 5)};
-    --background-dark-#{$key}-6: #{list.nth($val, 6)};
-    --background-dark-#{$key}-7: #{list.nth($val, 7)};
-    --background-dark-#{$key}-8: #{list.nth($val, 8)};
-    --background-dark-#{$key}-9: #{list.nth($val, 9)};
-    --background-dark-#{$key}-10: #{list.nth($val, 10)};
-    --background-dark-#{$key}-11: #{list.nth($val, 11)};
-    --background-dark-#{$key}-12: #{list.nth($val, 12)};
-  }
-  @each $key, $val in colors-dark.$colors-dark-alpha {
-    --color-dark-#{$key}-1: #{list.nth($val, 1)};
-    --color-dark-#{$key}-2: #{list.nth($val, 2)};
-    --color-dark-#{$key}-3: #{list.nth($val, 3)};
-    --color-dark-#{$key}-4: #{list.nth($val, 4)};
-    --color-dark-#{$key}-5: #{list.nth($val, 5)};
-    --color-dark-#{$key}-6: #{list.nth($val, 6)};
-    --color-dark-#{$key}-7: #{list.nth($val, 7)};
-    --color-dark-#{$key}-8: #{list.nth($val, 8)};
-    --color-dark-#{$key}-9: #{list.nth($val, 9)};
-    --color-dark-#{$key}-10: #{list.nth($val, 10)};
-    --color-dark-#{$key}-11: #{list.nth($val, 11)};
-    --color-dark-#{$key}-12: #{list.nth($val, 12)};
-  }
-  @each $key, $val in colors-dark.$background-dark-alpha {
-    --background-dark-#{$key}-1: #{list.nth($val, 1)};
-    --background-dark-#{$key}-2: #{list.nth($val, 2)};
-    --background-dark-#{$key}-3: #{list.nth($val, 3)};
-    --background-dark-#{$key}-4: #{list.nth($val, 4)};
-    --background-dark-#{$key}-5: #{list.nth($val, 5)};
-    --background-dark-#{$key}-6: #{list.nth($val, 6)};
-    --background-dark-#{$key}-7: #{list.nth($val, 7)};
-    --background-dark-#{$key}-8: #{list.nth($val, 8)};
-    --background-dark-#{$key}-9: #{list.nth($val, 9)};
-    --background-dark-#{$key}-10: #{list.nth($val, 10)};
-    --background-dark-#{$key}-11: #{list.nth($val, 11)};
-    --background-dark-#{$key}-12: #{list.nth($val, 12)};
-  }
-  //
-  //@media (prefers-color-scheme: dark) {
-    @each $key, $val in colors-dark.$colors-dark {
-      --color-#{$key}-1: #{list.nth($val, 1)};
-      --color-#{$key}-2: #{list.nth($val, 2)};
-      --color-#{$key}-3: #{list.nth($val, 3)};
-      --color-#{$key}-4: #{list.nth($val, 4)};
-      --color-#{$key}-5: #{list.nth($val, 5)};
-      --color-#{$key}-6: #{list.nth($val, 6)};
-      --color-#{$key}-7: #{list.nth($val, 7)};
-      --color-#{$key}-8: #{list.nth($val, 8)};
-      --color-#{$key}-9: #{list.nth($val, 9)};
-      --color-#{$key}-10: #{list.nth($val, 10)};
-      --color-#{$key}-11: #{list.nth($val, 11)};
-      --color-#{$key}-12: #{list.nth($val, 12)};
-    }
-    @each $key, $val in colors-dark.$background-dark {
-      --background-#{$key}-1: #{list.nth($val, 1)};
-      --background-#{$key}-2: #{list.nth($val, 2)};
-      --background-#{$key}-3: #{list.nth($val, 3)};
-      --background-#{$key}-4: #{list.nth($val, 4)};
-      --background-#{$key}-5: #{list.nth($val, 5)};
-      --background-#{$key}-6: #{list.nth($val, 6)};
-      --background-#{$key}-7: #{list.nth($val, 7)};
-      --background-#{$key}-8: #{list.nth($val, 8)};
-      --background-#{$key}-9: #{list.nth($val, 9)};
-      --background-#{$key}-10: #{list.nth($val, 10)};
-      --background-#{$key}-11: #{list.nth($val, 11)};
-      --background-#{$key}-12: #{list.nth($val, 12)};
-    }
-    @each $key, $val in colors-dark.$colors-dark-alpha {
-      --color-#{$key}-1: #{list.nth($val, 1)};
-      --color-#{$key}-2: #{list.nth($val, 2)};
-      --color-#{$key}-3: #{list.nth($val, 3)};
-      --color-#{$key}-4: #{list.nth($val, 4)};
-      --color-#{$key}-5: #{list.nth($val, 5)};
-      --color-#{$key}-6: #{list.nth($val, 6)};
-      --color-#{$key}-7: #{list.nth($val, 7)};
-      --color-#{$key}-8: #{list.nth($val, 8)};
-      --color-#{$key}-9: #{list.nth($val, 9)};
-      --color-#{$key}-10: #{list.nth($val, 10)};
-      --color-#{$key}-11: #{list.nth($val, 11)};
-      --color-#{$key}-12: #{list.nth($val, 12)};
-    }
-    @each $key, $val in colors-dark.$background-dark-alpha {
-      --background-#{$key}-1: #{list.nth($val, 1)};
-      --background-#{$key}-2: #{list.nth($val, 2)};
-      --background-#{$key}-3: #{list.nth($val, 3)};
-      --background-#{$key}-4: #{list.nth($val, 4)};
-      --background-#{$key}-5: #{list.nth($val, 5)};
-      --background-#{$key}-6: #{list.nth($val, 6)};
-      --background-#{$key}-7: #{list.nth($val, 7)};
-      --background-#{$key}-8: #{list.nth($val, 8)};
-      --background-#{$key}-9: #{list.nth($val, 9)};
-      --background-#{$key}-10: #{list.nth($val, 10)};
-      --background-#{$key}-11: #{list.nth($val, 11)};
-      --background-#{$key}-12: #{list.nth($val, 12)};
-      .background-#{$key} {
-        --background-auto-alpha-1: #{list.nth($val, 12)};
-        --background-auto-alpha-2: #{list.nth($val, 11)};
-        --background-auto-alpha-3: #{list.nth($val, 10)};
-        --background-auto-alpha-4: #{list.nth($val, 9)};
-        --background-auto-alpha-5: #{list.nth($val, 8)};
-        --background-auto-alpha-6: #{list.nth($val, 7)};
-        --background-auto-alpha-7: #{list.nth($val, 6)};
-        --background-auto-alpha-8: #{list.nth($val, 5)};
-        --background-auto-alpha-9: #{list.nth($val, 4)};
-        --background-auto-alpha-10: #{list.nth($val, 3)};
-        --background-auto-alpha-11: #{list.nth($val, 2)};
-        --background-auto-alpha-12: #{list.nth($val, 1)};
-      }
-    }
-  //}
-  //
-  //@media (prefers-color-scheme: light) {
-  //  @each $key, $val in colors-light.$colors-light {
-  //    --color-#{$key}-1: #{list.nth($val, 1)};
-  //    --color-#{$key}-2: #{list.nth($val, 2)};
-  //    --color-#{$key}-3: #{list.nth($val, 3)};
-  //    --color-#{$key}-4: #{list.nth($val, 4)};
-  //    --color-#{$key}-5: #{list.nth($val, 5)};
-  //    --color-#{$key}-6: #{list.nth($val, 6)};
-  //    --color-#{$key}-7: #{list.nth($val, 7)};
-  //    --color-#{$key}-8: #{list.nth($val, 8)};
-  //    --color-#{$key}-9: #{list.nth($val, 9)};
-  //    --color-#{$key}-10: #{list.nth($val, 10)};
-  //    --color-#{$key}-11: #{list.nth($val, 11)};
-  //    --color-#{$key}-12: #{list.nth($val, 12)};
-  //  }
-  //  @each $key, $val in colors-light.$background-light {
-  //    --background-#{$key}-1: #{list.nth($val, 1)};
-  //    --background-#{$key}-2: #{list.nth($val, 2)};
-  //    --background-#{$key}-3: #{list.nth($val, 3)};
-  //    --background-#{$key}-4: #{list.nth($val, 4)};
-  //    --background-#{$key}-5: #{list.nth($val, 5)};
-  //    --background-#{$key}-6: #{list.nth($val, 6)};
-  //    --background-#{$key}-7: #{list.nth($val, 7)};
-  //    --background-#{$key}-8: #{list.nth($val, 8)};
-  //    --background-#{$key}-9: #{list.nth($val, 9)};
-  //    --background-#{$key}-10: #{list.nth($val, 10)};
-  //    --background-#{$key}-11: #{list.nth($val, 11)};
-  //    --background-#{$key}-12: #{list.nth($val, 12)};
-  //  }
-  //  @each $key, $val in colors-light.$colors-light-alpha {
-  //    --color-#{$key}-1: #{list.nth($val, 1)};
-  //    --color-#{$key}-2: #{list.nth($val, 2)};
-  //    --color-#{$key}-3: #{list.nth($val, 3)};
-  //    --color-#{$key}-4: #{list.nth($val, 4)};
-  //    --color-#{$key}-5: #{list.nth($val, 5)};
-  //    --color-#{$key}-6: #{list.nth($val, 6)};
-  //    --color-#{$key}-7: #{list.nth($val, 7)};
-  //    --color-#{$key}-8: #{list.nth($val, 8)};
-  //    --color-#{$key}-9: #{list.nth($val, 9)};
-  //    --color-#{$key}-10: #{list.nth($val, 10)};
-  //    --color-#{$key}-11: #{list.nth($val, 11)};
-  //    --color-#{$key}-12: #{list.nth($val, 12)};
-  //  }
-  //  @each $key, $val in colors-light.$background-light-alpha {
-  //    --background-#{$key}-1: #{list.nth($val, 1)};
-  //    --background-#{$key}-2: #{list.nth($val, 2)};
-  //    --background-#{$key}-3: #{list.nth($val, 3)};
-  //    --background-#{$key}-4: #{list.nth($val, 4)};
-  //    --background-#{$key}-5: #{list.nth($val, 5)};
-  //    --background-#{$key}-6: #{list.nth($val, 6)};
-  //    --background-#{$key}-7: #{list.nth($val, 7)};
-  //    --background-#{$key}-8: #{list.nth($val, 8)};
-  //    --background-#{$key}-9: #{list.nth($val, 9)};
-  //    --background-#{$key}-10: #{list.nth($val, 10)};
-  //    --background-#{$key}-11: #{list.nth($val, 11)};
-  //    --background-#{$key}-12: #{list.nth($val, 12)};
-  //    .background-#{$key} {
-  //      --background-auto-alpha-1: #{list.nth($val, 12)};
-  //      --background-auto-alpha-2: #{list.nth($val, 11)};
-  //      --background-auto-alpha-3: #{list.nth($val, 10)};
-  //      --background-auto-alpha-4: #{list.nth($val, 9)};
-  //      --background-auto-alpha-5: #{list.nth($val, 8)};
-  //      --background-auto-alpha-6: #{list.nth($val, 7)};
-  //      --background-auto-alpha-7: #{list.nth($val, 6)};
-  //      --background-auto-alpha-8: #{list.nth($val, 5)};
-  //      --background-auto-alpha-9: #{list.nth($val, 4)};
-  //      --background-auto-alpha-10: #{list.nth($val, 3)};
-  //      --background-auto-alpha-11: #{list.nth($val, 2)};
-  //      --background-auto-alpha-12: #{list.nth($val, 1)};
-  //    }
-  //  }
-  //}
+	@each $key, $val in colors-dark.$colors-dark {
+		--color-dark-#{$key}-1: #{list.nth($val, 1)};
+		--color-dark-#{$key}-2: #{list.nth($val, 2)};
+		--color-dark-#{$key}-3: #{list.nth($val, 3)};
+		--color-dark-#{$key}-4: #{list.nth($val, 4)};
+		--color-dark-#{$key}-5: #{list.nth($val, 5)};
+		--color-dark-#{$key}-6: #{list.nth($val, 6)};
+		--color-dark-#{$key}-7: #{list.nth($val, 7)};
+		--color-dark-#{$key}-8: #{list.nth($val, 8)};
+		--color-dark-#{$key}-9: #{list.nth($val, 9)};
+		--color-dark-#{$key}-10: #{list.nth($val, 10)};
+		--color-dark-#{$key}-11: #{list.nth($val, 11)};
+		--color-dark-#{$key}-12: #{list.nth($val, 12)};
+	}
+	@each $key, $val in colors-dark.$background-dark {
+		--background-dark-#{$key}-1: #{list.nth($val, 1)};
+		--background-dark-#{$key}-2: #{list.nth($val, 2)};
+		--background-dark-#{$key}-3: #{list.nth($val, 3)};
+		--background-dark-#{$key}-4: #{list.nth($val, 4)};
+		--background-dark-#{$key}-5: #{list.nth($val, 5)};
+		--background-dark-#{$key}-6: #{list.nth($val, 6)};
+		--background-dark-#{$key}-7: #{list.nth($val, 7)};
+		--background-dark-#{$key}-8: #{list.nth($val, 8)};
+		--background-dark-#{$key}-9: #{list.nth($val, 9)};
+		--background-dark-#{$key}-10: #{list.nth($val, 10)};
+		--background-dark-#{$key}-11: #{list.nth($val, 11)};
+		--background-dark-#{$key}-12: #{list.nth($val, 12)};
+	}
+	@each $key, $val in colors-dark.$colors-dark-alpha {
+		--color-dark-#{$key}-1: #{list.nth($val, 1)};
+		--color-dark-#{$key}-2: #{list.nth($val, 2)};
+		--color-dark-#{$key}-3: #{list.nth($val, 3)};
+		--color-dark-#{$key}-4: #{list.nth($val, 4)};
+		--color-dark-#{$key}-5: #{list.nth($val, 5)};
+		--color-dark-#{$key}-6: #{list.nth($val, 6)};
+		--color-dark-#{$key}-7: #{list.nth($val, 7)};
+		--color-dark-#{$key}-8: #{list.nth($val, 8)};
+		--color-dark-#{$key}-9: #{list.nth($val, 9)};
+		--color-dark-#{$key}-10: #{list.nth($val, 10)};
+		--color-dark-#{$key}-11: #{list.nth($val, 11)};
+		--color-dark-#{$key}-12: #{list.nth($val, 12)};
+	}
+	@each $key, $val in colors-dark.$background-dark-alpha {
+		--background-dark-#{$key}-1: #{list.nth($val, 1)};
+		--background-dark-#{$key}-2: #{list.nth($val, 2)};
+		--background-dark-#{$key}-3: #{list.nth($val, 3)};
+		--background-dark-#{$key}-4: #{list.nth($val, 4)};
+		--background-dark-#{$key}-5: #{list.nth($val, 5)};
+		--background-dark-#{$key}-6: #{list.nth($val, 6)};
+		--background-dark-#{$key}-7: #{list.nth($val, 7)};
+		--background-dark-#{$key}-8: #{list.nth($val, 8)};
+		--background-dark-#{$key}-9: #{list.nth($val, 9)};
+		--background-dark-#{$key}-10: #{list.nth($val, 10)};
+		--background-dark-#{$key}-11: #{list.nth($val, 11)};
+		--background-dark-#{$key}-12: #{list.nth($val, 12)};
+	}
+	//
+	//@media (prefers-color-scheme: dark) {
+	@each $key, $val in colors-dark.$colors-dark {
+		--color-#{$key}-1: #{list.nth($val, 1)};
+		--color-#{$key}-2: #{list.nth($val, 2)};
+		--color-#{$key}-3: #{list.nth($val, 3)};
+		--color-#{$key}-4: #{list.nth($val, 4)};
+		--color-#{$key}-5: #{list.nth($val, 5)};
+		--color-#{$key}-6: #{list.nth($val, 6)};
+		--color-#{$key}-7: #{list.nth($val, 7)};
+		--color-#{$key}-8: #{list.nth($val, 8)};
+		--color-#{$key}-9: #{list.nth($val, 9)};
+		--color-#{$key}-10: #{list.nth($val, 10)};
+		--color-#{$key}-11: #{list.nth($val, 11)};
+		--color-#{$key}-12: #{list.nth($val, 12)};
+	}
+	@each $key, $val in colors-dark.$background-dark {
+		--background-#{$key}-1: #{list.nth($val, 1)};
+		--background-#{$key}-2: #{list.nth($val, 2)};
+		--background-#{$key}-3: #{list.nth($val, 3)};
+		--background-#{$key}-4: #{list.nth($val, 4)};
+		--background-#{$key}-5: #{list.nth($val, 5)};
+		--background-#{$key}-6: #{list.nth($val, 6)};
+		--background-#{$key}-7: #{list.nth($val, 7)};
+		--background-#{$key}-8: #{list.nth($val, 8)};
+		--background-#{$key}-9: #{list.nth($val, 9)};
+		--background-#{$key}-10: #{list.nth($val, 10)};
+		--background-#{$key}-11: #{list.nth($val, 11)};
+		--background-#{$key}-12: #{list.nth($val, 12)};
+	}
+	@each $key, $val in colors-dark.$colors-dark-alpha {
+		--color-#{$key}-1: #{list.nth($val, 1)};
+		--color-#{$key}-2: #{list.nth($val, 2)};
+		--color-#{$key}-3: #{list.nth($val, 3)};
+		--color-#{$key}-4: #{list.nth($val, 4)};
+		--color-#{$key}-5: #{list.nth($val, 5)};
+		--color-#{$key}-6: #{list.nth($val, 6)};
+		--color-#{$key}-7: #{list.nth($val, 7)};
+		--color-#{$key}-8: #{list.nth($val, 8)};
+		--color-#{$key}-9: #{list.nth($val, 9)};
+		--color-#{$key}-10: #{list.nth($val, 10)};
+		--color-#{$key}-11: #{list.nth($val, 11)};
+		--color-#{$key}-12: #{list.nth($val, 12)};
+	}
+	@each $key, $val in colors-dark.$background-dark-alpha {
+		--background-#{$key}-1: #{list.nth($val, 1)};
+		--background-#{$key}-2: #{list.nth($val, 2)};
+		--background-#{$key}-3: #{list.nth($val, 3)};
+		--background-#{$key}-4: #{list.nth($val, 4)};
+		--background-#{$key}-5: #{list.nth($val, 5)};
+		--background-#{$key}-6: #{list.nth($val, 6)};
+		--background-#{$key}-7: #{list.nth($val, 7)};
+		--background-#{$key}-8: #{list.nth($val, 8)};
+		--background-#{$key}-9: #{list.nth($val, 9)};
+		--background-#{$key}-10: #{list.nth($val, 10)};
+		--background-#{$key}-11: #{list.nth($val, 11)};
+		--background-#{$key}-12: #{list.nth($val, 12)};
+		.background-#{$key} {
+			--background-auto-alpha-1: #{list.nth($val, 12)};
+			--background-auto-alpha-2: #{list.nth($val, 11)};
+			--background-auto-alpha-3: #{list.nth($val, 10)};
+			--background-auto-alpha-4: #{list.nth($val, 9)};
+			--background-auto-alpha-5: #{list.nth($val, 8)};
+			--background-auto-alpha-6: #{list.nth($val, 7)};
+			--background-auto-alpha-7: #{list.nth($val, 6)};
+			--background-auto-alpha-8: #{list.nth($val, 5)};
+			--background-auto-alpha-9: #{list.nth($val, 4)};
+			--background-auto-alpha-10: #{list.nth($val, 3)};
+			--background-auto-alpha-11: #{list.nth($val, 2)};
+			--background-auto-alpha-12: #{list.nth($val, 1)};
+		}
+	}
+	//}
+	//
+	//@media (prefers-color-scheme: light) {
+	//  @each $key, $val in colors-light.$colors-light {
+	//    --color-#{$key}-1: #{list.nth($val, 1)};
+	//    --color-#{$key}-2: #{list.nth($val, 2)};
+	//    --color-#{$key}-3: #{list.nth($val, 3)};
+	//    --color-#{$key}-4: #{list.nth($val, 4)};
+	//    --color-#{$key}-5: #{list.nth($val, 5)};
+	//    --color-#{$key}-6: #{list.nth($val, 6)};
+	//    --color-#{$key}-7: #{list.nth($val, 7)};
+	//    --color-#{$key}-8: #{list.nth($val, 8)};
+	//    --color-#{$key}-9: #{list.nth($val, 9)};
+	//    --color-#{$key}-10: #{list.nth($val, 10)};
+	//    --color-#{$key}-11: #{list.nth($val, 11)};
+	//    --color-#{$key}-12: #{list.nth($val, 12)};
+	//  }
+	//  @each $key, $val in colors-light.$background-light {
+	//    --background-#{$key}-1: #{list.nth($val, 1)};
+	//    --background-#{$key}-2: #{list.nth($val, 2)};
+	//    --background-#{$key}-3: #{list.nth($val, 3)};
+	//    --background-#{$key}-4: #{list.nth($val, 4)};
+	//    --background-#{$key}-5: #{list.nth($val, 5)};
+	//    --background-#{$key}-6: #{list.nth($val, 6)};
+	//    --background-#{$key}-7: #{list.nth($val, 7)};
+	//    --background-#{$key}-8: #{list.nth($val, 8)};
+	//    --background-#{$key}-9: #{list.nth($val, 9)};
+	//    --background-#{$key}-10: #{list.nth($val, 10)};
+	//    --background-#{$key}-11: #{list.nth($val, 11)};
+	//    --background-#{$key}-12: #{list.nth($val, 12)};
+	//  }
+	//  @each $key, $val in colors-light.$colors-light-alpha {
+	//    --color-#{$key}-1: #{list.nth($val, 1)};
+	//    --color-#{$key}-2: #{list.nth($val, 2)};
+	//    --color-#{$key}-3: #{list.nth($val, 3)};
+	//    --color-#{$key}-4: #{list.nth($val, 4)};
+	//    --color-#{$key}-5: #{list.nth($val, 5)};
+	//    --color-#{$key}-6: #{list.nth($val, 6)};
+	//    --color-#{$key}-7: #{list.nth($val, 7)};
+	//    --color-#{$key}-8: #{list.nth($val, 8)};
+	//    --color-#{$key}-9: #{list.nth($val, 9)};
+	//    --color-#{$key}-10: #{list.nth($val, 10)};
+	//    --color-#{$key}-11: #{list.nth($val, 11)};
+	//    --color-#{$key}-12: #{list.nth($val, 12)};
+	//  }
+	//  @each $key, $val in colors-light.$background-light-alpha {
+	//    --background-#{$key}-1: #{list.nth($val, 1)};
+	//    --background-#{$key}-2: #{list.nth($val, 2)};
+	//    --background-#{$key}-3: #{list.nth($val, 3)};
+	//    --background-#{$key}-4: #{list.nth($val, 4)};
+	//    --background-#{$key}-5: #{list.nth($val, 5)};
+	//    --background-#{$key}-6: #{list.nth($val, 6)};
+	//    --background-#{$key}-7: #{list.nth($val, 7)};
+	//    --background-#{$key}-8: #{list.nth($val, 8)};
+	//    --background-#{$key}-9: #{list.nth($val, 9)};
+	//    --background-#{$key}-10: #{list.nth($val, 10)};
+	//    --background-#{$key}-11: #{list.nth($val, 11)};
+	//    --background-#{$key}-12: #{list.nth($val, 12)};
+	//    .background-#{$key} {
+	//      --background-auto-alpha-1: #{list.nth($val, 12)};
+	//      --background-auto-alpha-2: #{list.nth($val, 11)};
+	//      --background-auto-alpha-3: #{list.nth($val, 10)};
+	//      --background-auto-alpha-4: #{list.nth($val, 9)};
+	//      --background-auto-alpha-5: #{list.nth($val, 8)};
+	//      --background-auto-alpha-6: #{list.nth($val, 7)};
+	//      --background-auto-alpha-7: #{list.nth($val, 6)};
+	//      --background-auto-alpha-8: #{list.nth($val, 5)};
+	//      --background-auto-alpha-9: #{list.nth($val, 4)};
+	//      --background-auto-alpha-10: #{list.nth($val, 3)};
+	//      --background-auto-alpha-11: #{list.nth($val, 2)};
+	//      --background-auto-alpha-12: #{list.nth($val, 1)};
+	//    }
+	//  }
+	//}
 }

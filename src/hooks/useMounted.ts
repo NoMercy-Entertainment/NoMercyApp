@@ -1,22 +1,24 @@
-import { onUnmounted, onMounted, ref, toRaw } from 'vue';
+import { onMounted, onUnmounted, ref, toRaw } from 'vue';
 
-const keepAlive = ref<{
-	mount: () => void;
-	unmount: () => void
-	timeout: NodeJS.Timeout | null;
-}[]>([]);
+const keepAlive = ref<
+	{
+		mount: () => void;
+		unmount: () => void;
+		timeout: NodeJS.Timeout | null;
+	}[]
+>([]);
 
-const useMounted = (onMount: () => void, onUnmount: () => void, duration = 0) => {
+function useMounted(onMount: () => void, onUnmount: () => void, duration = 0) {
 	onMounted(() => {
-		const last = keepAlive.value
-			.find((fn) => fn.mount == onMount);
+		const last = keepAlive.value.find(fn => fn.mount === onMount);
 
 		if (last?.timeout) {
 			clearTimeout(last.timeout);
 			last.timeout = null;
 		}
 
-		if (last?.mount == onMount) return;
+		if (last?.mount === onMount)
+			return;
 		onMount();
 
 		keepAlive.value = [
@@ -24,8 +26,8 @@ const useMounted = (onMount: () => void, onUnmount: () => void, duration = 0) =>
 			{
 				mount: onMount,
 				unmount: onUnmount,
-				timeout: null
-			}
+				timeout: null,
+			},
 		];
 	});
 
@@ -35,8 +37,7 @@ const useMounted = (onMount: () => void, onUnmount: () => void, duration = 0) =>
 			return;
 		}
 
-		const last = keepAlive.value
-			.find((fn) => fn.mount == onMount);
+		const last = keepAlive.value.find(fn => fn.mount === onMount);
 
 		if (!last) {
 			onUnmount();
@@ -47,9 +48,8 @@ const useMounted = (onMount: () => void, onUnmount: () => void, duration = 0) =>
 			onUnmount();
 
 			keepAlive.value = keepAlive.value
-				.filter((fn) => fn.mount != onMount)
-				.map((fn) => toRaw(fn));
-
+				.filter(fn => fn.mount !== onMount)
+				.map(fn => toRaw(fn));
 		}, duration * 1000);
 	});
 }

@@ -1,4 +1,3 @@
-
 export const defaultInitConfig: Keycloak.KeycloakInitOptions = {
 	flow: 'standard',
 	checkLoginIframe: false,

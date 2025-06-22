@@ -1,7 +1,7 @@
 import { computed } from 'vue';
 import { Preferences } from '@capacitor/preferences';
-import i18next from "@/config/i18next";
-import {useLocalStorage} from "@vueuse/core";
+import i18next from '@/config/i18next';
+import { useLocalStorage } from '@vueuse/core';
 
 const autoThemeColors = useLocalStorage<boolean>('autoThemeColors', true);
 export const useAutoThemeColors = computed(() => autoThemeColors.value);
@@ -17,7 +17,7 @@ export const useAutoThemeColors = computed(() => autoThemeColors.value);
 	}
 	autoThemeColors.value = !!value;
 })();
-export const setUseAutoThemeColors = (value: boolean) => {
+export function setUseAutoThemeColors(value: boolean) {
 	autoThemeColors.value = value;
 	Preferences.set({
 		key: 'autoThemeColors',
@@ -37,9 +37,9 @@ export const showBackdrops = computed(() => backdrops.value);
 		}).then();
 		return;
 	}
-	backdrops.value = value == 'true';
+	backdrops.value = value === 'true';
 })();
-export const setShowBackdrops = (value: boolean) => {
+export function setShowBackdrops(value: boolean) {
 	backdrops.value = value;
 	Preferences.set({
 		key: 'showBackdrops',
@@ -60,9 +60,9 @@ export const usePercentageColors = computed(() => percentageColors.value);
 		return;
 	}
 
-	percentageColors.value = (value || true) == 'true';
+	percentageColors.value = (value || true) === 'true';
 })();
-export const setUsePercentageColors = (value: boolean) => {
+export function setUsePercentageColors(value: boolean) {
 	percentageColors.value = value;
 	Preferences.set({
 		key: 'percentageColors',
@@ -82,9 +82,9 @@ export const screensaverDelay = computed(() => ssd.value);
 		}).then();
 		return;
 	}
-	ssd.value = parseInt(value ?? '5');
+	ssd.value = Number.parseInt(value ?? '5');
 })();
-export const setScreensaverDelay = (delay: number) => {
+export function setScreensaverDelay(delay: number) {
 	ssd.value = delay;
 	Preferences.set({
 		key: 'screensaverDelay',
@@ -92,19 +92,23 @@ export const setScreensaverDelay = (delay: number) => {
 	}).then();
 }
 
-const lang = useLocalStorage('displayLanguage', window.navigator.language.split('-')?.[0]);
+const lang = useLocalStorage(
+	'displayLanguage',
+	window.navigator.language.split('-')?.[0],
+);
 export const displayLanguage = computed(() => lang.value);
 export async function setDisplayLanguage(value: string) {
 	lang.value = value;
 	await i18next.changeLanguage(value);
 	Preferences.set({
 		key: 'display_language',
-		value: value
+		value,
 	}).then();
 }
 (async () => {
-	Preferences.get({ key: 'display_language'})
-		.then(async (value) => {
-			await setDisplayLanguage(value.value ?? window.navigator.language.split('-')?.[0]);
-		});
-})()
+	Preferences.get({ key: 'display_language' }).then(async (value) => {
+		await setDisplayLanguage(
+			value.value ?? window.navigator.language.split('-')?.[0],
+		);
+	});
+})();

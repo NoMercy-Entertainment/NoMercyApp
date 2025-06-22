@@ -1,20 +1,20 @@
-import {computed, ref, watch} from 'vue';
+import { computed, ref } from 'vue';
 import { rgbaToHex } from '@uiw/color-convert';
 import { focusColor } from '@/store/ui';
-import {Preferences} from "@capacitor/preferences";
+import { Preferences } from '@capacitor/preferences';
 
 export const topNavColor = computed(() => {
 	return rgbaToHex({
-		r: parseInt(focusColor.value.split(' ')[0], 10) * 0.35,
-		g: parseInt(focusColor.value.split(' ')[1], 10) * 0.35,
-		b: parseInt(focusColor.value.split(' ')[2], 10) * 0.35,
+		r: Number.parseInt(focusColor.value.split(' ')[0], 10) * 0.35,
+		g: Number.parseInt(focusColor.value.split(' ')[1], 10) * 0.35,
+		b: Number.parseInt(focusColor.value.split(' ')[2], 10) * 0.35,
 		a: 1,
 	});
 });
 
 const theme = ref('violet');
 export const colorTheme = computed(() => theme.value);
-export const setColorTheme = async (value: string) => {
+export async function setColorTheme(value: string) {
 	document.body.classList.add('scheme-transition');
 	document.body.style.setProperty('--speed', '300');
 
@@ -36,24 +36,25 @@ export const setColorTheme = async (value: string) => {
 
 	if (value) {
 		el.classList.add(`theme-${value}`);
-	} else {
+	}
+	else {
 		el.classList.add('theme-violet');
 	}
 
 	await Preferences.set({
 		key: 'colorTheme',
-		value: value,
+		value,
 	});
-};
+}
 
-export const checkColorTheme = async () => {
+export async function checkColorTheme() {
 	const { value } = await Preferences.get({ key: 'colorTheme' });
 	return value;
-};
+}
 
-export const removeColorTheme = async () => {
+export async function removeColorTheme() {
 	await Preferences.remove({ key: 'colorTheme' });
-};
+}
 
 (async () => {
 	setTimeout(async () => {

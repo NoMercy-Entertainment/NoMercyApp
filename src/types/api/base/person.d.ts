@@ -38,7 +38,7 @@ export interface PersonResponseItem extends PeopleResponse {
 	combined_credits: Credits;
 	movie_credits: Credits;
 	tv_credits: Credits;
-	external_ids: { [key: string]: null | string; };
+	external_ids: { [key: string]: null | string };
 	images: Images;
 	translations: Translations;
 	known_for: KnownFor[];
@@ -54,7 +54,6 @@ export interface CreditsClass {
 	cast: KnownFor[];
 	crew: KnownFor[];
 }
-
 
 export interface KnownFor {
 	adult: boolean;

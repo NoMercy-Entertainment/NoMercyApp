@@ -64,13 +64,14 @@ import { pwaMessages } from './i18n/pwa';
 import { redirectUrl } from '@/store/routeState';
 
 function getCurrentLanguage(): string {
-	return localStorage.getItem('language')
-		|| navigator.language.split('-')[0]
-		|| 'en';
+	return (
+		localStorage.getItem('language') || navigator.language.split('-')[0] || 'en'
+	);
 }
 
 const lang = getCurrentLanguage();
-const messages = pwaMessages[lang as keyof typeof pwaMessages] || pwaMessages.en;
+const messages
+  = pwaMessages[lang as keyof typeof pwaMessages] || pwaMessages.en;
 
 const app = createApp(AppComponent);
 
@@ -122,7 +123,11 @@ async function initializeOfflineApp() {
 }
 
 async function initializeMobileApp() {
-	if (isPlatform('capacitor') && !isTv.value && !localStorage.getItem('access_token')) {
+	if (
+		isPlatform('capacitor')
+		&& !isTv.value
+		&& !localStorage.getItem('access_token')
+	) {
 		await lockPortrait();
 		const [MobileKeycloak, configModule] = await Promise.all([
 			import('@/lib/auth/mobile-keycloak').then(m => m.default),
@@ -161,7 +166,9 @@ async function initializeWebApp() {
 				checkLoginIframe: false,
 				enableLogging: true,
 				responseMode: 'query',
-				redirectUri: `${window.location.href || '#/'}${window.location.hash.includes('?') ? '' : '?'}`,
+				redirectUri: `${window.location.href || '#/'}${
+					window.location.hash.includes('?') ? '' : '?'
+				}`,
 			},
 			config: configModule.keycloakConfig,
 			onReady: async (data: any) => {
@@ -187,7 +194,9 @@ async function initializeCastApp() {
 				enableLogging: true,
 				pkceMethod: 'S256',
 				silentCheckSsoFallback: true,
-				redirectUri: `${window.location.href || '#/'}${window.location.hash.includes('?') ? '' : '?'}`,
+				redirectUri: `${window.location.href || '#/'}${
+					window.location.hash.includes('?') ? '' : '?'
+				}`,
 			},
 			config: configModule.keycloakConfig,
 		});
@@ -226,13 +235,23 @@ async function initialize() {
 		if (!onlineStatus.value) {
 			await initializeOfflineApp();
 		}
-		else if (isPlatform('capacitor') && !isTv.value && !localStorage.getItem('access_token')) {
+		else if (
+			isPlatform('capacitor')
+			&& !isTv.value
+			&& !localStorage.getItem('access_token')
+		) {
 			await initializeMobileApp();
 		}
-		else if (!isPlatform('capacitor') && !location.search.includes('refreshToken')) {
+		else if (
+			!isPlatform('capacitor')
+			&& !location.search.includes('refreshToken')
+		) {
 			await initializeWebApp();
 		}
-		else if (!isPlatform('capacitor') && location.search.includes('refreshToken')) {
+		else if (
+			!isPlatform('capacitor')
+			&& location.search.includes('refreshToken')
+		) {
 			await initializeCastApp();
 		}
 		else {

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { PropType } from 'vue';
+import type { PropType } from 'vue';
 
 import type { DisplayList } from '@/types/api/music/musicPlayer';
 import type { PlaylistItem } from '@/types/musicPlayer';
@@ -32,20 +32,24 @@ const props = defineProps({
 	},
 });
 
-const handleClick = (e?: MouseEvent) => {
+function handleClick(e?: MouseEvent) {
 	e?.stopPropagation();
 
 	serverClient()
-		.post<StatusResponse<string>>(`music/${props.data.type}/${props.data.id}/like`, {
-			value: !props.data.favorite,
-		})
+		.post<StatusResponse<string>>(
+			`music/${props.data.type}/${props.data.id}/like`,
+			{
+				value: !props.data.favorite,
+			},
+		)
 		.then(({ data }) => {
 			audioPlayer.setCurrentSong(currentSong.value);
 
 			if (props.data.type === 'tracks') {
 				// query.invalidateQueries(['music', `${type}s`, (props.data as any)[`${type}_track`]?.[0]?.id]);
 				// query.invalidateQueries(['music', 'albums', props.data.id]);
-			} else {
+			}
+			else {
 				// query.invalidateQueries(['music', props.data?.type, props.data.id]);
 			}
 
@@ -56,15 +60,22 @@ const handleClick = (e?: MouseEvent) => {
 			// 	duration: 2000,
 			// });
 		});
-};
-
-
+}
 </script>
 
 <template>
-	<MusicButton label="Favorite" :onclick="handleClick" :style="`--fill: ${color};`">
+	<MusicButton
+		label="Favorite"
+		:onclick="handleClick"
+		:style="`--fill: ${color};`"
+	>
 		<slot />
 
-		<OptimizedIcon icon="heart" class="h-7 w-7" v-if="data.favorite" :class="className" />
+		<OptimizedIcon
+			v-if="data.favorite"
+			icon="heart"
+			class="h-7 w-7"
+			:class="className"
+		/>
 	</MusicButton>
 </template>

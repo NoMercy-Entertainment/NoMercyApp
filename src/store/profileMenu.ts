@@ -3,16 +3,17 @@ import { computed, ref } from 'vue';
 const mo = ref(false);
 export const menuOpen = computed(() => mo.value);
 
-export const openMenu = () => {
+export function openMenu() {
 	mo.value = !mo.value;
-};
-export const closeMenu = () => {
+}
+export function closeMenu() {
 	mo.value = false;
-};
-export const toggleMenu = async () => {
+}
+export async function toggleMenu() {
 	if (mo.value) {
 		closeMenu();
-	} else {
+	}
+	else {
 		openMenu();
 	}
-};
+}

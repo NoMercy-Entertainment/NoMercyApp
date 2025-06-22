@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { PropType } from 'vue';
+import type { PropType } from 'vue';
 import { useTranslation } from 'i18next-vue';
 import { useQueryClient } from '@tanstack/vue-query';
 
@@ -34,14 +34,13 @@ const props = defineProps({
 const { t } = useTranslation();
 const query = useQueryClient();
 
-const handleDelete = () => {
+function handleDelete() {
 	serverClient()
 		.delete(`dashboard/libraries/${props.id}`)
 		.then(({ data }) => {
-
 			// showNotification({
 			// 	title: translate(data.message, ...data.args ?? []),
-			// 	type: data.status == 'ok'
+			// 	type: data.status === 'ok'
 			// 		? TYPE.SUCCESS
 			// 		: TYPE.ERROR,
 			// 	visibleOnly: true,
@@ -49,29 +48,47 @@ const handleDelete = () => {
 			// });
 			query.invalidateQueries({ queryKey: ['dashboard', 'libraries'] });
 
-			if (props.noRedirect) return;
+			if (props.noRedirect)
+				return;
 			window.history.back();
 		});
 
 	props.close();
-};
-
+}
 </script>
-<template>
-	<Modal :close="close" :open="open" maxWidth="max-w-xl" :params="{ library: props.name }"
-		:title="`Delete library {{library}}`">
 
+<template>
+	<Modal
+		:close="close"
+		:open="open"
+		max-width="max-w-xl"
+		:params="{ library: props.name }"
+		title="Delete library {{library}}"
+	>
 		<div class="my-6 text-sm text-auto-10">
-			{{ t('Are you sure you want to delete this library?') }}
+			{{ t("Are you sure you want to delete this library?") }}
 		</div>
 
-		<template v-slot:actions>
-			<Button id="yes" :onclick="handleDelete" endIcon="trash" color="red" type="button" variant="contained">
-				{{ t('Delete') }}
-			</button>
-			<Button id="no" :onClick="close" type="button" color="text-auto-alpha-11" variant="text">
-				{{ t('Cancel') }}
-			</button>
+		<template #actions>
+			<Button
+				id="yes"
+				:onclick="handleDelete"
+				end-icon="trash"
+				color="red"
+				type="button"
+				variant="contained"
+			>
+				{{ t("Delete") }}
+			</Button>
+			<Button
+				id="no"
+				:on-click="close"
+				type="button"
+				color="text-auto-alpha-11"
+				variant="text"
+			>
+				{{ t("Cancel") }}
+			</Button>
 		</template>
 	</Modal>
 </template>

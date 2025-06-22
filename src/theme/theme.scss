@@ -1,286 +1,284 @@
-@use "sass:list";
+@use 'sass:list';
 @use 'colors-light';
 @use 'colors-dark';
 
 :root {
+	--background-auto-1: var(--background-slate-12);
+	--background-auto-2: var(--background-slate-11);
+	--background-auto-3: var(--background-slate-10);
+	--background-auto-4: var(--background-slate-9);
+	--background-auto-5: var(--background-slate-8);
+	--background-auto-6: var(--background-slate-7);
+	--background-auto-7: var(--background-slate-6);
+	--background-auto-8: var(--background-slate-5);
+	--background-auto-9: var(--background-slate-4);
+	--background-auto-10: var(--background-slate-3);
+	--background-auto-11: var(--background-slate-2);
+	--background-auto-12: var(--background-slate-1);
+	--background-auto-alpha-1: var(--background-slate-alpha-12);
+	--background-auto-alpha-2: var(--background-slate-alpha-11);
+	--background-auto-alpha-3: var(--background-slate-alpha-10);
+	--background-auto-alpha-4: var(--background-slate-alpha-9);
+	--background-auto-alpha-5: var(--background-slate-alpha-8);
+	--background-auto-alpha-6: var(--background-slate-alpha-7);
+	--background-auto-alpha-7: var(--background-slate-alpha-6);
+	--background-auto-alpha-8: var(--background-slate-alpha-5);
+	--background-auto-alpha-9: var(--background-slate-alpha-4);
+	--background-auto-alpha-10: var(--background-slate-alpha-3);
+	--background-auto-alpha-11: var(--background-slate-alpha-2);
+	--background-auto-alpha-12: var(--background-slate-alpha-1);
 
-  --background-auto-1: var(--background-slate-12);
-  --background-auto-2: var(--background-slate-11);
-  --background-auto-3: var(--background-slate-10);
-  --background-auto-4: var(--background-slate-9);
-  --background-auto-5: var(--background-slate-8);
-  --background-auto-6: var(--background-slate-7);
-  --background-auto-7: var(--background-slate-6);
-  --background-auto-8: var(--background-slate-5);
-  --background-auto-9: var(--background-slate-4);
-  --background-auto-10: var(--background-slate-3);
-  --background-auto-11: var(--background-slate-2);
-  --background-auto-12: var(--background-slate-1);
-  --background-auto-alpha-1: var(--background-slate-alpha-12);
-  --background-auto-alpha-2: var(--background-slate-alpha-11);
-  --background-auto-alpha-3: var(--background-slate-alpha-10);
-  --background-auto-alpha-4: var(--background-slate-alpha-9);
-  --background-auto-alpha-5: var(--background-slate-alpha-8);
-  --background-auto-alpha-6: var(--background-slate-alpha-7);
-  --background-auto-alpha-7: var(--background-slate-alpha-6);
-  --background-auto-alpha-8: var(--background-slate-alpha-5);
-  --background-auto-alpha-9: var(--background-slate-alpha-4);
-  --background-auto-alpha-10: var(--background-slate-alpha-3);
-  --background-auto-alpha-11: var(--background-slate-alpha-2);
-  --background-auto-alpha-12: var(--background-slate-alpha-1);
-
-  --color-logo: var(--background-light-slate-9);
+	--color-logo: var(--background-light-slate-9);
 }
 
 .scheme-system {
-  @media (prefers-color-scheme: light) {
-    --background-auto-1: var(--background-slate-12);
-    --background-auto-2: var(--background-slate-11);
-    --background-auto-3: var(--background-slate-10);
-    --background-auto-4: var(--background-slate-9);
-    --background-auto-5: var(--background-slate-8);
-    --background-auto-6: var(--background-slate-7);
-    --background-auto-7: var(--background-slate-6);
-    --background-auto-8: var(--background-slate-5);
-    --background-auto-9: var(--background-slate-4);
-    --background-auto-10: var(--background-slate-3);
-    --background-auto-11: var(--background-slate-2);
-    --background-auto-12: var(--background-slate-1);
-    --background-auto-alpha-1: var(--background-slate-alpha-12);
-    --background-auto-alpha-2: var(--background-slate-alpha-11);
-    --background-auto-alpha-3: var(--background-slate-alpha-10);
-    --background-auto-alpha-4: var(--background-slate-alpha-9);
-    --background-auto-alpha-5: var(--background-slate-alpha-8);
-    --background-auto-alpha-6: var(--background-slate-alpha-7);
-    --background-auto-alpha-7: var(--background-slate-alpha-6);
-    --background-auto-alpha-8: var(--background-slate-alpha-5);
-    --background-auto-alpha-9: var(--background-slate-alpha-4);
-    --background-auto-alpha-10: var(--background-slate-alpha-3);
-    --background-auto-alpha-11: var(--background-slate-alpha-2);
-    --background-auto-alpha-12: var(--background-slate-alpha-1);
+	@media (prefers-color-scheme: light) {
+		--background-auto-1: var(--background-slate-12);
+		--background-auto-2: var(--background-slate-11);
+		--background-auto-3: var(--background-slate-10);
+		--background-auto-4: var(--background-slate-9);
+		--background-auto-5: var(--background-slate-8);
+		--background-auto-6: var(--background-slate-7);
+		--background-auto-7: var(--background-slate-6);
+		--background-auto-8: var(--background-slate-5);
+		--background-auto-9: var(--background-slate-4);
+		--background-auto-10: var(--background-slate-3);
+		--background-auto-11: var(--background-slate-2);
+		--background-auto-12: var(--background-slate-1);
+		--background-auto-alpha-1: var(--background-slate-alpha-12);
+		--background-auto-alpha-2: var(--background-slate-alpha-11);
+		--background-auto-alpha-3: var(--background-slate-alpha-10);
+		--background-auto-alpha-4: var(--background-slate-alpha-9);
+		--background-auto-alpha-5: var(--background-slate-alpha-8);
+		--background-auto-alpha-6: var(--background-slate-alpha-7);
+		--background-auto-alpha-7: var(--background-slate-alpha-6);
+		--background-auto-alpha-8: var(--background-slate-alpha-5);
+		--background-auto-alpha-9: var(--background-slate-alpha-4);
+		--background-auto-alpha-10: var(--background-slate-alpha-3);
+		--background-auto-alpha-11: var(--background-slate-alpha-2);
+		--background-auto-alpha-12: var(--background-slate-alpha-1);
 
-    --color-logo: var(--background-light-slate-9);
+		--color-logo: var(--background-light-slate-9);
 
-    @each $key, $val in colors-dark.$background-dark {
-      &.background-#{$key} {
-        --background-auto-1: #{list.nth($val, 12)};
-        --background-auto-2: #{list.nth($val, 11)};
-        --background-auto-3: #{list.nth($val, 10)};
-        --background-auto-4: #{list.nth($val, 9)};
-        --background-auto-5: #{list.nth($val, 8)};
-        --background-auto-6: #{list.nth($val, 7)};
-        --background-auto-7: #{list.nth($val, 6)};
-        --background-auto-8: #{list.nth($val, 5)};
-        --background-auto-9: #{list.nth($val, 4)};
-        --background-auto-10: #{list.nth($val, 3)};
-        --background-auto-11: #{list.nth($val, 2)};
-        --background-auto-12: #{list.nth($val, 1)};
-      }
-    }
-    @each $key, $val in colors-dark.$background-dark-alpha {
-      &.background-#{$key} {
-        --background-auto-alpha-1: #{list.nth($val, 12)};
-        --background-auto-alpha-2: #{list.nth($val, 11)};
-        --background-auto-alpha-3: #{list.nth($val, 10)};
-        --background-auto-alpha-4: #{list.nth($val, 9)};
-        --background-auto-alpha-5: #{list.nth($val, 8)};
-        --background-auto-alpha-6: #{list.nth($val, 7)};
-        --background-auto-alpha-7: #{list.nth($val, 6)};
-        --background-auto-alpha-8: #{list.nth($val, 5)};
-        --background-auto-alpha-9: #{list.nth($val, 4)};
-        --background-auto-alpha-10: #{list.nth($val, 3)};
-        --background-auto-alpha-11: #{list.nth($val, 2)};
-        --background-auto-alpha-12: #{list.nth($val, 1)};
+		@each $key, $val in colors-dark.$background-dark {
+			&.background-#{$key} {
+				--background-auto-1: #{list.nth($val, 12)};
+				--background-auto-2: #{list.nth($val, 11)};
+				--background-auto-3: #{list.nth($val, 10)};
+				--background-auto-4: #{list.nth($val, 9)};
+				--background-auto-5: #{list.nth($val, 8)};
+				--background-auto-6: #{list.nth($val, 7)};
+				--background-auto-7: #{list.nth($val, 6)};
+				--background-auto-8: #{list.nth($val, 5)};
+				--background-auto-9: #{list.nth($val, 4)};
+				--background-auto-10: #{list.nth($val, 3)};
+				--background-auto-11: #{list.nth($val, 2)};
+				--background-auto-12: #{list.nth($val, 1)};
+			}
+		}
+		@each $key, $val in colors-dark.$background-dark-alpha {
+			&.background-#{$key} {
+				--background-auto-alpha-1: #{list.nth($val, 12)};
+				--background-auto-alpha-2: #{list.nth($val, 11)};
+				--background-auto-alpha-3: #{list.nth($val, 10)};
+				--background-auto-alpha-4: #{list.nth($val, 9)};
+				--background-auto-alpha-5: #{list.nth($val, 8)};
+				--background-auto-alpha-6: #{list.nth($val, 7)};
+				--background-auto-alpha-7: #{list.nth($val, 6)};
+				--background-auto-alpha-8: #{list.nth($val, 5)};
+				--background-auto-alpha-9: #{list.nth($val, 4)};
+				--background-auto-alpha-10: #{list.nth($val, 3)};
+				--background-auto-alpha-11: #{list.nth($val, 2)};
+				--background-auto-alpha-12: #{list.nth($val, 1)};
+			}
+		}
+	}
 
-      }
-    }
-  }
+	@media (prefers-color-scheme: dark) {
+		--background-auto-1: var(--background-slate-1);
+		--background-auto-2: var(--background-slate-2);
+		--background-auto-3: var(--background-slate-3);
+		--background-auto-4: var(--background-slate-4);
+		--background-auto-5: var(--background-slate-5);
+		--background-auto-6: var(--background-slate-6);
+		--background-auto-7: var(--background-slate-7);
+		--background-auto-8: var(--background-slate-8);
+		--background-auto-9: var(--background-slate-9);
+		--background-auto-10: var(--background-slate-10);
+		--background-auto-11: var(--background-slate-11);
+		--background-auto-12: var(--background-slate-12);
+		--background-auto-alpha-1: var(--background-slate-alpha-1);
+		--background-auto-alpha-2: var(--background-slate-alpha-2);
+		--background-auto-alpha-3: var(--background-slate-alpha-3);
+		--background-auto-alpha-4: var(--background-slate-alpha-4);
+		--background-auto-alpha-5: var(--background-slate-alpha-5);
+		--background-auto-alpha-6: var(--background-slate-alpha-6);
+		--background-auto-alpha-7: var(--background-slate-alpha-7);
+		--background-auto-alpha-8: var(--background-slate-alpha-8);
+		--background-auto-alpha-9: var(--background-slate-alpha-9);
+		--background-auto-alpha-10: var(--background-slate-alpha-10);
+		--background-auto-alpha-11: var(--background-slate-alpha-11);
+		--background-auto-alpha-12: var(--background-slate-alpha-12);
 
-  @media (prefers-color-scheme: dark) {
-    --background-auto-1: var(--background-slate-1);
-    --background-auto-2: var(--background-slate-2);
-    --background-auto-3: var(--background-slate-3);
-    --background-auto-4: var(--background-slate-4);
-    --background-auto-5: var(--background-slate-5);
-    --background-auto-6: var(--background-slate-6);
-    --background-auto-7: var(--background-slate-7);
-    --background-auto-8: var(--background-slate-8);
-    --background-auto-9: var(--background-slate-9);
-    --background-auto-10: var(--background-slate-10);
-    --background-auto-11: var(--background-slate-11);
-    --background-auto-12: var(--background-slate-12);
-    --background-auto-alpha-1: var(--background-slate-alpha-1);
-    --background-auto-alpha-2: var(--background-slate-alpha-2);
-    --background-auto-alpha-3: var(--background-slate-alpha-3);
-    --background-auto-alpha-4: var(--background-slate-alpha-4);
-    --background-auto-alpha-5: var(--background-slate-alpha-5);
-    --background-auto-alpha-6: var(--background-slate-alpha-6);
-    --background-auto-alpha-7: var(--background-slate-alpha-7);
-    --background-auto-alpha-8: var(--background-slate-alpha-8);
-    --background-auto-alpha-9: var(--background-slate-alpha-9);
-    --background-auto-alpha-10: var(--background-slate-alpha-10);
-    --background-auto-alpha-11: var(--background-slate-alpha-11);
-    --background-auto-alpha-12: var(--background-slate-alpha-12);
+		--color-logo: var(--background-dark-slate-12) / 90%;
 
-    --color-logo: var(--background-dark-slate-12)/ 90%;
-
-    @each $key, $val in colors-light.$background-light {
-      &.background-#{$key} {
-        --background-auto-1: #{list.nth($val, 12)};
-        --background-auto-2: #{list.nth($val, 11)};
-        --background-auto-3: #{list.nth($val, 10)};
-        --background-auto-4: #{list.nth($val, 9)};
-        --background-auto-5: #{list.nth($val, 8)};
-        --background-auto-6: #{list.nth($val, 7)};
-        --background-auto-7: #{list.nth($val, 6)};
-        --background-auto-8: #{list.nth($val, 5)};
-        --background-auto-9: #{list.nth($val, 4)};
-        --background-auto-10: #{list.nth($val, 3)};
-        --background-auto-11: #{list.nth($val, 2)};
-        --background-auto-12: #{list.nth($val, 1)};
-      }
-    }
-    @each $key, $val in colors-light.$background-light-alpha {
-      &.background-#{$key} {
-        --background-auto-alpha-1: #{list.nth($val, 12)};
-        --background-auto-alpha-2: #{list.nth($val, 11)};
-        --background-auto-alpha-3: #{list.nth($val, 10)};
-        --background-auto-alpha-4: #{list.nth($val, 9)};
-        --background-auto-alpha-5: #{list.nth($val, 8)};
-        --background-auto-alpha-6: #{list.nth($val, 7)};
-        --background-auto-alpha-7: #{list.nth($val, 6)};
-        --background-auto-alpha-8: #{list.nth($val, 5)};
-        --background-auto-alpha-9: #{list.nth($val, 4)};
-        --background-auto-alpha-10: #{list.nth($val, 3)};
-        --background-auto-alpha-11: #{list.nth($val, 2)};
-        --background-auto-alpha-12: #{list.nth($val, 1)};
-      }
-    }
-  }
+		@each $key, $val in colors-light.$background-light {
+			&.background-#{$key} {
+				--background-auto-1: #{list.nth($val, 12)};
+				--background-auto-2: #{list.nth($val, 11)};
+				--background-auto-3: #{list.nth($val, 10)};
+				--background-auto-4: #{list.nth($val, 9)};
+				--background-auto-5: #{list.nth($val, 8)};
+				--background-auto-6: #{list.nth($val, 7)};
+				--background-auto-7: #{list.nth($val, 6)};
+				--background-auto-8: #{list.nth($val, 5)};
+				--background-auto-9: #{list.nth($val, 4)};
+				--background-auto-10: #{list.nth($val, 3)};
+				--background-auto-11: #{list.nth($val, 2)};
+				--background-auto-12: #{list.nth($val, 1)};
+			}
+		}
+		@each $key, $val in colors-light.$background-light-alpha {
+			&.background-#{$key} {
+				--background-auto-alpha-1: #{list.nth($val, 12)};
+				--background-auto-alpha-2: #{list.nth($val, 11)};
+				--background-auto-alpha-3: #{list.nth($val, 10)};
+				--background-auto-alpha-4: #{list.nth($val, 9)};
+				--background-auto-alpha-5: #{list.nth($val, 8)};
+				--background-auto-alpha-6: #{list.nth($val, 7)};
+				--background-auto-alpha-7: #{list.nth($val, 6)};
+				--background-auto-alpha-8: #{list.nth($val, 5)};
+				--background-auto-alpha-9: #{list.nth($val, 4)};
+				--background-auto-alpha-10: #{list.nth($val, 3)};
+				--background-auto-alpha-11: #{list.nth($val, 2)};
+				--background-auto-alpha-12: #{list.nth($val, 1)};
+			}
+		}
+	}
 }
 
 .scheme-light {
-  --background-auto-1: var(--background-slate-12);
-  --background-auto-2: var(--background-slate-11);
-  --background-auto-3: var(--background-slate-10);
-  --background-auto-4: var(--background-slate-9);
-  --background-auto-5: var(--background-slate-8);
-  --background-auto-6: var(--background-slate-7);
-  --background-auto-7: var(--background-slate-6);
-  --background-auto-8: var(--background-slate-5);
-  --background-auto-9: var(--background-slate-4);
-  --background-auto-10: var(--background-slate-3);
-  --background-auto-11: var(--background-slate-2);
-  --background-auto-12: var(--background-slate-1);
-  --background-auto-alpha-1: var(--background-slate-alpha-12);
-  --background-auto-alpha-2: var(--background-slate-alpha-11);
-  --background-auto-alpha-3: var(--background-slate-alpha-10);
-  --background-auto-alpha-4: var(--background-slate-alpha-9);
-  --background-auto-alpha-5: var(--background-slate-alpha-8);
-  --background-auto-alpha-6: var(--background-slate-alpha-7);
-  --background-auto-alpha-7: var(--background-slate-alpha-6);
-  --background-auto-alpha-8: var(--background-slate-alpha-5);
-  --background-auto-alpha-9: var(--background-slate-alpha-4);
-  --background-auto-alpha-10: var(--background-slate-alpha-3);
-  --background-auto-alpha-11: var(--background-slate-alpha-2);
-  --background-auto-alpha-12: var(--background-slate-alpha-1);
+	--background-auto-1: var(--background-slate-12);
+	--background-auto-2: var(--background-slate-11);
+	--background-auto-3: var(--background-slate-10);
+	--background-auto-4: var(--background-slate-9);
+	--background-auto-5: var(--background-slate-8);
+	--background-auto-6: var(--background-slate-7);
+	--background-auto-7: var(--background-slate-6);
+	--background-auto-8: var(--background-slate-5);
+	--background-auto-9: var(--background-slate-4);
+	--background-auto-10: var(--background-slate-3);
+	--background-auto-11: var(--background-slate-2);
+	--background-auto-12: var(--background-slate-1);
+	--background-auto-alpha-1: var(--background-slate-alpha-12);
+	--background-auto-alpha-2: var(--background-slate-alpha-11);
+	--background-auto-alpha-3: var(--background-slate-alpha-10);
+	--background-auto-alpha-4: var(--background-slate-alpha-9);
+	--background-auto-alpha-5: var(--background-slate-alpha-8);
+	--background-auto-alpha-6: var(--background-slate-alpha-7);
+	--background-auto-alpha-7: var(--background-slate-alpha-6);
+	--background-auto-alpha-8: var(--background-slate-alpha-5);
+	--background-auto-alpha-9: var(--background-slate-alpha-4);
+	--background-auto-alpha-10: var(--background-slate-alpha-3);
+	--background-auto-alpha-11: var(--background-slate-alpha-2);
+	--background-auto-alpha-12: var(--background-slate-alpha-1);
 
-  --color-logo: var(--background-light-slate-9);
-  --ion-text-color: var(--background-dark-slate-1) !important;
+	--color-logo: var(--background-light-slate-9);
+	--ion-text-color: var(--background-dark-slate-1) !important;
 
-  @each $key, $val in colors-dark.$background-dark {
-    &.background-#{$key} {
-      --background-auto-1: #{list.nth($val, 12)};
-      --background-auto-2: #{list.nth($val, 11)};
-      --background-auto-3: #{list.nth($val, 10)};
-      --background-auto-4: #{list.nth($val, 9)};
-      --background-auto-5: #{list.nth($val, 8)};
-      --background-auto-6: #{list.nth($val, 7)};
-      --background-auto-7: #{list.nth($val, 6)};
-      --background-auto-8: #{list.nth($val, 5)};
-      --background-auto-9: #{list.nth($val, 4)};
-      --background-auto-10: #{list.nth($val, 3)};
-      --background-auto-11: #{list.nth($val, 2)};
-      --background-auto-12: #{list.nth($val, 1)};
-    }
-  }
-  @each $key, $val in colors-dark.$background-dark-alpha {
-    &.background-#{$key} {
-      --background-auto-alpha-1: #{list.nth($val, 12)};
-      --background-auto-alpha-2: #{list.nth($val, 11)};
-      --background-auto-alpha-3: #{list.nth($val, 10)};
-      --background-auto-alpha-4: #{list.nth($val, 9)};
-      --background-auto-alpha-5: #{list.nth($val, 8)};
-      --background-auto-alpha-6: #{list.nth($val, 7)};
-      --background-auto-alpha-7: #{list.nth($val, 6)};
-      --background-auto-alpha-8: #{list.nth($val, 5)};
-      --background-auto-alpha-9: #{list.nth($val, 4)};
-      --background-auto-alpha-10: #{list.nth($val, 3)};
-      --background-auto-alpha-11: #{list.nth($val, 2)};
-      --background-auto-alpha-12: #{list.nth($val, 1)};
-    }
-  }
+	@each $key, $val in colors-dark.$background-dark {
+		&.background-#{$key} {
+			--background-auto-1: #{list.nth($val, 12)};
+			--background-auto-2: #{list.nth($val, 11)};
+			--background-auto-3: #{list.nth($val, 10)};
+			--background-auto-4: #{list.nth($val, 9)};
+			--background-auto-5: #{list.nth($val, 8)};
+			--background-auto-6: #{list.nth($val, 7)};
+			--background-auto-7: #{list.nth($val, 6)};
+			--background-auto-8: #{list.nth($val, 5)};
+			--background-auto-9: #{list.nth($val, 4)};
+			--background-auto-10: #{list.nth($val, 3)};
+			--background-auto-11: #{list.nth($val, 2)};
+			--background-auto-12: #{list.nth($val, 1)};
+		}
+	}
+	@each $key, $val in colors-dark.$background-dark-alpha {
+		&.background-#{$key} {
+			--background-auto-alpha-1: #{list.nth($val, 12)};
+			--background-auto-alpha-2: #{list.nth($val, 11)};
+			--background-auto-alpha-3: #{list.nth($val, 10)};
+			--background-auto-alpha-4: #{list.nth($val, 9)};
+			--background-auto-alpha-5: #{list.nth($val, 8)};
+			--background-auto-alpha-6: #{list.nth($val, 7)};
+			--background-auto-alpha-7: #{list.nth($val, 6)};
+			--background-auto-alpha-8: #{list.nth($val, 5)};
+			--background-auto-alpha-9: #{list.nth($val, 4)};
+			--background-auto-alpha-10: #{list.nth($val, 3)};
+			--background-auto-alpha-11: #{list.nth($val, 2)};
+			--background-auto-alpha-12: #{list.nth($val, 1)};
+		}
+	}
 }
 
 .scheme-dark {
-  --background-auto-1: var(--background-slate-1);
-  --background-auto-2: var(--background-slate-2);
-  --background-auto-3: var(--background-slate-3);
-  --background-auto-4: var(--background-slate-4);
-  --background-auto-5: var(--background-slate-5);
-  --background-auto-6: var(--background-slate-6);
-  --background-auto-7: var(--background-slate-7);
-  --background-auto-8: var(--background-slate-8);
-  --background-auto-9: var(--background-slate-9);
-  --background-auto-10: var(--background-slate-10);
-  --background-auto-11: var(--background-slate-11);
-  --background-auto-12: var(--background-slate-12);
-  --background-auto-alpha-1: var(--background-slate-alpha-1);
-  --background-auto-alpha-2: var(--background-slate-alpha-2);
-  --background-auto-alpha-3: var(--background-slate-alpha-3);
-  --background-auto-alpha-4: var(--background-slate-alpha-4);
-  --background-auto-alpha-5: var(--background-slate-alpha-5);
-  --background-auto-alpha-6: var(--background-slate-alpha-6);
-  --background-auto-alpha-7: var(--background-slate-alpha-7);
-  --background-auto-alpha-8: var(--background-slate-alpha-8);
-  --background-auto-alpha-9: var(--background-slate-alpha-9);
-  --background-auto-alpha-10: var(--background-slate-alpha-10);
-  --background-auto-alpha-11: var(--background-slate-alpha-11);
-  --background-auto-alpha-12: var(--background-slate-alpha-12);
+	--background-auto-1: var(--background-slate-1);
+	--background-auto-2: var(--background-slate-2);
+	--background-auto-3: var(--background-slate-3);
+	--background-auto-4: var(--background-slate-4);
+	--background-auto-5: var(--background-slate-5);
+	--background-auto-6: var(--background-slate-6);
+	--background-auto-7: var(--background-slate-7);
+	--background-auto-8: var(--background-slate-8);
+	--background-auto-9: var(--background-slate-9);
+	--background-auto-10: var(--background-slate-10);
+	--background-auto-11: var(--background-slate-11);
+	--background-auto-12: var(--background-slate-12);
+	--background-auto-alpha-1: var(--background-slate-alpha-1);
+	--background-auto-alpha-2: var(--background-slate-alpha-2);
+	--background-auto-alpha-3: var(--background-slate-alpha-3);
+	--background-auto-alpha-4: var(--background-slate-alpha-4);
+	--background-auto-alpha-5: var(--background-slate-alpha-5);
+	--background-auto-alpha-6: var(--background-slate-alpha-6);
+	--background-auto-alpha-7: var(--background-slate-alpha-7);
+	--background-auto-alpha-8: var(--background-slate-alpha-8);
+	--background-auto-alpha-9: var(--background-slate-alpha-9);
+	--background-auto-alpha-10: var(--background-slate-alpha-10);
+	--background-auto-alpha-11: var(--background-slate-alpha-11);
+	--background-auto-alpha-12: var(--background-slate-alpha-12);
 
-  --color-logo: var(--background-dark-slate-12)/ 90%;
-  --ion-text-color: var(--background-light-slate-12) !important;
+	--color-logo: var(--background-dark-slate-12) / 90%;
+	--ion-text-color: var(--background-light-slate-12) !important;
 
-  @each $key, $val in colors-light.$background-light {
-    &.background-#{$key} {
-      --background-auto-1: #{list.nth($val, 12)};
-      --background-auto-2: #{list.nth($val, 11)};
-      --background-auto-3: #{list.nth($val, 10)};
-      --background-auto-4: #{list.nth($val, 9)};
-      --background-auto-5: #{list.nth($val, 8)};
-      --background-auto-6: #{list.nth($val, 7)};
-      --background-auto-7: #{list.nth($val, 6)};
-      --background-auto-8: #{list.nth($val, 5)};
-      --background-auto-9: #{list.nth($val, 4)};
-      --background-auto-10: #{list.nth($val, 3)};
-      --background-auto-11: #{list.nth($val, 2)};
-      --background-auto-12: #{list.nth($val, 1)};
-    }
-  }
-  @each $key, $val in colors-light.$background-light-alpha {
-    &.background-#{$key} {
-      --background-auto-alpha-1: #{list.nth($val, 12)};
-      --background-auto-alpha-2: #{list.nth($val, 11)};
-      --background-auto-alpha-3: #{list.nth($val, 10)};
-      --background-auto-alpha-4: #{list.nth($val, 9)};
-      --background-auto-alpha-5: #{list.nth($val, 8)};
-      --background-auto-alpha-6: #{list.nth($val, 7)};
-      --background-auto-alpha-7: #{list.nth($val, 6)};
-      --background-auto-alpha-8: #{list.nth($val, 5)};
-      --background-auto-alpha-9: #{list.nth($val, 4)};
-      --background-auto-alpha-10: #{list.nth($val, 3)};
-      --background-auto-alpha-11: #{list.nth($val, 2)};
-      --background-auto-alpha-12: #{list.nth($val, 1)};
-    }
-  }
+	@each $key, $val in colors-light.$background-light {
+		&.background-#{$key} {
+			--background-auto-1: #{list.nth($val, 12)};
+			--background-auto-2: #{list.nth($val, 11)};
+			--background-auto-3: #{list.nth($val, 10)};
+			--background-auto-4: #{list.nth($val, 9)};
+			--background-auto-5: #{list.nth($val, 8)};
+			--background-auto-6: #{list.nth($val, 7)};
+			--background-auto-7: #{list.nth($val, 6)};
+			--background-auto-8: #{list.nth($val, 5)};
+			--background-auto-9: #{list.nth($val, 4)};
+			--background-auto-10: #{list.nth($val, 3)};
+			--background-auto-11: #{list.nth($val, 2)};
+			--background-auto-12: #{list.nth($val, 1)};
+		}
+	}
+	@each $key, $val in colors-light.$background-light-alpha {
+		&.background-#{$key} {
+			--background-auto-alpha-1: #{list.nth($val, 12)};
+			--background-auto-alpha-2: #{list.nth($val, 11)};
+			--background-auto-alpha-3: #{list.nth($val, 10)};
+			--background-auto-alpha-4: #{list.nth($val, 9)};
+			--background-auto-alpha-5: #{list.nth($val, 8)};
+			--background-auto-alpha-6: #{list.nth($val, 7)};
+			--background-auto-alpha-7: #{list.nth($val, 6)};
+			--background-auto-alpha-8: #{list.nth($val, 5)};
+			--background-auto-alpha-9: #{list.nth($val, 4)};
+			--background-auto-alpha-10: #{list.nth($val, 3)};
+			--background-auto-alpha-11: #{list.nth($val, 2)};
+			--background-auto-alpha-12: #{list.nth($val, 1)};
+		}
+	}
 }

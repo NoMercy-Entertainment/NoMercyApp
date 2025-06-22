@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import { PropType } from 'vue';
+import type { PropType } from 'vue';
 import { SwiperSlide } from 'swiper/vue';
 
-import { HomeDataItem, MusicHomeResponseItem } from '@/types/api/music';
+import type { HomeDataItem, MusicHomeResponseItem } from '@/types/api/music';
 
 import Carousel from '@/components/Carousel/Carousel.vue';
 import MusicCard from '@/components/Cards/MusicCard.vue';
@@ -23,8 +23,7 @@ defineProps({
 	},
 });
 
-const handleClick = (item: HomeDataItem) => {
-
+function handleClick(item: HomeDataItem) {
 	// setTimeout(() => {
 	// 	if (item?.backdrop) {
 	// 		setBackground(item?.backdrop);
@@ -42,15 +41,27 @@ const handleClick = (item: HomeDataItem) => {
 	//     resetLogoColors();
 	//   }
 	// }, 550);
-};
-
+}
 </script>
 
 <template>
-	<Carousel :title="data.title" :index="index" :limitCardCountBy="limitCardCountBy">
-		<swiper-slide v-for="item in data.items" :key="item.id" class="flex py-1" :virtualIndex="index">
-			<MusicCard :data="item" class="px-2" :id="`item-${item.name}-${item.id}`"
-				:onclick="() => handleClick(item)" />
-		</swiper-slide>
+	<Carousel
+		:title="data.title"
+		:index="index"
+		:limit-card-count-by="limitCardCountBy"
+	>
+		<SwiperSlide
+			v-for="item in data.items"
+			:key="item.id"
+			class="flex py-1"
+			:virtual-index="index"
+		>
+			<MusicCard
+				:id="`item-${item.name}-${item.id}`"
+				:data="item"
+				class="px-2"
+				:onclick="() => handleClick(item)"
+			/>
+		</SwiperSlide>
 	</Carousel>
 </template>

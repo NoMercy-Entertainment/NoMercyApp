@@ -1,6 +1,6 @@
 import { hexToRgba, hsvaToHex } from '@uiw/color-convert';
 import { chunk } from '@/lib/stringArray';
-import { blue, brown, gray, green, red } from "@/config/global";
+import { blue, brown, gray, green, red } from '@/config/global';
 
 export const greenToRed = [
 	{
@@ -22,15 +22,15 @@ export const greenToRed = [
 	{
 		pct: 50,
 		color: {
-			r: 0xff,
-			g: 0xff,
+			r: 0xFF,
+			g: 0xFF,
 			b: 0,
 		},
 	},
 	{
 		pct: 100,
 		color: {
-			r: 0xff,
+			r: 0xFF,
 			g: 0x00,
 			b: 0,
 		},
@@ -41,7 +41,7 @@ export const redToGreen = [
 	{
 		pct: 0,
 		color: {
-			r: 0xcc,
+			r: 0xCC,
 			g: 0,
 			b: 0,
 		},
@@ -49,8 +49,8 @@ export const redToGreen = [
 	{
 		pct: 50,
 		color: {
-			r: 0xee,
-			g: 0xee,
+			r: 0xEE,
+			g: 0xEE,
 			b: 0,
 		},
 	},
@@ -81,7 +81,7 @@ export interface PercentColor {
 	};
 }
 
-export const getColorFromPercent = (pct: number, scheme = greenToRed) => {
+export function getColorFromPercent(pct: number, scheme = greenToRed) {
 	let i: number;
 	for (i = 1; i < scheme.length - 1; i++) {
 		if (pct < scheme[i].pct) {
@@ -100,31 +100,34 @@ export const getColorFromPercent = (pct: number, scheme = greenToRed) => {
 		b: Math.floor(lower.color.b * pctLower + upper.color.b * pctUpper),
 	};
 	return `rgb(${[color.r, color.g, color.b].join(',')})`;
-};
+}
 
-export const setPrimaryDegree = function (value: number) {
+export function setPrimaryDegree(value: number) {
 	document.documentElement.style.setProperty('--primary-deg', `${value}deg`);
-};
-export const setPrimarySaturation = function (value: number) {
+}
+export function setPrimarySaturation(value: number) {
 	document.documentElement.style.setProperty('--primary-sat', `${value}%`);
-};
+}
 
-export const setCustomColor = function (key: string, value: number[]) {
-	document.documentElement.style.setProperty(`--custom-${key}`, value?.toString().replace(/,/gu, ' '));
-};
+export function setCustomColor(key: string, value: number[]) {
+	document.documentElement.style.setProperty(
+		`--custom-${key}`,
+		value?.toString().replace(/,/gu, ' '),
+	);
+}
 
-export const getLuminosity = function (c: any) {
+export function getLuminosity(c: any) {
 	c = RGBString2hex(c).substring(1);
 
-	const rgb: number = parseInt(c, 16);
-	const r = (rgb >> 16) & 0xff;
-	const g = (rgb >> 8) & 0xff;
-	const b = (rgb >> 0) & 0xff;
+	const rgb: number = Number.parseInt(c, 16);
+	const r = (rgb >> 16) & 0xFF;
+	const g = (rgb >> 8) & 0xFF;
+	const b = (rgb >> 0) & 0xFF;
 
 	return 0.2126 * r + 0.7152 * g + 0.0722 * b;
-};
+}
 
-export const tooLight = function (c: any, max = 130) {
+export function tooLight(c: any, max = 130) {
 	if (c) {
 		if (c.includes('#')) {
 			const rgb = hexToRgba(c);
@@ -133,12 +136,11 @@ export const tooLight = function (c: any, max = 130) {
 
 		const luminosity = getLuminosity(c);
 		return luminosity > max;
-
 	}
 	return false;
-};
+}
 
-export const tooDark = function (c: any, min = 50) {
+export function tooDark(c: any, min = 50) {
 	if (c) {
 		if (c.includes('#')) {
 			const rgb = hexToRgba(c);
@@ -147,53 +149,68 @@ export const tooDark = function (c: any, min = 50) {
 
 		const luminosity = getLuminosity(c);
 		return luminosity < min;
-
 	}
 	return false;
-};
+}
 
-export const byte2Hex = (n: number): string => {
+export function byte2Hex(n: number): string {
 	const nybHexString = '0123456789ABCDEF';
-	return String(nybHexString.substr((n >> 4) & 0x0f, 1)) + nybHexString.substr(n & 0x0f, 1);
-};
+	return (
+		String(nybHexString.substr((n >> 4) & 0x0F, 1))
+		+ nybHexString.substr(n & 0x0F, 1)
+	);
+}
 
-export const RGB2hex = (r: number, g: number, b: number): string => `#${byte2Hex(r)}${byte2Hex(g)}${byte2Hex(b)}`;
+export function RGB2hex(r: number, g: number, b: number): string {
+	return `#${byte2Hex(r)}${byte2Hex(g)}${byte2Hex(b)}`;
+}
 
-export const RGBString2hex = (string: string): string => {
+export function RGBString2hex(string: string): string {
 	const newString: number[] = string
 		.replace('rgb(', '')
 		.replace(')', '')
 		.split(/,|\s/gu)
 		.slice(0, 3)
-		.map(n => parseInt(n, 10));
+		.map(n => Number.parseInt(n, 10));
 
-	return `#${byte2Hex(newString[0])}${byte2Hex(newString[1])}${byte2Hex(newString[2])}`;
-};
+	return `#${byte2Hex(newString[0])}${byte2Hex(newString[1])}${byte2Hex(
+		newString[2],
+	)}`;
+}
 
-export const hexToRGB = (hex: string) => {
+export function hexToRGB(hex: string) {
 	const rgb = hexToRgba(hex);
 	return `rgb(${rgb.r} ${rgb.g} ${rgb.b})`;
 }
 
-export const pickPaletteColor = (color_palette?: PaletteColors | null | undefined, dark = 60, light = 160): string => {
+export function pickPaletteColor(color_palette?: PaletteColors | null | undefined, dark = 60, light = 160): string {
 	if (!color_palette || !color_palette.darkVibrant) {
 		return 'var(--color-theme-7)';
 	}
-	if (!tooLight(color_palette.lightVibrant, light) && !tooDark(color_palette.lightVibrant, dark)) {
+	if (
+		!tooLight(color_palette.lightVibrant, light)
+		&& !tooDark(color_palette.lightVibrant, dark)
+	) {
 		if (color_palette.lightVibrant!.includes('#')) {
 			const rgb = hexToRgba(color_palette.lightVibrant!);
 			return `${rgb.r} ${rgb.g} ${rgb.b}`;
 		}
 		return color_palette.lightVibrant ?? 'var(--color-theme-7)';
 	}
-	if (!tooDark(color_palette.primary, dark) && !tooLight(color_palette.primary, light)) {
+	if (
+		!tooDark(color_palette.primary, dark)
+		&& !tooLight(color_palette.primary, light)
+	) {
 		if (color_palette.primary!.includes('#')) {
 			const rgb = hexToRgba(color_palette.primary!);
 			return `${rgb.r} ${rgb.g} ${rgb.b}`;
 		}
 		return color_palette.primary ?? 'var(--color-theme-7)';
 	}
-	if (!tooDark(color_palette.dominant, dark) && !tooLight(color_palette.dominant, light)) {
+	if (
+		!tooDark(color_palette.dominant, dark)
+		&& !tooLight(color_palette.dominant, light)
+	) {
 		if (color_palette.dominant!.includes('#')) {
 			const rgb = hexToRgba(color_palette.dominant!);
 			return `${rgb.r} ${rgb.g} ${rgb.b}`;
@@ -201,21 +218,30 @@ export const pickPaletteColor = (color_palette?: PaletteColors | null | undefine
 		return color_palette.dominant ?? 'var(--color-theme-7)';
 	}
 
-	if (!tooDark(color_palette.darkVibrant, dark) && !tooLight(color_palette.darkVibrant, light)) {
+	if (
+		!tooDark(color_palette.darkVibrant, dark)
+		&& !tooLight(color_palette.darkVibrant, light)
+	) {
 		if (color_palette.darkVibrant!.includes('#')) {
 			const rgb = hexToRgba(color_palette.darkVibrant!);
 			return `${rgb.r} ${rgb.g} ${rgb.b}`;
 		}
 		return color_palette.darkVibrant ?? 'var(--color-theme-7)';
 	}
-	if (!tooDark(color_palette.darkMuted, dark) && !tooLight(color_palette.darkMuted, light)) {
+	if (
+		!tooDark(color_palette.darkMuted, dark)
+		&& !tooLight(color_palette.darkMuted, light)
+	) {
 		if (color_palette.darkMuted!.includes('#')) {
 			const rgb = hexToRgba(color_palette.darkMuted!);
 			return `${rgb.r} ${rgb.g} ${rgb.b}`;
 		}
 		return color_palette.darkMuted ?? 'var(--color-theme-7)';
 	}
-	if (!tooLight(color_palette.lightMuted, light) && !tooDark(color_palette.lightMuted, dark)) {
+	if (
+		!tooLight(color_palette.lightMuted, light)
+		&& !tooDark(color_palette.lightMuted, dark)
+	) {
 		if (color_palette.lightMuted!.includes('#')) {
 			const rgb = hexToRgba(color_palette.lightMuted!);
 			return `${rgb.r} ${rgb.g} ${rgb.b}`;
@@ -224,7 +250,7 @@ export const pickPaletteColor = (color_palette?: PaletteColors | null | undefine
 	}
 
 	return 'var(--color-theme-7)';
-};
+}
 
 export enum TailwindColors {
 	amber = 'amber',
@@ -257,7 +283,10 @@ export enum TailwindColors {
 	yellow = 'yellow',
 }
 
-export const themeColors: { title: keyof typeof TailwindColors; color: string }[] = [
+export const themeColors: {
+	title: keyof typeof TailwindColors;
+	color: string;
+}[] = [
 	{ title: 'red', color: 'rgb(var(--color-red-9))' },
 	{ title: 'tomato', color: 'rgb(var(--color-tomato-9))' },
 	{ title: 'orange', color: 'rgb(var(--color-orange-9))' },
@@ -293,14 +322,16 @@ export const themeColors: { title: keyof typeof TailwindColors; color: string }[
 	{ title: 'gray', color: 'rgb(var(--color-gray-9))' },
 ];
 
-export const backgroundColors: { title: keyof typeof TailwindColors; color: string }[] = [
+export const backgroundColors: {
+	title: keyof typeof TailwindColors;
+	color: string;
+}[] = [
 	{ title: 'olive', color: 'rgb(var(--background-olive-9))' },
 	{ title: 'sage', color: 'rgb(var(--background-sage-9))' },
 	{ title: 'slate', color: 'rgb(var(--background-slate-9))' },
 	{ title: 'mauve', color: 'rgb(var(--background-mauve-9))' },
 	{ title: 'sand', color: 'rgb(var(--background-sand-9))' },
 	{ title: 'gray', color: 'rgb(var(--background-gray-9))' },
-
 ];
 
 export type ThemeColors = TailwindColors | 'custom';
@@ -310,18 +341,18 @@ export interface ColorList {
 	value: number[];
 }
 
-export const setCustomColors = (colors: ColorList[]) => {
-	if (!colors) return;
+export function setCustomColors(colors: ColorList[]) {
+	if (!colors)
+		return;
 	Object.entries(colors).map((color) => {
 		setCustomColor(color[1].key, color[1].value);
 	});
-};
+}
 
-
-export type ImageBrightness = {
-	brightness: number,
-	transparency: number,
-	nonTransparentBrightness: number
+export interface ImageBrightness {
+	brightness: number;
+	transparency: number;
+	nonTransparentBrightness: number;
 }
 
 /**
@@ -329,15 +360,13 @@ export type ImageBrightness = {
  * @param imageSrc - The source URL of the image.
  * @param cb - The callback function that receives an object with the `brightness`, `transparency`, and `nonTransparentBrightness` values.
  */
-export const getImageBrightness = (imageSrc: string, cb: (arg: ImageBrightness) => void) => {
-
+export function getImageBrightness(imageSrc: string, cb: (arg: ImageBrightness) => void) {
 	const img = new Image();
 	img.style.display = 'none';
 	img.crossOrigin = 'anonymous';
 	img.src = imageSrc;
 
 	img.onload = () => {
-
 		let alphaSum = 0;
 		let colorSum = 0;
 
@@ -367,9 +396,17 @@ export const getImageBrightness = (imageSrc: string, cb: (arg: ImageBrightness) 
 			alphaSum += a;
 		}
 
-		const transparency = 100 - Math.floor((alphaSum / (img.naturalWidth * img.naturalHeight) / 255) * 100);
-		const brightness = Math.floor((colorSum / (img.naturalWidth * img.naturalHeight) / 255) * 100);
-		const nonTransparentBrightness = Math.floor((brightness / (100 - transparency)) * 100);
+		const transparency
+      = 100
+      	- Math.floor(
+      		(alphaSum / (img.naturalWidth * img.naturalHeight) / 255) * 100,
+      	);
+		const brightness = Math.floor(
+			(colorSum / (img.naturalWidth * img.naturalHeight) / 255) * 100,
+		);
+		const nonTransparentBrightness = Math.floor(
+			(brightness / (100 - transparency)) * 100,
+		);
 
 		cb({
 			brightness,
@@ -385,9 +422,9 @@ export const getImageBrightness = (imageSrc: string, cb: (arg: ImageBrightness) 
 			nonTransparentBrightness: 0,
 		});
 	};
-};
+}
 
-export const RGBToHSL = (r: number, g: number, b: number) => {
+export function RGBToHSL(r: number, g: number, b: number) {
 	r /= 255;
 	g /= 255;
 	b /= 255;
@@ -401,17 +438,11 @@ export const RGBToHSL = (r: number, g: number, b: number) => {
 				: 4 + (r - g) / s
 		: 0;
 	return {
-		h: 60 * h < 0
-			? 60 * h + 360
-			: 60 * h,
-		s: 100 * (s
-			? (l <= 0.5
-				? s / (2 * l - s)
-				: s / (2 - (2 * l - s)))
-			: 0),
+		h: 60 * h < 0 ? 60 * h + 360 : 60 * h,
+		s: 100 * (s ? (l <= 0.5 ? s / (2 * l - s) : s / (2 - (2 * l - s))) : 0),
 		l: (100 * (2 * l - s)) / 2,
 	};
-};
+}
 
 export interface Color {
 	red: number;
@@ -419,15 +450,15 @@ export interface Color {
 	blue: number;
 }
 
-export const isSimilarColor = (color1: Color, color2: Color, threshold = 15): boolean => {
+export function isSimilarColor(color1: Color, color2: Color, threshold = 15): boolean {
 	const distance = Math.sqrt(
 		(color1.red - color2.red) ** 2
 		+ (color1.green - color2.green) ** 2
-		+ (color1.blue - color2.blue) ** 2
+		+ (color1.blue - color2.blue) ** 2,
 	);
 
 	return distance <= threshold;
-};
+}
 
 export interface PaletteColors {
 	darkMuted?: string;
@@ -438,8 +469,7 @@ export interface PaletteColors {
 	dominant?: string;
 }
 
-export const getDominantColor = (img: HTMLImageElement): PaletteColors => {
-
+export function getDominantColor(img: HTMLImageElement): PaletteColors {
 	const canvas = document.createElement('canvas');
 	canvas.width = img.width;
 	canvas.height = img.height;
@@ -450,21 +480,20 @@ export const getDominantColor = (img: HTMLImageElement): PaletteColors => {
 	const imageData = ctx.getImageData(0, 0, img.width, img.height).data;
 
 	interface ColorMap {
-		count: number,
-		totalRGB: number,
-		averageRGB: number,
-		luminosity: number,
+		count: number;
+		totalRGB: number;
+		averageRGB: number;
+		luminosity: number;
 		hsl: {
-			h: number,
-			s: number,
-			l: number,
-		},
+			h: number;
+			s: number;
+			l: number;
+		};
 	}
 
 	const colorMap = new Map<string, ColorMap>();
 
 	for (let i = 0; i < imageData.length; i += 4) {
-
 		const colorMapObject = {
 			count: 0,
 			totalRGB: 0,
@@ -481,7 +510,7 @@ export const getDominantColor = (img: HTMLImageElement): PaletteColors => {
 
 		const total = rgba[0] + rgba[1] + rgba[2];
 
-		if (rgba[3] == 0) {
+		if (rgba[3] === 0) {
 			continue;
 		}
 		const color = `rgb(${rgba[0]}, ${rgba[1]}, ${rgba[2]})`;
@@ -495,13 +524,14 @@ export const getDominantColor = (img: HTMLImageElement): PaletteColors => {
 		colorMap.set(color, colorMapObject);
 	}
 
-	const colors: [string, ColorMap][] = Array.from(colorMap)
-		.sort((a, b) => b[1].count - a[1].count);
+	const colors: [string, ColorMap][] = Array.from(colorMap).sort(
+		(a, b) => b[1].count - a[1].count,
+	);
 	const pColor = colors.splice(0, 1);
 	const arr = [];
 	arr.push(pColor[0][0]);
 
-	const newColors = colors.sort((a, b) => (a[1].hsl.l - b[1].hsl.l));
+	const newColors = colors.sort((a, b) => a[1].hsl.l - b[1].hsl.l);
 	const firstHalf = newColors.splice(0, newColors.length / 2);
 	const secondHalf = newColors.splice(0, newColors.length);
 
@@ -512,7 +542,7 @@ export const getDominantColor = (img: HTMLImageElement): PaletteColors => {
 		arr.push(ch[i][0][0]);
 	}
 	for (let i = 0; i < 2; i++) {
-		arr.push((ch2[i].reverse())[0][0]);
+		arr.push(ch2[i].reverse()[0][0]);
 	}
 
 	return {
@@ -523,10 +553,11 @@ export const getDominantColor = (img: HTMLImageElement): PaletteColors => {
 		lightVibrant: RGBString2hex(arr[3]),
 		lightMuted: RGBString2hex(arr[4]),
 	};
-};
+}
 
-export const hexLighter = (hex?: string, luminosity?: number) => {
-	if (!hex) return;
+export function hexLighter(hex?: string, luminosity?: number) {
+	if (!hex)
+		return;
 	const rgb = hexToRgba(hex);
 	const hsl = RGBToHSL(rgb.r, rgb.g, rgb.b);
 
@@ -541,7 +572,7 @@ export const hexLighter = (hex?: string, luminosity?: number) => {
 	return hsvaToHex({ h: hsl.h, s: hsl.s, v: hsl.l, a: 1 });
 }
 
-export const hexDarker = (hex: string, luminosity?: number): string => {
+export function hexDarker(hex: string, luminosity?: number): string {
 	const rgb = hexToRgba(hex);
 	const hsl = RGBToHSL(rgb.r, rgb.g, rgb.b);
 
@@ -558,21 +589,27 @@ export const hexDarker = (hex: string, luminosity?: number): string => {
 	return hsvaToHex({ h: hsl.h, s: hsl.s, v: hsl.l, a: 1 });
 }
 
-export const hexOpacity = (hex: string, opacity: number): string => {
+export function hexOpacity(hex: string, opacity: number): string {
 	const rgb = hexToRgba(hex);
 	return `rgba(${rgb.r} ${rgb.g} ${rgb.b}/ ${opacity}%)`;
 }
 
-export const getGpuColor = (gpu: string) => {
-	if (gpu.toLowerCase().includes('nvidia')) return green;
-	if (gpu.toLowerCase().includes('amd')) return red;
-	if (gpu.toLowerCase().includes('intel')) return blue;
+export function getGpuColor(gpu: string) {
+	if (gpu.toLowerCase().includes('nvidia'))
+		return green;
+	if (gpu.toLowerCase().includes('amd'))
+		return red;
+	if (gpu.toLowerCase().includes('intel'))
+		return blue;
 	return gray;
-};
+}
 
-export const getCpuColor = (cpu: string) => {
-	if (cpu.toLowerCase().includes('amd')) return red;
-	if (cpu.toLowerCase().includes('intel')) return blue;
-	if (cpu.toLowerCase().includes('arm')) return brown;
+export function getCpuColor(cpu: string) {
+	if (cpu.toLowerCase().includes('amd'))
+		return red;
+	if (cpu.toLowerCase().includes('intel'))
+		return blue;
+	if (cpu.toLowerCase().includes('arm'))
+		return brown;
 	return gray;
-};
+}

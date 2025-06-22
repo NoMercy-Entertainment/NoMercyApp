@@ -1,11 +1,9 @@
 import { useKeycloak } from '@/lib/auth/tv-keycloak';
 import { refreshToken } from '@/lib/auth/index';
-import {setUser, user} from '@/store/user'
+import { setUser, user } from '@/store/user';
 
-export const storeUserDetails = (): Promise<void> => {
-
+export function storeUserDetails(): Promise<void> {
 	return new Promise((resolve, reject) => {
-
 		if (user.value?.id) {
 			resolve();
 			return;
@@ -15,12 +13,7 @@ export const storeUserDetails = (): Promise<void> => {
 			const { isAuthenticated } = useKeycloak();
 
 			if (isAuthenticated.value) {
-				const {
-					keycloak,
-					roles,
-					token,
-					refreshToken,
-				} = useKeycloak();
+				const { keycloak, roles, token, refreshToken } = useKeycloak();
 
 				setUser({
 					...user.value,
@@ -29,11 +22,12 @@ export const storeUserDetails = (): Promise<void> => {
 				});
 
 				if (keycloak.idTokenParsed) {
-
 					setUser({
 						...user.value,
 						id: keycloak.idTokenParsed.sub as string,
-						name: keycloak.idTokenParsed.display_name ?? keycloak.idTokenParsed?.name,
+						name:
+              keycloak.idTokenParsed.display_name
+              ?? keycloak.idTokenParsed?.name,
 						email: keycloak.idTokenParsed?.email,
 						moderator: roles.value.includes('nova'),
 					});
@@ -42,18 +36,16 @@ export const storeUserDetails = (): Promise<void> => {
 				return resolve();
 			}
 			else {
-
 				refreshToken().then(() => {
-
 					isAuthenticated.value = true;
 
 					resolve();
 				});
 			}
-
-		} catch (error) {
+		}
+		catch (error) {
 			// location.reload();
 			reject(new Error('Not authenticated'));
 		}
 	});
-};
+}

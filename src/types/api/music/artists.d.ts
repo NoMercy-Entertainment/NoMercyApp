@@ -1,4 +1,4 @@
-import { PaletteColors } from '../shared';
+import type { PaletteColors } from '../shared';
 
 export interface ArtistsResponse {
 	type: string;

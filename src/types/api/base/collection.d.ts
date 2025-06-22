@@ -1,4 +1,4 @@
-import { ExtendedVideo, MediaItem, Video } from '@/types/api/base/info';
+import type { ExtendedVideo, MediaItem } from '@/types/api/base/info';
 import type { ColorPalettes } from '@/types/api/shared';
 import type { InfoCredit } from '@/types/server';
 

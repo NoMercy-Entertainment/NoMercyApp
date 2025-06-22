@@ -1,16 +1,20 @@
-import {
-	KeycloakConfig, KeycloakError,
+import type {
+	KeycloakConfig,
+	KeycloakError,
 	KeycloakInitOptions,
-	KeycloakLoginOptions, KeycloakProfile,
+	KeycloakLoginOptions,
+	KeycloakProfile,
 	KeycloakPromise,
 	KeycloakResourceAccess,
-	KeycloakRoles
+	KeycloakRoles,
 } from 'keycloak-js';
-import {
-	KeycloakAccountOptions, KeycloakFlow,
+import type {
+	KeycloakAccountOptions,
+	KeycloakFlow,
 	KeycloakLogoutOptions,
 	KeycloakRegisterOptions,
-	KeycloakResponseMode, KeycloakResponseType
+	KeycloakResponseMode,
+	KeycloakResponseType,
 } from 'keycloak-ionic';
 
 declare class Keycloak {
@@ -65,8 +69,7 @@ declare function Keycloak(config?: KeycloakConfig | string): Keycloak;
 
 export default Keycloak;
 
-export interface Endpoints {
-}
+export interface Endpoints {}
 
 export interface RealmAccess {
 	roles: string[];
@@ -75,7 +78,7 @@ export interface RealmAccess {
 export interface ResourceAccess {
 	'nomercy-api': RealmAccess;
 	'realm-management': RealmAccess;
-	account: RealmAccess;
+	'account': RealmAccess;
 	'nomercy-server': RealmAccess;
 }
 
@@ -105,30 +108,30 @@ export interface IDTokenParsed {
 }
 
 export interface TokenParsed {
-	exp: number;
-	iat: number;
-	auth_time: number;
-	jti: string;
-	iss: string;
-	aud: string[];
-	sub: string;
-	typ: string;
-	azp: string;
-	nonce: string;
-	session_state: string;
+	'exp': number;
+	'iat': number;
+	'auth_time': number;
+	'jti': string;
+	'iss': string;
+	'aud': string[];
+	'sub': string;
+	'typ': string;
+	'azp': string;
+	'nonce': string;
+	'session_state': string;
 	'allowed-origins': string[];
-	realm_access: RealmAccess;
-	resource_access: ResourceAccess;
-	scope: string;
-	sid: string;
-	email_verified: boolean;
-	name: string;
-	preferred_username: string;
-	locale: string;
-	given_name: string;
-	display_name: string;
-	family_name: string;
-	email: string;
+	'realm_access': RealmAccess;
+	'resource_access': ResourceAccess;
+	'scope': string;
+	'sid': string;
+	'email_verified': boolean;
+	'name': string;
+	'preferred_username': string;
+	'locale': string;
+	'given_name': string;
+	'display_name': string;
+	'family_name': string;
+	'email': string;
 	[key: string]: any; // Add other attributes here.
 }
 
@@ -156,7 +159,7 @@ declare class KeycloakInstance {
 	 * Creates a new Keycloak client instance.
 	 * @param config A configuration object or path to a JSON config file.
 	 */
-	constructor(config?: KeycloakConfig | string)
+	constructor(config?: KeycloakConfig | string);
 
 	/**
 	 * Is true if the user is authenticated, false otherwise.
@@ -234,47 +237,47 @@ declare class KeycloakInstance {
 	timeSkew?: number;
 
 	/**
-	 * @private Undocumented.
+	 * @private
 	 */
 	loginRequired?: boolean;
 
 	/**
-	 * @private Undocumented.
+	 * @private
 	 */
 	authServerUrl?: string;
 
 	/**
-	 * @private Undocumented.
+	 * @private
 	 */
 	realm?: string;
 
 	/**
-	 * @private Undocumented.
+	 * @private
 	 */
 	clientId?: string;
 
 	/**
-	 * @private Undocumented.
+	 * @private
 	 */
 	clientSecret?: string;
 
 	/**
-	 * @private Undocumented.
+	 * @private
 	 */
 	redirectUri?: string;
 
 	/**
-	 * @private Undocumented.
+	 * @private
 	 */
 	sessionId?: string;
 
 	/**
-	 * @private Undocumented.
+	 * @private
 	 */
 	profile?: KeycloakProfile;
 
 	/**
-	 * @private Undocumented.
+	 * @private
 	 */
 	userInfo?: NonNullable<unknown>; // KeycloakUserInfo;
 
@@ -327,7 +330,9 @@ declare class KeycloakInstance {
 	 * @param initOptions Initialization options.
 	 * @returns A promise to set functions to be invoked on success or error.
 	 */
-	init(initOptions: KeycloakInitOptions): KeycloakPromise<boolean, KeycloakError>;
+	init(
+		initOptions: KeycloakInitOptions
+	): KeycloakPromise<boolean, KeycloakError>;
 
 	/**
 	 * Redirects to login form.
@@ -431,7 +436,7 @@ declare class KeycloakInstance {
 	loadUserProfile(): KeycloakPromise<KeycloakProfile, void>;
 
 	/**
-	 * @private Undocumented.
+	 * @private
 	 */
 	loadUserInfo(): KeycloakPromise<NonNullable<unknown>, void>;
 }

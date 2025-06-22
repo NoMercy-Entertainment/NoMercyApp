@@ -1,37 +1,38 @@
 import { ref } from 'vue';
-import { HubConnection } from '@microsoft/signalr';
-import { ActivityLog } from '@/types/server';
-import { queryClient } from "@/config/tanstack-query";
-import { useSocket } from '@/store/socket';
-import {Device} from "@capacitor/device";
+import type { HubConnection } from '@microsoft/signalr';
+import type { ActivityLog } from '@/types/server';
+import { queryClient } from '@/config/tanstack-query';
+import { useVideoSocket } from '@/store/videoSocket';
+import { Device } from '@capacitor/device';
 
-export const connect = (socket?: HubConnection) => {
-    if (!socket) return
+export function connect(socket?: HubConnection) {
+	if (!socket)
+		return;
 
-    socket.on('connect', onConnect);
-    socket.on('disconnected', onDisconnect);
-    socket.on('notify', onNotify);
+	socket.on('connect', onConnect);
+	socket.on('disconnected', onDisconnect);
+	socket.on('notify', onNotify);
 
-    socket.on('command', onCommand);
-    socket.on('RefreshLibrary', onUpdateContent);
-    socket.on('addActivityLog', onAddActivityLog);
-    socket.on('setActivityLog', onSetActivityLog);
-    socket.on('pingEvent', pingEvent);
+	socket.on('command', onCommand);
+	socket.on('RefreshLibrary', onUpdateContent);
+	socket.on('addActivityLog', onAddActivityLog);
+	socket.on('setActivityLog', onSetActivityLog);
+	socket.on('pingEvent', pingEvent);
+}
 
-};
+export function disconnect(socket?: HubConnection) {
+	if (!socket)
+		return;
+	socket.off('connect', onConnect);
+	socket.off('disconnected', onDisconnect);
+	socket.off('notify', onNotify);
 
-export const disconnect = (socket?: HubConnection) => {
-    if (!socket) return
-    socket.off('connect', onConnect);
-    socket.off('disconnected', onDisconnect);
-    socket.off('notify', onNotify);
-
-    socket.off('command', onCommand);
-    socket.off('RefreshLibrary', onUpdateContent);
-    socket.off('addActivityLog', onAddActivityLog);
-    socket.off('setActivityLog', onSetActivityLog);
-    socket.off('pingEvent', pingEvent);
-};
+	socket.off('command', onCommand);
+	socket.off('RefreshLibrary', onUpdateContent);
+	socket.off('addActivityLog', onAddActivityLog);
+	socket.off('setActivityLog', onSetActivityLog);
+	socket.off('pingEvent', pingEvent);
+}
 
 // // @ts-ignore
 // const cjs = new Castjs({
@@ -40,70 +41,73 @@ export const disconnect = (socket?: HubConnection) => {
 
 const timeout = ref<NodeJS.Timeout>();
 
-export const onConnect = (socket?: HubConnection | null) => {
-    if (!socket) return
-    document.dispatchEvent(new Event('baseHub-connected'));
-    clearTimeout(timeout.value);
+export function onConnect(socket?: HubConnection | null) {
+	if (!socket)
+		return;
+	document.dispatchEvent(new Event('baseHub-connected'));
+	clearTimeout(timeout.value);
 
-    // timeout.value = setTimeout(() => {
-    // showNotification({
-    // 	title: i18next.t('Connected to server'),
-    // 	type: TYPE.SUCCESS,
-    // 	visibleOnly: true,
-    // 	duration: 2000,
-    // });
-    // }, 500);
-};
+	// timeout.value = setTimeout(() => {
+	// showNotification({
+	// 	title: i18next.t('Connected to server'),
+	// 	type: TYPE.SUCCESS,
+	// 	visibleOnly: true,
+	// 	duration: 2000,
+	// });
+	// }, 500);
+}
 
-export const onDisconnect = (socket?: HubConnection | null) => {
-    if (!socket) return
-    document.dispatchEvent(new Event('baseHub-disconnected'));
+export function onDisconnect(socket?: HubConnection | null) {
+	if (!socket)
+		return;
+	document.dispatchEvent(new Event('baseHub-disconnected'));
 
-    // showNotification({
-    // 	title: i18next.t('Disconnected from server'),
-    // 	type: TYPE.ERROR,
-    // 	visibleOnly: true,
-    // 	duration: 2000,
-    // });
-};
+	// showNotification({
+	// 	title: i18next.t('Disconnected from server'),
+	// 	type: TYPE.ERROR,
+	// 	visibleOnly: true,
+	// 	duration: 2000,
+	// });
+}
 
-const onNotify = (data: any) => {
-    // showNotification({
-    // 	title: translate(data.title, ...data.args),
-    // 	body: data.body,
-    // 	type: data.type,
-    // 	visibleOnly: data.visibleOnly,
-    // 	duration: data.duration,
-    // });
-};
+function onNotify(data: any) {
+	// showNotification({
+	// 	title: translate(data.title, ...data.args),
+	// 	body: data.body,
+	// 	type: data.type,
+	// 	visibleOnly: data.visibleOnly,
+	// 	duration: data.duration,
+	// });
+}
 
-const onUpdateContent = (data: any) => {
-    queryClient.invalidateQueries(data);
+function onUpdateContent(data: any) {
+	queryClient.invalidateQueries(data);
 
-    // const currentSong = useStore(store, state => state.music.currentSong);
-    // if (data?.id === currentSong.value?.id) {
-    // 	setCurrentSong(currentSong.value);
-    // }
-};
+	// const currentSong = useStore(store, state => state.music.currentSong);
+	// if (data?.id === currentSong.value?.id) {
+	// 	setCurrentSong(currentSong.value);
+	// }
+}
 
-const onCommand = async (data: any) => {
-    const deviceId = await Device.getId().then((device) => device.identifier);
-    if (data.deviceId == deviceId) return;
-    const func = eval(`(${data})`);
-    if (typeof func === 'function') {
-        func();
-    }
-};
+async function onCommand(data: any) {
+	const deviceId = await Device.getId().then(device => device.identifier);
+	if (data.deviceId === deviceId)
+		return;
+	const func = eval(`(${data})`);
+	if (typeof func === 'function') {
+		func();
+	}
+}
 
-const onAddActivityLog = (data: ActivityLog) => {
-    //     addActivityLog(data);
-};
+function onAddActivityLog(data: ActivityLog) {
+	//     addActivityLog(data);
+}
 
-const onSetActivityLog = (data: ActivityLog[]) => {
-    //     setActivityLog(data);
-};
+function onSetActivityLog(data: ActivityLog[]) {
+	//     setActivityLog(data);
+}
 
-const pingEvent = (startTime: number) => {
-    const socket = useSocket();
-    socket.invoke('pongEvent', startTime).then()
-};
+function pingEvent(startTime: number) {
+	const socket = useVideoSocket();
+	socket.invoke('pongEvent', startTime).then();
+}

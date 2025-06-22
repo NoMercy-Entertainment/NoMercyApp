@@ -2,7 +2,11 @@ import { computed, type Ref, ref, watch } from 'vue';
 import { HubConnectionState } from '@microsoft/signalr/src/HubConnection';
 
 import SocketClient from '@/lib/clients/socketClient/SocketClient';
-import { connect, onConnect, onDisconnect } from '@/lib/clients/socketClient/events';
+import {
+	connect,
+	onConnect,
+	onDisconnect,
+} from '@/lib/clients/socketClient/events';
 import { currentServer } from '@/store/currentServer';
 import { user } from '@/store/user';
 
@@ -10,7 +14,7 @@ const castSocket: Ref<SocketClient | undefined> = ref();
 export const connection = computed(() => castSocket.value?.connection);
 export const castSocketIsConnected = ref(false);
 
-const connected = () => {
+function connected() {
 	castSocketIsConnected.value = true;
 	console.log('Connected to Cast SignalR');
 	document.dispatchEvent(new Event('castHub-connected'));
@@ -19,15 +23,15 @@ const connected = () => {
 		onConnect(castSocket.value?.connection);
 		connect(castSocket.value?.connection);
 	}
-};
+}
 
-const disconnected = (err?: Event | void) => {
+function disconnected(err?: Event | void) {
 	castSocketIsConnected.value = false;
 	console.log('Disconnected from Cast SignalR', err);
 	document.dispatchEvent(new Event('castHub-disconnected'));
-};
+}
 
-const error = (err: Error) => {
+function error(err: Error) {
 	castSocketIsConnected.value = false;
 	console.error('Cast SignalR Error:', err);
 	document.dispatchEvent(new Event('castHub-error'));
@@ -39,48 +43,60 @@ watch(currentServer, async (newServer) => {
 	if (newServer && castSocketIsConnected.value) {
 		castSocket.value?.connection?.stop().then();
 		castSocket.value?.dispose();
-		castSocket.value = new SocketClient(currentServer.value!.serverBaseUrl!, accessToken, 'castHub');
+		castSocket.value = new SocketClient(
+			currentServer.value!.serverBaseUrl!,
+			accessToken,
+			'castHub',
+		);
 
 		castSocket.value?.connection?.on('connected', connected);
 		castSocket.value?.connection?.on('disconnected', disconnected);
 
-		await connectToHub()
-			.catch(error);
+		await connectToHub().catch(error);
 	}
 });
 
-const connectToHub = async () => {
-	if (castSocket.value?.connection?.state === HubConnectionState.Connected) return;
+async function connectToHub() {
+	if (castSocket.value?.connection?.state === HubConnectionState.Connected)
+		return;
 
-	return castSocket.value?.connection?.start()
-		.then(connected);
-};
+	return castSocket.value?.connection?.start().then(connected);
+}
 
-export const stopCastSocket = async () => {
+export async function stopCastSocket() {
 	try {
-		if (castSocket.value?.connection?.state === HubConnectionState.Disconnected) return;
+		if (castSocket.value?.connection?.state === HubConnectionState.Disconnected)
+			return;
 
-		return castSocket.value?.connection?.stop()
+		return castSocket.value?.connection
+			?.stop()
 			.then(disconnected)
 			.catch(disconnected);
-
-	} catch (err) {
+	}
+	catch (err) {
 		console.error('Error stopping Cast SignalR:', err);
 		disconnected();
 	}
 }
 
-export const startCastSocket = async () => {
+export async function startCastSocket() {
 	const accessToken = user.value?.accessToken;
 
-	if (currentServer.value && (!castSocket.value?.connection?.state || castSocket.value?.connection?.state === HubConnectionState.Disconnected)) {
-		castSocket.value = new SocketClient(currentServer.value.serverBaseUrl, accessToken, 'castHub');
+	if (
+		currentServer.value
+		&& (!castSocket.value?.connection?.state
+			|| castSocket.value?.connection?.state === HubConnectionState.Disconnected)
+	) {
+		castSocket.value = new SocketClient(
+			currentServer.value.serverBaseUrl,
+			accessToken,
+			'castHub',
+		);
 
 		castSocket.value?.connection?.on('connected', connected);
 		castSocket.value?.connection?.on('disconnected', disconnected);
 
-		await connectToHub()
-			.catch(error);
+		await connectToHub().catch(error);
 
 		castSocket.value?.connection?.onreconnecting((error: Error | undefined) => {
 			console.log('SignalR Disconnected.', error?.message);

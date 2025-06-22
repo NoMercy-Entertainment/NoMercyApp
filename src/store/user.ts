@@ -1,7 +1,7 @@
-import {computed, ref} from 'vue';
+import { computed, ref } from 'vue';
 
 import type { User } from '@/types/auth';
-import Keycloak from '@/types/keycloak';
+import type Keycloak from '@/types/keycloak';
 
 export const u = ref<User>(<User>{
 	accessToken: localStorage.getItem('access_token') || '',
@@ -15,11 +15,11 @@ export const testUserToken = ref('test');
 
 export const keycloak = ref<Keycloak>(<Keycloak>{});
 
-export const setUser = (newUser: User): void => {
+export function setUser(newUser: User): void {
 	u.value = newUser;
 }
 
-export const setUserFromKeycloak = (keycloakUser: Keycloak): void => {
+export function setUserFromKeycloak(keycloakUser: Keycloak): void {
 	if (!keycloakUser) {
 		alert('No user found');
 		return;
@@ -43,15 +43,15 @@ export const setUserFromKeycloak = (keycloakUser: Keycloak): void => {
 		accessToken: keycloakUser.token,
 		locale: keycloakUser.tokenParsed.locale,
 		moderator: keycloakUser.hasRealmRole('nova'),
-	}
+	};
 }
 
-export const updateUserFromApi = (newUser: User): void => {
+export function updateUserFromApi(newUser: User): void {
 	u.value = {
 		...u.value,
 		avatarUrl: newUser.avatarUrl,
 		receivedMessages: newUser.receivedMessages,
 		sendMessages: newUser.sendMessages,
 		notifications: newUser.notifications,
-	}
+	};
 }

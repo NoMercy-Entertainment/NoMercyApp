@@ -3,29 +3,29 @@
 
 /// <reference lib="webworker" />
 
-import { VueKeycloakInstance } from '@dsb-norge/vue-keycloak-js/dist/types';
-import { SliderBar } from '@/lib/sliderBar';
-import { SwiperRef } from 'swiper/swiper-react';
+import type { VueKeycloakInstance } from '@dsb-norge/vue-keycloak-js/dist/types';
+import type { SliderBar } from '@/lib/sliderBar';
+import type { SwiperRef } from 'swiper/swiper-react';
 
 declare module '*.svg' {
-  const src: string;
-  export default src;
+	const src: string;
+	export default src;
 }
 declare module '*.svg?import' {
-  const src: string;
-  export default src;
+	const src: string;
+	export default src;
 }
 declare module '*.svg?url' {
-  const src: string;
-  export default src;
+	const src: string;
+	export default src;
 }
 declare module '*.svg?raw' {
-  const src: string;
-  export default src;
+	const src: string;
+	export default src;
 }
 declare module '*.svg?inline' {
-  const src: string;
-  export default src;
+	const src: string;
+	export default src;
 }
 declare module '*.scss';
 declare module '*.jpg';
@@ -47,55 +47,122 @@ declare interface VueScrollEvent {
 
 declare global {
 	interface HTMLElement extends ParentNode {
-		sliderBar: (player: any, callbackFn: string, getSizeFn?: string) => SliderBar | null;
+		sliderBar: (
+			player: any,
+			callbackFn: string,
+			getSizeFn?: string
+		) => SliderBar | null;
 		scrollHorizontalIntoView: (parentElement?: HTMLElement) => void;
 		scrollVerticalIntoView: (parentElement?: HTMLElement) => void;
-		animateVerticalIntoView: (parentElement?: HTMLElement | null, duration?: number) => void;
+		animateVerticalIntoView: (
+			parentElement?: HTMLElement | null,
+			duration?: number
+		) => void;
 		firstChild: HTMLElement | null;
 		lastChild: HTMLElement | null;
 		children: HTMLCollection;
 		isVisible: (parent?: HTMLElement) => boolean;
-		querySelectorAllArray<K extends keyof HTMLElementTagNameMap>(selectors: K): Array<HTMLElementTagNameMap[K]>;
-		querySelectorAllArray<K extends keyof SVGElementTagNameMap>(selectors: K): Array<SVGElementTagNameMap[K]>;
-		querySelectorAllArray<K extends keyof MathMLElementTagNameMap>(selectors: K): Array<MathMLElementTagNameMap[K]>;
-		querySelectorAllArray<E extends Element = Element>(selectors: string): Array<E>;
-		onDoubleClick: ({ singleClickEvtCallback, doubleClickEvtCallback }: { singleClickEvtCallback: (event: MouseEvent) => void; doubleClickEvtCallback: (event: MouseEvent) => void; }) => void
+		querySelectorAllArray: <K extends keyof HTMLElementTagNameMap>(
+			selectors: K
+		) => Array<HTMLElementTagNameMap[K]>;
+		querySelectorAllArray: <K extends keyof SVGElementTagNameMap>(
+			selectors: K
+		) => Array<SVGElementTagNameMap[K]>;
+		querySelectorAllArray: <K extends keyof MathMLElementTagNameMap>(
+			selectors: K
+		) => Array<MathMLElementTagNameMap[K]>;
+		querySelectorAllArray: <E extends Element = Element>(
+			selectors: string
+		) => Array<E>;
+		onDoubleClick: ({
+			singleClickEvtCallback,
+			doubleClickEvtCallback,
+		}: {
+			singleClickEvtCallback: (event: MouseEvent) => void;
+			doubleClickEvtCallback: (event: MouseEvent) => void;
+		}) => void;
 	}
 	interface Element {
-		querySelectorAllArray<K extends keyof HTMLElementTagNameMap>(selectors: K): Array<HTMLElementTagNameMap[K]>;
-		querySelectorAllArray<K extends keyof SVGElementTagNameMap>(selectors: K): Array<SVGElementTagNameMap[K]>;
-		querySelectorAllArray<K extends keyof MathMLElementTagNameMap>(selectors: K): Array<MathMLElementTagNameMap[K]>;
-		querySelectorAllArray<E extends Element = Element>(selectors: string): Array<E>;
-		onDoubleClick: ({ singleClickEvtCallback, doubleClickEvtCallback }: { singleClickEvtCallback: (event: MouseEvent) => void; doubleClickEvtCallback: (event: MouseEvent) => void; }) => void
+		querySelectorAllArray: <K extends keyof HTMLElementTagNameMap>(
+			selectors: K
+		) => Array<HTMLElementTagNameMap[K]>;
+		querySelectorAllArray: <K extends keyof SVGElementTagNameMap>(
+			selectors: K
+		) => Array<SVGElementTagNameMap[K]>;
+		querySelectorAllArray: <K extends keyof MathMLElementTagNameMap>(
+			selectors: K
+		) => Array<MathMLElementTagNameMap[K]>;
+		querySelectorAllArray: <E extends Element = Element>(
+			selectors: string
+		) => Array<E>;
+		onDoubleClick: ({
+			singleClickEvtCallback,
+			doubleClickEvtCallback,
+		}: {
+			singleClickEvtCallback: (event: MouseEvent) => void;
+			doubleClickEvtCallback: (event: MouseEvent) => void;
+		}) => void;
 	}
 	interface Document {
-		querySelectorAllArray<K extends keyof HTMLElementTagNameMap>(selectors: K): Array<HTMLElementTagNameMap[K]>;
-		querySelectorAllArray<K extends keyof SVGElementTagNameMap>(selectors: K): Array<SVGElementTagNameMap[K]>;
-		querySelectorAllArray<K extends keyof MathMLElementTagNameMap>(selectors: K): Array<MathMLElementTagNameMap[K]>;
-		querySelectorAllArray<E extends Element = Element>(selectors: string): Array<E>;
-		onDoubleClick: ({ singleClickEvtCallback, doubleClickEvtCallback }: { singleClickEvtCallback: (event: MouseEvent) => void; doubleClickEvtCallback: (event: MouseEvent) => void; }) => void
+		querySelectorAllArray<K extends keyof HTMLElementTagNameMap>(
+			selectors: K
+		): Array<HTMLElementTagNameMap[K]>;
+		querySelectorAllArray<K extends keyof SVGElementTagNameMap>(
+			selectors: K
+		): Array<SVGElementTagNameMap[K]>;
+		querySelectorAllArray<K extends keyof MathMLElementTagNameMap>(
+			selectors: K
+		): Array<MathMLElementTagNameMap[K]>;
+		querySelectorAllArray<E extends Element = Element>(
+			selectors: string
+		): Array<E>;
+		onDoubleClick: ({
+			singleClickEvtCallback,
+			doubleClickEvtCallback,
+		}: {
+			singleClickEvtCallback: (event: MouseEvent) => void;
+			doubleClickEvtCallback: (event: MouseEvent) => void;
+		}) => void;
 	}
 
 	interface MouseEvent {
 		target: HTMLElement & {
 			scrollHorizontalIntoView: (parentElement?: HTMLElement) => void;
 			scrollVerticalIntoView: (parentElement?: HTMLElement) => void;
-			animateVerticalIntoView: (parentElement?: HTMLElement | null, duration?: number) => void;
+			animateVerticalIntoView: (
+				parentElement?: HTMLElement | null,
+				duration?: number
+			) => void;
 			isVisible: (parent?: HTMLElement) => boolean;
-			querySelectorAllArray<K extends keyof HTMLElementTagNameMap>(selectors: K): Array<HTMLElementTagNameMap[K]>;
-			querySelectorAllArray<K extends keyof SVGElementTagNameMap>(selectors: K): Array<SVGElementTagNameMap[K]>;
-			querySelectorAllArray<K extends keyof MathMLElementTagNameMap>(selectors: K): Array<MathMLElementTagNameMap[K]>;
-			querySelectorAllArray<E extends Element = Element>(selectors: string): Array<E>;
-		}
+			querySelectorAllArray<K extends keyof HTMLElementTagNameMap>(
+				selectors: K
+			): Array<HTMLElementTagNameMap[K]>;
+			querySelectorAllArray<K extends keyof SVGElementTagNameMap>(
+				selectors: K
+			): Array<SVGElementTagNameMap[K]>;
+			querySelectorAllArray<K extends keyof MathMLElementTagNameMap>(
+				selectors: K
+			): Array<MathMLElementTagNameMap[K]>;
+			querySelectorAllArray<E extends Element = Element>(
+				selectors: string
+			): Array<E>;
+		};
 	}
-
 
 	interface VueDivElement {
 		$el: HTMLElement & {
 			scrollToTop: (arg: number) => void;
 			scrollToBottom: (arg: number) => void;
-			scrollToPoint: (x?: number | null, y?: number | null, duration?: number) => void;
-			scrollByPoint: (x?: number | null, y?: number | null, duration?: number) => void;
+			scrollToPoint: (
+				x?: number | null,
+				y?: number | null,
+				duration?: number
+			) => void;
+			scrollByPoint: (
+				x?: number | null,
+				y?: number | null,
+				duration?: number
+			) => void;
 		};
 	}
 	interface VueSwiperElement {
@@ -125,7 +192,7 @@ declare global {
 					MediaMetadata: {
 						// The constructor signature for MediaMetadata
 						// eslint-disable-next-line @typescript-eslint/no-misused-new
-						new(type: MetadataType): MediaMetadata;
+						new (type: MetadataType): MediaMetadata;
 						type: MetadataType;
 					};
 					MetadataType: typeof MetadataType;
@@ -137,12 +204,18 @@ declare global {
 }
 
 interface CastContext {
-	setOptions(options: CastContextOptions): void;
-	addEventListener(eventType: CastContextEventType, callback: (event: any) => void): void;
-	removeEventListener(eventType: CastContextEventType, callback: (event: any) => void): void;
-	getCastState(): CastState;
-	getCurrentDevice(): CastDevice | null;
-	getSession(): CastSession | null;
+	setOptions: (options: CastContextOptions) => void;
+	addEventListener: (
+		eventType: CastContextEventType,
+		callback: (event: any) => void
+	) => void;
+	removeEventListener: (
+		eventType: CastContextEventType,
+		callback: (event: any) => void
+	) => void;
+	getCastState: () => CastState;
+	getCurrentDevice: () => CastDevice | null;
+	getSession: () => CastSession | null;
 }
 
 interface CastContextOptions {
@@ -151,16 +224,16 @@ interface CastContextOptions {
 }
 
 enum CastContextEventType {
-	CAST_STATE_CHANGED = "cast_state_changed",
+	CAST_STATE_CHANGED = 'cast_state_changed',
 }
 
 enum AutoJoinPolicy {
-	ORIGIN_SCOPED = "origin_scoped",
+	ORIGIN_SCOPED = 'origin_scoped',
 }
 
 enum CastState {
-	NOT_CONNECTED = "not_connected",
-	CONNECTED = "connected",
+	NOT_CONNECTED = 'not_connected',
+	CONNECTED = 'connected',
 }
 
 interface CastDevice {
@@ -168,15 +241,15 @@ interface CastDevice {
 }
 
 interface CastSession {
-	loadMedia(
+	loadMedia: (
 		mediaInfo: MediaInfo,
 		onSuccess?: (result: any) => void,
 		onFailure?: (error: any) => void
-	): void;
-	end(
+	) => void;
+	end: (
 		onSuccess?: (result: any) => void,
 		onFailure?: (error: any) => void
-	): void;
+	) => void;
 }
 
 interface MediaInfo {
@@ -190,7 +263,7 @@ interface MediaInfo {
 interface MediaMetadata {
 	// The constructor signature for MediaMetadata
 	// eslint-disable-next-line @typescript-eslint/no-misused-new
-	new(type: MetadataType): MediaMetadata;
+	new (type: MetadataType): MediaMetadata;
 	type: MetadataType;
 }
 
@@ -200,9 +273,9 @@ enum MetadataType {
 }
 
 enum PlayerState {
-	IDLE = "IDLE",
-	PLAYING = "PLAYING",
-	PAUSED = "PAUSED",
+	IDLE = 'IDLE',
+	PLAYING = 'PLAYING',
+	PAUSED = 'PAUSED',
 }
 
 interface MediaStatus {

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { type PropType } from 'vue';
+import type { PropType } from 'vue';
 
 import type { PlaylistItem } from '@/types/musicPlayer';
 
@@ -21,16 +21,17 @@ defineProps({
 	},
 });
 
-const handleClick = (e?: MouseEvent) => {
+function handleClick(e?: MouseEvent) {
 	e?.stopPropagation();
-};
-
-
+}
 </script>
 
 <template>
-	<MusicButton label="" :onclick="handleClick"
-		class="-outline-offset-1 focus:outline focus:outline-1 focus:outline-white">
+	<MusicButton
+		label=""
+		:onclick="handleClick"
+		class="-outline-offset-1 focus:outline focus:outline-1 focus:outline-white"
+	>
 		<OptimizedIcon icon="menuDotsHorizontal" class="h-5 w-5" />
 	</MusicButton>
 </template>

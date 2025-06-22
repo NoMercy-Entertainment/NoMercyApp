@@ -1,19 +1,15 @@
 <script setup lang="ts">
-import {
-  IonButtons, IonButton,
-  IonContent, modalController,
-} from '@ionic/vue';
-
-
+import { IonButton, IonButtons, IonContent, modalController } from '@ionic/vue';
 </script>
 
 <template>
-  <ion-content :fullscreen="true" class="ion-padding">
-
-    <ion-buttons>
-      <ion-button @click="modalController.dismiss(null, 'cancel');">Close</ion-button>
-    </ion-buttons>
-  </ion-content>
+	<IonContent :fullscreen="true" class="ion-padding">
+		<IonButtons>
+			<IonButton @click="modalController.dismiss(null, 'cancel')">
+				Close
+			</IonButton>
+		</IonButtons>
+	</IonContent>
 </template>
 
 <style scoped></style>

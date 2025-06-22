@@ -1,9 +1,11 @@
-import { ComputedRef, Ref, ref, toRaw, UnwrapRef } from 'vue';
-import { QueryKey, useQuery, UseQueryReturnType } from '@tanstack/vue-query';
+import type { ComputedRef, Ref, UnwrapRef } from 'vue';
+import { ref, toRaw } from 'vue';
+import type { QueryKey, UseQueryReturnType } from '@tanstack/vue-query';
+import { useQuery } from '@tanstack/vue-query';
 
 import apiClient from './apiClient';
-import { AxiosError } from 'axios';
-import { ErrorResponse } from '@/types/server';
+import type { AxiosError } from 'axios';
+import type { ErrorResponse } from '@/types/server';
 import { queryKey } from '@/lib/clients/useInfiniteServerClient';
 import router from '@/router';
 
@@ -18,19 +20,22 @@ export interface ServerClientProps {
 	delay?: number;
 	queryKey?: QueryKey | unknown[];
 	type?: 'get' | 'post' | 'put' | 'patch' | 'delete' | 'head';
-	suspense?: Ref<UnwrapRef<boolean>>
+	suspense?: Ref<UnwrapRef<boolean>>;
 	limit?: number;
 }
 
 type Return<T> = UseQueryReturnType<T, AxiosError<ErrorResponse>> extends {
 	setLetter: (value: string) => void;
-} ? UseQueryReturnType<T, AxiosError<ErrorResponse>> : UseQueryReturnType<T, AxiosError<ErrorResponse>> & {
-	setLetter: (value: string) => void;
-};
+}
+	? UseQueryReturnType<T, AxiosError<ErrorResponse>>
+	: UseQueryReturnType<T, AxiosError<ErrorResponse>> & {
+		setLetter: (value: string) => void;
+	};
 
-const useApiClient = <T,>(options?: ServerClientProps): Return<T> => {
-
-	const letter = ref<string>(router.currentRoute.value.params?.letter as string || '_');
+function useApiClient<T>(options?: ServerClientProps): Return<T> {
+	const letter = ref<string>(
+		(router.currentRoute.value.params?.letter as string) || '_',
+	);
 
 	const setLetter = (value: string) => {
 		letter.value = value;
@@ -42,14 +47,15 @@ const useApiClient = <T,>(options?: ServerClientProps): Return<T> => {
 	});
 
 	const getDataValues = () => {
-		return Object.keys(options?.data ?? {})
-			.reduce((acc, key) => {
-				acc[key] = toRaw(options?.data![key].value);
-				return acc;
-			}, {} as Record<string | number, any>);
-	}
+		return Object.keys(options?.data ?? {}).reduce((acc, key) => {
+			acc[key] = toRaw(options?.data![key].value);
+			return acc;
+		}, {} as Record<string | number, any>);
+	};
 
-	const type = ref<'get' | 'post' | 'put' | 'patch' | 'delete' | 'head'>(options?.type ?? 'get');
+	const type = ref<'get' | 'post' | 'put' | 'patch' | 'delete' | 'head'>(
+		options?.type ?? 'get',
+	);
 
 	const useQueryC = useQuery({
 		...options,
@@ -68,43 +74,42 @@ const useApiClient = <T,>(options?: ServerClientProps): Return<T> => {
 		refetchOnMount: true,
 		refetchOnWindowFocus: false,
 		networkMode: 'offlineFirst',
-		staleTime: options?.keepForever
-			? Infinity
-			: 1000 * 60 * 5,
+		staleTime: options?.keepForever ? Infinity : 1000 * 60 * 5,
 		queryFn: () => {
 			return new Promise<T>((resolve, reject) => {
 				const controller = new AbortController();
 
 				setTimeout(() => {
-
 					let promise;
 
-					if ((options?.path ?? router.currentRoute.value.fullPath).includes('undefined')) return Promise.reject();
+					if (
+						(options?.path ?? router.currentRoute.value.fullPath).includes(
+							'undefined',
+						)
+					) {
+						return Promise.reject();
+					}
 
-					if (type.value == 'get') {
+					if (type.value === 'get') {
 						promise = apiClient<T>()
-							.get<T>(
-								options?.path ?? router.currentRoute.value.fullPath,
-								{
-									params: {
-										letter: letter.value,
-										...options?.params,
-										...getDataValues(),
-									},
-									signal: controller.signal,
-								}
-							)
+							.get<T>(options?.path ?? router.currentRoute.value.fullPath, {
+								params: {
+									letter: letter.value,
+									...options?.params,
+									...getDataValues(),
+								},
+								signal: controller.signal,
+							})
 							.then((response) => {
 								// @ts-ignore
 								return response.data?.data ?? response.data;
 							})
 							.catch(reject);
-
 					}
-					else if (type.value == 'post') {
-
+					else if (type.value === 'post') {
 						promise = apiClient<T>()
-							.post<T>(options?.path ?? router.currentRoute.value.fullPath,
+							.post<T>(
+								options?.path ?? router.currentRoute.value.fullPath,
 								{
 									letter: router.currentRoute.value.params.letter ?? undefined,
 									...options?.data,
@@ -112,34 +117,18 @@ const useApiClient = <T,>(options?: ServerClientProps): Return<T> => {
 								},
 								{
 									signal: controller.signal,
-								})
-							.then(({ data }) => {
-								// @ts-ignore
-								return data?.data ?? data;
-							})
-							.catch(reject);
-
-					}
-					else if (type.value == 'put') {
-						promise = apiClient<T>()
-							.put<T>(options?.path ?? router.currentRoute.value.fullPath,
-								{
-									letter: router.currentRoute.value.params.letter ?? undefined,
-									...options?.data,
-									...getDataValues(),
 								},
-								{
-									signal: controller.signal,
-								})
+							)
 							.then(({ data }) => {
 								// @ts-ignore
 								return data?.data ?? data;
 							})
 							.catch(reject);
 					}
-					else if (type.value == 'patch') {
+					else if (type.value === 'put') {
 						promise = apiClient<T>()
-							.patch<T>(options?.path ?? router.currentRoute.value.fullPath,
+							.put<T>(
+								options?.path ?? router.currentRoute.value.fullPath,
 								{
 									letter: router.currentRoute.value.params.letter ?? undefined,
 									...options?.data,
@@ -147,16 +136,18 @@ const useApiClient = <T,>(options?: ServerClientProps): Return<T> => {
 								},
 								{
 									signal: controller.signal,
-								})
+								},
+							)
 							.then(({ data }) => {
 								// @ts-ignore
 								return data?.data ?? data;
 							})
 							.catch(reject);
 					}
-					else if (type.value == 'delete') {
+					else if (type.value === 'patch') {
 						promise = apiClient<T>()
-							.delete<T>(options?.path ?? router.currentRoute.value.fullPath,
+							.patch<T>(
+								options?.path ?? router.currentRoute.value.fullPath,
 								{
 									letter: router.currentRoute.value.params.letter ?? undefined,
 									...options?.data,
@@ -164,7 +155,27 @@ const useApiClient = <T,>(options?: ServerClientProps): Return<T> => {
 								},
 								{
 									signal: controller.signal,
-								})
+								},
+							)
+							.then(({ data }) => {
+								// @ts-ignore
+								return data?.data ?? data;
+							})
+							.catch(reject);
+					}
+					else if (type.value === 'delete') {
+						promise = apiClient<T>()
+							.delete<T>(
+								options?.path ?? router.currentRoute.value.fullPath,
+								{
+									letter: router.currentRoute.value.params.letter ?? undefined,
+									...options?.data,
+									...getDataValues(),
+								},
+								{
+									signal: controller.signal,
+								},
+							)
 							.then(({ data }) => {
 								// @ts-ignore
 								return data?.data ?? data;
@@ -177,7 +188,6 @@ const useApiClient = <T,>(options?: ServerClientProps): Return<T> => {
 					// });
 
 					return resolve(promise as Promise<T>);
-
 				}, options?.delay ?? 0);
 			});
 		},
@@ -187,7 +197,6 @@ const useApiClient = <T,>(options?: ServerClientProps): Return<T> => {
 		...useQueryC,
 		setLetter,
 	};
-
-};
+}
 
 export default useApiClient;

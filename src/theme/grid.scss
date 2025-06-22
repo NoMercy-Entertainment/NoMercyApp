@@ -1,28 +1,28 @@
-
-
 .album-grid {
-    //grid-template-columns: [index] minmax(60px, 1fr) [first] 4fr [var2] 2fr [last] minmax(60px, 1fr);
-    grid-template-columns: [index] minmax(60px, 1fr) [first] 4fr [var2]  minmax(100px, 1fr);
-    @media (min-width: 640px) {
-        grid-template-columns: [index] 42px [first] 2fr [var1] 2fr [var2] 1fr [last] minmax(170px, auto);
-        //grid-template-columns: [index] 42px [first] 8fr [var1] 4fr [last] minmax(120px, auto);
-    }
+	//grid-template-columns: [index] minmax(60px, 1fr) [first] 4fr [var2] 2fr [last] minmax(60px, 1fr);
+	grid-template-columns: [index] minmax(60px, 1fr) [first] 4fr [var2] minmax(100px, 1fr);
+	@media (min-width: 640px) {
+		grid-template-columns: [index] 42px [first] 2fr [var1] 2fr [var2] 1fr [last] minmax(170px, auto);
+		//grid-template-columns: [index] 42px [first] 8fr [var1] 4fr [last] minmax(120px, auto);
+	}
 }
 
 .artist-grid {
-    grid-template-columns: [index] minmax(60px, 1fr) [first] 4fr [var2] minmax(100px, 1fr);
-    @media (min-width: 640px) {
-        // grid-template-columns: [index] 42px [first] 2fr [var1] 3fr [var2] 1fr [last] minmax(120px, auto)
-        grid-template-columns: [index] 42px [first] minmax(360px, 4fr) [var1] minmax(360px, 3fr) [var2] minmax(360px, 2fr) [last] minmax(150px, 1fr);
+	grid-template-columns: [index] minmax(60px, 1fr) [first] 4fr [var2] minmax(100px, 1fr);
+	@media (min-width: 640px) {
+		// grid-template-columns: [index] 42px [first] 2fr [var1] 3fr [var2] 1fr [last] minmax(120px, auto)
+		grid-template-columns:
+			[index] 42px [first] minmax(360px, 4fr) [var1] minmax(360px, 3fr) [var2] minmax(360px, 2fr)
+			[last] minmax(150px, 1fr);
 
-        //grid-template-columns: [index] 42px [first] 3fr [var1] 4fr [var2] 1fr [last] minmax(120px, auto)
-    }
+		//grid-template-columns: [index] 42px [first] 3fr [var1] 4fr [var2] 1fr [last] minmax(120px, auto)
+	}
 }
 .home-grid {
-    grid-template-columns: [index] minmax(41px, 1fr) [first] 4fr [var2] minmax(40px, 1fr);
-    @media (min-width: 640px) {
-        grid-template-columns: [index] 42px [first] 4fr [var1] 4fr [var2] 1fr [last] 60px;
-    }
+	grid-template-columns: [index] minmax(41px, 1fr) [first] 4fr [var2] minmax(40px, 1fr);
+	@media (min-width: 640px) {
+		grid-template-columns: [index] 42px [first] 4fr [var1] 4fr [var2] 1fr [last] 60px;
+	}
 }
 
 //.card-poster {
@@ -34,16 +34,16 @@
 //}
 
 .media-grid {
-    @apply grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-7 3xl:grid-cols-8 4xl:grid-cols-9 5xl:grid-cols-14;
+	@apply grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-7 3xl:grid-cols-8 4xl:grid-cols-9 5xl:grid-cols-14;
 }
 
 .media-poster-grid {
-    @apply grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-7 3xl:grid-cols-8 4xl:grid-cols-9 5xl:grid-cols-14;
+	@apply grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-7 3xl:grid-cols-8 4xl:grid-cols-9 5xl:grid-cols-14;
 }
 .media-backdrop-grid {
-    @apply grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-4 3xl:grid-cols-5 4xl:grid-cols-5 5xl:grid-cols-6;
+	@apply grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-4 3xl:grid-cols-5 4xl:grid-cols-5 5xl:grid-cols-6;
 }
 
 .dashboard-grid {
-    @apply grid grid-cols-2 xl:grid-cols-3 2xl:grid-cols-5 3xl:grid-cols-6 4xl:grid-cols-7 5xl:grid-cols-8;
+	@apply grid grid-cols-2 xl:grid-cols-3 2xl:grid-cols-5 3xl:grid-cols-6 4xl:grid-cols-7 5xl:grid-cols-8;
 }

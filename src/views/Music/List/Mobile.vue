@@ -1,11 +1,16 @@
 <script setup lang="ts">
-import {onMounted, ref, watch} from 'vue';
-import {useRoute} from 'vue-router';
-import {IonContent, IonPage, isPlatform, onIonViewWillEnter} from '@ionic/vue';
+import { onMounted, ref, watch } from 'vue';
+import { useRoute } from 'vue-router';
+import {
+	IonContent,
+	IonPage,
+	isPlatform,
+	onIonViewWillEnter,
+} from '@ionic/vue';
 
 import type { DisplayList } from '@/types/api/music/musicPlayer';
 
-import { PlaylistItem, SortOrder, SortType } from '@/types/musicPlayer';
+import type { PlaylistItem, SortOrder, SortType } from '@/types/musicPlayer';
 
 import useServerClient from '@/lib/clients/useServerClient';
 import { breakTitle, setTitle, sortByType } from '@/lib/stringArray';
@@ -16,12 +21,12 @@ import ArtistHeader from '@/views/Music/List/components/ArtistHeader.vue';
 import SortHeader from '@/views/Music/List/components/SortHeader.vue';
 import TrackRow from '@/views/Music/List/components/TrackRow.vue';
 import OptimizedIcon from '@/components/OptimizedIcon.vue';
-import NotFound from "@/Layout/Desktop/components/NotFound.vue";
+import NotFound from '@/Layout/Desktop/components/NotFound.vue';
 
 const route = useRoute();
 
 const { data, isError } = useServerClient<DisplayList>({
-  path: route.fullPath,
+	path: route.fullPath,
 });
 
 const main = ref<HTMLDivElement | null>(null);
@@ -30,142 +35,203 @@ const displayList = ref<PlaylistItem[]>();
 const filter = ref('');
 
 watch(data, (value) => {
-  setTitle(value?.name ?? null);
+	setTitle(value?.name ?? null);
 
-  sort(value?.tracks ?? [], sortType.value, sortOrder.value, filter.value);
+	sort(value?.tracks ?? [], sortType.value, sortOrder.value, filter.value);
 
-  setColorPalette(value?.color_palette?.cover);
+	setColorPalette(value?.color_palette?.cover);
 });
 
 watch(sortOrder, (value) => {
-  sort(data.value?.tracks ?? [], sortType.value, value, filter.value);
+	sort(data.value?.tracks ?? [], sortType.value, value, filter.value);
 });
 watch(sortType, (value) => {
-  sort(data.value?.tracks ?? [], value, sortOrder.value, filter.value);
+	sort(data.value?.tracks ?? [], value, sortOrder.value, filter.value);
 });
 watch(filter, (value) => {
-  sort(data.value?.tracks ?? [], sortType.value, sortOrder.value, value);
+	sort(data.value?.tracks ?? [], sortType.value, sortOrder.value, value);
 });
 
-const sort = (songs: PlaylistItem[], sortType: SortType, sortOrder: SortOrder, value: string) => {
+function sort(songs: PlaylistItem[], sortType: SortType, sortOrder: SortOrder, value: string) {
+	const newList = sortByType<PlaylistItem>(
+		songs ?? [],
+		sortType,
+		sortOrder,
+		setSortOrder,
+	);
 
-  const newList = sortByType<PlaylistItem>(songs ?? [], sortType, sortOrder, setSortOrder);
-
-  if (value == '') {
-    displayList.value = newList;
-  } else {
-    // @ts-ignore
-    displayList.value = newList?.filter(t =>
-      t.name?.toLowerCase().includes(value?.toLowerCase?.())
-      || t.artist_track?.some(a => a.name.toLowerCase().includes(value?.toLowerCase?.()))
-      || t.album_track?.[0]?.name.toLowerCase().includes(value?.toLowerCase?.())) ?? [];
-  }
-};
+	if (value === '') {
+		displayList.value = newList;
+	}
+	else {
+		// @ts-ignore
+		displayList.value
+      = newList?.filter(
+				t =>
+					t.name?.toLowerCase().includes(value?.toLowerCase?.())
+					|| t.artist_track?.some(a =>
+						a.name.toLowerCase().includes(value?.toLowerCase?.()),
+					)
+					|| t.album_track?.[0]?.name
+						.toLowerCase()
+						.includes(value?.toLowerCase?.()),
+			) ?? [];
+	}
+}
 
 onMounted(() => {
-  sort(data?.value?.tracks ?? [], sortType.value, sortOrder.value, filter.value);
-  if (data.value?.color_palette?.cover) {
-    setColorPalette(data.value?.color_palette?.cover);
-  }
+	sort(
+		data?.value?.tracks ?? [],
+		sortType.value,
+		sortOrder.value,
+		filter.value,
+	);
+	if (data.value?.color_palette?.cover) {
+		setColorPalette(data.value?.color_palette?.cover);
+	}
 });
 
 onIonViewWillEnter(() => {
-  sort(data?.value?.tracks ?? [], sortType.value, sortOrder.value, filter.value);
-  if (data.value?.color_palette?.cover) {
-    setColorPalette(data.value?.color_palette?.cover);
-  }
+	sort(
+		data?.value?.tracks ?? [],
+		sortType.value,
+		sortOrder.value,
+		filter.value,
+	);
+	if (data.value?.color_palette?.cover) {
+		setColorPalette(data.value?.color_palette?.cover);
+	}
 });
 
-const handleBack = () => {
-  window.history.back();
-};
+function handleBack() {
+	window.history.back();
+}
 
 const showScrollHeader = ref(false);
 const showScrollHeaderText = ref(false);
 const sortHeader = ref<VueDivElement>();
 const container = ref<VueDivElement>();
 
-const onScroll = () => {
-  // if(window.CSS.supports('container-type', 'scroll-state')) return;
+function onScroll() {
+	// if(window.CSS.supports('container-type', 'scroll-state')) return;
 
-  const headerScrollTop = 170;
-  const headerScrollTextTop = 160;
-  const sortHeaderTop = isPlatform('capacitor') ? 88 : 64;
+	const headerScrollTop = 170;
+	const headerScrollTextTop = 160;
+	const sortHeaderTop = isPlatform('capacitor') ? 88 : 64;
 
-  const top = sortHeader.value?.$el?.getBoundingClientRect().top;
-  if (!top) {
-    requestAnimationFrame(onScroll);
-    return;
-  }
+	const top = sortHeader.value?.$el?.getBoundingClientRect().top;
+	if (!top) {
+		requestAnimationFrame(onScroll);
+		return;
+	}
 
-  showScrollHeader.value = top <= headerScrollTop;
-  showScrollHeaderText.value = top <= headerScrollTextTop;
+	showScrollHeader.value = top <= headerScrollTop;
+	showScrollHeaderText.value = top <= headerScrollTextTop;
 
-  if (top == sortHeaderTop) {
-    sortHeader.value?.$el?.classList.add('!bg-focus');
-    sortHeader.value?.$el?.firstChild?.classList.add('!bg-slate-light-10/11', 'dark:!bg-[rgb(var(--background-auto)/79%)]');
-  } else {
-    sortHeader.value?.$el?.classList.remove('!bg-focus');
-    sortHeader.value?.$el?.firstChild?.classList.remove('!bg-slate-light-10/11', 'dark:!bg-[rgb(var(--background-auto)/79%)]');
-  }
+	if (top === sortHeaderTop) {
+		sortHeader.value?.$el?.classList.add('!bg-focus');
+		sortHeader.value?.$el?.firstChild?.classList.add(
+			'!bg-slate-light-10/11',
+			'dark:!bg-[rgb(var(--background-auto)/79%)]',
+		);
+	}
+	else {
+		sortHeader.value?.$el?.classList.remove('!bg-focus');
+		sortHeader.value?.$el?.firstChild?.classList.remove(
+			'!bg-slate-light-10/11',
+			'dark:!bg-[rgb(var(--background-auto)/79%)]',
+		);
+	}
 
-  requestAnimationFrame(onScroll);
-};
+	requestAnimationFrame(onScroll);
+}
 
 watch(container, () => {
-  requestAnimationFrame(onScroll);
+	requestAnimationFrame(onScroll);
 });
-
 </script>
 
 <template>
-  <ion-page>
-    <ion-content ref="container" @ionScroll="onScroll" :scrollEvents="true">
-      <NotFound v-if="isError && !data" />
-      <div
-        v-else-if="!route.params.id || (route.params.id && data?.id == route.params.id)"
-        ref="main"
-        class="flex flex-col h-auto overflow-x-clip w-available sm:rounded-2xl -mt-safe-offset-12 bg-[rgb(var(--background-auto))]">
-        <ArtistHeader :data="data" />
+	<IonPage>
+		<IonContent ref="container" :scroll-events="true" @ion-scroll="onScroll">
+			<NotFound v-if="isError && !data" />
+			<div
+				v-else-if="
+					!route.params.id || (route.params.id && data?.id === route.params.id)
+				"
+				ref="main"
+				class="flex flex-col h-auto overflow-x-clip w-available sm:rounded-2xl -mt-safe-offset-12 bg-[rgb(var(--background-auto))]"
+			>
+				<ArtistHeader :data="data" />
 
-        <div class="relative z-0 flex h-auto flex-shrink-0 flex-grow flex-col items-start justify-start self-stretch">
+				<div
+					class="relative z-0 flex h-auto flex-shrink-0 flex-grow flex-col items-start justify-start self-stretch"
+				>
+					<div
+						class="pointer-events-none absolute z-0 h-96 w-full bg-spotifyBottom bg-focus"
+					/>
 
-          <div class="pointer-events-none absolute z-0 h-96 w-full bg-spotifyBottom bg-focus"></div>
+					<div
+						id="navbar"
+						class="fixed z-1099 -mx-2 flex gap-4 p-2 px-4 w-available sm:hidden bg-slate-light-11 dark:bg-slate-dark-1 top-0 pt-safe-offset-4 transition-all duration-200"
+						:class="{
+							'opacity-0 pointer-events-none': !showScrollHeader,
+							'opacity-100 pointer-events-auto': showScrollHeader,
+						}"
+					>
+						<div
+							id="navBg"
+							class="z-20 absolute flex items-center inset-0 w-available h-full bg-focus/12 dark:bg-focus transition-all duration-200 bg-spotifyTop opacity-50 pointer-events-none"
+						/>
 
-          <div id="navbar"
-            class="fixed z-1099 -mx-2 flex gap-4 p-2 px-4 w-available sm:hidden bg-slate-light-11 dark:bg-slate-dark-1 top-0 pt-safe-offset-4 transition-all duration-200"
-            :class="{
-              'opacity-0 pointer-events-none': !showScrollHeader,
-              'opacity-100 pointer-events-auto': showScrollHeader
-            }">
-            <div id="navBg"
-              class="z-20 absolute flex items-center inset-0 w-available h-full bg-focus/12 dark:bg-focus transition-all duration-200 bg-spotifyTop opacity-50 pointer-events-none">
-            </div>
+						<button
+							class="z-30 flex h-10 w-11 items-center justify-center rounded-md"
+							@click="handleBack"
+						>
+							<OptimizedIcon icon="arrowLeft" />
+						</button>
 
-            <button @click="handleBack" class="z-30 flex h-10 w-11 items-center justify-center rounded-md">
-              <OptimizedIcon icon="arrowLeft" />
-            </button>
+						<div
+							id="navText"
+							class="pointer-events-none whitespace-pre text-left relative z-20 line-clamp-1 h-auto self-center font-bold leading-none transition-all duration-200 w-[70%] overflow-clip text-xl"
+							:class="{
+								'opacity-0 pointer-events-none': !showScrollHeader,
+								'opacity-100 pointer-events-auto': showScrollHeader,
+							}"
+							v-html="
+								breakTitle(
+									data?.name ?? 'Songs you like',
+									'text-xs line-clamp-1',
+								)
+							"
+						/>
+					</div>
 
-            <div id="navText"
-              class="pointer-events-none whitespace-pre text-left relative z-20 line-clamp-1 h-auto self-center font-bold leading-none transition-all duration-200 w-[70%] overflow-clip text-xl"
-              :class="{
-                'opacity-0 pointer-events-none': !showScrollHeader,
-                'opacity-100 pointer-events-auto': showScrollHeader
-              }" v-html="breakTitle(data?.name ?? 'Songs you like', 'text-xs line-clamp-1')">
-            </div>
-          </div>
+					<ControlHeader
+						:key="data?.id"
+						:data="data"
+						:filter="filter"
+						@filter-change="(e: string) => filter = e"
+					/>
 
-          <ControlHeader :key="data?.id" :data="data" :filter="filter" @filter-change="(e: string) => filter = e" />
+					<div
+						class="flex flex-1 flex-shrink-0 flex-col items-start justify-start self-stretch bg-slate-dark-12 dark:bg-transparent flex-grow-1 gap-0.5 sm:p-4"
+					>
+						<SortHeader ref="sortHeader" :key="data?.id" />
 
-          <div
-            class="flex flex-1 flex-shrink-0 flex-col items-start justify-start self-stretch bg-slate-dark-12 dark:bg-transparent flex-grow-1 gap-0.5 sm:p-4">            <SortHeader ref="sortHeader" :key="data?.id" />
-
-            <template v-for="(item, index) in displayList" :key="item.id + item?.favorite">
-              <TrackRow :data="item" :displayList="displayList" :index="index" />
-            </template>
-          </div>
-        </div>
-      </div>
-    </ion-content>
-  </ion-page>
+						<template
+							v-for="(item, index) in displayList"
+							:key="item.id + item?.favorite"
+						>
+							<TrackRow
+								:data="item"
+								:display-list="displayList"
+								:index="index"
+							/>
+						</template>
+					</div>
+				</div>
+			</div>
+		</IonContent>
+	</IonPage>
 </template>

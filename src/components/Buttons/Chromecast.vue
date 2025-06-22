@@ -7,16 +7,14 @@
 
 // const { currentDevice, isCasting, config, startCasting, stopCasting } = useChromecast();
 
-
 // onMounted(() => {
 //   console.log('mounted', config);
 //   // initChromeCast();
 // });
-
 </script>
 
 <template>
-  <!-- <div>
+	<!-- <div>
     <h1>Chromecast Demo</h1>
 
     <div class="flex flex-col gap-4">

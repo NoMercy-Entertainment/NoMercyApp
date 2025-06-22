@@ -1,6 +1,6 @@
 import type { ColorPalettes } from '../shared';
 import type { Artist } from '@/types/api/music/artist';
-import { PlaylistItem } from '@/types/musicPlayer';
+import type { PlaylistItem } from '@/types/musicPlayer';
 
 export interface AlbumResponse {
 	id: string;

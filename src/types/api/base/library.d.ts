@@ -72,7 +72,6 @@ export interface FolderLibrary {
 	folder: Folder;
 }
 
-
 export interface EncoderProfileLibrary {
 	encoderProfile_id: string;
 	library_id: string;
@@ -101,7 +100,6 @@ export interface Profile {
 	opts: any[];
 	customArguments: any[];
 }
-
 
 export interface VideoProfile {
 	codec: string;

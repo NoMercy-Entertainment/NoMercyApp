@@ -1,13 +1,23 @@
-import type { KeycloakConfig } from "keycloak-js";
+import type { KeycloakConfig } from 'keycloak-js';
 
 export const siteTitle = 'NoMercy TV';
 
-export const suffix = location.hostname.includes('dev')
-	|| location.hostname.includes('vscode')
-	|| location.hostname.includes('12')
-	|| location.hostname.includes('192') ? '-dev' : '';
+export const suffix
+  = location.hostname.includes('dev')
+  	|| location.hostname.includes('vscode')
+  	|| location.hostname.includes('12')
+  	|| location.hostname.includes('192')
+  	? '-dev'
+  	: '';
 
-export const ignoredRedirectQueries = ['letter', 'page', 'season', 'sort', 'type', 'episode'];
+export const ignoredRedirectQueries = [
+	'letter',
+	'page',
+	'season',
+	'sort',
+	'type',
+	'episode',
+];
 
 export const authBaseUrl = `https://auth${suffix}.nomercy.tv/realms/NoMercyTV/protocol/openid-connect/`;
 
