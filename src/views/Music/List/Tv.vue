@@ -24,7 +24,7 @@ import MusicButton from '@/components/MusicPlayer/components/MusicButton.vue';
 import TrackLinks from '@/components/MusicPlayer/components/TrackLinks.vue';
 import {
 	audioPlayer,
-	currentMusicDeviceId,
+	currentDeviceId,
 	currentPlaylist,
 	currentSong,
 	isPlaying,
@@ -166,7 +166,7 @@ function handleClick(song: PlaylistItem) {
 		return;
 	}
 
-	if (!currentMusicDeviceId.value) {
+	if (!currentDeviceId.value) {
 		musicSocketConnection.value
 			?.invoke('ChangeDeviceCommand', deviceId.value)
 			.then(() => {

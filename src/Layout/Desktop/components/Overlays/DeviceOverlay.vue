@@ -4,8 +4,8 @@ import { computed } from 'vue';
 import type { Device } from '@/types/server';
 
 import {
-	connectedMusicDevices,
-	currentMusicDeviceId,
+	connectedDevices,
+	currentDeviceId,
 	deviceMenuOpen,
 	musicSize,
 } from '@/store/audioPlayer';
@@ -16,7 +16,7 @@ import OptimizedIcon from '@/components/OptimizedIcon.vue';
 import { user } from '@/store/user';
 
 function switchDevice(device: Device) {
-	if (device.device_id === currentMusicDeviceId.value)
+	if (device.device_id === currentDeviceId.value)
 		return;
 
 	musicSocketConnection.value
@@ -30,7 +30,7 @@ function switchDevice(device: Device) {
 }
 
 const currentDevice = computed(() =>
-	connectedDevices.value.find(d => d.device_id === currentMusicDeviceId.value),
+	connectedDevices.value.find(d => d.device_id === currentDeviceId.value),
 );
 </script>
 
@@ -51,7 +51,7 @@ const currentDevice = computed(() =>
 			class="flex h-full w-full flex-col justify-center gap-2 overflow-auto tv:overflow-clip p-2 scrollbar-none"
 		>
 			<template
-				v-for="device in connectedMusicDevices.toSorted((a, b) =>
+				v-for="device in connectedDevices.toSorted((a, b) =>
 					(a?.custom_name ?? a?.name).localeCompare(b?.custom_name ?? b?.name),
 				)"
 				:key="device?.id"
@@ -59,10 +59,10 @@ const currentDevice = computed(() =>
 				<button
 					class="flex w-full items-center justify-between gap-2 px-2 py-1 rounded-md focus-visible:bg-[#3f3f3f] transition-all duration-200 text-left"
 					:class="{
-						'bg-[#2f2f2f]': currentMusicDeviceId === device?.device_id,
+						'bg-[#2f2f2f]': currentDeviceId === device?.device_id,
 					}"
 					:style="
-						currentMusicDeviceId === device?.device_id
+						currentDeviceId === device?.device_id
 							&& `color: hsl(from rgb(var(--color-focus)) h s calc(l + 25))`
 					"
 					@click="
