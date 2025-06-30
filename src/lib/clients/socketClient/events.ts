@@ -2,7 +2,7 @@ import { ref } from 'vue';
 import type { HubConnection } from '@microsoft/signalr';
 import type { ActivityLog } from '@/types/server';
 import { queryClient } from '@/config/tanstack-query';
-import { useVideoSocket } from '@/store/videoSocket';
+// import { useVideoSocket } from '@/store/videoSocket';
 import { Device } from '@capacitor/device';
 
 export function connect(socket?: HubConnection) {
@@ -108,6 +108,6 @@ function onSetActivityLog(data: ActivityLog[]) {
 }
 
 function pingEvent(startTime: number) {
-	const socket = useVideoSocket();
-	socket.invoke('pongEvent', startTime).then();
+	// const socket = useVideoSocket();
+	// socket.invoke('pongEvent', startTime).then();
 }
