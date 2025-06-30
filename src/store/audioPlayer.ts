@@ -1,186 +1,37 @@
 // noinspection JSUnusedGlobalSymbols
 
-import {ref, toRaw, watch} from 'vue';
-import {createAnimation, isPlatform, modalController} from '@ionic/vue';
-import {
-	VolumeButtons,
+import { ref, toRaw, watch } from 'vue';
+import { createAnimation, isPlatform, modalController } from '@ionic/vue';
+import type {
 	VolumeButtonsCallback,
 	VolumeButtonsOptions,
-	VolumeButtonsResult
-} from "@capacitor-community/volume-buttons";
+	VolumeButtonsResult,
+} from '@capacitor-community/volume-buttons';
+import { VolumeButtons } from '@capacitor-community/volume-buttons';
 import MusicPlayer from '@nomercy-entertainment/nomercy-music-player';
-import { RepeatState, type EQBand, type EqualizerPreset, type EQSliderValues } from '@nomercy-entertainment/nomercy-music-player/src/types';
+import type {
+	EQBand,
+	EQSliderValues,
+	EqualizerPreset,
+	RepeatState,
+} from '@nomercy-entertainment/nomercy-music-player/src/types';
 
-import { SizeState, VisibilityState, type PlaylistItem } from '@/types/musicPlayer';
-import {Device} from "@/types/server";
+import {
+	type PlaylistItem,
+	SizeState,
+	VisibilityState,
+} from '@/types/musicPlayer';
 
-import { onDoubleClick } from "@/lib/utils";
-import { siteTitle } from "@/config/config";
+import type { Device } from '@/types/server.ts';
 
-import {deviceId} from "@/store/deviceInfo";
-import {user} from "@/store/user";
-import {musicSocketConnection} from "@/store/musicSocket";
+import { onDoubleClick } from '@/lib/utils';
+import { siteTitle } from '@/config/config';
 
-export const audioPlayer = new MusicPlayer<PlaylistItem>({
-	motionConfig: {
-		canvas: document.getElementById('visualizer') as HTMLCanvasElement,
-	},
-	motionColors: [
-		'#ff0000',
-		'#ffff00',
-		'#00ff00',
-		'#00ffff',
-		'#0000ff',
-		'#ff00ff',
-		'#ff0000',
-	],
-	siteTitle,
-	expose: true,
-	disableAutoPlayback: user.value.features?.nomercyConnect ?? false,
-	actions: {
-		play: () => {
-			if (!user.value.features?.nomercyConnect) {
-				audioPlayer.play().then();
-				return;
-			}
-			if(!currentDeviceId.value) {
-				musicSocketConnection.value?.invoke('ChangeDeviceCommand', deviceId.value)
-					.then(() => {
-						console.log('Switched to device:', deviceId.value);
-					})
-					.catch((error) => {
-						console.error('Error switching device:', error);
-					});
-			}
-			musicSocketConnection.value?.invoke('PlaybackCommand',
-				'play',
-				null
-			);
-		},
-		pause: () => {
-			if (!user.value.features?.nomercyConnect) {
-				audioPlayer.pause();
-				return;
-			}
-			if(!currentDeviceId.value) {
-				musicSocketConnection.value?.invoke('ChangeDeviceCommand', deviceId.value)
-					.then(() => {
-						console.log('Switched to device:', deviceId.value);
-					})
-					.catch((error) => {
-						console.error('Error switching device:', error);
-					});
-			}
-			musicSocketConnection.value?.invoke('PlaybackCommand',
-				'pause',
-				null
-			);
-		},
-		stop: () => {
-			setLyricsMenuOpen(false);
-			setQueueMenuOpen(false);
-			setDeviceMenuOpen(false);
-			if (!user.value.features?.nomercyConnect) {
-				audioPlayer.stop();
-				return;
-			}
-			musicSocketConnection.value?.invoke('PlaybackCommand',
-				'stop',
-				null
-			);
-		},
-		previous: () => {
-			if (!user.value.features?.nomercyConnect) {
-				audioPlayer.previous();
-				return;
-			}
-			musicSocketConnection.value?.invoke('PlaybackCommand',
-				'previous',
-				null
-			);
-		},
-		next: () => {
-			if (!user.value.features?.nomercyConnect) {
-				audioPlayer.next();
-				return;
-			}
-			musicSocketConnection.value?.invoke('PlaybackCommand',
-				'next',
-				null
-			);
-		},
-		seek: (position: number) => {
-			musicSocketConnection.value?.invoke('PlaybackCommand',
-				'seek',
-				position
-			);
-			audioPlayer.seek(position);
-		},
-	},
-});
+import { deviceId } from '@/store/deviceInfo';
+import { user } from '@/store/user';
+import { musicSocketConnection } from '@/store/musicSocket';
 
-watch(user, value => {
-	audioPlayer.setAutoPlayback(value.features?.nomercyConnect ?? false);
-});
-
-export default audioPlayer;
-
-export const lyricsMenuOpen = ref<boolean>(false);
-export const setLyricsMenuOpen = (value: boolean): void => {
-	lyricsMenuOpen.value = value;
-	queueMenuOpen.value = false;
-	deviceMenuOpen.value = false;
-	equalizerMenuOpen.value = false;
-};
-export const toggleLyricsMenuOpen = (): void => {
-	lyricsMenuOpen.value = !lyricsMenuOpen.value;
-	queueMenuOpen.value = false;
-	deviceMenuOpen.value = false;
-	equalizerMenuOpen.value = false;
-};
-
-export const hasLyrics = ref<boolean>(false);
-export const setHasLyrics = (value: boolean): void => {
-	hasLyrics.value = value;
-};
-
-export const deviceMenuOpen = ref<boolean>(false);
-export const setDeviceMenuOpen = (value: boolean): void => {
-	deviceMenuOpen.value = value;
-	lyricsMenuOpen.value = false;
-	queueMenuOpen.value = false;
-	equalizerMenuOpen.value = false;
-};
-export const toggleDeviceMenuOpen = (): void => {
-	deviceMenuOpen.value = !deviceMenuOpen.value;
-	lyricsMenuOpen.value = false;
-	queueMenuOpen.value = false;
-	equalizerMenuOpen.value = false;
-};
-
-const modalOpen = ref<boolean>(false);
-export const fullPlayerModalOpen = ref<boolean>(modalOpen.value);
-export const setFullPlayerModalOpen = (value: boolean): void => {
-	fullPlayerModalOpen.value = value;
-	if (value) {
-		setMusicSize(SizeState.full);
-	} else {
-		setMusicSize(SizeState.compact);
-	}
-};
-export const toggleFullPlayerModalOpen = (): void => {
-	modalOpen.value = !modalOpen.value;
-};
-export const openFullPlayer = (): void => {
-	fullPlayerModalOpen.value = true;
-	setMusicSize(SizeState.full);
-};
-export const closeFullPlayer = (): void => {
-	fullPlayerModalOpen.value = false;
-	setMusicSize(SizeState.compact);
-};
-
-export const connectedDevices = ref<Device[]>([]);
+export const connectedMusicDevices = ref<Device[]>([]);
 export const currentDeviceId = ref<string | null>(null);
 
 export const currentTime = ref<number>(0);
@@ -204,35 +55,181 @@ export const equalizerSliderValues = ref<EQSliderValues>(<EQSliderValues>{});
 
 export const equalizerPreset = ref<EqualizerPreset>(<EqualizerPreset>{});
 
-export const setCurrentPlaylist = (value: string): void => {
-	currentPlaylist.value = value;
-};
-
+export const lyricsMenuOpen = ref<boolean>(false);
+export const hasLyrics = ref<boolean>(false);
+export const deviceMenuOpen = ref<boolean>(false);
+const modalOpen = ref<boolean>(false);
+export const fullPlayerModalOpen = ref<boolean>(modalOpen.value);
 export const queueMenuOpen = ref<boolean>(false);
-export const setQueueMenuOpen = (value: boolean): void => {
+export const equalizerMenuOpen = ref<boolean>(false);
+
+export const audioPlayer = new MusicPlayer<PlaylistItem>({
+	motionConfig: {
+		canvas: document.getElementById('visualizer') as HTMLCanvasElement,
+	},
+	motionColors: [
+		'#ff0000',
+		'#ffff00',
+		'#00ff00',
+		'#00ffff',
+		'#0000ff',
+		'#ff00ff',
+		'#ff0000',
+	],
+	siteTitle,
+	expose: true,
+	disableAutoPlayback: user.value.features?.nomercyConnect ?? false,
+	actions: {
+		play: () => {
+			if (!user.value.features?.nomercyConnect) {
+				audioPlayer.play().then();
+				return;
+			}
+			if (!currentDeviceId.value) {
+				musicSocketConnection.value
+					?.invoke('ChangeDeviceCommand', deviceId.value)
+					.then(() => {
+						console.log('Switched to device:', deviceId.value);
+					})
+					.catch((error) => {
+						console.error('Error switching device:', error);
+					});
+			}
+			musicSocketConnection.value?.invoke('PlaybackCommand', 'play', null);
+		},
+		pause: () => {
+			if (!user.value.features?.nomercyConnect) {
+				audioPlayer.pause();
+				return;
+			}
+			if (!currentDeviceId.value) {
+				musicSocketConnection.value
+					?.invoke('ChangeDeviceCommand', deviceId.value)
+					.then(() => {
+						console.log('Switched to device:', deviceId.value);
+					})
+					.catch((error) => {
+						console.error('Error switching device:', error);
+					});
+			}
+			musicSocketConnection.value?.invoke('PlaybackCommand', 'pause', null);
+		},
+		stop: () => {
+			setLyricsMenuOpen(false);
+			setQueueMenuOpen(false);
+			setDeviceMenuOpen(false);
+			if (!user.value.features?.nomercyConnect) {
+				audioPlayer.stop();
+				return;
+			}
+			musicSocketConnection.value?.invoke('PlaybackCommand', 'stop', null);
+		},
+		previous: () => {
+			if (!user.value.features?.nomercyConnect) {
+				audioPlayer.previous();
+				return;
+			}
+			musicSocketConnection.value?.invoke('PlaybackCommand', 'previous', null);
+		},
+		next: () => {
+			if (!user.value.features?.nomercyConnect) {
+				audioPlayer.next();
+				return;
+			}
+			musicSocketConnection.value?.invoke('PlaybackCommand', 'next', null);
+		},
+		seek: (position: number) => {
+			musicSocketConnection.value?.invoke('PlaybackCommand', 'seek', position);
+			audioPlayer.seek(position);
+		},
+	},
+});
+
+watch(user, (value) => {
+	audioPlayer.setAutoPlayback(value.features?.nomercyConnect ?? false);
+});
+
+export default audioPlayer;
+
+export function setLyricsMenuOpen(value: boolean): void {
+	lyricsMenuOpen.value = value;
+	queueMenuOpen.value = false;
+	deviceMenuOpen.value = false;
+	equalizerMenuOpen.value = false;
+}
+export function toggleLyricsMenuOpen(): void {
+	lyricsMenuOpen.value = !lyricsMenuOpen.value;
+	queueMenuOpen.value = false;
+	deviceMenuOpen.value = false;
+	equalizerMenuOpen.value = false;
+}
+
+export function setHasLyrics(value: boolean): void {
+	hasLyrics.value = value;
+}
+
+export function setDeviceMenuOpen(value: boolean): void {
+	deviceMenuOpen.value = value;
+	lyricsMenuOpen.value = false;
+	queueMenuOpen.value = false;
+	equalizerMenuOpen.value = false;
+}
+export function toggleDeviceMenuOpen(): void {
+	deviceMenuOpen.value = !deviceMenuOpen.value;
+	lyricsMenuOpen.value = false;
+	queueMenuOpen.value = false;
+	equalizerMenuOpen.value = false;
+}
+
+export function setFullPlayerModalOpen(value: boolean): void {
+	fullPlayerModalOpen.value = value;
+	if (value) {
+		setMusicSize(SizeState.full);
+	}
+	else {
+		setMusicSize(SizeState.compact);
+	}
+}
+export function toggleFullPlayerModalOpen(): void {
+	modalOpen.value = !modalOpen.value;
+}
+export function openFullPlayer(): void {
+	fullPlayerModalOpen.value = true;
+	setMusicSize(SizeState.full);
+}
+export function closeFullPlayer(): void {
+	fullPlayerModalOpen.value = false;
+	setMusicSize(SizeState.compact);
+}
+
+export function setCurrentPlaylist(value: string): void {
+	currentPlaylist.value = value;
+}
+
+export function setQueueMenuOpen(value: boolean): void {
 	queueMenuOpen.value = value;
 	lyricsMenuOpen.value = false;
 	deviceMenuOpen.value = false;
 	equalizerMenuOpen.value = false;
-};
-export const toggleQueueMenuOpen = (): void => {
+}
+export function toggleQueueMenuOpen(): void {
 	queueMenuOpen.value = !queueMenuOpen.value;
 	lyricsMenuOpen.value = false;
 	deviceMenuOpen.value = false;
 	equalizerMenuOpen.value = false;
-};
+}
 
 export const musicVisibility = ref<VisibilityState>(VisibilityState.hidden);
-export const setMusicVisibility = (value: VisibilityState): void => {
+export function setMusicVisibility(value: VisibilityState): void {
 	musicVisibility.value = value;
-};
+}
 
 export const musicSize = ref<SizeState>(SizeState.compact);
-export const setMusicSize = (value: SizeState): void => {
+export function setMusicSize(value: SizeState): void {
 	musicSize.value = value;
-};
+}
 
-export const enterAnimation = (baseEl: HTMLElement) => {
+export function enterAnimation(baseEl: HTMLElement) {
 	const root = baseEl.shadowRoot as ShadowRoot;
 
 	const backdropAnimation = createAnimation()
@@ -251,17 +248,17 @@ export const enterAnimation = (baseEl: HTMLElement) => {
 		.easing('ease-out')
 		.duration(300)
 		.addAnimation([backdropAnimation, wrapperAnimation]);
-};
+}
 
-export const leaveAnimation = (baseEl: HTMLElement,) => {
-	return enterAnimation(baseEl)
-		.direction('normal');
-};
+export function leaveAnimation(baseEl: HTMLElement) {
+	return enterAnimation(baseEl).direction('normal');
+}
 
-// eslint-disable-next-line @typescript-eslint/ban-types
-export const openModal = async (component: Function | HTMLElement | string | null) => {
+export async function openModal(
+	component: Function | HTMLElement | string | null,
+) {
 	const modal = await modalController.create({
-		component: component,
+		component,
 		// animated: true,
 		enterAnimation,
 		leaveAnimation,
@@ -275,42 +272,45 @@ export const openModal = async (component: Function | HTMLElement | string | nul
 		componentProps: {
 			closeModal: async () => {
 				await modal.dismiss();
-			}
+			},
 		},
 	});
 
 	await modal.present();
-};
+}
 
-export const equalizerMenuOpen = ref<boolean>(false);
-export const setEqualizerMenuOpen = (value: boolean): void => {
+export function setEqualizerMenuOpen(value: boolean): void {
 	equalizerMenuOpen.value = value;
 	lyricsMenuOpen.value = false;
 	queueMenuOpen.value = false;
 	deviceMenuOpen.value = false;
-};
-export const toggleEqualizerMenuOpen = (): void => {
+}
+export function toggleEqualizerMenuOpen(): void {
 	equalizerMenuOpen.value = !equalizerMenuOpen.value;
 	lyricsMenuOpen.value = false;
 	queueMenuOpen.value = false;
 	deviceMenuOpen.value = false;
-};
+}
 
-export const closeEqualizerMenu = (): void => {
+export function closeEqualizerMenu(): void {
 	equalizerMenuOpen.value = false;
 	lyricsMenuOpen.value = false;
 	queueMenuOpen.value = false;
 	deviceMenuOpen.value = false;
 }
 
-export const abbreviateFrequency = (frequency: number) => {
+export function abbreviateFrequency(frequency: number) {
 	if (frequency >= 1000) {
 		return `${frequency / 1000}k`;
 	}
 	return frequency;
-};
+}
 
-export const convertToPercentage = (value: number, min: number, max: number): number => {
+export function convertToPercentage(
+	value: number,
+	min: number,
+	max: number,
+): number {
 	let percentage = ((value - min) / (max - min)) * 100;
 
 	if (percentage <= 20) {
@@ -323,13 +323,17 @@ export const convertToPercentage = (value: number, min: number, max: number): nu
 	return Math.max(0, Math.min(100, percentage));
 }
 
-export const handleFullReset = () => {
+export function handleFullReset() {
 	panning.value = 0;
-	setEqualizerPreset(equalizerPresets.value.find(preset => preset.name == 'Flat'));
-};
+	setEqualizerPreset(
+		equalizerPresets.value.find(
+			(preset: EqualizerPreset) => preset.name === 'Flat',
+		),
+	);
+}
 
-export const handleChange = (type: string, event: Event, band?: EQBand) => {
-	const value = parseFloat((event.target as HTMLInputElement).value);
+export function handleChange(type: string, event: Event, band?: EQBand) {
+	const value = Number.parseFloat((event.target as HTMLInputElement).value);
 
 	if (type === 'panning') {
 		panning.value = value;
@@ -338,7 +342,8 @@ export const handleChange = (type: string, event: Event, band?: EQBand) => {
 		return;
 	}
 
-	if (!band?.gain) return;
+	if (!band?.gain)
+		return;
 
 	band.gain = value;
 
@@ -348,58 +353,70 @@ export const handleChange = (type: string, event: Event, band?: EQBand) => {
 		return;
 	}
 
-	bands.value = [...bands.value.map((b) => {
-		if (b.frequency === band.frequency) {
-			audioPlayer.setFilter(band);
-			return band;
-		}
-		return b;
-	})];
-
-	audioPlayer.equalizerBands = bands.value;
-
-	audioPlayer.saveEqualizerSettings();
-};
-
-export const handleReset = (type: string, event: MouseEvent, band?: EQBand) => {
-	onDoubleClick(event, () => { }, () => {
-		if (type === 'panning') {
-			panning.value = 0;
-			audioPlayer.setPanner(0);
-			audioPlayer.saveEqualizerSettings();
-			return;
-		}
-
-		if (!band?.gain) return;
-
-		band.gain = 0;
-
-		if (band.frequency === 'Pre') {
-			audioPlayer.setPreGain(0);
-			audioPlayer.saveEqualizerSettings();
-			return;
-		}
-
-		bands.value = [...bands.value.map((b) => {
+	bands.value = [
+		...bands.value.map((b: EQBand) => {
 			if (b.frequency === band.frequency) {
 				audioPlayer.setFilter(band);
 				return band;
 			}
 			return b;
-		})];
+		}),
+	];
 
-		audioPlayer.equalizerBands = bands.value;
+	audioPlayer.equalizerBands = bands.value;
 
-		audioPlayer.saveEqualizerSettings();
-	});
+	audioPlayer.saveEqualizerSettings();
 }
 
-export const setEqualizerPreset = (value?: EqualizerPreset) => {
-	equalizerPreset.value = equalizerPresets.value.find((p) => p.name === (value?.name ?? 'Flat')) ?? equalizerPresets.value[0];
+export function handleReset(type: string, event: MouseEvent, band?: EQBand) {
+	onDoubleClick(
+		event,
+		() => {},
+		() => {
+			if (type === 'panning') {
+				panning.value = 0;
+				audioPlayer.setPanner(0);
+				audioPlayer.saveEqualizerSettings();
+				return;
+			}
+
+			if (!band?.gain)
+				return;
+
+			band.gain = 0;
+
+			if (band.frequency === 'Pre') {
+				audioPlayer.setPreGain(0);
+				audioPlayer.saveEqualizerSettings();
+				return;
+			}
+
+			bands.value = [
+				...bands.value.map((b: EQBand) => {
+					if (b.frequency === band.frequency) {
+						audioPlayer.setFilter(band);
+						return band;
+					}
+					return b;
+				}),
+			];
+
+			audioPlayer.equalizerBands = bands.value;
+
+			audioPlayer.saveEqualizerSettings();
+		},
+	);
+}
+
+export function setEqualizerPreset(value?: EqualizerPreset) {
+	equalizerPreset.value
+    = equalizerPresets.value.find(
+			(p: EqualizerPreset) => p.name === (value?.name ?? 'Flat'),
+		) ?? equalizerPresets.value[0];
 
 	bands.value = [
 		{ frequency: 'Pre', gain: equalizerSliderValues.value.pre.default },
-		...equalizerPreset.value.values
+		...equalizerPreset.value.values,
 	];
 
 	audioPlayer.equalizerBands = bands.value;
@@ -416,8 +433,8 @@ bands.value = audioPlayer.equalizerBands;
 equalizerPresets.value = audioPlayer.equalizerPresets;
 equalizerSliderValues.value = audioPlayer.equalizerSliderValues;
 
-equalizerPreset.value = audioPlayer.equalizerPresets
-	.find(preset => preset.name == 'Flat') ?? equalizerPresets.value[0];
+equalizerPreset.value = audioPlayer.equalizerPresets.find(preset => preset.name === 'Flat')
+	?? equalizerPresets.value[0];
 
 let lastTime = 0;
 audioPlayer.on('time', (timeState) => {
@@ -426,7 +443,10 @@ audioPlayer.on('time', (timeState) => {
 	remainingTime.value = timeState.remaining;
 	percentage.value = timeState.percentage;
 
-	if(currentDeviceId.value == deviceId.value && timeState.position - lastTime > 5) {
+	if (
+		currentDeviceId.value === deviceId.value
+		&& timeState.position - lastTime > 5
+	) {
 		lastTime = timeState.position;
 		// musicSocketConnection.value?.invoke('CurrentTimeCommand', timeState.position);
 	}
@@ -436,7 +456,8 @@ audioPlayer.on('song', (data) => {
 	lastTime = 0;
 	if (data) {
 		musicVisibility.value = VisibilityState.showing;
-	} else {
+	}
+	else {
 		musicVisibility.value = VisibilityState.hidden;
 		lyricsMenuOpen.value = false;
 		queueMenuOpen.value = false;
@@ -482,9 +503,14 @@ audioPlayer.on('volume', (value) => {
 if (isPlatform('capacitor')) {
 	VolumeButtons.clearWatch().then();
 	const options: VolumeButtonsOptions = {};
-	const callback: VolumeButtonsCallback = (result: VolumeButtonsResult, err?: any) => {
+	const callback: VolumeButtonsCallback = (
+		result: VolumeButtonsResult,
+		err?: any,
+	) => {
 		console.log(result.direction, err);
-		audioPlayer.setVolume(result.direction === 'up' ? volume.value + 10 : volume.value - 10);
+		audioPlayer.setVolume(
+			result.direction === 'up' ? volume.value + 10 : volume.value - 10,
+		);
 	};
 
 	options.disableSystemVolumeHandler = false;
