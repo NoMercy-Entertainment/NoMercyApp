@@ -46,6 +46,7 @@ const top = ref<HTMLElement>();
 const bottom = ref<HTMLElement>();
 const cardsPerScroll = ref(7);
 
+const content = ref<VueDivElement>();
 function jumpTo(id: string) {
 	const element = document.querySelector<HTMLElement>(id);
 	if (element) {
@@ -58,7 +59,6 @@ function jumpTo(id: string) {
 	}
 }
 
-const content = ref<VueDivElement>();
 function scrollToBottom() {
 	content.value?.$el?.scrollToBottom(0);
 	content.value?.$el?.scrollIntoView({
@@ -91,10 +91,9 @@ function scrollToCenter(e: FocusEvent) {
 	document.activeElement?.scrollIntoView({
 		behavior: 'smooth',
 		block: 'center',
-		inline:
-      scrollIndex.value === 2 || hasMoreCardsToRight.value
-      	? 'center'
-      	: undefined,
+		inline: scrollIndex.value === 2 || hasMoreCardsToRight.value
+			? 'center'
+			: undefined,
 	});
 
 	setTimeout(() => {

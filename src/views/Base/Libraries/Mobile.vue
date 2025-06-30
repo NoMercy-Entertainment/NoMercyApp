@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { watch } from 'vue';
+import { useRoute } from 'vue-router';
 import { IonContent, IonPage } from '@ionic/vue';
 import { setTitle } from '@/lib/stringArray';
 import { setBackground, setColorPalette } from '@/store/ui';
