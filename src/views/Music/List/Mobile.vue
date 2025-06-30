@@ -160,7 +160,7 @@ watch(container, () => {
 					!route.params.id || (route.params.id && data?.id === route.params.id)
 				"
 				ref="main"
-				class="flex flex-col h-auto overflow-x-clip w-available sm:rounded-2xl -mt-safe-offset-12 bg-[rgb(var(--background-auto))]"
+				class="flex flex-col h-auto overflow-x-clip w-available sm:rounded-2xl -mt-safe-offset-6 bg-[rgb(var(--background-auto))]"
 			>
 				<ArtistHeader :data="data" />
 
