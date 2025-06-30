@@ -4,8 +4,15 @@ import { IonContent, IonPage } from '@ionic/vue';
 
 import ScrollContainer from '@/Layout/Desktop/components/ScrollContainer.vue';
 import NMComponent from '@/components/NMComponent.vue';
+import { watch } from 'vue';
+import { setBackground, setColorPalette } from '@/store/ui.ts';
 
 const route = useRoute();
+
+watch(route, () => {
+	setColorPalette(null);
+	setBackground(null);
+});
 </script>
 
 <template>

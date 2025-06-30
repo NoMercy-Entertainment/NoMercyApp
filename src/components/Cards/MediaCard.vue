@@ -131,21 +131,27 @@ const focusColor = computed(() => {
 					</div>
 				</div>
 			</template>
-			<div
-				v-else
-				:class="`flex flex-col justify-start items-start w-full contain-strict will-change-transform h-14 z-0 absolute overflow-clip rounded-b-lg left-0 transition-all duration-200 px-2 py-1 group-hover/card:-bottom-0 text-left ${
-					image ? '-bottom-20' : 'bottom-0'
-				}`"
-			>
+			<template v-else>
 				<div
-					class="absolute inset-0 z-0 opacity-0 group-hover/card:opacity-100 transition-all duration-200 bg-auto-1/60 overflow-clip rounded-b-lg"
-				/>
-				<p
-					class="z-10 w-auto flex-shrink-0 flex-grow-0 self-stretch text-sm font-bold line-clamp-2 leading-[1.2] text-auto-12 empty:hidden dark:font-medium text-wrap"
+					class="flex flex-col justify-start items-start w-full h-12 z-0 absolute left-0 transition-all duration-200 px-2 py-1 group-hover/card:-bottom-0 text-left"
+					:class="{
+						'-bottom-20': image,
+						'bottom-0': !image,
+					}"
 				>
-					{{ data?.title }}
-				</p>
-			</div>
+					<div
+						class="absolute inset-0 z-0 transition-all duration-200 bg-neutral-100/80 dark:bg-neutral-900/80"
+						:class="{
+							'opacity-0 group-hover/card:opacity-100': image,
+						}"
+					/>
+					<p
+						class="z-10 w-auto flex-shrink-0 flex-grow-0 self-stretch text-xs font-semibold line-clamp-2 leading-[1.2] text-neutral-900 dark:text-neutral-100 empty:hidden dark:font-medium text-wrap"
+					>
+						{{ data.title }}
+					</p>
+				</div>
+			</template>
 
 			<CardIndicator :data="data" />
 		</div>

@@ -159,7 +159,7 @@ function scrollToTop() {
 							class="flex flex-shrink-0 flex-grow-0 items-start justify-start gap-4"
 						>
 							<BannerButton
-								:href="`/${data?.media_type}/${data?.id}/watch`"
+								:href="`${data?.link}/watch`"
 								title="Play"
 								class="group/play"
 								@focus="scrollToTop"
@@ -197,7 +197,7 @@ function scrollToTop() {
 							<MediaLikeButton v-if="data" :data="data" @focus="scrollToTop" />
 
 							<BannerButton
-								:href="`/${data?.media_type}/${data?.id}`"
+								:href="data?.link"
 								title="Info"
 								@focus="scrollToTop"
 							>
@@ -215,7 +215,7 @@ function scrollToTop() {
 				>
 					<div v-if="data" class="z-50 flex w-full justify-evenly gap-4">
 						<RouterLink
-							:to="`/${data?.media_type}/${data?.id}/watch`"
+							:to="`${data?.link}/watch`"
 							:aria-label="$t('Play')"
 							class="flex h-10 w-1/2 items-center justify-between gap-2 whitespace-nowrap rounded-md pr-4 pl-3 text-black bg-auto-12 py-1.5"
 							@focus="scrollToTop"
@@ -227,7 +227,7 @@ function scrollToTop() {
 						</RouterLink>
 
 						<RouterLink
-							:to="`/${data?.media_type}/${data?.id}`"
+							:to="data?.link"
 							:aria-label="$t('Info')"
 							class="flex justify-center items-center relative gap-2 p-2 rounded-lg hover:bg-auto-5/6 transition-colors duration-200"
 							@focus="scrollToTop"
@@ -293,7 +293,7 @@ function scrollToTop() {
 					class="flex flex-shrink-0 flex-grow-0 items-start justify-start gap-6 self-stretch p-6"
 				>
 					<RouterLink
-						:to="`/${data?.media_type}/${data?.id}/watch`"
+						:to="`${data?.link}/watch`"
 						class="flex justify-center items-center flex-grow h-10 relative overflow-hidden gap-3 px-6 py-4 rounded-lg text-slate-light-12 dark:text-slate-dark-12 bg-[#fdfeff]/[0.93]"
 					>
 						<OptimizedIcon
@@ -308,7 +308,7 @@ function scrollToTop() {
 						</p>
 					</RouterLink>
 					<RouterLink
-						:to="`/${data?.media_type}/${data?.id}`"
+						:to="data?.link"
 						class="frosting flex justify-center items-center flex-grow h-10 relative gap-3 px-6 py-4 rounded-lg text-slate-light-1 bg-slate-light-12"
 					>
 						<OptimizedIcon icon="infoCircle" class-name="w-6" />

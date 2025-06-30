@@ -200,7 +200,7 @@ const scrollToCenter = () => {
         <h3
           v-if="title"
           ref="title"
-          class="mr-2 ml-3 sm:ml-3 my-2 text-slate-lightA-12/70 dark:text-slate-darkA-12/80 self-stretch flex-grow-0 flex-shrink-0 text-xl font-bold"
+          class="mr-2 ml-3 sm:ml-3 my-2 text-slate-lightA-12/90 dark:text-slate-darkA-12/90 self-stretch flex-grow-0 flex-shrink-0 text-xl font-bold"
         >
           {{ title }}
         </h3>
@@ -232,7 +232,7 @@ const scrollToCenter = () => {
         <RouterLink
           v-if="more_link"
           :to="more_link"
-          class="text-base text-slate-dark-9 dark:text-slate-light-9 flex items-center ml-auto sm:ml-4 mr-2 sm:mr-auto"
+          class="text-base text-slate-lightA-8/90 dark:text-slate-darkA-8/90 flex items-center ml-auto sm:ml-4 mr-2 sm:mr-auto"
         >
           <span class="leading-none pt-0.5">{{ more_link_text }}</span>
           <OptimizedIcon icon="chevronRight" className="w-6 mt-1" />

@@ -1,16 +1,19 @@
 <script setup lang="ts">
-import { onMounted } from 'vue';
+import { watch } from 'vue';
 import { IonContent, IonPage } from '@ionic/vue';
 import { setTitle } from '@/lib/stringArray';
 import { setBackground, setColorPalette } from '@/store/ui';
 
 import ScrollContainer from '@/Layout/Desktop/components/ScrollContainer.vue';
 import NMComponent from '@/components/NMComponent.vue';
+import { useRoute } from 'vue-router';
 
-onMounted(() => {
+const route = useRoute();
+
+watch(route, () => {
 	setTitle();
-	setBackground(null);
 	setColorPalette(null);
+	setBackground(null);
 });
 </script>
 

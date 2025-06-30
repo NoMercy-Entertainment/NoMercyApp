@@ -1,7 +1,6 @@
-import { defineAsyncComponent } from 'vue';
 import { isMobile, isTv, tvModeOverride } from '@/config/global';
 
-export default defineAsyncComponent(() => {
+export default () => {
 	if (isTv.value || tvModeOverride.value) {
 		return import('./Tv.vue');
 	}
@@ -11,4 +10,4 @@ export default defineAsyncComponent(() => {
 	else {
 		return import('./Desktop.vue');
 	}
-});
+};

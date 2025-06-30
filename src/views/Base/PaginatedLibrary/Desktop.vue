@@ -17,7 +17,7 @@ import { setBackground, setColorPalette } from '@/store/ui';
 import router from '@/router';
 import { setTitle } from '@/lib/stringArray';
 
-import MediaCard from '@/components/Cards/MediaCard.vue';
+import MediaCard from '@/components/NMCard.vue';
 import PersonCard from '@/components/Cards/PersonCard.vue';
 import GenreCard from '@/components/Cards/GenreCard.vue';
 import EmptyCard from '@/components/Cards/EmptyCard.vue';

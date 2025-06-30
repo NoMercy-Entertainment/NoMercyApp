@@ -122,7 +122,7 @@ const shareData = computed<ShareOptions>(() => ({
 			<button
 				v-if="toggleTrailer"
 				class="frosting flex justify-start items-center flex-grow h-10 relative overflow-hidden gap-2 px-2 py-4 rounded-3xl text-slate-light-1 bg-slate-light-12"
-				@click="toggleTrailer()"
+				@click="toggleTrailer($event)"
 			>
 				<p class="flex-grow w-[100px] text-[15px] font-semibold text-center">
 					{{ $t(!data ? "loading" : "Trailer") }}

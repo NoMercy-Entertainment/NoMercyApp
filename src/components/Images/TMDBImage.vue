@@ -257,16 +257,11 @@ function onError(e: Event) {
 	>
 		<div
 			v-if="opacity === 0 && type === 'image'"
-			class="absolute inset-0 h-full w-full bg-black/50 shadow"
+			class="absolute inset-0 h-full w-full bg-black/30 dark:bg-black/50 shadow"
 		/>
 		<picture
 			v-if="!error && path && !path?.includes?.('undefined')"
-			class="pointer-events-none absolute inset-0 flex select-none flex-col items-end justify-end self-end transition-all duration-500"
-			:class="{
-				'aspect-poster  w-available h-auto': aspect === 'poster',
-				'aspect-backdrop  w-available h-auto': aspect === 'backdrop',
-				'w-auto h-available': aspect === null,
-			}"
+			class="pointer-events-none absolute inset-0 h-inherit flex select-none flex-col items-end justify-end self-end transition-all duration-500 max-h-inherit overflow-hidden"
 			:style="`opacity: ${opacity}; float: ${type === 'logo' ? 'right' : ''}`"
 		>
 			<source :srcset="`${serverImageUrl} 1x`" type="image/avif">
@@ -287,12 +282,12 @@ function onError(e: Event) {
 				:onloadstart="onLoadStart"
 				:onerror="onError"
 				crossorigin="anonymous"
-				class="pointer-events-auto inset-0 h-auto bg-top transition-all duration-500 max-h-available"
+				class="pointer-events-auto inset-0 bg-top transition-all duration-500 max-h-inherit"
 				:class="{
-					'aspect-poster  w-available h-auto': aspect === 'poster',
-					'aspect-backdrop  w-available h-auto': aspect === 'backdrop',
+					'aspect-poster w-available h-auto': aspect === 'poster',
+					'aspect-backdrop w-available h-auto': aspect === 'backdrop',
 					'w-available h-available': aspect === null,
-					'object-scale-down !w-auto': type === 'logo',
+					'object-contain w-auto h-inherit': type === 'logo',
 					'object-cover object-top': type === 'image',
 					'[filter:drop-shadow(0px_0px_6px_black)_drop-shadow(0px_0px_6px_black)_drop-shadow(0px_0px_6px_black)]':
 						shouldDarken,

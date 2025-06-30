@@ -161,7 +161,8 @@ onUnmounted(() => {
 	clearInterval(interval.value ?? undefined);
 });
 
-function toggleTrailer() {
+function toggleTrailer(e?: MouseEvent) {
+	e?.stopPropagation();
 	if (!data?.value?.videos)
 		return;
 	trailerOpen.value = !trailerOpen.value;
@@ -275,7 +276,7 @@ function handleAdd() {
 		message: string;
 		status: string;
 		args: string[];
-	}>(`${route.fullPath}/add`)
+	}>(`${route.fullPath}add`)
 		.then(({ data }) => {
 			// showNotification({
 			// 	title: translate(data.message, ...data.args),
@@ -375,18 +376,18 @@ const shareData = computed<ShareOptions>(() => ({
 										:size="500"
 										:shadow="pickPaletteColor(data?.color_palette?.poster)"
 										:title="data?.title"
-										class="pointer-events-none relative mx-auto flex h-full w-auto select-none place-self-start overflow-hidden p-4"
+										class="pointer-events-none relative mx-auto flex h-full w-full select-none place-self-start overflow-hidden p-4"
 										class-name="relative bottom-0 h-auto w-auto p-4"
 										type="logo"
 									/>
 								</div>
 
 								<div
-									class="relative col-start-2 col-end-4 grid flex-shrink-0 flex-grow-0 grid-cols-3 items-start justify-start self-stretch rounded-2xl bg-gradient-to-b p-6 from-slate-light-2/12 via-slate-light-3/12 to-slate-light-3/11 dark:from-slate-dark-2/12 dark:via-slate-dark-2/12 dark:to-slate-dark-2/11 border-auto-5/8 border-1 min-h-[23.5rem]"
+									class="relative col-start-2 col-end-4 grid flex-shrink-0 flex-grow-0 grid-cols-3 items-start justify-start self-stretch rounded-2xl bg-gradient-to-b p-6 from-slate-light-3/12 via-slate-light-4/12 to-slate-light-4/11 dark:from-slate-dark-2/12 dark:via-slate-dark-2/12 dark:to-slate-dark-2/11 border-auto-5/8 border-1 min-h-[23.5rem]"
 								>
 									<div
 										v-if="data?.poster"
-										class="absolute bottom-20 z-10 col-start-1 content-center col-end-2 h-auto w-full items-start justify-start rounded-lg -top-[12rem] sm:block"
+										class="absolute bottom-12 z-10 col-start-1 content-center col-end-2 h-auto w-full items-start justify-start rounded-lg -top-[8rem] sm:block"
 									>
 										<RouterLink
 											:to="`/${data?.media_type}/${data?.id}/watch`"
@@ -410,7 +411,7 @@ const shareData = computed<ShareOptions>(() => ({
 												:title="data?.title"
 												aspect="poster"
 												class-name="pointer-events-none absolute -inset-1 z-20 flex aspect-poster scale-100 select-none items-center place-self-start overflow-hidden rounded-2xl !w-auto !h-auto max-h-available"
-												class="m-auto !w-auto !h-auto children:w-auto scale-100 rounded-2xl aspect-poster 5xl:w-inherit"
+												class="m-auto !w-full !h-full children:w-auto scale-100 rounded-2xl aspect-poster 5xl:w-inherit flex"
 												type="image"
 											/>
 
@@ -508,7 +509,7 @@ const shareData = computed<ShareOptions>(() => ({
 												</div>
 												<BannerButton
 													title="$t('Watch trailer')"
-													@click="trailerState === true ? toggleTrailer() : null"
+													@click="trailerState === true ? toggleTrailer($event) : null"
 												>
 													<OptimizedIcon
 														icon="film"
@@ -533,7 +534,7 @@ const shareData = computed<ShareOptions>(() => ({
 
 												<ShareButton
 													:share-data="shareData"
-													class="!p-0 text-white"
+													class="!p-0"
 												/>
 
 												<MediaLikeButton v-if="data" :data="data" />
@@ -692,13 +693,13 @@ const shareData = computed<ShareOptions>(() => ({
 											/>
 
 											<div
-												class="relative grid w-full flex-shrink-0 flex-grow-0 grid-cols-7 items-start justify-start gap-1 text-slate-lightA-12/70 dark:text-slate-darkA-12/80"
+												class="relative grid w-full flex-shrink-0 flex-grow-0 grid-cols-7 items-start justify-start gap-1"
 											>
-												<p class="grid-cols-3 text-xs font-bold uppercase">
+												<p class="grid-cols-3 text-xs font-bold uppercase text-slate-lightA-12/70 dark:text-slate-darkA-12/80">
 													{{ $t("External links") }}
 												</p>
 												<div
-													class="col-span-6 col-start-3 flex w-full max-w-fit flex-wrap gap-1 self-center xl:col-start-3 2xl:col-start-2"
+													class="col-span-6 col-start-3 flex w-full max-w-fit flex-wrap gap-1 self-center xl:col-start-3 2xl:col-start-2 text-slate-lightA-12 dark:text-slate-darkA-12/80 font-semibold"
 												>
 													<div class="gap-1 children:whitespace-nowrap text-sm">
 														<a

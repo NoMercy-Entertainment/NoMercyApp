@@ -57,7 +57,7 @@ function handleSelectServer() {
 
 		<template #default="{ open }">
 			<div
-				class="flex w-full flex-col items-start justify-start p-2 text-slate-dark-9 dark:text-slate-light-5"
+				class="flex w-full flex-col items-start justify-start p-2 text-slate-lightA-12/90 dark:text-slate-darkA-12/80"
 				:inert="!open"
 				style="box-shadow: 0 4px 7px 0 rgba(0, 0, 0, 0.08)"
 			>

@@ -33,7 +33,7 @@ import ContentRating from '@/components/Images/ContentRating.vue';
 import HeaderItem from '@/views/Base/Person/components/HeaderItem.vue';
 import Collapsible from '@/views/Base/Person/components/Collapsible.vue';
 import MobileInfoCard from '@/views/Base/Info/components/MobileInfoCard.vue';
-import MediaCard from '@/components/Cards/MediaCard.vue';
+import MediaCard from '@/components/NMCard.vue';
 import collect from 'collect.js';
 import { convertToHumanReact } from '@/lib/dateTime';
 import { t } from 'i18next';

@@ -73,7 +73,6 @@ defineProps({
 			<RouterLink
 				v-if="carousel.props?.data?.link"
 				id="watch_now"
-				ref="play"
 				:to="carousel.props?.data?.link"
 				tabindex="0"
 				class="text-black flex-grow-0 flex-shrink-0 px-4 py-2 rounded-3xl bg-slate-light-4 focus-visible:ring-[3px] ring-inset focus-visible:ring-focus"
@@ -82,21 +81,6 @@ defineProps({
 			</RouterLink>
 		</div>
 	</div>
-
-	<!--  <div -->
-	<!--      class="flex justify-center items-center absolute right-4 bottom-4 gap-1.5 px-2 py-1.5 z-10" -->
-	<!--  > -->
-	<!--    <div class="absolute flex-grow-0 flex-shrink-0 w-20 h-5 opacity-50 rounded-2xl bg-black"></div> -->
-	<!--    <template v-for="(item, index) in [0,1,2,3,4]" :key="item"> -->
-	<!--      <div -->
-	<!--          class="flex-grow-0 flex-shrink-0 w-1.5 h-1.5 rounded-full" -->
-	<!--          :class="{ -->
-	<!--                    'bg-white': index === 0, -->
-	<!--                    'bg-[#8e918f]': index !== 0 -->
-	<!--                  }" -->
-	<!--      ></div> -->
-	<!--    </template> -->
-	<!--  </div> -->
 </template>
 
 <style scoped></style>

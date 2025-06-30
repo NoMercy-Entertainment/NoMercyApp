@@ -46,7 +46,7 @@ onMounted(() => {
 				v-for="(item, index) in data[keyName]"
 				:key="item?.id"
 				:class="data[keyName]?.length > 5 ? 'children:grayscale' : ''"
-				class="gap-1 children:whitespace-nowrap text-sm leading-[140%] text-slate-lightA-12/70 dark:text-slate-darkA-12/80"
+				class="gap-1 children:whitespace-nowrap text-sm leading-[140%] text-slate-lightA-12 dark:text-slate-darkA-12/90 font-semibold"
 			>
 				<template v-if="item?.id && prefix && keyName === 'genres'">
 					<GenrePill :genre="item" />

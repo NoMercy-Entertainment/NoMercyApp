@@ -29,6 +29,7 @@ import RipperOverlay from './components/Overlays/RipperOverlay.vue';
 import MusicPlayerDesktop from '@/components/MusicPlayer/MusicPlayerDesktop.vue';
 import EqualizerOverlay from '@/Layout/Desktop/components/Overlays/EqualizerOverlay.vue';
 import ChristmasSnow from '@/components/Seasonal/Christmas/ChristmasSnow.vue';
+import { isDarkMode } from '@/config/global.ts';
 
 const route = useRoute();
 
@@ -74,12 +75,16 @@ function focusMain() {
 					>
 						<div
 							id="overlay"
-							class="pointer-events-none absolute inset-0 hidden dark:flex"
+							class="pointer-events-none absolute inset-0 dark:flex w-full h-full"
 							:style="`
-                    background: ${
-								background ? 'rgba(0, 0, 0, 0.7)' : 'rgba(0, 0, 0, 0)'
+                 background: ${
+								!background
+									? ''
+									: isDarkMode
+										? 'rgba(0, 0, 0, 0.7)'
+										: 'rgba(0, 0, 0, 0.4)'
 							};
-                 `"
+               `"
 						/>
 						<div
 							class="flex flex-col relative overflow-auto justify-start items-start w-available h-available sm:rounded-2xl flex-1 border-auto-alpha-2 !bg-cover children:scrollbar-none sm:border-3"

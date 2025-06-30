@@ -20,7 +20,7 @@ import { setTitle } from '@/lib/stringArray';
 
 import Indexer from '@/Layout/Indexer.vue';
 
-import MediaCard from '@/components/Cards/MediaCard.vue';
+import MediaCard from '@/components/NMCard.vue';
 import PersonCard from '@/components/Cards/PersonCard.vue';
 import GenreCard from '@/components/Cards/GenreCard.vue';
 import EmptyCard from '@/components/Cards/EmptyCard.vue';

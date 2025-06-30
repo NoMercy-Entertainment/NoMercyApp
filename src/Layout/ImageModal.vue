@@ -336,7 +336,7 @@ function onRightClick(e: MouseEvent) {
 						class="absolute left-0 z-0 p-4 bottom:2 sm:bottom-6 sm:left-8 tv:bottom-4 tv:left-6"
 					>
 						<div
-							class="pointer-events-none flex h-full w-full select-none items-start justify-start bg-cover min-h-[20vh] max-h-[20vh] min-w-[30vw] max-w-[30vw] tv:min-h-[15vh] tv:max-h-[15vh] tv:min-w-[30vw] tv:max-w-[30vw]"
+							class="pointer-events-none flex h-inherit w-full select-none items-start justify-start bg-cover min-h-[20vh] max-h-[20vh] min-w-[30vw] max-w-[30vw] tv:min-h-[15vh] tv:max-h-[15vh] tv:min-w-[30vw] tv:max-w-[30vw]"
 						>
 							<TMDBImage
 								v-if="logoSrc"
@@ -345,8 +345,8 @@ function onRightClick(e: MouseEvent) {
 								:path="logoSrc"
 								:shadow="logoColor"
 								:size="500"
-								class="w-auto object-contain h-available object-[0_0%] max-h-inherit !duration-700 children:!duration-700"
-								class-name="relative h-auto w-auto self-start px-4 py-4 !items-start"
+								class="w-auto !h-inherit object-contain h-available object-[0_0%] max-h-inherit !duration-700 children:!duration-700"
+								class-name="relative !h-inherit self-start px-4 py-4 !items-start"
 								type="logo"
 							/>
 						</div>

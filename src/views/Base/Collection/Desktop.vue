@@ -19,15 +19,14 @@ import OptimizedIcon from '@/components/OptimizedIcon.vue';
 import MediaLikeButton from '@/components/Buttons/MediaLikeButton.vue';
 import DropdownMenu from '@/Layout/Desktop/components/Menus/DropdownMenu.vue';
 import { showBackdrops } from '@/store/preferences';
-import MediaCard from '@/components/Cards/MediaCard.vue';
-import PersonCarousel from '@/components/Carousel/PersonCarousel.vue';
-import ImageCarousel from '@/components/Carousel/ImageCarousel.vue';
+import MediaCard from '@/components/NMCard.vue';
 import ContentRating from '@/components/Images/ContentRating.vue';
 import { useTranslation } from 'i18next-vue';
 import InfoHeaderItem from '@/views/Base/Info/components/InfoHeaderItem.vue';
 import NotFound from '@/Layout/Desktop/components/NotFound.vue';
 import ShareButton from '@/components/Buttons/ShareButton.vue';
 import type { ShareOptions } from '@capacitor/share';
+import NMCarousel from '@/components/NMCarousel.vue';
 
 const { t } = useTranslation();
 const route = useRoute();
@@ -294,31 +293,47 @@ const shareData = computed<ShareOptions>(() => ({
 							</template>
 						</div>
 
-						<PersonCarousel
+						<NMCarousel
 							v-if="data?.cast && data?.cast?.length > 0"
+							id="cast"
+							next_id="crew"
+							previous_id="poster"
 							:data="unique(data?.cast, 'id').slice(0, 50)"
 							title="Cast"
+							:index="0"
 						/>
 
-						<PersonCarousel
+						<NMCarousel
 							v-if="data?.crew && data?.crew?.length > 0"
+							id="crew"
+							next_id="backdrop"
+							previous_id="cast"
 							:data="sortByPosterAlphabetized(data?.crew).slice(0, 50)"
 							title="Crew"
+							:index="0"
 						/>
 
-						<ImageCarousel
+						<NMCarousel
 							v-if="data?.posters && data?.posters?.length > 0"
+							id="poster"
+							next_id="backdrop"
+							previous_id="crew"
 							:data="data?.posters"
 							title="Poster"
 							type="poster"
+							:index="0"
 						/>
 
-						<ImageCarousel
+						<NMCarousel
 							v-if="data?.backdrops && data?.backdrops?.length > 0"
+							id="backdrop"
+							next_id=""
+							previous_id="backdrop"
 							:color-palette="data?.color_palette?.poster"
 							:data="data?.backdrops"
 							title="Backdrop"
 							type="backdrop"
+							:index="0"
 						/>
 					</div>
 				</div>

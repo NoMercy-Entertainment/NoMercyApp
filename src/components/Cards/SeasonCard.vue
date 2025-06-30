@@ -26,7 +26,7 @@ const props = defineProps({
 	<RouterLink
 		v-if="data?.id && data?.available"
 		:id="data?.id"
-		:class="`frosting border-0 border-[rgb(var(--color-focus))] flex flex-col h-auto items-center group/season focus-shift focus-outline transition-all duration-200 overflow-clip relative !rounded-lg select-none shadow-[0px_0px_0_1px_rgb(var(--color-focus,var(--color-theme-6))/70%)] w-full z-0 bg-auto-1/12  text-slate-lightA-12/70  dark:text-slate-darkA-12/80 ${
+		:class="`frosting border-0 border-[rgb(var(--color-focus))] flex flex-col h-auto items-center group/season focus-shift focus-outline transition-all duration-200 overflow-clip relative !rounded-lg select-none shadow-[0px_0px_0_1px_rgb(var(--color-focus,var(--color-theme-6))/70%)] w-full z-0 bg-auto-1/12  text-slate-lightA-12/90  dark:text-slate-darkA-12/80 ${
 			data?.available ? 'cursor-pointer' : 'cursor-not-allowed'
 		}`"
 		:onfocus="scrollIntoView()"
