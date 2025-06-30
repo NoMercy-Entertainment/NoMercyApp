@@ -1,239 +1,272 @@
 import { toRaw } from "vue";
 
-import Plugin from '@nomercy-entertainment/nomercy-video-player/src/plugin';
-import { NMPlayer } from '@nomercy-entertainment/nomercy-video-player/src/types';
+import Plugin from "@nomercy-entertainment/nomercy-video-player/src/plugin";
+import { NMPlayer } from "@nomercy-entertainment/nomercy-video-player/src/types";
 
-import { groupBy } from '@/lib/stringArray';
-import type {NMPlaylistItem} from "@/lib/VideoPlayer";
-import type {Icon} from "@nomercy-entertainment/nomercy-video-player/src/types.ts";
-import {buttons} from "@/lib/VideoPlayer/plugins/UIPlugin/buttons.ts";
+import { groupBy } from "@/lib/stringArray";
+import type { NMPlaylistItem } from "@/lib/VideoPlayer";
+import type { Icon } from "@nomercy-entertainment/nomercy-video-player/src/types.ts";
+import { buttons } from "@/lib/VideoPlayer/plugins/UIPlugin/buttons.ts";
 
 export interface AutoSkipPluginArgs {
-	playlist: NMPlaylistItem[]
-	introPatterns?: RegExp[];
-	outroPatterns?: RegExp[];
-	autoSkip?: boolean;
+  playlist: NMPlaylistItem[];
+  introPatterns?: RegExp[];
+  outroPatterns?: RegExp[];
+  autoSkip?: boolean;
+  disableAutoPlayback: boolean;
 }
 
 export class AutoSkipPlugin extends Plugin {
-	player: NMPlayer<AutoSkipPluginArgs> = <NMPlayer<AutoSkipPluginArgs>>{};
+  player: NMPlayer<AutoSkipPluginArgs> = <NMPlayer<AutoSkipPluginArgs>>{};
 
-	introPatterns: RegExp[] = [
-		/^OP$/ui,
-		/^NCOP$/ui,
-		/^Opening$/ui,
-		/^Opening/ui,
-		/^Opening Credits$/ui,
-		/^Opening Theme$/ui,
-		/^Opening Song$/ui,
-		/^Epilogue$/ui,
-	];
+  introPatterns: RegExp[] = [
+    /^OP$/iu,
+    /^NCOP$/iu,
+    /^Opening$/iu,
+    /^Opening/iu,
+    /^Opening Credits$/iu,
+    /^Opening Theme$/iu,
+    /^Opening Song$/iu,
+    /^Epilogue$/iu,
+  ];
 
-	outroPatterns: RegExp[] = [
-		/^ED$/ui,
-		/^PV$/ui,
-		/^NCED$/ui,
-		/^CM$/ui,
-		/^Preview$/ui,
-		/^Next Episode Preview$/ui,
-		/^Next Time Preview$/ui,
-		/^Outro$/ui,
-		/^Ending/ui,
-		/^Prologue$/ui,
-		/^ED\+Cast$/ui,
-		/^Credits$/ui,
-		/^End Credits$/ui,
-		/^Closing$/ui,
-	];
+  outroPatterns: RegExp[] = [
+    /^ED$/iu,
+    /^PV$/iu,
+    /^NCED$/iu,
+    /^CM$/iu,
+    /^Preview$/iu,
+    /^Next Episode Preview$/iu,
+    /^Next Time Preview$/iu,
+    /^Outro$/iu,
+    /^Ending/iu,
+    /^Prologue$/iu,
+    /^ED\+Cast$/iu,
+    /^Credits$/iu,
+    /^End Credits$/iu,
+    /^Closing$/iu,
+  ];
 
-	buttons: Icon = <Icon>{};
+  buttons: Icon = <Icon>{};
 
-	autoSkip: boolean = false;
+  autoSkip: boolean = false;
 
-	initialize(player: NMPlayer<AutoSkipPluginArgs>) {
-		this.player = player;
+  initialize(player: NMPlayer<AutoSkipPluginArgs>) {
+    this.player = player;
 
-		if (this.player.options.introPatterns) {
-			this.introPatterns = this.player.options.introPatterns;
-		}
-		if (this.player.options.outroPatterns) {
-			this.outroPatterns = this.player.options.outroPatterns;
-		}
+    if(this.player.options.disableAutoPlayback) return;
 
-		if (this.player.options.autoSkip !== undefined) {
-			this.autoSkip = this.player.options.autoSkip;
-		} else {
-			this.autoSkip = localStorage.getItem('nmplayer-auto-skip') === 'true'
-		}
+    if (this.player.options.introPatterns) {
+      this.introPatterns = this.player.options.introPatterns;
+    }
+    if (this.player.options.outroPatterns) {
+      this.outroPatterns = this.player.options.outroPatterns;
+    }
 
-		this.buttons = buttons();
-	}
+    if (this.player.options.autoSkip !== undefined) {
+      this.autoSkip = this.player.options.autoSkip;
+    } else {
+      this.autoSkip = localStorage.getItem("nmplayer-auto-skip") === "true";
+    }
 
-	use() {
-		this.player.on('time', this.checkChapters.bind(this));
-	}
+    this.buttons = buttons();
+  }
 
-	dispose() {
-		this.player.off('time', this.checkChapters.bind(this));
-	}
+  use() {
+    if(this.player.options.disableAutoPlayback) return;
+    this.player.on("time", this.checkChapters.bind(this));
+  }
 
-	lastChapter: string = '';
+  dispose() {
+    if(this.player.options.disableAutoPlayback) return;
+    this.player.off("time", this.checkChapters.bind(this));
+  }
 
-	getChapterType(title: string): 'intro' | 'next' | null {
-		if (this.introPatterns.some(re => re.test(title))) return 'intro';
-		if (this.outroPatterns.some(re => re.test(title))) return 'next';
-		return null;
-	}
+  lastChapter: string = "";
 
-	checkChapters(): void {
-		if (!this.player.chapters || !this.player.chapters.cues || this.player.chapters.cues.length === 0) {
-			this.hideSkipButton();
-			return;
-		}
-		if (this.player.chapters.errors.length > 0) {
-			console.error('Error parsing chapters:', this.player.chapters.errors);
-			this.hideSkipButton();
-			return;
-		}
+  getChapterType(title: string): "intro" | "next" | null {
+    if (this.introPatterns.some((re) => re.test(title))) return "intro";
+    if (this.outroPatterns.some((re) => re.test(title))) return "next";
+    return null;
+  }
 
-		const currentTime = this.player.getVideoElement().currentTime;
-		let currentChapter = this.getCurrentChapter(currentTime);
-		if (!currentChapter) {
-			this.hideSkipButton();
-			return;
-		}
+  checkChapters(): void {
+    if (
+      !this.player.chapters ||
+      !this.player.chapters.cues ||
+      this.player.chapters.cues.length === 0
+    ) {
+      this.hideSkipButton();
+      return;
+    }
+    if (this.player.chapters.errors.length > 0) {
+      console.error("Error parsing chapters:", this.player.chapters.errors);
+      this.hideSkipButton();
+      return;
+    }
 
-		if (this.shouldSkipChapter(currentChapter.text)) {
-			// Auto-skip logic
-			if (this.lastChapter !== currentChapter.text) {
-				this.lastChapter = currentChapter.text;
-				const nextChapter = this.getNextChapter(currentChapter.endTime);
-				if (!nextChapter) {
-					this.player.next();
-					this.lastChapter = '';
-					return;
-				}
-				if (this.autoSkip) {
-					this.hideSkipButton();
-					this.player.seek(nextChapter.startTime);
-				} else {
-					this.showSkipButton();
-				}
-			}
-		} else {
-			this.hideSkipButton();
-		}
-	}
+    const currentTime = this.player.getVideoElement().currentTime;
+    let currentChapter = this.getCurrentChapter(currentTime);
+    if (!currentChapter) {
+      this.hideSkipButton();
+      return;
+    }
 
-	isFirstOrLastEpisodeOfSeason(): boolean {
-		const playlistItem = this.player.playlistItem();
-		if (playlistItem.episode == 1) return true;
+    if (this.shouldSkipChapter(currentChapter.text)) {
+      // Auto-skip logic
+      if (this.lastChapter !== currentChapter.text) {
+        this.lastChapter = currentChapter.text;
+        const nextChapter = this.getNextChapter(currentChapter.endTime);
+        if (!nextChapter) {
+          this.player.next();
+          this.lastChapter = "";
+          return;
+        }
+        if (this.autoSkip) {
+          this.hideSkipButton();
+          this.player.seek(nextChapter.startTime);
+        } else {
+          this.showSkipButton();
+        }
+      }
+    } else {
+      this.hideSkipButton();
+    }
+  }
 
-		const playlist = this.player.getPlaylist().map((item) => toRaw(item as any));
+  isFirstOrLastEpisodeOfSeason(): boolean {
+    const playlistItem = this.player.playlistItem();
+    if (playlistItem.episode === 1) return true;
 
-		const seasons = groupBy(playlist, 'season');
-		const season = seasons[playlistItem.season as number];
+    const playlist = this.player
+      .getPlaylist()
+      .map((item) => toRaw(item as any));
 
-		if (!season) return false;
+    const seasons = groupBy(playlist, "season");
+    const season = seasons[playlistItem.season as number];
 
-		return season.at(-1) == playlistItem;
-	}
+    if (!season) return false;
 
-	shouldSkipChapter(chapterTitle: string): boolean {
-		if (this.player.getCurrentTime() < this.player.getDuration() / 2 && this.player.getPlaylistIndex() == 0) {
-			return false;
-		}
-		if (this.player.getCurrentTime() > this.player.getDuration() / 2 && this.player.isLastPlaylistItem()) {
-			return false;
-		}
-		if (this.isFirstOrLastEpisodeOfSeason()) {
-			return false;
-		}
+    return season.at(-1) === playlistItem;
+  }
 
-		return this.introPatterns.some(pattern => pattern.test(chapterTitle))
-			|| this.outroPatterns.some(pattern => pattern.test(chapterTitle));
-	}
+  shouldSkipChapter(chapterTitle: string): boolean {
+    if (
+      this.player.getCurrentTime() < this.player.getDuration() / 2 &&
+      this.player.getPlaylistIndex() === 0
+    ) {
+      return false;
+    }
+    if (
+      this.player.getCurrentTime() > this.player.getDuration() / 2 &&
+      this.player.isLastPlaylistItem()
+    ) {
+      return false;
+    }
+    if (this.isFirstOrLastEpisodeOfSeason()) {
+      return false;
+    }
 
-	getCurrentChapter(currentTime: number) {
-		return this.player.chapters.cues.find((chapter) => currentTime >= chapter.startTime && currentTime <= chapter.endTime);
-	}
+    return (
+      this.introPatterns.some((pattern) => pattern.test(chapterTitle)) ||
+      this.outroPatterns.some((pattern) => pattern.test(chapterTitle))
+    );
+  }
 
-	getNextChapter(currentEndTime: number) {
-		return this.player.chapters.cues.find((chapter) => chapter.startTime >= currentEndTime);
-	}
+  getCurrentChapter(currentTime: number) {
+    return this.player.chapters.cues.find(
+      (chapter) =>
+        currentTime >= chapter.startTime && currentTime <= chapter.endTime
+    );
+  }
 
-	skipButtonElement: HTMLElement | null = null;
+  getNextChapter(currentEndTime: number) {
+    return this.player.chapters.cues.find(
+      (chapter) => chapter.startTime >= currentEndTime
+    );
+  }
 
-	showSkipButton(): void {
-		if (this.skipButtonElement) {
-			this.skipButtonElement.classList.add('visible');
-			return;
-		}
+  skipButtonElement: HTMLElement | null = null;
 
-		const button = this.player.createElement('button', 'skip-chapter-button')
-			.addClasses([
-				'skip-chapter-button',
-				'flex',
-				'items-center',
-				'justify-center',
-				'gap-2',
-				'text-sm',
-				'text-white',
-				'bg-neutral-800',
-				'rounded',
-				'hover:bg-neutral-700',
-				'px-2',
-				'py-1',
-				'absolute',
-				'bottom-20',
-				'right-6',
-				'z-10',
-				'transition-opacity',
-				'duration-300',
-				'opacity-0',
-				'invisible',
-			])
-			.appendTo(this.player.overlay)
-			.get();
+  showSkipButton(): void {
+    if (this.skipButtonElement) {
+      this.skipButtonElement.classList.add("visible");
+      return;
+    }
 
-		const type = this.getChapterType(this.lastChapter);
-		let label = type === 'intro'
-			? this.player.localize('Skip intro')
-			: this.player.localize('Skip outro');
+    const button = this.player
+      .createElement("button", "skip-chapter-button")
+      .addClasses([
+        "skip-chapter-button",
+        "flex",
+        "items-center",
+        "justify-center",
+        "gap-2",
+        "text-sm",
+        "text-white",
+        "bg-neutral-800",
+        "rounded",
+        "hover:bg-neutral-700",
+        "px-2",
+        "py-1",
+        "absolute",
+        "bottom-20",
+        "right-6",
+        "z-10",
+        "transition-opacity",
+        "duration-300",
+        "opacity-0",
+        "invisible",
+      ])
+      .appendTo(this.player.overlay)
+      .get();
 
-		button.title = label;
+    const type = this.getChapterType(this.lastChapter);
+    let label =
+      type === "intro"
+        ? this.player.localize("Skip intro")
+        : this.player.localize("Skip outro");
 
-		const icon = this.player.createSVGElement(button, 'chevronR', this.buttons.chevronR, false, false);
-		icon.classList.add('w-4', 'h-4');
+    button.title = label;
 
-		const text = this.player.createElement('span', 'skip-chapter-text')
-			.addClasses(['hidden', 'md:inline'])
-			.appendTo(button)
-			.get();
+    const text = this.player
+      .createElement("span", "skip-chapter-text")
+      .addClasses(["hidden", "md:inline"])
+      .appendTo(button)
+      .get();
 
-		text.textContent = label;
+    text.textContent = label;
 
-		button.addEventListener('click', this.player.nextChapter.bind(this.player));
-		this.skipButtonElement = button;
+    const icon = this.player.createSVGElement(
+        button,
+        "chevronR",
+        this.buttons.chevronR,
+        false,
+        false
+    );
+    icon.classList.add("w-4", "h-4");
+    
+    button.addEventListener("click", this.player.nextChapter.bind(this.player));
+    this.skipButtonElement = button;
 
-		requestAnimationFrame(() => {
-			button.classList.remove('opacity-0', 'invisible');
-			button.classList.add('opacity-100', 'visible');
-		});
+    requestAnimationFrame(() => {
+      button.classList.remove("opacity-0", "invisible");
+      button.classList.add("opacity-100", "visible");
+    });
 
-		button.focus();
-	}
+    button.focus();
+  }
 
-	hideSkipButton(): void {
-		if (this.skipButtonElement) {
-			this.skipButtonElement.classList.remove('opacity-100', 'visible');
-			this.skipButtonElement.classList.add('opacity-0', 'invisible');
-			setTimeout(() => {
-				if (this.skipButtonElement) {
-					this.skipButtonElement.remove();
-					this.skipButtonElement = null;
-				}
-			}, 300);
-		}
-	}
+  hideSkipButton(): void {
+    if (this.skipButtonElement) {
+      this.skipButtonElement.classList.remove("opacity-100", "visible");
+      this.skipButtonElement.classList.add("opacity-0", "invisible");
+      setTimeout(() => {
+        if (this.skipButtonElement) {
+          this.skipButtonElement.remove();
+          this.skipButtonElement = null;
+        }
+      }, 300);
+    }
+  }
 }

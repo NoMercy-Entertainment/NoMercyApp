@@ -2,8 +2,8 @@
 import { computed } from 'vue';
 
 import {
-	connectedDevices,
-	currentDeviceId,
+	connectedMusicDevices,
+	currentMusicDeviceId,
 	deviceMenuOpen,
 	musicSize,
 	toggleDeviceMenuOpen,
@@ -27,8 +27,8 @@ function handleClick(e?: MouseEvent) {
 }
 
 const currentDevice = computed(() =>
-	connectedDevices.value.find(
-		d => d.device_id === currentDeviceId.value,
+	connectedMusicDevices.value.find(
+		d => d.device_id === currentMusicDeviceId.value,
 	),
 );
 </script>
@@ -40,7 +40,7 @@ const currentDevice = computed(() =>
 		label="Playing on this device"
 		:onclick="handleClick"
 		class="flex gap-2 items-center flex-nowrap"
-		:data-current_device="currentDeviceId"
+		:data-current_device="currentMusicDeviceId"
 	>
 		<OptimizedIcon
 			v-if="deviceMenuOpen"
@@ -54,7 +54,7 @@ const currentDevice = computed(() =>
 			class="text-auto-900 flex sm:hidden compact:hidden pointer-events-none !text-sm min-w-full whitespace-nowrap pl-2 max-w-72"
 		>
 			{{
-				currentDeviceId === deviceId
+				currentMusicDeviceId === deviceId
 					? $t("This device")
 					: currentDevice?.custom_name ?? currentDevice?.name
 			}}

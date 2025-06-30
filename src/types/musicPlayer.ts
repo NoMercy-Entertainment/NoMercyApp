@@ -111,11 +111,11 @@ export interface StateEvents {
 export interface StateEvent {
 	type: string;
 	event: {
-		state: PlayerState;
+		state: MusicPlayerState;
 	};
 }
 
-export interface PlayerState {
+export interface MusicPlayerState {
 	actions: Actions;
 	device_id: null;
 	is_playing: boolean;

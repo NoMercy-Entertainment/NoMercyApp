@@ -8,7 +8,7 @@ import type { ServerInfo } from '@/types/api/dashboard/server';
 import useMounted from '@/hooks/useMounted';
 import useHubListener from '@/hooks/useHubListener';
 import { connection } from '@/lib/clients/dashboardSocket';
-// import { useVideoSocket } from '@/store/videoSocket';
+import { useVideoSocket } from '@/store/videoSocket';
 import { getCpuColor, getGpuColor, hexOpacity } from '@/lib/colorHelper';
 import { orange, purple } from '@/config/global';
 import useServerClient from '@/lib/clients/useServerClient';
@@ -42,13 +42,13 @@ useMounted(
 	10,
 );
 
-// function connected() {
-// 	connection.value?.invoke('StartResources');
-// }
+function connected() {
+	connection.value?.invoke('StartResources');
+}
 
 onMounted(() => {
-	// const socket = useVideoSocket();
-	// socket?.onreconnected(connected);
+	const socket = useVideoSocket();
+	socket?.onreconnected(connected);
 });
 
 const cpuCores = computed(() => {
@@ -202,7 +202,7 @@ const chartOptions = computed(() => {
 				labels: {
 					color: textColor,
 				},
-				value: legendPosition,
+				value: legendPosition.value,
 				onClick() {
 					legendPosition.value
             = positionOptions[

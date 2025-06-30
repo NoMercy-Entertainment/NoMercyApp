@@ -8,177 +8,176 @@ import { currentServer } from '@/store/currentServer';
 import { user } from '@/store/user';
 import { setDisableScreensaver } from '@/store/imageModal';
 
-import type {NMPlayer, PlayerConfig, NMPlaylistItem, PlaylistItem} from '@/lib/VideoPlayer';
+import type {
+	NMPlayer,
+	NMPlaylistItem,
+	PlayerConfig,
+	PlaylistItem,
+} from '@/lib/VideoPlayer';
 import {
-  AutoSkipPlugin,
-  TVUIPlugin,
-  KeyHandlerPlugin,
-  nmplayer,
-  OctopusPlugin,
-  SyncPlugin
+	AutoSkipPlugin,
+	nmplayer,
+	OctopusPlugin,
+	SyncPlugin,
+	TVUIPlugin,
 } from '@/lib/VideoPlayer';
 
 import audioPlayer from '@/store/audioPlayer';
-import router from "@/router";
-import { hideNavBar, setNavBarVisible, showNavBar } from "@/store/ui";
-import useServerClient from "@/lib/clients/useServerClient";
+import router from '@/router';
+import { hideNavBar, setNavBarVisible, showNavBar } from '@/store/ui';
+import useServerClient from '@/lib/clients/useServerClient';
+import { VideoNoMercyConnectPlugin } from '@/lib/VideoPlayer/plugins/videoNoMercyConnectPlugin.ts';
+import KeyHandlerPlugin from '@/lib/VideoPlayer/plugins/keyHandlerPlugin.ts';
 
-const { data } = useServerClient<NMPlaylistItem[]>();
+const { data } = useServerClient<NMPlaylistItem[]>({
+	enabled: false,
+});
 
 const player = ref<NMPlayer<NMPlaylistItem>>();
 
-const goBack = () => {
-  player.value?.emit('back-button');
-  player.value?.emit('back-button-hyjack');
+function goBack() {
+	player.value?.emit('back-button');
+	player.value?.emit('back-button-hyjack');
 }
 
-const initPlayer = (value: NMPlaylistItem[] | undefined) => {
+function initPlayer(value?: NMPlaylistItem[] | undefined) {
+	const config: Partial<PlayerConfig<PlaylistItem>> = {
+		muted: false,
+		controls: false,
+		preload: 'auto',
+		debug: false,
+		autoPlay: true,
+		playlist: value?.filter(item => !!item.id) ?? [],
 
-  const config: Partial<PlayerConfig<PlaylistItem>> = {
-    muted: false,
-    controls: false,
-    preload: 'auto',
-    debug: false,
-    autoPlay: true,
-    playlist: value?.filter(item => !!item.id) ?? [],
+		controlsTimeout: 3000,
+		doubleClickDelay: 300,
+		playbackRates: [0.25, 0.5, 0.75, 1, 1.25, 1.5, 1.75, 2],
+		accessToken:
+      user.value?.accessToken || localStorage.getItem('access_token') || '',
+		basePath: currentServer.value?.serverBaseUrl,
+		forceTvMode:
+      (isPlatform('android') || isPlatform('ios')) && !isPlatform('mobile'),
+		disableTouchControls: false,
+		disableMediaControls:
+      'mediaSession' in navigator || isPlatform('capacitor'),
+		renderAhead: 10,
+		disableAutoPlayback: false,
+	};
 
-    controlsTimeout: 3000,
-    doubleClickDelay: 300,
-    playbackRates: [
-      0.25,
-      0.5,
-      0.75,
-      1,
-      1.25,
-      1.5,
-      1.75,
-      2,
-    ],
-    accessToken: user.value?.accessToken || localStorage.getItem('access_token') || '',
-    basePath: currentServer.value?.serverBaseUrl,
-    forceTvMode: (isPlatform('android') || isPlatform('ios')) && !isPlatform('mobile'),
-    disableTouchControls: false,
-    disableMediaControls: 'mediaSession' in navigator || isPlatform('capacitor'),
-    renderAhead: 10,
-  };
+	// @ts-ignore
+	player.value = nmplayer('player1').setup(config);
 
-  // @ts-ignore
-  player.value = nmplayer('player1')
-    .setup(config);
+	if (false) {
+		const videoNoMercyConnectPlugin = new VideoNoMercyConnectPlugin();
+		player.value?.registerPlugin('videoNoMercyConnect', videoNoMercyConnectPlugin);
+		player.value?.usePlugin('videoNoMercyConnect');
+	}
 
-  const tvUIPlugin = new TVUIPlugin();
-  player.value?.registerPlugin('tvUI', tvUIPlugin);
-  player.value?.usePlugin('tvUI');
+	const tvUIPlugin = new TVUIPlugin();
+	player.value?.registerPlugin('tvUI', tvUIPlugin);
+	player.value?.usePlugin('tvUI');
 
-  const autoSkipPlugin = new AutoSkipPlugin();
-  player.value?.registerPlugin('autoSkip', autoSkipPlugin);
-  player.value?.usePlugin('autoSkip');
+	const autoSkipPlugin = new AutoSkipPlugin();
+	player.value?.registerPlugin('autoSkip', autoSkipPlugin);
+	player.value?.usePlugin('autoSkip');
 
-  const keyHandlerPlugin = new KeyHandlerPlugin();
-  player.value?.registerPlugin('keyHandler', keyHandlerPlugin);
-  player.value?.usePlugin('keyHandler');
+	const keyHandlerPlugin = new KeyHandlerPlugin();
+	player.value?.registerPlugin('keyHandler', keyHandlerPlugin);
+	player.value?.usePlugin('keyHandler');
 
-  const syncPlugin = new SyncPlugin();
-  player.value?.registerPlugin('sync', syncPlugin);
-  player.value?.usePlugin('sync');
+	if (!false) {
+		const syncPlugin = new SyncPlugin();
+		player.value?.registerPlugin('sync', syncPlugin);
+		player.value?.usePlugin('sync');
+	}
 
-  const octopusPlugin = new OctopusPlugin();
-  player.value?.registerPlugin('octopus', octopusPlugin);
-  player.value?.usePlugin('octopus');
+	const octopusPlugin = new OctopusPlugin();
+	player.value?.registerPlugin('octopus', octopusPlugin);
+	player.value?.usePlugin('octopus');
 
-  // const sabrePlugin = new SabrePlugin();
-  // player.value?.registerPlugin('sabre', sabrePlugin);
-  // player.value?.usePlugin('sabre');
+	// const sabrePlugin = new SabrePlugin();
+	// player.value?.registerPlugin('sabre', sabrePlugin);
+	// player.value?.usePlugin('sabre');
 
-  player.value?.once('play', () => {
-    player.value?.enterFullscreen();
-  });
+	player.value?.once('play', () => {
+		player.value?.enterFullscreen();
+	});
 
-  player.value?.once('back', () => {
-    player.value?.dispose();
-    router.back();
-  });
+	player.value?.on('playlistComplete', () => {
+		player.value?.dispose();
+		router.back();
+	});
 
-  player.value?.on('playlistComplete', () => {
-    player.value?.dispose();
-    router.back();
-  });
+	player.value?.on('back', () => {
+		router.back();
+	});
 
-  player.value?.on('play', () => {
-    setDisableScreensaver(true);
-  });
+	player.value?.on('play', () => {
+		setDisableScreensaver(true);
+	});
 
-  player.value?.on('pause', () => {
-    setDisableScreensaver(false);
-  });
+	player.value?.on('pause', () => {
+		setDisableScreensaver(false);
+	});
 
-  player.value?.on('ready', () => {
-    hideNavBar();
-    audioPlayer.stop();
-  });
+	player.value?.on('ready', () => {
+		hideNavBar();
+		audioPlayer.stop();
+	});
 
-  player.value?.on('item', () => {
-    player.value?.play();
-  });
+	player.value?.on('item', () => {
+		player.value?.play();
+	});
 
-  player.value?.on('active', (value) => {
-    if (value) {
-      //
-    } else {
-      //
-    }
-  });
-
-  // player.value?.on('dispose', () => {
-  //   router.back();
-  //   showNavBar();
-  // });
-
-  App.addListener('backButton', goBack);
-
-};
+	App.addListener('backButton', goBack);
+}
 
 watch(data, (value) => {
-  if (!value) return;
-  initPlayer(value);
+	initPlayer(value);
 });
 
 onMounted(() => {
-  setNavBarVisible(false);
-  if (data.value) {
-    initPlayer(data.value);
-  }
+	audioPlayer.stop();
+	setNavBarVisible(false);
+	if (false) {
+		initPlayer();
+	}
+	else {
+		initPlayer(data.value);
+	}
 });
 
 onUnmounted(() => {
-  setDisableScreensaver(false);
-  showNavBar();
-  player.value?.dispose();
+	setDisableScreensaver(false);
+	showNavBar();
+	player.value?.dispose();
 });
-
 </script>
 
 <template>
-  <ion-page>
-    <ion-content :fullscreen="true">
-      <div class="absolute inset-0 flex h-full w-full overflow-clip bg-black z-1199" :class="{
-        'mb-28': isNative,
-        'mb-0': !isNative,
-      }">
-        <div id="player1" class="group nomercyplayer"></div>
-      </div>
-    </ion-content>
-  </ion-page>
+	<IonPage>
+		<IonContent :fullscreen="true">
+			<div
+				class="absolute inset-0 flex h-full w-full overflow-clip bg-black z-1199"
+				:class="{
+					'mb-28': isNative,
+					'mb-0': !isNative,
+				}"
+			>
+				<div id="player1" class="group nomercyplayer" />
+			</div>
+		</IonContent>
+	</IonPage>
 </template>
 
 <style>
 .nomercyplayer .top-bar {
-  padding-top: calc(var(--safe-area-inset-top, 0px) + 1rem);
+	padding-top: calc(var(--safe-area-inset-top, 0px) + 1rem);
 }
 .nomercyplayer dialog {
-  background: #000000cc;
+	background: #000000cc;
 }
 .nomercyplayer #slider-bar {
-  background: #ffffff50
+	background: #ffffff50;
 }
 </style>

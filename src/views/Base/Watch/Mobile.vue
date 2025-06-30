@@ -3,170 +3,186 @@ import { onBeforeUnmount, onMounted, onUnmounted, ref, watch } from 'vue';
 import { IonContent, IonPage, isPlatform } from '@ionic/vue';
 import { App } from '@capacitor/app';
 
-import { disableImmersiveMode, enableImmersiveMode, lockLandscape, lockPortrait } from '@/lib/utils';
+import {
+	disableImmersiveMode,
+	enableImmersiveMode,
+	lockLandscape,
+	lockPortrait,
+} from '@/lib/utils';
 import { isNative } from '@/config/global';
 import { currentServer } from '@/store/currentServer';
 import { user } from '@/store/user';
 import { setDisableScreensaver } from '@/store/imageModal';
 
-import type {NMPlayer, PlayerConfig, NMPlaylistItem, PlaylistItem} from '@/lib/VideoPlayer';
+import type {
+	NMPlayer,
+	NMPlaylistItem,
+	PlayerConfig,
+	PlaylistItem,
+} from '@/lib/VideoPlayer';
 import {
-  AutoSkipPlugin,
-  DesktopUIPlugin,
-  nmplayer,
-  OctopusPlugin,
-  SyncPlugin
+	AutoSkipPlugin,
+	DesktopUIPlugin,
+	nmplayer,
+	OctopusPlugin,
+	SyncPlugin,
 } from '@/lib/VideoPlayer';
 
 import audioPlayer from '@/store/audioPlayer';
-import router from "@/router";
-import useServerClient from "@/lib/clients/useServerClient";
-import { setNavBarVisible } from "@/store/ui";
+import router from '@/router';
+import { VideoNoMercyConnectPlugin } from '@/lib/VideoPlayer/plugins/videoNoMercyConnectPlugin.ts';
+import useServerClient from '@/lib/clients/useServerClient.ts';
 
-const { data } = useServerClient<NMPlaylistItem[]>();
+const { data } = useServerClient<NMPlaylistItem[]>({
+	enabled: false,
+});
 
 const player = ref<NMPlayer<NMPlaylistItem>>();
 
-const initPlayer = (value: NMPlaylistItem[] | undefined) => {
+function initPlayer(value?: NMPlaylistItem[] | undefined) {
+	const config: Partial<PlayerConfig<PlaylistItem>> = {
+		muted: false,
+		controls: false,
+		preload: 'auto',
+		debug: false,
+		autoPlay: true,
+		playlist: value?.filter(item => !!item.id) ?? [],
 
-  const config: Partial<PlayerConfig<PlaylistItem>> = {
-    muted: false,
-    controls: false,
-    preload: 'auto',
-    debug: false,
-    autoPlay: true,
-    playlist: value?.filter(item => !!item.id) ?? [],
+		controlsTimeout: 3000,
+		doubleClickDelay: 300,
+		playbackRates: [0.25, 0.5, 0.75, 1, 1.25, 1.5, 1.75, 2],
+		accessToken:
+      user.value?.accessToken || localStorage.getItem('access_token') || '',
+		basePath: currentServer.value?.serverBaseUrl,
+		forceTvMode:
+      (isPlatform('android') || isPlatform('ios')) && !isPlatform('mobile'),
+		disableTouchControls: false,
+		disableMediaControls:
+      'mediaSession' in navigator || isPlatform('capacitor'),
+		renderAhead: 100,
+		disableAutoPlayback: false,
+	} satisfies PlayerConfig<PlaylistItem>;
 
-    controlsTimeout: 3000,
-    doubleClickDelay: 300,
-    playbackRates: [
-      0.25,
-      0.5,
-      0.75,
-      1,
-      1.25,
-      1.5,
-      1.75,
-      2,
-    ],
-    accessToken: user.value?.accessToken || localStorage.getItem('access_token') || '',
-    basePath: currentServer.value?.serverBaseUrl,
-    forceTvMode: (isPlatform('android') || isPlatform('ios')) && !isPlatform('mobile'),
-    disableTouchControls: false,
-    disableMediaControls: 'mediaSession' in navigator || isPlatform('capacitor'),
-    renderAhead: 100,
-  };
+	// @ts-ignore
+	player.value = nmplayer('player1').setup(config);
 
-  // @ts-ignore
-  player.value = nmplayer('player1')
-    .setup(config);
+	player.value?.once('back', () => {
+		//
+	});
 
-  player.value?.once('back', () => {
-    //
-  });
+	if (false) {
+		const videoNoMercyConnectPlugin = new VideoNoMercyConnectPlugin();
+		player.value?.registerPlugin('videoNoMercyConnect', videoNoMercyConnectPlugin);
+		player.value?.usePlugin('videoNoMercyConnect');
+	}
 
-  const desktopUIPlugin = new DesktopUIPlugin();
-  player.value?.registerPlugin('desktopUI', desktopUIPlugin);
-  player.value?.usePlugin('desktopUI');
+	const desktopUIPlugin = new DesktopUIPlugin();
+	player.value?.registerPlugin('desktopUI', desktopUIPlugin);
+	player.value?.usePlugin('desktopUI');
 
-  const autoSkipPlugin = new AutoSkipPlugin();
-  player.value?.registerPlugin('autoSkip', autoSkipPlugin);
-  player.value?.usePlugin('autoSkip');
+	const autoSkipPlugin = new AutoSkipPlugin();
+	player.value?.registerPlugin('autoSkip', autoSkipPlugin);
+	player.value?.usePlugin('autoSkip');
 
-  const syncPlugin = new SyncPlugin();
-  player.value?.registerPlugin('sync', syncPlugin);
-  player.value?.usePlugin('sync');
+	if (!false) {
+		const syncPlugin = new SyncPlugin();
+		player.value?.registerPlugin('sync', syncPlugin);
+		player.value?.usePlugin('sync');
+	}
 
-  const octopusPlugin = new OctopusPlugin();
-  player.value?.registerPlugin('octopus', octopusPlugin);
-  player.value?.usePlugin('octopus');
+	const octopusPlugin = new OctopusPlugin();
+	player.value?.registerPlugin('octopus', octopusPlugin);
+	player.value?.usePlugin('octopus');
 
-  // const sabrePlugin = new SabrePlugin();
-  // player.value?.registerPlugin('sabre', sabrePlugin);
-  // player.value?.usePlugin('sabre');
+	// const sabrePlugin = new SabrePlugin();
+	// player.value?.registerPlugin('sabre', sabrePlugin);
+	// player.value?.usePlugin('sabre');
 
-  player.value?.once('play', () => {
-    player.value?.enterFullscreen();
-  });
+	player.value?.once('play', () => {
+		player.value?.enterFullscreen();
+	});
 
-  player.value?.on('playlistComplete', () => {
-    player.value?.dispose();
-    router.back();
-  });
+	player.value?.on('playlistComplete', () => {
+		player.value?.dispose();
+		router.back();
+	});
 
-  player.value?.on('back', () => {
-    router.back();
-  });
+	player.value?.on('back', () => {
+		router.back();
+	});
 
-  player.value?.on('play', () => {
-    setDisableScreensaver(true);
-  });
+	player.value?.on('play', () => {
+		setDisableScreensaver(true);
+	});
 
-  player.value?.on('pause', () => {
-    setDisableScreensaver(false);
-  });
+	player.value?.on('pause', () => {
+		setDisableScreensaver(false);
+	});
 
-  player.value?.on('ready', () => {
-    lockLandscape();
-    enableImmersiveMode();
-    audioPlayer.stop();
-  });
+	player.value?.on('ready', () => {
+		lockLandscape();
+		enableImmersiveMode();
+		audioPlayer.stop();
+	});
 
-  player.value?.on('item', () => {
-    player.value?.play();
-  });
+	player.value?.on('item', () => {
+		player.value?.play();
+	});
 
-  App.addListener('backButton', () => {
-    player.value?.emit('back-button-hyjack');
-    router.back();
-  });
-
-};
+	App.addListener('backButton', () => {
+		player.value?.emit('back-button-hyjack');
+		router.back();
+	});
+}
 
 watch(data, (value) => {
-  if (!value) return;
-  initPlayer(value);
+	initPlayer(value);
 });
 
 onMounted(() => {
-  setNavBarVisible(false);
-  if (data.value) {
-    initPlayer(data.value);
-  }
-});
-
-onBeforeUnmount(() => {
-  lockPortrait();
-  disableImmersiveMode();
+	audioPlayer.stop();
+	if (false) {
+		initPlayer();
+	}
+	else {
+		initPlayer(data.value);
+	}
 });
 
 onUnmounted(() => {
-  player.value?.dispose();
-  setDisableScreensaver(false);
+	player.value?.dispose();
+	setDisableScreensaver(false);
 });
 
+onBeforeUnmount(() => {
+	lockPortrait();
+	disableImmersiveMode();
+});
 </script>
 
 <template>
-  <ion-page>
-    <ion-content :fullscreen="true">
-      <Teleport to="body">
-        <div class="absolute inset-0 flex h-full w-full overflow-clip bg-black z-1199" :class="{
-          'mb-28': isNative,
-          'mb-0': !isNative,
-        }">
-          <div id="player1" class="group nomercyplayer"></div>
-        </div>
-      </Teleport>
-    </ion-content>
-  </ion-page>
+	<IonPage>
+		<IonContent :fullscreen="true">
+			<Teleport to="body">
+				<div
+					class="absolute inset-0 flex h-full w-full overflow-clip bg-black z-1199"
+					:class="{
+						'mb-28': isNative,
+						'mb-0': !isNative,
+					}"
+				>
+					<div id="player1" class="group nomercyplayer" />
+				</div>
+			</Teleport>
+		</IonContent>
+	</IonPage>
 </template>
 
 <style>
 .nomercyplayer .top-bar {
-  @apply pt-safe-offset-4;
+	@apply pt-safe-offset-4;
 }
 .nomercyplayer dialog {
-   background: #000000cc;
- }
+	background: #000000cc;
+}
 </style>

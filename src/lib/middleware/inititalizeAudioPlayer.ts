@@ -5,14 +5,15 @@ import { currentServer } from '@/store/currentServer';
 import { user } from '@/store/user';
 import audioPlayer from '@/store/audioPlayer';
 
-const initializeAudioPlayer = (): Promise<void> => {
+function initializeAudioPlayer(): Promise<void> {
 	if (audioPlayer.accessToken) {
 		return Promise.resolve();
 	}
 
 	return new Promise((resolve) => {
 		watch(currentServer, (server) => {
-			if (!server) return;
+			if (!server)
+				return;
 			audioPlayer.setBaseUrl(server.serverBaseUrl);
 			audioPlayer.setAccessToken(user.value.accessToken);
 		});
@@ -20,7 +21,10 @@ const initializeAudioPlayer = (): Promise<void> => {
 		audioPlayer.setBaseUrl(currentServer.value?.serverBaseUrl);
 		audioPlayer.setAccessToken(user.value.accessToken);
 
-		const supportsAudioContext = useLocalStorage('nmplayer-music-supports-audio-context', false);
+		const supportsAudioContext = useLocalStorage(
+			'nmplayer-music-supports-audio-context',
+			false,
+		);
 		supportsAudioContext.value = false;
 
 		// document.addEventListener('click', () => {
@@ -49,8 +53,7 @@ const initializeAudioPlayer = (): Promise<void> => {
 		// });
 
 		resolve();
-
 	});
-};
+}
 
 export default initializeAudioPlayer;

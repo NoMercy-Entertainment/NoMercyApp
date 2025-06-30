@@ -11,7 +11,7 @@ import type {
 import useServerClient from '@/lib/clients/useServerClient';
 import serverClient from '@/lib/clients/serverClient';
 import { currentServer } from '@/store/currentServer';
-// import { useVideoSocket } from '@/store/videoSocket';
+import { useVideoSocket } from '@/store/videoSocket';
 
 import OptimizedIcon from '@/components/OptimizedIcon.vue';
 import KeepCounting from '@/components/KeepCounting.vue';
@@ -38,18 +38,18 @@ const { data: serverInfo } = useServerClient<ServerInfo>({
 	queryKey: ['serverInfo', currentServer.value?.serverBaseUrl],
 });
 
-// function connected() {
-// 	isOnline.value = true;
-// 	refetch();
-// }
-// function disconnected() {
-// 	isOnline.value = false;
-// }
+function connected() {
+	isOnline.value = true;
+	refetch();
+}
+function disconnected() {
+	isOnline.value = false;
+}
 
 onMounted(() => {
-	// const socket = useVideoSocket();
-	// socket?.onreconnected(connected);
-	// socket?.onclose(disconnected);
+	const socket = useVideoSocket();
+	socket?.onreconnected(connected);
+	socket?.onclose(disconnected);
 });
 
 function togglePause() {

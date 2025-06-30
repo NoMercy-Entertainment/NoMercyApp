@@ -3,15 +3,16 @@ import { computed, ref, toRaw, watch } from 'vue';
 import type SocketClient from '@/lib/clients/socketClient/SocketClient';
 import type { HubConnection } from '@microsoft/signalr';
 import audioPlayer, {
-	connectedDevices,
-	currentDeviceId,
+	connectedMusicDevices,
+	currentMusicDeviceId,
 	currentSong,
 	currentTime,
 	setCurrentPlaylist,
+	volume,
 } from '@/store/audioPlayer';
 import { deviceId } from '@/store/deviceInfo';
 import type { Device } from '@/types/server';
-import type { PlayerState, StateEvents } from '@/types/musicPlayer';
+import type { MusicPlayerState, StateEvents } from '@/types/musicPlayer';
 
 export const mc = ref(false);
 export const musicSocketIsConnected = computed(() => mc.value);
@@ -23,7 +24,7 @@ export function setMusicSocketInstance(value: SocketClient) {
 	si.value = value;
 }
 
-const ps = ref<PlayerState>();
+const ps = ref<MusicPlayerState>();
 export const playerState = computed(() => ps.value);
 
 export function useMusicSocket() {
@@ -39,19 +40,30 @@ watch(si, (value) => {
 	value?.connection?.on('disconnected', disconnected);
 	value?.connection?.on('error', error);
 
-	value?.connection?.on('MusicPlayerState', handlePlayerState);
-	value?.connection?.on('ConnectedDevicesState', handleConnectedDevicesState);
-	value?.connection?.on('ChangeDevice', handleBroadcastStatus);
+	value?.connection?.on('MusicPlayerState', handleMusicPlayerState);
+	value?.connection?.on(
+		'ConnectedDevicesState',
+		handleMusicConnectedDevicesState,
+	);
+	value?.connection?.on('ChangeDevice', handleMusicBroadcastStatus);
 
-	value?.connection?.invoke('Devices').then(handleConnectedDevicesState);
+	value?.connection?.invoke('Devices').then(handleMusicConnectedDevicesState);
 
-	window.addEventListener('beforeunload', () => {
-		value?.connection?.stop();
-	}, { once: true });
+	window.addEventListener(
+		'beforeunload',
+		() => {
+			value?.connection?.stop();
+		},
+		{ once: true },
+	);
 
-	window.addEventListener('unload', () => {
-		value?.connection?.stop();
-	}, { once: true });
+	window.addEventListener(
+		'unload',
+		() => {
+			value?.connection?.stop();
+		},
+		{ once: true },
+	);
 });
 
 function connected() {
@@ -72,14 +84,14 @@ function error(err: Error) {
 	document.dispatchEvent(new Event('musicHub-error'));
 }
 
-export function handleBroadcastStatus(data: any) {
+export function handleMusicBroadcastStatus(data: any) {
 	if (!data)
 		return;
 	for (const e of data.events) {
 		// console.raw(e);
 		const state = e.deviceBroadcastStatus;
 
-		currentDeviceId.value = state.device_id;
+		currentMusicDeviceId.value = state.device_id;
 
 		if (state.device_id === deviceId.value) {
 			audioPlayer.unmute();
@@ -90,14 +102,13 @@ export function handleBroadcastStatus(data: any) {
 	}
 }
 
-export function handlePlayerState(data: StateEvents) {
+export function handleMusicPlayerState(data: StateEvents) {
 	if (!data)
 		return;
 	for (const e of data.events) {
 		if (e.type !== 'PlayerStateChanged')
 			continue;
 		const state = e.event.state;
-		ps.value = state;
 
 		// console.log(state);
 
@@ -109,16 +120,16 @@ export function handlePlayerState(data: StateEvents) {
 			return;
 		}
 
-		const offset = ((Date.now() - state.timestamp) / 1000) / 2;
+		const offset = (Date.now() - state.timestamp) / 1000 / 2;
 		const seekValue = state.progress_ms >= 1
 			? (state.progress_ms + offset) / 1000
 			: state.progress_ms / 1000;
 		// const seekValue = state.progress_ms / 1000;
 
-		currentDeviceId.value = state.device_id;
+		currentMusicDeviceId.value = state.device_id;
 		setCurrentPlaylist(state.current_list);
 
-		if (state.device_id == deviceId.value && !state.muted_state) {
+		if (state.device_id === deviceId.value && !state.muted_state) {
 			audioPlayer.unmute();
 		}
 		else {
@@ -134,9 +145,10 @@ export function handlePlayerState(data: StateEvents) {
 			state.volume_percentage = 100;
 
 		audioPlayer.setVolume(state.volume_percentage);
+		volume.value = state.volume_percentage;
 		audioPlayer.setQueue(state.playlist);
 
-		if (currentSong.value?.id != state.item?.id) {
+		if (currentSong.value?.id !== state.item?.id) {
 			audioPlayer.setCurrentSong(state.item);
 			audioPlayer.play().then();
 
@@ -163,8 +175,9 @@ export function handlePlayerState(data: StateEvents) {
 			currentSong.value = state.item;
 		}
 
-		if (state.device_id == deviceId.value) {
-			(!currentTime.value || Math.abs(currentTime.value - seekValue) > 0.75) && audioPlayer.seek(seekValue);
+		if (state.device_id === deviceId.value) {
+			(!currentTime.value || Math.abs(currentTime.value - seekValue) > 0.75)
+			&& audioPlayer.seek(seekValue);
 		}
 		else {
 			audioPlayer.seek(seekValue);
@@ -179,7 +192,7 @@ export function handlePlayerState(data: StateEvents) {
 	}
 }
 
-function handleConnectedDevicesState(devices: Device[]) {
+function handleMusicConnectedDevicesState(devices: Device[]) {
 	// console.log(devices);
-	connectedDevices.value = devices;
+	connectedMusicDevices.value = devices;
 }

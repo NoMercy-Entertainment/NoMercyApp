@@ -32,7 +32,7 @@ import { user } from '@/store/user';
 import { musicSocketConnection } from '@/store/musicSocket';
 
 export const connectedMusicDevices = ref<Device[]>([]);
-export const currentDeviceId = ref<string | null>(null);
+export const currentMusicDeviceId = ref<string | null>(null);
 
 export const currentTime = ref<number>(0);
 export const duration = ref<number>(0);
@@ -85,7 +85,7 @@ export const audioPlayer = new MusicPlayer<PlaylistItem>({
 				audioPlayer.play().then();
 				return;
 			}
-			if (!currentDeviceId.value) {
+			if (!currentMusicDeviceId.value) {
 				musicSocketConnection.value
 					?.invoke('ChangeDeviceCommand', deviceId.value)
 					.then(() => {
@@ -102,7 +102,7 @@ export const audioPlayer = new MusicPlayer<PlaylistItem>({
 				audioPlayer.pause();
 				return;
 			}
-			if (!currentDeviceId.value) {
+			if (!currentMusicDeviceId.value) {
 				musicSocketConnection.value
 					?.invoke('ChangeDeviceCommand', deviceId.value)
 					.then(() => {
@@ -444,7 +444,7 @@ audioPlayer.on('time', (timeState) => {
 	percentage.value = timeState.percentage;
 
 	if (
-		currentDeviceId.value === deviceId.value
+		currentMusicDeviceId.value === deviceId.value
 		&& timeState.position - lastTime > 5
 	) {
 		lastTime = timeState.position;

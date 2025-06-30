@@ -7,7 +7,14 @@ import nmplayer from '@nomercy-entertainment/nomercy-video-player/src/index';
 import Plugin from '@nomercy-entertainment/nomercy-video-player/src/plugin';
 import OctopusPlugin from '@nomercy-entertainment/nomercy-video-player/src/plugins/octopusPlugin';
 import KeyHandlerPlugin from '@nomercy-entertainment/nomercy-video-player/src/plugins/keyHandlerPlugin';
-import type { NMPlayer, PlaylistItem, PlayerConfig, VTTData } from '@nomercy-entertainment/nomercy-video-player/src/types';
+import type {
+	Level,
+	NMPlayer,
+	PlayerConfig,
+	PlaylistItem,
+	Track,
+	VTTData,
+} from '@nomercy-entertainment/nomercy-video-player/src/types';
 
 // // @ts-ignore
 // import nmplayer from 'http://localhost:5503/src/index.ts';
@@ -21,27 +28,30 @@ import type { NMPlayer, PlaylistItem, PlayerConfig, VTTData } from '@nomercy-ent
 // import type {NMPlayer, PlaylistItem, PlayerConfig, VTTData} from 'http://localhost:5503/src/index.d.ts';
 
 export interface NMPlaylistItem extends PlaylistItem {
-	origin:        string;
-	video_id:      string;
-	tmdb_id:       number;
-	video_type:    string;
+	origin: string;
+	video_id: string;
+	tmdb_id: number;
+	video_type: string;
 	playlist_type: string;
-	fonts:         any[];
-	fontsFile:     string;
-	episode_id:    number;
+	fonts: any[];
+	fontsFile: string;
+	episode_id: number;
+	audio: Track[];
+	captions: Track[];
+	qualities: Level[];
 }
 
 export {
-	nmplayer,
-	SyncPlugin,
 	AutoSkipPlugin,
-	OctopusPlugin,
 	DesktopUIPlugin,
-	TVUIPlugin,
 	KeyHandlerPlugin,
+	nmplayer,
 	NMPlayer,
-	PlaylistItem,
+	OctopusPlugin,
 	PlayerConfig,
+	PlaylistItem,
 	Plugin,
+	SyncPlugin,
+	TVUIPlugin,
 	VTTData,
-}
+};

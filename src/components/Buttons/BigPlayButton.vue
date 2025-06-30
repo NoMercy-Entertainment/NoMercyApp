@@ -8,7 +8,7 @@ import type {
 	DisplayList,
 } from '@/types/api/music/musicPlayer';
 import audioPlayer, {
-	currentDeviceId,
+	currentMusicDeviceId,
 	currentPlaylist,
 	currentSong,
 	isPlaying,
@@ -57,7 +57,7 @@ function handleClick() {
 		return;
 	}
 
-	if (!currentDeviceId.value) {
+	if (!currentMusicDeviceId.value) {
 		musicSocketConnection.value
 			?.invoke('ChangeDeviceCommand', deviceId.value)
 			.then(() => {
