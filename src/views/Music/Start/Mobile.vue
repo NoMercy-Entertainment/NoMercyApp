@@ -63,7 +63,7 @@ watch(currentServer, (value) => {
 
 <template>
 	<IonPage>
-		<IonContent :fullscreen="true" class="mt-4">
+		<IonContent :fullscreen="true" class="mt-safe-offset-4">
 			<template
 				v-if="
 					!isMutating

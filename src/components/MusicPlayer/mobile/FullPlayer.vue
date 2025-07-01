@@ -204,7 +204,7 @@ async function onWillDismiss() {
 			</div>
 
 			<div
-				class="frosting relative mx-3 -mt-10 mb-safe-offset-3 rounded-2xl pt-10 pb-4 w-available bg-focus/60 shadow"
+				class="frosting relative mx-3 -mt-10 mb-3 rounded-2xl pt-10 pb-4 w-available bg-focus/60 shadow"
 			>
 				<div
 					class="absolute top-0 z-10 flex w-full items-center rounded-t-2xl pr-2 pl-4 font-semibold"
