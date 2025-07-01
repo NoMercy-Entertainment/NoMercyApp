@@ -162,7 +162,6 @@ ion-item::part(native) {
 @media screen and (max-width: 800px) {
 	ion-content::part(scroll) {
 		@apply bg-slate-light-1 dark:bg-slate-dark-1;
-		--offset-top: -1rem;
 	}
 	ion-modal:nth-of-type(2) {
 		display: none !important;

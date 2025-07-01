@@ -34,7 +34,7 @@ import { VideoNoMercyConnectPlugin } from '@/lib/VideoPlayer/plugins/videoNoMerc
 import useServerClient from '@/lib/clients/useServerClient.ts';
 
 const { data } = useServerClient<NMPlaylistItem[]>({
-	enabled: false,
+	enabled: !false,
 });
 
 const player = ref<NMPlayer<NMPlaylistItem>>();

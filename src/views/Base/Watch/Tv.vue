@@ -30,7 +30,7 @@ import { VideoNoMercyConnectPlugin } from '@/lib/VideoPlayer/plugins/videoNoMerc
 import KeyHandlerPlugin from '@/lib/VideoPlayer/plugins/keyHandlerPlugin.ts';
 
 const { data } = useServerClient<NMPlaylistItem[]>({
-	enabled: false,
+	enabled: !false,
 });
 
 const player = ref<NMPlayer<NMPlaylistItem>>();
