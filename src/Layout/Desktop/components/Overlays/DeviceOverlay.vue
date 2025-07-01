@@ -30,7 +30,7 @@ function switchDevice(device: Device) {
 }
 
 const currentDevice = computed(() =>
-	connectedDevices.value.find(d => d.device_id === currentMusicDeviceId.value),
+	connectedMusicDevices.value.find(d => d.device_id === currentMusicDeviceId.value),
 );
 </script>
 
