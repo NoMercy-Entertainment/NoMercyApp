@@ -15,6 +15,9 @@
 	--color-background: rgb(var(--background-light-slate-3));
 	--background-auto: var(--background-light-slate-1);
 	--color-text: rgb(var(--background-auto-12));
+	--keyboard-height: 0px;
+	--safe-area-inset-bottom: env(safe-area-inset-bottom, 0px);
+	--safe-area-inset-top: env(safe-area-inset-top, 0px);
 }
 
 * {
@@ -23,7 +26,7 @@
 }
 
 html {
-	height: -webkit-fill-available;
+	//height: -webkit-fill-available;
 	scroll-behavior: smooth;
 	--ion-font-family: 'Inter', sans-serif !important;
 	-webkit-overflow-scrolling: touch;
@@ -100,10 +103,10 @@ ion-content::part(background) {
 }
 
 ion-content::part(scroll) {
-	display: flex !important;
-	flex-direction: column;
+	//display: flex !important;
+	//flex-direction: column;
 	scroll-behavior: smooth;
-	margin-top: var(--ion-safe-area-top);
+	//margin-top: var(--ion-safe-area-top);
 }
 
 ion-content::part(scroll):not(svg),

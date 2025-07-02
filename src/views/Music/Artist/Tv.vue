@@ -286,7 +286,7 @@ function handleClick(song: PlaylistItem) {
 											class="items-center !rounded-md !overflow-clip"
 										>
 											<IonCol size="2" tabindex="-1">
-												<div
+												<button
 													tabindex="0"
 													:data-index="index"
 													:data-id="song.id"
@@ -299,7 +299,7 @@ function handleClick(song: PlaylistItem) {
 														:alt="song.name"
 														class="w-auto h-full aspect-square"
 													/>
-												</div>
+												</button>
 											</IonCol>
 
 											<IonCol size="8" tabindex="-1" class="my-auto mt-2">
@@ -342,7 +342,7 @@ function handleClick(song: PlaylistItem) {
 													<MediaLikeButton :data="song" />
 													<MusicButton
 														label=""
-														tabindex="1"
+														tabindex="0"
 														:onclick="() => {}"
 														class="!bg-transparent mr-2"
 													>

@@ -18,7 +18,7 @@ watch(route, () => {
 <template>
 	<IonPage>
 		<IonContent :fullscreen="true">
-			<ScrollContainer :auto-hide="true" :static="true">
+			<ScrollContainer :auto-hide="true" :static="true" class="!pb-5">
 				<NMComponent />
 			</ScrollContainer>
 		</IonContent>

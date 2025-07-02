@@ -3,7 +3,6 @@ defineProps({
 	isActive: {
 		type: Boolean,
 		default: false,
-		required: true,
 	},
 });
 </script>

@@ -25,11 +25,9 @@ declare class Keycloak {
 	login?(options?: KeycloakLoginOptions): KeycloakPromise<void, void>; // [Keycloak] login function
 	loginFn?(options?: KeycloakLoginOptions): KeycloakPromise<void, void>; // Alias for login
 	// This is not defined in keycloak
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	logoutFn?(options?: any): KeycloakPromise<void, void> | void; // Keycloak logout function
 	createLoginUrl(options?: KeycloakLoginOptions): string; // Keycloak createLoginUrl function
 	// This is not defined in keycloak
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	createLogoutUrl(options?: any): string; // Keycloak createLogoutUrl function
 	createRegisterUrl(options?: KeycloakLoginOptions): string; // Keycloak createRegisterUrl function
 	register(options?: KeycloakLoginOptions): KeycloakPromise<void, void>; // Keycloak register function

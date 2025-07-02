@@ -1,6 +1,6 @@
-import { NavigationGuardNext, RouteLocationNormalizedGeneric, RouteRecordRaw } from 'vue-router';
+import type { NavigationGuardNext, RouteLocationNormalizedGeneric, RouteRecordRaw } from 'vue-router';
 import { computed } from 'vue';
-import {isMobile, isTv, tvModeOverride} from '@/config/global';
+import { isMobile, isTv, tvModeOverride } from '@/config/global';
 
 import MobileBaseLayout from '@/Layout/Mobile/BaseLayout.vue';
 import TvBaseLayout from '@/Layout/Tv/BaseLayout.vue';
@@ -66,9 +66,11 @@ import libraries from '@/store/Libraries';
 const baseLayout = computed(() => {
 	if (isTv.value || tvModeOverride.value) {
 		return TvBaseLayout;
-	} else if (isMobile.value) {
+	}
+	else if (isMobile.value) {
 		return MobileBaseLayout;
-	} else {
+	}
+	else {
 		return DesktopBaseLayout;
 	}
 });
@@ -76,7 +78,7 @@ const baseLayout = computed(() => {
 export const routes: Array<RouteRecordRaw> = [
 	{
 		path: '/',
-		redirect: '/home'
+		redirect: '/home',
 	},
 	{
 		path: '/',
@@ -84,20 +86,20 @@ export const routes: Array<RouteRecordRaw> = [
 		children: [
 			{
 				path: '',
-				redirect: '/home'
+				redirect: '/home',
 			},
 			{
 				path: 'home',
 				name: 'Home',
-				component: BaseIndex
+				component: BaseIndex,
 			},
 			{
 				path: 'search',
 				name: 'Search',
 				component: Search,
 				props: {
-					type: 'all'
-				}
+					type: 'all',
+				},
 			},
 			{
 				path: 'libraries',
@@ -110,24 +112,25 @@ export const routes: Array<RouteRecordRaw> = [
 							name: 'Library',
 							params: {
 								id: firstLibrary.link.replace('/', ''),
-							}
+							},
 						});
-					} else {
+					}
+					else {
 						next();
 					}
-				}
+				},
 			},
 			{
 				path: 'libraries/:id/letter/:letter',
 				name: 'Library paginated',
 				strict: true,
-				component: BaseLibrary
+				component: BaseLibrary,
 			},
 			{
 				path: 'libraries/:id',
 				name: 'Library',
 				strict: true,
-				component: BaseLibrary
+				component: BaseLibrary,
 			},
 			{
 				path: 'specials',
@@ -137,7 +140,7 @@ export const routes: Array<RouteRecordRaw> = [
 			{
 				path: 'specials/:id',
 				name: 'Special',
-				component: BaseCollection
+				component: BaseCollection,
 			},
 			{
 				path: 'genre',
@@ -147,7 +150,7 @@ export const routes: Array<RouteRecordRaw> = [
 			{
 				path: 'genre/:id',
 				name: 'Genre',
-				component: BaseLibrary
+				component: BaseLibrary,
 			},
 			{
 				path: 'collection',
@@ -157,7 +160,7 @@ export const routes: Array<RouteRecordRaw> = [
 			{
 				path: 'collection/:id',
 				name: 'Collection',
-				component: BaseCollection
+				component: BaseCollection,
 			},
 			{
 				path: 'person',
@@ -167,17 +170,17 @@ export const routes: Array<RouteRecordRaw> = [
 			{
 				path: 'person/:id',
 				name: 'Person',
-				component: BasePerson
+				component: BasePerson,
 			},
 			{
 				path: 'movie/:id',
 				name: 'Movie',
-				component: BaseInfo
+				component: BaseInfo,
 			},
 			{
 				path: 'tv/:id',
 				name: 'TV Show',
-				component: BaseInfo
+				component: BaseInfo,
 			},
 			{
 				path: ':type/:id/watch',
@@ -190,9 +193,9 @@ export const routes: Array<RouteRecordRaw> = [
 				props: {
 					message: 'Page not found',
 					status: 404,
-				}
+				},
 			},
-		]
+		],
 	},
 	{
 		path: '/music',
@@ -200,16 +203,16 @@ export const routes: Array<RouteRecordRaw> = [
 		children: [
 			{
 				path: 'music',
-				redirect: '/music/start'
+				redirect: '/music/start',
 			},
 			{
 				path: 'start',
 				name: 'Music Start',
-				component: MusicStart
+				component: MusicStart,
 			},
 			{
 				path: 'artists',
-				redirect: '/music/artists/_'
+				redirect: '/music/artists/_',
 			},
 			{
 				path: 'artists/:letter',
@@ -226,14 +229,14 @@ export const routes: Array<RouteRecordRaw> = [
 			},
 			{
 				path: 'albums',
-				redirect: '/music/albums/_'
+				redirect: '/music/albums/_',
 			},
 			{
 				path: 'albums/:letter',
 				name: 'Albums',
 				component: MusicCards,
 				props: {
-					type: 'albums'
+					type: 'albums',
 				},
 			},
 			{
@@ -246,20 +249,20 @@ export const routes: Array<RouteRecordRaw> = [
 				name: 'Music Genres',
 				component: MusicCards,
 				props: {
-					type: 'genres'
+					type: 'genres',
 				},
 			},
 			{
 				path: 'genres/:id',
 				name: 'Music Genre',
-				component: MusicCards
+				component: MusicCards,
 			},
 			{
 				path: 'playlists',
 				name: 'Music Playlists',
 				component: MusicCards,
 				props: {
-					type: 'playlists'
+					type: 'playlists',
 				},
 			},
 			{
@@ -267,7 +270,7 @@ export const routes: Array<RouteRecordRaw> = [
 				name: 'Music Playlist',
 				component: MusicList,
 				props: {
-					type: 'playlists'
+					type: 'playlists',
 				},
 			},
 			{
@@ -275,10 +278,10 @@ export const routes: Array<RouteRecordRaw> = [
 				name: 'Tracks',
 				component: MusicList,
 				props: {
-					type: 'tracks'
+					type: 'tracks',
 				},
 			},
-		]
+		],
 	},
 	{
 		path: '/dashboard',
@@ -362,7 +365,7 @@ export const routes: Array<RouteRecordRaw> = [
 			{
 				path: 'notifications/:id',
 				name: 'Notification',
-				component: DashboardNotifications
+				component: DashboardNotifications,
 			},
 			{
 				path: 'metadata',
@@ -392,7 +395,7 @@ export const routes: Array<RouteRecordRaw> = [
 			{
 				path: 'plugins/:id',
 				name: 'Plugin',
-				component: DashboardPlugins
+				component: DashboardPlugins,
 			},
 			{
 				path: 'schedule',
@@ -404,7 +407,7 @@ export const routes: Array<RouteRecordRaw> = [
 				name: 'Scheduled Task',
 				component: DashboardSchedule,
 			},
-		]
+		],
 	},
 	{
 		path: '/preferences',
@@ -454,7 +457,7 @@ export const routes: Array<RouteRecordRaw> = [
 		children: [
 			{
 				path: 'setup',
-				redirect: 'setup/select-servers'
+				redirect: 'setup/select-servers',
 			},
 			{
 				path: 'select-servers',
@@ -470,7 +473,7 @@ export const routes: Array<RouteRecordRaw> = [
 				path: 'server-offline',
 				name: 'Server offline',
 				component: SetupServerOffline,
-			}
+			},
 		],
 	},
 	{

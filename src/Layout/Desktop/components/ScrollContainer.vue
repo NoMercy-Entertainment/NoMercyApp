@@ -149,7 +149,7 @@ function mouseLeave() {
 <template>
 	<div
 		ref="scrollContainerElement"
-		class="flex flex-1 h-full music-showing:h-[calc(100vh-11rem)] z-0 isolate overflow-auto will-change-scroll w-full flex-col scrollbar-none pb-2 scroll-container min-h-[91.2%]"
+		class="flex flex-1 h-available music-showing:h-[calc(100vh-7rem)] z-0 isolate overflow-auto will-change-scroll w-full flex-col scrollbar-none pb-2 scroll-container min-h-[91.2%]"
 		:class="{
 			'group/scrollContainer': !frame,
 			'group/scrollContainer-frame': frame,

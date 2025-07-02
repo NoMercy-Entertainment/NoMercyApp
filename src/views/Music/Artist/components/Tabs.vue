@@ -26,7 +26,7 @@ function setTab(value: number) {
 				class="absolute left-4 inline-flex flex-col items-start justify-start gap-2 top-[15px]"
 			>
 				<ul class="inline-flex items-start justify-start gap-4">
-					<li
+					<button
 						v-for="(tab, index) in tabs"
 						:key="tab.name"
 						:class="`px-1 pb-4 ${
@@ -42,7 +42,7 @@ function setTab(value: number) {
 						>
 							{{ $t(tab.name) }}
 						</div>
-					</li>
+					</button>
 				</ul>
 			</nav>
 

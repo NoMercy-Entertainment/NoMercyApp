@@ -14,7 +14,6 @@ defineProps({
 	},
 	displayType: {
 		type: String as PropType<'list' | 'card'>,
-		required: true,
 		default: 'list',
 	},
 	activeTab: {

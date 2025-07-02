@@ -57,16 +57,18 @@ export async function setColorScheme(value: ColorScheme) {
 
 		if (value === 'dark') {
 			NavigationBar.setColor({ color: '#000000', darkButtons: true }).then();
-			StatusBar.setBackgroundColor({ color: '#00000080' }).then();
+			// StatusBar.setBackgroundColor({ color: topNavColor.value }).then();
 			StatusBar.setStyle({ style: Style.Dark }).then();
 		}
 		else {
 			NavigationBar.setColor({ color: '#FFFFFF', darkButtons: true }).then();
-			StatusBar.setBackgroundColor({ color: '#FFFFFFA0' }).then();
+			// StatusBar.setBackgroundColor({ color: topNavColor.value }).then();
 			StatusBar.setStyle({ style: Style.Dark }).then();
 		}
 
-		StatusBar.setOverlaysWebView({ overlay: true }).then();
+		// StatusBar.setOverlaysWebView({ overlay: true }).then();
+
+		StatusBar.setOverlaysWebView({ overlay: false }).then();
 	}
 
 	await Preferences.set({

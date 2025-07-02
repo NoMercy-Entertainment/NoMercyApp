@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { nextTick, onBeforeMount, onMounted, ref, watch } from 'vue';
+import { nextTick, onMounted, ref, watch } from 'vue';
 
 import type { Lyric } from '@/types/musicPlayer';
 
@@ -25,9 +25,7 @@ const lastIndex = ref(-1);
 const currentLyric = ref<HTMLDivElement>();
 
 function fetchLyrics(id: string) {
-	if (!id || currentSong.value?.lyrics)
-		return;
-	if (id === currentSong.value?.id)
+	if (!id)
 		return;
 
 	const lyricsUrl = `${currentServer.value?.serverApiUrl}/music/tracks/${id}/lyrics`;
@@ -47,7 +45,10 @@ function fetchLyrics(id: string) {
 		});
 }
 
-onBeforeMount(() => {
+onMounted(() => {
+	if (!lyrics_container.value)
+		return;
+
 	lastIndex.value = -1;
 
 	if (currentSong.value?.lyrics) {
@@ -56,11 +57,6 @@ onBeforeMount(() => {
 	else if (currentSong.value?.id) {
 		fetchLyrics(currentSong.value?.id);
 	}
-});
-
-onMounted(() => {
-	if (!lyrics_container.value || !currentLyric.value)
-		return;
 
 	lyrics_container.value.scrollTop = 0;
 
@@ -68,9 +64,7 @@ onMounted(() => {
 		if (!lyrics_container.value || !lyrics_container.value)
 			return;
 
-		const newIndex
-      = (lyrics.value?.findIndex?.(l => l.time?.total >= data.position) ?? 0)
-      	- 1;
+		const newIndex = (lyrics.value?.findIndex?.(l => l.time?.total >= data.position) ?? 0) - 1;
 
 		const elements = Array.from(
 			lyrics_container.value?.querySelectorAll<HTMLDivElement>(
@@ -162,10 +156,12 @@ watch(currentTime, (value) => {
 		});
 });
 
-watch(currentSong, (value, oldValue) => {
-	if (value?.id === oldValue?.id)
+watch(currentSong, (value, prev) => {
+	if (value?.id === prev?.id)
 		return;
+
 	lastIndex.value = -1;
+	lyrics.value = null;
 
 	if (value?.lyrics) {
 		lyrics.value = value.lyrics;

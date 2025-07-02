@@ -110,7 +110,7 @@ export function handleMusicPlayerState(data: StateEvents) {
 			continue;
 		const state = e.event.state;
 
-		// console.log(state);
+		console.log(state);
 
 		if (!state?.item) {
 			audioPlayer.stop();
@@ -127,6 +127,7 @@ export function handleMusicPlayerState(data: StateEvents) {
 		// const seekValue = state.progress_ms / 1000;
 
 		currentMusicDeviceId.value = state.device_id;
+
 		setCurrentPlaylist(state.current_list);
 
 		if (state.device_id === deviceId.value && !state.muted_state) {

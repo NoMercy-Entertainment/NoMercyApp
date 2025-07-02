@@ -13,7 +13,7 @@ import { setMusicPlaylists } from '@/store/musicPlaylists';
 import type { LogoResponse } from '@/types/server';
 import { redirectUrl } from '@/store/routeState';
 
-const { data: libraries, refetch } = useServerClient<LibrariesResponse[]>({
+const { data: libraries } = useServerClient<LibrariesResponse[]>({
 	path: '/libraries',
 	refetchInterval: 10000,
 	queryKey: ['libraries'],

@@ -57,11 +57,10 @@ export class SliderBar<S extends PlaylistItem> {
 	getScrubTime(e: any, parent: HTMLElement) {
 		const elementRect = parent.getBoundingClientRect();
 
-		const x
-      = e.clientX
-      	?? e.touches?.[0]?.clientX
-      	?? e.changedTouches?.[0]?.clientX
-      	?? 0;
+		const x = e.clientX
+			?? e.touches?.[0]?.clientX
+			?? e.changedTouches?.[0]?.clientX
+			?? 0;
 
 		let offsetX = x - elementRect.left;
 		if (offsetX <= 0)

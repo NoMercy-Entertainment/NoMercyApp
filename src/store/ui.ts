@@ -1,10 +1,17 @@
-import { computed, ref } from 'vue';
+import { computed, ref, watch } from 'vue';
 import type { PaletteColors } from '@/lib/colorHelper';
+import { tooLight } from '@/lib/colorHelper';
+import { tooDark } from '@/lib/colorHelper';
 import { pickPaletteColor } from '@/lib/colorHelper';
-import { isPlatform } from '@ionic/vue';
+import { isPlatform, useKeyboard } from '@ionic/vue';
 import { SortOrder, SortType } from '@/types/musicPlayer';
 import { useAutoThemeColors } from '@/store/preferences';
 import { isXmasTime } from '@/lib/dateTime';
+import { Keyboard } from '@capacitor/keyboard';
+import { StatusBar } from '@capacitor/status-bar';
+import { rgbaToHex } from '@uiw/color-convert';
+import { rgbToHex } from '@/types/config.ts';
+import { disableImmersiveMode } from '@/lib/utils.ts';
 
 export const scrollContainerElement = ref<HTMLDivElement>();
 export const setupComplete = ref(false);
@@ -43,8 +50,30 @@ export function setColorPalette(value?: PaletteColors | null) {
 			.replace(/,/gu, ' ')
 			.replace('rgb(', '');
 
-		document.documentElement.style.setProperty('--color-focus', fc.value);
+		document.documentElement.style.setProperty('--color-focus', value ? fc.value : 'var(--color-theme-9)');
 	}
+
+	let color = rgbaToHex({
+		r: Number.parseInt(fc.value.split(' ')[0], 10) * 0.35,
+		g: Number.parseInt(fc.value.split(' ')[1], 10) * 0.35,
+		b: Number.parseInt(fc.value.split(' ')[2], 10) * 0.35,
+		a: 1,
+	});
+
+	const style = window.getComputedStyle(document.body);
+	const defaultColor = `rgb(${style.getPropertyValue('--color-theme-7')})`;
+
+	if (tooDark(color, 10)) {
+		color = rgbToHex(defaultColor, 1);
+	}
+	if (tooLight(color, 160)) {
+		color = rgbToHex(defaultColor, 1);
+	}
+
+	disableImmersiveMode();
+	StatusBar.setBackgroundColor({
+		color,
+	}).then();
 }
 
 const l = ref<string | null>();
@@ -112,3 +141,32 @@ export function hideNavBar() {
 		document.documentElement.classList.add('xmas');
 	}
 })();
+
+const kb = useKeyboard();
+watch(kb, (value) => {
+	if (value) {
+		document.documentElement.classList.add('keyboard-open');
+		document.documentElement.style.setProperty('--keyboard-height', `${value.keyboardHeight}px`);
+	}
+	else {
+		document.documentElement.classList.remove('keyboard-open');
+		document.documentElement.style.setProperty('--keyboard-height', '0px');
+	}
+});
+
+if (isPlatform('capacitor')) {
+	Keyboard.addListener('keyboardWillShow', (info) => {
+		console.log('keyboard did show with height:', info.keyboardHeight);
+		document.documentElement.classList.add('keyboard-open');
+		if (info.keyboardHeight) {
+			document.documentElement.style.setProperty('--keyboard-height', `${info.keyboardHeight}px`);
+		}
+		else {
+			document.documentElement.style.setProperty('--keyboard-height', '0px');
+		}
+	}).then();
+	Keyboard.addListener('keyboardWillHide', () => {
+		document.documentElement.classList.remove('keyboard-open');
+		document.documentElement.style.setProperty('--keyboard-height', '0px');
+	}).then();
+}

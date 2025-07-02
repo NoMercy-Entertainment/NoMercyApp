@@ -10,9 +10,10 @@ import {
 	queryKey as qk,
 } from '@/lib/routerHelper';
 
-import { setTitle } from '@/lib/stringArray';
-import { setBackground, setColorPalette } from '@/store/ui';
 import { useOnline } from '@vueuse/core';
+import router from '@/router';
+import { onIonViewWillEnter } from '@ionic/vue';
+import { useRoute } from 'vue-router';
 
 const props = defineProps({
 	path: {
@@ -44,19 +45,15 @@ const { data: mutatedData, mutate } = getMutation({
 });
 
 const onlineStatus = useOnline();
+const route = useRoute();
 
 onMounted(() => {
-	if (!homeData.value)
+	if (!homeData.value) {
 		return;
-
-	setTitle();
-	setBackground(null);
-	setColorPalette(null);
+	}
 
 	if (onlineStatus.value) {
-		const mutations
-      = homeData.value?.filter?.(item => item?.update?.when === 'pageLoad')
-      	?? [];
+		const mutations = homeData.value?.filter?.(item => item?.update?.when === 'pageLoad') ?? [];
 		mutate(mutations);
 	}
 });
@@ -65,8 +62,7 @@ watch(onlineStatus, (value) => {
 	if (!value)
 		return;
 
-	const mutations
-    = homeData.value?.filter?.(item => item?.update?.when === 'online') ?? [];
+	const mutations = homeData.value?.filter?.(item => item?.update?.when === 'online') ?? [];
 	mutate(mutations);
 });
 
@@ -76,6 +72,28 @@ watch(homeData, (value) => {
 	setTimeout(() => {
 		document.dispatchEvent(new Event('indexer'));
 	}, 1000);
+});
+
+router.beforeEach((to) => {
+	if (!homeData.value || (to.name !== 'Home' && to.name !== 'Libraries')) {
+		return;
+	}
+
+	if (onlineStatus.value) {
+		const mutations = homeData.value?.filter?.(item => item?.update?.when === 'pageLoad') ?? [];
+		mutate(mutations);
+	}
+});
+
+onIonViewWillEnter(() => {
+	if (!homeData.value) {
+		return;
+	}
+
+	if (onlineStatus.value) {
+		const mutations = homeData.value?.filter?.(item => item?.update?.when === 'pageLoad') ?? [];
+		mutate(mutations);
+	}
 });
 </script>
 

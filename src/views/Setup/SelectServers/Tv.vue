@@ -72,7 +72,7 @@ watch(serverList, (value) => {
 							</p>
 						</div>
 
-						<div
+						<button
 							v-show="!isTv"
 							tabindex="0"
 							class="flex justify-center items-center ml-auto relative gap-1.5 pl-3 pr-4 py-2.5 h-10 opacity-40 rounded-full border-[1.5px] border-[#c4c7c5]"
@@ -87,7 +87,7 @@ watch(serverList, (value) => {
 							>
 								{{ $t("Exit TV mode") }}
 							</span>
-						</div>
+						</button>
 
 						<RouterLink
 							to="/logout"

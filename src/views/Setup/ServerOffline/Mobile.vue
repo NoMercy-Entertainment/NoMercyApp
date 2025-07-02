@@ -14,7 +14,7 @@ import { setMusicPlaylists } from '@/store/musicPlaylists';
 import EmptyBackdrop from '@/components/Images/EmptyBackdrop.vue';
 import { redirectUrl } from '@/store/routeState';
 
-const { data: libraries, refetch } = useServerClient<LibrariesResponse[]>({
+const { data: libraries } = useServerClient<LibrariesResponse[]>({
 	path: '/libraries',
 	refetchInterval: 10000,
 	queryKey: ['libraries'],

@@ -67,8 +67,7 @@ onMounted(() => {
 	setTimeout(() => {
 		if (!fileUpload.value?.$el)
 			return;
-		fileUpload.value.$el.querySelector('span[files]').innerText
-      = t('No file chosen');
+		fileUpload.value.$el.querySelector('span[files]').textContent = t('No file chosen');
 	}, 100);
 });
 
@@ -144,12 +143,12 @@ const description
 								with-credentials
 								mode="basic"
 								accept="image/*"
-								@select="handleSelected"
 								:max-file-size="2 * 1024 * 1024"
-								@before-send="beforeSend"
 								:style="style"
-								@upload="onUpload"
 								:class="classes"
+								@select="handleSelected"
+								@before-send="beforeSend"
+								@upload="onUpload"
 							/>
 
 							<Button

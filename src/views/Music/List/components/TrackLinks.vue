@@ -61,7 +61,7 @@ function handleClick(e: Event) {
 </script>
 
 <template>
-	<div
+	<button
 		v-if="data"
 		:id="`trackLink-${type}-${suffix}`"
 		data-marquee="container"
@@ -95,5 +95,5 @@ function handleClick(e: Event) {
 				</RouterLink>
 			</template>
 		</div>
-	</div>
+	</button>
 </template>

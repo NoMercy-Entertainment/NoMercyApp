@@ -24,7 +24,7 @@ export class SocketClient {
 	constructor(
 		baseUrl: string,
 		accessToken: string,
-    endpoint: string = 'socket',
+    	endpoint: string = 'socket',
 	) {
 		this.baseUrl = baseUrl;
 		this.accessToken = accessToken;
@@ -37,7 +37,7 @@ export class SocketClient {
 		if (!this.connection)
 			return;
 
-		// await this.connection.stop();
+		await this.connection.stop();
 	};
 
 	setup = async () => {

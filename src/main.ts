@@ -134,6 +134,17 @@ async function initializeMobileApp() {
 			import('@/config/config'),
 		]);
 
+		const { StatusBar } = await import('@capacitor/status-bar').then(m => m.default);
+		const disableImmersiveMode = await import('@/lib/utils.ts').then(m => m.disableImmersiveMode);
+
+		const style = window.getComputedStyle(document.body);
+		const color = `rgb(${style.getPropertyValue('--color-theme-7')})`;
+
+		disableImmersiveMode();
+		StatusBar.setBackgroundColor({
+			color,
+		}).then();
+
 		app.use(MobileKeycloak, {
 			init: {
 				refreshToken: localStorage.getItem('refresh_token') || undefined,

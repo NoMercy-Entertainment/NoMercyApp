@@ -138,7 +138,7 @@ function handleDown(event: KeyboardEvent) {
 	}
 }
 
-function handleUp(event: KeyboardEvent) {
+function handleUp() {
 	timeout.value = setTimeout(() => {
 		locked.value = false;
 	}, 150);
@@ -159,7 +159,7 @@ function handleUp(event: KeyboardEvent) {
 				>
 					<template v-if="data">
 						<TvCarousel2
-							v-for="(render, index) in data?.filter?.(
+							v-for="(render) in data?.filter?.(
 								(item) => item.component === 'NMCarousel',
 							) ?? []"
 							:key="render.id"

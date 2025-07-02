@@ -44,29 +44,6 @@ const artistCarousel = computed(() => {
 		},
 	];
 });
-
-function transformToBionic(content: string) {
-	if (!content)
-		return;
-
-	const words = content.split(' ');
-	const newWords = words.map((word: string) => {
-		const newWord = [...word];
-		const diff = newWord.length % 2;
-		let idx = newWord.length / 2;
-
-		if (diff) {
-			idx = Math.ceil(idx);
-		}
-
-		newWord.splice(idx, 0, '</span>');
-		newWord.unshift('<span class="bionic">');
-
-		return newWord.join('');
-	});
-
-	return newWords.join(' ');
-}
 </script>
 
 <template>
@@ -76,7 +53,6 @@ function transformToBionic(content: string) {
 	>
 		<TabFrame :data="data" :active-tab="activeTab">
 			<div class="flex flex-col gap-2 overflow-clip w-available max-w-[75ch]">
-				<!--				<div v-for="line in transformToBionic(data.description ?? overview ?? '')?.split('\n') ?? []" -->
 				<div
 					v-for="line in (data.description ?? '')?.split('\n') ?? []"
 					:key="line"

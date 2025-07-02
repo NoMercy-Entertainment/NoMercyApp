@@ -15,10 +15,10 @@ export const searchResultLoading = ref(false);
 export const searchType = ref<'video' | 'music'>('video');
 
 export const musicSearchValue = ref('');
+const musicResult = ref<Component<HomeDataItem>[]>([]);
 export const musicSearchResult = computed(() => musicResult.value);
 
 const debouncedMusicSearchValue = refDebounced(musicSearchValue, 700);
-const musicResult = ref<Component<HomeDataItem>[]>([]);
 
 watch(debouncedMusicSearchValue, (value) => {
 	if (value === '') {
@@ -45,9 +45,9 @@ watch(debouncedMusicSearchValue, (value) => {
 
 export const videoSearchValue = ref('');
 export const hasMoreResults = ref(false);
+const videoResult = ref<Array<Movie | Tv | (Person & any)>>([]);
 export const videoSearchResult = computed(() => videoResult.value);
 
-const videoResult = ref<Array<Movie | Tv | (Person & any)>>([]);
 const debouncedVideoSearchValue = refDebounced(videoSearchValue, 700);
 const page = ref(1);
 

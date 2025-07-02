@@ -43,7 +43,7 @@ export function storeUserDetails(): Promise<void> {
 				});
 			}
 		}
-		catch (error) {
+		catch {
 			// location.reload();
 			reject(new Error('Not authenticated'));
 		}

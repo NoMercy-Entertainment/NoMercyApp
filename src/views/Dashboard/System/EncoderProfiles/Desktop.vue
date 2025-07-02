@@ -47,7 +47,7 @@ function handleCreateEncoderProfile() {
 					</Button>
 				</template>
 
-				<template v-for="profile in encoderProfiles ?? []">
+				<template v-for="profile in encoderProfiles ?? []" :key="profile.id">
 					<ServerEncoderCard :data="profile" />
 				</template>
 			</DashboardLayout>

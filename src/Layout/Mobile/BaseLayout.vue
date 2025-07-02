@@ -8,7 +8,6 @@ import {
 	IonProgressBar,
 	IonRouterOutlet,
 	IonTabs,
-	isPlatform,
 } from '@ionic/vue';
 
 import { lockPortrait, unlockOrientation } from '@/lib/utils';
@@ -17,7 +16,6 @@ import { currentSong, fullPlayerModalOpen } from '@/store/audioPlayer';
 
 import ImageModal from '@/Layout/ImageModal.vue';
 // import Screensaver from '@/Layout/Screensaver.vue';
-import EqualizerMenu from '@/Layout/Mobile/components/menus/EqualizerMenu.vue';
 import DeviceOverlay from '@/Layout/Desktop/components/Overlays/DeviceOverlay.vue';
 
 import FullPlayer from '@/components/MusicPlayer/mobile/FullPlayer.vue';
@@ -26,14 +24,13 @@ import ChristmasSnow from '@/components/Seasonal/Christmas/ChristmasSnow.vue';
 
 import ProfileMenu from './components/menus/ProfileMenu.vue';
 import BottomBar from './components/BottomBar.vue';
-import SideFlyout from './components/SideFlyout.vue';
 import MobileLibraryHeader from '@/views/Base/Library/components/MobileLibraryHeader.vue';
 
 const isFetching = useIsFetching();
 
 onMounted(() => {
 	lockPortrait();
-	router.afterEach(() => {
+	router.beforeEach(() => {
 		closeMenu();
 	});
 });
@@ -49,7 +46,7 @@ onUnmounted(() => {
 			<IonProgressBar
 				v-if="isFetching > 0"
 				type="indeterminate"
-				class="absolute mt-safe top-0 z-1199 bg-black"
+				class="absolute top-0 z-1199 bg-black"
 			/>
 			<ChristmasSnow />
 			<MobileLibraryHeader />
@@ -60,8 +57,8 @@ onUnmounted(() => {
 			/>
 
 			<ProfileMenu />
-			<EqualizerMenu />
-			<DeviceOverlay class="!z-10" :ignore-el-ref="[]" />
+			<!--			<EqualizerMenu /> -->
+			<DeviceOverlay class="!z-10" />
 
 			<BottomBar />
 
@@ -76,8 +73,6 @@ onUnmounted(() => {
 			<ImageModal />
 			<!--      <Toast class="z-1199" /> -->
 			<!--      <Screensaver /> -->
-
-			<SideFlyout v-if="!isPlatform('capacitor')" />
 		</IonTabs>
 	</IonPage>
 </template>

@@ -13,7 +13,7 @@ import type { DisplayList } from '@/types/api/music/musicPlayer';
 import type { PlaylistItem, SortOrder, SortType } from '@/types/musicPlayer';
 
 import useServerClient from '@/lib/clients/useServerClient';
-import { breakTitle, setTitle, sortByType } from '@/lib/stringArray';
+import { setTitle, sortByType } from '@/lib/stringArray';
 import { setColorPalette, setSortOrder, sortOrder, sortType } from '@/store/ui';
 
 import ControlHeader from '@/views/Music/List/components/ControlHeader.vue';
@@ -22,6 +22,7 @@ import SortHeader from '@/views/Music/List/components/SortHeader.vue';
 import TrackRow from '@/views/Music/List/components/TrackRow.vue';
 import OptimizedIcon from '@/components/OptimizedIcon.vue';
 import NotFound from '@/Layout/Desktop/components/NotFound.vue';
+import Marquee from '@/components/Marquee.vue';
 
 const route = useRoute();
 
@@ -160,7 +161,7 @@ watch(container, () => {
 					!route.params.id || (route.params.id && data?.id === route.params.id)
 				"
 				ref="main"
-				class="flex flex-col h-auto overflow-x-clip w-available sm:rounded-2xl -mt-safe-offset-8 bg-[rgb(var(--background-auto))]"
+				class="flex flex-col h-auto overflow-x-clip w-available sm:rounded-2xl -mt-safe-offset-6 bg-[rgb(var(--background-auto))]"
 			>
 				<ArtistHeader :data="data" />
 
@@ -173,7 +174,7 @@ watch(container, () => {
 
 					<div
 						id="navbar"
-						class="fixed z-1099 -mx-2 flex gap-4 p-2 px-4 w-available sm:hidden bg-slate-light-11 dark:bg-slate-dark-1 top-0 pt-safe-offset-4 transition-all duration-200"
+						class="fixed z-1099 -mx-2 flex gap-4 p-2 px-4 w-available sm:hidden bg-slate-light-11 dark:bg-slate-dark-1 top-0 pt-4 transition-all duration-200"
 						:class="{
 							'opacity-0 pointer-events-none': !showScrollHeader,
 							'opacity-100 pointer-events-auto': showScrollHeader,
@@ -193,18 +194,14 @@ watch(container, () => {
 
 						<div
 							id="navText"
-							class="pointer-events-none whitespace-pre text-left relative z-20 line-clamp-1 h-auto self-center font-bold leading-none transition-all duration-200 w-[70%] overflow-clip text-xl"
+							class="pointer-events-none whitespace-pre text-left relative z-20 line-clamp-1 h-auto self-center font-bold leading-none transition-all duration-200 w-[80%] overflow-clip text-xl"
 							:class="{
 								'opacity-0 pointer-events-none': !showScrollHeader,
 								'opacity-100 pointer-events-auto': showScrollHeader,
 							}"
-							v-html="
-								breakTitle(
-									data?.name ?? 'Songs you like',
-									'text-xs line-clamp-1',
-								)
-							"
-						/>
+						>
+							<Marquee :text="data?.name" />
+						</div>
 					</div>
 
 					<ControlHeader

@@ -4,7 +4,7 @@ import type { HomeDataItem } from '@/types/api/music';
 import { currentServer } from '@/store/currentServer';
 import type { Component } from '@/lib/routerHelper';
 
-const props = defineProps({
+defineProps({
 	data: {
 		type: Array as PropType<Component<HomeDataItem>[]>,
 		required: true,

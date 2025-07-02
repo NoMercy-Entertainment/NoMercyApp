@@ -226,7 +226,7 @@
     <!--    <script src="https://www.gstatic.com/cast/sdk/libs/caf_receiver/v3/cast_receiver_framework.js"></script>-->
 
     <script>
-      const theme = localStorage.getItem("CapacitorStorage.colorTheme");
+      const theme = localStorage.getItem("theme");
 
       const el = document.querySelector("html");
 
@@ -806,8 +806,8 @@
     </style>
   </head>
 
-  <body class="flex min-h-full antialiased !block">
-    <div id="app" class="fixed inset-0 h-full w-full">
+  <body class="flex sm:min-h-full antialiased sm:!block">
+    <div id="app" class="sm:fixed sm:inset-0 h-full w-full">
       <div class="parent">
         <svg
           xmlns="http://www.w3.org/2000/svg"

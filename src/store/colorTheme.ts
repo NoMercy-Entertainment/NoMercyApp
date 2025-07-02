@@ -1,7 +1,11 @@
-import { computed, ref } from 'vue';
+import { computed } from 'vue';
 import { rgbaToHex } from '@uiw/color-convert';
 import { focusColor } from '@/store/ui';
 import { Preferences } from '@capacitor/preferences';
+import { rgbToHex } from '@/types/config.ts';
+import { StatusBar } from '@capacitor/status-bar';
+import { useLocalStorage } from '@vueuse/core';
+import { isPlatform } from '@ionic/vue';
 
 export const topNavColor = computed(() => {
 	return rgbaToHex({
@@ -12,7 +16,7 @@ export const topNavColor = computed(() => {
 	});
 });
 
-const theme = ref('violet');
+const theme = useLocalStorage('theme', 'violet');
 export const colorTheme = computed(() => theme.value);
 export async function setColorTheme(value: string) {
 	document.body.classList.add('scheme-transition');
@@ -39,6 +43,14 @@ export async function setColorTheme(value: string) {
 	}
 	else {
 		el.classList.add('theme-violet');
+	}
+
+	if (isPlatform('capacitor')) {
+		const style = window.getComputedStyle(document.body);
+		const color = `rgb(${style.getPropertyValue('--color-theme-7')})`;
+		StatusBar.setBackgroundColor({
+			color: rgbToHex(color, 1),
+		}).then();
 	}
 
 	await Preferences.set({

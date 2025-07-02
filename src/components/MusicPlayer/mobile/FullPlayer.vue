@@ -204,7 +204,7 @@ async function onWillDismiss() {
 			</div>
 
 			<div
-				class="frosting relative mx-3 -mt-10 mb-3 rounded-2xl pt-10 pb-4 w-available bg-focus/60 shadow"
+				class="frosting relative mx-3 -mt-10 rounded-2xl pt-10 w-available bg-focus/60 shadow"
 			>
 				<div
 					class="absolute top-0 z-10 flex w-full items-center rounded-t-2xl pr-2 pl-4 font-semibold"
@@ -239,10 +239,6 @@ ion-modal {
 	--height: 100%;
 	--ion-color-step-350: transparent;
 	@apply absolute mt-0 -mb-safe-offset-16;
-}
-
-html.plt-cordova ion-content::part(scroll) {
-	--offset-bottom: 64px;
 }
 
 html.plt-mobileweb:has(#miniPlayer) ion-content::part(scroll) {

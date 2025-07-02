@@ -134,7 +134,7 @@ watch(searchType, () => {
 						</div>
 					</div>
 
-					<label class="flex w-available mr-1">
+					<div class="flex w-available mr-1">
 						<input
 							id="search"
 							ref="search"
@@ -153,7 +153,7 @@ watch(searchType, () => {
 							type="search"
 							autocomplete="off"
 						>
-					</label>
+					</div>
 				</div>
 			</div>
 
@@ -187,7 +187,6 @@ watch(searchType, () => {
 
 									<div
 										v-if="hasMoreResults && videoSearchResult.length > 0"
-										ref="loadMore"
 										class="z-50 flex justify-center mt-3"
 									>
 										<button

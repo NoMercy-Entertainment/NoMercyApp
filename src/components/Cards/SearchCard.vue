@@ -96,7 +96,7 @@ defineProps({
 					</span>
 				</p>
 			</div>
-			<p class="text-sm line-clamp-6 sm:text-sm">
+			<p class="text-sm line-clamp-4 sm:text-sm">
 				{{ item?.overview }}
 			</p>
 		</div>

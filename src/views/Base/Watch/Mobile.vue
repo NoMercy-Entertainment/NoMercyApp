@@ -107,8 +107,14 @@ function initPlayer(value?: NMPlaylistItem[] | undefined) {
 		router.back();
 	});
 
-	player.value?.on('back', () => {
+	player.value?.on('dispose', () => {
+		lockPortrait();
+		disableImmersiveMode();
 		router.back();
+	});
+
+	player.value?.on('back', () => {
+		player.value?.dispose();
 	});
 
 	player.value?.on('play', () => {
@@ -150,13 +156,11 @@ onMounted(() => {
 });
 
 onUnmounted(() => {
-	player.value?.dispose();
 	setDisableScreensaver(false);
 });
 
 onBeforeUnmount(() => {
-	lockPortrait();
-	disableImmersiveMode();
+	player.value?.dispose();
 });
 </script>
 

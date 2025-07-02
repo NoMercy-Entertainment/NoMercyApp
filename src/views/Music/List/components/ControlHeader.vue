@@ -100,8 +100,8 @@ const shareData = computed<ShareOptions>(() => ({
 		class="sm:hidden sticky left-full -mt-16 z-1199 flex justify-center items-center gap-2 mr-4 h-auto"
 		style="box-shadow: 0 1px 2px 0 rgba(16, 24, 40, 0.05)"
 		:class="{
-			'top-safe-offset-11': !isPlatform('capacitor'),
-			'top-safe-offset-3': isPlatform('capacitor'),
+			'top-11': !isPlatform('capacitor'),
+			'top-12': isPlatform('capacitor'),
 		}"
 	>
 		<BigPlayButton v-if="data?.tracks" :data="data" />

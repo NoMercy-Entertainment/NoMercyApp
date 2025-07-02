@@ -42,12 +42,10 @@ function handleSimulateFirstVisit() {
 }
 
 function handleTestUpdateNotification() {
-	const lang
-    = localStorage.getItem('language')
-    	|| navigator.language.split('-')[0]
-    	|| 'en';
-	const messages
-    = pwaMessages[lang as keyof typeof pwaMessages] || pwaMessages.en;
+	const lang = localStorage.getItem('language')
+		|| navigator.language.split('-')[0]
+		|| 'en';
+	const messages = pwaMessages[lang as keyof typeof pwaMessages] || pwaMessages.en;
 
 	const updateNotification = {
 		id: `sw-update-test-${Date.now()}`,

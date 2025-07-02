@@ -5,7 +5,7 @@ import OptimizedIcon from '@/components/OptimizedIcon.vue';
 import { setShowBackdrops, showBackdrops } from '@/store/preferences';
 import { useToggle } from '@vueuse/core';
 
-const [value, toggle] = useToggle(showBackdrops.value);
+const [value] = useToggle(showBackdrops.value);
 
 const { t } = useTranslation();
 

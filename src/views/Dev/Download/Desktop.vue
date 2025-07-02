@@ -115,6 +115,7 @@ async function downloadShow() {
 									<div class="flex gap-2">
 										<div class="w-1/4 flex flex-col gap-2">
 											<img
+												alt="Item Image"
 												:src="`${tmdbImageBaseUrl}${item.image}`"
 												class="w-full h-auto aspect-video object-fit my-auto rounded"
 											>

@@ -3,12 +3,10 @@ import { onMounted, ref, watch } from 'vue';
 import {
 	IonContent,
 	IonPage,
-	isPlatform,
+	onIonViewDidEnter,
 	onIonViewWillEnter,
-	useKeyboard,
 } from '@ionic/vue';
 import { useRoute } from 'vue-router';
-import { refDebounced } from '@vueuse/core';
 
 import { setBackground, setColorPalette } from '@/store/ui';
 import {
@@ -20,7 +18,7 @@ import {
 	searchValue,
 	videoSearchResult,
 } from '@/store/search';
-import { greetingValue, isNative } from '@/config/global';
+import { greetingValue } from '@/config/global';
 import { showScreensaver } from '@/store/imageModal';
 
 import OptimizedIcon from '@/components/OptimizedIcon.vue';
@@ -52,11 +50,7 @@ onMounted(() => {
 	}, 100);
 });
 
-const { isOpen, keyboardHeight } = useKeyboard();
-const debouncedIsOpen = refDebounced(isOpen, 300);
-const debouncedKeyboardHeight = refDebounced(keyboardHeight, 300);
-
-onIonViewWillEnter(() => {
+onIonViewDidEnter(() => {
 	setColorPalette(null);
 	setBackground(null);
 });
@@ -84,22 +78,13 @@ watch(searchType, () => {
 		content.value?.$el?.scrollToBottom();
 	}, 100);
 });
-
-watch(debouncedKeyboardHeight, () => {
-	setTimeout(() => {
-		// @ts-ignore
-		content.value?.$el?.scrollToBottom(0);
-	}, 100);
-});
 </script>
 
 <template>
 	<IonPage>
 		<IonContent ref="content" :fullscreen="true">
 			<div
-				class="relative flex flex-grow flex-col items-center justify-start gap-12 self-stretch overflow-clip px-4 pt-8 will-change-auto" :class="{
-					'mb-24': debouncedIsOpen && searchValue?.length === 0,
-				}"
+				class="absolute inset-0 w-screen h-available flex flex-grow flex-col items-center justify-start gap-12 overflow-clip  will-change-auto"
 			>
 				<CosmosBg2 v-if="greetingValue && searchValue?.length === 0" />
 				<div
@@ -123,20 +108,11 @@ watch(debouncedKeyboardHeight, () => {
 				</div>
 
 				<div
-					class="absolute top-0 flex w-full flex-col gap-4 px-2 pt-2 h-full overflow-clip"
-					:style="{
-						height:
-							debouncedIsOpen && searchValue?.length === 0
-								? `calc(100vh - ${debouncedKeyboardHeight + 104}px)`
-								: debouncedIsOpen && searchValue?.length > 0
-									? `calc(100vh - ${debouncedKeyboardHeight + 70}px)`
-									: '92%',
-					}"
-					:class="searchValue?.length > 0 ? '' : ''"
+					class="relative flex w-full h-available flex-col gap-4 overflow-clip mb-14"
 				>
 					<div
 						v-if="searchType === 'video'"
-						class="flex flex-wrap gap-2 sm:gap-4 overflow-auto"
+						class="flex flex-wrap gap-2 sm:gap-4 overflow-auto p-4"
 					>
 						<template v-for="item in videoSearchResult ?? []" :key="item.id">
 							<SearchCard :item="item" />
@@ -157,7 +133,7 @@ watch(debouncedKeyboardHeight, () => {
 
 					<div
 						v-else-if="musicSearchResult"
-						class="flex w-full flex-col p-1 h-available sm:p-4 sm:pt-0 overflow-auto"
+						class="flex w-full flex-col h-available p-4 sm:pt-0 overflow-auto"
 					>
 						<component
 							:is="render.component"
@@ -170,28 +146,11 @@ watch(debouncedKeyboardHeight, () => {
 				</div>
 
 				<div
-					class="absolute flex justify-center items-center self-center flex-grow-0 flex-shrink-0 w-available h-14 sm:w-1/2 overflow-hidden gap-2 p-1.5 rounded-[20px] border-2 bg-[#d7dbdf] border-[#eceef0] dark:bg-black dark:border-[#202425] transition-all duration-200"
-					:style="{
-						bottom:
-							debouncedIsOpen && searchValue.length === 0
-								? `${
-									debouncedKeyboardHeight - (isPlatform('mobile') ? 180 : 80)
-								}px`
-								: debouncedIsOpen && searchValue.length > 0
-									? `${debouncedKeyboardHeight - 80}px`
-									: !debouncedIsOpen && searchValue.length > 0
-										? '0vh'
-										: '50vh',
-					}"
-					:class="{
-						'mx-2': !debouncedIsOpen && searchValue.length === 0,
-						'rounded-none': debouncedIsOpen || searchValue.length > 0,
-						'translate-y-[calc(var(--safe-area-inset-top)*-1.5)]':
-							debouncedIsOpen && isNative,
-					}"
+					id="search-bar"
+					class="absolute flex justify-center items-center self-center flex-grow-0 flex-shrink-0 w-available h-14 sm:w-1/2 overflow-hidden gap-2 p-1.5 rounded-[20px] border-2 bg-[#d7dbdf] border-[#eceef0] dark:bg-black dark:border-[#202425] transform-gpu transition-translate duration-200 z-999"
 				>
 					<div
-						class="flex flex-col justify-start items-start flex-grow-0 flex-shrink-0 gap-2 p-1 rounded-xl bg-[#012139]/[0.13] dark:bg-[#dfeffe]/[0.14] backdrop-blur"
+						class="relative flex flex-col justify-start items-start flex-grow-0 flex-shrink-0 gap-2 p-1 rounded-xl bg-[#012139]/[0.13] dark:bg-[#dfeffe]/[0.14] backdrop-blur"
 					>
 						<div
 							class="relative flex justify-center items-start flex-grow-0 flex-shrink-0 gap-2"
@@ -230,12 +189,13 @@ watch(debouncedKeyboardHeight, () => {
 						</div>
 					</div>
 
-					<label class="flex w-available">
+					<div class="flex w-available">
 						<input
 							id="search"
 							ref="search"
 							v-model="searchValue"
 							enterkeyhint="search"
+							pattern="[A-Za-z0-9\s]{1,}"
 							:placeholder="
 								searchType === 'video'
 									? `${$t('Movie')}, ${$t('Show')} ${$t('or')} ${$t(
@@ -246,16 +206,34 @@ watch(debouncedKeyboardHeight, () => {
 									)}...`
 							"
 							class="w-available flex-shrink-0 border-transparent bg-transparent px-1 mr-1 text-lg shadow-transparent flex-grow-1 focus:outline-none"
-							:class="{
-								'!py-1': !debouncedIsOpen,
-							}"
 							name="search"
 							type="search"
 							autocomplete="off"
 						>
-					</label>
+					</div>
 				</div>
 			</div>
 		</IonContent>
 	</IonPage>
 </template>
+
+<style scoped lang="scss">
+#search-bar {
+	translate: 0 -50dvh;
+	bottom: var(--keyboard-height, 0px);
+	margin-left: 0.5rem;
+	margin-right: 0.5rem;
+}
+html.keyboard-open #search-bar {
+	translate: 0 0;
+	border-radius: 0;
+	margin: 0;
+	bottom: 0;
+}
+ion-content:has(input:valid) #search-bar {
+	translate: 0 0;
+	bottom: 0;
+	margin: 0;
+	border-radius: 0;
+}
+</style>
