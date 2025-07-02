@@ -134,7 +134,7 @@ async function initializeMobileApp() {
 			import('@/config/config'),
 		]);
 
-		const { StatusBar } = await import('@capacitor/status-bar').then(m => m.default);
+		const { StatusBar } = await import('@capacitor/status-bar');
 		const disableImmersiveMode = await import('@/lib/utils.ts').then(m => m.disableImmersiveMode);
 
 		const style = window.getComputedStyle(document.body);
