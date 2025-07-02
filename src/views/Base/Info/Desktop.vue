@@ -276,7 +276,7 @@ function handleAdd() {
 		message: string;
 		status: string;
 		args: string[];
-	}>(`${route.fullPath}add`)
+	}>(`${route.fullPath}/add`)
 		.then(({ data }) => {
 			// showNotification({
 			// 	title: translate(data.message, ...data.args),
