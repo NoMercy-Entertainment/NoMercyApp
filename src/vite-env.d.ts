@@ -62,60 +62,6 @@ declare global {
 		lastChild: HTMLElement | null;
 		children: HTMLCollection;
 		isVisible: (parent?: HTMLElement) => boolean;
-		querySelectorAllArray: <K extends keyof HTMLElementTagNameMap>(
-			selectors: K
-		) => Array<HTMLElementTagNameMap[K]>;
-		querySelectorAllArray: <K extends keyof SVGElementTagNameMap>(
-			selectors: K
-		) => Array<SVGElementTagNameMap[K]>;
-		querySelectorAllArray: <K extends keyof MathMLElementTagNameMap>(
-			selectors: K
-		) => Array<MathMLElementTagNameMap[K]>;
-		querySelectorAllArray: <E extends Element = Element>(
-			selectors: string
-		) => Array<E>;
-		onDoubleClick: ({
-			singleClickEvtCallback,
-			doubleClickEvtCallback,
-		}: {
-			singleClickEvtCallback: (event: MouseEvent) => void;
-			doubleClickEvtCallback: (event: MouseEvent) => void;
-		}) => void;
-	}
-	interface Element {
-		querySelectorAllArray: <K extends keyof HTMLElementTagNameMap>(
-			selectors: K
-		) => Array<HTMLElementTagNameMap[K]>;
-		querySelectorAllArray: <K extends keyof SVGElementTagNameMap>(
-			selectors: K
-		) => Array<SVGElementTagNameMap[K]>;
-		querySelectorAllArray: <K extends keyof MathMLElementTagNameMap>(
-			selectors: K
-		) => Array<MathMLElementTagNameMap[K]>;
-		querySelectorAllArray: <E extends Element = Element>(
-			selectors: string
-		) => Array<E>;
-		onDoubleClick: ({
-			singleClickEvtCallback,
-			doubleClickEvtCallback,
-		}: {
-			singleClickEvtCallback: (event: MouseEvent) => void;
-			doubleClickEvtCallback: (event: MouseEvent) => void;
-		}) => void;
-	}
-	interface Document {
-		querySelectorAllArray<K extends keyof HTMLElementTagNameMap>(
-			selectors: K
-		): Array<HTMLElementTagNameMap[K]>;
-		querySelectorAllArray<K extends keyof SVGElementTagNameMap>(
-			selectors: K
-		): Array<SVGElementTagNameMap[K]>;
-		querySelectorAllArray<K extends keyof MathMLElementTagNameMap>(
-			selectors: K
-		): Array<MathMLElementTagNameMap[K]>;
-		querySelectorAllArray<E extends Element = Element>(
-			selectors: string
-		): Array<E>;
 		onDoubleClick: ({
 			singleClickEvtCallback,
 			doubleClickEvtCallback,
@@ -134,18 +80,6 @@ declare global {
 				duration?: number
 			) => void;
 			isVisible: (parent?: HTMLElement) => boolean;
-			querySelectorAllArray<K extends keyof HTMLElementTagNameMap>(
-				selectors: K
-			): Array<HTMLElementTagNameMap[K]>;
-			querySelectorAllArray<K extends keyof SVGElementTagNameMap>(
-				selectors: K
-			): Array<SVGElementTagNameMap[K]>;
-			querySelectorAllArray<K extends keyof MathMLElementTagNameMap>(
-				selectors: K
-			): Array<MathMLElementTagNameMap[K]>;
-			querySelectorAllArray<E extends Element = Element>(
-				selectors: string
-			): Array<E>;
 		};
 	}
 
@@ -168,9 +102,6 @@ declare global {
 	interface VueSwiperElement {
 		$el: HTMLElement & SwiperRef;
 	}
-	interface Array<T> {
-		latest(): Array<T>;
-	}
 }
 
 declare global {
@@ -191,7 +122,6 @@ declare global {
 				messages: {
 					MediaMetadata: {
 						// The constructor signature for MediaMetadata
-						// eslint-disable-next-line @typescript-eslint/no-misused-new
 						new (type: MetadataType): MediaMetadata;
 						type: MetadataType;
 					};
@@ -262,8 +192,6 @@ interface MediaInfo {
 
 interface MediaMetadata {
 	// The constructor signature for MediaMetadata
-	// eslint-disable-next-line @typescript-eslint/no-misused-new
-	new (type: MetadataType): MediaMetadata;
 	type: MetadataType;
 }
 

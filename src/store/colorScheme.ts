@@ -66,8 +66,6 @@ export async function setColorScheme(value: ColorScheme) {
 			StatusBar.setStyle({ style: Style.Dark }).then();
 		}
 
-		// StatusBar.setOverlaysWebView({ overlay: true }).then();
-
 		StatusBar.setOverlaysWebView({ overlay: false }).then();
 	}
 

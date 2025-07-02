@@ -62,7 +62,7 @@ const shareData = computed<ShareOptions>(() => ({
 				type="text"
 				name="search"
 				@input="
-					$emit('filter-change', ($event.target as HTMLInputElement)?.value)
+					$emit('filterChange', ($event.target as HTMLInputElement)?.value)
 				"
 			>
 			<div

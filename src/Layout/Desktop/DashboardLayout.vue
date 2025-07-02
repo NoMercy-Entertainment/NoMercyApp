@@ -129,7 +129,7 @@ onMounted(() => {
 	setBackground(null);
 });
 
-useMounted(startDashboardSocket, stopDashboardSocket, 10);
+useMounted(startDashboardSocket, stopDashboardSocket, 20);
 
 const showError = computed(() => {
 	return (
