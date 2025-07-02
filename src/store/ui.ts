@@ -142,11 +142,11 @@ export function hideNavBar() {
 	}
 })();
 
-const kb = useKeyboard();
-watch(kb, (value) => {
+const { keyboardHeight } = useKeyboard();
+watch(keyboardHeight, (value) => {
 	if (value) {
 		document.documentElement.classList.add('keyboard-open');
-		document.documentElement.style.setProperty('--keyboard-height', `${value.keyboardHeight}px`);
+		document.documentElement.style.setProperty('--keyboard-height', `${value}px`);
 	}
 	else {
 		document.documentElement.classList.remove('keyboard-open');

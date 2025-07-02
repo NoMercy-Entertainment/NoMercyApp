@@ -134,14 +134,14 @@ async function initializeMobileApp() {
 			import('@/config/config'),
 		]);
 
-		const { StatusBar } = await import('@capacitor/status-bar');
+		const StatusBar = await import('@capacitor/status-bar').then(m => m.default || m);
 		const disableImmersiveMode = await import('@/lib/utils.ts').then(m => m.disableImmersiveMode);
 
 		const style = window.getComputedStyle(document.body);
 		const color = `rgb(${style.getPropertyValue('--color-theme-7')})`;
 
 		disableImmersiveMode();
-		StatusBar.setBackgroundColor({
+		StatusBar.StatusBar.setBackgroundColor({
 			color,
 		}).then();
 
