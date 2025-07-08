@@ -102,7 +102,6 @@ function focusMain() {
 									<IonRouterOutlet
 										:key="route.path"
 										animated="false"
-										class="pointer-events-none children:pointer-events-auto"
 									/>
 								</IonTabs>
 							</main>

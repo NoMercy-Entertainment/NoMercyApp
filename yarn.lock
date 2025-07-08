@@ -2305,10 +2305,10 @@
     audiomotion-analyzer "^4.5.0"
     hls.js "^1.5.13"
 
-"@nomercy-entertainment/nomercy-video-player@^0.4.1":
-  version "0.4.1"
-  resolved "https://registry.yarnpkg.com/@nomercy-entertainment/nomercy-video-player/-/nomercy-video-player-0.4.1.tgz#f5fed2bf9d59f48338995eae69a74ffaee4b7c63"
-  integrity sha512-pClSmM9pbBr1syTbNhUqAqJ1H4/Oil1gX4Qw1yEWEMTN/Yqr4fuKDuHOd33hQEQ+m79/zOSiYuZi4+ouB+9ksQ==
+"@nomercy-entertainment/nomercy-video-player@^0.4.4":
+  version "0.4.4"
+  resolved "https://registry.yarnpkg.com/@nomercy-entertainment/nomercy-video-player/-/nomercy-video-player-0.4.4.tgz#c60d50895dd3996ffc9f30fe0cad4580f61698a2"
+  integrity sha512-6FZsQa/keHok+CqeIe70acA6btRsriH48GCkz8l8KLhVhIFcsuLEnuzp5EGHFWcWb8oTACQzht1JdHw5+NwWcQ==
   dependencies:
     "@nomercy-entertainment/media-session" "^0.1.11"
     "@sabre-js/sabre" "^0.5.1-pre.21da9b6"
@@ -4124,6 +4124,15 @@
     "@vueuse/metadata" "13.2.0"
     "@vueuse/shared" "13.2.0"
 
+"@vueuse/core@13.5.0":
+  version "13.5.0"
+  resolved "https://registry.yarnpkg.com/@vueuse/core/-/core-13.5.0.tgz#1136d3db088945d7b7a2397170737d5a3e557b36"
+  integrity sha512-wV7z0eUpifKmvmN78UBZX8T7lMW53Nrk6JP5+6hbzrB9+cJ3jr//hUlhl9TZO/03bUkMK6gGkQpqOPWoabr72g==
+  dependencies:
+    "@types/web-bluetooth" "^0.0.21"
+    "@vueuse/metadata" "13.5.0"
+    "@vueuse/shared" "13.5.0"
+
 "@vueuse/core@^11.2.0":
   version "11.3.0"
   resolved "https://registry.npmjs.org/@vueuse/core/-/core-11.3.0.tgz"
@@ -4134,6 +4143,14 @@
     "@vueuse/shared" "11.3.0"
     vue-demi ">=0.14.10"
 
+"@vueuse/integrations@^13.5.0":
+  version "13.5.0"
+  resolved "https://registry.yarnpkg.com/@vueuse/integrations/-/integrations-13.5.0.tgz#5a5802bfcd757e84878bedb734d2d30d080ce0c2"
+  integrity sha512-7RACJySnlpl0MkSzxbtadioNGSX4TL5/Wl2cUy4nDq/XkeHwPYvVM880HJUSiap/FXhVEup9VKTM9y/n5UspAw==
+  dependencies:
+    "@vueuse/core" "13.5.0"
+    "@vueuse/shared" "13.5.0"
+
 "@vueuse/metadata@11.3.0":
   version "11.3.0"
   resolved "https://registry.npmjs.org/@vueuse/metadata/-/metadata-11.3.0.tgz"
@@ -4143,6 +4160,11 @@
   version "13.2.0"
   resolved "https://registry.npmjs.org/@vueuse/metadata/-/metadata-13.2.0.tgz"
   integrity sha512-kPpzuQCU0+D8DZCzK0iPpIcXI+6ufWSgwnjJ6//GNpEn+SHViaCtR+XurzORChSgvpHO9YC8gGM97Y1kB+UabA==
+
+"@vueuse/metadata@13.5.0":
+  version "13.5.0"
+  resolved "https://registry.yarnpkg.com/@vueuse/metadata/-/metadata-13.5.0.tgz#18c24a32489b0a4fb9d7436efc048e836bfc4799"
+  integrity sha512-euhItU3b0SqXxSy8u1XHxUCdQ8M++bsRs+TYhOLDU/OykS7KvJnyIFfep0XM5WjIFry9uAPlVSjmVHiqeshmkw==
 
 "@vueuse/shared@11.3.0":
   version "11.3.0"
@@ -4155,6 +4177,11 @@
   version "13.2.0"
   resolved "https://registry.npmjs.org/@vueuse/shared/-/shared-13.2.0.tgz"
   integrity sha512-vx9ZPDF5HcU9up3Jgt3G62dMUfZEdk6tLyBAHYAG4F4n73vpaA7J5hdncDI/lS9Vm7GA/FPlbOmh9TrDZROTpg==
+
+"@vueuse/shared@13.5.0":
+  version "13.5.0"
+  resolved "https://registry.yarnpkg.com/@vueuse/shared/-/shared-13.5.0.tgz#c36e3e0eafca9c3b92356ccef139db0df7d9905e"
+  integrity sha512-K7GrQIxJ/ANtucxIXbQlUHdB0TPA8c+q5i+zbrjxuhJCnJ9GtBg75sBSnvmLSxHKPg2Yo8w62PWksl9kwH0Q8g==
 
 "@webassemblyjs/ast@1.14.1", "@webassemblyjs/ast@^1.14.1":
   version "1.14.1"
@@ -12950,6 +12977,11 @@ socks@^2.8.3:
   dependencies:
     ip-address "^9.0.5"
     smart-buffer "^4.2.0"
+
+sortablejs@^1:
+  version "1.15.6"
+  resolved "https://registry.yarnpkg.com/sortablejs/-/sortablejs-1.15.6.tgz#ff93699493f5b8ab8d828f933227b4988df1d393"
+  integrity sha512-aNfiuwMEpfBM/CN6LY0ibyhxPfPbyFeBTYJKCvzkJ2GkUpazIt3H+QIPAMHwqQ7tMKaHz1Qj+rJJCqljnf4p3A==
 
 "source-map-js@>=0.6.2 <2.0.0", source-map-js@^1.0.1, source-map-js@^1.2.0, source-map-js@^1.2.1:
   version "1.2.1"

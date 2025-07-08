@@ -33,7 +33,7 @@ function getServerPermissions(): Promise<void> {
 			})
 			.catch(() => {
 				done.value = true;
-				router.push({ name: 'Server offline' }).then(() => resolve());
+				router.replace({ name: 'Server offline' }).then(() => resolve());
 			});
 	});
 }

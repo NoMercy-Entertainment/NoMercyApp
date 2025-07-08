@@ -302,7 +302,7 @@ export async function enableImmersiveMode() {
 			| AndroidSystemUiFlags.LayoutStable
 			| AndroidSystemUiFlags.Fullscreen,
 		);
-		await StatusBar.setOverlaysWebView({ overlay: true });
+		await StatusBar.setOverlaysWebView({ overlay: false });
 	}
 }
 
@@ -315,7 +315,7 @@ export function disableImmersiveMode() {
 
 		StatusBar.show().then();
 		AndroidFullScreen.showSystemUI().then();
-		StatusBar.setOverlaysWebView({ overlay: true }).then();
+		StatusBar.setOverlaysWebView({ overlay: false }).then();
 	}
 }
 

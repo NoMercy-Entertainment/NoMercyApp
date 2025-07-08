@@ -2,6 +2,9 @@ import { ref } from 'vue';
 
 import type { Server } from '@/types/auth';
 
+export const serverSetupComplete = ref<boolean>(false);
+export const serverInfoRequested = ref<boolean>(false);
+export const serverLibraries = ref<boolean>(false);
 const servers = ref<Server[]>([]);
 
 export function setServers(newServers: Server[]): void {

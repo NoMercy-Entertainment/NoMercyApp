@@ -75,32 +75,38 @@ watch(homeData, (value) => {
 });
 
 router.beforeEach((to) => {
-	if (!homeData.value || (to.name !== 'Home' && to.name !== 'Libraries')) {
+	console.log('Router beforeEach:', to.name);
+	if (!homeData.value || (to.name !== 'Home' && to.name !== 'Libraries' && to.name !== 'Music Start')) {
+		console.log('Skipping mutation on route change:', to.name);
 		return;
 	}
 
 	if (onlineStatus.value) {
 		const mutations = homeData.value?.filter?.(item => item?.update?.when === 'pageLoad') ?? [];
+		console.log('Mutating on route change:', mutations);
 		mutate(mutations);
 	}
 });
 
 onIonViewWillEnter(() => {
-	if (!homeData.value) {
+	console.log('IonViewWillEnter');
+	if (!homeData.value || (route.name !== 'Home' && route.name !== 'Libraries' && route.name !== 'Music Start')) {
+		console.log('Skipping mutation on view enter:', route.name);
 		return;
 	}
 
 	if (onlineStatus.value) {
 		const mutations = homeData.value?.filter?.(item => item?.update?.when === 'pageLoad') ?? [];
+		console.log('Mutating on view enter:', mutations);
 		mutate(mutations);
 	}
 });
 </script>
 
 <template>
-	<template v-if="!isMutating || !onlineStatus">
+	<template v-if="(!isMutating || !onlineStatus)">
 		<component
-			:is="render.component"
+			:is="render?.component"
 			v-for="(render, index) in mutatedData ?? homeData ?? []"
 			:key="render.id"
 			:index="index"

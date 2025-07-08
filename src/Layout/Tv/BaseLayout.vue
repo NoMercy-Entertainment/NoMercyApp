@@ -16,7 +16,6 @@ import FullTvPlayer from '@/components/MusicPlayer/tv/FullTvPlayer.vue';
 			<Navbar />
 			<IonRouterOutlet
 				animated="false"
-				class="pointer-events-none children:pointer-events-auto"
 			/>
 		</IonTabs>
 

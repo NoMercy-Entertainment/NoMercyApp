@@ -464,7 +464,7 @@ const shareData = computed<ShareOptions>(() => ({
 											>
 												<BannerButton
 													v-if="hasItem"
-													:href="`/${data?.media_type}/${data?.id}/watch`"
+													:href="`${data?.link}/watch`"
 													title="Play"
 												>
 													<OptimizedIcon
@@ -703,7 +703,7 @@ const shareData = computed<ShareOptions>(() => ({
 												>
 													<div class="gap-1 children:whitespace-nowrap text-sm">
 														<a
-															:href="`https://www.themoviedb.org/${data?.media_type}/${data?.id}`"
+															:href="`https://themoviedb.org/${data?.media_type}/${data?.id}`"
 															target="_blank"
 															class="inline-block underline-offset-4 hover:underline focus-visible:underline"
 														>
@@ -722,7 +722,7 @@ const shareData = computed<ShareOptions>(() => ({
 														class="gap-1 children:whitespace-nowrap text-sm"
 													>
 														<a
-															:href="`https://www.imdb.com/title/${data?.external_ids?.imdb_id}`"
+															:href="`https://imdb.com/title/${data?.external_ids?.imdb_id}`"
 															class="inline-block underline-offset-4 hover:underline focus-visible:underline"
 															target="_blank"
 														>

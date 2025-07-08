@@ -24,7 +24,7 @@ router.afterEach((to) => {
 </script>
 
 <template>
-	<IonToolbar v-if="show" class="mt-safe transition-all duration-200 toolbar">
+	<IonToolbar v-if="show" class="transition-all duration-200 toolbar">
 		<IonSegment :scrollable="true" mode="ios" :value="route.fullPath">
 			<template
 				v-for="library in libraries?.filter((l) => l.type !== 'music') ?? []"

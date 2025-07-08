@@ -3,8 +3,9 @@ import type { PropType } from 'vue';
 import { useTranslation } from 'i18next-vue';
 import { useRoute } from 'vue-router';
 import { useQueryClient } from '@tanstack/vue-query';
+import { toRaw } from 'vue';
 
-import type { ServerLibrary } from '@/types/server';
+import type { FolderLibrary, LibrariesResponse } from '@/types/api/base/library';
 
 import serverClient from '@/lib/clients/serverClient';
 import FolderBrowser from '@/components/FolderBrowser.vue';
@@ -28,7 +29,7 @@ const props = defineProps({
 		required: true,
 	},
 	library: {
-		type: Object as PropType<ServerLibrary>,
+		type: Object as PropType<LibrariesResponse>,
 		required: false,
 	},
 });
@@ -43,10 +44,21 @@ function handleCreateFolder() {
 		message: string;
 		status: string;
 		args: string[];
+		data?: FolderLibrary;
 	}>(`dashboard/libraries/${route.params.id ?? props.library?.id}/folders`, {
 			path: props.folder,
 		})
 		.then(({ data }) => {
+			// Update the parent library state with the new folder
+			if (data.status === 'ok' && data.data && props.library) {
+				// Create a new library object with the updated folder_library array
+				props.library.folder_library = [
+					...toRaw(props.library.folder_library || []),
+					data.data,
+				];
+			}
+
+			// Invalidate queries to refresh library data from server
 			query.invalidateQueries({ queryKey: ['dashboard', 'libraries'] });
 
 			// showNotification({
@@ -59,7 +71,11 @@ function handleCreateFolder() {
 			// });
 
 			props.setFolder('/');
-
+			props.close();
+		})
+		.catch((error) => {
+			console.error('Error adding folder:', error);
+			// Close modal even on error
 			props.close();
 		});
 }

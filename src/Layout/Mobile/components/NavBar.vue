@@ -65,7 +65,7 @@ const isFetching = useIsFetching();
 	<IonProgressBar
 		v-if="isFetching > 0"
 		type="indeterminate"
-		class="absolute mt-safe top-0 z-1199 bg-black"
+		class="absolute top-0 z-1199 bg-black"
 	/>
 </template>
 

@@ -1,5 +1,5 @@
 import type { ColorPalettes } from '../shared';
-import type { EncoderProfile, FolderLibrary, User } from '@/types/server';
+import type { User } from '@/types/server';
 import type { Artist } from '@/types/api/music/artist';
 
 export interface LibrariesResponse {

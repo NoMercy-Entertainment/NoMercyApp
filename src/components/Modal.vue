@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { useTranslation } from 'i18next-vue';
 import type { PropType } from 'vue';
 import { ref, watch } from 'vue';
 
@@ -36,8 +35,6 @@ const props = defineProps({
 	},
 });
 
-const { t } = useTranslation();
-
 const visible = ref(false);
 
 watch(props, (value) => {
@@ -57,7 +54,7 @@ watch(visible, (value) => {
 		v-model:open="visible"
 		modal
 		:header="$t(title, params)"
-		role="dialog"
+		as="div"
 		class="w-full"
 		:class="{
 			[maxWidth]: true,

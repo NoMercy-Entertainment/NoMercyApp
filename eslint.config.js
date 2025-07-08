@@ -23,6 +23,7 @@ export default antfu({
 			'no-console': 'off',
 			'ts/no-unsafe-function-type': 'off',
 			'node/prefer-global/process': 'off',
+			'no-extend-native': 'off',
 		},
 	},
 	js: {

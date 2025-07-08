@@ -34,7 +34,7 @@ import { VideoNoMercyConnectPlugin } from '@/lib/VideoPlayer/plugins/videoNoMerc
 import useServerClient from '@/lib/clients/useServerClient.ts';
 
 const { data } = useServerClient<NMPlaylistItem[]>({
-	enabled: !false,
+	enabled: !user.value.features?.nomercyConnect,
 });
 
 const player = ref<NMPlayer<NMPlaylistItem>>();
@@ -60,7 +60,7 @@ function initPlayer(value?: NMPlaylistItem[] | undefined) {
 		disableMediaControls:
       'mediaSession' in navigator || isPlatform('capacitor'),
 		renderAhead: 100,
-		disableAutoPlayback: false,
+		disableAutoPlayback: user.value.features?.nomercyConnect,
 	} satisfies PlayerConfig<PlaylistItem>;
 
 	// @ts-ignore
@@ -70,7 +70,7 @@ function initPlayer(value?: NMPlaylistItem[] | undefined) {
 		//
 	});
 
-	if (false) {
+	if (user.value.features?.nomercyConnect) {
 		const videoNoMercyConnectPlugin = new VideoNoMercyConnectPlugin();
 		player.value?.registerPlugin('videoNoMercyConnect', videoNoMercyConnectPlugin);
 		player.value?.usePlugin('videoNoMercyConnect');
@@ -84,7 +84,7 @@ function initPlayer(value?: NMPlaylistItem[] | undefined) {
 	player.value?.registerPlugin('autoSkip', autoSkipPlugin);
 	player.value?.usePlugin('autoSkip');
 
-	if (!false) {
+	if (!user.value.features?.nomercyConnect) {
 		const syncPlugin = new SyncPlugin();
 		player.value?.registerPlugin('sync', syncPlugin);
 		player.value?.usePlugin('sync');
@@ -147,7 +147,7 @@ watch(data, (value) => {
 
 onMounted(() => {
 	audioPlayer.stop();
-	if (false) {
+	if (user.value.features?.nomercyConnect) {
 		initPlayer();
 	}
 	else {

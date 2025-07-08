@@ -30,7 +30,7 @@ import { VideoNoMercyConnectPlugin } from '@/lib/VideoPlayer/plugins/videoNoMerc
 import KeyHandlerPlugin from '@/lib/VideoPlayer/plugins/keyHandlerPlugin.ts';
 
 const { data } = useServerClient<NMPlaylistItem[]>({
-	enabled: !false,
+	enabled: !user.value.features?.nomercyConnect,
 });
 
 const player = ref<NMPlayer<NMPlaylistItem>>();
@@ -61,13 +61,13 @@ function initPlayer(value?: NMPlaylistItem[] | undefined) {
 		disableMediaControls:
       'mediaSession' in navigator || isPlatform('capacitor'),
 		renderAhead: 10,
-		disableAutoPlayback: false,
+		disableAutoPlayback: user.value.features?.nomercyConnect,
 	};
 
 	// @ts-ignore
 	player.value = nmplayer('player1').setup(config);
 
-	if (false) {
+	if (user.value.features?.nomercyConnect) {
 		const videoNoMercyConnectPlugin = new VideoNoMercyConnectPlugin();
 		player.value?.registerPlugin('videoNoMercyConnect', videoNoMercyConnectPlugin);
 		player.value?.usePlugin('videoNoMercyConnect');
@@ -85,7 +85,7 @@ function initPlayer(value?: NMPlaylistItem[] | undefined) {
 	player.value?.registerPlugin('keyHandler', keyHandlerPlugin);
 	player.value?.usePlugin('keyHandler');
 
-	if (!false) {
+	if (!user.value.features?.nomercyConnect) {
 		const syncPlugin = new SyncPlugin();
 		player.value?.registerPlugin('sync', syncPlugin);
 		player.value?.usePlugin('sync');
@@ -139,7 +139,7 @@ watch(data, (value) => {
 onMounted(() => {
 	audioPlayer.stop();
 	setNavBarVisible(false);
-	if (false) {
+	if (user.value.features?.nomercyConnect) {
 		initPlayer();
 	}
 	else {

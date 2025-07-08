@@ -41,7 +41,7 @@ function getLocations(): Promise<void> {
 				done.value = true;
 
 				if (servers.value.length === 0) {
-					await router.push({ name: 'No Servers' });
+					await router.replace({ name: 'No Servers' });
 				}
 				else if (servers.value.length === 1) {
 					setCurrentServer(servers.value[0]);
@@ -57,7 +57,7 @@ function getLocations(): Promise<void> {
 					);
 				}
 				else if (servers.value.length > 1) {
-					await router.push({ name: 'Select Server' });
+					await router.replace({ name: 'Select Server' });
 				}
 
 				return resolve();

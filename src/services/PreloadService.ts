@@ -58,86 +58,6 @@ class PreloadService {
 	}
 
 	/**
-	 * Preload a JavaScript module
-	 */
-	async preloadModule(modulePath: string) {
-		if (this.preloadedResources.has(modulePath))
-			return;
-
-		try {
-			// Create module preload link
-			const link = document.createElement('link');
-			link.rel = 'modulepreload';
-			link.href = modulePath;
-			document.head.appendChild(link);
-
-			this.preloadedResources.add(modulePath);
-		}
-		catch (error) {
-			console.warn(`Failed to preload module: ${modulePath}`, error);
-		}
-	}
-
-	/**
-	 * Prefetch routes likely to be visited next
-	 */
-	async prefetchRoute(routePath: string) {
-		if (this.preloadedResources.has(routePath))
-			return;
-
-		try {
-			// Prefetch the route's component
-			const response = await fetch(routePath, {
-				method: 'HEAD',
-				credentials: 'same-origin',
-			});
-
-			if (response.ok) {
-				this.preloadedResources.add(routePath);
-			}
-		}
-		catch (error) {
-			console.warn(`Failed to prefetch route: ${routePath}`, error);
-		}
-	}
-
-	/**
-	 * Smart preloading based on user behavior
-	 */
-	smartPreload() {
-		// Preload on mouse hover with debounce
-		let hoverTimeout: NodeJS.Timeout;
-
-		document.addEventListener('mouseover', (event) => {
-			const target = event.target as HTMLElement;
-			const link = target.closest(
-				'a[href][target="_blank"]',
-			) as HTMLAnchorElement;
-
-			if (link) {
-				clearTimeout(hoverTimeout);
-				hoverTimeout = setTimeout(() => {
-					this.prefetchRoute(link.href);
-				}, 100); // 100ms delay to avoid too aggressive preloading
-			}
-		});
-
-		// Preload on touch start for mobile
-		document.addEventListener(
-			'touchstart',
-			(event) => {
-				const target = event.target as HTMLElement;
-				const link = target.closest('a[href]') as HTMLAnchorElement;
-
-				if (link) {
-					this.prefetchRoute(link.href);
-				}
-			},
-			{ passive: true },
-		);
-	}
-
-	/**
 	 * Preload images in viewport
 	 */
 	preloadImagesInViewport() {
@@ -212,7 +132,6 @@ class PreloadService {
 
 	private startPreloading() {
 		this.preloadCriticalAssets();
-		this.smartPreload();
 		this.preloadImagesInViewport();
 
 		// Preload critical components after initial load

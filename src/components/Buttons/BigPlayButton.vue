@@ -40,7 +40,7 @@ const props = defineProps({
 });
 
 const playlistName = computed(
-	() => `${props.data?.type?.replace(/s$/u, '')}/${props.data?.id}`,
+	() => `/music/${props.data?.type?.replace(/s$/u, '')}/${props.data?.id}`,
 );
 
 function handleClick() {
@@ -67,18 +67,17 @@ function handleClick() {
 				console.error('Error switching device:', error);
 			});
 	}
+
+	const trackId = props.data.tracks.some(t => t.id === currentSong.value?.id)
+		? currentSong.value?.id
+		: props.data.tracks.at(0)?.id;
+
 	musicSocketConnection.value?.invoke(
 		'StartPlaybackCommand',
 		props.data.type.replace(/s$/u, ''),
 		props.data.id,
-		currentSong.value?.id ?? props.data.tracks.at(0)?.id,
+		trackId,
 	);
-	if (currentPlaylist.value === playlistName.value) {
-		audioPlayer.togglePlayback();
-		return;
-	}
-	audioPlayer.playTrack(props.data.tracks.at(0)!, props.data.tracks);
-	setCurrentPlaylist(playlistName.value);
 }
 </script>
 

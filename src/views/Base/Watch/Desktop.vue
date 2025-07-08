@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { onMounted, onUnmounted, ref, watch } from 'vue';
-import { IonPage, isPlatform } from '@ionic/vue';
+import { onBeforeUnmount, onMounted, ref, watch } from 'vue';
+import { IonContent, IonPage, isPlatform } from '@ionic/vue';
 
 import { setDisableScreensaver } from '@/store/imageModal';
 
@@ -29,7 +29,7 @@ import useServerClient from '@/lib/clients/useServerClient.ts';
 import { VideoNoMercyConnectPlugin } from '@/lib/VideoPlayer/plugins/videoNoMercyConnectPlugin.ts';
 
 const { data } = useServerClient<NMPlaylistItem[]>({
-	enabled: !false,
+	enabled: !user.value.features?.nomercyConnect,
 });
 
 const player = ref<NMPlayer<PlaylistItem>>();
@@ -53,7 +53,7 @@ function initPlayer(value?: NMPlaylistItem[] | undefined) {
 		disableMediaControls:
       'mediaSession' in navigator || isPlatform('capacitor'),
 		renderAhead: 100,
-		disableAutoPlayback: false,
+		disableAutoPlayback: user.value.features?.nomercyConnect,
 	} satisfies PlayerConfig<PlaylistItem>;
 
 	// @ts-ignore
@@ -63,7 +63,7 @@ function initPlayer(value?: NMPlaylistItem[] | undefined) {
 		router.back();
 	});
 
-	if (false) {
+	if (user.value.features?.nomercyConnect) {
 		const videoNoMercyConnectPlugin = new VideoNoMercyConnectPlugin();
 		player.value?.registerPlugin('videoNoMercyConnect', videoNoMercyConnectPlugin);
 		player.value?.usePlugin('videoNoMercyConnect');
@@ -81,7 +81,7 @@ function initPlayer(value?: NMPlaylistItem[] | undefined) {
 	player.value?.registerPlugin('keyHandler', keyHandlerPlugin);
 	player.value?.usePlugin('keyHandler');
 
-	if (!false) {
+	if (!user.value.features?.nomercyConnect) {
 		const syncPlugin = new SyncPlugin();
 		player.value?.registerPlugin('sync', syncPlugin);
 		player.value?.usePlugin('sync');
@@ -100,11 +100,9 @@ function initPlayer(value?: NMPlaylistItem[] | undefined) {
 	});
 
 	player.value?.on('playlistComplete', () => {
-		player.value?.dispose();
+		console.log('Playlist complete');
 		router.back();
 	});
-
-	player.value?.once('back', () => {});
 
 	player.value?.on('play', () => {
 		setDisableScreensaver(true);
@@ -123,12 +121,17 @@ function initPlayer(value?: NMPlaylistItem[] | undefined) {
 }
 
 watch(data, (value) => {
-	initPlayer(value);
+	if (user.value.features?.nomercyConnect) {
+		initPlayer();
+	}
+	else {
+		initPlayer(value);
+	}
 });
 
 onMounted(() => {
 	audioPlayer.stop();
-	if (false) {
+	if (user.value.features?.nomercyConnect) {
 		initPlayer();
 	}
 	else {
@@ -136,7 +139,8 @@ onMounted(() => {
 	}
 });
 
-onUnmounted(() => {
+onBeforeUnmount(() => {
+	console.log('Unmounting player');
 	player.value?.dispose();
 	setDisableScreensaver(false);
 });
@@ -144,7 +148,15 @@ onUnmounted(() => {
 
 <template>
 	<IonPage>
-		<div id="player1" class="group nomercyplayer" />
+		<IonContent :fullscreen="true">
+			<!--			<Teleport to="body"> -->
+			<!--				<div -->
+			<!--					class="absolute inset-0 flex h-full w-full overflow-clip bg-black z-1199" -->
+			<!--				> -->
+			<div id="player1" class="group nomercyplayer" />
+			<!--				</div> -->
+			<!--			</Teleport> -->
+		</IonContent>
 	</IonPage>
 </template>
 

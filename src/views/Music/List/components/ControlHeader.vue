@@ -101,7 +101,7 @@ const shareData = computed<ShareOptions>(() => ({
 		style="box-shadow: 0 1px 2px 0 rgba(16, 24, 40, 0.05)"
 		:class="{
 			'top-11': !isPlatform('capacitor'),
-			'top-12': isPlatform('capacitor'),
+			'top-10': isPlatform('capacitor'),
 		}"
 	>
 		<BigPlayButton v-if="data?.tracks" :data="data" />

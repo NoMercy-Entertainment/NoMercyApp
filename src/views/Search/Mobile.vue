@@ -230,7 +230,7 @@ html.keyboard-open #search-bar {
 	margin: 0;
 	bottom: 0;
 }
-ion-content:has(input:valid) #search-bar {
+ion-content:has(input:not(:placeholder-shown)) #search-bar {
 	translate: 0 0;
 	bottom: 0;
 	margin: 0;

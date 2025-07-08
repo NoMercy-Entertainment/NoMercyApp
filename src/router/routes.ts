@@ -72,6 +72,7 @@ function DevPerformanceDashboard() {
 const SetupSelectServer = () => import('@/views/Setup/SelectServers');
 const SetupNoServer = () => import('@/views/Setup/NoServers');
 const SetupServerOffline = () => import('@/views/Setup/ServerOffline');
+const SetupPostInstall = () => import('@/views/Setup/PostInstall');
 
 const NotFound = () => import('@/views/NotFound');
 
@@ -202,14 +203,6 @@ export const routes: Array<RouteRecordRaw> = [
 				path: ':type/:id/watch',
 				name: 'Watch',
 				component: BaseWatch,
-			},
-			{
-				path: ':catchAll(.*)*',
-				component: NotFound,
-				props: {
-					message: 'Page not found',
-					status: 404,
-				},
 			},
 		],
 	},
@@ -496,6 +489,11 @@ export const routes: Array<RouteRecordRaw> = [
 				name: 'Server offline',
 				component: SetupServerOffline,
 			},
+			{
+				path: 'post-install',
+				name: 'Post Install',
+				component: SetupPostInstall,
+			},
 		],
 	},
 	{
@@ -514,6 +512,14 @@ export const routes: Array<RouteRecordRaw> = [
 		meta: {
 			public: true,
 			bypassSetup: true,
+		},
+	},
+	{
+		path: '/:catchAll(.*)*',
+		component: NotFound,
+		props: {
+			message: 'Page not found',
+			status: 404,
 		},
 	},
 ];

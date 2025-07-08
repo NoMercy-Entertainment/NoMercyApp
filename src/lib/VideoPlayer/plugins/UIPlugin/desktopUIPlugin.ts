@@ -1594,7 +1594,7 @@ export class DesktopUIPlugin extends BaseUIPlugin {
     subtitleSettingButtonValueText: HTMLSpanElement
   ) {
     if (data.property === "fontFamily") {
-      console.log(fontFamilies.find((f) => f.value === value));
+      this.player.options.debug && console.log(fontFamilies.find((f) => f.value === value));
       subtitleSettingButtonValueText.innerText = fontFamilies.find(
         (f) => f.value === value
       )!.name;

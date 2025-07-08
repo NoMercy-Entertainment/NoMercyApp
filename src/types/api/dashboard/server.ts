@@ -63,6 +63,8 @@ export interface ServerInfo {
 	gpu: string[];
 	version: string;
 	bootTime: number;
+	os_version: string;
+	setup_complete: boolean;
 }
 
 export interface ServerTask {

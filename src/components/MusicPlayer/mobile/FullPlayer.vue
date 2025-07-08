@@ -132,7 +132,7 @@ function handleExpand() {
 		}, 500);
 	}
 	else {
-		lyricsContainer.value!.style.height = `${window.innerHeight * 0.85}px`;
+		lyricsContainer.value!.style.height = `${window.innerHeight * 0.915}px`;
 		setTimeout(() => {
 			// @ts-ignore
 			content.value.$el?.scrollToBottom();
@@ -204,7 +204,7 @@ async function onWillDismiss() {
 			</div>
 
 			<div
-				class="frosting relative mx-3 -mt-10 rounded-2xl pt-10 w-available bg-focus/60 shadow"
+				class="frosting relative mx-3 mb-4 -mt-10 rounded-2xl pt-10 w-available bg-focus/60 shadow"
 			>
 				<div
 					class="absolute top-0 z-10 flex w-full items-center rounded-t-2xl pr-2 pl-4 font-semibold"
@@ -246,7 +246,8 @@ html.plt-mobileweb:has(#miniPlayer) ion-content::part(scroll) {
 }
 
 ion-modal#fullPlayer ion-content::part(scroll) {
-	@apply absolute pt-0 mt-0 #{!important};
+	--offset-bottom: -1rem;
+	@apply absolute pt-0 mt-0 pb-0 #{!important};
 }
 
 ion-modal::part(content) {

@@ -184,7 +184,7 @@ ion-item::part(native) {
 		--offset-top: -0rem;
 	}
 	html:has(.toolbar) ion-content::part(scroll) {
-		--offset-top: -2.5rem;
+		--offset-top: -3.5rem;
 	}
 
 	html.plt-mobileweb:has(ion-toolbar:first-child:nth-last-child(2) ~ *) ion-content::part(scroll) {
@@ -193,4 +193,8 @@ ion-item::part(native) {
 	html.plt-mobileweb:has(#fullPlayer:not(.overlay-hidden)) ion-content::part(scroll) {
 		--offset-top: 0.5rem;
 	}
+}
+
+.ion-page-invisible {
+	pointer-events: none;
 }

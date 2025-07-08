@@ -29,3 +29,26 @@ export const keycloakConfig: KeycloakConfig = {
 
 export const tmdbImageBaseUrl = 'https://image.tmdb.org/t/p';
 export const tmdbApiKey = 'ed3bf860adef0537783e4abee86d65af';
+
+export const libraryTypes = [
+	{
+		name: 'Movies',
+		value: 'movie',
+	},
+	{
+		name: 'TV Shows',
+		value: 'tv',
+	},
+	{
+		name: 'Music',
+		value: 'music',
+	},
+	// {
+	// 	name: 'Audio Books',
+	// 	value: 'book',
+	// },
+	{
+		name: 'Images',
+		value: 'image',
+	},
+];

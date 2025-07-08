@@ -1559,7 +1559,7 @@ async function loadIconOptimized(name: string): Promise<string> {
 	catch (error) {
 		try {
 			// Try to load from extracted mooooom icons
-			// @vite-ignore
+			/* @vite-ignore */
 			const moooomModule = await import(`./${name}.svg`);
 
 			if (typeof moooomModule.default === 'string') {
@@ -1575,7 +1575,7 @@ async function loadIconOptimized(name: string): Promise<string> {
 		catch (moooomError) {
 			try {
 				// Fallback to regular import without ?import
-				// @vite-ignore
+				/* @vite-ignore */
 				const fallbackModule = await import(`./${name}.svg`);
 				return fallbackModule.default || fallbackModule.src || '';
 			}

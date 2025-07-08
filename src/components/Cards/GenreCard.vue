@@ -41,10 +41,10 @@ const genreColor = computed(() => genreColors(props.data.title));
 	>
 		<div class="backdropCard-overlay" />
 		<div
-			class="relative flex flex-shrink-0 flex-grow-0 flex-col items-center justify-center h-[70%]"
+			class="relative flex flex-shrink-0 flex-grow-0 flex-col items-center justify-center h-[80%]"
 		>
 			<div
-				:class="`flex items-center justify-center w-auto h-auto aspect-square p-4 object-cover rounded-3xl overflow-clip transition-all duration-200 ${rotate} ${genreColor.iconBg} rounded-3xl
+				:class="`flex items-center justify-center w-auto h-auto aspect-square p-4 -translate-y-[20%] object-cover rounded-3xl overflow-clip transition-all duration-200 ${rotate} ${genreColor.iconBg} rounded-3xl
             shadow-[0_1px_0_0_rgba(255,255,255,0.20)_inset,0_-1px_0_0_rgba(var(--color-slate-9)/60%)_inset,0_22px_30px_-4px_rgba(var(--color-slate-9)/70%)]
             hover:!shadow-[0_1px_0_0_rgba(255,255,255,0.20)_inset,0_-1px_0_0_rgba(var(--color-slate-11)/60%)_inset,0_22px_30px_-4px_rgba(var(--color-slate-11)/70%)]
             dark:shadow-[0_1px_0_0_rgba(255,255,255,0.20)_inset,0_-1px_0_0_rgba(var(--color-slate-1)/30%)_inset,0_22px_30px_-4px_rgba(var(--color-slate-1)/70%)]

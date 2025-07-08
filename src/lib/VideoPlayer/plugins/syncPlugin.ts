@@ -53,9 +53,6 @@ export class SyncPlugin extends Plugin {
 			const socket = useVideoSocket();
 			socket?.invoke('RemoveWatched', this.episodeData()).then();
 		}
-
-		this.dispose();
-		this.player.dispose();
 	}
 
   episodeData() {

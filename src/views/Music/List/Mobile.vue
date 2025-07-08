@@ -161,7 +161,7 @@ watch(container, () => {
 					!route.params.id || (route.params.id && data?.id === route.params.id)
 				"
 				ref="main"
-				class="flex flex-col h-auto overflow-x-clip w-available sm:rounded-2xl -mt-safe-offset-6 bg-[rgb(var(--background-auto))]"
+				class="flex flex-col h-auto overflow-x-clip w-available sm:rounded-2xl -mt-6 bg-[rgb(var(--background-auto))]"
 			>
 				<ArtistHeader :data="data" />
 
@@ -194,7 +194,7 @@ watch(container, () => {
 
 						<div
 							id="navText"
-							class="pointer-events-none whitespace-pre text-left relative z-20 line-clamp-1 h-auto self-center font-bold leading-none transition-all duration-200 w-[80%] overflow-clip text-xl"
+							class="pointer-events-none whitespace-pre text-left relative z-20 line-clamp-1 h-auto self-center font-bold leading-none transition-all duration-200 w-[70%] overflow-clip text-xl"
 							:class="{
 								'opacity-0 pointer-events-none': !showScrollHeader,
 								'opacity-100 pointer-events-auto': showScrollHeader,

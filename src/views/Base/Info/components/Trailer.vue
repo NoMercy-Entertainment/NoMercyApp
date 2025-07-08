@@ -17,7 +17,7 @@ const props = defineProps({
 		required: true,
 	},
 	toggle: {
-		type: Function as PropType<(e: MouseEvent) => void>,
+		type: Function as PropType<() => void>,
 		required: true,
 	},
 	open: {

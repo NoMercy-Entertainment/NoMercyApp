@@ -70,7 +70,7 @@ export async function copyToClipboard(text: string): Promise<boolean> {
 			await navigator.clipboard.writeText(text);
 			return true;
 		}
-		catch (e) {
+		catch {
 			return false;
 		}
 	}
@@ -137,7 +137,6 @@ export function generateRandomString(length: number): string {
  * Sort by key (optional)
  * @param {Array} array Array
  * @param {string} key Group key
- * @param {string} key Sort key
  */
 export function groupBy<T>(array: T[], key: string): T[][] {
 	const list: any = {};
@@ -164,7 +163,7 @@ export function isJsonString(str: string) {
 	try {
 		JSON.parse(str);
 	}
-	catch (error) {
+	catch {
 		return false;
 	}
 	return true;
@@ -292,7 +291,7 @@ export function sortBy<T>(arr: T[], key: string, direction = 'asc',	subKey?: str
  * Sort Array of objects by a priority list.
  * @param {Array} sortingOrder Sorting Order
  * @param {string} key Sort key
- * @param {string} key Sort direction
+ * @param {string} order Sort direction
  */
 export function sortByPriorityKeyed<T = string>(sortingOrder: {
 	[x: string]: T;
@@ -312,16 +311,12 @@ export function sortByPriorityKeyed<T = string>(sortingOrder: {
 			return 0;
 		}
 
-		const first
-      = (a[key as keyof typeof a] as string).toString().toLowerCase()
-      	in sortingOrder
-      	? sortingOrder[a[key as keyof typeof a] as string]
-      	: Number.MAX_SAFE_INTEGER;
-		const second
-      = (b[key as keyof typeof b] as string).toString().toLowerCase()
-      	in sortingOrder
-      	? sortingOrder[b[key as keyof typeof b] as string]
-      	: Number.MAX_SAFE_INTEGER;
+		const first = (a[key as keyof typeof a] as string).toString().toLowerCase() in sortingOrder
+			? sortingOrder[a[key as keyof typeof a] as string]
+			: Number.MAX_SAFE_INTEGER;
+		const second = (b[key as keyof typeof b] as string).toString().toLowerCase() in sortingOrder
+			? sortingOrder[b[key as keyof typeof b] as string]
+			: Number.MAX_SAFE_INTEGER;
 
 		let result = 0;
 		if (first > second) {
@@ -452,13 +447,17 @@ export function sortByPriority(arr: any[], prefferedOrder: string | any[]) {
 /**
  * SortCallback.
  * Sort Array of objects by Updated at,
- * @param {Array} array Array
- * @param {string} key Group key
+ * @param a
+ * @param a.updated_at Updated at property
+ * @param b
+ * @param b.updated_at Updated at property
  * @param {string} direction Sort direction
  */
-export function sort_updated(a: { updated_at: string | number | Date }, b: {
-	updated_at: string | number | Date;
-}, direction = 'asc') {
+export function sort_updated(
+	a: { updated_at: string | number | Date },
+	b: { updated_at: string | number | Date },
+	direction = 'asc',
+): 0 | 1 | -1 {
 	const keyA = new Date(a.updated_at);
 	const keyB = new Date(b.updated_at);
 	if (keyA < keyB) {
@@ -799,9 +798,9 @@ export function create_UUID() {
 	) // /tv/1433/season/1/episode/1?api_key=ABCDEFGHIJK&language=en-US
  */
 export function stringFormat(template: string, ...values: Array<string | number>): string {
-	const regex = new RegExp(/\{(?<index>\d+)\}/u, 'gu');
+	const regex = /\{(?<index>\d+)\}/gu;
 	const matches = template.match(regex);
-	if (matches?.length === null)
+	if (!matches || matches?.length === null)
 		return template;
 
 	let string = template;
