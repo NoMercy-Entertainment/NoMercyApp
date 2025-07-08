@@ -1,0 +1,1 @@
+import{$ as t}from"./vue-ionic-Ct1zWn9G.js";import"./vendor-BO8Pa1dw.js";import"./icons-BW5E66pf.js";import"./rxjs-BCp2L9Rn.js";import"./media-C2AqgyMX.js";import"./api-BBofn2cc.js";import"./swiper-D00Cnjmx.js";const c=t({__name:"Mobile",setup(o){return(r,p)=>null}});export{c as default};
