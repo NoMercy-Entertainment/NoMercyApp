@@ -681,7 +681,7 @@ export class DesktopUIPlugin extends BaseUIPlugin {
       .appendTo(menuWrapper)
       .get();
 
-    this.sizeMenuFrame();
+      this.sizeMenuFrame();
 
     const menuContent = this.player
       .createElement("div", "menu-content")
@@ -698,6 +698,12 @@ export class DesktopUIPlugin extends BaseUIPlugin {
       .appendTo(menuFrame)
       .get();
 
+    this.player.on("ready", () => {
+      this.sizeMenuFrame();
+    });
+    this.player.on("play", () => {
+      this.sizeMenuFrame();
+    });
     this.player.on("resize", () => {
       this.sizeMenuFrame();
     });
@@ -2567,13 +2573,12 @@ export class DesktopUIPlugin extends BaseUIPlugin {
       .get();
     seasonScrollContainer.style.transform = "translateX(0)";
 
-    seasonScrollContainer.innerHTML = "";
-    for (const [, item] of unique(
-      this.player.getPlaylist(),
-      "season"
-    ).entries() ?? []) {
-      this.createSeasonMenuButton(seasonScrollContainer, item);
-    }
+    this.player.on("playlist", (data) => {
+      seasonScrollContainer.innerHTML = "";
+      for (const [, item] of unique(this.player.getPlaylist(), "season").entries() ?? []) {
+        this.createSeasonMenuButton(seasonScrollContainer, item);
+      }
+    });
 
     const episodeMenu = this.player
       .createElement("div", "episode-menu")
@@ -2595,10 +2600,6 @@ export class DesktopUIPlugin extends BaseUIPlugin {
     scrollContainer.addEventListener("focus", () => {
       (scrollContainer.firstChild as HTMLButtonElement)?.focus();
     });
-
-    for (const [index, item] of this.player.getPlaylist().entries() ?? []) {
-      this.createEpisodeMenuButton(scrollContainer, item, index);
-    }
 
     this.player.on("playlist", (data) => {
       scrollContainer.innerHTML = "";
@@ -2627,7 +2628,7 @@ export class DesktopUIPlugin extends BaseUIPlugin {
     item: PlaylistItem,
     hovered = false
   ) {
-    if (!item?.season) return;
+    if (item?.season === null || item?.season === undefined) return;
 
     const seasonButton = this.player
       .createElement("button", `season-${item.id}`)
@@ -2656,7 +2657,8 @@ export class DesktopUIPlugin extends BaseUIPlugin {
     );
     this.player.addClasses(chevron, ["ml-auto"]);
 
-    seasonButton.addEventListener("click", () => {
+    seasonButton.addEventListener("click", (e) => {
+      e.stopPropagation();
       this.player.emit("switch-season", item?.season);
     });
 

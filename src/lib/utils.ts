@@ -272,7 +272,7 @@ export async function unlockOrientation() {
 		try {
 			ScreenOrientation.unlock().then();
 		}
-		catch (e) {
+		catch {
 			//
 		}
 	}

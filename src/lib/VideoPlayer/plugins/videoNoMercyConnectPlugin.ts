@@ -223,7 +223,7 @@ export class VideoNoMercyConnectPlugin extends Plugin {
         if (state.current_quality?.width != null) {
             const index = this.player.getQualityLevels()
                 .findIndex(c => c.width === state.current_quality.width);
-            console.log("Quality index: ", index, state.current_quality);
+            // console.log("Quality index: ", index, state.current_quality);
             if (index != null) {
                 this.player.setCurrentQuality(index);
             }

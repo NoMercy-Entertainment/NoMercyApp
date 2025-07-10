@@ -134,8 +134,7 @@ useMounted(startDashboardSocket, stopDashboardSocket, 20);
 const showError = computed(() => {
 	return (
 		(accessError.value?.code
-			|| isPending.value
-			|| !dashboardSocketIsConnected.value)
+			|| isPending.value)
 		&& !props.allowAnyone
 	);
 });
@@ -180,7 +179,7 @@ watch(dataUpdatedAt, (value) => {
 				' min-h-[92vh] sm:min-h-[92.75vh]': !$slots.cta,
 				' min-h-[92vh] sm:min-h-[90.1vh]': !!$slots.cta,
 			}"
-			class="flex flex-col relative z-0 flex-1 h-available h-px overflow-clip items-start justify-start self-stretch w-available bg-slate-light-4 dark:bg-slate-dark-2"
+			class="flex flex-col relative z-0 flex-1 h-available overflow-clip items-start justify-start self-stretch w-available bg-slate-light-4 dark:bg-slate-dark-2"
 		>
 			<div
 				class="sticky top-0 z-10 flex flex-shrink-0 flex-grow-0 flex-col items-start justify-start gap-5 self-stretch"
