@@ -30,6 +30,7 @@ import MusicPlayerDesktop from '@/components/MusicPlayer/MusicPlayerDesktop.vue'
 import EqualizerOverlay from '@/Layout/Desktop/components/Overlays/EqualizerOverlay.vue';
 import ChristmasSnow from '@/components/Seasonal/Christmas/ChristmasSnow.vue';
 import { isDarkMode } from '@/config/global.ts';
+import Shadow from '@/Layout/Desktop/components/Shadow.vue';
 
 const route = useRoute();
 
@@ -89,6 +90,7 @@ function focusMain() {
 						<div
 							class="flex flex-col relative overflow-auto justify-start items-start w-available h-available sm:rounded-2xl flex-1 border-auto-alpha-2 !bg-cover children:scrollbar-none sm:border-3"
 						>
+							<Shadow />
 							<main
 								id="main"
 								class="flex h-auto flex-1 flex-grow flex-col items-start justify-start self-stretch bg-cover bg-center bg-no-repeat min-h-available w-available scrollbar-none sm:child:border-2 sm:rounded-2xl"

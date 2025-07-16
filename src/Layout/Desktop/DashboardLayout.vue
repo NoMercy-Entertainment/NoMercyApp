@@ -179,7 +179,7 @@ watch(dataUpdatedAt, (value) => {
 				' min-h-[92vh] sm:min-h-[92.75vh]': !$slots.cta,
 				' min-h-[92vh] sm:min-h-[90.1vh]': !!$slots.cta,
 			}"
-			class="flex flex-col relative z-0 flex-1 h-available overflow-clip items-start justify-start self-stretch w-available bg-slate-light-4 dark:bg-slate-dark-2"
+			class="flex flex-col relative z-0 flex-1 h-available overflow-clip items-start justify-start self-stretch w-available "
 		>
 			<div
 				class="sticky top-0 z-10 flex flex-shrink-0 flex-grow-0 flex-col items-start justify-start gap-5 self-stretch"
@@ -188,7 +188,7 @@ watch(dataUpdatedAt, (value) => {
 				<div class="absolute inset-0 z-0 h-full w-full" />
 				<!--			<Shadow type="linear"/> -->
 				<div
-					class="z-10 flex h-20 items-center justify-between gap-4 self-stretch border-b px-4 py-4 border-auto-7/6 xl:px-6 bg-slate-light-4 dark:bg-slate-dark-2"
+					class="z-10 flex h-20 items-center justify-between gap-4 self-stretch border-b px-4 py-4 border-auto-7/6 xl:px-6 "
 				>
 					<div
 						class="relative flex h-full flex-col items-start justify-center gap-1 text-slate-light-12/80 dark:text-slate-dark-12/80"
@@ -223,7 +223,7 @@ watch(dataUpdatedAt, (value) => {
 
 			<div
 				v-if="error"
-				class="grid h-full w-full place-items-center bg-slate-light-4 dark:bg-slate-dark-2"
+				class="grid h-full w-full place-items-center"
 			>
 				<div
 					class="relative flex flex-col items-center justify-start gap-8 overflow-hidden"
@@ -246,7 +246,7 @@ watch(dataUpdatedAt, (value) => {
 				v-else
 				:static="true"
 				frame
-				class="z-0 w-full flex-1 overflow-y-auto overflow-x-hidden sm:p-4 bg-slate-light-4 dark:bg-slate-dark-2"
+				class="z-0 w-full flex-1 overflow-y-auto overflow-x-hidden sm:p-4"
 			>
 				<div
 					class="h-auto w-full flex-wrap content-start gap-4 flex-1"

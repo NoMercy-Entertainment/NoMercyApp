@@ -387,7 +387,7 @@ const shareData = computed<ShareOptions>(() => ({
 								>
 									<div
 										v-if="data?.poster"
-										class="absolute z-10 col-start-1 content-center col-end-2 h-auto w-full items-start justify-start rounded-lg -top-[2vh] sm:block"
+										class="absolute z-10 col-start-1 content-center col-end-2 h-auto w-full items-start justify-start rounded-lg top-0 -translate-y-[25%] sm:block"
 									>
 										<RouterLink
 											:to="`/${data?.media_type}/${data?.id}/watch`"
