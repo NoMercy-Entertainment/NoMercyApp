@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { computed, onMounted, onUnmounted, ref, watch } from 'vue';
 import { useRoute } from 'vue-router';
-import axios from 'axios';
 import { useTranslation } from 'i18next-vue';
 import { IonContent, IonPage } from '@ionic/vue';
 import type { ShareOptions } from '@capacitor/share';
@@ -100,11 +99,25 @@ function processTrailer(value: InfoResponse | undefined) {
       	});
 	}, 1000);
 
-	axios
+	// axios
+	//     .head(
+	//         `https://trailer.nomercy.tv/${value.videos[trailerIndex.value]?.src}/${
+	//             value.videos[trailerIndex.value]?.src
+	//         }.webm`,
+	//         {
+	//           withCredentials: false,
+	//         },
+	//     )
+	//     .then(() => {
+	//       trailerState.value = true;
+	//     })
+	//     .catch(() => {
+	//       incrementTrailerIndex();
+	//       trailerState.value = false;
+	//     });
+	serverClient()
 		.head(
-			`https://trailer.nomercy.tv/${value.videos[trailerIndex.value]?.src}/${
-				value.videos[trailerIndex.value]?.src
-			}.webm`,
+			`trailer/${value.videos[trailerIndex.value]?.src}`,
 			{
 				withCredentials: false,
 			},
@@ -184,8 +197,14 @@ function incrementTrailerIndex() {
 	else {
 		trailerIndex.value++;
 	}
-	trailerIndex.value++;
 }
+
+watch(trailerIndex, (value, oldValue) => {
+	if (!value || value === oldValue)
+		return;
+
+	processTrailer(data?.value);
+});
 
 function toggleWatched() {}
 
@@ -387,16 +406,15 @@ const shareData = computed<ShareOptions>(() => ({
 								>
 									<div
 										v-if="data?.poster"
-										class="absolute z-10 col-start-1 content-center col-end-2 h-auto w-full items-start justify-start rounded-lg top-0 -translate-y-[25%] sm:block"
+										class="absolute z-10 col-start-1 content-center col-end-2 h-auto w-full items-start justify-start rounded-lg top-0 -translate-y-[35%] sm:block"
 									>
 										<RouterLink
 											:to="`/${data?.media_type}/${data?.id}/watch`"
 											:aria-label="$t('Play')"
-											:class="`relative h-auto m-auto mx-auto w-[65%] scale-95 cursor-default group/card block z-0 transitioning rounded-2xl aspect-poster overflow-clip select-none cover !shadow-none max-h-available  ${
-												hasItem
-													? 'hover:!scale-100 hover:-translate-y-1 3xl:-mt-40'
-													: ''
-											}`"
+											class="relative h-available m-auto mx-auto flex-1 flex max-w-[65%] scale-95 cursor-default group/card block z-0 transitioning rounded-2xl aspect-poster overflow-clip select-none cover !shadow-none max-h-available  hover:!scale-100 hover:-translate-y-1 4xl:-mt-0 5xl:-mt-20"
+											:class="{
+												'hover:!scale-100 hover:-translate-y-1': hasItem,
+											}"
 											data-nav="true"
 											data-nav-r="play"
 											data-nav-reset="true"
