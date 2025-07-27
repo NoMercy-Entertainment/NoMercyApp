@@ -3,10 +3,13 @@ import Backend from 'i18next-http-backend';
 
 import type { Language } from '@/types/api/shared';
 
+const language	= localStorage.getItem('displayLanguage')?.replace(/"/gu, '')
+	|| navigator.language.split('-')?.[0];
+
 i18next
 	.use(Backend)
 	.init({
-		lng: navigator.language.split('-')?.[0] ?? 'en',
+		lng: language,
 		fallbackLng: 'en',
 		debug: false,
 		load: 'currentOnly',

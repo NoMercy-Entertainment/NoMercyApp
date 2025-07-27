@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { onBeforeUnmount, onMounted, onUnmounted, type PropType, ref, watch } from 'vue';
+import { onMounted, onUnmounted, type PropType, ref, watch } from 'vue';
 
 import type { InfoResponse } from '@/types/api/base/info';
 
@@ -157,16 +157,11 @@ onMounted(() => {
 
 	audioPlayer.stop();
 	sidebarState.value = sidebar.value;
+
 	setDisableScreensaver(true);
 	closeSidebar();
 
 	initPlayer(data.value);
-});
-
-onBeforeUnmount(() => {
-	console.log('Unmounting player');
-	trailer.value?.dispose();
-	setDisableScreensaver(false);
 });
 
 // const trailer = ref<NMPlayer<NMPlaylistItem>>();
@@ -284,7 +279,7 @@ onBeforeUnmount(() => {
 // });
 
 onUnmounted(() => {
-	setSidebar(sidebarState.value);
+	setSidebar(sidebarState.value ?? 'open');
 	setDisableScreensaver(false);
 
 	if (trailer.value) {

@@ -1,6 +1,7 @@
 import type { AxiosRequestConfig, AxiosResponse } from 'axios';
 import axios from 'axios';
 import { keycloak, user } from '@/store/user';
+import { displayLanguage } from '@/store/preferences.ts';
 
 export interface AxiosInstance<E> {
 	request: <T = unknown>(
@@ -43,14 +44,10 @@ export default <T>({
 	baseUrl: string;
 	timeout?: number;
 }) => {
-	const language
-    = localStorage.getItem('NoMercy-displayLanguage')?.replace(/"/gu, '')
-    	|| navigator.language.split('-')?.[0];
-
 	const axiosInstance = axios.create({
 		headers: {
 			'Accept': 'application/json',
-			'Accept-Language': language,
+			'Accept-Language': displayLanguage.value,
 			'Authorization': `Bearer ${
 				user.value?.accessToken || localStorage.getItem('access_token')
 			}`,
