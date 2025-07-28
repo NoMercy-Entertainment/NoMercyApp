@@ -2,6 +2,7 @@ import { computed, ref } from 'vue';
 
 import type { User } from '@/types/auth';
 import type Keycloak from '@/types/keycloak';
+import { isPlatform } from '@ionic/vue';
 
 export const u = ref<User>(<User>{
 	accessToken: localStorage.getItem('access_token') || '',
@@ -21,19 +22,19 @@ export function setUser(newUser: User): void {
 
 export function setUserFromKeycloak(keycloakUser: Keycloak): void {
 	if (!keycloakUser) {
-		alert('No user found');
 		return;
 	}
 	if (!keycloakUser.tokenParsed) {
-		alert('No token parsed');
 		return;
 	}
 
 	keycloak.value = keycloakUser;
 
-	localStorage.setItem('access_token', keycloakUser.token);
-	localStorage.setItem('refresh_token', keycloakUser.refreshToken);
-	localStorage.setItem('id_token', keycloakUser.idToken);
+	if (isPlatform('capacitor')) {
+		localStorage.setItem('access_token', keycloakUser.token);
+		localStorage.setItem('refresh_token', keycloakUser.refreshToken);
+		localStorage.setItem('id_token', keycloakUser.idToken);
+	}
 
 	u.value = {
 		...u.value,

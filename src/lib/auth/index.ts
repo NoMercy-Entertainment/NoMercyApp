@@ -177,14 +177,16 @@ export function storeTokens(data: TokenResponse) {
 		expiresIn: data.expires_in,
 	});
 
-	localStorage.setItem('access_token', data.access_token);
-	localStorage.setItem('refresh_token', data.refresh_token);
-	localStorage.setItem('id_token', data.id_token);
+	if (isPlatform('capacitor')) {
+		localStorage.setItem('access_token', data.access_token);
+		localStorage.setItem('refresh_token', data.refresh_token);
+		localStorage.setItem('id_token', data.id_token);
+	}
 
 	try {
 		const decodedToken = parseToken<IDToken>(data.id_token!);
 
-		console.log('decodedToken');
+		console.log('decodedToken', decodedToken);
 		setUser({
 			...user.value,
 			name: decodedToken.display_name,
