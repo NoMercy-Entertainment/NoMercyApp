@@ -411,7 +411,7 @@ const shareData = computed<ShareOptions>(() => ({
 										<RouterLink
 											:to="`/${data?.media_type}/${data?.id}/watch`"
 											:aria-label="$t('Play')"
-											class="relative h-available m-auto mx-auto flex-1 flex max-w-[65%] scale-95 cursor-default group/card block z-0 transitioning rounded-2xl aspect-poster overflow-clip select-none cover !shadow-none max-h-available  hover:!scale-100 hover:-translate-y-1 4xl:-mt-0 5xl:-mt-20"
+											class="relative h-available m-auto mx-auto flex-1 flex max-w-[65%] scale-95 cursor-default group/card block z-0 transitioning rounded-2xl aspect-poster overflow-clip select-none cover !shadow-none max-h-available  hover:!scale-100 hover:-translate-y-1 4xl:-mt-0 5xl:-mt-20 mb-20"
 											:class="{
 												'hover:!scale-100 hover:-translate-y-1': hasItem,
 											}"

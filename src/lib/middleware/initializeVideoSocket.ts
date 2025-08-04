@@ -14,9 +14,7 @@ function initializeVideoSocket(): Promise<void> {
 		done.value = true;
 
 		if (
-			!currentServer.value
-			|| !user.value
-			|| !user.value.features?.nomercyConnect
+			!currentServer.value || !user.value
 		) {
 			user.value.features ??= {};
 			user.value.features.nomercyConnect = false;
