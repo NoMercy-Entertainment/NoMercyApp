@@ -50,6 +50,7 @@ export class BaseUIPlugin extends Plugin {
   playbackButton: HTMLButtonElement = <HTMLButtonElement>{};
   loader: HTMLDivElement = <HTMLDivElement>{};
   thumbnailClone: HTMLDivElement = <HTMLDivElement>{};
+  previewImage: HTMLImageElement = <HTMLImageElement>{};
 
   chapters: any[] = [];
   previewTime: PreviewTime[] = [];
@@ -110,7 +111,7 @@ export class BaseUIPlugin extends Plugin {
   menuButtonTextStyles = [
     "menu-button-text",
     "text-white",
-    "cursor-pointer",
+    "pointer-events-none",
     "font-semibold",
     "pl-2",
     "flex",
@@ -131,6 +132,7 @@ export class BaseUIPlugin extends Plugin {
     "leading-[normal]",
     "line-clamp-1",
   ];
+  private dataURL?: string;
 
   constructor() {
     super();
@@ -315,37 +317,51 @@ export class BaseUIPlugin extends Plugin {
     path2.setAttribute("fill", "currentFill");
     spinner.appendChild(path2);
   }
-  fetchPreviewTime() {
+
+  getClosestSeekableInterval() {
+    const scrubTime = this.player.getCurrentTime();
+    const interval = this.previewTime.find((interval) => {
+      return scrubTime >= interval.start && scrubTime < interval.end;
+    })!;
+    return interval?.start;
+  }
+
+  async fetchPreviewTime() {
     if (this.previewTime.length === 0) {
       const imageFile = this.player.getSpriteFile();
 
-      const img = new Image();
-      this.player.once("item", () => {
-        img.remove();
-      });
+      this.previewImage = new Image();
+      // this.player.once("item", () => {
+      //   this.previewImage.remove();
+      //   this.previewTime = [];
+      //
+      // });
 
       if (imageFile) {
         this.image = imageFile;
         if (this.player.options.accessToken) {
-          this.player
+          await this.player
             .getFileContents<Blob>({
               url: imageFile,
               options: {
                 type: "blob",
               },
               callback: (data: Blob) => {
-                const dataURL = URL.createObjectURL(data as Blob);
+                if(this.dataURL) {
+                  URL.revokeObjectURL(this.dataURL);
+                }
+                this.dataURL = URL.createObjectURL(data as Blob);
 
-                img.src = dataURL;
+                this.previewImage.src = this.dataURL;
 
                 if (this.sliderPopImage.style) {
-                  this.sliderPopImage.style.backgroundImage = `url('${dataURL}')`;
+                  this.sliderPopImage.style.backgroundImage = `url('${this.dataURL}')`;
                 }
 
                 // release memory
-                this.player.once("item", () => {
-                  URL.revokeObjectURL(dataURL);
-                });
+                // this.player.once("item", () => {
+                //   URL.revokeObjectURL(dataURL);
+                // });
                 setTimeout(() => {
                   this.player.emit("preview-time", this.previewTime);
                 }, 400);
@@ -357,7 +373,7 @@ export class BaseUIPlugin extends Plugin {
             this.sliderPopImage.style.backgroundImage = `url('${imageFile}')`;
           }
 
-          img.src = imageFile;
+          this.previewImage.src = imageFile;
           setTimeout(() => {
             this.player.emit("preview-time", this.previewTime);
           }, 400);
@@ -365,22 +381,22 @@ export class BaseUIPlugin extends Plugin {
       }
 
       const timeFile = this.player.getTimeFile();
-      if (timeFile && this.currentTimeFile !== timeFile) {
-        this.player.currentTimeFile = timeFile;
+      if (timeFile && (this.currentTimeFile !== timeFile || this.previewTime.length === 0)) {
+        this.currentTimeFile = timeFile;
 
-        img.onload = () => {
-          this.player
+        this.previewImage.onload = async () => {
+          await this.player
             .getFileContents<string>({
               url: timeFile,
               options: {
                 type: "text",
               },
               callback: (data: string) => {
+                if (this.previewTime.length > 0) return;
+
                 const parser = new WebVTTParser();
                 const vtt = parser.parse(data, "metadata");
                 const regex = /(?<x>\d*),(?<y>\d*),(?<w>\d*),(?<h>\d*)/u;
-
-                this.previewTime = [];
 
                 vtt.cues.forEach((cue) => {
                   const match = regex.exec(cue.text);
@@ -407,8 +423,8 @@ export class BaseUIPlugin extends Plugin {
                 }, 400);
               },
             })
-            .then(() => {
-              this.loadSliderPopImage(0);
+            .then(async () => {
+              await this.loadSliderPopImage({startTime: 0});
             });
         };
       }
@@ -1720,128 +1736,6 @@ export class BaseUIPlugin extends Plugin {
     return playerMessage;
   }
 
-  createSeekContainer(parent: HTMLElement) {
-    const seekContainer = this.player
-      .createElement("div", "seek-container")
-      .addClasses([
-        "relative",
-        "h-auto",
-        "mb-28",
-        "w-available",
-        "translate-y-[80vh]",
-        "z-40",
-        "w-available",
-      ])
-      .appendTo(parent)
-      .get();
-
-    const seekScrollCloneContainer = this.player
-      .createElement("div", "seek-scroll-clone-container")
-      .addClasses([
-        "[--gap:1.5rem]",
-        "absolute",
-        "flex",
-        "h-available",
-        "w-available",
-        "gap-[var(--gap)]",
-        "z-10",
-        "pointer-events-none",
-      ])
-      .appendTo(seekContainer)
-      .get();
-
-    this.thumbnailClone = this.player
-      .createElement("div", `thumbnail-clone-${1}`)
-      .addClasses(["h-auto", "object-cover", "border-4", "mx-auto"])
-      .appendTo(seekScrollCloneContainer)
-      .get();
-
-    const seekScrollContainer = this.player
-      .createElement("div", "seek-scroll-container")
-      .addClasses([
-        "relative",
-        "flex",
-        "h-available",
-        "w-available",
-        "overflow-auto",
-        "px-[calc(100%/2.14)]",
-        "gap-1.5",
-        "scrollbar-none",
-      ])
-      .appendTo(seekContainer)
-      .get();
-
-    this.player.once("item", () => {
-      this.player.on("preview-time", () => {
-        this.thumbs = [];
-        for (const time of this.previewTime) {
-          this.thumbs.push({
-            time,
-            el: this.createThumbnail(time),
-          });
-        }
-
-        seekScrollContainer.innerHTML = "";
-        unique(
-          this.thumbs.map((t) => t.el),
-          "id"
-        ).forEach((thumb) => {
-          seekScrollContainer.appendChild(thumb);
-        });
-
-        this.player.once("time", () => {
-          this.currentScrubTime = this.player.getClosestSeekableInterval();
-          this.player.emit("currentScrubTime", {
-            ...this.player.getTimeData(),
-            currentTime: this.player.getClosestSeekableInterval(),
-          });
-        });
-      });
-    });
-
-    this.player.on("lastTimeTrigger", () => {
-      this.currentScrubTime = this.player.getClosestSeekableInterval();
-      this.player.emit("currentScrubTime", {
-        ...this.player.getTimeData(),
-        currentTime: this.player.getClosestSeekableInterval(),
-      });
-    });
-
-    this.player.on("currentScrubTime", (data: TimeData) => {
-      if (data.currentTime <= 0) {
-        data.currentTime = 0;
-      }
-      else if (data.currentTime >= this.player.getDuration()) {
-        data.currentTime = this.player.getDuration();
-      }
-
-      const thumb = this.thumbs.find((thumb) => {
-        return (
-          data.currentTime >= thumb.time.start &&
-          data.currentTime <= thumb.time.end
-        );
-      });
-
-      this.currentScrubTime = data.currentTime;
-
-      if (!thumb) return;
-
-      this.player.scrollIntoView(thumb.el);
-    });
-
-    this.player.on("show-seek-container", (value) => {
-      if (value) {
-        seekContainer.style.transform = "none";
-
-        this.player.pause();
-      } else {
-        this.seekContainer.style.transform = "";
-      }
-    });
-
-    return seekContainer;
-  }
-
   createTopBar(parent: HTMLElement) {
     return this.player
       .createElement("div", "top-bar")
@@ -2096,14 +1990,7 @@ export class BaseUIPlugin extends Plugin {
       ])
       .get();
 
-    thumbnail.style.backgroundImage = `url('${
-      (this.player.options.basePath ? this.player.options.basePath : "") +
-      this.image
-    }${
-      this.player.options.accessToken
-        ? `?token=${this.player.options.accessToken}`
-        : ""
-    }')`;
+    thumbnail.style.backgroundImage = `url('${this.previewImage.src}')`;
     thumbnail.style.backgroundPosition = `-${time.x}px -${time.y}px`;
     thumbnail.style.width = `max(232px, ${time.w}px)`;
     thumbnail.style.minWidth = `max(232px, ${time.w}px)`;
@@ -2116,8 +2003,8 @@ export class BaseUIPlugin extends Plugin {
     return thumbnail;
   }
 
-  getSliderPopImage(scrubTime: any) {
-    const img = this.loadSliderPopImage(scrubTime);
+  async getSliderPopImage(scrubTime: any) {
+    const img = await this.loadSliderPopImage(scrubTime);
 
     if (img) {
       this.sliderPopImage.style.backgroundPosition = `-${img.x}px -${img.y}px`;
@@ -2138,8 +2025,8 @@ export class BaseUIPlugin extends Plugin {
     return imgDimension;
   }
 
-  loadSliderPopImage(scrubTime?: any) {
-    this.fetchPreviewTime();
+  async loadSliderPopImage(scrubTime?: any) {
+    await this.fetchPreviewTime();
 
     let img = this.previewTime.find(
       (p: { start: number; end: number }) =>

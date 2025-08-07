@@ -2144,7 +2144,7 @@
 
 "@jofr/capacitor-media-session@^4.0.0":
   version "4.0.0"
-  resolved "https://registry.npmjs.org/@jofr/capacitor-media-session/-/capacitor-media-session-4.0.0.tgz"
+  resolved "https://registry.yarnpkg.com/@jofr/capacitor-media-session/-/capacitor-media-session-4.0.0.tgz#7cf17309426717be228047c15df61471d35dbba6"
   integrity sha512-IGfc6BUzeeR0sJkk+0/jij3l0h78NdTqPMwBc9LXZrojtiqNtg4tw3CnIkYGccwZ/0glV3hPl8HVNTElOPVCyg==
 
 "@jridgewell/gen-mapping@^0.3.2", "@jridgewell/gen-mapping@^0.3.5":
@@ -2305,10 +2305,10 @@
     audiomotion-analyzer "^4.5.0"
     hls.js "^1.5.13"
 
-"@nomercy-entertainment/nomercy-video-player@^0.4.5":
-  version "0.4.5"
-  resolved "https://registry.yarnpkg.com/@nomercy-entertainment/nomercy-video-player/-/nomercy-video-player-0.4.5.tgz#a159f04f8cda688eff6ac7b45c5a59c49588b035"
-  integrity sha512-SLbznoDNEqlTcHScKFCHQxU/URqcjA7yPi+gOMU90GXnpfgYobw5wgrO0i4Tel47LvTBW8VIzZCUb7erq2CoSA==
+"@nomercy-entertainment/nomercy-video-player@^0.4.6":
+  version "0.4.6"
+  resolved "https://registry.yarnpkg.com/@nomercy-entertainment/nomercy-video-player/-/nomercy-video-player-0.4.6.tgz#4bbaf1de09f82d76348f466bdbfebcb9c1adb036"
+  integrity sha512-XI/v8w+LL0XkhdehN09rz1nG3i7ZL96OC9tmm5LhHql4fCgQff5HGDIZnCBLnZ0hDfnca5sBZeYhFzaIYbv6WA==
   dependencies:
     "@nomercy-entertainment/media-session" "^0.1.11"
     "@sabre-js/sabre" "^0.5.1-pre.21da9b6"

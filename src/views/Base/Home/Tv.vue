@@ -45,6 +45,15 @@ watch(continueWatching, (value) => {
 
 onMounted(() => {
 	selected.value = continueWatching.value?.filter(item => item.id)?.at(0);
+
+	setTimeout(() => {
+		const target = document.querySelector(
+			`[data-card="${selected.value?.id}"]`,
+		) as HTMLAnchorElement;
+		if (target) {
+			target.focus();
+		}
+	}, 1000);
 });
 
 onIonViewDidEnter(() => {
@@ -57,18 +66,7 @@ onIonViewDidEnter(() => {
 		if (target) {
 			target.focus();
 		}
-	}, 100);
-});
-
-watch(selected, (value) => {
-	setTimeout(() => {
-		const target = document.querySelector(
-			`[data-card="${value?.id}"]`,
-		) as HTMLAnchorElement;
-		if (target) {
-			target.focus();
-		}
-	}, 100);
+	}, 1000);
 });
 
 const scrollContainer = ref<HTMLDivElement>();
@@ -150,7 +148,7 @@ function handleDown(event: KeyboardEvent) {
 	}
 }
 
-function handleUp(event: KeyboardEvent) {
+function handleUp() {
 	timeout.value = setTimeout(() => {
 		locked.value = false;
 	}, 150);

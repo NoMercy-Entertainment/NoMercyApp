@@ -1,5 +1,8 @@
 <script setup lang="ts">
 import { onMounted, type PropType, watch } from 'vue';
+import { useRoute } from 'vue-router';
+import { onIonViewWillEnter, IonSpinner } from '@ionic/vue';
+import { useOnline } from '@vueuse/core';
 
 import type { HomeItem } from '@/types/api/base/home';
 import {
@@ -10,10 +13,7 @@ import {
 	queryKey as qk,
 } from '@/lib/routerHelper';
 
-import { useOnline } from '@vueuse/core';
 import router from '@/router';
-import { onIonViewWillEnter } from '@ionic/vue';
-import { useRoute } from 'vue-router';
 
 const props = defineProps({
 	path: {
@@ -37,7 +37,7 @@ const queryKey = props.options.queryKey ?? qk();
 
 const isMutating = getMutating({ queryKey, path: props.path });
 
-const { data: homeData } = getQuery({ queryKey, path: props.path });
+const { data: homeData, isLoading } = getQuery({ queryKey, path: props.path });
 
 const { data: mutatedData, mutate } = getMutation({
 	queryKey,
@@ -104,7 +104,12 @@ onIonViewWillEnter(() => {
 </script>
 
 <template>
-	<template v-if="(!isMutating || !onlineStatus)">
+	<template v-if="isLoading">
+		<div class="grid w-available h-available place-items-center">
+			<IonSpinner name="crescent" class="ion-padding" />
+		</div>
+	</template>
+	<template v-else-if="(!isMutating || !onlineStatus)">
 		<component
 			:is="render?.component"
 			v-for="(render, index) in mutatedData ?? homeData ?? []"

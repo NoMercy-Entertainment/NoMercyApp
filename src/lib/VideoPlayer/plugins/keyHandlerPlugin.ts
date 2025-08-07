@@ -84,7 +84,7 @@ export class KeyHandlerPlugin extends Plugin {
 		if(this.hasNoMercyConnect()){
 			this.sendNoMercyConnectCommand("forward");
 		} else {
-			this.player.rewindVideo();
+			this.player.forwardVideo();
 		}
 	}
 
@@ -199,7 +199,7 @@ export class KeyHandlerPlugin extends Plugin {
 				name: 'Rewind',
 				key: 'ArrowLeft',
 				control: false,
-				function: () => this.handleBackward(),
+				function: () => !this.player.isTv() && this.handleBackward(),
 			},
 			{
 				name: 'Rewind',
@@ -214,7 +214,7 @@ export class KeyHandlerPlugin extends Plugin {
 				name: 'Fast forward',
 				key: 'ArrowRight',
 				control: false,
-				function: () => this.handleForward(),
+				function: () => !this.player.isTv() && this.handleForward(),
 			},
 			{
 				name: 'Fast forward',

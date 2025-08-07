@@ -31,7 +31,7 @@ defineProps({
 			{{ title }}
 		</h3>
 
-		<div class="relative isolate w-full flex flex-col whitespace-pre">
+		<div class="relative isolate w-full flex flex-col whitespace-pre gap-2 items-start justify-start p-1">
 			<component
 				:is="render.component"
 				v-for="(render, index) in items ?? []"

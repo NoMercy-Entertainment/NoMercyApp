@@ -261,7 +261,7 @@ function onError(e: Event) {
 		/>
 		<picture
 			v-if="!error && path && !path?.includes?.('undefined')"
-			class="pointer-events-none absolute inset-0 h-inherit flex select-none flex-col items-end justify-end self-end transition-all duration-500 max-h-inherit overflow-hidden"
+			class="pointer-events-none absolute inset-0 h-inherit flex select-none flex-col items-end justify-end tv:justify-start self-end transition-all duration-500 max-h-inherit overflow-hidden"
 			:style="`opacity: ${opacity}; float: ${type === 'logo' ? 'right' : ''}`"
 		>
 			<source :srcset="`${serverImageUrl} 1x`" type="image/avif">

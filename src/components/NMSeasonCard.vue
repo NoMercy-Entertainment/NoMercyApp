@@ -4,22 +4,36 @@ import type { PropType } from 'vue';
 import type { Episode } from '@/types/api/base/info';
 
 import { scrollIntoView } from '@/lib/utils';
-
 import { pickPaletteColor } from '@/lib/colorHelper';
+import type { ContextMenuItem } from '@/store/contextMenuItems.ts';
+
 import TMDBImage from '@/components/Images/TMDBImage.vue';
 import OptimizedIcon from '@/components/OptimizedIcon.vue';
+import { pad } from '@/lib/stringArray.ts';
 
 const props = defineProps({
 	data: {
-		type: Object as PropType<Episode>,
+		type: Object as PropType<Episode> | undefined,
 		required: true,
 	},
-	suffix: {
-		type: String,
+	watch: {
+		type: Boolean,
 		required: false,
-		default: '',
+		default: false,
+	},
+	disableAutoAspect: {
+		type: Boolean,
+		required: false,
+		default: false,
+	},
+	contextMenuItems: {
+		type: Array as PropType<ContextMenuItem[]>,
+		required: false,
+		default: () => [],
 	},
 });
+
+console.raw(props);
 </script>
 
 <template>
@@ -82,16 +96,13 @@ const props = defineProps({
 			class="grid w-full items-stretch gap-1 rounded-b-md p-2 transitioning text-left"
 		>
 			<p
-				class="z-10 w-auto text-2xs sm:text-sm font-bold !leading-5 h-10 line-clamp-2 sm:line-clamp-1"
-				:title="`${data?.episode_number ? `${data?.episode_number} - ` : ''}${
-					data?.title
-				}`"
+				class="z-10 w-auto flex-shrink-0 flex-grow-0 self-stretch text-2xs sm:text-sm font-bold !leading-5 h-11 line-clamp-2 sm:line-clamp-1"
+				:title="`${data?.episode_number ? `S${data?.season_number}E${data?.episode_number} - ` : ''}${data?.title}`"
 			>
-				{{ data?.episode_number ? `${data?.episode_number} - ` : ""
-				}}{{ data?.title }}
+				{{ data?.episode_number ? `S${data?.season_number}E${data?.episode_number} - ` : "" }}{{ data?.title }}
 			</p>
 			<p
-				class="z-10 h-8 w-auto hidden sm:flex text-xs min-h-8 line-clamp-2 leading-[1.2] text-auto-12/80"
+				class="z-10 h-8 w-auto flex-shrink-0 flex-grow-0 whitespace-normal self-stretch hidden sm:flex text-xs min-h-8 line-clamp-2 leading-[1.2] text-auto-12/80"
 				:title="data?.overview"
 			>
 				{{ data?.overview }}
@@ -155,16 +166,13 @@ const props = defineProps({
 			class="grid w-full items-stretch gap-1 rounded-b-md p-2 transitioning text-left"
 		>
 			<p
-				class="z-10 w-auto text-sm font-bold !leading-5 h-10 line-clamp-1"
-				:title="`${data?.episode_number ? `${data?.episode_number} - ` : ''}${
-					data?.title
-				}`"
+				class="z-10 w-auto flex-shrink-0 flex-grow-0 self-stretch text-2xs sm:text-sm font-bold !leading-5 line-clamp-2 sm:line-clamp-1"
+				:title="`${data?.episode_number ? `S${data?.season_number}E${data?.episode_number} - ` : ''}${data?.title}`"
 			>
-				{{ data?.episode_number ? `${data?.episode_number} - ` : ""
-				}}{{ data?.title }}
+				{{ data?.episode_number ? `S${pad(data?.season_number, 2)}E${pad(data?.episode_number, 2)} - ` : "" }}{{ data?.title }}
 			</p>
 			<p
-				class="z-10 h-8 w-auto text-xs min-h-8 line-clamp-2 leading-[1.2] text-auto-12/80"
+				class="z-10 h-8 w-auto flex-shrink-0 flex-grow-0 whitespace-normal self-stretch hidden sm:flex text-xs min-h-8 line-clamp-2 leading-[1.2] text-auto-12/80"
 				:title="data?.overview"
 			>
 				{{ data?.overview }}

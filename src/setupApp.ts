@@ -44,6 +44,7 @@ import NMGrid from '@/components/NMGrid.vue';
 import HomeCard from '@/components/NMHomeCard.vue';
 import NMList from '@/components/NMList.vue';
 import NMMusicCard from '@/components/NMMusicCard.vue';
+import NMSeasonCard from '@/components/NMSeasonCard.vue';
 
 import NMMusicHomeCard from '@/components/NMMusicHomeCard.vue';
 import NMServerComponent from '@/components/NMServerComponent.vue';
@@ -126,6 +127,7 @@ export async function setupApp(app: AppContext['app']) {
 	app.component('NMServerComponent', NMServerComponent);
 	app.component('NMTopResultCard', NMTopResultCard);
 	app.component('NMTrackRow', NMTrackRow);
+	app.component('NMSeasonCard', NMSeasonCard);
 
 	app.component('SwiperContainer', Swiper);
 	app.component('SwiperSlide', SwiperSlide);

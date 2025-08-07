@@ -61,7 +61,7 @@ defineProps({
 	<Teleport to=".image-preload-container">
 		<template v-for="item in data?.slice(0, 7)" :key="item.id">
 			<img
-				:src="`https://app.nomercy.tv/tmdb-images${item.backdrop}?width=2160&type=avif&aspect_ratio=null`"
+				:src="`https://app.nomercy.tv/tmdb-images${item.backdrop}`"
 				width="0"
 				height="0"
 				loading="eager"

@@ -7,7 +7,8 @@ import {
 } from "@nomercy-entertainment/nomercy-video-player/src/helpers";
 
 import type { PlaylistItem } from "../../index";
-import { Icon } from "@nomercy-entertainment/nomercy-video-player/src/types";
+import {Icon, TimeData} from "@nomercy-entertainment/nomercy-video-player/src/types";
+import {unique} from "@/lib/stringArray.ts";
 
 export class TVUIPlugin extends BaseUIPlugin {
   preScreen: HTMLDialogElement = <HTMLDialogElement>{};
@@ -144,7 +145,7 @@ export class TVUIPlugin extends BaseUIPlugin {
         this.playbackButton.focus();
       }
 
-      this.currentScrubTime = this.player.getClosestSeekableInterval();
+      this.currentScrubTime = this.getClosestSeekableInterval();
     });
 
     let activeButton = restartButton ?? nextButton;
@@ -157,11 +158,13 @@ export class TVUIPlugin extends BaseUIPlugin {
           } else {
             this.nextUp.lastChild?.focus();
           }
-        } else if (e.key === "ArrowLeft") {
+        }
+        else if (e.key === "ArrowLeft") {
           activeButton = (e.target as HTMLButtonElement)
             .previousElementSibling as HTMLButtonElement;
           activeButton?.focus();
-        } else if (e.key === "ArrowRight") {
+        }
+        else if (e.key === "ArrowRight") {
           e.preventDefault();
           activeButton = (e.target as HTMLButtonElement)
             .nextElementSibling as HTMLButtonElement;
@@ -188,102 +191,96 @@ export class TVUIPlugin extends BaseUIPlugin {
       button?.addEventListener("keydown", (e) => {
         if (e.key === "ArrowUp") {
           e.preventDefault();
-          if (!this.nextUp.style || this.nextUp.style.display === "none") {
-            activeButton?.focus();
+          if (this.nextUp?.classList?.contains('visible')) {
+            this.nextUp?.focus();
           } else {
-            this.nextUp.lastChild?.focus();
+            activeButton?.focus();
           }
         }
       });
     });
 
     let didSlide: boolean = false;
-    [document.body].forEach((button) => {
       const evt = (e: KeyboardEvent) => {
-        if (e.key === "ArrowLeft") {
-          // eslint-disable-next-line max-len
-          if (
-            [
-              restartButton,
-              nextButton,
-              this.nextUp.firstChild,
-              this.nextUp.lastChild,
-            ].includes(e.target as HTMLButtonElement)
-          ) {
-            return;
-          }
-          e.preventDefault();
+          const target = e.target as unknown as HTMLButtonElement;
+          if (e.key === "ArrowLeft") {
+              // eslint-disable-next-line max-len
+              if ([
+                  restartButton.id,
+                  nextButton.id,
+                  this.nextUp.firstChild?.id,
+                  this.nextUp.lastChild?.id,
+              ].includes(target?.id)) {
+                  return;
+              }
+              e.preventDefault();
 
-          this.player.emit("show-seek-container", true);
+              this.player.emit("show-seek-container", true);
 
-          if (this.shouldSlide) {
-            this.currentScrubTime = this.player.getClosestSeekableInterval();
-            this.player.emit("currentScrubTime", {
-              ...this.player.getTimeData(),
-              currentTime: this.player.getClosestSeekableInterval(),
-            });
-            this.shouldSlide = false;
-          } else {
-            const newScrubTime = this.currentScrubTime - 10;
-            didSlide = true;
-            this.player.emit("currentScrubTime", {
-              ...this.player.getTimeData(),
-              currentTime: newScrubTime,
-            });
+              if (this.shouldSlide) {
+                  this.currentScrubTime = this.getClosestSeekableInterval();
+                  this.player.emit("currentScrubTime", {
+                      ...this.player.getTimeData(),
+                      currentTime: this.getClosestSeekableInterval(),
+                  });
+                  this.shouldSlide = false;
+              } else {
+                  const newScrubTime = this.currentScrubTime - 10;
+                  didSlide = true;
+                  this.player.emit("currentScrubTime", {
+                      ...this.player.getTimeData(),
+                      currentTime: newScrubTime,
+                  });
+              }
           }
-        } else if (e.key === "ArrowRight") {
-          // eslint-disable-next-line max-len
-          if (
-            [
-              restartButton,
-              nextButton,
-              this.nextUp.firstChild,
-              this.nextUp.lastChild,
-            ].includes(e.target as HTMLButtonElement)
-          ) {
-            return;
-          }
-          e.preventDefault();
+          else if (e.key === "ArrowRight") {
+              // eslint-disable-next-line max-len
+              if ([
+                  restartButton.id,
+                  nextButton.id,
+                  this.nextUp.firstChild?.id,
+                  this.nextUp.lastChild?.id,
+              ].includes(target?.id)) {
+                  return;
+              }
+              e.preventDefault();
 
-          this.player.emit("show-seek-container", true);
+              this.player.emit("show-seek-container", true);
 
-          if (this.shouldSlide) {
-            this.currentScrubTime = this.player.getClosestSeekableInterval();
-            this.player.emit("currentScrubTime", {
-              ...this.player.getTimeData(),
-              currentTime: this.player.getClosestSeekableInterval(),
-            });
-            this.shouldSlide = false;
-          } else {
-            const newScrubTime = this.currentScrubTime + 10;
-            didSlide = true;
-            this.player.emit("currentScrubTime", {
-              ...this.player.getTimeData(),
-              currentTime: newScrubTime,
-            });
+              if (this.shouldSlide) {
+                  this.currentScrubTime = this.player.getClosestSeekableInterval();
+                  this.player.emit("currentScrubTime", {
+                      ...this.player.getTimeData(),
+                      currentTime: this.player.getClosestSeekableInterval(),
+                  });
+                  this.shouldSlide = false;
+              } else {
+                  const newScrubTime = this.currentScrubTime + 10;
+                  didSlide = true;
+                  this.player.emit("currentScrubTime", {
+                      ...this.player.getTimeData(),
+                      currentTime: newScrubTime,
+                  });
+              }
           }
-        } else if (e.key === "Enter") {
-          if (
-            Math.abs(this.currentScrubTime - this.player.getCurrentTime()) >
-              5 &&
-            didSlide
-          ) {
-            this.player.seek(this.currentScrubTime);
-            didSlide = false;
-          } else if (e.target === document.body) {
-            this.player.togglePlayback();
+          else if (e.key === "Enter") {
+              if (
+                  Math.abs(this.currentScrubTime - this.player.getCurrentTime()) >
+                  5 &&
+                  didSlide
+              ) {
+                  this.player.seek(this.currentScrubTime);
+                  didSlide = false;
+              } else if (e.target === document.body) {
+                  this.player.togglePlayback();
+              }
           }
-        }
       };
-      (button as unknown as HTMLButtonElement)?.addEventListener(
-        "keydown",
-        evt
-      );
+
+    [window, restartButton, nextButton].forEach((button) => {
+      (button as unknown as HTMLButtonElement)?.addEventListener("keydown", evt);
       this.player.on("dispose", () => {
-        (button as unknown as HTMLButtonElement)?.removeEventListener(
-          "keydown",
-          evt
-        );
+        (button as unknown as HTMLButtonElement)?.removeEventListener("keydown", evt);
       });
     });
 
@@ -413,8 +410,7 @@ export class TVUIPlugin extends BaseUIPlugin {
         "mt-7",
         "mb-3",
         "overflow-auto",
-        "px-2",
-        "py-0.5",
+        "p-2",
         "[*::-webkit-scrollbar]:hidden",
       ])
       .appendTo(leftSide)
@@ -925,12 +921,12 @@ export class TVUIPlugin extends BaseUIPlugin {
       .appendTo(this.sliderBar)
       .get();
 
-    this.player.on("item", () => {
+    this.player.on("item", async () => {
       this.sliderBar.classList.add("bg-white/20");
       this.previewTime = [];
       this.chapters = [];
       sliderProgress.style.transform = "translateX(0%)";
-      this.fetchPreviewTime();
+      await this.fetchPreviewTime();
     });
 
     this.player.on("chapters", () => {
@@ -1741,4 +1737,127 @@ export class TVUIPlugin extends BaseUIPlugin {
 
     return tvButton;
   }
+
+    createSeekContainer(parent: HTMLElement) {
+        const seekContainer = this.player
+            .createElement("div", "seek-container")
+            .addClasses([
+                "relative",
+                "h-auto",
+                "mb-28",
+                "w-available",
+                "translate-y-[80vh]",
+                "z-40",
+                "w-available",
+            ])
+            .appendTo(parent)
+            .get();
+
+        const seekScrollCloneContainer = this.player
+            .createElement("div", "seek-scroll-clone-container")
+            .addClasses([
+                "[--gap:1.5rem]",
+                "absolute",
+                "flex",
+                "h-available",
+                "w-available",
+                "gap-[var(--gap)]",
+                "z-10",
+                "pointer-events-none",
+            ])
+            .appendTo(seekContainer)
+            .get();
+
+        this.thumbnailClone = this.player
+            .createElement("div", `thumbnail-clone-${1}`)
+            .addClasses(["h-auto", "object-cover", "border-4", "mx-auto"])
+            .appendTo(seekScrollCloneContainer)
+            .get();
+
+        const seekScrollContainer = this.player
+            .createElement("div", "seek-scroll-container")
+            .addClasses([
+                "relative",
+                "flex",
+                "h-available",
+                "w-available",
+                "overflow-auto",
+                "px-[calc(100%/2.14)]",
+                "gap-1.5",
+                "scrollbar-none",
+            ])
+            .appendTo(seekContainer)
+            .get();
+
+        this.player.once("item", () => {
+            this.player.on("preview-time", () => {
+                this.thumbs = [];
+                for (const time of this.previewTime) {
+                    this.thumbs.push({
+                        time,
+                        el: this.createThumbnail(time),
+                    });
+                }
+
+                seekScrollContainer.innerHTML = "";
+                unique(
+                    this.thumbs.map((t) => t.el),
+                    "id"
+                ).forEach((thumb) => {
+                    seekScrollContainer.appendChild(thumb);
+                });
+
+                this.player.once("time", () => {
+                    this.currentScrubTime = this.getClosestSeekableInterval();
+                    this.player.emit("currentScrubTime", {
+                        ...this.player.getTimeData(),
+                        currentTime: this.getClosestSeekableInterval(),
+                    });
+                });
+            });
+        });
+
+        this.player.on("lastTimeTrigger", () => {
+            this.currentScrubTime = this.getClosestSeekableInterval();
+            this.player.emit("currentScrubTime", {
+                ...this.player.getTimeData(),
+                currentTime: this.getClosestSeekableInterval(),
+            });
+        });
+
+        this.player.on("currentScrubTime", (data: TimeData) => {
+            if (data.currentTime <= 0) {
+                data.currentTime = 0;
+            }
+            else if (data.currentTime >= this.player.getDuration()) {
+                return;
+            }
+
+            const thumb = this.thumbs.find((thumb) => {
+                return (
+                    data.currentTime >= thumb.time.start &&
+                    data.currentTime <= thumb.time.end
+                );
+            });
+
+            this.currentScrubTime = data.currentTime;
+
+            if (!thumb) return;
+
+            this.player.scrollIntoView(thumb.el);
+        });
+
+        this.player.on("show-seek-container", (value) => {
+            if (value) {
+                seekContainer.style.transform = "none";
+
+                this.player.pause();
+            } else {
+                this.seekContainer.style.transform = "";
+            }
+        });
+
+        return seekContainer;
+    }
+
 }

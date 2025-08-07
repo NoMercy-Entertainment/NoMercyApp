@@ -24,7 +24,6 @@ router.beforeResolve(async (to, from, next) => {
 	if (
 		isPlatform('capacitor')
 		&& to.name !== 'Auth'
-		&& !localStorage.getItem('refresh_token')
 		&& !user.value.accessToken
 	) {
 		const { isAuthenticated } = useKeycloak();

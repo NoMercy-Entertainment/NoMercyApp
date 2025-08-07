@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onBeforeUnmount, onMounted, ref, watch } from 'vue';
+import { onMounted, onUnmounted, ref, watch } from 'vue';
 import { IonContent, IonPage, isPlatform } from '@ionic/vue';
 
 import { setDisableScreensaver } from '@/store/imageModal';
@@ -139,7 +139,7 @@ onMounted(() => {
 	}
 });
 
-onBeforeUnmount(() => {
+onUnmounted(() => {
 	console.log('Unmounting player');
 	player.value?.dispose();
 	setDisableScreensaver(false);

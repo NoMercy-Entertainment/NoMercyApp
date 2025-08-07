@@ -44,6 +44,8 @@ import NotFound from '@/Layout/Desktop/components/NotFound.vue';
 import BannerButton from '@/components/Buttons/BannerButton.vue';
 import ShareButton from '@/components/Buttons/ShareButton.vue';
 import { MenuItem } from '@headlessui/vue';
+import MissingEpisodes from '@/views/Base/Info/components/MissingEpisodes.vue';
+import type { ComputedRef } from 'vue';
 
 const route = useRoute();
 
@@ -68,6 +70,14 @@ const endTime = ref<string | 0 | null | undefined>(null);
 const interval = ref<NodeJS.Timeout | null>(null);
 const { t } = useTranslation();
 
+const missingEpisodesModalOpen = ref(false);
+function openMissingEpisodesContentModal() {
+	missingEpisodesModalOpen.value = true;
+}
+function closeMissingEpisodesModal() {
+	missingEpisodesModalOpen.value = false;
+}
+
 function processTrailer(value: InfoResponse | undefined) {
 	trailerState.value = 'loading';
 
@@ -80,23 +90,18 @@ function processTrailer(value: InfoResponse | undefined) {
 		return;
 	}
 
-	endTime.value
-    = value.duration
-    	&& new Date(
-    		new Date().getTime() + value.duration * 60 * 1000,
-    	).toLocaleTimeString(i18next.language ?? 'en-US', {
-    		hour: '2-digit',
-    		minute: '2-digit',
-    	});
+	endTime.value = value.duration && new Date(new Date().getTime() + value.duration * 60 * 1000)
+		.toLocaleTimeString(i18next.language ?? 'en-US', {
+			hour: '2-digit',
+			minute: '2-digit',
+		});
+
 	interval.value = setInterval(() => {
-		endTime.value
-      = value.duration
-      	&& new Date(
-      		new Date().getTime() + value.duration * 60 * 1000,
-      	).toLocaleTimeString(i18next.language ?? 'en-US', {
-      		hour: '2-digit',
-      		minute: '2-digit',
-      	});
+		endTime.value = value.duration && new Date(new Date().getTime() + value.duration * 60 * 1000)
+			.toLocaleTimeString(i18next.language ?? 'en-US', {
+				hour: '2-digit',
+				minute: '2-digit',
+			});
 	}, 1000);
 
 	// axios
@@ -346,6 +351,12 @@ const menuItems = computed<IMenuItem[]>(() => [
 		icon: 'folderRemove',
 		onclick: handleDelete,
 		title: `Delete ${data?.value?.media_type === 'movie' ? 'movie' : 'TV show'}`,
+		privileged: true,
+	},
+	{
+		icon: 'searchMagnifyingGlass',
+		onclick: openMissingEpisodesContentModal,
+		title: 'Show missing episodes',
 		privileged: true,
 	},
 ]);
@@ -839,6 +850,7 @@ const shareData = computed<ShareOptions>(() => ({
 					/>
 				</div>
 			</ScrollContainer>
+			<MissingEpisodes :close="closeMissingEpisodesModal" :open="missingEpisodesModalOpen" />
 		</IonContent>
 	</IonPage>
 </template>

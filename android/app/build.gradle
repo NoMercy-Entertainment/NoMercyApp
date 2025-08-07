@@ -3,6 +3,11 @@ apply plugin: 'com.android.application'
 android {
     namespace "tv.nomercy.app"
     compileSdk rootProject.ext.compileSdkVersion
+    compileSdkVersion rootProject.ext.compileSdkVersion
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_21
+        targetCompatibility JavaVersion.VERSION_21
+    }
     defaultConfig {
         applicationId "tv.nomercy.app"
         minSdkVersion rootProject.ext.minSdkVersion

@@ -162,6 +162,8 @@ export class DesktopUIPlugin extends BaseUIPlugin {
     this.tooltip.remove();
     this.episodeTip.remove();
     this.loader.remove();
+    this.menuFrame.remove();
+    this.sliderBar.remove();    
   }
 
   createTopRow(parent: HTMLDivElement) {
@@ -2273,9 +2275,9 @@ export class DesktopUIPlugin extends BaseUIPlugin {
     ["mousemove", "touchmove"].forEach((event) => {
       this.sliderBar.addEventListener(
         event,
-        (e: any) => {
+        async (e: any) => {
           const scrubTime = this.getScrubTime(e);
-          this.getSliderPopImage(scrubTime);
+          await this.getSliderPopImage(scrubTime);
           sliderText.innerText = humanTime(scrubTime.scrubTimePlayer);
 
           const sliderPopOffsetX = this.getSliderPopOffsetX(
@@ -2308,9 +2310,9 @@ export class DesktopUIPlugin extends BaseUIPlugin {
 
     this.sliderBar.addEventListener(
       "mouseover",
-      (e: MouseEvent) => {
+      async (e: MouseEvent) => {
         const scrubTime = this.getScrubTime(e);
-        this.getSliderPopImage(scrubTime);
+        await this.getSliderPopImage(scrubTime);
         sliderText.innerText = humanTime(scrubTime.scrubTimePlayer);
         this.chapterText.innerText =
           this.player.getChapterText(scrubTime.scrubTimePlayer) ?? "";
@@ -2351,13 +2353,13 @@ export class DesktopUIPlugin extends BaseUIPlugin {
       sliderPop.style.setProperty("--visibility", "0");
     });
 
-    this.player.on("item", () => {
+    this.player.on("item", async () => {
       this.sliderBar.classList.add("bg-white/20");
-      this.previewTime = [];
+      // this.previewTime = [];
       this.chapters = [];
       sliderBuffer.style.width = "0";
       sliderProgress.style.width = "0";
-      this.fetchPreviewTime();
+      await this.fetchPreviewTime();
     });
 
     this.player.on("chapters", () => {

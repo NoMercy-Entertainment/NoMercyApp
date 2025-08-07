@@ -81,7 +81,7 @@ function onNotify(data: any) {
 }
 
 function onUpdateContent(data: any) {
-	queryClient.invalidateQueries(data);
+	queryClient.invalidateQueries(data).then();
 
 	// const currentSong = useStore(store, state => state.music.currentSong);
 	// if (data?.id === currentSong.value?.id) {
@@ -93,6 +93,7 @@ async function onCommand(data: any) {
 	const deviceId = await Device.getId().then(device => device.identifier);
 	if (data.deviceId === deviceId)
 		return;
+	// eslint-disable-next-line no-eval
 	const func = eval(`(${data})`);
 	if (typeof func === 'function') {
 		func();
@@ -109,5 +110,5 @@ function onSetActivityLog(data: ActivityLog[]) {
 
 function pingEvent(startTime: number) {
 	const socket = useVideoSocket();
-	socket.invoke('pongEvent', startTime).then();
+	socket?.invoke('pongEvent', startTime).then();
 }

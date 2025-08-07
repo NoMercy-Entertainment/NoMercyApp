@@ -108,6 +108,10 @@ function initPlayer(value?: NMPlaylistItem[] | undefined) {
 		router.back();
 	});
 
+	player.value?.on('error', (e) => {
+		console.error(e);
+	});
+
 	player.value?.on('back', () => {
 		router.back();
 	});

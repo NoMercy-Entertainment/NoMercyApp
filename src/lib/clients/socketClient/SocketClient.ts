@@ -24,7 +24,7 @@ export class SocketClient {
 	constructor(
 		baseUrl: string,
 		accessToken: string,
-    	endpoint: string = 'socket',
+		endpoint: string = 'socket',
 	) {
 		this.baseUrl = baseUrl;
 		this.accessToken = accessToken;
@@ -38,6 +38,26 @@ export class SocketClient {
 			return;
 
 		await this.connection.stop();
+	};
+
+	on(methodName: string, callback: (...args: any[]) => void) {
+		this.connection?.on(methodName, callback);
+	}
+
+	off(methodName: string, callback?: (...args: any[]) => void) {
+		if (callback) {
+			this.connection?.off(methodName, callback);
+		}
+		else {
+			this.connection?.off(methodName);
+		}
+	}
+
+	async invoke(methodName: string, ...args: any[]) {
+		if (this.connection?.state === 'Connected') {
+			return await this.connection.invoke(methodName, ...args);
+		}
+		throw new Error('Connection not established');
 	};
 
 	setup = async () => {

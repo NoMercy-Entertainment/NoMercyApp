@@ -12,7 +12,7 @@ import { useKeycloak } from '@/lib/auth/tv-keycloak';
 import { suffix } from '@/config/config';
 import router from '@/router';
 import { IonContent, IonPage } from '@ionic/vue';
-import { redirectUrl } from '@/store/routeState';
+import servers from '@/store/servers.ts';
 
 const { t } = useTranslation();
 
@@ -96,7 +96,9 @@ function acquireToken() {
 			storeTokens(response.data);
 			keepTokenFresh();
 
-			await router.push(redirectUrl.value);
+			setTimeout(async () => {
+				await router.push({ name: 'Home' });
+			}, 500);
 		})
 		.catch(() => {
 			setTimeout(() => {
@@ -104,6 +106,15 @@ function acquireToken() {
 			}, deviceResponse.value!.interval * 1000);
 		});
 }
+
+watch(servers, (value) => {
+	if (value.length === 0)
+		return;
+
+	setTimeout(async () => {
+		await router.push({ name: 'Home' });
+	}, 1000);
+});
 </script>
 
 <template>
