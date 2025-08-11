@@ -50,7 +50,7 @@ export class BaseUIPlugin extends Plugin {
   playbackButton: HTMLButtonElement = <HTMLButtonElement>{};
   loader: HTMLDivElement = <HTMLDivElement>{};
   thumbnailClone: HTMLDivElement = <HTMLDivElement>{};
-  previewImage: HTMLImageElement = <HTMLImageElement>{};
+  previewImage: HTMLImageElement = new Image();
 
   chapters: any[] = [];
   previewTime: PreviewTime[] = [];
@@ -76,6 +76,7 @@ export class BaseUIPlugin extends Plugin {
   highQuality = false;
   shouldSlide = true;
   currentTimeFile = "";
+  isInitialized = false;
 
   currentMenu: "language" | "episode" | "pause" | "quality" | "seek" | null =
     null;
@@ -149,6 +150,11 @@ export class BaseUIPlugin extends Plugin {
 
     this.player.on("play", () => {
       this.player.emit("hide-episode-tip");
+    });
+
+    this.player.on("item", () => {
+      this.previewImage?.remove?.();
+      this.previewTime = [];
     });
   }
 
@@ -327,108 +333,101 @@ export class BaseUIPlugin extends Plugin {
   }
 
   async fetchPreviewTime() {
-    if (this.previewTime.length === 0) {
-      const imageFile = this.player.getSpriteFile();
+      if (this.previewTime.length === 0) {
 
-      this.previewImage = new Image();
-      // this.player.once("item", () => {
-      //   this.previewImage.remove();
-      //   this.previewTime = [];
-      //
-      // });
+        this.previewTime = [<PreviewTime>{}];
 
-      if (imageFile) {
-        this.image = imageFile;
-        if (this.player.options.accessToken) {
-          await this.player
-            .getFileContents<Blob>({
-              url: imageFile,
-              options: {
-                type: "blob",
-              },
-              callback: (data: Blob) => {
-                if(this.dataURL) {
-                  URL.revokeObjectURL(this.dataURL);
-                }
-                this.dataURL = URL.createObjectURL(data as Blob);
+        await new Promise(async (resolve) => {
+          const imageFile = this.player.getSpriteFile();
 
-                this.previewImage.src = this.dataURL;
+          if (imageFile) {
+            this.image = imageFile;
+            if (this.player.options.accessToken) {
+              await this.player
+                  .getFileContents<Blob>({
+                    url: imageFile,
+                    options: {
+                      type: "blob",
+                    },
+                    callback: (data: Blob) => {
+                      if (this.dataURL) {
+                        URL.revokeObjectURL(this.dataURL);
+                      }
+                      this.dataURL = URL.createObjectURL(data as Blob);
 
-                if (this.sliderPopImage.style) {
-                  this.sliderPopImage.style.backgroundImage = `url('${this.dataURL}')`;
-                }
+                      this.previewImage.src = this.dataURL;
 
-                // release memory
-                // this.player.once("item", () => {
-                //   URL.revokeObjectURL(dataURL);
-                // });
-                setTimeout(() => {
-                  this.player.emit("preview-time", this.previewTime);
-                }, 400);
-              },
-            })
-            .then();
-        } else {
-          if (this.sliderPopImage.style) {
-            this.sliderPopImage.style.backgroundImage = `url('${imageFile}')`;
+                      if (this.sliderPopImage.style) {
+                        this.sliderPopImage.style.backgroundImage = `url('${this.dataURL}')`;
+                      }
+
+                      setTimeout(() => {
+                        this.player.emit("preview-time", this.previewTime);
+                      }, 400);
+                    },
+                  })
+                  .then(resolve);
+            } else {
+              if (this.sliderPopImage.style) {
+                this.sliderPopImage.style.backgroundImage = `url('${imageFile}')`;
+              }
+
+              this.previewImage.src = imageFile;
+              setTimeout(() => {
+                this.player.emit("preview-time", this.previewTime);
+              }, 400);
+
+              resolve(true);
+            }
           }
+        });
 
-          this.previewImage.src = imageFile;
-          setTimeout(() => {
-            this.player.emit("preview-time", this.previewTime);
-          }, 400);
-        }
-      }
+        await new Promise(async (resolve) => {
+          const timeFile = this.player.getTimeFile();
+          if (!timeFile) return resolve(true);
 
-      const timeFile = this.player.getTimeFile();
-      if (timeFile && (this.currentTimeFile !== timeFile || this.previewTime.length === 0)) {
-        this.currentTimeFile = timeFile;
-
-        this.previewImage.onload = async () => {
           await this.player
-            .getFileContents<string>({
-              url: timeFile,
-              options: {
-                type: "text",
-              },
-              callback: (data: string) => {
-                if (this.previewTime.length > 0) return;
+              .getFileContents<string>({
+                url: timeFile,
+                options: {
+                  type: "text",
+                },
+                callback: (data: string) => {
+                  const parser = new WebVTTParser();
+                  const vtt = parser.parse(data, "metadata");
+                  const regex = /(?<x>\d*),(?<y>\d*),(?<w>\d*),(?<h>\d*)/u;
 
-                const parser = new WebVTTParser();
-                const vtt = parser.parse(data, "metadata");
-                const regex = /(?<x>\d*),(?<y>\d*),(?<w>\d*),(?<h>\d*)/u;
+                  vtt.cues.forEach((cue) => {
+                    const match = regex.exec(cue.text);
+                    if (!match?.groups) return;
 
-                vtt.cues.forEach((cue) => {
-                  const match = regex.exec(cue.text);
-                  if (!match?.groups) return;
+                    const {x, y, w, h} = match.groups;
 
-                  const { x, y, w, h } = match.groups;
+                    const [imgX, imgY, imgW, imgH] = [x, y, w, h].map((val) =>
+                        parseInt(val, 10)
+                    );
 
-                  const [imgX, imgY, imgW, imgH] = [x, y, w, h].map((val) =>
-                    parseInt(val, 10)
-                  );
-
-                  this.previewTime.push({
-                    start: cue.startTime,
-                    end: cue.endTime,
-                    x: imgX,
-                    y: imgY,
-                    w: imgW,
-                    h: imgH,
+                    this.previewTime.push({
+                      start: cue.startTime,
+                      end: cue.endTime,
+                      x: imgX,
+                      y: imgY,
+                      w: imgW,
+                      h: imgH,
+                    });
                   });
-                });
 
-                setTimeout(() => {
-                  this.player.emit("preview-time", this.previewTime);
-                }, 400);
-              },
-            })
-            .then(async () => {
-              await this.loadSliderPopImage({startTime: 0});
-            });
-        };
+                  setTimeout(() => {
+                    this.player.emit("preview-time", this.previewTime);
+                  }, 400);
+                },
+              })
+              .then(async () => {
+                await this.loadSliderPopImage({startTime: 0});
+                resolve(true);
+              });
+        });
       }
-    }
   }
 
 
@@ -1275,13 +1274,9 @@ export class BaseUIPlugin extends Plugin {
 
       if (this.subtitlesMenuOpen) {
         this.player.emit("show-menu", false);
-
-        this.menuFrame.close();
       } else {
         this.player.emit("show-subtitles-menu", true);
         this.player.emit("show-subtitleSettings-menu", false);
-
-        this.menuFrame.showModal();
       }
     });
 
@@ -1343,12 +1338,8 @@ export class BaseUIPlugin extends Plugin {
 
       if (this.languageMenuOpen) {
         this.player.emit("show-menu", false);
-
-        this.menuFrame.close();
       } else {
         this.player.emit("show-language-menu", true);
-
-        this.menuFrame.showModal();
       }
     });
 
@@ -1409,12 +1400,8 @@ export class BaseUIPlugin extends Plugin {
 
       if (this.qualityMenuOpen) {
         this.player.emit("show-menu", false);
-
-        this.menuFrame.close();
       } else {
         this.player.emit("show-quality-menu", true);
-
-        this.menuFrame.showModal();
       }
 
       if (this.highQuality) {
@@ -1599,12 +1586,8 @@ export class BaseUIPlugin extends Plugin {
 
       if (this.playlistMenuOpen) {
         this.player.emit("show-menu", false);
-
-        this.menuFrame.close();
       } else {
         this.player.emit("show-playlist-menu", true);
-
-        this.menuFrame.showModal();
 
         setTimeout(() => {
           document

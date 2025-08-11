@@ -56,6 +56,8 @@ function initPlayer(value?: NMPlaylistItem[] | undefined) {
 		disableAutoPlayback: user.value.features?.nomercyConnect,
 	} satisfies PlayerConfig<PlaylistItem>;
 
+	player.value?.dispose();
+
 	// @ts-ignore
 	player.value = nmplayer('player1').setup(config);
 
@@ -121,21 +123,15 @@ function initPlayer(value?: NMPlaylistItem[] | undefined) {
 }
 
 watch(data, (value) => {
-	if (user.value.features?.nomercyConnect) {
-		initPlayer();
-	}
-	else {
-		initPlayer(value);
-	}
+	if (!value || !value.length)
+		return;
+	initPlayer(value);
 });
 
 onMounted(() => {
 	audioPlayer.stop();
 	if (user.value.features?.nomercyConnect) {
 		initPlayer();
-	}
-	else {
-		initPlayer(data.value);
 	}
 });
 

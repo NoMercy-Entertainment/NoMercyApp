@@ -69,6 +69,9 @@ export class DesktopUIPlugin extends BaseUIPlugin {
   subtitleSettingActions: SubtitleSettingAction[] = [];
 
   use() {
+    if (this.isInitialized) return;
+    this.isInitialized = true;
+
     this.subtitleSettingActions = subtitleSettingActions(this.player);
 
     this.topBar = this.createTopBar(this.overlay);
@@ -533,12 +536,8 @@ export class DesktopUIPlugin extends BaseUIPlugin {
 
       if (this.speedMenuOpen) {
         this.player.emit("show-menu", false);
-
-        this.menuFrame.close();
       } else {
         this.player.emit("show-speed-menu", true);
-
-        this.menuFrame.showModal();
       }
     });
 

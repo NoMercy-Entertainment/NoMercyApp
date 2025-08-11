@@ -2,7 +2,7 @@ import {RouteLocationNormalizedLoaded, useRoute} from "vue-router";
 import Plugin from '@nomercy-entertainment/nomercy-video-player/src/plugin';
 import type { NMPlayer } from "@nomercy-entertainment/nomercy-video-player/src/types";
 
-import { useVideoSocket } from "@/store/videoSocket";
+import {useVideoSocket, videoSocketConnection} from "@/store/videoSocket";
 import type {NMPlaylistItem} from "@/lib/VideoPlayer";
 
 export interface SyncPluginArgs {
@@ -39,7 +39,7 @@ export class SyncPlugin extends Plugin {
 		const data = this.episodeData();
 
 		const socket = useVideoSocket();
-		socket?.invoke?.('SetTime', data);
+		socket?.invoke('SetTime', data);
 	}
 
 	ended() {

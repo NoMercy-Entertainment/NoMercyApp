@@ -142,6 +142,8 @@ function initPlayer(value?: NMPlaylistItem[] | undefined) {
 }
 
 watch(data, (value) => {
+	if (!value || !value.length)
+		return;
 	initPlayer(value);
 });
 
@@ -149,9 +151,6 @@ onMounted(() => {
 	audioPlayer.stop();
 	if (user.value.features?.nomercyConnect) {
 		initPlayer();
-	}
-	else {
-		initPlayer(data.value);
 	}
 });
 

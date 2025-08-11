@@ -24,13 +24,13 @@ import {
 
 import audioPlayer from '@/store/audioPlayer';
 import router from '@/router';
-import { hideNavBar, setNavBarVisible, showNavBar } from '@/store/ui';
+import { hideNavBar, showNavBar } from '@/store/ui';
 import useServerClient from '@/lib/clients/useServerClient';
-import { VideoNoMercyConnectPlugin } from '@/lib/VideoPlayer/plugins/videoNoMercyConnectPlugin.ts';
+// import { VideoNoMercyConnectPlugin } from '@/lib/VideoPlayer/plugins/videoNoMercyConnectPlugin.ts';
 import KeyHandlerPlugin from '@/lib/VideoPlayer/plugins/keyHandlerPlugin.ts';
 
 const { data } = useServerClient<NMPlaylistItem[]>({
-	enabled: !user.value.features?.nomercyConnect,
+	// enabled: !user.value.features?.nomercyConnect,
 });
 
 const player = ref<NMPlayer<NMPlaylistItem>>();
@@ -61,17 +61,17 @@ function initPlayer(value?: NMPlaylistItem[] | undefined) {
 		disableMediaControls:
       'mediaSession' in navigator || isPlatform('capacitor'),
 		renderAhead: 10,
-		disableAutoPlayback: user.value.features?.nomercyConnect,
+		// disableAutoPlayback: user.value.features?.nomercyConnect,
 	};
 
 	// @ts-ignore
 	player.value = nmplayer('player1').setup(config);
 
-	if (user.value.features?.nomercyConnect) {
-		const videoNoMercyConnectPlugin = new VideoNoMercyConnectPlugin();
-		player.value?.registerPlugin('videoNoMercyConnect', videoNoMercyConnectPlugin);
-		player.value?.usePlugin('videoNoMercyConnect');
-	}
+	// if (user.value.features?.nomercyConnect) {
+	// 	const videoNoMercyConnectPlugin = new VideoNoMercyConnectPlugin();
+	// 	player.value?.registerPlugin('videoNoMercyConnect', videoNoMercyConnectPlugin);
+	// 	player.value?.usePlugin('videoNoMercyConnect');
+	// }
 
 	const tvUIPlugin = new TVUIPlugin();
 	player.value?.registerPlugin('tvUI', tvUIPlugin);
@@ -85,11 +85,11 @@ function initPlayer(value?: NMPlaylistItem[] | undefined) {
 	player.value?.registerPlugin('keyHandler', keyHandlerPlugin);
 	player.value?.usePlugin('keyHandler');
 
-	if (!user.value.features?.nomercyConnect) {
-		const syncPlugin = new SyncPlugin();
-		player.value?.registerPlugin('sync', syncPlugin);
-		player.value?.usePlugin('sync');
-	}
+	// if (!user.value.features?.nomercyConnect) {
+	const syncPlugin = new SyncPlugin();
+	player.value?.registerPlugin('sync', syncPlugin);
+	player.value?.usePlugin('sync');
+	// }
 
 	const octopusPlugin = new OctopusPlugin();
 	player.value?.registerPlugin('octopus', octopusPlugin);
@@ -137,17 +137,15 @@ function initPlayer(value?: NMPlaylistItem[] | undefined) {
 }
 
 watch(data, (value) => {
+	if (!value || !value.length)
+		return;
 	initPlayer(value);
 });
 
 onMounted(() => {
 	audioPlayer.stop();
-	setNavBarVisible(false);
 	if (user.value.features?.nomercyConnect) {
 		initPlayer();
-	}
-	else {
-		initPlayer(data.value);
 	}
 });
 

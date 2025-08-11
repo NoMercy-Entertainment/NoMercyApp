@@ -1,4 +1,4 @@
-import { toRaw } from "vue";
+import {Ref, toRaw} from "vue";
 
 import Plugin from "@nomercy-entertainment/nomercy-video-player/src/plugin";
 import { NMPlayer } from "@nomercy-entertainment/nomercy-video-player/src/types";
@@ -7,6 +7,7 @@ import { groupBy } from "@/lib/stringArray";
 import type { NMPlaylistItem } from "@/lib/VideoPlayer";
 import type { Icon } from "@nomercy-entertainment/nomercy-video-player/src/types.ts";
 import { buttons } from "@/lib/VideoPlayer/plugins/UIPlugin/buttons.ts";
+import {useLocalStorage} from "@vueuse/core";
 
 export interface AutoSkipPluginArgs {
   playlist: NMPlaylistItem[];
@@ -19,33 +20,37 @@ export interface AutoSkipPluginArgs {
 export class AutoSkipPlugin extends Plugin {
   player: NMPlayer<AutoSkipPluginArgs> = <NMPlayer<AutoSkipPluginArgs>>{};
 
-  introPatterns: RegExp[] = [
-    /^OP$/iu,
-    /^NCOP$/iu,
-    /^Opening$/iu,
-    /^Opening/iu,
-    /^Opening Credits$/iu,
-    /^Opening Theme$/iu,
-    /^Opening Song$/iu,
-    /^Epilogue$/iu,
-  ];
+  introPatterns: RegExp[] = useLocalStorage('introPatterns', [
+    '^OP$',
+    '^NCOP$',
+    '^Opening$',
+    '^Opening',
+    '^Opening Credits$',
+    '^Opening Theme$',
+    '^Opening Song$',
+    '^Epilogue$',
+    '^Prologue$',
+  ])
+      .value
+      .map((pattern) => new RegExp(pattern, "iu"));
 
-  outroPatterns: RegExp[] = [
-    /^ED$/iu,
-    /^PV$/iu,
-    /^NCED$/iu,
-    /^CM$/iu,
-    /^Preview$/iu,
-    /^Next Episode Preview$/iu,
-    /^Next Time Preview$/iu,
-    /^Outro$/iu,
-    /^Ending/iu,
-    /^Prologue$/iu,
-    /^ED\+Cast$/iu,
-    /^Credits$/iu,
-    /^End Credits$/iu,
-    /^Closing$/iu,
-  ];
+  outroPatterns: RegExp[] = useLocalStorage('outroPatterns', [
+    '^ED$',
+    '^PV$',
+    '^NCED$',
+    '^CM$',
+    '^Preview$',
+    '^Next Episode Preview$',
+    '^Next Time Preview$',
+    '^Outro$',
+    '^Ending',
+    '^ED\+Cast$',
+    '^Credits$',
+    '^End Credits$',
+    '^Closing$',
+  ])
+      .value
+      .map((pattern) => new RegExp(pattern, "iu"));
 
   buttons: Icon = <Icon>{};
 
@@ -66,7 +71,7 @@ export class AutoSkipPlugin extends Plugin {
     if (this.player.options.autoSkip !== undefined) {
       this.autoSkip = this.player.options.autoSkip;
     } else {
-      this.autoSkip = localStorage.getItem("nmplayer-auto-skip") === "true";
+      this.autoSkip = localStorage.getItem("nmplayer-auto-skip") === "true" || this.player.isTv();
     }
 
     this.buttons = buttons();
@@ -116,14 +121,14 @@ export class AutoSkipPlugin extends Plugin {
       // Auto-skip logic
       if (this.lastChapter !== currentChapter.text) {
         this.lastChapter = currentChapter.text;
-        const nextChapter = this.getNextChapter(currentChapter.endTime);
-        if (!nextChapter) {
+        let nextChapter = this.getNextChapter(currentTime);
+
+        if (this.autoSkip && (!nextChapter || this.shouldSkipChapter(nextChapter.text))) {
           this.player.next();
           this.lastChapter = "";
           return;
         }
-        if (this.autoSkip) {
-          this.hideSkipButton();
+        else if (this.autoSkip && nextChapter) {
           this.player.seek(nextChapter.startTime);
         } else {
           this.showSkipButton();
@@ -181,9 +186,9 @@ export class AutoSkipPlugin extends Plugin {
   }
 
   getNextChapter(currentEndTime: number) {
-    return this.player.chapters.cues.find(
+    return toRaw(this.player.chapters.cues.find(
       (chapter) => chapter.startTime >= currentEndTime
-    );
+    ));
   }
 
   skipButtonElement: HTMLElement | null = null;
@@ -245,8 +250,12 @@ export class AutoSkipPlugin extends Plugin {
         false
     );
     icon.classList.add("w-4", "h-4");
-    
-    button.addEventListener("click", this.player.nextChapter.bind(this.player));
+
+    button.addEventListener("click", () => {
+      this.skipToNextPlayableChapter(this.player.getCurrentTime());
+      this.hideSkipButton();
+    });
+
     this.skipButtonElement = button;
 
     requestAnimationFrame(() => {
@@ -255,6 +264,21 @@ export class AutoSkipPlugin extends Plugin {
     });
 
     button.focus();
+  }
+
+  skipToNextPlayableChapter(currentTime: number) {
+    let nextChapter = this.getNextChapter(currentTime);
+
+    while (nextChapter && this.shouldSkipChapter(nextChapter.text)) {
+      currentTime = nextChapter.endTime;
+      nextChapter = this.getNextChapter(currentTime);
+    }
+
+    if (!nextChapter) {
+      this.player.next(); // Move to the next episode
+    } else {
+      this.player.seek(nextChapter.startTime); // Skip to the next playable chapter
+    }
   }
 
   hideSkipButton(): void {
