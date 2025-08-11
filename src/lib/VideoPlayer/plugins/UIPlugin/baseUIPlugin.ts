@@ -1277,6 +1277,7 @@ export class BaseUIPlugin extends Plugin {
       } else {
         this.player.emit("show-subtitles-menu", true);
         this.player.emit("show-subtitleSettings-menu", false);
+        this.menuFrame.showModal();
       }
     });
 
@@ -1340,6 +1341,7 @@ export class BaseUIPlugin extends Plugin {
         this.player.emit("show-menu", false);
       } else {
         this.player.emit("show-language-menu", true);
+        this.menuFrame.showModal();
       }
     });
 
@@ -1401,7 +1403,9 @@ export class BaseUIPlugin extends Plugin {
       if (this.qualityMenuOpen) {
         this.player.emit("show-menu", false);
       } else {
+        this.player.emit("show-menu", true);
         this.player.emit("show-quality-menu", true);
+        this.menuFrame.showModal();
       }
 
       if (this.highQuality) {
@@ -1588,6 +1592,7 @@ export class BaseUIPlugin extends Plugin {
         this.player.emit("show-menu", false);
       } else {
         this.player.emit("show-playlist-menu", true);
+        this.menuFrame.showModal();
 
         setTimeout(() => {
           document

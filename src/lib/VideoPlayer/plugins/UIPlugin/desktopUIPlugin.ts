@@ -538,6 +538,7 @@ export class DesktopUIPlugin extends BaseUIPlugin {
         this.player.emit("show-menu", false);
       } else {
         this.player.emit("show-speed-menu", true);
+        this.menuFrame.showModal();
       }
     });
 

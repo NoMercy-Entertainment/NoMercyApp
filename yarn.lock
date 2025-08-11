@@ -2305,10 +2305,10 @@
     audiomotion-analyzer "^4.5.0"
     hls.js "^1.5.13"
 
-"@nomercy-entertainment/nomercy-video-player@^0.4.6":
-  version "0.4.6"
-  resolved "https://registry.yarnpkg.com/@nomercy-entertainment/nomercy-video-player/-/nomercy-video-player-0.4.6.tgz#4bbaf1de09f82d76348f466bdbfebcb9c1adb036"
-  integrity sha512-XI/v8w+LL0XkhdehN09rz1nG3i7ZL96OC9tmm5LhHql4fCgQff5HGDIZnCBLnZ0hDfnca5sBZeYhFzaIYbv6WA==
+"@nomercy-entertainment/nomercy-video-player@^0.4.8":
+  version "0.4.8"
+  resolved "https://registry.yarnpkg.com/@nomercy-entertainment/nomercy-video-player/-/nomercy-video-player-0.4.8.tgz#3585ce079dc8fd57b037766978172fd4f787e847"
+  integrity sha512-/OpM3HydwJgtHQ2huSHdwUhzvuposYQTjN05YCaeZX87MldkHE/i7loUV5oDVwUfsDkin0Uw2ZF2RVZswB9IYQ==
   dependencies:
     "@nomercy-entertainment/media-session" "^0.1.11"
     "@sabre-js/sabre" "^0.5.1-pre.21da9b6"
