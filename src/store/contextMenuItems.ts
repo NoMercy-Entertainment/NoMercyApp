@@ -67,7 +67,13 @@ export function makeContextMenu(items: ContextMenuItem[]): (MenuItem & { icon?: 
 			label: item.label,
 			icon: item.icon,
 			confirm: item.confirm,
-			command: () => cmd(item.args?.url, contextMenuContext.value),
+			args: item.args,
+			// eslint-disable-next-line ts/no-use-before-define
+			command: () => cmd(item.args?.url, contextMenuContext.value).then(() => {
+				if (item.args?.replaceKey) {
+					document.dispatchEvent(new CustomEvent('mutateId', { detail: { id: item.args?.replaceKey } }));
+				}
+			}),
 		};
 	});
 }

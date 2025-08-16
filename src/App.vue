@@ -1,5 +1,26 @@
 <script setup lang="ts">
+import { onMounted } from 'vue';
 import { IonApp, IonRouterOutlet } from '@ionic/vue';
+import { useToast } from 'primevue/usetoast';
+import type { ToastMessageOptions } from 'primevue';
+
+const toast = useToast();
+
+function handleToast(data: ToastMessageOptions) {
+	toast.add({
+		severity: data.severity,
+		summary: data.summary,
+		detail: data.detail,
+		life: data.life,
+	});
+}
+
+onMounted(async () => {
+	document.addEventListener('toast', (event: CustomEvent<ToastMessageOptions>) => {
+		console.log('Toast event received:', event.detail);
+		handleToast(event.detail);
+	});
+});
 </script>
 
 <template>
@@ -7,5 +28,6 @@ import { IonApp, IonRouterOutlet } from '@ionic/vue';
 		<IonRouterOutlet
 			animated="false"
 		/>
+		<Toast class="z-1199" />
 	</IonApp>
 </template>

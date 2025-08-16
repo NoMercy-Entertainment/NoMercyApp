@@ -2295,20 +2295,20 @@
     "@capacitor/core" "^6.1.2"
     "@jofr/capacitor-media-session" "^4.0.0"
 
-"@nomercy-entertainment/nomercy-music-player@^0.2.4":
-  version "0.2.4"
-  resolved "https://registry.npmjs.org/@nomercy-entertainment/nomercy-music-player/-/nomercy-music-player-0.2.4.tgz"
-  integrity sha512-c3WFW+u0o3wVuuyJfZJUx9+qjzJfKvJLGE6f82xpOpwjIYVqqLW8w9mKaIR7VI6LKpOVwgAfxuu1JQmIJWWgsA==
+"@nomercy-entertainment/nomercy-music-player@^0.2.6":
+  version "0.2.6"
+  resolved "https://registry.yarnpkg.com/@nomercy-entertainment/nomercy-music-player/-/nomercy-music-player-0.2.6.tgz#34b8e98cd1234af3f6d3878a1eaae8d582f4b515"
+  integrity sha512-XtKCYlR/jOFPIxdeDogK0U4v4TgNR5ohupD/fqbGZ6wlOLDncVUYolWydsKpA4A570N4MG+AvWTDb4aXgrvdbQ==
   dependencies:
     "@ionic/vue" "^8.4.1"
     "@nomercy-entertainment/media-session" "^0.1.10"
     audiomotion-analyzer "^4.5.0"
     hls.js "^1.5.13"
 
-"@nomercy-entertainment/nomercy-video-player@^0.4.8":
-  version "0.4.8"
-  resolved "https://registry.yarnpkg.com/@nomercy-entertainment/nomercy-video-player/-/nomercy-video-player-0.4.8.tgz#3585ce079dc8fd57b037766978172fd4f787e847"
-  integrity sha512-/OpM3HydwJgtHQ2huSHdwUhzvuposYQTjN05YCaeZX87MldkHE/i7loUV5oDVwUfsDkin0Uw2ZF2RVZswB9IYQ==
+"@nomercy-entertainment/nomercy-video-player@^0.4.9":
+  version "0.4.9"
+  resolved "https://registry.yarnpkg.com/@nomercy-entertainment/nomercy-video-player/-/nomercy-video-player-0.4.9.tgz#36b2ab9f3608567ab8bb997fed3f6b9785e41a04"
+  integrity sha512-aNgKgs4mELlF66OF9eQ70PfY7da/6DfGICh4U8T+tknzRu2mWkzWtDjirqAyHyV/dlL+dYifTv5LK674kdEkog==
   dependencies:
     "@nomercy-entertainment/media-session" "^0.1.11"
     "@sabre-js/sabre" "^0.5.1-pre.21da9b6"

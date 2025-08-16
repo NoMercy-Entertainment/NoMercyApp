@@ -10,6 +10,8 @@ import serverClient from '@/lib/clients/serverClient';
 import OptimizedIcon from '@/components/OptimizedIcon.vue';
 import MusicButton from './MusicButton.vue';
 import audioPlayer, { currentSong } from '@/store/audioPlayer';
+import { useToast } from 'primevue/usetoast';
+import { translate } from '@/lib/stringArray.ts';
 
 const props = defineProps({
 	data: {
@@ -32,6 +34,8 @@ const props = defineProps({
 	},
 });
 
+const toast = useToast();
+
 function handleClick(e?: MouseEvent) {
 	e?.stopPropagation();
 
@@ -53,12 +57,12 @@ function handleClick(e?: MouseEvent) {
 				// query.invalidateQueries(['music', props.data?.type, props.data.id]);
 			}
 
-			// showNotification({
-			// 	title: translate(data.message, ...data.args ?? []),
-			// 	type: TYPE.SUCCESS,
-			// 	visibleOnly: true,
-			// 	duration: 2000,
-			// });
+			toast.add({
+				severity: 'success',
+				summary: translate(data.message, ...data.args ?? []),
+				detail: 'File Uploaded',
+				life: 2000,
+			});
 		});
 }
 </script>

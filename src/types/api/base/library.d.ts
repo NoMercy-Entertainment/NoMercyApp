@@ -57,7 +57,7 @@ export interface LibraryResponse {
 export interface StatusResponse<T> {
 	status: string;
 	message: string;
-	args?: string[];
+	args: string[];
 	data?: T;
 }
 
@@ -145,4 +145,10 @@ export interface ArtistLibrary {
 	artist_id: string;
 	library_id: string;
 	artist: Artist;
+}
+
+export interface SeasonTitleResponse {
+	title: string;
+	seasonNumber: number;
+	episodeCount: number;
 }

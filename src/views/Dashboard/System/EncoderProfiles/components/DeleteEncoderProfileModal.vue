@@ -5,6 +5,9 @@ import { useTranslation } from 'i18next-vue';
 import { useQueryClient } from '@tanstack/vue-query';
 
 import serverClient from '@/lib/clients/serverClient';
+import { useToast } from 'primevue/usetoast';
+import { translate } from '@/lib/stringArray.ts';
+import type { StatusResponse } from '@/types/api/base/library';
 
 const props = defineProps({
 	open: {
@@ -31,19 +34,17 @@ const props = defineProps({
 
 const { t } = useTranslation();
 const query = useQueryClient();
+const toast = useToast();
 
 function handleDelete() {
 	serverClient()
-		.delete(`dashboard/encoderprofiles/${props.id}`)
+		.delete<StatusResponse<string>>(`dashboard/encoderprofiles/${props.id}`)
 		.then(({ data }) => {
-			// showNotification({
-			// 	title: translate(data.message, ...data.args ?? []),
-			// 	type: data.status === 'ok'
-			// 		? TYPE.SUCCESS
-			// 		: TYPE.ERROR,
-			// 	visibleOnly: true,
-			// 	duration: 2000,
-			// });
+			toast.add({
+				severity: data.status === 'ok' ? 'success' : 'error',
+				summary: translate(data.message, ...data.args ?? []),
+				life: 2000,
+			});
 			query.invalidateQueries({ queryKey: ['dashboard', 'encoderProfiles'] });
 
 			if (props.noRedirect)

@@ -67,26 +67,26 @@ export class SocketClient {
 		try {
 			this.connection.onreconnecting((error: Error | undefined) => {
 				console.log('SignalR Disconnected.', error?.message);
-				onDisconnect(this.connection!);
+				onDisconnect(this.connection!, this.endpoint);
 			});
 			this.connection.onreconnected(() => {
 				console.log('SignalR Reconnected.');
-				onConnect(this.connection!);
+				onConnect(this.connection!, this.endpoint);
 			});
 			this.connection.onclose(async () => {
 				console.log('SignalR Closed.');
-				onDisconnect(this.connection!);
+				onDisconnect(this.connection!, this.endpoint);
 
 				if (!this.connection)
 					return;
 
 				await this.connection.start();
-				onConnect(this.connection);
+				onConnect(this.connection, this.endpoint);
 				connect(this.connection);
 			});
 
 			await this.connection.start();
-			onConnect(this.connection);
+			onConnect(this.connection, this.endpoint);
 			connect(this.connection);
 		}
 		catch (err) {

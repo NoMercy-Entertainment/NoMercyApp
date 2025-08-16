@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onMounted, onUnmounted, ref, watch } from 'vue';
+import { onBeforeUnmount, onMounted, ref, watch } from 'vue';
 import { IonContent, IonPage, isPlatform } from '@ionic/vue';
 
 import { setDisableScreensaver } from '@/store/imageModal';
@@ -123,7 +123,7 @@ function initPlayer(value?: NMPlaylistItem[] | undefined) {
 }
 
 watch(data, (value) => {
-	if (!value || !value.length)
+	if (!value?.length)
 		return;
 	initPlayer(value);
 });
@@ -133,10 +133,12 @@ onMounted(() => {
 	if (user.value.features?.nomercyConnect) {
 		initPlayer();
 	}
+	else if (data.value?.length) {
+		initPlayer(data.value);
+	}
 });
 
-onUnmounted(() => {
-	console.log('Unmounting player');
+onBeforeUnmount(() => {
 	player.value?.dispose();
 	setDisableScreensaver(false);
 });

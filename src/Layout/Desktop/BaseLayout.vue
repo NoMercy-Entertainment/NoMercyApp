@@ -4,7 +4,6 @@ import { useRoute } from 'vue-router';
 import { IonPage, IonRouterOutlet, IonTabs } from '@ionic/vue';
 
 import ContextMenu from 'primevue/contextmenu';
-import Toast from 'primevue/toast';
 import ConfirmDialog from 'primevue/confirmdialog';
 
 import type { MenuItem } from 'primevue/menuitem';
@@ -129,10 +128,6 @@ function focusMain() {
 
 			<MusicPlayerDesktop />
 			<ImageModal />
-			<!--      <Toast class="z-1199" /> -->
-			<!--      <Screensaver /> -->
-
-			<Toast />
 			<ConfirmDialog />
 			<ContextMenu ref="contextMenu" :model="contextMenuItems" />
 		</div>

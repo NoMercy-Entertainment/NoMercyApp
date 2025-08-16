@@ -1088,3 +1088,27 @@ export function checkboxValue(selectedArray: unknown[], totalArray: unknown[]): 
 		return null;
 	}
 }
+
+export function getCommonSize(requestedWidth: string | number | null): string {
+	const commonSizes = ['w92', 'w185', 'w342', 'w500', 'w780', 'original'];
+
+	if (!requestedWidth) {
+		return 'original';
+	}
+
+	const requestedWidthNum = Number.parseInt(requestedWidth.toString(), 10);
+	let closestSize = commonSizes[0];
+
+	for (const size of commonSizes) {
+		if (size === 'original')
+			return 'original';
+		const sizeNum = Number.parseInt(size.replace('w', ''), 10);
+
+		if (sizeNum >= requestedWidthNum) {
+			closestSize = size;
+			break;
+		}
+	}
+
+	return closestSize;
+}

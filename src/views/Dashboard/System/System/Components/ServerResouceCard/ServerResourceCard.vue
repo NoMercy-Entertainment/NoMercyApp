@@ -64,7 +64,7 @@ const gpuCores = computed(() => {
 		resources.value?.gpu
 		// ?.filter(c => !Number.isNaN(c))
 			?.toSorted((a, b) => a.index - b.index)
-			.map(gpu => gpu.encode) ?? []
+			.map(gpu => (gpu.power + gpu.core) / 2) ?? []
 	);
 });
 

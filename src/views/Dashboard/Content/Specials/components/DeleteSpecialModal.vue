@@ -6,6 +6,9 @@ import { useQueryClient } from '@tanstack/vue-query';
 
 import serverClient from '@/lib/clients/serverClient';
 import Modal from '@/components/Modal.vue';
+import { useToast } from 'primevue/usetoast';
+import type { StatusResponse } from '@/types/api/base/library';
+import { translate } from '@/lib/stringArray.ts';
 
 const props = defineProps({
 	open: {
@@ -32,19 +35,17 @@ const props = defineProps({
 
 const { t } = useTranslation();
 const query = useQueryClient();
+const toast = useToast();
 
 function handleDelete() {
 	serverClient()
-		.delete(`dashboard/specials/${props.id}`)
+		.delete<StatusResponse<string>>(`dashboard/specials/${props.id}`)
 		.then(({ data }) => {
-			// showNotification({
-			// 	title: translate(data.message, ...data.args ?? []),
-			// 	type: data.status === 'ok'
-			// 		? TYPE.SUCCESS
-			// 		: TYPE.ERROR,
-			// 	visibleOnly: true,
-			// 	duration: 2000,
-			// });
+			toast.add({
+				severity: data.status === 'ok' ? 'success' : 'error',
+				summary: translate(data.message, ...data.args ?? []),
+				life: 2000,
+			});
 			query.invalidateQueries({ queryKey: ['dashboard', 'specials'] });
 
 			if (props.noRedirect)

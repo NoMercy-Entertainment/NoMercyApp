@@ -1,6 +1,12 @@
 <script setup lang="ts">
-import { onBeforeUnmount, onMounted, onUnmounted, ref, watch } from 'vue';
-import { IonContent, IonPage, isPlatform } from '@ionic/vue';
+import { ref, watch } from 'vue';
+import {
+	IonContent,
+	IonPage,
+	isPlatform,
+	onIonViewDidEnter,
+	onIonViewDidLeave,
+} from '@ionic/vue';
 import { App } from '@capacitor/app';
 
 import {
@@ -137,29 +143,28 @@ function initPlayer(value?: NMPlaylistItem[] | undefined) {
 
 	App.addListener('backButton', () => {
 		player.value?.emit('back-button-hyjack');
-		router.back();
 	});
 }
 
 watch(data, (value) => {
-	if (!value || !value.length)
+	if (!value?.length)
 		return;
 	initPlayer(value);
 });
 
-onMounted(() => {
+onIonViewDidEnter(() => {
 	audioPlayer.stop();
 	if (user.value.features?.nomercyConnect) {
 		initPlayer();
 	}
+	else if (data.value?.length) {
+		initPlayer(data.value);
+	}
 });
 
-onUnmounted(() => {
-	setDisableScreensaver(false);
-});
-
-onBeforeUnmount(() => {
+onIonViewDidLeave(() => {
 	player.value?.dispose();
+	setDisableScreensaver(false);
 });
 </script>
 

@@ -10,6 +10,8 @@ import serverClient from '@/lib/clients/serverClient';
 import useServerClient from '@/lib/clients/useServerClient';
 
 import type { ServerInfo } from '@/types/api/dashboard/server.ts';
+import { useToast } from 'primevue/usetoast';
+import { translate } from '@/lib/stringArray.ts';
 
 const props = defineProps({
 	setNextButtonLocked: {
@@ -19,6 +21,7 @@ const props = defineProps({
 });
 
 const query = useQueryClient();
+const toast = useToast();
 
 const { data: serverInfo } = useServerClient<ServerInfo>({
 	path: 'dashboard/server/info',
@@ -41,13 +44,11 @@ function updateServerName() {
 			name: debouncedName.value,
 		})
 		.then(({ data }) => {
-			// showNotification({
-			// 	title: translate(data.message, ...data.args ?? []),
-			// 	type: TYPE.SUCCESS,
-			// 	visibleOnly: true,
-			// 	duration: 2000,
-			// });
-
+			toast.add({
+				severity: 'success',
+				summary: translate(data.message, ...data.args ?? []),
+				life: 2000,
+			});
 			query.invalidateQueries({ queryKey: ['servers'] });
 		});
 }

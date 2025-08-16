@@ -9,6 +9,7 @@ import { getImageBrightness, hexLighter } from '@/lib/colorHelper';
 import { currentServer } from '@/store/currentServer';
 import { useAutoThemeColors } from '@/store/preferences';
 import AppLogoSquare from '@/components/Images/icons/AppLogoSquare.vue';
+import { getCommonSize } from '@/lib/stringArray.ts';
 
 const props = defineProps({
 	path: {
@@ -78,14 +79,14 @@ const serverImageUrl = computed(() => {
 	if (!props.path || !currentServer.value)
 		return;
 	// return `${currentServer.value?.serverBaseUrl}/images/original${props.path}`;
-	return `https://app.nomercy.tv/tmdb-images${props.path}`;
+	return `https://app.nomercy.tv/tmdb-images${props.path}?width=${props.size ? props.size * 2 : null}`;
 });
 
 const tmdbImageUrl = computed(() => {
 	if (!props.path)
 		return;
 	// return `${tmdbImageBaseUrl}/original${props.path}`;
-	return `https://media.themoviedb.org/t/p/original${props.path}`;
+	return `https://media.themoviedb.org/t/p/${getCommonSize(props?.size ?? 'original')}${props.path}`;
 });
 const luminosityValue = computed(() => {
 	return isDarkMode.value ? 0 : 20;
@@ -264,7 +265,7 @@ function onError(e: Event) {
 			class="pointer-events-none absolute inset-0 h-inherit flex select-none flex-col items-end justify-end tv:justify-start self-end transition-all duration-500 max-h-inherit overflow-hidden"
 			:style="`opacity: ${opacity}; float: ${type === 'logo' ? 'right' : ''}`"
 		>
-			<source :srcset="`${serverImageUrl} 1x`" type="image/avif">
+			<source :srcset="`${serverImageUrl} 1x`">
 			<!--      <source -->
 			<!--          :srcset="`${serverImageUrl}?width=${size ? (size * 2) : null}&type=webp&aspect_ratio=${aspectRatio} 1x`" -->
 			<!--          type="image/webp" -->

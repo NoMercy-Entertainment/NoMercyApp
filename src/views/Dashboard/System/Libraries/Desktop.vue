@@ -15,6 +15,10 @@ import { currentServer } from '@/store/currentServer';
 
 import DashboardLayout from '@/Layout/Desktop/DashboardLayout.vue';
 import LibraryCard from './components/LibraryCard.vue';
+import { useToast } from 'primevue/usetoast';
+import { translate } from '@/lib/stringArray.ts';
+
+const toast = useToast();
 
 const { data: libraries, error } = useServerClient<LibrariesResponse[]>({
 	path: 'dashboard/libraries',
@@ -25,6 +29,12 @@ function handleCreateLibrary() {
 	serverClient()
 		.post<StatusResponse<Library>>('dashboard/libraries')
 		.then(({ data }) => {
+			toast.add({
+				severity: data.status === 'ok' ? 'success' : 'error',
+				summary: translate(data.message, ...data.args),
+				life: 2000,
+			});
+
 			queryClient.invalidateQueries({
 				queryKey: [
 					'dashboard',
@@ -40,30 +50,22 @@ function handleRefresh() {
 	loadingRefresh.value = true;
 
 	serverClient()
-		.post<{
-		message: string;
-		status: string;
-		args: string[];
-	}>('dashboard/libraries/refresh')
+		.post<StatusResponse<string>>('dashboard/libraries/refresh')
 		.then(({ data }) => {
 			loadingRefresh.value = false;
-			// showNotification({
-			// 	title: translate(data.message, ...data.args),
-			// 	type: data.status === 'ok'
-			// 		? TYPE.SUCCESS
-			// 		: TYPE.ERROR,
-			// 	visibleOnly: true,
-			// 	duration: 2000,
-			// });
+			toast.add({
+				severity: data.status === 'ok' ? 'success' : 'error',
+				summary: translate(data.message, ...data.args),
+				life: 2000,
+			});
 		})
 		.catch(() => {
 			loadingRefresh.value = false;
-			// showNotification({
-			// 	title: translate('An error occurred while rescanning the libraries'),
-			// 	type: TYPE.ERROR,
-			// 	visibleOnly: true,
-			// 	duration: 2000,
-			// });
+			toast.add({
+				severity: 'error',
+				summary: translate('An error occurred while rescanning the libraries'),
+				life: 2000,
+			});
 		});
 }
 
@@ -72,30 +74,22 @@ function handleRescan() {
 	loadingRescan.value = true;
 
 	serverClient()
-		.post<{
-		message: string;
-		status: string;
-		args: string[];
-	}>('dashboard/libraries/rescan')
+		.post<StatusResponse<string>>('dashboard/libraries/rescan')
 		.then(({ data }) => {
 			loadingRescan.value = false;
-			// showNotification({
-			// 	title: translate(data.message, ...data.args),
-			// 	type: data.status === 'ok'
-			// 		? TYPE.SUCCESS
-			// 		: TYPE.ERROR,
-			// 	visibleOnly: true,
-			// 	duration: 2000,
-			// });
+			toast.add({
+				severity: data.status === 'ok' ? 'success' : 'error',
+				summary: translate(data.message, ...data.args),
+				life: 2000,
+			});
 		})
 		.catch(() => {
 			loadingRescan.value = false;
-			// showNotification({
-			// 	title: translate('An error occurred while rescanning the libraries'),
-			// 	type: TYPE.ERROR,
-			// 	visibleOnly: true,
-			// 	duration: 2000,
-			// });
+			toast.add({
+				severity: 'error',
+				summary: translate('An error occurred while rescanning the libraries'),
+				life: 2000,
+			});
 		});
 }
 </script>

@@ -1,8 +1,9 @@
 <script setup lang="ts">
-import { onMounted, type PropType, watch } from 'vue';
+import { onMounted, onUnmounted, type PropType, watch } from 'vue';
 import { useRoute } from 'vue-router';
-import { onIonViewWillEnter, IonSpinner } from '@ionic/vue';
+import { onIonViewWillEnter } from '@ionic/vue';
 import { useOnline } from '@vueuse/core';
+import { IonSpinner } from '@ionic/vue';
 
 import type { HomeItem } from '@/types/api/base/home';
 import {
@@ -47,23 +48,53 @@ const { data: mutatedData, mutate } = getMutation({
 const onlineStatus = useOnline();
 const route = useRoute();
 
+function mutatePageLoad() {
+	if (!homeData.value || !onlineStatus.value) {
+		return;
+	}
+
+	const mutations = homeData.value.filter(item => item?.update?.when === 'pageLoad') ?? [];
+	mutate(mutations);
+}
+
+function mutateOnline() {
+	if (!homeData.value || !onlineStatus.value) {
+		return;
+	}
+
+	const mutations = homeData.value.filter(item => item?.update?.when === 'online') ?? [];
+	mutate(mutations);
+}
+
+function mutateId(event: CustomEvent<{ id: string }>) {
+	if (!homeData.value || !onlineStatus.value) {
+		return;
+	}
+
+	const mutations = homeData.value.filter(item => item?.id === event.detail.id) ?? [];
+	mutate(mutations);
+}
+
 onMounted(() => {
+	document.addEventListener('mutateId', mutateId);
+
 	if (!homeData.value) {
 		return;
 	}
 
 	if (onlineStatus.value) {
-		const mutations = homeData.value?.filter?.(item => item?.update?.when === 'pageLoad') ?? [];
-		mutate(mutations);
+		mutatePageLoad();
 	}
+});
+
+onUnmounted(() => {
+	document.removeEventListener('mutateId', mutateId);
 });
 
 watch(onlineStatus, (value) => {
 	if (!value)
 		return;
-
-	const mutations = homeData.value?.filter?.(item => item?.update?.when === 'online') ?? [];
-	mutate(mutations);
+	mutateOnline();
 });
 
 watch(homeData, (value) => {
@@ -75,30 +106,22 @@ watch(homeData, (value) => {
 });
 
 router.beforeEach((to) => {
-	console.log('Router beforeEach:', to.name);
 	if (!homeData.value || (to.name !== 'Home' && to.name !== 'Libraries' && to.name !== 'Music Start')) {
-		console.log('Skipping mutation on route change:', to.name);
 		return;
 	}
 
 	if (onlineStatus.value) {
-		const mutations = homeData.value?.filter?.(item => item?.update?.when === 'pageLoad') ?? [];
-		console.log('Mutating on route change:', mutations);
-		mutate(mutations);
+		mutatePageLoad();
 	}
 });
 
 onIonViewWillEnter(() => {
-	console.log('IonViewWillEnter');
 	if (!homeData.value || (route.name !== 'Home' && route.name !== 'Libraries' && route.name !== 'Music Start')) {
-		console.log('Skipping mutation on view enter:', route.name);
 		return;
 	}
 
 	if (onlineStatus.value) {
-		const mutations = homeData.value?.filter?.(item => item?.update?.when === 'pageLoad') ?? [];
-		console.log('Mutating on view enter:', mutations);
-		mutate(mutations);
+		mutatePageLoad();
 	}
 });
 </script>

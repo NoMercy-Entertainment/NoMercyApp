@@ -17,10 +17,12 @@ import useApiClient from '@/lib/clients/useApiClient';
 import type { ServerUser } from '@/types/auth';
 import Select from '@/components/Forms/Select.vue';
 import { currentServer } from '@/store/currentServer';
+import { useToast } from 'primevue/usetoast';
+import { translate } from '@/lib/stringArray.ts';
 
 const query = useQueryClient();
-
 const route = useRoute();
+const toast = useToast();
 
 const { data: libraries } = useServerClient<ServerLibrary[]>({
 	path: '/dashboard/libraries',
@@ -67,9 +69,7 @@ watch(permissions, (value) => {
 	allowedLibraries.value = libraries.value?.filter(l =>
 		value?.libraries?.includes(l.id),
 	);
-	allowedAllLibraries.value
-    = libraries.value?.filter(l => value?.libraries?.includes(l.id)).length
-    	== libraries.value?.length;
+	allowedAllLibraries.value = libraries.value?.filter(l => value?.libraries?.includes(l.id)).length === libraries.value?.length;
 });
 
 const deleteConfirmOpen = ref(false);
@@ -102,15 +102,11 @@ function handleSave() {
 				queryKey: ['userPermissions', route.params.id],
 			});
 
-			// showNotification({
-			//     title: translate(data.message, ...data.args),
-			//     type: data.status === 'ok'
-			//         ? TYPE.SUCCESS
-			//         : TYPE.ERROR,
-			//     visibleOnly: true,
-			//     duration: 2000,
-			// });
-
+			toast.add({
+				severity: data.status === 'ok' ? 'success' : 'error',
+				summary: translate(data.message, ...data.args),
+				life: 2000,
+			});
 			handleCancel();
 		});
 }

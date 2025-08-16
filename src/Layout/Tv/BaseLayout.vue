@@ -20,8 +20,6 @@ import FullTvPlayer from '@/components/MusicPlayer/tv/FullTvPlayer.vue';
 		</IonTabs>
 
 		<ImageModal />
-		<!--      <Toast class="z-1199" /> -->
-		<!--    <Screensaver /> -->
 		<FullTvPlayer v-if="currentSong" />
 	</IonPage>
 </template>

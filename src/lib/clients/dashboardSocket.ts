@@ -19,7 +19,7 @@ function connected() {
 	document.dispatchEvent(new Event('dashboardHub-connected'));
 
 	if (dashboardSocket.value?.connection) {
-		onConnect(dashboardSocket.value?.connection);
+		onConnect(dashboardSocket.value?.connection, 'Dashboard Hub');
 		connect(dashboardSocket.value?.connection);
 	}
 }
@@ -105,13 +105,13 @@ export async function startDashboardSocket() {
 		dashboardSocket.value?.connection?.onreconnecting(
 			(error: Error | undefined) => {
 				console.log('SignalR Disconnected.', error?.message);
-				onDisconnect(dashboardSocket.value?.connection);
+				onDisconnect(dashboardSocket.value!.connection, 'Dashboard Hub');
 				disconnected();
 			},
 		);
 		dashboardSocket.value?.connection?.onreconnected(() => {
 			console.log('SignalR Reconnected.');
-			onConnect(dashboardSocket.value?.connection);
+			onConnect(dashboardSocket.value!.connection, 'Dashboard Hub');
 			connected();
 		});
 	}

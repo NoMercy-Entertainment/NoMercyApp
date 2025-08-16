@@ -10,6 +10,8 @@ import type { FolderLibrary, LibrariesResponse } from '@/types/api/base/library'
 import serverClient from '@/lib/clients/serverClient';
 import FolderBrowser from '@/components/FolderBrowser.vue';
 import Modal from '@/components/Modal.vue';
+import { useToast } from 'primevue/usetoast';
+import { translate } from '@/lib/stringArray.ts';
 
 const props = defineProps({
 	open: {
@@ -35,8 +37,9 @@ const props = defineProps({
 });
 
 const route = useRoute();
-const { t } = useTranslation();
 const query = useQueryClient();
+const toast = useToast();
+const { t } = useTranslation();
 
 function handleCreateFolder() {
 	serverClient()
@@ -61,14 +64,11 @@ function handleCreateFolder() {
 			// Invalidate queries to refresh library data from server
 			query.invalidateQueries({ queryKey: ['dashboard', 'libraries'] });
 
-			// showNotification({
-			// 	title: translate(data.message, ...data.args),
-			// 	type: data.status === 'ok'
-			// 		? TYPE.SUCCESS
-			// 		: TYPE.ERROR,
-			// 	visibleOnly: true,
-			// 	duration: 2000,
-			// });
+			toast.add({
+				severity: data.status === 'ok' ? 'success' : 'error',
+				summary: translate(data.message, ...data.args),
+				life: 2000,
+			});
 
 			props.setFolder('/');
 			props.close();

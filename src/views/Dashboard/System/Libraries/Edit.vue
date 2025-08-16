@@ -9,6 +9,7 @@ import type {
 	EncoderProfile,
 	FolderLibrary,
 	LibrariesResponse,
+	StatusResponse,
 } from '@/types/api/base/library';
 import type { Language } from '@/types/api/shared';
 import type { Library, NameVal } from '@/types/api/dashboard/server';
@@ -25,9 +26,12 @@ import DeleteLibraryModal from './components/DeleteLibraryModal.vue';
 import Folder from './components/Folder.vue';
 import AddContentModal from '@/views/Dashboard/System/Libraries/components/AddContentModal.vue';
 import { IonContent, IonPage } from '@ionic/vue';
+import { useToast } from 'primevue/usetoast';
+import { translate } from '@/lib/stringArray.ts';
 
 const route = useRoute();
 const query = useQueryClient();
+const toast = useToast();
 const { t } = useTranslation();
 
 const {
@@ -128,32 +132,22 @@ function handleRefresh() {
 	loadingRefresh.value = true;
 
 	serverClient()
-		.post<{
-		message: string;
-		status: string;
-		args: string[];
-	}>(`dashboard/libraries/${route.params.id}/refresh`)
+		.post<StatusResponse<string>>(`dashboard/libraries/${route.params.id}/refresh`)
 		.then(({ data }) => {
-			console.log(data.status === 'ok');
 			loadingRefresh.value = false;
-			// showNotification({
-			//     title: translate(data.message, ...data.args),
-			//     type: data.status === 'ok'
-			//         ? TYPE.SUCCESS
-			//         : TYPE.ERROR,
-			//     visibleOnly: true,
-			//     duration: 2000,
-			// });
+			toast.add({
+				severity: data.status === 'ok' ? 'success' : 'error',
+				summary: translate(data.message, ...data.args),
+				life: 2000,
+			});
 		})
 		.catch(() => {
-			console.log('error');
 			loadingRefresh.value = false;
-			// showNotification({
-			//     title: translate('An error occurred while rescanning the library folders'),
-			//     type: TYPE.ERROR,
-			//     visibleOnly: true,
-			//     duration: 2000,
-			// });
+			toast.add({
+				severity: 'error',
+				summary: translate('An error occurred while rescanning the library folders'),
+				life: 2000,
+			});
 		});
 }
 
@@ -168,26 +162,20 @@ function handleRescan() {
 		args: string[];
 	}>(`dashboard/libraries/${route.params.id}/rescan`)
 		.then(({ data }) => {
-			console.log(data.status === 'ok');
 			loadingRescan.value = false;
-			// showNotification({
-			//     title: translate(data.message, ...data.args),
-			//     type: data.status === 'ok'
-			//         ? TYPE.SUCCESS
-			//         : TYPE.ERROR,
-			//     visibleOnly: true,
-			//     duration: 2000,
-			// });
+			toast.add({
+				severity: data.status === 'ok' ? 'success' : 'error',
+				summary: translate(data.message, ...data.args),
+				life: 2000,
+			});
 		})
 		.catch(() => {
-			console.log('error');
 			loadingRescan.value = false;
-			// showNotification({
-			//     title: translate('An error occurred while rescanning the library folders'),
-			//     type: TYPE.ERROR,
-			//     visibleOnly: true,
-			//     duration: 2000,
-			// });
+			toast.add({
+				severity: 'error',
+				summary: translate('An error occurred while rescanning the library folders'),
+				life: 2000,
+			});
 		});
 }
 
@@ -216,14 +204,11 @@ function handleSave() {
 		.then(({ data }) => {
 			query.invalidateQueries({ queryKey: ['dashboard', 'libraries'] });
 
-			// showNotification({
-			//     title: translate(data.message, ...data.args),
-			//     type: data.status === 'ok'
-			//         ? TYPE.SUCCESS
-			//         : TYPE.ERROR,
-			//     visibleOnly: true,
-			//     duration: 2000,
-			// });
+			toast.add({
+				severity: data.status === 'ok' ? 'success' : 'error',
+				summary: translate(data.message, ...data.args),
+				life: 2000,
+			});
 
 			handleCancel();
 		});

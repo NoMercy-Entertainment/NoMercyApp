@@ -12,7 +12,7 @@ import { isNative } from '@/config/global';
 import i18next from '@/config/i18next';
 
 import useServerClient from '@/lib/clients/useServerClient';
-import { setTitle, sortByPosterAlphabetized } from '@/lib/stringArray';
+import { setTitle, sortByPosterAlphabetized, translate } from '@/lib/stringArray';
 import { pickPaletteColor } from '@/lib/colorHelper';
 import serverClient from '@/lib/clients/serverClient';
 import { convertToHumanReact } from '@/lib/dateTime';
@@ -45,7 +45,8 @@ import BannerButton from '@/components/Buttons/BannerButton.vue';
 import ShareButton from '@/components/Buttons/ShareButton.vue';
 import { MenuItem } from '@headlessui/vue';
 import MissingEpisodes from '@/views/Base/Info/components/MissingEpisodes.vue';
-import type { ComputedRef } from 'vue';
+import { useToast } from 'primevue/usetoast';
+import sidebar from '@/store/sidebar.ts';
 
 const route = useRoute();
 
@@ -69,6 +70,8 @@ const trailerIndex = ref(-1);
 const endTime = ref<string | 0 | null | undefined>(null);
 const interval = ref<NodeJS.Timeout | null>(null);
 const { t } = useTranslation();
+
+const toast = useToast();
 
 const missingEpisodesModalOpen = ref(false);
 function openMissingEpisodesContentModal() {
@@ -221,22 +224,18 @@ function handleRescan() {
 		args: string[];
 	}>(`${route.fullPath}/rescan`)
 		.then(({ data }) => {
-			// showNotification({
-			// 	title: translate(data.message, ...data.args),
-			// 	type: data.status === 'ok'
-			// 		? TYPE.SUCCESS
-			// 		: TYPE.ERROR,
-			// 	visibleOnly: true,
-			// 	duration: 2000,
-			// });
+			toast.add({
+				severity: data.status === 'ok' ? 'success' : 'error',
+				summary: translate(data.message, ...data.args),
+				life: 2000,
+			});
 		})
 		.catch(() => {
-			// showNotification({
-			// 	title: translate('An error occurred while rescanning the library folders'),
-			// 	type: TYPE.ERROR,
-			// 	visibleOnly: true,
-			// 	duration: 2000,
-			// });
+			toast.add({
+				severity: 'error',
+				summary: translate('An error occurred while rescanning the library folders'),
+				life: 2000,
+			});
 		});
 }
 
@@ -248,22 +247,18 @@ function handleRefresh() {
 		args: string[];
 	}>(`${route.fullPath}/refresh`)
 		.then(({ data }) => {
-			// showNotification({
-			// 	title: translate(data.message, ...data.args),
-			// 	type: data.status === 'ok'
-			// 		? TYPE.SUCCESS
-			// 		: TYPE.ERROR,
-			// 	visibleOnly: true,
-			// 	duration: 2000,
-			// });
+			toast.add({
+				severity: data.status === 'ok' ? 'success' : 'error',
+				summary: translate(data.message, ...data.args),
+				life: 3000,
+			});
 		})
 		.catch(() => {
-			// showNotification({
-			// 	title: translate('An error occurred while rescanning the library folders'),
-			// 	type: TYPE.ERROR,
-			// 	visibleOnly: true,
-			// 	duration: 2000,
-			// });
+			toast.add({
+				severity: 'error',
+				summary: translate('An error occurred while rescanning the library folders'),
+				life: 2000,
+			});
 		});
 }
 
@@ -275,22 +270,18 @@ function handleDelete() {
 		args: string[];
 	}>(`${route.fullPath}`)
 		.then(({ data }) => {
-			// showNotification({
-			// 	title: translate(data.message, ...data.args),
-			// 	type: data.status === 'ok'
-			// 		? TYPE.SUCCESS
-			// 		: TYPE.ERROR,
-			// 	visibleOnly: true,
-			// 	duration: 2000,
-			// });
+			toast.add({
+				severity: data.status === 'ok' ? 'success' : 'error',
+				summary: translate(data.message, ...data.args),
+				life: 2000,
+			});
 		})
 		.catch(() => {
-			// showNotification({
-			// 	title: translate('An error occurred while rescanning the library folders'),
-			// 	type: TYPE.ERROR,
-			// 	visibleOnly: true,
-			// 	duration: 2000,
-			// });
+			toast.add({
+				severity: 'error',
+				summary: translate('An error occurred while rescanning the library folders'),
+				life: 2000,
+			});
 		});
 }
 
@@ -302,22 +293,18 @@ function handleAdd() {
 		args: string[];
 	}>(`${route.fullPath}/add`)
 		.then(({ data }) => {
-			// showNotification({
-			// 	title: translate(data.message, ...data.args),
-			// 	type: data.status === 'ok'
-			// 		? TYPE.SUCCESS
-			// 		: TYPE.ERROR,
-			// 	visibleOnly: true,
-			// 	duration: 2000,
-			// });
+			toast.add({
+				severity: data.status === 'ok' ? 'success' : 'error',
+				summary: translate(data.message, ...data.args),
+				life: 2000,
+			});
 		})
 		.catch(() => {
-			// showNotification({
-			// 	title: translate('An error occurred while rescanning the library folders'),
-			// 	type: TYPE.ERROR,
-			// 	visibleOnly: true,
-			// 	duration: 2000,
-			// });
+			toast.add({
+				severity: 'error',
+				summary: translate('An error occurred while rescanning the library folders'),
+				life: 2000,
+			});
 		});
 }
 
@@ -422,8 +409,10 @@ const shareData = computed<ShareOptions>(() => ({
 										<RouterLink
 											:to="`/${data?.media_type}/${data?.id}/watch`"
 											:aria-label="$t('Play')"
-											class="relative h-available m-auto mx-auto flex-1 flex max-w-[65%] scale-95 cursor-default group/card block z-0 transitioning rounded-2xl aspect-poster overflow-clip select-none cover !shadow-none max-h-available  hover:!scale-100 hover:-translate-y-1 4xl:-mt-0 5xl:-mt-20 mb-20"
+											class="relative h-available m-auto mx-auto flex-1 flex max-w-[75%] scale-95 cursor-default group/card z-0 transitioning rounded-2xl aspect-poster overflow-clip select-none cover !shadow-none max-h-available  hover:!scale-100 hover:-translate-y-1"
 											:class="{
+												' 4xl:-mt-10 5xl:-mt-20 6xl:-mt-28 mb-20 6xl:mb-28': sidebar === 'open',
+												' 4xl:-mt-2 5xl:-mt-60 6xl:-mt-28 mb-60 6xl:mb-28': sidebar !== 'open',
 												'hover:!scale-100 hover:-translate-y-1': hasItem,
 											}"
 											data-nav="true"

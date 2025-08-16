@@ -7,6 +7,11 @@ import { VueQueryPlugin } from '@tanstack/vue-query';
 import MasonryWall from '@yeger/vue-masonry-wall';
 import I18NextVue from 'i18next-vue';
 
+import '@primeuix/styled';
+import '@/lib/scrollHandlers';
+import '@/store/deviceInfo';
+import '@/store/screensaver';
+
 import {
 	Card,
 	Checkbox,
@@ -45,6 +50,7 @@ import HomeCard from '@/components/NMHomeCard.vue';
 import NMList from '@/components/NMList.vue';
 import NMMusicCard from '@/components/NMMusicCard.vue';
 import NMSeasonCard from '@/components/NMSeasonCard.vue';
+import NMSeasonTitle from '@/components/NMSeasonTitle.vue';
 
 import NMMusicHomeCard from '@/components/NMMusicHomeCard.vue';
 import NMServerComponent from '@/components/NMServerComponent.vue';
@@ -56,10 +62,6 @@ import { queryClient } from '@/config/tanstack-query';
 import konamiEnabled from '@/store/konami';
 import { redirectUrl } from '@/store/routeState';
 import router from './router';
-import '@primeuix/styled';
-import '@/lib/scrollHandlers';
-import '@/store/deviceInfo';
-import '@/store/screensaver';
 
 export async function setupApp(app: AppContext['app']) {
 	if (
@@ -113,7 +115,6 @@ export async function setupApp(app: AppContext['app']) {
 
 	app.use(MasonryWall);
 
-	app.component('Button', Button);
 	app.component('Modal', Modal);
 	app.component('NMCard', NMCard);
 	app.component('NMCarousel', NMCarousel);
@@ -128,14 +129,14 @@ export async function setupApp(app: AppContext['app']) {
 	app.component('NMTopResultCard', NMTopResultCard);
 	app.component('NMTrackRow', NMTrackRow);
 	app.component('NMSeasonCard', NMSeasonCard);
+	app.component('NMSeasonTitle', NMSeasonTitle);
 
 	app.component('SwiperContainer', Swiper);
 	app.component('SwiperSlide', SwiperSlide);
 
-	app.use(ConfirmationService);
-	app.use(ToastService);
 	app.directive('ripple', Ripple);
 	app.directive('tooltip', Tooltip);
+	app.component('Button', Button);
 	app.component('Card', Card);
 	app.component('Checkbox', Checkbox);
 	app.component('ContextMenu', ContextMenu);
@@ -151,6 +152,9 @@ export async function setupApp(app: AppContext['app']) {
 	app.component('Textarea', Textarea);
 	app.component('Image', Image);
 	app.component('Form', Form);
+
+	app.use(ConfirmationService);
+	app.use(ToastService);
 
 	if (!sessionStorage.getItem('load') && isPlatform('capacitor')) {
 		setTimeout(() => {

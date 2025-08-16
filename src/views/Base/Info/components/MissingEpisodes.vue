@@ -21,7 +21,7 @@ const route = useRoute();
 </script>
 
 <template>
-	<Modal :open="open" :close="close" title="Missing Episodes" size="lg">
+	<Modal :open="open" :close="close" title="Missing episodes" max-width="max-w-7xl">
 		<ScrollContainer :auto-hide="true" :static="true">
 			<NMComponent :path="`${route.path}/missing`" />
 		</ScrollContainer>

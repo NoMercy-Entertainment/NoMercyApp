@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { IonContent, IonPage } from '@ionic/vue';
 import { useQueryClient } from '@tanstack/vue-query';
+import { useToast } from 'primevue/usetoast';
+import { useTranslation } from 'i18next-vue';
 
 import type { Device } from '@/types/server';
 
@@ -12,6 +14,8 @@ import ServerDeviceCard from '@/views/Dashboard/System/System/Components/ServerD
 import OptimizedIcon from '@/components/OptimizedIcon.vue';
 
 const query = useQueryClient();
+const toast = useToast();
+const { t } = useTranslation();
 
 const { data: devices, error } = useServerClient<Device[]>({
 	path: 'dashboard/devices',
@@ -27,20 +31,18 @@ async function handleDelete() {
 		.then(() => {
 			query.invalidateQueries({ queryKey: ['devices'] });
 
-			// showNotification({
-			//     title: t('Activity logs deleted'),
-			//     type: TYPE.SUCCESS,
-			//     visibleOnly: true,
-			//     duration: 2000,
-			// });
+			toast.add({
+				severity: 'success',
+				summary: t('Activity logs deleted'),
+				life: 2000,
+			});
 		})
 		.catch(() => {
-			// showNotification({
-			//     title: `${t('Something went wrong')} ${t('trying to delete activity logs')}`,
-			//     type: TYPE.ERROR,
-			//     visibleOnly: true,
-			//     duration: 2000,
-			// });
+			toast.add({
+				severity: 'error',
+				summary: `${t('Something went wrong')} ${t('trying to delete activity logs')}`,
+				life: 2000,
+			});
 		});
 }
 </script>

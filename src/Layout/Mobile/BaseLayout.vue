@@ -70,8 +70,6 @@ onUnmounted(() => {
 			/>
 
 			<ImageModal />
-			<!--      <Toast class="z-1199" /> -->
-			<!--      <Screensaver /> -->
 		</IonTabs>
 	</IonPage>
 </template>

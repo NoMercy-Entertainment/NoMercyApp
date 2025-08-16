@@ -46,6 +46,7 @@ const props = defineProps({
 				:color-palette="data?.color_palette?.still"
 				class="h-40"
 				:size="660"
+				loading="lazy"
 				aspect="backdrop"
 				class-name="pointer-events-none absolute z-20 flex h-full w-full select-none object-cover transitioning trickle-div"
 				type="image"

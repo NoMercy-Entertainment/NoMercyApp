@@ -21,8 +21,8 @@ defineProps({
 
 <template>
 	<div
-		v-if="items"
-		class="mt-2 sm:mt-4 mb-2 sm:mr-8 flex flex-1 flex-col w-auto flex-shrink-0 flex-grow-1 items-start justify-start gap-2 self-stretch text-left"
+		v-if="items?.length > 0"
+		class="mt-2 sm:mt-4 mb-2 flex flex-1 flex-col w-auto flex-shrink-0 flex-grow-1 items-start justify-start gap-2 self-stretch text-left"
 	>
 		<h3
 			v-if="title"
@@ -40,6 +40,14 @@ defineProps({
 				v-bind="render.props"
 			/>
 		</div>
+	</div>
+	<div v-else class="mt-2 sm:mt-4 mb-2 flex flex-1 flex-col w-auto flex-shrink-0 flex-grow-1 items-start justify-start gap-2 self-stretch text-left">
+		<h3 class="text-[20px] font-bold text-auto-12 mr-2 ml-1 sm:ml-3 text-slate-dark-1 dark:text-slate-light-1">
+			{{ title }}
+		</h3>
+		<p class="text-slate-dark-2 dark:text-slate-light-2">
+			No items.
+		</p>
 	</div>
 </template>
 

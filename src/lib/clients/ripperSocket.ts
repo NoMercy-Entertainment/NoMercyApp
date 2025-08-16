@@ -4,8 +4,6 @@ import { HubConnectionState } from '@microsoft/signalr/src/HubConnection';
 import SocketClient from '@/lib/clients/socketClient/SocketClient';
 import {
 	connect,
-	onConnect,
-	onDisconnect,
 } from '@/lib/clients/socketClient/events';
 import { currentServer } from '@/store/currentServer';
 import { user } from '@/store/user';
@@ -19,7 +17,6 @@ function connected() {
 	document.dispatchEvent(new Event('ripperHub-connected'));
 
 	if (ripperSocket.value?.connection) {
-		onConnect(ripperSocket.value?.connection);
 		connect(ripperSocket.value?.connection);
 	}
 }
@@ -102,13 +99,11 @@ export async function startRipperSocket() {
 		ripperSocket.value?.connection?.onreconnecting(
 			(error: Error | undefined) => {
 				console.log('SignalR Disconnected.', error?.message);
-				onDisconnect(ripperSocket.value?.connection);
 				disconnected();
 			},
 		);
 		ripperSocket.value?.connection?.onreconnected(() => {
 			console.log('SignalR Reconnected.');
-			onConnect(ripperSocket.value?.connection);
 			connected();
 		});
 	}

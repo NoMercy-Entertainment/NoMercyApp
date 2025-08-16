@@ -28,6 +28,7 @@ export default {
 			'3xl': '1800px',
 			'4xl': '1920px',
 			'5xl': '2200px',
+			'6xl': '2800px',
 		},
 		screens: {
 			'sm': '640px',
@@ -38,6 +39,7 @@ export default {
 			'3xl': '1800px',
 			'4xl': '1920px',
 			'5xl': '2200px',
+			'6xl': '2800px',
 			'tv': {
 				min: '960px',
 				max: '960px',

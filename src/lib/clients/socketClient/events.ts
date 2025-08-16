@@ -1,9 +1,10 @@
-import { ref } from 'vue';
 import type { HubConnection } from '@microsoft/signalr';
 import type { ActivityLog } from '@/types/server';
 import { queryClient } from '@/config/tanstack-query';
 import { useVideoSocket } from '@/store/videoSocket';
 import { Device } from '@capacitor/device';
+import i18next from 'i18next';
+import { translate } from '@/lib/stringArray.ts';
 
 export function connect(socket?: HubConnection) {
 	if (!socket)
@@ -39,45 +40,43 @@ export function disconnect(socket?: HubConnection) {
 //     receiver: '925B4C3C',
 // });
 
-const timeout = ref<NodeJS.Timeout>();
-
-export function onConnect(socket?: HubConnection | null) {
+export function onConnect(socket: HubConnection | null, endpoint: string) {
 	if (!socket)
 		return;
 	document.dispatchEvent(new Event('baseHub-connected'));
-	clearTimeout(timeout.value);
 
-	// timeout.value = setTimeout(() => {
-	// showNotification({
-	// 	title: i18next.t('Connected to server'),
-	// 	type: TYPE.SUCCESS,
-	// 	visibleOnly: true,
-	// 	duration: 2000,
-	// });
-	// }, 500);
+	document.dispatchEvent(new CustomEvent('toast', {
+		detail: {
+			severity: 'info',
+			summary: i18next.t(`Connected to ${endpoint}`),
+			life: 3000,
+		},
+	}));
 }
 
-export function onDisconnect(socket?: HubConnection | null) {
+export function onDisconnect(socket: HubConnection | null, endpoint: string) {
 	if (!socket)
 		return;
 	document.dispatchEvent(new Event('baseHub-disconnected'));
 
-	// showNotification({
-	// 	title: i18next.t('Disconnected from server'),
-	// 	type: TYPE.ERROR,
-	// 	visibleOnly: true,
-	// 	duration: 2000,
-	// });
+	document.dispatchEvent(new CustomEvent('toast', {
+		detail: {
+			severity: 'error',
+			summary: i18next.t(`Disconnected from ${endpoint}`),
+			life: 2000,
+		},
+	}));
 }
 
 function onNotify(data: any) {
-	// showNotification({
-	// 	title: translate(data.title, ...data.args),
-	// 	body: data.body,
-	// 	type: data.type,
-	// 	visibleOnly: data.visibleOnly,
-	// 	duration: data.duration,
-	// });
+	document.dispatchEvent(new CustomEvent('toast', {
+		detail: {
+			severity: data.type,
+			summary: translate(data.title, ...data.args),
+			detail: data.body,
+			life: data.duration,
+		},
+	}));
 }
 
 function onUpdateContent(data: any) {
