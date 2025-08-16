@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, ref, watch } from 'vue';
+import { computed, onUnmounted, ref, watch } from 'vue';
 import { useRoute } from 'vue-router';
 import {
 	IonContent,
@@ -8,13 +8,14 @@ import {
 	onIonViewWillEnter,
 	onIonViewWillLeave,
 } from '@ionic/vue';
-import axios from 'axios';
 import { t } from 'i18next';
 
 import type { InfoResponse } from '@/types/api/base/info';
 
 import i18next from '@/config/i18next';
 import useServerClient from '@/lib/clients/useServerClient';
+import serverClient from '@/lib/clients/serverClient'; // Add this import
+
 import {
 	breakTitle2,
 	setTitle,
@@ -153,7 +154,6 @@ function incrementTrailerIndex() {
 	else {
 		trailerIndex.value++;
 	}
-	trailerIndex.value++;
 }
 
 function processTrailer(value: InfoResponse | undefined) {
@@ -168,34 +168,27 @@ function processTrailer(value: InfoResponse | undefined) {
 		return;
 	}
 
-	endTime.value
-    = value.duration
-    	&& new Date(
-    		new Date().getTime() + value.duration * 60 * 1000,
-    	).toLocaleTimeString(i18next.language ?? 'en-US', {
-    		hour: '2-digit',
-    		minute: '2-digit',
-    	});
+	endTime.value = value.duration && new Date(
+		new Date().getTime() + value.duration * 60 * 1000,
+	).toLocaleTimeString(i18next.language ?? 'en-US', {
+		hour: '2-digit',
+		minute: '2-digit',
+	});
+
 	interval.value = setInterval(() => {
-		endTime.value
-      = value.duration
-      	&& new Date(
-      		new Date().getTime() + value.duration * 60 * 1000,
-      	).toLocaleTimeString(i18next.language ?? 'en-US', {
-      		hour: '2-digit',
-      		minute: '2-digit',
-      	});
+		endTime.value = value.duration && new Date(
+			new Date().getTime() + value.duration * 60 * 1000,
+		).toLocaleTimeString(i18next.language ?? 'en-US', {
+			hour: '2-digit',
+			minute: '2-digit',
+		});
 	}, 1000);
 
-	axios
-		.head(
-			`https://trailer.nomercy.tv/${value.videos[trailerIndex.value]?.src}/${
-				value.videos[trailerIndex.value]?.src
-			}.webm`,
-			{
-				withCredentials: false,
-			},
-		)
+	// Use serverClient instead of axios for consistency
+	serverClient()
+		.head(`trailer/${value.videos[trailerIndex.value]?.src}`, {
+			withCredentials: false,
+		})
 		.then(() => {
 			trailerState.value = true;
 		})
@@ -204,6 +197,18 @@ function processTrailer(value: InfoResponse | undefined) {
 			trailerState.value = false;
 		});
 }
+
+watch(trailerIndex, (value, oldValue) => {
+	if (!value || value === oldValue)
+		return;
+
+	processTrailer(data?.value);
+});
+
+// Add cleanup on component unmount
+onUnmounted(() => {
+	clearInterval(interval.value ?? undefined);
+});
 </script>
 
 <template>
@@ -435,7 +440,7 @@ function processTrailer(value: InfoResponse | undefined) {
 				</div>
 			</div>
 
-			<MobileInfoCard :data="data" :toggle-trailer="toggleTrailer" />
+			<MobileInfoCard :data="data" :toggle-trailer="toggleTrailer" :trailer-state="trailerState" />
 
 			<Trailer
 				v-if="data?.videos && data?.videos?.length > 0 && trailerOpen"
@@ -446,7 +451,7 @@ function processTrailer(value: InfoResponse | undefined) {
 				:title="data?.title ?? data?.name"
 				:toggle="toggleTrailer"
 				:videos="data?.videos"
-				class="absolute inset-0 h-full w-full z-999"
+				class="inset-0 h-full w-available z-999"
 			/>
 		</IonContent>
 	</IonPage>

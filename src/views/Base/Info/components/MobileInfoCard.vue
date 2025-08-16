@@ -36,6 +36,9 @@ const props = defineProps({
 		>,
 		required: false,
 	},
+	trailerState: {
+		required: true,
+	},
 	toggleTrailer: {
 		type: Function as PropType<() => void>,
 		required: false,
@@ -119,13 +122,50 @@ const shareData = computed<ShareOptions>(() => ({
 				</p>
 			</RouterLink>
 
+			<!--			<button -->
+			<!--          v-if="trailerState === true" -->
+			<!--				class="frosting flex justify-start items-center flex-grow h-10 relative overflow-hidden gap-2 px-2 py-4 rounded-3xl text-slate-light-1 bg-slate-light-12" -->
+			<!--				@click="toggleTrailer($event)" -->
+			<!--			> -->
+			<!--        <OptimizedIcon -->
+			<!--            icon="film" -->
+			<!--            class-name="w-6 text-green-8" -->
+			<!--        /> -->
+			<!--				<p class="flex-grow w-[100px] text-[15px] font-semibold text-center"> -->
+			<!--					{{ $t("Watch trailer") }} -->
+			<!--				</p> -->
+			<!--			</button> -->
+
 			<button
-				v-if="toggleTrailer"
+				v-if="trailerState === true"
+				title="Watch trailer"
 				class="frosting flex justify-start items-center flex-grow h-10 relative overflow-hidden gap-2 px-2 py-4 rounded-3xl text-slate-light-1 bg-slate-light-12"
-				@click="toggleTrailer($event)"
+				@click="toggleTrailer"
 			>
-				<p class="flex-grow w-[100px] text-[15px] font-semibold text-center">
-					{{ $t(!data ? "loading" : "Trailer") }}
+				<p class="flex-grow w-[100px] text-[15px] font-semibold text-center text-green-8">
+					{{ $t("Watch trailer") }}
+				</p>
+			</button>
+
+			<button
+				v-else-if="trailerState === false"
+				title="Trailer unavailable"
+				class="frosting flex justify-start items-center flex-grow h-10 relative overflow-hidden gap-2 px-2 py-4 rounded-3xl text-slate-light-1 bg-slate-light-12"
+				disabled
+			>
+				<p class="flex-grow w-[100px] text-[15px] font-semibold text-center text-red-8">
+					{{ $t("Watch trailer") }}
+				</p>
+			</button>
+
+			<button
+				v-else-if="trailerState === 'loading'"
+				title="Loading trailer..."
+				class="frosting flex justify-start items-center flex-grow h-10 relative overflow-hidden gap-2 px-2 py-4 rounded-3xl text-slate-light-1 bg-slate-light-12"
+				disabled
+			>
+				<p class="flex-grow w-[100px] text-[15px] font-semibold text-center text-gray-8">
+					{{ $t("Watch trailer") }}
 				</p>
 			</button>
 		</div>

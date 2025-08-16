@@ -295,17 +295,17 @@ onUnmounted(() => {
 
 <template>
 	<button
-		class="fixed h-full w-full overflow-hidden rounded-lg bg-black/50"
+		class="fixed inset-0 h-available w-available overflow-hidden rounded-lg bg-black/50"
 		@click="toggle()"
 	>
 		<div
 			:data-music="musicVisibility"
 			:data-sidebar="sidebar"
-			class="absolute w-screen h-available sm:w-auto sm:overflow-hidden sm:inset-1/2 sm:aspect-video sm:-translate-y-[50%] sidebar-closed:sm:h-full sidebar-closed:sm:max-w-[90vw] sidebar-closed:sm:max-h-[93%] sidebar-closed:px-4 sidebar-closed:py-2 sidebar-closed:xl:px-[1.8rem] sidebar-closed:xl:py-4 sm:-translate-x-[50%] sidebar-open:h-5/6 sidebar-open:px-10 sidebar-open:py-6 sidebar-open:xl:px-[2.8rem] sidebar-open:xl:py-6"
+			class="absolute inset-0 sm:top-0 w-available h-available sm:w-auto sm:overflow-hidden sm:inset-1/2 sm:aspect-video sm:-translate-y-[50%] sidebar-closed:sm:h-full sidebar-closed:sm:max-w-[90vw] sidebar-closed:sm:max-h-[93%] sidebar-closed:px-4 sidebar-closed:py-2 sidebar-closed:xl:px-[1.8rem] sidebar-closed:xl:py-4 sm:-translate-x-[50%] sidebar-open:h-5/6 sidebar-open:px-10 sidebar-open:py-6 sidebar-open:xl:px-[2.8rem] sidebar-open:xl:py-6"
 		>
 			<div
 				ref="trailerContainer"
-				class="relative rounded-2xl flex overflow-clip children:overflow-clip h-auto top-1/2 -translate-y-1/2 w-full sm:h-full children:!w-full children:!h-auto children:!aspect-video"
+				class="relative rounded-2xl flex overflow-clip children:overflow-clip h-auto top-1/4 sm:top-1/2 -translate-y-1/2 w-full sm:h-full children:!w-full children:!h-auto children:!aspect-video"
 				@click.stop=""
 			>
 				<div id="trailer" class="group nomercyplayer" />
