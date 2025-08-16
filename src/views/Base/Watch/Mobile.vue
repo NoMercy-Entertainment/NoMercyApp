@@ -143,6 +143,7 @@ function initPlayer(value?: NMPlaylistItem[] | undefined) {
 
 	App.addListener('backButton', () => {
 		player.value?.emit('back-button-hyjack');
+		router.back();
 	});
 }
 
