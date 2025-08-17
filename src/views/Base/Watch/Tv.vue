@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { onMounted, onUnmounted, ref, watch } from 'vue';
-import { IonContent, IonPage, isPlatform } from '@ionic/vue';
+import { ref, watch } from 'vue';
+import { IonContent, IonPage, isPlatform, onIonViewDidEnter, onIonViewDidLeave } from '@ionic/vue';
 import { App } from '@capacitor/app';
 
 import { isNative } from '@/config/global';
@@ -24,10 +24,11 @@ import {
 
 import audioPlayer from '@/store/audioPlayer';
 import router from '@/router';
-import { hideNavBar, showNavBar } from '@/store/ui';
+import { hideNavBar } from '@/store/ui';
 import useServerClient from '@/lib/clients/useServerClient';
 // import { VideoNoMercyConnectPlugin } from '@/lib/VideoPlayer/plugins/videoNoMercyConnectPlugin.ts';
 import KeyHandlerPlugin from '@/lib/VideoPlayer/plugins/keyHandlerPlugin.ts';
+import { disableImmersiveMode, lockPortrait } from '@/lib/utils.ts';
 
 const { data } = useServerClient<NMPlaylistItem[]>({
 	// enabled: !user.value.features?.nomercyConnect,
@@ -108,12 +109,14 @@ function initPlayer(value?: NMPlaylistItem[] | undefined) {
 		router.back();
 	});
 
-	player.value?.on('error', (e) => {
-		console.error(e);
+	player.value?.on('dispose', () => {
+		lockPortrait();
+		disableImmersiveMode();
+		router.back();
 	});
 
 	player.value?.on('back', () => {
-		router.back();
+		player.value?.dispose();
 	});
 
 	player.value?.on('play', () => {
@@ -133,26 +136,33 @@ function initPlayer(value?: NMPlaylistItem[] | undefined) {
 		player.value?.play();
 	});
 
+	App.addListener('backButton', () => {
+		player.value?.emit('back-button-hyjack');
+		router.back();
+	});
+
 	App.addListener('backButton', goBack);
 }
 
 watch(data, (value) => {
-	if (!value || !value.length)
+	if (!value?.length)
 		return;
 	initPlayer(value);
 });
 
-onMounted(() => {
+onIonViewDidEnter(() => {
 	audioPlayer.stop();
 	if (user.value.features?.nomercyConnect) {
 		initPlayer();
 	}
+	else if (data.value?.length) {
+		initPlayer(data.value);
+	}
 });
 
-onUnmounted(() => {
-	setDisableScreensaver(false);
-	showNavBar();
+onIonViewDidLeave(() => {
 	player.value?.dispose();
+	setDisableScreensaver(false);
 });
 </script>
 
