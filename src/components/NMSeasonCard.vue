@@ -152,7 +152,7 @@ console.raw(props);
 				}"
 			>
 				<div class="transitioning hover:scale-110" style="--stroke-width: 1">
-					<MoooomIcon icon="arrowSmallUpRight" class-name="w-20" stroke="1" />
+					<MoooomIcon icon="shareSquare" class-name="w-20" stroke="1" />
 				</div>
 			</div>
 			<div

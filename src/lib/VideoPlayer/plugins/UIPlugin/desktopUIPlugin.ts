@@ -262,9 +262,9 @@ export class DesktopUIPlugin extends BaseUIPlugin {
         "group-[&.nomercyplayer:not(.buffering).paused]:bg-gradient-circle-c",
 
         "from-15%",
-        "from-black/50",
-        "via-40%",
-        "via-black/30",
+        "from-black/60",
+        "via-35%",
+        "via-black/10",
         "to-100%",
         "to-black/0",
       ])

@@ -14,7 +14,6 @@ import {
   unique,
 } from "@nomercy-entertainment/nomercy-video-player/src/helpers";
 import { buttons } from "./buttons";
-import { TimeData } from "@nomercy-entertainment/nomercy-video-player/src/types";
 
 import type { NMPlaylistItem } from "@/lib/VideoPlayer";
 
@@ -1643,6 +1642,7 @@ export class BaseUIPlugin extends Plugin {
         "group-[&.nomercyplayer:has(.open)]:translate-y-0",
         "group-[&.nomercyplayer.active]:translate-y-0",
         "group-[&.nomercyplayer:has(.volume-container:hover)]:!translate-y-0",
+        "group-[&.nomercyplayer:has(.open)]:!translate-y-40",
         "items-center",
         "mt-auto",
         "text-center",
@@ -1660,12 +1660,12 @@ export class BaseUIPlugin extends Plugin {
       .addClasses([
         "absolute",
         "pointer-events-none",
-        "pt-[10%]",
+        "pt-[3%]",
         "w-available",
         "bottom-0",
         "bg-gradient-to-t",
         "from-black/85",
-        "via-black/40",
+        "via-black/60",
         "to-black/0",
       ])
       .appendTo(bottomBar)
@@ -1745,7 +1745,7 @@ export class BaseUIPlugin extends Plugin {
         "pointer-events-none",
         "group-[&.nomercyplayer.active]:translate-y-0",
         "group-[&.nomercyplayer.paused]:translate-y-0",
-        "group-[&.nomercyplayer:has(.open)]:translate-y-0",
+        "group-[&.nomercyplayer:has(.open)]:-translate-y-full",
 
         "group-[&.nomercyplayer:has(.volume-container:hover)]:!translate-y-0",
         "transition-all",

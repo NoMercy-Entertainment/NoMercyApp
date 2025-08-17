@@ -61,60 +61,60 @@ function initPlayer(value?: NMPlaylistItem[] | undefined) {
 	// @ts-ignore
 	player.value = nmplayer('player1').setup(config);
 
-	player.value?.once('back', () => {
+	player.value!.once('back', () => {
 		router.back();
 	});
 
 	if (user.value.features?.nomercyConnect) {
 		const videoNoMercyConnectPlugin = new VideoNoMercyConnectPlugin();
-		player.value?.registerPlugin('videoNoMercyConnect', videoNoMercyConnectPlugin);
-		player.value?.usePlugin('videoNoMercyConnect');
+		player.value!.registerPlugin('videoNoMercyConnect', videoNoMercyConnectPlugin);
+		player.value!.usePlugin('videoNoMercyConnect');
 	}
 
 	const desktopUIPlugin = new DesktopUIPlugin();
-	player.value?.registerPlugin('desktopUI', desktopUIPlugin);
-	player.value?.usePlugin('desktopUI');
+	player.value!.registerPlugin('desktopUI', desktopUIPlugin);
+	player.value!.usePlugin('desktopUI');
 
 	const autoSkipPlugin = new AutoSkipPlugin();
-	player.value?.registerPlugin('autoSkip', autoSkipPlugin);
-	player.value?.usePlugin('autoSkip');
+	player.value!.registerPlugin('autoSkip', autoSkipPlugin);
+	player.value!.usePlugin('autoSkip');
 
 	const keyHandlerPlugin = new KeyHandlerPlugin();
-	player.value?.registerPlugin('keyHandler', keyHandlerPlugin);
-	player.value?.usePlugin('keyHandler');
+	player.value!.registerPlugin('keyHandler', keyHandlerPlugin);
+	player.value!.usePlugin('keyHandler');
 
 	if (!user.value.features?.nomercyConnect) {
 		const syncPlugin = new SyncPlugin();
-		player.value?.registerPlugin('sync', syncPlugin);
-		player.value?.usePlugin('sync');
+		player.value!.registerPlugin('sync', syncPlugin);
+		player.value!.usePlugin('sync');
 	}
 
 	const octopusPlugin = new OctopusPlugin();
-	player.value?.registerPlugin('octopus', octopusPlugin);
-	player.value?.usePlugin('octopus');
+	player.value!.registerPlugin('octopus', octopusPlugin);
+	player.value!.usePlugin('octopus');
 
 	// const sabrePlugin = new SabrePlugin();
-	// player.value?.registerPlugin('sabre', sabrePlugin);
-	// player.value?.usePlugin('sabre');
+	// player.value!.registerPlugin('sabre', sabrePlugin);
+	// player.value!.usePlugin('sabre');
 
-	player.value?.once('play', () => {
-		player.value?.enterFullscreen();
+	player.value!.once('play', () => {
+		player.value!.enterFullscreen();
 	});
 
-	player.value?.on('playlistComplete', () => {
+	player.value!.on('playlistComplete', () => {
 		console.log('Playlist complete');
 		router.back();
 	});
 
-	player.value?.on('play', () => {
+	player.value!.on('play', () => {
 		setDisableScreensaver(true);
 	});
 
-	player.value?.on('pause', () => {
+	player.value!.on('pause', () => {
 		setDisableScreensaver(false);
 	});
 
-	player.value?.on('fullscreen', (value) => {
+	player.value!.on('fullscreen', (value) => {
 		// @ts-ignore
 		window.external?.sendMessage?.(
 			value ? 'enterFullscreen' : 'exitFullscreen',

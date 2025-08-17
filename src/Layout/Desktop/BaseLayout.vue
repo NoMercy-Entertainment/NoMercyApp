@@ -63,7 +63,7 @@ function focusMain() {
 				<GradientBorder :hide-border="false">
 					<div
 						id="mainContent"
-						class="flex w-px flex-1 flex-col relative overflow-clip justify-start items-start w-available h-available sm:rounded-2xl border-auto-alpha-2 !bg-cover children:scrollbar-none z-0"
+						class="flex w-px flex-1 flex-col relative overflow-clip justify-start items-start w-available h-available sm:rounded-2xl border-auto-alpha-2 !bg-cover children:scrollbar-none z-0 bg-center"
 						:style="`
                   box-shadow: 0 1px 3px 0 rgba(16,24,40,0.1), 0 1px 2px 0 rgba(16,24,40,0.06);
                   background-image: ${

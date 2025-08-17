@@ -301,11 +301,11 @@ onUnmounted(() => {
 		<div
 			:data-music="musicVisibility"
 			:data-sidebar="sidebar"
-			class="absolute inset-0 w-available h-available sm:w-auto sm:overflow-hidden sm:inset-1/2 sm:aspect-video sm:-translate-y-[50%] sidebar-closed:sm:h-full sidebar-closed:sm:max-w-[90vw] sidebar-closed:sm:max-h-[93%] sidebar-closed:px-4 sidebar-closed:py-2 sidebar-closed:xl:px-[1.8rem] sidebar-closed:xl:py-4 sm:-translate-x-[50%] sidebar-open:h-5/6 sidebar-open:px-10 sidebar-open:py-6 sidebar-open:xl:px-[2.8rem] sidebar-open:xl:py-6"
+			class="absolute inset-0 w-full h-auto max-w-full max-h-full sm:w-full sm:h-auto sm:overflow-hidden sm:inset-1/2 sm:aspect-video sm:-translate-y-[50%] sidebar-closed:px-4 sidebar-closed:py-2 sidebar-closed:xl:px-[1.8rem] sidebar-closed:xl:py-4 sm:-translate-x-[50%] sidebar-open:px-4 sidebar-open:py-6 sidebar-open:xl:px-[2.8rem] sidebar-open:xl:py-6"
 		>
 			<div
 				ref="trailerContainer"
-				class="relative rounded-2xl flex overflow-clip children:overflow-clip h-auto top-1/4 sm:top-1/2 -translate-y-1/2 w-full sm:h-full children:!w-full children:!h-auto children:!aspect-video"
+				class="relative rounded-2xl flex overflow-clip mx-auto children:overflow-clip h-auto top-1/4 sm:top-1/2 -translate-y-1/2 w-fit sm:h-full"
 				@click.stop=""
 			>
 				<div id="trailer" class="group nomercyplayer" />

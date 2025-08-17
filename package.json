@@ -61,7 +61,7 @@
 		"@microsoft/signalr": "^8.0.7",
 		"@nomercy-entertainment/media-session": "^0.1.11",
 		"@nomercy-entertainment/nomercy-music-player": "^0.2.6",
-		"@nomercy-entertainment/nomercy-video-player": "^0.5.0",
+		"@nomercy-entertainment/nomercy-video-player": "^0.5.2",
 		"@primevue/auto-import-resolver": "^4.0.0-beta.5",
 		"@primevue/forms": "^4.3.1",
 		"@primevue/themes": "4.0.0-rc.2",

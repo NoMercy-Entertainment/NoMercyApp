@@ -451,7 +451,7 @@ const shareData = computed<ShareOptions>(() => ({
 									</div>
 
 									<p
-										class="absolute bottom-6 left-8 w-full flex-shrink-0 select-none flex-grow-0 text-sm text-slate-lightA-12/70 dark:text-slate-darkA-12/80"
+										class="col-start-1 content-center col-end-2 mt-auto bottom-6 left-8 w-full flex-shrink-0 select-none flex-grow-0 text-sm text-slate-lightA-12/70 dark:text-slate-darkA-12/80"
 									>
 										{{ $t("Data provided by The Movie Database(TMDb)") }}.
 									</p>
