@@ -64,11 +64,21 @@ import { redirectUrl } from '@/store/routeState';
 import router from './router';
 
 export async function setupApp(app: AppContext['app']) {
-	if (
-		'serviceWorker' in navigator
-		&& !import.meta.env.DEV
-		&& suffix !== '-dev'
-	) {
+	if ('serviceWorker' in navigator && !import.meta.env.DEV) {
+		// Log service worker status for debugging
+		navigator.serviceWorker.getRegistrations().then((registrations) => {
+			console.log('All SW registrations:', registrations);
+			registrations.forEach((reg, index) => {
+				console.log(`Registration ${index}:`, {
+					scope: reg.scope,
+					installing: reg.installing?.scriptURL,
+					waiting: reg.waiting?.scriptURL,
+					active: reg.active?.scriptURL,
+				});
+			});
+		});
+	}
+	if ('serviceWorker' in navigator && !import.meta.env.DEV && suffix !== '-dev') {
 		await navigator.serviceWorker.ready;
 
 		// Set up service worker update detection

@@ -38,8 +38,9 @@ export default defineConfig(({ command }) => {
 				registerType: 'prompt',
 				workbox: {
 					cleanupOutdatedCaches: true,
-					// clientsClaim: true,
+					clientsClaim: true,
 					sourcemap: false,
+					skipWaiting: false,
 					mode: env.NODE_ENV === 'production' ? 'production' : 'development',
 					dontCacheBustURLsMatching: /\.\w{8}\./,
 					navigateFallback: 'index.html',
@@ -400,6 +401,7 @@ export default defineConfig(({ command }) => {
 					navigateFallback: 'index.html',
 					suppressWarnings: false,
 				},
+				injectRegister: 'script',
 			}),
 			ViteCspPlugin(
 				{

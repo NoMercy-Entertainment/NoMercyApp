@@ -22,7 +22,6 @@ export function setShowScreensaver(open: boolean) {
 const dss = ref<boolean>(false);
 export const disableScreensaver = computed(() => dss.value);
 export function setDisableScreensaver(disable: boolean) {
-	console.log('Setting disableScreensaver to', disable);
 	dss.value = disable;
 }
 
