@@ -26,7 +26,8 @@ import InfoHeaderItem from '@/views/Base/Info/components/InfoHeaderItem.vue';
 import NotFound from '@/Layout/Desktop/components/NotFound.vue';
 import ShareButton from '@/components/Buttons/ShareButton.vue';
 import type { ShareOptions } from '@capacitor/share';
-import NMCarousel from '@/components/NMCarousel.vue';
+import PersonCarousel from '@/components/Carousel/PersonCarousel.vue';
+import ImageCarousel from '@/components/Carousel/ImageCarousel.vue';
 
 const { t } = useTranslation();
 const route = useRoute();
@@ -293,7 +294,7 @@ const shareData = computed<ShareOptions>(() => ({
 							</template>
 						</div>
 
-						<NMCarousel
+						<PersonCarousel
 							v-if="data?.cast && data?.cast?.length > 0"
 							id="cast"
 							next_id="crew"
@@ -303,7 +304,7 @@ const shareData = computed<ShareOptions>(() => ({
 							:index="0"
 						/>
 
-						<NMCarousel
+						<PersonCarousel
 							v-if="data?.crew && data?.crew?.length > 0"
 							id="crew"
 							next_id="backdrop"
@@ -313,7 +314,7 @@ const shareData = computed<ShareOptions>(() => ({
 							:index="0"
 						/>
 
-						<NMCarousel
+						<ImageCarousel
 							v-if="data?.posters && data?.posters?.length > 0"
 							id="poster"
 							next_id="backdrop"
@@ -324,7 +325,7 @@ const shareData = computed<ShareOptions>(() => ({
 							:index="0"
 						/>
 
-						<NMCarousel
+						<ImageCarousel
 							v-if="data?.backdrops && data?.backdrops?.length > 0"
 							id="backdrop"
 							next_id=""
