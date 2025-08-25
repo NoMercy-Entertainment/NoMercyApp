@@ -1,0 +1,1 @@
+import{_ as o}from"./_plugin-vue_export-helper-DlAUqK2U.js";import{h as c,o as e}from"./vue-ionic-CemLi1Vc.js";const t={},r={class:"bg"};function s(_,a){return e(),c("div",r)}const p=o(t,[["render",s],["__scopeId","data-v-27843bed"]]);export{p as E};
