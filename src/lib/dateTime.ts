@@ -87,14 +87,13 @@ export function humanTime(time: any) {
 	return current.replace('NaN:NaN:NaN', '00:00');
 }
 
-// eslint-disable-next-line @typescript-eslint/ban-types
 export function humanTimeExtended(
 	t: Function,
 	dateTime: Date | number,
 	short = false,
 ) {
-	const now = new Date().getTime();
-	const diffInSeconds = Math.floor((now - new Date(dateTime).getTime()) / 1000);
+	const now = new Date().timestamp();
+	const diffInSeconds = Math.floor(now - new Date(dateTime).timestamp());
 
 	let days: number | string = Math.floor(diffInSeconds / (3600 * 24));
 	let hours: number | string = Math.floor((diffInSeconds % (3600 * 24)) / 3600);

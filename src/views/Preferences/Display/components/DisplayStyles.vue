@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import CardStylePicker from './CardStylePicker.vue';
 import ColorIndication from './ColorIndication.vue';
-import AutoColorTheming from './AutoColorTheming.vue';
+import OverlayCarouselButtons from './OverlayCarouselButtons.vue';
 </script>
 
 <template>
@@ -10,6 +10,6 @@ import AutoColorTheming from './AutoColorTheming.vue';
 	>
 		<CardStylePicker />
 		<ColorIndication />
-		<AutoColorTheming />
+		<OverlayCarouselButtons />
 	</div>
 </template>

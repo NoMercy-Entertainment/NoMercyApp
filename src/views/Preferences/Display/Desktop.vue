@@ -8,6 +8,7 @@ import DisplayLanguage from '@/views/Preferences/Display/components/DisplayLangu
 import ThemeColors from '@/views/Preferences/Display/components/ThemeColors.vue';
 import ScreensaverSettings from '@/views/Preferences/Display/components/ScreensaverSettings.vue';
 import DisplayStyles from '@/views/Preferences/Display/components/DisplayStyles.vue';
+import AutoColorTheming from '@/views/Preferences/Display/components/AutoColorTheming.vue';
 </script>
 
 <template>
@@ -32,6 +33,7 @@ import DisplayStyles from '@/views/Preferences/Display/components/DisplayStyles.
 				>
 					<DisplayLanguage />
 					<ThemeColors />
+					<AutoColorTheming />
 				</div>
 
 				<div

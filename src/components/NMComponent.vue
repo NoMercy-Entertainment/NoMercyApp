@@ -1,9 +1,8 @@
 <script setup lang="ts">
 import { onMounted, onUnmounted, type PropType, watch } from 'vue';
 import { useRoute } from 'vue-router';
-import { onIonViewWillEnter } from '@ionic/vue';
+import { IonSpinner, onIonViewWillEnter } from '@ionic/vue';
 import { useOnline } from '@vueuse/core';
-import { IonSpinner } from '@ionic/vue';
 
 import type { HomeItem } from '@/types/api/base/home';
 import {
@@ -13,8 +12,6 @@ import {
 	getQuery,
 	queryKey as qk,
 } from '@/lib/routerHelper';
-
-import router from '@/router';
 
 const props = defineProps({
 	path: {
@@ -77,8 +74,7 @@ function mutateId(event: CustomEvent<{ id: string }>) {
 
 onMounted(() => {
 	document.addEventListener('mutateId', mutateId);
-
-	if (!homeData.value) {
+	if (!homeData.value || (route.name !== 'Home' && route.name !== 'Libraries' && route.name !== 'Music Start')) {
 		return;
 	}
 
@@ -103,16 +99,6 @@ watch(homeData, (value) => {
 	setTimeout(() => {
 		document.dispatchEvent(new Event('indexer'));
 	}, 1000);
-});
-
-router.beforeEach((to) => {
-	if (!homeData.value || (to.name !== 'Home' && to.name !== 'Libraries' && to.name !== 'Music Start')) {
-		return;
-	}
-
-	if (onlineStatus.value) {
-		mutatePageLoad();
-	}
 });
 
 onIonViewWillEnter(() => {

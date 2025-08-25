@@ -125,7 +125,7 @@ function handleClick(item: any) {
 			<template v-if="showBackdrops">
 				<div v-if="!!data.logo" class="absolute inset-0 h-full w-full">
 					<div
-						class="pointer-events-none absolute inset-0 z-0 mt-auto h-4/5 bg-gradient-to-t from-neutral-100 dark:from-neutral-100 via-neutral-100 dark:via-neutral-100/60"
+						class="pointer-events-none absolute inset-0 z-0 mt-auto h-4/5 bg-gradient-to-t from-neutral-100 via-neutral-100 dark:from-neutral-950 dark:via-neutral-950/60"
 					/>
 					<div
 						class="absolute bottom-0 left-0 h-full max-h-24 w-full max-w-[66%]"
@@ -144,11 +144,11 @@ function handleClick(item: any) {
 				</div>
 				<div v-else class="absolute inset-0 h-full w-full">
 					<div
-						class="pointer-events-none absolute inset-0 z-0 mt-auto h-4/5 bg-gradient-to-t from-neutral-100 dark:from-neutral-100 via-neutral-100 dark:via-neutral-100/60"
+						class="pointer-events-none absolute inset-0 z-0 mt-auto h-4/5 bg-gradient-to-t from-neutral-100 via-neutral-100 dark:from-neutral-950 dark:via-neutral-950/60"
 					/>
 					<div class="absolute bottom-4 left-4 w-full max-w-[66%]">
 						<p
-							class="z-10 w-auto text-xl font-bold line-clamp-2 leading-[1.2] text-neutral-900 dark:text-neutral-100 empty:hidden dark:font-medium"
+							class="z-10 w-auto text-xl font-bold line-clamp-2 leading-[1.2] text-neutral-950 dark:text-neutral-100 empty:hidden dark:font-medium"
 						>
 							{{ data.title }}
 						</p>
@@ -164,13 +164,13 @@ function handleClick(item: any) {
 					}"
 				>
 					<div
-						class="absolute inset-0 z-0 transition-all duration-200 bg-neutral-100/80 dark:bg-neutral-900/80"
+						class="absolute inset-0 z-0 transition-all duration-200 bg-neutral-100/80 dark:bg-neutral-950/80"
 						:class="{
 							'opacity-0 group-hover/card:opacity-100': image,
 						}"
 					/>
 					<p
-						class="z-10 w-auto flex-shrink-0 flex-grow-0 self-stretch text-xs font-semibold line-clamp-2 leading-[1.2] text-neutral-900 dark:text-neutral-100 empty:hidden dark:font-medium text-wrap"
+						class="z-10 w-auto flex-shrink-0 flex-grow-0 self-stretch text-xs font-semibold line-clamp-2 leading-[1.2] text-neutral-950 dark:text-neutral-100 empty:hidden dark:font-medium text-wrap"
 					>
 						{{ data.title }}
 					</p>

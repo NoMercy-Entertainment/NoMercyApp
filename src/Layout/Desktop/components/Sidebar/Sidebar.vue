@@ -114,7 +114,7 @@ function libraryIconName(type: string) {
 	<aside
 		id="sidebar"
 		:data-sidebar="sidebar"
-		class="absolute bg-slate-light-1 dark:bg-slate-dark-1 top-0 bottom-0 left-0 flex sidebar-open:w-64 sidebar-closed:-translate-x-full sidebar-hidden:-translate-x-full items-start justify-start self-stretch overflow-x-visible transition-[transform,width] duration-200 sidebar h-available z-1099 group/aside sidebar-hidden:sm:w-0 sidebar-closed:sm:w-20 sidebar-closed:sm:translate-x-0 sidebar-hidden:sm:translate-x-0 sm:!relative max-h-available overflow-clip children:opacity-100 sidebar-hidden:children:opacity-0"
+		class="absolute bg-slate-light-1 dark:bg-slate-dark-1 top-0 bottom-0 left-0 flex sidebar-open:w-64 sidebar-closed:-translate-x-full sidebar-hidden:-translate-x-full items-start justify-start self-stretch overflow-x-visible transition-[transform,width] duration-200 sidebar h-available z-1099 group/aside sidebar-hidden:sm:w-0 sidebar-closed:sm:w-16 sidebar-closed:sm:translate-x-0 sidebar-hidden:sm:translate-x-0 sm:!relative max-h-available overflow-clip children:opacity-100 sidebar-hidden:children:opacity-0"
 	>
 		<div
 			class="flex sidebar-open:w-64 flex-grow flex-col items-start justify-start self-stretch overflow-clip h-available sidebar-hidden:sm:w-4 sidebar-closed:sm:w-20 sm:mt-4 overflow-x-hidden"
@@ -345,7 +345,7 @@ function libraryIconName(type: string) {
 			:data-sidebar="sidebar"
 			style="box-shadow: 0 1px 2px 0 rgba(16, 24, 40, 0.05)"
 			:aria-label="sidebar === 'open' ? $t('Close sidebar') : $t('Open sidebar')"
-			class="bg-slate-light-5 dark:bg-slate-dark-5 border-slate-light-10 dark:border-slate-dark-10 flex absolute top-[30px] overflow-hidden z-1099 duration-200 w-8 h-8 p-1.5 rounded-md shadow justify-center items-center gap-2 border border-auto-alpha-7 sidebar-open:left-60 sidebar-closed:left-16 !opacity-[0.1%] group-hover/aside:!opacity-100 focus:!opacity-100"
+			class="bg-slate-light-5 dark:bg-slate-dark-5 border-slate-light-10 dark:border-slate-dark-10 flex absolute bottom-[30px] overflow-hidden z-1099 duration-200 w-8 h-8 p-1.5 rounded-md shadow justify-center items-center gap-2 border border-auto-alpha-7 sidebar-open:left-60 sidebar-closed:left-12 !opacity-[0.1%] group-hover/aside:!opacity-100 focus:!opacity-100"
 			@click="toggleSidebar()"
 		>
 			<OptimizedIcon

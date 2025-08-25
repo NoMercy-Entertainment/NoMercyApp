@@ -42,6 +42,7 @@ import Button from '@/components/Buttons/Button.vue';
 import Modal from '@/components/Modal.vue';
 import NMCard from '@/components/NMCard.vue';
 import NMCarousel from '@/components/NMCarousel.vue';
+import NMCarousel2 from '@/components/NMCarousel2.vue';
 
 import NMContainer from '@/components/NMContainer.vue';
 import NMGenreCard from '@/components/NMGenreCard.vue';
@@ -125,9 +126,12 @@ export async function setupApp(app: AppContext['app']) {
 
 	app.use(MasonryWall);
 
+	const supportsCarousel = CSS.supports('scroll-snap-type', 'x mandatory') && CSS.supports('anchor-name: --carousel');
+
 	app.component('Modal', Modal);
 	app.component('NMCard', NMCard);
-	app.component('NMCarousel', NMCarousel);
+	app.component('NMCarousel', supportsCarousel ? NMCarousel2 : NMCarousel);
+	app.component('NMCarousel2', supportsCarousel ? NMCarousel2 : NMCarousel);
 	app.component('NMContainer', NMContainer);
 	app.component('NMGenreCard', NMGenreCard);
 	app.component('NMGrid', NMGrid);

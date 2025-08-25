@@ -47,6 +47,28 @@ export function setShowBackdrops(value: boolean) {
 	}).then();
 }
 
+const overlayCarouselButtons = useLocalStorage<boolean>('useOverlayCarouselButtons', false);
+export const useOverlayCarouselButtons = computed(() => overlayCarouselButtons.value);
+(async () => {
+	const { value } = await Preferences.get({ key: 'useOverlayCarouselButtons' });
+	if (value === null) {
+		overlayCarouselButtons.value = false;
+		Preferences.set({
+			key: 'useOverlayCarouselButtons',
+			value: 'false',
+		}).then();
+		return;
+	}
+	overlayCarouselButtons.value = value === 'true';
+})();
+export function setOverlayCarouselButtons(value: boolean) {
+	overlayCarouselButtons.value = value;
+	Preferences.set({
+		key: 'useOverlayCarouselButtons',
+		value: value.toString(),
+	}).then();
+}
+
 const percentageColors = useLocalStorage<boolean>('percentageColors', true);
 export const usePercentageColors = computed(() => percentageColors.value);
 (async () => {

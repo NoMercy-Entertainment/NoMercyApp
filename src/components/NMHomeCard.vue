@@ -63,13 +63,13 @@ function toggleWatched() {
 
 onMounted(() => {
 	if (props.data?.color_palette) {
-		setColorPalette(props.data?.color_palette?.poster);
+		setColorPalette(props.data?.color_palette?.backdrop);
 	}
 });
 
 onIonViewWillEnter(() => {
 	if (props.data?.color_palette) {
-		setColorPalette(props.data?.color_palette?.poster);
+		setColorPalette(props.data?.color_palette?.backdrop);
 	}
 });
 
