@@ -62,15 +62,15 @@ const value = computed(() => {
 	/>
 	<span
 		v-else-if="value"
-		class="absolute text-white sm:text-transparent w-[var(--width)] md:w-4 items-center h-5 z-50 left-0 lg:-left-2 top-4 rounded-tr-md rounded-br-md overflow-hidden flex px-1 text-xs whitespace-nowrap animate-[grow_.3] duration-200 place-items-center justify-center border-r border-b border-gray-900/50 pill shadow-pill lg:text-transparent  group-focus-visible/card:left-0 tv:text-white transition-all"
+		class="absolute text-white sm:text-transparent w-[var(--width)] md:w-4 items-center h-5 z-50 left-0 lg:-left-2 top-4 rounded-tr-md rounded-br-md overflow-hidden flex px-1 text-xs whitespace-nowrap animate-[grow_.3] duration-200 place-items-center justify-center border-r border-b border-gray-900/50 pill shadow-pill lg:text-transparent  group-focus-visible/card:left-0 group-active/card:left-0 tv:text-white transition-all"
 		:class="{
-			'bg-[#94f] group-hover/card:text-white': percent === 100,
-			'bg-[#4b4] group-hover/card:text-white': percent >= 70 && percent < 100,
-			'!text-black sm:!text-transparent group-hover/card:!text-black group-focus-within/card:!text-black font-semibold':
+			'bg-[#94f] group-hover/card:text-white group-active/card:text-white': percent === 100,
+			'bg-[#4b4] group-hover/card:text-white group-active/card:text-white': percent >= 70 && percent < 100,
+			'!text-black sm:!text-transparent group-hover/card:!text-black group-active/card:!text-black group-focus-within/card:!text-black font-semibold':
 				percent > 30 && percent < 80,
 			'bg-[#fb3] sm:group-hover/card:text-white': percent > 0 && percent < 70,
 			'bg-[#f44]': percent === 0,
-			'lg:group-hover/card:text-white group-hover/card:left-0 group-focus-within/card:left-0 lg:group-focus/card:text-white group-hover/card:w-[var(--width)] group-focus-within/card:w-[var(--width)] group-focus-visible/card:w-[var(--width)]': !(number_of_items === 1 && have_items === 1),
+			'lg:group-hover/card:text-white group-hover/card:left-0 lg:group-active/card:text-white group-active/card:left-0 group-focus-within/card:left-0 lg:group-focus/card:text-white group-hover/card:w-[var(--width)] group-focus-within/card:w-[var(--width)] group-focus-visible/card:w-[var(--width)]': !(number_of_items === 1 && have_items === 1),
 		}"
 		:style="`
             background-image: ${

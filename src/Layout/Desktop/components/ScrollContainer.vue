@@ -4,6 +4,7 @@ import type { VueScrollEvent } from '@/vite-env';
 
 import router from '@/router';
 import { musicVisibility } from '@/store/audioPlayer';
+import { scrollContainerElement } from '@/store/ui.ts';
 
 defineProps({
 	autoHide: {
@@ -32,7 +33,6 @@ defineEmits<{
 const refHandle = ref<HTMLSpanElement>();
 const refBar = ref<HTMLDivElement>();
 const show = ref(false);
-const scrollContainerElement = ref<HTMLDivElement>();
 
 function enable() {
 	const handle = refHandle.value;
@@ -144,6 +144,10 @@ function mouseEnter() {
 function mouseLeave() {
 	show.value = false;
 }
+
+function handleFocus() {
+	// scrollContainerElement.value?.querySelector('.group\\/scrollContainer:not(:has(:focus)) a,.group\\/scrollContainer:not(:has(:focus)) button')?.focus();
+}
 </script>
 
 <template>
@@ -154,10 +158,12 @@ function mouseLeave() {
 			'group/scrollContainer': !frame,
 			'group/scrollContainer-frame': frame,
 		}"
+		tabindex="1"
 		:data-music="musicVisibility"
 		@scroll="$emit('scroll', $event as unknown as VueScrollEvent)"
 		@mousemove="mouseEnter"
 		@mouseleave="mouseLeave"
+		@focus="handleFocus"
 	>
 		<slot />
 

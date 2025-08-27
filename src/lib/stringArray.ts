@@ -1114,5 +1114,5 @@ Array.prototype.latest = function () {
 };
 
 Date.prototype.timestamp = function (): number {
-	return Math.floor(this.timestamp() / 1000);
+	return Math.floor(this.getTime() / 1000);
 };

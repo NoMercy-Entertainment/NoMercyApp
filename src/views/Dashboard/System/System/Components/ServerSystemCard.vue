@@ -34,7 +34,7 @@ defineProps({
 			</div>
 
 			<div
-				class="flex flex-shrink-0 flex-grow-0 flex-col items-start justify-start gap-4 self-stretch rounded-xl"
+				class="flex flex-shrink-0 flex-grow-0 flex-col items-start justify-start gap-4 self-stretch rounded-xl overflow-clip"
 				:class="{
 					'bg-slate-lightA-3 dark:bg-slate-darkA-3 p-4': background,
 				}"
@@ -59,7 +59,7 @@ defineProps({
 		</div>
 
 		<div
-			class="flex flex-shrink-0 flex-grow-0 flex-col items-start justify-start gap-4 self-stretch rounded-xl"
+			class="flex flex-shrink-0 flex-grow-0 flex-col items-start justify-start gap-4 self-stretch rounded-xl overflow-clip"
 			:class="{
 				'bg-slate-lightA-3 dark:bg-slate-darkA-3 p-4': background,
 			}"

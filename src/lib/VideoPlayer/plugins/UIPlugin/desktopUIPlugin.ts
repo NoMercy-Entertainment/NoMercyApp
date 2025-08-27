@@ -2217,7 +2217,7 @@ export class DesktopUIPlugin extends BaseUIPlugin {
 
     const sliderText = this.player
       .createElement("div", "slider-text")
-      .addClasses(["slider-pop-text", "font-mono"])
+      .addClasses(["slider-pop-text", "font-mono", "mx-4"])
       .appendTo(sliderPop)
       .get();
 

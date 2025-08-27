@@ -108,43 +108,43 @@ function toggleServerState() {
 		</template>
 
 		<div
-			class="relative flex flex-shrink-0 flex-grow-0 items-start justify-start gap-4 self-stretch overflow-clip w-available"
+			class="flex flex-1 flex-nowrap text-sm line-clamp-2 text-slate-light-10 dark:text-slate-dark-10 w-available"
 		>
 			<p
-				class="w-auto flex-grow whitespace-nowrap text-sm text-slate-light-12 dark:text-slate-dark-12"
+				class="w-40 flex-grow whitespace-nowrap text-sm text-slate-light-12 dark:text-slate-dark-12"
 			>
 				{{ $t("Server") }}
 			</p>
 			<p
-				class="flex-shrink-0 flex-grow-0 text-sm line-clamp-1 text-slate-light-10 dark:text-slate-dark-10"
+				class="text-sm line-clamp-2 text-slate-light-10 dark:text-slate-dark-10 text-right w-full"
 			>
 				{{ serverInfo?.server }}
 			</p>
 		</div>
 		<div
-			class="relative flex flex-shrink-0 flex-grow-0 items-start justify-start gap-4 self-stretch overflow-clip w-available"
+			class="flex flex-1 flex-nowrap text-sm line-clamp-2 text-slate-light-10 dark:text-slate-dark-10 w-available"
 		>
 			<p
-				class="w-auto flex-grow whitespace-nowrap text-sm text-slate-light-12 dark:text-slate-dark-12"
+				class="w-40 flex-grow whitespace-nowrap text-sm text-slate-light-12 dark:text-slate-dark-12"
 			>
 				{{ $t("Server version") }}
 			</p>
 			<p
-				class="flex-shrink-0 flex-grow-0 text-sm line-clamp-1 text-slate-light-10 dark:text-slate-dark-10"
+				class="text-sm line-clamp-2 text-slate-light-10 dark:text-slate-dark-10 text-right w-full"
 			>
 				{{ serverInfo?.version }}
 			</p>
 		</div>
 		<div
-			class="relative flex flex-shrink-0 flex-grow-0 items-start justify-start gap-4 self-stretch overflow-clip w-available"
+			class="flex flex-1 flex-nowrap text-sm line-clamp-2 text-slate-light-10 dark:text-slate-dark-10 w-available"
 		>
 			<p
-				class="w-auto flex-grow whitespace-nowrap text-sm text-slate-light-12 dark:text-slate-dark-12"
+				class="w-40 flex-grow whitespace-nowrap text-sm text-slate-light-12 dark:text-slate-dark-12"
 			>
 				{{ $t("Uptime") }}
 			</p>
 			<p
-				class="flex-shrink-0 flex-grow-0 text-sm line-clamp-1 text-slate-light-10 dark:text-slate-dark-10"
+				class="text-sm line-clamp-2 text-slate-light-10 dark:text-slate-dark-10 text-right w-full"
 			>
 				<KeepCounting
 					:key="serverInfo?.bootTime"
@@ -153,59 +153,59 @@ function toggleServerState() {
 			</p>
 		</div>
 		<div
-			class="relative flex flex-shrink-0 flex-grow-0 items-start justify-start gap-4 self-stretch overflow-clip w-available"
+			class="flex flex-1 flex-nowrap text-sm line-clamp-2 text-slate-light-10 dark:text-slate-dark-10 w-available"
 		>
 			<p
-				class="w-auto flex-grow whitespace-nowrap text-sm text-slate-light-12 dark:text-slate-dark-12"
+				class="w-40 flex-grow whitespace-nowrap text-sm text-slate-light-12 dark:text-slate-dark-12"
 			>
 				{{ $t("OS") }}
 			</p>
 			<p
-				class="flex-shrink-0 flex-grow-0 text-sm line-clamp-1 text-slate-light-10 dark:text-slate-dark-10"
+				class="text-sm line-clamp-2 text-slate-light-10 dark:text-slate-dark-10 text-right w-full"
 			>
 				{{ serverInfo?.os.toTitleCase() }}
 			</p>
 		</div>
 		<div
-			class="relative flex flex-shrink-0 flex-grow-0 items-start justify-start gap-4 self-stretch overflow-clip w-available"
+			class="flex flex-1 flex-nowrap text-sm line-clamp-2 text-slate-light-10 dark:text-slate-dark-10 w-available"
 		>
 			<p
-				class="w-auto flex-grow whitespace-nowrap text-sm text-slate-light-12 dark:text-slate-dark-12"
+				class="w-40 flex-grow whitespace-nowrap text-sm text-slate-light-12 dark:text-slate-dark-12"
 			>
 				{{ $t("Architecture") }}
 			</p>
 			<p
-				class="flex-shrink-0 flex-grow-0 text-sm line-clamp-1 text-slate-light-10 dark:text-slate-dark-10"
+				class="text-sm line-clamp-2 text-slate-light-10 dark:text-slate-dark-10 text-right w-full"
 			>
 				{{ serverInfo?.arch }}
 			</p>
 		</div>
 		<div
 			v-for="(cpu, index) in serverInfo?.cpu"
-			class="relative flex flex-shrink-0 flex-grow-0 items-start justify-start gap-4 self-stretch overflow-clip w-available"
+			class="flex flex-1 flex-nowrap text-sm line-clamp-2 text-slate-light-10 dark:text-slate-dark-10 w-available"
 		>
 			<p
-				class="w-auto flex-grow whitespace-nowrap text-sm text-slate-light-12 dark:text-slate-dark-12"
+				class="w-40 flex-grow whitespace-nowrap text-sm text-slate-light-12 dark:text-slate-dark-12"
 			>
 				{{ $t("CPU") }} #{{ index + 1 }}
 			</p>
 			<p
-				class="flex-shrink-0 flex-grow-0 text-sm line-clamp-1 text-slate-light-10 dark:text-slate-dark-10"
+				class="text-sm line-clamp-2 text-slate-light-10 dark:text-slate-dark-10 text-right w-full"
 			>
 				{{ cpu }}
 			</p>
 		</div>
 		<div
 			v-for="(gpu, index) in serverInfo?.gpu"
-			class="relative flex flex-shrink-0 flex-grow-0 items-start justify-start gap-4 self-stretch overflow-clip w-available"
+			class="flex flex-1 flex-nowrap text-sm line-clamp-2 text-slate-light-10 dark:text-slate-dark-10 w-available"
 		>
 			<p
-				class="w-auto flex-grow whitespace-nowrap text-sm text-slate-light-12 dark:text-slate-dark-12"
+				class="w-40 flex-grow whitespace-nowrap text-sm text-slate-light-12 dark:text-slate-dark-12"
 			>
 				{{ $t("GPU") }} #{{ index + 1 }}
 			</p>
 			<p
-				class="flex-shrink-0 flex-grow-0 text-sm line-clamp-1 text-slate-light-10 dark:text-slate-dark-10"
+				class="text-sm line-clamp-2 text-slate-light-10 dark:text-slate-dark-10 text-right w-full"
 			>
 				{{ gpu }}
 			</p>

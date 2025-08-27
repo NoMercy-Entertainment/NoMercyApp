@@ -101,7 +101,7 @@ function handleClick(item: any) {
 		:data-scroll="scrollLetter"
 		:data-card="data?.link"
 		:onclick="() => handleClick(data)"
-		:to="data.link"
+		:to="data.link" no-ring
 		class="group/card frosting flex flex-col h-full items-center focus-outline relative rounded-lg select-none shadow-[0px_0px_0_1px_rgb(var(--color-focus,var(--color-theme-6))/70%)] w-full z-0 bg-auto-50/70 flex-grow-0"
 		:class="showBackdrops ? 'aspect-backdrop' : 'aspect-poster'"
 		:style="`--color-focus: ${focusColor};`"
