@@ -4,9 +4,7 @@ import { useRoute } from 'vue-router';
 import { IonSpinner, onIonViewWillEnter } from '@ionic/vue';
 import { useOnline } from '@vueuse/core';
 
-import type { HomeItem } from '@/types/api/base/home';
 import {
-	type Component,
 	getMutating,
 	getMutation,
 	getQuery,
@@ -20,9 +18,10 @@ const props = defineProps({
 		default: undefined,
 	},
 	options: {
-		type: Object as PropType<
-      Component<HomeItem>[] & { queryKey: string[]; path?: string }
-		>,
+		type: Object as PropType<{
+			queryKey: string[];
+			keepForever?: boolean | undefined;
+		}>,
 		required: false,
 		default: () => ({
 			keepForever: true,

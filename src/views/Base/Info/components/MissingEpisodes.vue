@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type { PropType } from 'vue';
+import { computed } from 'vue';
 import { useRoute } from 'vue-router';
 
 import Modal from '@/components/Modal.vue';
@@ -18,12 +19,23 @@ defineProps({
 });
 
 const route = useRoute();
+const queryKey = computed(() => {
+	const key = `${route.path}/missing`.split('/');
+	key[0] = 'base';
+
+	return key;
+});
 </script>
 
 <template>
 	<Modal :open="open" :close="close" title="Missing episodes" max-width="max-w-7xl">
 		<ScrollContainer :auto-hide="true" :static="true">
-			<NMComponent :path="`${route.path}/missing`" />
+			<NMComponent
+				:path="`${route.path}/missing`"
+				:options="{
+					queryKey,
+				}"
+			/>
 		</ScrollContainer>
 	</Modal>
 </template>

@@ -63,8 +63,8 @@ onMounted(() => {
 		return;
 	currentLibrary.value = libraries.value?.find(l => l.id === route.params.id);
 	destinationFolder.value = {
-		id: currentLibrary.value?.folder_library?.at(-1)?.folder_id ?? '',
-		name: currentLibrary.value?.folder_library.at(-1)?.folder.path ?? '',
+		id: currentLibrary.value?.folder_library?.at(0)?.folder_id ?? '',
+		name: currentLibrary.value?.folder_library.at(0)?.folder.path ?? '',
 	};
 });
 
@@ -73,8 +73,8 @@ watch(libraries, (value) => {
 		return;
 	currentLibrary.value = value?.find(l => l.id === route.params.id);
 	destinationFolder.value = {
-		id: currentLibrary.value?.folder_library?.at(-1)?.folder_id ?? '',
-		name: currentLibrary.value?.folder_library.at(-1)?.folder.path ?? '',
+		id: currentLibrary.value?.folder_library?.at(0)?.folder_id ?? '',
+		name: currentLibrary.value?.folder_library.at(0)?.folder.path ?? '',
 	};
 });
 
