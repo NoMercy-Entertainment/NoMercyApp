@@ -1,5 +1,4 @@
 <script lang="ts" setup>
-import { useTranslation } from 'i18next-vue';
 import router from '@/router';
 
 import OptimizedIcon from '@/components/OptimizedIcon.vue';
@@ -15,8 +14,6 @@ defineProps({
 		required: false,
 	},
 });
-
-const { t } = useTranslation();
 
 const back = () => window.history.back();
 </script>
@@ -36,7 +33,7 @@ const back = () => window.history.back();
 	>
 		<OptimizedIcon icon="arrowLeft" class="h-6 w-6" />
 		<span class="mx-1">
-			{{ t("Back") }}
+			{{ $t("Back") }}
 		</span>
 	</button>
 
@@ -52,7 +49,7 @@ const back = () => window.history.back();
 	>
 		<OptimizedIcon icon="arrowLeft" class="h-6 w-6" />
 		<span class="mx-1">
-			{{ t("Back") }}
+			{{ $t("Back") }}
 		</span>
 	</button>
 </template>

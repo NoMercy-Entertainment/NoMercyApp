@@ -4,7 +4,6 @@ import { useSwipe } from '@vueuse/core';
 
 import { darkMode } from '@/store/colorScheme';
 
-import { shouldShowLibraryLinks } from '@/store/Libraries';
 import {
 	hasMusicLibrary,
 	isDashboardRoute,
@@ -16,6 +15,7 @@ import {
 
 import { closeSidebar, sidebar } from '@/store/sidebar';
 import { currentServer } from '@/store/currentServer';
+import libraries from '@/store/Libraries.ts';
 
 import ProfileMenuServerSection from '@/Layout/Desktop/components/Menus/ProfileMenuServerSection.vue';
 import SideFlyoutButton from '@/Layout/Mobile/components/SideFlyoutButton.vue';
@@ -23,6 +23,8 @@ import SideFlyoutButton from '@/Layout/Mobile/components/SideFlyoutButton.vue';
 import Toggle from '@/components/Forms/Toggle.vue';
 
 const reload = () => window.location.reload();
+
+const shouldShowLibraryLinks = computed(() => !!currentServer.value && (libraries.value?.length ?? 0) > 0);
 
 const target = ref<HTMLElement | null>(null);
 const container = ref<HTMLElement | null>(null);
@@ -95,7 +97,7 @@ const { isSwiping, lengthX } = useSwipe(target, {
 		style="box-shadow: 0 4px 7px 0 rgba(0, 0, 0, 0.08)"
 		:style="{ left }"
 	>
-		<div
+		<button
 			class="fixed inset-0 top-14 w-[500%] h-screen bg-black/40 -z-10"
 			:style="{ opacity }"
 			:class="{

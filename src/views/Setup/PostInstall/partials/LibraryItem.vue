@@ -6,13 +6,9 @@ import { ref } from 'vue';
 import type { LibrariesResponse } from '@/types/api/base/library';
 
 import EditLibraryModal from '../components/EditLibraryModal.vue';
+import DeleteLibraryModal from '../components/DeleteLibraryModal.vue';
 import MoooomIcon from '@/components/Images/icons/MoooomIcon.vue';
-import DeleteLibraryModal from '@/views/Dashboard/System/Libraries/components/DeleteLibraryModal.vue';
 import type { MoooomIcons } from '@Icons/icons.ts';
-
-defineEmits({
-	'update:modelValue': (value: LibrariesResponse) => true,
-});
 
 const library = defineModel({
 	type: Object as PropType<LibrariesResponse>,
@@ -95,8 +91,6 @@ const icon = computed<keyof typeof MoooomIcons>(() => {
 			v-model="library"
 			:close="closeEdit"
 			:open="editLibraryOpen"
-			no-redirect
-			@update:model-value="console.log('emit', $event); $emit('update:modelValue', $event)"
 		/>
 
 		<DeleteLibraryModal
@@ -105,7 +99,6 @@ const icon = computed<keyof typeof MoooomIcons>(() => {
 			:name="library.title"
 			:close="closeDeleteConfirm"
 			:open="deleteLibraryConfirmOpen"
-			no-redirect
 		/>
 	</div>
 </template>

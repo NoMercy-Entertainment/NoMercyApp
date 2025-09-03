@@ -1,9 +1,11 @@
 <script setup lang="ts">
 import { onBeforeMount, onMounted, ref, toRaw, watch } from 'vue';
 import { useRoute } from 'vue-router';
+import { useToast } from 'primevue/usetoast';
 import { useTranslation } from 'i18next-vue';
 
 import { useQueryClient } from '@tanstack/vue-query';
+import { IonContent, IonPage } from '@ionic/vue';
 
 import type {
 	EncoderProfile,
@@ -14,6 +16,7 @@ import type {
 import type { Language } from '@/types/api/shared';
 import type { Library, NameVal } from '@/types/api/dashboard/server';
 
+import { translate } from '@/lib/stringArray.ts';
 import useServerClient from '@/lib/clients/useServerClient';
 import serverClient from '@/lib/clients/serverClient';
 import { currentServer } from '@/store/currentServer';
@@ -25,15 +28,10 @@ import NewFolderModal from './components/NewFolderModal.vue';
 import DeleteLibraryModal from './components/DeleteLibraryModal.vue';
 import Folder from './components/Folder.vue';
 import AddContentModal from '@/views/Dashboard/System/Libraries/components/AddContentModal.vue';
-import { IonContent, IonPage } from '@ionic/vue';
-import { useToast } from 'primevue/usetoast';
-import { translate } from '@/lib/stringArray.ts';
 
 const route = useRoute();
 const query = useQueryClient();
 const toast = useToast();
-const { t } = useTranslation();
-
 const {
 	data: libraries,
 	error,
@@ -274,7 +272,7 @@ function handleDeleteFolder(folder: FolderLibrary) {
 						<div class="flex w-full flex-col sm:w-1/3">
 							<div class="mt-4 flex h-11 w-full">
 								<h3 class="text-xl">
-									{{ t("Library settings") }}:
+									{{ $t("Library settings") }}:
 								</h3>
 							</div>
 							<div class="flex flex-col gap-2">
@@ -338,7 +336,7 @@ function handleDeleteFolder(folder: FolderLibrary) {
 						<div class="flex w-full flex-col sm:w-2/3">
 							<div class="mt-4 flex h-16 w-full gap-2">
 								<h3 class="text-xl">
-									{{ t("Folders") }}:
+									{{ $t("Folders") }}:
 								</h3>
 
 								<Button
@@ -348,9 +346,9 @@ function handleDeleteFolder(folder: FolderLibrary) {
 									color="white"
 									class="ml-auto"
 									start-icon="folderAdd"
-									:on-click="openNewFolderModal"
+									:onclick="openNewFolderModal"
 								>
-									{{ t("Add new folder") }}
+									{{ $t("Add new folder") }}
 								</Button>
 							</div>
 							<div class="flex w-full flex-col gap-1">
@@ -387,7 +385,7 @@ function handleDeleteFolder(folder: FolderLibrary) {
 						"
 						@click="handleRefresh"
 					>
-						{{ t("Refresh") }}
+						{{ $t("Refresh") }}
 					</Button>
 					<Button
 						id="rescan"
@@ -403,7 +401,7 @@ function handleDeleteFolder(folder: FolderLibrary) {
 						"
 						@click="handleRescan"
 					>
-						{{ t("Rescan") }}
+						{{ $t("Rescan") }}
 					</Button>
 					<Button
 						id="remove"
@@ -414,7 +412,7 @@ function handleDeleteFolder(folder: FolderLibrary) {
 						color="red"
 						@click="openDeleteConfirm"
 					>
-						{{ t("Remove") }}
+						{{ $t("Remove") }}
 					</Button>
 					<Button
 						id="add"
@@ -425,7 +423,7 @@ function handleDeleteFolder(folder: FolderLibrary) {
 						start-icon="folderAdd"
 						@click="openAddContentModal"
 					>
-						{{ t("Add content") }}
+						{{ $t("Add content") }}
 					</Button>
 					<Button
 						id="cancel"
@@ -434,7 +432,7 @@ function handleDeleteFolder(folder: FolderLibrary) {
 						color="white"
 						@click="handleCancel"
 					>
-						{{ t("Cancel") }}
+						{{ $t("Cancel") }}
 					</Button>
 					<Button
 						id="save"
@@ -443,7 +441,7 @@ function handleDeleteFolder(folder: FolderLibrary) {
 						color="theme"
 						@click="handleSave"
 					>
-						{{ t("Save") }}
+						{{ $t("Save") }}
 					</Button>
 				</template>
 

@@ -1,7 +1,6 @@
 <script lang="ts" setup>
 import { onMounted, ref, watch } from 'vue';
 import axios from 'axios';
-import { useTranslation } from 'i18next-vue';
 import type { Level, RenderAs } from 'qrcode.vue';
 import QrcodeVue from 'qrcode.vue';
 
@@ -13,8 +12,6 @@ import { suffix } from '@/config/config';
 import router from '@/router';
 import { IonContent, IonPage } from '@ionic/vue';
 import servers from '@/store/servers.ts';
-
-const { t } = useTranslation();
 
 const url = ref(
 	`https://${suffix ? `${suffix.replace('-', '')}.` : ''}nomercy.tv/tv`,
@@ -126,14 +123,14 @@ watch(servers, (value) => {
 			>
 				<div class="flex w-2/3 flex-col gap-4 font-semibold">
 					<h1 class="text-3xl">
-						{{ t("Follow these steps on your computer or mobile device") }}
+						{{ $t("Follow these steps on your computer or mobile device") }}
 					</h1>
 					<div class="flex items-start gap-4">
 						<span
 							class="whitespace-nowrap rounded-md px-3 leading-8 text-white bg-theme-600"
-						>{{ t("Step") }} 1</span>
+						>{{ $t("Step") }} 1</span>
 						<div class="flex flex-col gap-2 text-lg">
-							<p>{{ t("Scan the QR with your phone or go to") }}:</p>
+							<p>{{ $t("Scan the QR with your phone or go to") }}:</p>
 							<p class="text-2xl font-semibold whitespace-break-spaces">
 								{{ url }}?code={{ deviceResponse?.user_code }}
 							</p>
@@ -142,10 +139,10 @@ watch(servers, (value) => {
 					<div class="flex items-start gap-4">
 						<span
 							class="whitespace-nowrap rounded-md px-3 leading-8 text-white bg-theme-600"
-						>{{ t("Step") }} 2</span>
+						>{{ $t("Step") }} 2</span>
 						<div class="flex flex-col gap-2 text-lg">
-							<p>{{ t("Sign in to NoMercy") }}.</p>
-							<p>{{ t("Your tv will be ready to watch") }}.</p>
+							<p>{{ $t("Sign in to NoMercy") }}.</p>
+							<p>{{ $t("Your tv will be ready to watch") }}.</p>
 						</div>
 					</div>
 				</div>
@@ -165,7 +162,7 @@ watch(servers, (value) => {
 			</div>
 			<div v-else class="grid h-screen w-screen place-items-center">
 				<div role="status">
-					<span>{{ t("Loading") }}...</span>
+					<span>{{ $t("Loading") }}...</span>
 				</div>
 			</div>
 		</IonContent>

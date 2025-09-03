@@ -1,7 +1,6 @@
-import { ref, watch } from 'vue';
+import { ref } from 'vue';
 
 import type { LibrariesResponse } from '@/types/api/base/library';
-import { currentServer } from '@/store/currentServer';
 
 const libraries = ref<LibrariesResponse[]>([]);
 
@@ -18,15 +17,3 @@ export function clearLibraries(): void {
 }
 
 export default libraries;
-
-export const shouldShowLibraryLinks = ref((libraries.value?.length ?? 0) > 0);
-
-watch(libraries, (value) => {
-	shouldShowLibraryLinks.value = (value?.length ?? 0) > 0;
-});
-
-watch(currentServer, (value) => {
-	if (!value) {
-		shouldShowLibraryLinks.value = false;
-	}
-});

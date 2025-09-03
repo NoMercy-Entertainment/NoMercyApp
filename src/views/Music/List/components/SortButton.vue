@@ -1,6 +1,5 @@
 <script lang="ts" setup>
 import type { PropType } from 'vue';
-import { useTranslation } from 'i18next-vue';
 import { setSortOrder, setSortType, sortOrder, sortType } from '@/store/ui';
 import { SortOrder, SortType } from '@/types/musicPlayer';
 import OptimizedIcon from '@/components/OptimizedIcon.vue';
@@ -19,8 +18,6 @@ defineProps({
 		default: '',
 	},
 });
-
-const { t } = useTranslation();
 
 function handleSortChange(value: SortType) {
 	console.log('handleSortChange', value);
@@ -73,7 +70,7 @@ function handleKeyup(e: KeyboardEvent) {
 		:onkeyup="handleKeyup"
 	>
 		<span class="">
-			{{ t(name) }}
+			{{ $t(name) }}
 		</span>
 		<OptimizedIcon
 			v-if="

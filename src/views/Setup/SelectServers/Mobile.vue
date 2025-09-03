@@ -1,29 +1,61 @@
 <script setup lang="ts">
 import { onMounted } from 'vue';
 import { IonContent, IonPage } from '@ionic/vue';
+import { useQueryClient } from '@tanstack/vue-query';
 
 import type { Server } from '@/types/auth';
+import type { LibrariesResponse } from '@/types/api/base/library';
 
 import router from '@/router';
-import servers from '@/store/servers';
+import serverClient from '@/lib/clients/serverClient.ts';
+import servers, { serverLibraries } from '@/store/servers';
+import { redirectUrl } from '@/store/routeState';
+import { setBackground, setColorPalette, setupComplete } from '@/store/ui';
 import { setCurrentServer } from '@/store/currentServer';
-import { setBackground, setColorPalette } from '@/store/ui';
+import { setLibraries } from '@/store/Libraries.ts';
 
 import ServerCard from '@/views/Setup/SelectServers/components/ServerCard.vue';
-
 import EmptyBackdrop from '@/components/Images/EmptyBackdrop.vue';
-import { redirectUrl } from '@/store/routeState';
+import { videoSocketConnection } from '@/store/videoSocket.ts';
+import { musicSocketConnection } from '@/store/musicSocket.ts';
+import { ripperSocketConnection } from '@/lib/clients/ripperSocket.ts';
+
+const query = useQueryClient();
 
 async function handleSelectServer(server: Server) {
 	setCurrentServer(server);
 
-	router.replace(redirectUrl.value).then();
+	await serverClient()
+		.get<{ data: LibrariesResponse[] }>('libraries')
+		.then(({ data }) => {
+			setLibraries(data.data);
+			setupComplete.value = true;
+			serverLibraries.value = true;
+
+			setTimeout(async () => {
+				if (redirectUrl.value === '/setup/select-servers') {
+					await router.replace({ name: 'Home' });
+				}
+				else {
+					await router.replace(redirectUrl.value);
+				}
+			}, 50);
+		})
+		.catch(async () => {
+			await router.replace({ name: 'Server offline' });
+		});
 }
 
 onMounted(() => {
 	setCurrentServer(null);
 	setColorPalette(null);
 	setBackground(null);
+
+	query.removeQueries();
+
+	videoSocketConnection.value?.stop();
+	musicSocketConnection.value?.stop();
+	ripperSocketConnection.value?.stop();
 });
 </script>
 

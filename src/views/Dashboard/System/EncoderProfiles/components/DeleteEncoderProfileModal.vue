@@ -1,11 +1,10 @@
 <script lang="ts" setup>
 import type { PropType } from 'vue';
-import { useTranslation } from 'i18next-vue';
+import { useToast } from 'primevue/usetoast';
 
 import { useQueryClient } from '@tanstack/vue-query';
 
 import serverClient from '@/lib/clients/serverClient';
-import { useToast } from 'primevue/usetoast';
 import { translate } from '@/lib/stringArray.ts';
 import type { StatusResponse } from '@/types/api/base/library';
 
@@ -32,7 +31,6 @@ const props = defineProps({
 	},
 });
 
-const { t } = useTranslation();
 const query = useQueryClient();
 const toast = useToast();
 
@@ -65,7 +63,7 @@ function handleDelete() {
 		title="Delete encoder profile {{profile}}"
 	>
 		<div class="my-6 text-sm text-auto-10">
-			{{ t("Are you sure you want to delete this encoder profile?") }}
+			{{ $t("Are you sure you want to delete this encoder profile?") }}
 		</div>
 
 		<template #actions>
@@ -77,16 +75,16 @@ function handleDelete() {
 				type="button"
 				variant="contained"
 			>
-				{{ t("Delete") }}
+				{{ $t("Delete") }}
 			</Button>
 			<Button
 				id="no"
-				:on-click="close"
+				:onclick="close"
 				type="button"
 				color="text-auto-alpha-11"
 				variant="text"
 			>
-				{{ t("Cancel") }}
+				{{ $t("Cancel") }}
 			</Button>
 		</template>
 	</Modal>

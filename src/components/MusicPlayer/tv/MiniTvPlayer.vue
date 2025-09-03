@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import type { PropType } from 'vue';
 import { watch } from 'vue';
-import { useTranslation } from 'i18next-vue';
 
 import type { PlaylistItem } from '@/types/musicPlayer';
 
@@ -24,8 +23,6 @@ defineProps({
 		required: false,
 	},
 });
-
-const { t } = useTranslation();
 
 function togglePlayerSize() {
 	if (musicSize.value === SizeState.compact) {
@@ -108,7 +105,7 @@ watch(musicSize, () => {
 					class="flex h-full flex-col overflow-hidden px-2 w-available"
 				>
 					<div class="flex w-full justify-between">
-						<span class="text-xs">{{ t("Now Playing") }}</span>
+						<span class="text-xs">{{ $t("Now Playing") }}</span>
 
 						<EqSpinner v-if="isPlaying" :playing="isPlaying" />
 

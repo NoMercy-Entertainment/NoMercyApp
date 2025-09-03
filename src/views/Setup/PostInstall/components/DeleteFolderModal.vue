@@ -1,11 +1,12 @@
 <script lang="ts" setup>
 import type { PropType } from 'vue';
-import { useRoute } from 'vue-router';
 import { useQueryClient } from '@tanstack/vue-query';
 
 import serverClient from '@/lib/clients/serverClient';
 
 import Modal from '@/components/Modal.vue';
+import { translate } from '@/lib/stringArray.ts';
+import { useToast } from 'primevue/usetoast';
 
 const props = defineProps({
 	open: {
@@ -20,6 +21,10 @@ const props = defineProps({
 		type: String,
 		required: true,
 	},
+	libraryId: {
+		type: String,
+		required: true,
+	},
 	name: {
 		type: String,
 		required: true,
@@ -31,7 +36,7 @@ const props = defineProps({
 });
 
 const query = useQueryClient();
-const route = useRoute();
+const toast = useToast();
 
 function handleDelete() {
 	serverClient()
@@ -39,21 +44,27 @@ function handleDelete() {
 		message: string;
 		status: string;
 		args: string[];
-	}>(`dashboard/libraries/${route.params.id}/folders/${props.id}`)
+	}>(`dashboard/libraries/${props.libraryId}/folders/${props.id}`)
 		.then(({ data }) => {
 			query.invalidateQueries({ queryKey: ['dashboard', 'libraries'] });
 
-			// showNotification({
-			//     title: translate(data.message, ...data.args),
-			//     type: data.status === 'ok'
-			//         ? TYPE.SUCCESS
-			//         : TYPE.ERROR,
-			//     visibleOnly: true,
-			//     duration: 2000,
-			// });
-		});
+			toast.add({
+				severity: data.status === 'ok' ? 'success' : 'error',
+				summary: translate(data.message, ...data.args ?? []),
+				life: 2000,
+			});
 
-	props.close();
+			props.close();
+		})
+		.catch((err) => {
+			toast.add({
+				severity: 'error',
+				summary: err.message,
+				life: 2000,
+			});
+
+			props.close();
+		});
 }
 </script>
 
@@ -62,7 +73,7 @@ function handleDelete() {
 		:close="close"
 		:open="open"
 		max-width="max-w-xl"
-		:params="{ folder: props.name }"
+		:params="{ folder: name }"
 		title="Delete folder {{folder}}"
 	>
 		<div class="my-6 text-sm text-auto-10">

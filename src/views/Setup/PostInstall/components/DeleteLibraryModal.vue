@@ -1,11 +1,14 @@
 <script lang="ts" setup>
 import type { PropType } from 'vue';
-import { useRoute } from 'vue-router';
 import { useQueryClient } from '@tanstack/vue-query';
 
 import serverClient from '@/lib/clients/serverClient';
 
 import Modal from '@/components/Modal.vue';
+import Button from '@/components/Button.vue';
+import { useToast } from 'primevue/usetoast';
+import { translate } from '@/lib/stringArray.ts';
+import type { StatusResponse } from '@/types/api/base/library';
 
 const props = defineProps({
 	open: {
@@ -31,26 +34,18 @@ const props = defineProps({
 });
 
 const query = useQueryClient();
-const route = useRoute();
+const toast = useToast();
 
 function handleDelete() {
 	serverClient()
-		.delete<{
-		message: string;
-		status: string;
-		args: string[];
-	}>(`dashboard/libraries/${route.params.id}/folders/${props.id}`)
+		.delete<StatusResponse<string>>(`dashboard/libraries/${props.id}`)
 		.then(({ data }) => {
+			toast.add({
+				severity: data.status === 'ok' ? 'success' : 'error',
+				summary: translate(data.message, ...data.args ?? []),
+				life: 2000,
+			});
 			query.invalidateQueries({ queryKey: ['dashboard', 'libraries'] });
-
-			// showNotification({
-			//     title: translate(data.message, ...data.args),
-			//     type: data.status === 'ok'
-			//         ? TYPE.SUCCESS
-			//         : TYPE.ERROR,
-			//     visibleOnly: true,
-			//     duration: 2000,
-			// });
 		});
 
 	props.close();
@@ -62,11 +57,11 @@ function handleDelete() {
 		:close="close"
 		:open="open"
 		max-width="max-w-xl"
-		:params="{ folder: props.name }"
-		title="Delete folder {{folder}}"
+		:params="{ library: props.name }"
+		title="Delete library {{library}}"
 	>
 		<div class="my-6 text-sm text-auto-10">
-			{{ $t("Are you sure you want to delete this folder?") }}
+			{{ $t("Are you sure you want to delete this library?") }}
 		</div>
 
 		<template #actions>

@@ -1,15 +1,16 @@
 <script lang="ts" setup>
 import type { PropType } from 'vue';
-import { useTranslation } from 'i18next-vue';
+import { useToast } from 'primevue/usetoast';
 import { useQueryClient } from '@tanstack/vue-query';
 
+import type { StatusResponse } from '@/types/api/base/library';
+
 import serverClient from '@/lib/clients/serverClient';
+import { translate } from '@/lib/stringArray.ts';
 
 import Modal from '@/components/Modal.vue';
 import Button from '@/components/Button.vue';
-import { useToast } from 'primevue/usetoast';
-import { translate } from '@/lib/stringArray.ts';
-import type { StatusResponse } from '@/types/api/base/library';
+import router from '@/router';
 
 const props = defineProps({
 	open: {
@@ -34,7 +35,6 @@ const props = defineProps({
 	},
 });
 
-const { t } = useTranslation();
 const query = useQueryClient();
 const toast = useToast();
 
@@ -51,7 +51,7 @@ function handleDelete() {
 
 			if (props.noRedirect)
 				return;
-			window.history.back();
+			router.back();
 		});
 
 	props.close();
@@ -67,7 +67,7 @@ function handleDelete() {
 		title="Delete library {{library}}"
 	>
 		<div class="my-6 text-sm text-auto-10">
-			{{ t("Are you sure you want to delete this library?") }}
+			{{ $t("Are you sure you want to delete this library?") }}
 		</div>
 
 		<template #actions>
@@ -79,16 +79,16 @@ function handleDelete() {
 				type="button"
 				variant="contained"
 			>
-				{{ t("Delete") }}
+				{{ $t("Delete") }}
 			</Button>
 			<Button
 				id="no"
-				:on-click="close"
+				:onclick="close"
 				type="button"
 				color="text-auto-alpha-11"
 				variant="text"
 			>
-				{{ t("Cancel") }}
+				{{ $t("Cancel") }}
 			</Button>
 		</template>
 	</Modal>

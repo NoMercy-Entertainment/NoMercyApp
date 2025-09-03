@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import type { PropType } from 'vue';
-import { useTranslation } from 'i18next-vue';
 import {
 	Listbox,
 	ListboxButton,
@@ -47,8 +46,6 @@ defineProps({
 
 defineEmits(['update:modelValue']);
 
-const { t } = useTranslation();
-
 const modelValue = defineModel<any>({
 	required: true,
 });
@@ -73,7 +70,7 @@ const modelValue = defineModel<any>({
 					'mb-px text-xs font-thin': variant === 'tight',
 				}"
 			>
-				{{ t(label) }}
+				{{ $t(label) }}
 			</ListboxLabel>
 			<div
 				class="flex flex-1 flex-shrink-0 flex-grow-0 flex-col"

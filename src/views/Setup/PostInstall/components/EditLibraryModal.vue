@@ -4,18 +4,19 @@ import { type PropType, ref, watch } from 'vue';
 import { useQueryClient } from '@tanstack/vue-query';
 
 import type { Language } from '@/types/api/shared';
-import type { EncoderProfile, FolderLibrary, LibrariesResponse } from '@/types/api/base/library';
+import type { LibrariesResponse } from '@/types/api/base/library';
 
 import { libraryTypes } from '@/config/config.ts';
 import serverClient from '@/lib/clients/serverClient';
-import router from '@/router';
 
 import Modal from '@/components/Modal.vue';
 import MoooomIcon from '@/components/Images/icons/MoooomIcon.vue';
 import Button from '@/components/Buttons/Button.vue';
 import TypeButton from '@/views/Setup/PostInstall/components/TypeButton.vue';
 import FolderItem from '@/views/Setup/PostInstall/components/FolderItem.vue';
-import NewFolderModal from '@/views/Dashboard/System/Libraries/components/NewFolderModal.vue';
+import NewFolderModal from './NewFolderModal.vue';
+import { useToast } from 'primevue/usetoast';
+import { useDebounce } from '@vueuse/core';
 
 const props = defineProps({
 	open: {
@@ -23,7 +24,7 @@ const props = defineProps({
 		required: true,
 	},
 	close: {
-		type: Function as PropType<() => any>,
+		type: Function as PropType<(e: Event) => any>,
 		required: true,
 	},
 	id: {
@@ -36,44 +37,19 @@ const props = defineProps({
 	},
 });
 
-const emit = defineEmits({
-	'update:modelValue': (value: LibrariesResponse) => true,
-});
-
 const library = defineModel({
 	type: Object as PropType<LibrariesResponse>,
 	required: true,
 });
 
 const query = useQueryClient();
+const toast = useToast();
 
 const title = ref<string>(library.value?.title);
+const debouncedTitle = useDebounce(title, 500);
 const selectedType = ref<string>(library.value?.type ?? 'movie');
 
-// Update the parent library object when title changes
-watch(title, (value) => {
-	if (!value || !library.value)
-		return;
-
-	library.value = {
-		...library.value,
-		title: value,
-	};
-});
-
-// Update the parent library object when type changes
-watch(selectedType, (value) => {
-	if (!value || !library.value)
-		return;
-
-	library.value = {
-		...library.value,
-		type: value,
-	};
-});
-
-// Also watch for changes to the library prop to update local state
-watch(() => library.value, (newLibrary) => {
+watch(library, (newLibrary) => {
 	if (!newLibrary)
 		return;
 	title.value = newLibrary.title;
@@ -102,20 +78,9 @@ function openNewFolderModal() {
 }
 function closeNewModal() {
 	newModalOpen.value = false;
-
-	// Ensure changes from NewFolderModal are properly reflected
-	if (library.value && !library.value.folder_library) {
-		library.value = {
-			...library.value,
-			folder_library: [],
-		};
-	}
 }
 
 function handleEdit() {
-	if (!library.value)
-		return;
-
 	serverClient()
 		.patch(`dashboard/libraries/${library.value.id}`, {
 			...library.value,
@@ -124,60 +89,64 @@ function handleEdit() {
 		})
 		.then(() => {
 			query.invalidateQueries({ queryKey: ['dashboard', 'libraries'] });
+			toast.add({
+				severity: 'success',
+				summary: 'Library updated successfully',
+				life: 2000,
+			});
 
-			if (props.noRedirect)
-				return;
-			router.replace('/dashboard/system/libraries');
+			props.close();
+		})
+		.catch((err) => {
+			toast.add({
+				severity: 'error',
+				summary: err.message,
+				life: 2000,
+			});
+
+			props.close();
 		});
-
-	props.close();
 }
 
-function setEncoderQualities(folder: FolderLibrary, profiles: EncoderProfile[]) {
-	if (!library.value)
+watch(debouncedTitle, (newTitle) => {
+	if (!newTitle)
 		return;
 
-	// Create a fresh copy of the folder_library array
-	const updatedFolderLibraries = library.value.folder_library.map((f) => {
-		if (f.folder_id === folder.folder_id) {
-			return {
-				...f,
-				folder: {
-					...f.folder,
-					encoder_profiles: profiles.map(p => p),
-				},
-			};
-		}
-		return f;
-	});
+	serverClient()
+		.patch(`dashboard/libraries/${library.value.id}`, {
+			title: newTitle,
+		})
+		.then(() => {
+			query.invalidateQueries({ queryKey: ['dashboard', 'libraries'] });
+		})
+		.catch((err) => {
+			toast.add({
+				severity: 'error',
+				summary: err.message,
+				life: 2000,
+			});
+		});
+});
 
-	// Replace the entire folder_library array
-	emit('update:modelValue', {
-		...library.value,
-		folder_library: updatedFolderLibraries,
-	});
-}
-
-function handleDeleteFolder(folder: FolderLibrary) {
-	if (!library.value)
+watch(selectedType, (newType) => {
+	if (!newType)
 		return;
 
-	library.value = {
-		...library.value,
-		folder_library: library.value.folder_library.filter(f => f.folder_id !== folder.folder_id),
-	};
-}
-
-function setLibraryType(type: string) {
-	if (!library.value)
-		return;
-
-	library.value = {
-		...library.value,
-		type,
-	};
-	selectedType.value = type;
-}
+	serverClient()
+		.patch(`dashboard/libraries/${library.value.id}`, {
+			type: newType,
+		})
+		.then(() => {
+			query.invalidateQueries({ queryKey: ['dashboard', 'libraries'] });
+		})
+		.catch((err) => {
+			toast.add({
+				severity: 'error',
+				summary: err.message,
+				life: 2000,
+			});
+		});
+});
 </script>
 
 <template>
@@ -279,8 +248,6 @@ function setLibraryType(type: string) {
 								<FolderItem
 									v-model="library"
 									:folder="folderLibrary"
-									:set-encoder-qualities="setEncoderQualities"
-									:handle-delete-folder="handleDeleteFolder"
 								/>
 							</template>
 						</template>
@@ -302,12 +269,12 @@ function setLibraryType(type: string) {
 				class="flex w-full justify-end items-start self-stretch flex-grow-0 flex-shrink-0 gap-2 rounded-lg bg-white/[0.04] p-2"
 			>
 				<Button
-					id="save"
+					id="done"
 					type="button"
 					color="theme"
 					@click="handleEdit"
 				>
-					{{ $t("Create library") }}
+					{{ $t("Done") }}
 				</Button>
 			</div>
 		</template>

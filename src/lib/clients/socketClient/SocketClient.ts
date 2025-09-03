@@ -73,11 +73,11 @@ export class SocketClient {
 				console.log('SignalR Reconnected.');
 				onConnect(this.connection!, this.endpoint);
 			});
-			this.connection.onclose(async () => {
-				console.log('SignalR Closed.');
+			this.connection.onclose(async (error) => {
+				console.log('SignalR Closed.', error);
 				onDisconnect(this.connection!, this.endpoint);
 
-				if (!this.connection)
+				if (!this.connection || !error)
 					return;
 
 				await this.connection.start();

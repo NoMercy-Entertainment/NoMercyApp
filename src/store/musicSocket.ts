@@ -17,10 +17,10 @@ import type { MusicPlayerState, StateEvents } from '@/types/musicPlayer';
 export const mc = ref(false);
 export const musicSocketIsConnected = computed(() => mc.value);
 
-const si = ref<SocketClient | undefined>();
+const si = ref<SocketClient | undefined | null>();
 export const musicSocketInstance = computed(() => si.value);
 export const musicSocketConnection = computed(() => si.value?.connection);
-export function setMusicSocketInstance(value: SocketClient) {
+export function setMusicSocketInstance(value: SocketClient | null) {
 	si.value = value;
 }
 

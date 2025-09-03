@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { computed, ref, watch } from 'vue';
-import { useTranslation } from 'i18next-vue';
 import { IonContent, IonModal } from '@ionic/vue';
 import type { Swiper } from 'swiper';
 import { Swiper as SwiperComponent } from 'swiper/vue';
@@ -31,8 +30,6 @@ import ChristmasSnow from '@/components/Seasonal/Christmas/ChristmasSnow.vue';
 import TopRow from '../mobile/TopRow.vue';
 import TrackRow from '../mobile/TrackRow.vue';
 import ButtonContainer from '../mobile/ButtonContainer.vue';
-
-const { t } = useTranslation();
 
 const lyricsSize = ref<'small' | 'full'>('small');
 const content = ref<VueDivElement>();
@@ -209,7 +206,7 @@ async function onWillDismiss() {
 				<div
 					class="absolute top-0 z-10 flex w-full items-center rounded-t-2xl pr-2 pl-4 font-semibold"
 				>
-					<span>{{ t("Lyrics") }}</span>
+					<span>{{ $t("Lyrics") }}</span>
 					<MusicButton label="expand" class="ml-auto" :onclick="handleExpand">
 						<OptimizedIcon
 							v-if="lyricsSize === 'full'"

@@ -26,7 +26,7 @@ const props = defineProps({
 		required: true,
 	},
 	setCurrentStep: {
-		type: Function as PropType<(value: boolean) => void>,
+		type: Function as PropType<(value: string) => void>,
 		required: true,
 	},
 	finish: {
@@ -123,7 +123,7 @@ const { data: encoderProfiles } = useServerClient<EncoderProfile[]>({
 						variant="text"
 						@click="previousStep"
 					>
-						{{ t('Back') }}
+						{{ $t('Back') }}
 					</Button>
 					<Button v-if="isLastStep"
 						id="cancel"
@@ -134,7 +134,7 @@ const { data: encoderProfiles } = useServerClient<EncoderProfile[]>({
 						variant="default"
 						@click="finish"
 					>
-						{{ t('Finish') }}
+						{{ $t('Finish') }}
 					</button>
 					<Button v-else
 						id="save"
@@ -145,7 +145,7 @@ const { data: encoderProfiles } = useServerClient<EncoderProfile[]>({
 						variant="default"
 						@click="nextStep"
 					>
-						{{ t('Next') }}
+						{{ $t('Next') }}
 					</button>
 				</div>
 			</div>

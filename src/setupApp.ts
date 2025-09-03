@@ -126,7 +126,7 @@ export async function setupApp(app: AppContext['app']) {
 
 	app.use(MasonryWall);
 
-	const supportsCarousel = CSS.supports('scroll-marker-group', 'after');
+	const supportsCarousel = CSS.supports('scroll-marker-group', 'after') && false;
 
 	app.component('Modal', Modal);
 	app.component('NMCard', NMCard);

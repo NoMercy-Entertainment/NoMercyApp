@@ -6,14 +6,14 @@ import type { HubConnection } from '@microsoft/signalr';
 export const vc = ref(false);
 export const videoSocketIsConnected = computed(() => vc.value);
 
-const si = ref<SocketClient | undefined>();
+const si = ref<SocketClient | undefined | null>();
 export const videoSocketInstance = computed(() => si.value);
 
 // @ts-ignore
 window.videoSocketInstance = si;
 
 export const videoSocketConnection = computed(() => si.value?.connection);
-export function setVideoSocketInstance(value: SocketClient) {
+export function setVideoSocketInstance(value: SocketClient | null) {
 	si.value = value;
 }
 

@@ -1,7 +1,6 @@
 <script lang="ts" setup>
 import type { PropType } from 'vue';
 import { ref, watch } from 'vue';
-import { useTranslation } from 'i18next-vue';
 
 import { useQueryClient } from '@tanstack/vue-query';
 import { useSortable } from '@vueuse/integrations/useSortable';
@@ -20,11 +19,12 @@ const props = defineProps({
 		required: true,
 	},
 });
-const { t } = useTranslation();
+
 const query = useQueryClient();
 
 const { data: libraries } = useServerClient<LibrariesResponse[]>({
 	path: 'dashboard/libraries',
+	queryKey: ['dashboard', 'libraries'],
 });
 
 const el = ref<HTMLElement | null>(null);
@@ -39,16 +39,6 @@ watch(libraries, (value) => {
 
 	props.setNextButtonLocked(value?.length === 0);
 });
-
-function updateLibrary(library: LibrariesResponse) {
-	const index = list.value.findIndex(item => item.id === library.id);
-	if (index !== -1) {
-		list.value = [
-			...list.value.slice(0, index),
-			library,
-		];
-	}
-}
 
 function handleCreateLibrary() {
 	serverClient()
@@ -71,9 +61,9 @@ function handleSortLibrary() {
 		});
 }
 
-// watch(list, () => {
-// 	handleSortLibrary();
-// });
+watch(list, () => {
+	handleSortLibrary();
+});
 
 useSortable(el, list, {
 	animation: 150,
@@ -84,16 +74,15 @@ useSortable(el, list, {
 <template>
 	<div class="flex flex-col overflow-hidden text-start h-available">
 		<h2 class="mb-2 text-xl font-semibold">
-			{{ t('Organize your media library') }}
+			{{ $t('Organize your media library') }}
 		</h2>
 		<p class="mb-4 text-sm">
-			{{ t('Add your media libraries to organize your content.') }}
+			{{ $t('Add your media libraries to organize your content.') }}
 		</p>
 		<div ref="el" class="flex h-auto w-full flex-col overflow-y-auto text-start">
 			<template v-for="(item, index) in list" :key="item.id">
 				<LibraryItem
 					v-model="list[index]"
-					@update:model-value="updateLibrary($event)"
 				/>
 			</template>
 		</div>
@@ -104,7 +93,7 @@ useSortable(el, list, {
 				variant="contained"
 				@click="handleCreateLibrary"
 			>
-				{{ t('Add media library') }}
+				{{ $t('Add media library') }}
 			</Button>
 		</div>
 	</div>

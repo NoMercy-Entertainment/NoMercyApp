@@ -6,7 +6,7 @@ import type { DriveState } from '@/types/api/dashboard/ripper';
 import useMounted from '@/hooks/useMounted';
 import useHubListener from '@/hooks/useHubListener';
 import {
-	connection,
+	ripperSocketConnection,
 	ripperSocketIsConnected,
 	startRipperSocket,
 	stopRipperSocket,
@@ -119,7 +119,7 @@ watch(ripperSocketIsConnected, async (value) => {
 
 			if (!drive.label)
 				continue;
-			connection.value
+			ripperSocketConnection.value
 				?.invoke('GetDriveState', drive.path)
 				.then(data => handleDriveState(data))
 				.catch(error => console.error('GetDriveState:', error));
@@ -132,7 +132,7 @@ watch(ripperSocketIsConnected, async (value) => {
 
 useMounted(startRipperSocket, stopRipperSocket, 10);
 
-useHubListener(connection, 'DriveState', handleDriveState);
+useHubListener(ripperSocketConnection, 'DriveState', handleDriveState);
 </script>
 
 <template>

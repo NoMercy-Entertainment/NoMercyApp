@@ -6,7 +6,8 @@ import type { EncoderProfile, FolderLibrary, LibrariesResponse } from '@/types/a
 import useServerClient from '@/lib/clients/useServerClient.ts';
 
 import MoooomIcon from '@/components/Images/icons/MoooomIcon.vue';
-import DeleteEncoderProfileModal	from '@/views/Dashboard/System/EncoderProfiles/components/DeleteEncoderProfileModal.vue';
+import DeleteFolderModal from './DeleteFolderModal.vue';
+import serverClient from '@/lib/clients/serverClient.ts';
 
 const props = defineProps({
 	handleDeleteFolder: {
@@ -17,16 +18,6 @@ const props = defineProps({
 		type: Object as PropType<FolderLibrary>,
 		required: true,
 	},
-	setEncoderQualities: {
-		type: Function as PropType<
-			(FolderLibrary: FolderLibrary, profiles: EncoderProfile[]) => void
-		>,
-		required: true,
-	},
-});
-
-const emit = defineEmits({
-	'update:modelValue': (value: LibrariesResponse) => true,
 });
 
 const library = defineModel({
@@ -69,19 +60,19 @@ const availableQualities = computed(() => {
 // Use a local copy of the encoder profiles
 const encoderQualities = ref<EncoderProfile[]>(
 	availableQualities.value?.filter(quality =>
-		props.folder.folder.encoder_profiles?.some(
+		props.folder.folder?.encoder_profiles?.some(
 			profile => profile.id === quality.id,
 		),
 	) ?? [],
 );
 
 // Update the local encoderQualities when the available qualities or folder encoder profiles change
-watch([availableQualities, () => props.folder.folder.encoder_profiles], ([newAvailableQualities, newEncoderProfiles]) => {
-	if (!newAvailableQualities || !newEncoderProfiles)
+watch([availableQualities, props], ([newAvailableQualities, newProps]) => {
+	if (!newAvailableQualities || !newProps)
 		return;
 
 	encoderQualities.value = newAvailableQualities.filter(quality =>
-		newEncoderProfiles.some(profile => profile.id === quality.id),
+		newProps.folder.folder?.encoder_profiles.some(profile => profile.id === quality.id),
 	);
 }, { deep: true });
 
@@ -94,14 +85,48 @@ function handleEncoderQualitiesChange(event: any) {
 	encoderQualities.value = selectedProfiles;
 
 	// Notify the parent component about the change
-	props.setEncoderQualities(toRaw(props.folder), selectedProfiles);
+	setEncoderQualities(toRaw(props.folder), selectedProfiles);
+}
+
+function setEncoderQualities(folder: FolderLibrary, profiles: EncoderProfile[]) {
+	if (!library.value)
+		return;
+
+	// Create a fresh copy of the folder_library array
+	const updatedFolderLibraries = library.value.folder_library.map((f) => {
+		if (f.folder_id === folder.folder_id) {
+			return {
+				...f,
+				folder: {
+					...f.folder,
+					encoder_profiles: profiles.map(p => p),
+				},
+			};
+		}
+		return f;
+	});
+
+	serverClient()
+		.patch(`dashboard/libraries/${library.value.id}`, {
+			folder_library: updatedFolderLibraries,
+		})
+		.then(() => {
+			query.invalidateQueries({ queryKey: ['dashboard', 'libraries'] });
+		})
+		.catch((err) => {
+			toast.add({
+				severity: 'error',
+				summary: err.message,
+				life: 2000,
+			});
+		});
 }
 
 // Watch for library type changes to update available qualities
 watch(library, () => {
 	if (availableQualities.value) {
 		encoderQualities.value = availableQualities.value.filter(quality =>
-			props.folder.folder.encoder_profiles.some(
+			props.folder.folder?.encoder_profiles.some(
 				profile => profile.id === quality.id,
 			),
 		);
@@ -145,10 +170,10 @@ function closeDeleteConfirm() {
 		</div>
 	</div>
 
-	<DeleteEncoderProfileModal
-		v-if="library?.id"
-		:id="library?.id ?? ''"
-		:name="library?.title ?? ''"
+	<DeleteFolderModal
+		:id="folder.folder.id"
+		:library-id="library?.id"
+		:name="folder.folder.path"
 		:close="closeDeleteConfirm"
 		:open="deleteConfirmOpen"
 	/>

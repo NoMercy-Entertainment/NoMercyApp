@@ -1,6 +1,5 @@
 <script lang="ts" setup>
 import { computed, type PropType } from 'vue';
-import { useTranslation } from 'i18next-vue';
 
 import VueJsonPretty from 'vue-json-pretty';
 import 'vue-json-pretty/lib/styles.css';
@@ -34,8 +33,6 @@ const props = defineProps({
 		required: true,
 	},
 });
-
-const { t } = useTranslation();
 
 const logMessage = computed(() => {
 	if (!props.data)
@@ -93,12 +90,12 @@ const logMessage = computed(() => {
 		<template #actions>
 			<Button
 				id="no"
-				:on-click="close"
+				:onclick="close"
 				type="button"
 				color="text-auto-alpha-11"
 				variant="text"
 			>
-				{{ t("Close") }}
+				{{ $t("Close") }}
 			</Button>
 		</template>
 	</Modal>

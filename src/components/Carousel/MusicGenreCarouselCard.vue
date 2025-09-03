@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import type { PropType } from 'vue';
 import { ref } from 'vue';
-import { useTranslation } from 'i18next-vue';
 
 import { pickPaletteColor } from '@/lib/colorHelper';
 import type { GenreItem } from '@/types/api/music/genres';
@@ -17,8 +16,6 @@ const props = defineProps({
 		required: true,
 	},
 });
-
-const { t } = useTranslation();
 
 const ringColor = ref(
 	pickPaletteColor(props.data?.color_palette?.poster)
@@ -110,7 +107,7 @@ const ringColor = ref(
 				<div
 					class="relative z-10 inline-block max-w-full overflow-clip text-ellipsis whitespace-nowrap align-middle text-sm font-bold"
 				>
-					{{ t(data?.name) }}
+					{{ $t(data?.name) }}
 				</div>
 				<div
 					v-if="data?.musicGenre_track"

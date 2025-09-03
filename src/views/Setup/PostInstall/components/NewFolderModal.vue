@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { type PropType, toRaw } from 'vue';
+import type { PropType } from 'vue';
 import { useRoute } from 'vue-router';
 import { useQueryClient } from '@tanstack/vue-query';
 
@@ -49,16 +49,6 @@ function handleCreateFolder() {
 			path: props.folder,
 		})
 		.then(({ data }) => {
-			// Update the parent library state with the new folder
-			if (data.status === 'ok' && data.data && props.library) {
-				// Create a new library object with the updated folder_library array
-				props.library.folder_library = [
-					...toRaw(props.library.folder_library || []),
-					data.data,
-				];
-			}
-
-			// Invalidate queries to refresh library data from server
 			query.invalidateQueries({ queryKey: ['dashboard', 'libraries'] });
 
 			toast.add({

@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import type { PropType } from 'vue';
 import { computed, onMounted, ref, watch } from 'vue';
-import { useTranslation } from 'i18next-vue';
 import { useRoute } from 'vue-router';
 
 import type { FileItem, FileList } from '@/types/api/dashboard/newContent';
@@ -41,7 +40,6 @@ const props = defineProps({
 	},
 });
 const route = useRoute();
-const { t } = useTranslation();
 
 const fileList = ref<FileItem[]>([]);
 const files = ref<{ id: number; path: string }[]>([]);
@@ -287,10 +285,10 @@ const continueAvailable = computed(() => {
 				color="theme"
 				variant="default"
 				class=""
-				:on-click="submit"
+				:onclick="submit"
 				:disabled="continueAvailable"
 			>
-				{{ t("Add selection") }}
+				{{ $t("Add selection") }}
 			</Button>
 
 			<Checkbox
@@ -321,9 +319,9 @@ const continueAvailable = computed(() => {
 					type="button"
 					variant="default"
 					color="theme"
-					:on-click="getFileList"
+					:onclick="getFileList"
 				>
-					{{ t("Select") }}
+					{{ $t("Select") }}
 				</Button>
 			</template>
 		</Modal>

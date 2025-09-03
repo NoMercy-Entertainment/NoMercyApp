@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import type { PropType } from 'vue';
 import { onMounted, ref, watch } from 'vue';
-import { useTranslation } from 'i18next-vue';
 
 import {
 	Listbox,
@@ -45,8 +44,6 @@ const props = defineProps({
 });
 
 const emit = defineEmits(['update:modelValue']);
-
-const { t } = useTranslation();
 
 const selected = ref<Language[] | Language>(props.modelValue!);
 const query = ref('');
@@ -127,7 +124,7 @@ onMounted(() => {
 					'mb-px text-xs font-thin': variant === 'tight',
 				}"
 			>
-				{{ t(name) }}
+				{{ $t(name) }}
 			</ListboxLabel>
 			<div
 				class="relative"
@@ -178,7 +175,7 @@ onMounted(() => {
 							v-if="selected?.length > 4"
 							class="ml-3 block truncate text-left"
 						>
-							{{ selected?.length }} {{ t("selected") }}
+							{{ selected?.length }} {{ $t("selected") }}
 						</span>
 						<span v-else class="ml-3 block truncate text-left">
 							{{

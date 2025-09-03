@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import type { PropType } from 'vue';
 import { onMounted, ref, watch } from 'vue';
-import { useTranslation } from 'i18next-vue';
 
 import type {
 	DirectoryTreeItem,
@@ -23,16 +22,13 @@ const props = defineProps({
 	},
 });
 
-const { t } = useTranslation();
-
-watch(props, (value) => {
-	path.value = value.selected;
-});
-
 const path = ref(props.selected ?? '/');
 const lock = ref(false);
 const directorySeparator = ref('/');
 
+watch(props, (value) => {
+	path.value = value.selected;
+});
 watch(path, (newValue) => {
 	props.setSelected(newValue);
 
@@ -96,10 +92,10 @@ onMounted(() => {
 	<div class="relative flex w-full flex-col overflow-clip h-[88%] even:text-lg">
 		<div class="flex p-2 pt-4 border-b !bg-transparent text-sm select-none">
 			<span class="">
-				{{ t("Type") }}
+				{{ $t("Type") }}
 			</span>
 			<span class="mr-auto ml-4">
-				{{ t("Name") }}
+				{{ $t("Name") }}
 			</span>
 		</div>
 		<div class="relative flex w-full flex-col h-[85%]">

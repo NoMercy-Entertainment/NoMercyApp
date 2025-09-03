@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { MenuItem } from '@headlessui/vue';
-import { useTranslation } from 'i18next-vue';
+
 import type {
 	FunctionalComponent,
 	HTMLAttributes,
@@ -24,8 +24,6 @@ defineProps({
 		required: false,
 	},
 });
-
-const { t } = useTranslation();
 </script>
 
 <template>
@@ -39,7 +37,7 @@ const { t } = useTranslation();
 			:onclick="onclick"
 		>
 			<component :is="icon" v-if="icon" class="h-5 w-5" />
-			{{ t(title) }}
+			{{ $t(title) }}
 		</button>
 	</MenuItem>
 </template>

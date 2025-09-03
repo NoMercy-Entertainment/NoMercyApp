@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { computed, type PropType, ref } from 'vue';
-import { useTranslation } from 'i18next-vue';
 
 import type { MoooomIcons } from '@Icons/icons';
 import OptimizedIcon from '@/components/OptimizedIcon.vue';
@@ -20,8 +19,6 @@ defineProps({
 		required: false,
 	},
 });
-
-const { t } = useTranslation();
 
 const open = ref<boolean>(true);
 
@@ -48,7 +45,7 @@ const classes = computed(
 			<span
 				class="relative flex flex-shrink-0 flex-grow items-center justify-start text-sm font-semibold"
 			>
-				{{ t(title) }}
+				{{ $t(title) }}
 			</span>
 			<OptimizedIcon
 				icon="chevronRight"

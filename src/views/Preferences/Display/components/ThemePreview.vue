@@ -1,11 +1,9 @@
 <script setup lang="ts">
 import { computed } from 'vue';
-import { useTranslation } from 'i18next-vue';
 
-import AppLogo from '@/components/Images/icons/AppLogo.vue';
 import { showBackdrops } from '@/store/preferences';
 
-const { t } = useTranslation();
+import AppLogo from '@/components/Images/icons/AppLogo.vue';
 
 const colors = computed(() => {
 	// if (useGradientPercentageColors.value) {
@@ -44,7 +42,7 @@ const colors = computed(() => {
 	>
 		<div class="relative flex select-none flex-col gap-3 w-available">
 			<p class="font-bold">
-				{{ t("Theme preview") }}
+				{{ $t("Theme preview") }}
 			</p>
 			<div
 				class="relative flex h-auto items-start justify-start overflow-hidden rounded-2xl border-2 aspect-[16/10] bg-slate-light-1 dark:bg-slate-dark-1 border-auto-9/20"

@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { computed, onMounted, type PropType, ref } from 'vue';
 import { RouterLink } from 'vue-router';
-import { useTranslation } from 'i18next-vue';
 
 import router from '@/router';
 import { sidebar } from '@/store/sidebar';
@@ -36,8 +35,6 @@ const props = defineProps({
 		required: false,
 	},
 });
-
-const { t } = useTranslation();
 
 const isCurrentRoute = ref(location.hash.replace('#', '') === props.href);
 
@@ -82,7 +79,7 @@ function handleClick() {
 		v-if="show"
 		:to="href"
 		class="flex justify-start items-center self-stretch h-11 relative gap-2 px-2.5 py-2 rounded-md border border-transparent hover:border-focus/4 active:!bg-focus/11 dark:active:!bg-focus/8 active:border-focus/4 active:hover:border-focus/4 focus:bg-focus-9 hover:!bg-focus/10 disabled:!bg-focus/2 disabled:!border-focus/2 transition-colors duration-200 hover:text-auto-12 overflow-clip"
-		:aria-label="t(name)"
+		:aria-label="$t(name)"
 		:style="styles"
 		:class="classes"
 		@click="handleClick"
@@ -105,7 +102,7 @@ function handleClick() {
 			<span
 				class="ml-2 flex-grow overflow-clip font-medium w-inherit line-clamp-1 text-left"
 			>
-				{{ t(name) }}
+				{{ $t(name) }}
 			</span>
 		</span>
 	</RouterLink>

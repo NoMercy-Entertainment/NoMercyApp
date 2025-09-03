@@ -1,33 +1,66 @@
 <script setup lang="ts">
 import { onMounted, onUnmounted, ref, watch } from 'vue';
+import { RouterLink } from 'vue-router';
 import { IonContent, IonPage, onIonViewWillEnter } from '@ionic/vue';
+import { useQueryClient } from '@tanstack/vue-query';
 
-import type { Server } from '@/types/auth';
+import type { LibrariesResponse } from '@/types/api/base/library';
+import type { Server } from '@/types/auth.ts';
 
 import router from '@/router';
-import servers from '@/store/servers';
-import { setCurrentServer } from '@/store/currentServer';
-import { hideNavBar, showNavBar } from '@/store/ui';
-
-import ServerCard from '@/views/Setup/SelectServers/components/ServerCard.vue';
-import { user } from '@/store/user';
-import NoMercyAvatar from '@/components/Images/NoMercyAvatar.vue';
-import { RouterLink } from 'vue-router';
-import OptimizedIcon from '@/components/OptimizedIcon.vue';
+import serverClient from '@/lib/clients/serverClient.ts';
+import servers, { serverLibraries } from '@/store/servers';
+import { hideNavBar, setupComplete, showNavBar } from '@/store/ui';
 import { isTv, tvModeOverride } from '@/config/global';
 import { redirectUrl } from '@/store/routeState';
+import { setLibraries } from '@/store/Libraries.ts';
+import { user } from '@/store/user';
+import { setCurrentServer } from '@/store/currentServer.ts';
+
+import ServerCard from '@/views/Setup/SelectServers/components/ServerCard.vue';
+import NoMercyAvatar from '@/components/Images/NoMercyAvatar.vue';
+import OptimizedIcon from '@/components/OptimizedIcon.vue';
+import { videoSocketConnection } from '@/store/videoSocket.ts';
+import { musicSocketConnection } from '@/store/musicSocket.ts';
+import { ripperSocketConnection } from '@/lib/clients/ripperSocket.ts';
+
+const query = useQueryClient();
 
 const serverList = ref<HTMLElement>();
 
-function handleSelectServer(server: Server) {
+async function handleSelectServer(server: Server) {
 	setCurrentServer(server);
 
-	router.replace(redirectUrl.value).then();
+	await serverClient()
+		.get<{ data: LibrariesResponse[] }>('libraries')
+		.then(({ data }) => {
+			setLibraries(data.data);
+			setupComplete.value = true;
+			serverLibraries.value = true;
+
+			setTimeout(async () => {
+				if (redirectUrl.value === '/setup/select-servers') {
+					await router.replace({ name: 'Home' });
+				}
+				else {
+					await router.replace(redirectUrl.value);
+				}
+			}, 50);
+		})
+		.catch(async () => {
+			await router.replace({ name: 'Server offline' });
+		});
 }
 
 onMounted(() => {
 	setCurrentServer(null);
 	hideNavBar();
+
+	query.removeQueries();
+
+	videoSocketConnection.value?.stop();
+	musicSocketConnection.value?.stop();
+	ripperSocketConnection.value?.stop();
 });
 
 onUnmounted(() => {

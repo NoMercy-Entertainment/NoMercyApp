@@ -1,14 +1,15 @@
 <script lang="ts" setup>
 import type { PropType } from 'vue';
-import { useTranslation } from 'i18next-vue';
+import { useToast } from 'primevue/usetoast';
 
 import { useQueryClient } from '@tanstack/vue-query';
 
-import serverClient from '@/lib/clients/serverClient';
-import Modal from '@/components/Modal.vue';
-import { useToast } from 'primevue/usetoast';
 import type { StatusResponse } from '@/types/api/base/library';
+
+import serverClient from '@/lib/clients/serverClient';
 import { translate } from '@/lib/stringArray.ts';
+
+import Modal from '@/components/Modal.vue';
 
 const props = defineProps({
 	open: {
@@ -33,7 +34,6 @@ const props = defineProps({
 	},
 });
 
-const { t } = useTranslation();
 const query = useQueryClient();
 const toast = useToast();
 
@@ -66,7 +66,7 @@ function handleDelete() {
 		title="Delete special {{special}}"
 	>
 		<div class="my-6 text-sm text-auto-10">
-			{{ t("Are you sure you want to delete this special?") }}
+			{{ $t("Are you sure you want to delete this special?") }}
 		</div>
 
 		<template #actions>
@@ -77,16 +77,16 @@ function handleDelete() {
 				color="red"
 				type="button"
 			>
-				{{ t("Delete") }}
+				{{ $t("Delete") }}
 			</Button>
 			<Button
 				id="no"
-				:on-click="close"
+				:onclick="close"
 				type="button"
 				color="text-auto-alpha-11"
 				variant="text"
 			>
-				{{ t("Cancel") }}
+				{{ $t("Cancel") }}
 			</Button>
 		</template>
 	</Modal>

@@ -1,9 +1,8 @@
 <script setup lang="ts">
+import { computed } from 'vue';
 import { RouterLink } from 'vue-router';
-import { useTranslation } from 'i18next-vue';
 import { isPlatform } from '@ionic/vue';
 
-import { shouldShowLibraryLinks } from '@/store/Libraries';
 import { user } from '@/store/user';
 
 import NotificationMenu from '@/Layout/Desktop/components/Menus/NotificationMenu.vue';
@@ -13,15 +12,21 @@ import OptimizedIcon from '@/components/OptimizedIcon.vue';
 import AppLogo from '@/components/Images/icons/AppLogo.vue';
 import NavbarButton from './NavbarButton.vue';
 import {
+	hasMusicLibrary,
 	isHomeRoute,
 	isLibraryRoute,
 	isMusicRoute,
 	searchUrl,
 } from '@/store/routeState';
 import { currentServer } from '@/store/currentServer';
+import libraries from '@/store/Libraries.ts';
+
 import MessagesMenu from '@/Layout/Desktop/components/Menus/MessagesMenu.vue';
 
-const { t } = useTranslation();
+console.log('server', currentServer.value);
+console.log('libraries', libraries.value);
+
+const shouldShowLibraryLinks = computed(() => !!currentServer.value && (libraries.value?.length ?? 0) > 0);
 </script>
 
 <template>
@@ -89,7 +94,7 @@ const { t } = useTranslation();
 					/>
 
 					<NavbarButton
-						v-if="shouldShowLibraryLinks"
+						v-if="shouldShowLibraryLinks && hasMusicLibrary"
 						href="/music/start"
 						:active="isMusicRoute"
 						icon="noteDouble"

@@ -4,13 +4,6 @@ import libraries from '@/store/Libraries';
 import router from '@/router';
 import { useLocalStorage } from '@vueuse/core';
 
-export const searchUrl = computed(() => {
-	if (isMusicRoute.value) {
-		return '/search?from=music';
-	}
-	return '/search';
-});
-
 export const redirectUrl = useLocalStorage('redirectUrl', '/home');
 export const isSearchRoute = computed(
 	() => router.currentRoute.value.path === '/search',
@@ -39,7 +32,7 @@ export const isPreferencesRoute = computed(() =>
 	router.currentRoute.value.path.startsWith('/preferences'),
 );
 export const hasMusicLibrary = computed(() =>
-	libraries.value?.some?.(l => l.type !== 'music'),
+	libraries.value?.some?.(l => l.type === 'music'),
 );
 export const isAlbumRoute = computed(() =>
 	router.currentRoute.value.path.startsWith('/music/album'),
@@ -56,8 +49,13 @@ export const isSongRoute = computed(() =>
 export const isQueueRoute = computed(() =>
 	router.currentRoute.value.path.startsWith('/music/queue'),
 );
-export const isTrackRoute = computed(
-	() =>
-		router.currentRoute.value.path.startsWith('/music/artist/')
-		|| router.currentRoute.value.path.startsWith('/music/album/'),
-);
+export const isTrackRoute = computed(() =>
+	router.currentRoute.value.path.startsWith('/music/artist/')
+	|| router.currentRoute.value.path.startsWith('/music/album/'));
+
+export const searchUrl = computed(() => {
+	if (isMusicRoute.value) {
+		return '/search?from=music';
+	}
+	return '/search';
+});

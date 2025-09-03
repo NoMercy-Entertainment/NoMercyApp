@@ -8,9 +8,13 @@ import {
 import { currentServer } from '@/store/currentServer';
 import { user } from '@/store/user';
 
-const ripperSocket: Ref<SocketClient | undefined> = ref();
-export const connection = computed(() => ripperSocket.value?.connection);
+const ripperSocket: Ref<SocketClient | undefined | null> = ref();
+export const ripperSocketConnection = computed(() => ripperSocket.value?.connection);
 export const ripperSocketIsConnected = ref(false);
+
+export function setRipperSocketInstance(value: SocketClient | null) {
+	ripperSocket.value = value;
+}
 
 function connected() {
 	ripperSocketIsConnected.value = true;

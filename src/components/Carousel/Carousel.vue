@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import type { PropType } from 'vue';
 import { computed, ref, watch } from 'vue';
-import { useTranslation } from 'i18next-vue';
 import type { Swiper } from 'swiper';
 import { Swiper as SwiperComponent } from 'swiper/vue';
 import { register } from 'swiper/element/bundle';
@@ -54,8 +53,6 @@ const props = defineProps({
 		default: 'prev-carousel',
 	},
 });
-
-const { t } = useTranslation();
 
 const backButtonEnabled = ref(false);
 const nextButtonEnabled = ref(true);
@@ -143,7 +140,7 @@ function focusMain() {
 				<h3 v-if="title"
 					class="mr-2 ml-3 sm:ml-3 my-2 text-slate-lightA-12/70 dark:text-slate-darkA-12/80 self-stretch flex-grow-0 flex-shrink-0 text-xl font-bold"
 				>
-					{{ t(title ?? 'Continue watching') }}
+					{{ $t(title ?? 'Continue watching') }}
 				</h3>
 				<slot v-else name="selector" />
 

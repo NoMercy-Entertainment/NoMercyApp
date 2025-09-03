@@ -35,7 +35,7 @@ const props = defineProps({
 	},
 });
 
-const visible = ref(false);
+const visible = ref(props.open);
 
 watch(props, (value) => {
 	visible.value = value.open;

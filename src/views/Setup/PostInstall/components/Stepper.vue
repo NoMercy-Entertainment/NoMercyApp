@@ -34,7 +34,7 @@ const percentage = computed(() => {
 <template>
 	<div class="-mt-12 px-4">
 		<h4 class="text-xl font-bold text-contrast">
-			{{ t(currentStep) }}
+			{{ $t(currentStep) }}
 		</h4>
 		<div aria-hidden="true" class="mt-4">
 			<div class="overflow-hidden rounded-full bg-gray-200">
@@ -44,7 +44,7 @@ const percentage = computed(() => {
 				class="mt-6 hidden text-sm font-medium text-auto-600 sm:grid"
 			>
 				<div v-for="step in steps" :key="step" class="text-center">
-					{{ t(step) }}
+					{{ $t(step) }}
 				</div>
 			</div>
 		</div>

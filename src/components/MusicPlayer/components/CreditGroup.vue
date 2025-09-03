@@ -1,6 +1,5 @@
 <script lang="ts" setup>
 import type { PropType } from 'vue';
-import { useTranslation } from 'i18next-vue';
 import { IonItem, IonList } from '@ionic/vue';
 
 import type { KnownFor } from '@/types/api/base/person';
@@ -18,8 +17,6 @@ defineProps({
 		required: true,
 	},
 });
-
-const { t } = useTranslation();
 </script>
 
 <template>
@@ -28,7 +25,7 @@ const { t } = useTranslation();
 		class="relative flex w-available flex-col items-start justify-start gap-2 -mx-3"
 	>
 		<p class="text-left text-xl font-bold ml-4">
-			{{ t(title) }}
+			{{ $t(title) }}
 		</p>
 
 		<IonList lines="inset" class="w-available">
@@ -69,7 +66,7 @@ const { t } = useTranslation();
 							</p>
 
 							<p class="text-contrast/60">
-								{{ t("as") }}
+								{{ $t("as") }}
 							</p>
 
 							<p

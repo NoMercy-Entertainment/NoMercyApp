@@ -1,13 +1,12 @@
 <script setup lang="ts">
 import { watch } from 'vue';
-import { useTranslation } from 'i18next-vue';
-import OptimizedIcon from '@/components/OptimizedIcon.vue';
-import { setShowBackdrops, showBackdrops } from '@/store/preferences';
 import { useToggle } from '@vueuse/core';
 
-const [value] = useToggle(showBackdrops.value);
+import { setShowBackdrops, showBackdrops } from '@/store/preferences';
 
-const { t } = useTranslation();
+import OptimizedIcon from '@/components/OptimizedIcon.vue';
+
+const [value] = useToggle(showBackdrops.value);
 
 watch(value, (newVal) => {
 	setShowBackdrops(newVal);
@@ -18,7 +17,7 @@ watch(value, (newVal) => {
 	<div class="mb-8 flex select-none flex-col gap-3">
 		<div class="flex items-center justify-between">
 			<p class="font-bold">
-				{{ t("Card style") }}
+				{{ $t("Card style") }}
 			</p>
 		</div>
 		<div
