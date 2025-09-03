@@ -1,6 +1,5 @@
 <script lang="ts" setup>
 import { computed, type PropType } from 'vue';
-import { useTranslation } from 'i18next-vue';
 
 import type { ServerLibrary } from '@/types/server.ts';
 import type { EncoderProfile } from '@/types/api/dashboard/server.ts';
@@ -34,8 +33,6 @@ const props = defineProps({
 		required: true,
 	},
 });
-
-const { t } = useTranslation();
 
 const isFirstStep = computed(() => {
 	return props.steps.findIndex(step => step === props.currentStep) === 0;
@@ -107,7 +104,7 @@ const { data: encoderProfiles } = useServerClient<EncoderProfile[]>({
 						<AppLogo class="pb-8" />
 					</div>
 
-					<Stepper :key="currentStep" :current-step="currentStep" :steps="steps" />
+					<Stepper :current-step="currentStep" :steps="steps" />
 
 					<div class="overflow-hidden p-4 h-available">
 						<slot />

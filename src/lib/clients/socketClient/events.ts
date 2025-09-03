@@ -63,7 +63,7 @@ export function onDisconnect(socket: HubConnection | null, endpoint: string) {
 		detail: {
 			severity: 'error',
 			summary: i18next.t(`Disconnected from ${endpoint}`),
-			life: 2000,
+			life: 5000,
 		},
 	}));
 }

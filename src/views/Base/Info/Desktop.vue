@@ -227,14 +227,14 @@ function handleRescan() {
 			toast.add({
 				severity: data.status === 'ok' ? 'success' : 'error',
 				summary: translate(data.message, ...data.args),
-				life: 2000,
+				life: 5000,
 			});
 		})
 		.catch(() => {
 			toast.add({
 				severity: 'error',
 				summary: translate('An error occurred while rescanning the library folders'),
-				life: 2000,
+				life: 5000,
 			});
 		});
 }
@@ -257,7 +257,7 @@ function handleRefresh() {
 			toast.add({
 				severity: 'error',
 				summary: translate('An error occurred while rescanning the library folders'),
-				life: 2000,
+				life: 5000,
 			});
 		});
 }
@@ -273,14 +273,14 @@ function handleDelete() {
 			toast.add({
 				severity: data.status === 'ok' ? 'success' : 'error',
 				summary: translate(data.message, ...data.args),
-				life: 2000,
+				life: 5000,
 			});
 		})
 		.catch(() => {
 			toast.add({
 				severity: 'error',
 				summary: translate('An error occurred while rescanning the library folders'),
-				life: 2000,
+				life: 5000,
 			});
 		});
 }
@@ -296,14 +296,14 @@ function handleAdd() {
 			toast.add({
 				severity: data.status === 'ok' ? 'success' : 'error',
 				summary: translate(data.message, ...data.args),
-				life: 2000,
+				life: 5000,
 			});
 		})
 		.catch(() => {
 			toast.add({
 				severity: 'error',
 				summary: translate('An error occurred while rescanning the library folders'),
-				life: 2000,
+				life: 5000,
 			});
 		});
 }

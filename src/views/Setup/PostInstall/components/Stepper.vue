@@ -1,7 +1,6 @@
 <script lang="ts" setup>
 import type { PropType } from 'vue';
 import { computed } from 'vue';
-import { useTranslation } from 'i18next-vue';
 
 const props = defineProps({
 	steps: {
@@ -13,8 +12,6 @@ const props = defineProps({
 		required: true,
 	},
 });
-
-const { t } = useTranslation();
 
 const currentStepIndex = computed(() => {
 	if (!props.steps)
@@ -38,7 +35,7 @@ const percentage = computed(() => {
 		</h4>
 		<div aria-hidden="true" class="mt-4">
 			<div class="overflow-hidden rounded-full bg-gray-200">
-				<div :style="`width: ${percentage}%`" class="h-1 rounded-full bg-theme-600" />
+				<div :style="`width: ${percentage}%`" class="h-1 rounded-full bg-focus transition-all duration-300" />
 			</div>
 			<div :style="`grid-template-columns: repeat(${steps.length}, minmax(0, 1fr))`"
 				class="mt-6 hidden text-sm font-medium text-auto-600 sm:grid"

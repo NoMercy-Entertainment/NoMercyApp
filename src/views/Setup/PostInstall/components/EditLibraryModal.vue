@@ -92,7 +92,7 @@ function handleEdit() {
 			toast.add({
 				severity: 'success',
 				summary: 'Library updated successfully',
-				life: 2000,
+				life: 5000,
 			});
 
 			props.close();
@@ -101,7 +101,7 @@ function handleEdit() {
 			toast.add({
 				severity: 'error',
 				summary: err.message,
-				life: 2000,
+				life: 5000,
 			});
 
 			props.close();
@@ -123,7 +123,7 @@ watch(debouncedTitle, (newTitle) => {
 			toast.add({
 				severity: 'error',
 				summary: err.message,
-				life: 2000,
+				life: 5000,
 			});
 		});
 });
@@ -143,7 +143,7 @@ watch(selectedType, (newType) => {
 			toast.add({
 				severity: 'error',
 				summary: err.message,
-				life: 2000,
+				life: 5000,
 			});
 		});
 });
@@ -169,7 +169,7 @@ watch(selectedType, (newType) => {
 					<div
 						class="flex flex-col justify-start items-start self-stretch flex-grow-0 flex-shrink-0 gap-4"
 					>
-						<div class="flex justify-start items-start self-stretch flex-grow-0 flex-shrink-0">
+						<div class="grid grid-cols-4 justify-start items-start self-stretch gap-2">
 							<template v-for="type in libraryTypes" :key="type.value">
 								<TypeButton
 									:type="type"

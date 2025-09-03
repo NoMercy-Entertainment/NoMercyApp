@@ -54,7 +54,7 @@ function handleCreateFolder() {
 			toast.add({
 				severity: data.status === 'ok' ? 'success' : 'error',
 				summary: translate(data.message, ...data.args),
-				life: 2000,
+				life: 5000,
 			});
 
 			props.setFolder('/');

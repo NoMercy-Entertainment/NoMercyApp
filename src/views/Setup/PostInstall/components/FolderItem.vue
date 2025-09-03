@@ -117,7 +117,7 @@ function setEncoderQualities(folder: FolderLibrary, profiles: EncoderProfile[]) 
 			toast.add({
 				severity: 'error',
 				summary: err.message,
-				life: 2000,
+				life: 5000,
 			});
 		});
 }

@@ -32,7 +32,7 @@ function handleCreateLibrary() {
 			toast.add({
 				severity: data.status === 'ok' ? 'success' : 'error',
 				summary: translate(data.message, ...data.args),
-				life: 2000,
+				life: 5000,
 			});
 
 			queryClient.invalidateQueries({
@@ -56,7 +56,7 @@ function handleRefresh() {
 			toast.add({
 				severity: data.status === 'ok' ? 'success' : 'error',
 				summary: translate(data.message, ...data.args),
-				life: 2000,
+				life: 5000,
 			});
 		})
 		.catch(() => {
@@ -64,7 +64,7 @@ function handleRefresh() {
 			toast.add({
 				severity: 'error',
 				summary: translate('An error occurred while rescanning the libraries'),
-				life: 2000,
+				life: 5000,
 			});
 		});
 }
@@ -80,7 +80,7 @@ function handleRescan() {
 			toast.add({
 				severity: data.status === 'ok' ? 'success' : 'error',
 				summary: translate(data.message, ...data.args),
-				life: 2000,
+				life: 5000,
 			});
 		})
 		.catch(() => {
@@ -88,7 +88,7 @@ function handleRescan() {
 			toast.add({
 				severity: 'error',
 				summary: translate('An error occurred while rescanning the libraries'),
-				life: 2000,
+				life: 5000,
 			});
 		});
 }

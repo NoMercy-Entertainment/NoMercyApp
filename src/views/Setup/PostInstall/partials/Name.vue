@@ -47,14 +47,14 @@ function updateServerName() {
 			toast.add({
 				severity: 'success',
 				summary: translate(data.message, ...data.args ?? []),
-				life: 2000,
+				life: 5000,
 			});
 			query.invalidateQueries({ queryKey: ['servers'] });
 		});
 }
 
-watch(debouncedName, (value) => {
-	if (!value) {
+watch(debouncedName, (value, oldValue) => {
+	if (!value || value === oldValue || oldValue === '') {
 		return;
 	}
 
@@ -67,8 +67,12 @@ watch(serverName, (value) => {
 </script>
 
 <template>
-	<Textarea id="serverName"
-		v-model="serverName"
-		name="Give your server a friendly name to help identify it."
-	/>
+	<div class="flex flex-col gap-2">
+		<label for="serverName">Server name</label>
+		<InputText id="serverName"
+			v-model="serverName"
+			class="w-1/3"
+			name="Give your server a friendly name to help identify it."
+		/>
+	</div>
 </template>

@@ -34,14 +34,14 @@ async function handleDelete() {
 			toast.add({
 				severity: 'success',
 				summary: t('Activity logs deleted'),
-				life: 2000,
+				life: 5000,
 			});
 		})
 		.catch(() => {
 			toast.add({
 				severity: 'error',
 				summary: `${t('Something went wrong')} ${t('trying to delete activity logs')}`,
-				life: 2000,
+				life: 5000,
 			});
 		});
 }

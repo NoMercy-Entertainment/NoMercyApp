@@ -2,7 +2,6 @@
 import { onBeforeMount, onMounted, ref, toRaw, watch } from 'vue';
 import { useRoute } from 'vue-router';
 import { useToast } from 'primevue/usetoast';
-import { useTranslation } from 'i18next-vue';
 
 import { useQueryClient } from '@tanstack/vue-query';
 import { IonContent, IonPage } from '@ionic/vue';
@@ -136,7 +135,7 @@ function handleRefresh() {
 			toast.add({
 				severity: data.status === 'ok' ? 'success' : 'error',
 				summary: translate(data.message, ...data.args),
-				life: 2000,
+				life: 5000,
 			});
 		})
 		.catch(() => {
@@ -144,7 +143,7 @@ function handleRefresh() {
 			toast.add({
 				severity: 'error',
 				summary: translate('An error occurred while rescanning the library folders'),
-				life: 2000,
+				life: 5000,
 			});
 		});
 }
@@ -164,7 +163,7 @@ function handleRescan() {
 			toast.add({
 				severity: data.status === 'ok' ? 'success' : 'error',
 				summary: translate(data.message, ...data.args),
-				life: 2000,
+				life: 5000,
 			});
 		})
 		.catch(() => {
@@ -172,7 +171,7 @@ function handleRescan() {
 			toast.add({
 				severity: 'error',
 				summary: translate('An error occurred while rescanning the library folders'),
-				life: 2000,
+				life: 5000,
 			});
 		});
 }
@@ -205,7 +204,7 @@ function handleSave() {
 			toast.add({
 				severity: data.status === 'ok' ? 'success' : 'error',
 				summary: translate(data.message, ...data.args),
-				life: 2000,
+				life: 5000,
 			});
 
 			handleCancel();

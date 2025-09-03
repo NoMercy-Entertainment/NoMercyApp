@@ -51,7 +51,7 @@ function handleDelete() {
 			toast.add({
 				severity: data.status === 'ok' ? 'success' : 'error',
 				summary: translate(data.message, ...data.args ?? []),
-				life: 2000,
+				life: 5000,
 			});
 
 			props.close();
@@ -60,7 +60,7 @@ function handleDelete() {
 			toast.add({
 				severity: 'error',
 				summary: err.message,
-				life: 2000,
+				life: 5000,
 			});
 
 			props.close();

@@ -1,7 +1,6 @@
 <script lang="ts" setup>
 import { ref } from 'vue';
 import { IonContent, IonPage } from '@ionic/vue';
-import { useQueryClient } from '@tanstack/vue-query';
 
 import Frame from './components/Frame.vue';
 
@@ -18,11 +17,10 @@ import { setupComplete } from '@/store/ui.ts';
 import { serverLibraries } from '@/store/servers.ts';
 
 const toast = useToast();
-const query = useQueryClient();
 
-const steps = ref(['Name', 'Media libraries', 'Finish']);
+const steps = ref(['Base info', 'Media libraries', 'Finish']);
 
-const currentStep = ref('Name');
+const currentStep = ref('Base info');
 const nextButtonLocked = ref(false);
 
 async function finish() {
@@ -78,7 +76,7 @@ function setNextButtonLocked(value: boolean) {
 				:set-current-step="setCurrentStep"
 				:steps="steps"
 			>
-				<Name v-if="currentStep === 'Name'"
+				<Name v-if="currentStep === 'Base info'"
 					:set-next-button-locked="setNextButtonLocked"
 				/>
 

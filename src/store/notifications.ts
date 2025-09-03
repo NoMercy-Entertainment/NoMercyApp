@@ -10,6 +10,8 @@ export function setNotifications(data: Message[]) {
 }
 
 export function addNotification(message: Message) {
+	if (notifications.value.find(m => m.id === message.id))
+		return;
 	notifications.value.push(message);
 }
 

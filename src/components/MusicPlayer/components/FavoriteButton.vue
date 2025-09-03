@@ -61,7 +61,7 @@ function handleClick(e?: MouseEvent) {
 				severity: 'success',
 				summary: translate(data.message, ...data.args ?? []),
 				detail: 'File Uploaded',
-				life: 2000,
+				life: 5000,
 			});
 		});
 }

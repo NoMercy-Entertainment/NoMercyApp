@@ -88,7 +88,7 @@ export function setupServiceWorkerUpdates() {
 			.then((registration) => {
 				if (registration) {
 					console.log('Checking for updates...');
-					registration.update();
+					registration.update().then();
 				}
 			})
 			.catch((error) => {
