@@ -17,6 +17,7 @@ import FolderItem from '@/views/Setup/PostInstall/components/FolderItem.vue';
 import NewFolderModal from './NewFolderModal.vue';
 import { useToast } from 'primevue/usetoast';
 import { useDebounce } from '@vueuse/core';
+import { translate } from '@/lib/stringArray.ts';
 
 const props = defineProps({
 	open: {
@@ -91,7 +92,8 @@ function handleEdit() {
 			query.invalidateQueries({ queryKey: ['dashboard', 'libraries'] });
 			toast.add({
 				severity: 'success',
-				summary: 'Library updated successfully',
+				summary: translate('Success'),
+				detail: 'Library updated successfully',
 				life: 5000,
 			});
 
@@ -100,7 +102,8 @@ function handleEdit() {
 		.catch((err) => {
 			toast.add({
 				severity: 'error',
-				summary: err.message,
+				summary: translate('Error'),
+				detail: err.message,
 				life: 5000,
 			});
 
@@ -122,7 +125,8 @@ watch(debouncedTitle, (newTitle) => {
 		.catch((err) => {
 			toast.add({
 				severity: 'error',
-				summary: err.message,
+				summary: translate('Error'),
+				detail: err.message,
 				life: 5000,
 			});
 		});
@@ -142,7 +146,8 @@ watch(selectedType, (newType) => {
 		.catch((err) => {
 			toast.add({
 				severity: 'error',
-				summary: err.message,
+				summary: translate('Error'),
+				detail: err.message,
 				life: 5000,
 			});
 		});

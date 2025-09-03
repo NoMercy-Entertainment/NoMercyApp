@@ -1,13 +1,16 @@
 <script setup lang="ts">
 import { computed, type PropType, ref, toRaw, watch } from 'vue';
+import { useToast } from 'primevue/usetoast';
+import { useQueryClient } from '@tanstack/vue-query';
 
 import type { EncoderProfile, FolderLibrary, LibrariesResponse } from '@/types/api/base/library';
 
 import useServerClient from '@/lib/clients/useServerClient.ts';
+import serverClient from '@/lib/clients/serverClient.ts';
+import { translate } from '@/lib/stringArray.ts';
 
 import MoooomIcon from '@/components/Images/icons/MoooomIcon.vue';
 import DeleteFolderModal from './DeleteFolderModal.vue';
-import serverClient from '@/lib/clients/serverClient.ts';
 
 const props = defineProps({
 	handleDeleteFolder: {
@@ -19,6 +22,9 @@ const props = defineProps({
 		required: true,
 	},
 });
+
+const toast = useToast();
+const query = useQueryClient();
 
 const library = defineModel({
 	type: Object as PropType<LibrariesResponse>,
@@ -116,7 +122,8 @@ function setEncoderQualities(folder: FolderLibrary, profiles: EncoderProfile[]) 
 		.catch((err) => {
 			toast.add({
 				severity: 'error',
-				summary: err.message,
+				summary: translate('Error'),
+				detail: err.message,
 				life: 5000,
 			});
 		});

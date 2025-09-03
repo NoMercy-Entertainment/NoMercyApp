@@ -46,7 +46,8 @@ function updateServerName() {
 		.then(({ data }) => {
 			toast.add({
 				severity: 'success',
-				summary: translate(data.message, ...data.args ?? []),
+				summary: translate('Success'),
+				detail: translate(data.message, ...data.args ?? []),
 				life: 5000,
 			});
 			query.invalidateQueries({ queryKey: ['servers'] });

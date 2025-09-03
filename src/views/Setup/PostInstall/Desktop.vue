@@ -15,6 +15,7 @@ import type { LibrariesResponse } from '@/types/api/base/library';
 import { setLibraries } from '@/store/Libraries.ts';
 import { setupComplete } from '@/store/ui.ts';
 import { serverLibraries } from '@/store/servers.ts';
+import { translate } from '@/lib/stringArray.ts';
 
 const toast = useToast();
 
@@ -30,7 +31,7 @@ async function finish() {
 		.then(() => {
 			toast.add({
 				severity: 'success',
-				summary: 'Scanning libraries',
+				summary: translate('Success'),
 				detail: 'Your media libraries are being scanned in the background.',
 				life: 16000,
 			});

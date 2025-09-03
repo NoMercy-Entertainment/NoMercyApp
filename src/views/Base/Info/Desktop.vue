@@ -226,14 +226,16 @@ function handleRescan() {
 		.then(({ data }) => {
 			toast.add({
 				severity: data.status === 'ok' ? 'success' : 'error',
-				summary: translate(data.message, ...data.args),
+				summary: translate('Success'),
+				detail: translate(data.message, ...data.args),
 				life: 5000,
 			});
 		})
 		.catch(() => {
 			toast.add({
 				severity: 'error',
-				summary: translate('An error occurred while rescanning the library folders'),
+				summary: translate('error'),
+				detail: translate('An error occurred while rescanning the library folders'),
 				life: 5000,
 			});
 		});
@@ -249,14 +251,16 @@ function handleRefresh() {
 		.then(({ data }) => {
 			toast.add({
 				severity: data.status === 'ok' ? 'success' : 'error',
-				summary: translate(data.message, ...data.args),
+				summary: translate(data.status === 'ok' ? 'Success' : 'Error'),
+				detail: translate(data.message, ...data.args),
 				life: 3000,
 			});
 		})
 		.catch(() => {
 			toast.add({
 				severity: 'error',
-				summary: translate('An error occurred while rescanning the library folders'),
+				summary: translate('Error'),
+				detail: translate('An error occurred while rescanning the library folders'),
 				life: 5000,
 			});
 		});
@@ -272,14 +276,16 @@ function handleDelete() {
 		.then(({ data }) => {
 			toast.add({
 				severity: data.status === 'ok' ? 'success' : 'error',
-				summary: translate(data.message, ...data.args),
+				summary: translate(data.status === 'ok' ? 'Success' : 'Error'),
+				detail: translate(data.message, ...data.args),
 				life: 5000,
 			});
 		})
 		.catch(() => {
 			toast.add({
 				severity: 'error',
-				summary: translate('An error occurred while rescanning the library folders'),
+				summary: translate('error'),
+				detail: translate('An error occurred while rescanning the library folders'),
 				life: 5000,
 			});
 		});
@@ -295,14 +301,16 @@ function handleAdd() {
 		.then(({ data }) => {
 			toast.add({
 				severity: data.status === 'ok' ? 'success' : 'error',
-				summary: translate(data.message, ...data.args),
+				summary: translate(data.status === 'ok' ? 'Success' : 'Error'),
+				detail: translate(data.message, ...data.args),
 				life: 5000,
 			});
 		})
 		.catch(() => {
 			toast.add({
 				severity: 'error',
-				summary: translate('An error occurred while rescanning the library folders'),
+				summary: translate('Error'),
+				detail: translate('An error occurred while rescanning the library folders'),
 				life: 5000,
 			});
 		});

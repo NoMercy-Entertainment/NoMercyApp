@@ -50,7 +50,8 @@ function handleDelete() {
 
 			toast.add({
 				severity: data.status === 'ok' ? 'success' : 'error',
-				summary: translate(data.message, ...data.args ?? []),
+				summary: translate(data.status === 'ok' ? 'Success' : 'Error'),
+				detail: translate(data.message, ...data.args ?? []),
 				life: 5000,
 			});
 
@@ -59,7 +60,8 @@ function handleDelete() {
 		.catch((err) => {
 			toast.add({
 				severity: 'error',
-				summary: err.message,
+				summary: translate('Error'),
+				detail: err.message,
 				life: 5000,
 			});
 

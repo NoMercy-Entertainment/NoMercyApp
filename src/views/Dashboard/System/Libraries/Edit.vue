@@ -134,7 +134,8 @@ function handleRefresh() {
 			loadingRefresh.value = false;
 			toast.add({
 				severity: data.status === 'ok' ? 'success' : 'error',
-				summary: translate(data.message, ...data.args),
+				summary: translate(data.status === 'ok' ? 'Success' : 'Error'),
+				detail: translate(data.message, ...data.args),
 				life: 5000,
 			});
 		})
@@ -142,7 +143,8 @@ function handleRefresh() {
 			loadingRefresh.value = false;
 			toast.add({
 				severity: 'error',
-				summary: translate('An error occurred while rescanning the library folders'),
+				summary: translate('Error'),
+				detail: translate('An error occurred while rescanning the library folders'),
 				life: 5000,
 			});
 		});
@@ -162,7 +164,8 @@ function handleRescan() {
 			loadingRescan.value = false;
 			toast.add({
 				severity: data.status === 'ok' ? 'success' : 'error',
-				summary: translate(data.message, ...data.args),
+				summary: translate(data.status === 'ok' ? 'Success' : 'Error'),
+				detail: translate(data.message, ...data.args),
 				life: 5000,
 			});
 		})
@@ -170,7 +173,8 @@ function handleRescan() {
 			loadingRescan.value = false;
 			toast.add({
 				severity: 'error',
-				summary: translate('An error occurred while rescanning the library folders'),
+				summary: translate('Error'),
+				detail: translate('An error occurred while rescanning the library folders'),
 				life: 5000,
 			});
 		});
@@ -203,7 +207,8 @@ function handleSave() {
 
 			toast.add({
 				severity: data.status === 'ok' ? 'success' : 'error',
-				summary: translate(data.message, ...data.args),
+				summary: translate(data.status === 'ok' ? 'Success' : 'Error'),
+				detail: translate(data.message, ...data.args),
 				life: 5000,
 			});
 

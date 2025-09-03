@@ -12,6 +12,7 @@ import serverClient from '@/lib/clients/serverClient';
 import DashboardLayout from '@/Layout/Desktop/DashboardLayout.vue';
 import ServerDeviceCard from '@/views/Dashboard/System/System/Components/ServerDeviceCard.vue';
 import OptimizedIcon from '@/components/OptimizedIcon.vue';
+import { translate } from '@/lib/stringArray.ts';
 
 const query = useQueryClient();
 const toast = useToast();
@@ -33,14 +34,16 @@ async function handleDelete() {
 
 			toast.add({
 				severity: 'success',
-				summary: t('Activity logs deleted'),
+				summary: translate('Success'),
+				detail: t('Activity logs deleted'),
 				life: 5000,
 			});
 		})
 		.catch(() => {
 			toast.add({
 				severity: 'error',
-				summary: `${t('Something went wrong')} ${t('trying to delete activity logs')}`,
+				summary: translate('Error'),
+				detail: `${t('Something went wrong')} ${t('trying to delete activity logs')}`,
 				life: 5000,
 			});
 		});

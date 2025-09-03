@@ -59,8 +59,8 @@ function handleClick(e?: MouseEvent) {
 
 			toast.add({
 				severity: 'success',
-				summary: translate(data.message, ...data.args ?? []),
-				detail: 'File Uploaded',
+				summary: translate('Success'),
+				detail: translate(data.message, ...data.args ?? []),
 				life: 5000,
 			});
 		});
