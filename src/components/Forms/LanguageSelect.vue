@@ -16,7 +16,6 @@ import OptimizedIcon from '@/components/OptimizedIcon.vue';
 
 const props = defineProps({
 	modelValue: {
-		type: Object as PropType<Language | undefined>,
 		required: true,
 	},
 	name: {
