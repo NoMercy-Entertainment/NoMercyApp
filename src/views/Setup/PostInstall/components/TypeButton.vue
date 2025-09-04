@@ -35,7 +35,7 @@ const icon = computed<keyof typeof MoooomIcons>(() => {
 			string = 'tv';
 			break;
 		case 'image':
-			string = 'camera';
+			string = 'picture';
 			break;
 		case 'movie':
 			string = 'film';
@@ -51,7 +51,7 @@ const icon = computed<keyof typeof MoooomIcons>(() => {
 <template>
 	<div class="flex justify-start items-start flex-grow gap-1 px-2 py-4 rounded-xl "
 		:class="{
-			'bg-focus/6 outline outline-2 outline-focus hover:bg-focus/[0.15]': selected,
+			'bg-white/11 dark:bg-black/8 outline outline-2 outline-focus hover:bg-focus/[0.15]': selected,
 			'hover:bg-focus/[0.15]': !selected,
 		}"
 	>
@@ -68,7 +68,7 @@ const icon = computed<keyof typeof MoooomIcons>(() => {
 					class="flex justify-start items-start self-stretch flex-grow-0 flex-shrink-0 relative gap-1.5"
 				>
 					<p
-						class="flex-grow w-full text-base font-medium text-center text-[#eeecec]"
+						class="flex-grow w-full text-base font-medium text-center text-slate-dark-1/70 dark:text-slate-light-1/70"
 					>
 						{{ type.name }}
 					</p>

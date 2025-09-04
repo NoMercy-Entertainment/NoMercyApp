@@ -30,7 +30,7 @@ const percentage = computed(() => {
 
 <template>
 	<div class="-mt-12 px-4">
-		<h4 class="text-xl font-bold text-contrast">
+		<h4 class="text-xl font-bold text-slate-light-12/80 dark:text-slate-dark-12/80">
 			{{ $t(currentStep) }}
 		</h4>
 		<div aria-hidden="true" class="mt-4">
@@ -40,7 +40,7 @@ const percentage = computed(() => {
 			<div :style="`grid-template-columns: repeat(${steps.length}, minmax(0, 1fr))`"
 				class="mt-6 hidden text-sm font-medium text-auto-600 sm:grid"
 			>
-				<div v-for="step in steps" :key="step" class="text-center">
+				<div v-for="step in steps" :key="step" class="text-center font-semibold">
 					{{ $t(step) }}
 				</div>
 			</div>

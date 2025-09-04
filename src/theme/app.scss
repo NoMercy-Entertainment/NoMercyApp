@@ -127,6 +127,11 @@ ion-content::part(scroll):not(svg),
 	}
 }
 
+*:not(svg)::selection {
+  @apply bg-focus text-white;
+  background-color: var(--select-background, hsl(from rgb(var(--color-focus)) h s calc(l * 0.85)));
+}
+
 ion-content::part(scroll) {
 	@apply scrollbar-none;
 	--offset-bottom: 0px;

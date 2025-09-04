@@ -82,18 +82,18 @@ const { data: encoderProfiles } = useServerClient<EncoderProfile[]>({
 </script>
 
 <template>
-	<div class="mx-auto grid h-screen place-content-center px-4 sm:px-6 lg:px-8">
-		<div class="mx-auto -mt-24 w-screen max-w-6xl">
+	<div class="mx-auto grid h-available place-content-center px-4 sm:px-6 lg:px-8">
+		<div class="mx-auto w-screen max-w-6xl">
 			<div
 				:class="true ? 'animate-loading' : ''"
-				class="w-full h-full gap-2.5 flex flex-col ml-auto overflow-hidden rounded-xl bg-slate-light-1 dark:bg-slate-dark-1 bg-cover border-2 border-transparent text-start [background:padding-box_var(--bg-color),border-box_var(--border-color)] transition-all duration-300"
+				class="w-full h-full gap-2.5 flex flex-col ml-auto overflow-hidden rounded-xl bg-slate-light-1 dark:bg-slate-dark-1 bg-cover border-2 border-transparent text-start transition-all duration-300"
 				style="
-					--bg-color: linear-gradient(rgb(var(--color-auto-50)), rgb(var(--color-auto-50)));
-					--border-color: linear-gradient(var(--angle),
-						rgb(var(--color-logo-light) / 0.7) 0%,
-						rgb(var(--color-logo-light) / 0.3) 33.33%,
-						rgb(var(--color-logo-light) / 0.14) 66.67%,
-						rgb(var(--color-logo-light) / 0.1) 100%
+					--bg-color: linear-gradient(rgb(var(--background-auto-3)), rgb(var(--background-auto-3)));
+					--border-color: linear-gradient(var(--angle, 45deg),
+						rgb(var(--color-focus) / 0.7) 0%,
+						rgb(var(--color-focus) / 0.3) 33.33%,
+						rgb(var(--color-focus) / 0.14) 66.67%,
+						rgb(var(--color-focus) / 0.1) 100%
 					);
 				"
 			>
@@ -115,7 +115,7 @@ const { data: encoderProfiles } = useServerClient<EncoderProfile[]>({
 					<Button v-if="!isFirstStep"
 						id="yes"
 						class="ml-auto !w-28"
-						color="white"
+						color="slate"
 						type="button"
 						variant="text"
 						@click="previousStep"

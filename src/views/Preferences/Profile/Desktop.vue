@@ -12,7 +12,7 @@ import { user } from '@/store/user';
 import { suffix } from '@/config/config';
 
 import Avatar from '@/components/Images/Avatar.vue';
-import Button from '@/components/Buttons/Button.vue';
+import Button from '@/components/Button.vue';
 import DashboardLayout from '@/Layout/Desktop/DashboardLayout.vue';
 import apiClient from '@/lib/clients/apiClient';
 import type { User } from '@/types/auth';
@@ -92,7 +92,7 @@ const classes = computed(() => {
 	return twMerge(
 		'!flex !justify-center !items-center !px-4 !py-2 !gap-2 !rounded-lg !text-sm',
 		'select-none !w-auto !font-semibold !leading-[100%] !transition-transform !duration-150 !border-none !text-white',
-		'!bg-gradient-to-b from-[var(--color-11)] to-[var(--color-10)] hover:from-[var(--color-12)] hover:to-[var(--color-11)] active:from-[var(--color-10)] active:to-[var(--color-9)] dark:from-[var(--color-7)] dark:to-[var(--color-5)] dark:hover:from-[var(--color-8)] dark:hover:to-[var(--color-6)] dark:active:from-[var(--color-7)] dark:active:to-[var(--color-4)] button-filled ',
+		'!bg-gradient-to-b from-[var(--color-11)] to-[var(--color-10)] hover:from-[var(--color-12)] hover:to-[var(--color-11)] active:from-[var(--color-10)] active:to-[var(--color-9)] dark:from-[var(--color-8)] dark:to-[var(--color-5)] dark:hover:from-[var(--color-8)] dark:hover:to-[var(--color-6)] dark:active:from-[var(--color-8)] dark:active:to-[var(--color-4)] button-filled ',
 		`
 				 shadow-[0_1px_0_0_rgba(255,255,255,0.20)_inset,0_-1px_0_0_rgba(var(--background-auto-11)/60%)_inset,0_22px_30px_-4px_rgba(var(--background-auto-11)/70%)]
 				 dark:shadow-[0_1px_0_0_rgba(255,255,255,0.20)_inset,0_-1px_0_0_rgba(var(--background-auto-1)/30%)_inset,0_22px_30px_-4px_rgba(var(--background-auto-1)/70%)]

@@ -45,7 +45,7 @@ function changeTheme(value: ColorScheme) {
 					title="Light"
 					class="relative flex h-8 w-8 flex-shrink-0 flex-grow-0 items-center justify-center rounded-3xl outline border-2"
 					:class="
-						scheme === 'light' ? 'outline-[#6e56cf]' : 'outline-transparent'
+						scheme === 'light' ? 'outline-focus' : 'outline-transparent'
 					"
 					@click="changeTheme('light')"
 				>
@@ -64,7 +64,7 @@ function changeTheme(value: ColorScheme) {
 				<!--                <button id="auto" title="System default" @click="changeTheme('system')" -->
 				<!--                    class="relative flex h-8 w-8 flex-shrink-0 flex-grow-0 items-center justify-center rounded-3xl outline outline-2" -->
 				<!--                    :class="scheme === 'system' -->
-				<!--                        ? 'outline-[#6e56cf]' -->
+				<!--                        ? 'outline-focus' -->
 				<!--                        : 'outline-transparent'"> -->
 				<!--                    <svg width="32" height="32" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg" -->
 				<!--                        class="flex-shrink-0 flex-grow-0 opacity-80" preserveAspectRatio="xMidYMid meet"> -->
@@ -83,7 +83,7 @@ function changeTheme(value: ColorScheme) {
 					id="dark"
 					title="Dark"
 					class="relative flex h-8 w-8 flex-shrink-0 flex-grow-0 items-center justify-center rounded-3xl outline outline-2"
-					:class="scheme === 'dark' ? 'outline-[#6e56cf]' : 'border-transparent'"
+					:class="scheme === 'dark' ? 'outline-focus' : 'border-transparent'"
 					@click="changeTheme('dark')"
 				>
 					<svg

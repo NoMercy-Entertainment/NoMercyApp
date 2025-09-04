@@ -12,7 +12,7 @@ import { currentServer } from '@/store/currentServer';
 import { queryClient } from '@/config/tanstack-query';
 
 import Modal from '@/components/Modal.vue';
-import Button from '@/components/Buttons/Button.vue';
+import Button from '@/components/Button.vue';
 import type { Nullable } from 'vitest';
 
 const props = defineProps({

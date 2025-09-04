@@ -100,13 +100,13 @@ const classes = computed(() => {
 		'select-none w-auto font-semibold leading-[100%] transition-transform duration-150',
 		props.className?.includes('h-') ? '' : 'h-9',
 		props.variant === 'default' || props.variant === 'contained'
-			? '!bg-gradient-to-b  from-[var(--color-9)] to-[var(--color-7)] hover:from-[var(--color-10)] hover:to-[var(--color-6)] active:from-[var(--color-9)] active:to-[var(--color-6)] dark:from-[var(--color-7)] dark:to-[var(--color-5)] dark:hover:from-[var(--color-8)] dark:hover:to-[var(--color-6)] dark:active:from-[var(--color-7)] dark:active:to-[var(--color-4)] button-filled'
+			? '!bg-gradient-to-b  from-[var(--color-9)] to-[var(--color-7)] hover:from-[var(--color-10)] hover:to-[var(--color-6)] active:from-[var(--color-9)] active:to-[var(--color-6)] dark:from-[var(--color-10)] dark:to-[var(--color-8)] dark:hover:from-[var(--color-11)] dark:hover:to-[var(--color-9)] dark:active:from-[var(--color-9)] dark:active:to-[var(--color-7)] button-filled !text-[var(--color-12)] shadow-lg'
 			: '',
 		props.variant === 'text'
-			? 'hover:outline-[rgba(var(--color-7),.1)] hover:outline-1 hover:outline text-[rgb(var(--background-auto-alpha-10))]'
+			? 'hover:outline-[rgba(var(--color-7),.1)] hover:outline-1 hover:outline text-[rgb(var(--background-auto-10))]'
 			: `
-				 shadow-[0_1px_0_0_rgba(255,255,255,0.20)_inset,0_-1px_0_0_rgba(var(--background-auto-2)/60%)_inset,0_22px_30px_-4px_rgba(var(--background-auto-2)/70%)]
-				 dark:shadow-[0_1px_0_0_rgba(255,255,255,0.20)_inset,0_-1px_0_0_rgba(var(--background-auto-1)/30%)_inset,0_22px_30px_-4px_rgba(var(--background-auto-1)/70%)]
+				 shadow-[0_1px_0_0_rgba(255,255,255,0.20)_inset,0_-1px_0_0_rgba(var(--background-auto-2)/60%)_inset,0_6px_10px_-4px_rgba(var(--background-auto-2)/70%)]
+				 dark:shadow-[0_1px_0_0_rgba(255,255,255,0.20)_inset,0_-1px_0_0_rgba(var(--background-auto-1)/30%)_inset,0_6px_10px_-4px_rgba(var(--background-auto-1)/70%)]
 
 				 active:!shadow-none
 				 active:!dark:shadow-none
@@ -118,7 +118,7 @@ const classes = computed(() => {
 			? props.color === 'theme'
 				? 'text-white'
 				: props.color
-			: 'text-[rgb(var(--background-auto-alpha-10))]',
+			: 'text-[rgb(var(--background-auto-10))]',
 		props.disabled ? 'grayscale cursor-not-allowed' : '',
 	);
 });

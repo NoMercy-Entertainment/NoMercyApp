@@ -504,7 +504,7 @@ watch(videoCodecs, (value) => {
         id="remove"
         variant="text"
         class="children:text-gray-400 children:transition-colors children:duration-100 children:hover:text-red-dark-8"
-        color="text-auto-alpha-11"
+        color="auto-alpha"
         startIcon="folderRemove"
         @click="openDeleteConfirm"
       >

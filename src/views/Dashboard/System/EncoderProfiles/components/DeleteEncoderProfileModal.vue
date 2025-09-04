@@ -82,7 +82,7 @@ function handleDelete() {
 				id="no"
 				:onclick="close"
 				type="button"
-				color="text-auto-alpha-11"
+				color="auto-alpha"
 				variant="text"
 			>
 				{{ $t("Cancel") }}

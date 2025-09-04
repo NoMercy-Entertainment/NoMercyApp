@@ -6,7 +6,7 @@ import useApiClient from '@/lib/clients/useApiClient';
 
 import DashboardLayout from '@/Layout/Desktop/DashboardLayout.vue';
 
-import Button from '@/components/Buttons/Button.vue';
+import Button from '@/components/Button.vue';
 import UserCard from './components/UserCard.vue';
 import InviteUserModal from './components/InviteUserModal.vue';
 import { currentServer } from '@/store/currentServer';

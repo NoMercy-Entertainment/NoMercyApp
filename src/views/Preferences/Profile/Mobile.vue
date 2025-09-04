@@ -12,7 +12,7 @@ import { user } from '@/store/user';
 import { suffix } from '@/config/config';
 
 import Avatar from '@/components/Images/Avatar.vue';
-import Button from '@/components/Buttons/Button.vue';
+import Button from '@/components/Button.vue';
 import DashboardLayout from '@/Layout/Desktop/DashboardLayout.vue';
 import apiClient from '@/lib/clients/apiClient';
 import type { User } from '@/types/auth';

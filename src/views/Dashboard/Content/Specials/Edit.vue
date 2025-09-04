@@ -8,7 +8,7 @@ import useServerClient from '@/lib/clients/useServerClient';
 
 import DashboardLayout from '@/Layout/Desktop/DashboardLayout.vue';
 import DeleteSpecialModal from './components/DeleteSpecialModal.vue';
-import Button from '@/components/Buttons/Button.vue';
+import Button from '@/components/Button.vue';
 import { InputText } from 'primevue';
 import { currentServer } from '@/store/currentServer';
 import serverClient from '@/lib/clients/serverClient';
@@ -100,7 +100,7 @@ function handleSave() {
 				variant="text"
 				start-icon="folderRemove"
 				class="children:text-gray-400 children:transition-colors children:duration-100 children:hover:text-red-dark-8"
-				color="text-auto-alpha-11"
+				color="auto-alpha"
 				@click="openDeleteConfirm"
 			>
 				{{ $t("Remove") }}

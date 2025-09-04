@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import type { PropType } from 'vue';
 import { ref, watch } from 'vue';
+import Shadow from '@/Layout/Desktop/components/Shadow.vue';
 
 const props = defineProps({
 	open: {
@@ -33,6 +34,15 @@ const props = defineProps({
 		required: false,
 		default: false,
 	},
+	background: {
+		type: Boolean,
+		required: false,
+	},
+	noClose: {
+		type: Boolean,
+		required: false,
+		default: false,
+	},
 });
 
 const visible = ref(props.open);
@@ -55,11 +65,13 @@ watch(visible, (value) => {
 		modal
 		:header="$t(title, params)"
 		as="div"
-		class="w-full"
+		class="w-available bg-slate-light-1 dark:bg-slate-dark-1 overflow-clip relative isolate"
 		:class="{
 			[maxWidth]: true,
+			'no-close': noClose,
 		}"
 	>
+		<Shadow v-if="background" class="-z-10 -translate-y-[10%] translate-x-[20%]" />
 		<ScrollPanel
 			class="w-available h-available"
 			:dt="{
@@ -74,7 +86,7 @@ watch(visible, (value) => {
 		</ScrollPanel>
 
 		<template #footer>
-			<slot name="actions" />
+			<slot name="actions" class="z-10" />
 		</template>
 	</Dialog>
 </template>

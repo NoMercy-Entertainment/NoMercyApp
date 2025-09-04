@@ -57,7 +57,7 @@ const icon = computed<keyof typeof MoooomIcons>(() => {
 
 <template>
 	<div
-		class="flex h-min children:cursor-default flex-col items-center rounded-lg w-inherit odd:bg-auto-300/20 even:bg-auto-300/0"
+		class="flex h-min children:cursor-default flex-col items-center rounded-lg w-inherit odd:bg-slate-light-12/5 even:bg-slate-light-12/2 dark:odd:bg-slate-dark-12/5 dark:even:bg-slate-dark-12/2 text-slate-light-12/80 dark:text-slate-dark-12/80"
 	>
 		<div class="flex items-center gap-2 overflow-x-hidden py-2 pr-2 w-inherit overflow-y-show">
 			<button class="ml-2 h-auto w-8 p-2 handle">
@@ -69,7 +69,7 @@ const icon = computed<keyof typeof MoooomIcons>(() => {
 			</span>
 
 			<button
-				class="ml-auto flex justify-center items-center h-10 px-2.5 py-2 gap-2 rounded-lg text-sm select-none w-auto font-semibold leading-[100%] transition-all duration-150 button-text hover:outline-[rgba(var(--color-500),.1)] hover:outline-1 hover:outline text-[var(--color-500)]"
+				class="ml-auto flex justify-center items-center h-10 px-2.5 py-2 gap-2 rounded-lg text-sm select-none w-auto font-semibold leading-[100%] transition-all duration-150 button-text hover:outline-slate-light-11 dark:hover:outline-slate-dark-11 outline-1 outline outline-transparent"
 				type="button"
 				@click="openEdit"
 			>
@@ -77,7 +77,7 @@ const icon = computed<keyof typeof MoooomIcons>(() => {
 			</button>
 
 			<button
-				class="ml-auto flex justify-center items-center h-10 px-2.5 py-2 gap-2 rounded-lg text-sm select-none w-auto font-semibold leading-[100%] transition-all duration-150 button-text hover:outline-[rgba(var(--color-500),.1)] hover:outline-1 hover:outline text-[var(--color-500)]"
+				class="ml-auto flex justify-center items-center h-10 px-2.5 py-2 gap-2 rounded-lg text-sm select-none w-auto font-semibold leading-[100%] transition-all duration-150 button-text hover:outline-slate-light-11 dark:hover:outline-slate-dark-11 outline-1 outline outline-transparent"
 				type="button"
 				@click="openDeleteConfirm"
 			>
@@ -102,3 +102,9 @@ const icon = computed<keyof typeof MoooomIcons>(() => {
 		/>
 	</div>
 </template>
+
+<style scoped>
+[draggable='true'] {
+	@apply bg-slate-light-12/20 dark:bg-slate-dark-12/3;
+}
+</style>

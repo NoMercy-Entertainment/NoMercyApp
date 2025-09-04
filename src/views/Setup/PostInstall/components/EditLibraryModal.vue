@@ -11,7 +11,7 @@ import serverClient from '@/lib/clients/serverClient';
 
 import Modal from '@/components/Modal.vue';
 import MoooomIcon from '@/components/Images/icons/MoooomIcon.vue';
-import Button from '@/components/Buttons/Button.vue';
+import Button from '@/components/Button.vue';
 import TypeButton from '@/views/Setup/PostInstall/components/TypeButton.vue';
 import FolderItem from '@/views/Setup/PostInstall/components/FolderItem.vue';
 import NewFolderModal from './NewFolderModal.vue';
@@ -90,13 +90,6 @@ function handleEdit() {
 		})
 		.then(() => {
 			query.invalidateQueries({ queryKey: ['dashboard', 'libraries'] });
-			toast.add({
-				severity: 'success',
-				summary: translate('Success'),
-				detail: 'Library updated successfully',
-				life: 5000,
-			});
-
 			props.close();
 		})
 		.catch((err) => {
@@ -161,6 +154,8 @@ watch(selectedType, (newType) => {
 		:open="open"
 		max-width="max-w-[565px]"
 		title="Edit Library"
+		background
+		no-close
 	>
 		<div
 			class="flex flex-col justify-start items-start flex-grow-0 flex-shrink-0 w-full relative gap-8 p-1 px-6"
@@ -179,7 +174,7 @@ watch(selectedType, (newType) => {
 								<TypeButton
 									:type="type"
 									:selected="selectedType === type.value"
-									class-name="size-10"
+									class-name="size-8 text-slate-dark-5 dark:text-slate-light-5"
 									@click="selectedType = type.value"
 								/>
 							</template>
@@ -194,10 +189,10 @@ watch(selectedType, (newType) => {
 									<div
 										class="flex justify-start items-center flex-grow-0 flex-shrink-0 relative gap-px"
 									>
-										<p class="flex-grow-0 flex-shrink-0 text-sm font-medium text-left text-[#eeecec]">
+										<p class="flex-grow-0 flex-shrink-0 text-sm font-medium text-left text-auto-10">
 											{{ $t('Library Title') }}
 										</p>
-										<p class="flex-grow-0 flex-shrink-0 text-sm font-medium text-left text-[#6e56cf]">
+										<p class="flex-grow-0 flex-shrink-0 text-sm font-medium text-left text-focus">
 											*
 										</p>
 									</div>
@@ -220,7 +215,7 @@ watch(selectedType, (newType) => {
 				<div
 					class="flex justify-start items-center self-stretch flex-grow-0 flex-shrink-0 relative gap-2 rounded"
 				>
-					<p class="flex-grow w-[501px] text-lg font-medium text-left text-[#eeecec]">
+					<p class="flex-grow w-[501px] text-lg font-medium text-left text-auto-11">
 						{{ $t('Select one or more folders') }}
 					</p>
 				</div>
@@ -233,16 +228,15 @@ watch(selectedType, (newType) => {
 						<div
 							class="flex flex-col justify-start items-start self-stretch flex-grow-0 flex-shrink-0 gap-2"
 						>
-							<Button
+							<button
 								id="save"
 								type="button"
-								color="slate"
-								class="w-full flex justify-between"
-								end-icon="folderAdd"
+								class="group/button flex justify-start items-center self-stretch flex-grow-0 flex-shrink-0 h-11 relative overflow-hidden gap-2 pl-3 pr-2.5 py-2.5 rounded-[10px] text-slate-dark-8 dark:text-slate-dark-11 font-semibold transition-colors bg-slate-dark-2/[0.13] dark:bg-slate-dark-11/[0.14] hover:bg-slate-dark-12/[0.13] hover:dark:bg-slate-dark-12/[0.14] active:bg-slate-dark-12/[0.13] active:dark:bg-slate-dark-10/[0.14] "
 								@click="openNewFolderModal"
 							>
-								{{ $t("Add folder") }}
-							</Button>
+								<span>{{ $t("Add folder") }}</span>
+								<MoooomIcon icon="folderAdd" class-name="w-6 h-6 flex-grow-0 flex-shrink-0 ml-auto group-hover/button:text-slate-light-12 group-hover/button:dark:text-slate-dark-12" />
+							</button>
 						</div>
 
 						<template v-if="library?.folder_library">
@@ -257,10 +251,10 @@ watch(selectedType, (newType) => {
 							</template>
 						</template>
 						<div
-							class="flex justify-start items-center self-stretch flex-grow-0 flex-shrink-0 relative gap-1"
+							class="flex justify-start items-center self-stretch flex-grow-0 flex-shrink-0 relative gap-1 text-slate-light-12 dark:text-slate-dark-11"
 						>
-							<MoooomIcon icon="infoCircle" class-name="w-4 h-4 text-[#9ba1a6] flex-grow-0 flex-shrink-0" />
-							<p class="flex-grow-0 flex-shrink-0 text-sm text-left text-[#9ba1a6]">
+							<MoooomIcon icon="infoCircle" class-name="w-4 h-4 flex-grow-0 flex-shrink-0" />
+							<p class="flex-grow-0 flex-shrink-0 text-sm text-left ">
 								{{ $t('You can always add folder and change encoding profiles later') }}
 							</p>
 						</div>
@@ -277,6 +271,7 @@ watch(selectedType, (newType) => {
 					id="done"
 					type="button"
 					color="theme"
+					variant="contained"
 					@click="handleEdit"
 				>
 					{{ $t("Done") }}
@@ -298,7 +293,7 @@ watch(selectedType, (newType) => {
   #editLibraryModal,
 #editLibraryModal * {
 	--p-overlay-modal-padding: 0.5rem;
-	--p-dialog-header-padding: 1.5rem 1rem 0rem 2.5rem;
+	--p-dialog-header-padding: 1.5rem 1rem 0rem 2rem;
 	--p-dialog-content-padding: 0.5rem;
 	--p-dialog-footer-padding: 0.5rem;
 }

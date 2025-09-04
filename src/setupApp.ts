@@ -37,7 +37,7 @@ import { Swiper, SwiperSlide } from 'swiper/vue';
 // @ts-ignore
 import KonamiCode from 'vue3-konami-code';
 
-import Button from '@/components/Buttons/Button.vue';
+import Button from '@/components/Button.vue';
 
 import Modal from '@/components/Modal.vue';
 import NMCard from '@/components/NMCard.vue';

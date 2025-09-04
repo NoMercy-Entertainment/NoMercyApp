@@ -9,7 +9,7 @@ import apiClient from '@/lib/clients/apiClient';
 import { currentServer } from '@/store/currentServer';
 
 import Modal from '@/components/Modal.vue';
-import Button from '@/components/Buttons/Button.vue';
+import Button from '@/components/Button.vue';
 
 const props = defineProps({
 	open: {

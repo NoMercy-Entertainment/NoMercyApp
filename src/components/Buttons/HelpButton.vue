@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { suffix } from '@/config/config';
 
-import Button from '@/components/Buttons/Button.vue';
+import Button from '@/components/Button.vue';
 
 import { useRoute } from 'vue-router';
 import { computed } from 'vue';

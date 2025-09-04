@@ -68,12 +68,34 @@ watch(serverName, (value) => {
 </script>
 
 <template>
-	<div class="flex flex-col gap-2">
-		<label for="serverName">Server name</label>
-		<InputText id="serverName"
-			v-model="serverName"
-			class="w-1/3"
-			name="Give your server a friendly name to help identify it."
-		/>
+	<div class="flex flex-col gap-2 h-available">
+		<div class="flex flex-col gap-2">
+			<label for="serverName">Server name</label>
+			<InputText id="serverName"
+				v-model="serverName"
+				class="w-1/3"
+				name="Give your server a friendly name to help identify it."
+			/>
+		</div>
+		<div class="mt-auto flex flex-col">
+			<p class="mb-4 text-sm">
+				{{ $t('By using this NoMercy app, a NoMercy MediaServer, or any of our services, you agree to the') }}
+				<a
+					href="https://nomercy.tv/privacy-policy"
+					target="_blank"
+					class="text-theme-10 hover:underline"
+				>
+					{{ $t('Privacy Policy') }}
+				</a>
+				{{ $t('and') }}
+				<a
+					href="https://nomercy.tv/terms-of-service"
+					target="_blank"
+					class="text-theme-10 hover:underline"
+				>
+					{{ $t('Terms of Service') }}
+				</a>.
+			</p>
+		</div>
 	</div>
 </template>

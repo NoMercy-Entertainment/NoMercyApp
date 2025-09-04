@@ -11,7 +11,7 @@ import serverClient from '@/lib/clients/serverClient';
 
 import DashboardLayout from '@/Layout/Desktop/DashboardLayout.vue';
 import DeleteUserModal from '@/views/Dashboard/System/Users/components/DeleteUserModal.vue';
-import Button from '@/components/Buttons/Button.vue';
+import Button from '@/components/Button.vue';
 import Toggle from '@/components/Forms/Toggle.vue';
 import useApiClient from '@/lib/clients/useApiClient';
 import type { ServerUser } from '@/types/auth';
@@ -250,7 +250,7 @@ watch(allowedLibraries, (value) => {
 				type="button"
 				variant="text"
 				class="mr-auto"
-				color="text-auto-alpha-11"
+				color="auto-alpha"
 				start-icon="userDelete"
 				@click="openDeleteConfirm"
 			>

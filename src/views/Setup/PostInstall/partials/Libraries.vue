@@ -79,7 +79,7 @@ useSortable(el, list, {
 		<p class="mb-4 text-sm">
 			{{ $t('Add your media libraries to organize your content.') }}
 		</p>
-		<div ref="el" class="flex h-auto w-full flex-col overflow-y-auto text-start">
+		<div ref="el" class="flex h-auto w-full flex-col overflow-y-auto text-start gap-1">
 			<template v-for="(item, index) in list" :key="item.id">
 				<LibraryItem
 					v-model="list[index]"

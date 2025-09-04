@@ -1,21 +1,21 @@
 <script lang="ts" setup>
 import { ref } from 'vue';
 import { IonContent, IonPage } from '@ionic/vue';
+import { useToast } from 'primevue/usetoast';
 
-import Frame from './components/Frame.vue';
-
-import Libraries from './partials/Libraries.vue';
-import Finish from './partials/Finish.vue';
-import Name from './partials/Name.vue';
+import type { LibrariesResponse } from '@/types/api/base/library';
 
 import router from '@/router';
 import serverClient from '@/lib/clients/serverClient.ts';
-import { useToast } from 'primevue/usetoast';
-import type { LibrariesResponse } from '@/types/api/base/library';
+import { translate } from '@/lib/stringArray.ts';
 import { setLibraries } from '@/store/Libraries.ts';
 import { setupComplete } from '@/store/ui.ts';
 import { serverLibraries } from '@/store/servers.ts';
-import { translate } from '@/lib/stringArray.ts';
+
+import Frame from './components/Frame.vue';
+import Libraries from './partials/Libraries.vue';
+import Finish from './partials/Finish.vue';
+import Base from './partials/Base.vue';
 
 const toast = useToast();
 
@@ -77,7 +77,7 @@ function setNextButtonLocked(value: boolean) {
 				:set-current-step="setCurrentStep"
 				:steps="steps"
 			>
-				<Name v-if="currentStep === 'Base info'"
+				<Base v-if="currentStep === 'Base info'"
 					:set-next-button-locked="setNextButtonLocked"
 				/>
 
