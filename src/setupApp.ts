@@ -63,6 +63,7 @@ import { queryClient } from '@/config/tanstack-query';
 import konamiEnabled from '@/store/konami';
 import { redirectUrl } from '@/store/routeState';
 import router from './router';
+import { isMobile } from '@/config/global.ts';
 
 export async function setupApp(app: AppContext['app']) {
 	if ('serviceWorker' in navigator && !import.meta.env.DEV) {
@@ -126,7 +127,7 @@ export async function setupApp(app: AppContext['app']) {
 
 	app.use(MasonryWall);
 
-	const supportsCarousel = CSS.supports('scroll-marker-group', 'after') && false;
+	const supportsCarousel = CSS.supports('scroll-marker-group', 'after') && isMobile.value;
 
 	app.component('Modal', Modal);
 	app.component('NMCard', NMCard);

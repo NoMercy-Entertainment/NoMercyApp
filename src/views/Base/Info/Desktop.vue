@@ -253,7 +253,7 @@ function handleRefresh() {
 				severity: data.status === 'ok' ? 'success' : 'error',
 				summary: translate(data.status === 'ok' ? 'Success' : 'Error'),
 				detail: translate(data.message, ...data.args),
-				life: 3000,
+				life: 5000,
 			});
 		})
 		.catch(() => {

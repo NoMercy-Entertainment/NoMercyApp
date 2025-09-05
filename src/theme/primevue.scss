@@ -1,4 +1,4 @@
-
+/* === Textarea === */
 .p-textarea {
   --p-textarea-filled-background: #151718;
   --p-textarea-border-color: rgb(126 134 140);
@@ -6,50 +6,34 @@
   --p-textarea-filled-focus-background: #151718;
 }
 
+
+/* === Meter Group === */
 .p-metergroup {
   --p-metergroup-meters-background: rgb(var(--background-auto-2));
   --p-metergroup-gap: 0.5rem;
   --p-metergroup-label-list-horizontal-gap: 0.5rem;
 }
+
+
+/* === Input Text === */
 .p-inputtext {
   --p-inputtext-focus-border-color: rgb(var(--color-focus));
   --p-inputtext-filled-background: rgb(var(--background-auto-2));
   --p-inputtext-border-color: rgb(var(--background-auto-4));
   --p-inputtext-color: rgb(var(--background-auto-11));
   --p-inputtext-background: rgb(var(--background-auto-1)/80%);
+  box-shadow:
+          0 1px 0 rgba(0, 0, 0, 0.16) inset,
+          0 -1px 0 rgba(255, 255, 255, 0.08) inset,
+          0 2px 2px rgba(0, 0, 0, 0.16) inset;
 }
 
 html.scheme-dark .p-inputtext {
   --p-inputtext-background: rgb(var(--background-auto-11)/8%);
 }
 
-.p-select {
-  --p-select-border-color: rgb(126 134 140);
-  :hover {
-    --p-select-border-color: rgb(165, 174, 182);
-  }
-}
 
-.p-select-label {
-  --p-select-color: rgb(var(--background-auto-11));
-}
-
-.p-select-option.p-select-option-selected {
-  --p-select-option-selected-background: rgb(var(--color-focus) / 80%);
-  color: var(--p-select-option-selected-color);
-}
-.p-select-option.p-select-option-selected.p-focus {
-  --p-select-option-selected-focus-background: rgb(var(--color-focus));
-  color: var(--p-select-option-selected-focus-color);
-}
-
-.p-select:not(.p-disabled):not([no-ring]).p-focus {
-  --p-select-focus-border-color: rgb(var(--color-focus));
-  box-shadow: var(--p-select-focus-ring-shadow);
-  outline: var(--p-select-focus-ring-width) var(--p-select-focus-ring-style) var(--p-select-focus-ring-color);
-  outline-offset: var(--p-select-focus-ring-offset);
-}
-
+/* === Checkbox === */
 .p-checkbox-box {
   --p-checkbox-border-color: rgb(var(--background-auto-2));
   --p-checkbox-background: rgb(var(--background-auto-1)/80%);
@@ -60,22 +44,117 @@ html.scheme-dark .p-inputtext {
   --p-checkbox-sm-height: 1.25rem;
   padding: 0;
 }
+
 .p-checkbox-checked .p-checkbox-box {
   --p-checkbox-checked-border-color: rgb(var(--color-focus));
   --p-checkbox-checked-background: rgb(var(--color-focus));
 }
-.p-checkbox-checked:not(.p-disabled):has(.p-checkbox-input:hover) .p-checkbox-box {
+
+.p-checkbox-checked:not(.p-disabled):has(.p-checkbox-input:hover)
+.p-checkbox-box {
   --p-checkbox-checked-hover-background: rgb(var(--color-focus));
   --p-checkbox-checked-hover-border-color: rgb(var(--color-focus));
 }
-.p-select:not(.p-disabled).p-focus,
+
+
+/* === Select & Multiselect === */
+.p-select,
+.p-multiselect {
+  --p-select-background: rgb(var(--background-auto-1)/80%);
+  --p-select-color: rgb(var(--background-auto-11));
+  --p-select-border-color: rgb(var(--background-auto-10)/20%);
+  --p-select-focus-border-color: rgb(var(--background-auto-4));
+  --p-select-placeholder-color: rgb(var(--background-auto-11)/80%);
+  box-shadow:
+          0 1px 0 rgba(0, 0, 0, 0.16) inset,
+          0 -1px 0 rgba(255, 255, 255, 0.08) inset,
+          0 2px 2px rgba(0, 0, 0, 0.16) inset;
+}
+
+.p-select:hover {
+  --p-select-border-color: rgb(165, 174, 182);
+}
+
+.p-select-label {
+  --p-select-color: rgb(var(--background-auto-11));
+}
+
+
+/* Selected option */
+.p-select-option.p-select-option-selected,
+.p-multiselect-option.p-multiselect-option-selected {
+  --p-select-option-selected-background: rgb(var(--color-focus)/80%);
+  color: var(--p-select-option-selected-color);
+}
+
+/* Selected + focus */
+.p-select-option.p-select-option-selected.p-focus,
+.p-multiselect-option.p-multiselect-option-selected.p-focus {
+  --p-select-option-selected-focus-background: rgb(var(--color-focus));
+  color: var(--p-select-option-selected-focus-color);
+}
+
+/* Focus ring */
+.p-select:not(.p-disabled):not([no-ring]).p-focus,
 .p-multiselect:not(.p-disabled).p-focus {
   --p-select-focus-border-color: rgb(var(--color-focus));
   --p-multiselect-focus-border-color: rgb(var(--color-focus));
+  box-shadow: var(--p-select-focus-ring-shadow);
+  outline: var(--p-select-focus-ring-width)
+  var(--p-select-focus-ring-style)
+  var(--p-select-focus-ring-color);
+  outline-offset: var(--p-select-focus-ring-offset);
 }
 
+
+/* Overlay menus */
+.p-select-overlay,
+.p-multiselect-overlay {
+  --p-select-overlay-background: rgb(var(--background-auto-1));
+  --p-select-overlay-color: rgb(var(--background-auto-12));
+  --p-select-overlay-border-color: rgb(var(--background-auto-9));
+  --p-select-overlay-shadow: rgb(var(--color-auto-2));
+}
+
+
+/* Option base */
+.p-select-option,
+.p-multiselect-option {
+  --p-select-option-color: rgb(var(--background-auto-12));
+}
+
+
+/* Option focus */
+.p-select-option:not(.p-select-option-selected):not(.p-disabled).p-focus,
+.p-multiselect-option:not(.p-multiselect-option-selected):not(.p-disabled).p-focus {
+  --p-select-option-focus-background: rgb(var(--background-auto-2));
+  --p-select-option-focus-color: rgb(var(--background-auto-1)/80%);
+  --p-multiselect-option-focus-background: rgb(var(--background-auto-2));
+  --p-multiselect-option-focus-color: rgb(var(--background-auto-1)/80%);
+}
+
+
+/* Dropdown arrow */
+.p-select-dropdown,
+.p-multiselect-dropdown {
+  transition: rotate 0.2s ease;
+  transform-origin: center;
+}
+
+.p-select-dropdown:hover,
+.p-multiselect-dropdown:hover {
+  --p-select-dropdown-color: rgb(var(--background-auto-12));
+}
+
+.p-multiselect-open .p-select-dropdown,
+.p-multiselect-open .p-multiselect-dropdown {
+  rotate: -180deg;
+}
+
+
+/* === Dialog === */
 .p-dialog {
-  --p-dialog-border-color: transpatent;
+  --p-dialog-border-color: transparent;
   --p-dialog-background: rgb(var(--background-auto-1));
   --p-dialog-color: rgb(var(--background-auto-12));
 }
@@ -89,207 +168,50 @@ html.scheme-dark .p-inputtext {
 }
 
 .p-dialog-content {
-  --p-dialog-content-padding: 0 1.25rem .25rem 1.25rem;
+  --p-dialog-content-padding: 0 1.25rem 0.25rem 1.25rem;
+  z-index: 0;
 }
 
-label {
-  @apply text-slate-light-12/80 dark:text-slate-dark-12/80 #{!important};
+.p-dialog-footer {
+  z-index: 1;
 }
 
-input:-webkit-autofill,
-input:-webkit-autofill:hover,
-input:-webkit-autofill:focus,
-input:-webkit-autofill:active {
-  -webkit-background-clip: inherit;
-  -webkit-text-fill-color: inherit;
-  transition: background-color 5000s ease-in-out 0s;
-  box-shadow: inset 0 0 20px 20px var(--color-background);
+.p-dialog.no-close .p-button {
+  display: none;
 }
 
-input:-webkit-autofill,
-input:-webkit-autofill:hover,
-input:-webkit-autofill:focus,
-input:-webkit-autofill:active {
-  color: inherit;
-}
 
-input[type='range'] {
-  @apply h-2 flex flex-1 outline-none transition-[background] duration-200 ease-in-out appearance-none rounded-full accent-focus [&::-webkit-slider-runnable-track]:rounded-full bg-slate-dark-9 dark:bg-slate-dark-9
-  [&::-webkit-slider-thumb]:transition-all [&::-moz-slider-thumb]:transition-all
-  [&::-webkit-slider-thumb]:duration-100 [&::-moz-slider-thumb]:duration-100
-  [background-image:_-webkit-gradient(linear,_left_top,_right_top,_color-stop(var(--left),_rgb(var(--color-focus))),_color-stop(var(--left),_#ffffff80))]
-  dark:[background-image:_-webkit-gradient(linear,_left_top,_right_top,_color-stop(var(--left),_rgb(var(--color-focus))),_color-stop(var(--left),_#00000080))] #{!important};
-}
-input[type='range']::-webkit-slider-runnable-track {
-  @apply h-2;
-}
-input[type='range']::-moz-range-track {
-  @apply h-2;
-}
-
-input[type='range'].vertical {
-  @apply w-2;
-  @apply [background-image:_-webkit-gradient(linear,_right_top,_right_bottom,_color-stop(var(--left),_rgb(var(--color-focus))),_color-stop(var(--left),_#ffffff80))]
-  dark:[background-image:_-webkit-gradient(linear,_right_top,_right_bottom,_color-stop(var(--left),_rgb(var(--color-focus))),_color-stop(var(--left),_#00000080))] #{!important};
-  writing-mode: vertical-lr;
-}
-input[type='range'].vertical::-webkit-slider-runnable-track {
-  @apply w-2;
-}
-input[type='range'].vertical::-moz-range-track {
-  @apply w-2;
-}
-
-/* For Webkit browsers (Chrome, Safari) */
-input[type='range']::-webkit-slider-thumb {
-  appearance: none;
-  @apply w-5 h-5 rounded-full;
-  translate: 0 -25%;
-  background: radial-gradient(100% 100% at 50% 0%, #fff 0%, #c8c7cc 100%);
-  box-shadow:
-          0px -1px 2px 0px rgba(0, 0, 0, 0.25) inset,
-          0px 6px 8px -2px rgba(0, 0, 0, 0.24);
-}
-input[type='range'].vertical::-webkit-slider-thumb {
-  @apply rotate-180;
-  translate: -25% -0;
-}
-input[type='range']:hover::-webkit-slider-thumb {
-}
-
-/* For Firefox */
-input[type='range']::-moz-range-thumb {
-  appearance: none;
-  @apply w-5 h-5 rounded-full;
-  background: radial-gradient(100% 100% at 50% 0%, #fff 0%, #c8c7cc 100%);
-  box-shadow:
-          0px -1px 2px 0px rgba(0, 0, 0, 0.25) inset,
-          0px 6px 8px -2px rgba(0, 0, 0, 0.24);
-}
-input[type='range'].vertical::-moz-range-thumb {
-}
-input[type='range']:hover::-moz-range-thumb {
-}
-
-.p-select,
-.p-multiselect,
-.p-multiselect,
-.p-inputtext {
-  box-shadow:
-          0 1px 0 0 rgba(0, 0, 0, 0.16) inset,
-          0 -1px 0 0 rgba(255, 255, 255, 0.08) inset,
-          0 2px 2px 0 rgba(0, 0, 0, 0.16) inset;
-}
-
-.p-inputfield-sm {
-  @apply text-sm py-1 #{!important};
-}
-
+/* === Card === */
 .p-card {
-  @apply relative flex items-start justify-start gap-2 self-stretch rounded-lg p-3 bg-slate-lightA-3 dark:bg-slate-darkA-3 #{!important};
+  @apply relative flex items-start justify-start gap-2 self-stretch
+  rounded-lg p-3 bg-slate-lightA-3 dark:bg-slate-darkA-3
+  !important;
 }
 
 .p-card-title {
-  @apply text-base font-semibold text-slate-dark-1 dark:text-slate-light-1 #{!important};
+  @apply text-base font-semibold text-slate-dark-1 dark:text-slate-light-1
+  !important;
 }
 
-.p-multiselect-header,
-.p-multiselect-header {
-  @apply mt-1 mx-1;
+.p-card-body {
+  @apply flex-1 w-full;
+  --p-card-body-padding: 0rem;
 }
 
+
+/* === FloatLabel === */
 .p-floatlabel {
   @apply left-0;
 }
 
 .p-floatlabel label {
-  transform: translateY(-100%) #{!important};
+  transform: translateY(-100%) !important;
   --p-floatlabel-position-x: 0.5rem;
   --p-floatlabel-position-y: 0.5rem;
 }
 
 .p-floatlabel:has(.p-textarea) label {
   --p-floatlabel-position-y: 50%;
-}
-
-.p-select,
-.p-multiselect {
-  --p-select-background: rgb(var(--background-auto-1)/80%);
-  --p-select-color: rgb(var(--background-auto-11));
-  --p-select-border-color: rgb(var(--background-auto-10)/20%);
-  --p-select-focus-border-color: rgb(var(--background-auto-4));
-  --p-select-placeholder-color: rgb(var(--background-auto-11)/80%);
-  --p-multiselect-background: rgb(var(--background-auto-1)/80%);
-  --p-multiselect-color: rgb(var(--background-auto-11));
-  --p-multiselect-border-color: rgb(var(--background-auto-10)/20%);
-  --p-multiselect-focus-border-color: rgb(var(--background-auto-4));
-  --p-multiselect-placeholder-color: rgb(var(--background-auto-11)/80%);
-}
-
-.p-multiselect-overlay,
-.p-multiselect-overlay {
-  --p-select-overlay-background: rgb(var(--background-auto-1));
-  --p-select-overlay-color: rgb(var(--background-auto-12));
-  --p-select-overlay-border-color: rgb(var(--background-auto-9));
-  --p-select-overlay-shadow: rgb(var(--color-auto-2));
-  --p-multiselect-overlay-background: rgb(var(--background-auto-1));
-  --p-multiselect-overlay-color: rgb(var(--background-auto-12));
-  --p-multiselect-overlay-border-color: rgb(var(--background-auto-9));
-  --p-multiselect-overlay-shadow: rgb(var(--color-auto-2));
-}
-.p-multiselect-option,
-.p-multiselect-option {
-  --p-select-option-color: rgb(var(--background-auto-12));
-  --p-multiselect-option-color: rgb(var(--background-auto-12));
-  }
-
-.p-multiselect-option:not(.p-select-option-selected):not(.p-disabled).p-focus,
-.p-multiselect-option:not(.p-multiselect-option-selected):not(.p-disabled).p-focus {
-  --p-select-option-focus-background :rgb(var(--background-auto-2));
-  --p-select-option-focus-color: rgb(var(--background-auto-1)/80%);
-  --p-multiselect-option-focus-background :rgb(var(--background-auto-2));
-  --p-multiselect-option-focus-color: rgb(var(--background-auto-1)/80%);
-}
-
-.p-select-header {}
-.p-multiselect-header {}
-
-.p-select-dropdown,
-.p-multiselect-dropdown {
-  transition: rotate 0.2s ease;
-  transform-origin: center;
-}
-.p-select-dropdown:hover,
-.p-multiselect-dropdown:hover {
-  --p-select-dropdown-color: rgb(var(--background-auto-12));
-  --p-multiselect-dropdown-color: rgb(var(--background-auto-12));
-}
-.p-multiselect-open .p-select-dropdown,
-.p-multiselect-open .p-multiselect-dropdown {
-  rotate: -180deg;
-}
-
-html.scheme-dark {
-  .p-select,
-  .p-multiselect {
-    --p-select-background: rgb(var(--background-auto-11)/8%);
-    --p-multiselect-background: rgb(var(--background-auto-11)/8%);
-  }
-  .p-select-overlay,
-  .p-multiselect-overlay {
-     --p-select-overlay-background: rgb(var(--background-auto-3));
-     --p-select-overlay-color: rgb(var(--background-auto-12));
-     --p-multiselect-overlay-background: rgb(var(--background-auto-3));
-     --p-multiselect-overlay-color: rgb(var(--background-auto-12));
-   }
-
-  .p-select-option:not(.p-select-option-selected):not(.p-disabled).p-focus,
-  .p-multiselect-option:not(.p-multiselect-option-selected):not(.p-disabled).p-focus {
-    --p-select-option-focus-background :rgb(var(--background-auto-5));
-    --p-select-option-focus-color: rgb(var(--background-auto-12));
-    --p-multiselect-option-focus-background :rgb(var(--background-auto-5));
-    --p-multiselect-option-focus-color: rgb(var(--background-auto-12));
-  }
 }
 
 .p-floatlabel-on:has(input:focus) label,
@@ -299,39 +221,159 @@ html.scheme-dark {
 .p-floatlabel-on:has(textarea.p-filled) label,
 .p-floatlabel-on:has(.p-inputwrapper-focus) label,
 .p-floatlabel-on:has(.p-inputwrapper-filled) label {
-  @apply pl-2 left-0 text-3xs text-slate-light-12 dark:text-slate-dark-12 #{!important};
-  transform: translateY(-50%) #{!important};
+  @apply pl-2 left-0 text-3xs
+  text-slate-light-12 dark:text-slate-dark-12 !important;
+  transform: translateY(-50%) !important;
 }
 
-.p-select-option {
-  @apply text-sm h-8 #{!important};
+
+/* === Utilities & Misc === */
+.p-inputfield-sm {
+  @apply text-sm py-1 !important;
 }
 
-.p-card-body {
-  @apply flex-1 w-full;
-  --p-card-body-padding: 0rem;
-}
-
-.p-dialog-content {
-  z-index: 0;
-}
-.p-dialog-footer {
-  z-index: 1;
-}
-
-.p-dialog.no-close .p-button {
-  display: none;
+.p-multiselect-header {
+  @apply mt-1 mx-1;
 }
 
 .p-button-text.p-button-secondary:not(:disabled):hover {
   --p-button-text-secondary-hover-background: rgb(var(--color-focus)/10%);
   --p-button-text-secondary-color: rgb(var(--color-focus));
 }
+
 .p-button-text.p-button-secondary:not(:disabled):active {
-    --p-button-text-secondary-active-background: rgb(var(--color-focus)/20%);
-    --p-button-text-secondary-color: rgb(var(--color-focus));
+  --p-button-text-secondary-active-background: rgb(var(--color-focus)/20%);
+  --p-button-text-secondary-color: rgb(var(--color-focus));
 }
 
 .p-scrollpanel-bar {
   --p-scrollpanel-bar-background: rgb(var(--background-auto-9)/70%);
+}
+
+.p-select-option {
+  @apply text-sm h-8 !important;
+}
+
+
+/* === Dark Mode Overrides === */
+html.scheme-dark {
+  .p-select,
+  .p-multiselect {
+    --p-select-background: rgb(var(--background-auto-11)/8%);
+    --p-multiselect-background: rgb(var(--background-auto-11)/8%);
+  }
+
+  .p-select-overlay,
+  .p-multiselect-overlay {
+    --p-select-overlay-background: rgb(var(--background-auto-3));
+    --p-multiselect-overlay-background: rgb(var(--background-auto-3));
+    --p-select-overlay-color: rgb(var(--background-auto-12));
+    --p-multiselect-overlay-color: rgb(var(--background-auto-12));
+  }
+
+  .p-select-option:not(.p-select-option-selected):not(.p-disabled).p-focus,
+  .p-multiselect-option:not(.p-multiselect-option-selected):not(.p-disabled).p-focus {
+    --p-select-option-focus-background: rgb(var(--background-auto-5));
+    --p-select-option-focus-color: rgb(var(--background-auto-12));
+    --p-multiselect-option-focus-background: rgb(var(--background-auto-5));
+    --p-multiselect-option-focus-color: rgb(var(--background-auto-12));
+  }
+  }
+
+.p-toast-message-info, .p-toast-message-success, .p-toast-message-warn, .p-toast-message-error, .p-toast-message-secondary, .p-toast-message-contrast {
+  --p-toast-border-width: 1px;
+  //--p-toast-blur: '';
+  --p-toast-border-radius: .5rem;
+}
+
+.p-toast-message-content {
+  align-items: center !important;
+  //--p-toast-content-padding: '';
+  //--p-toast-content-gap: '';
+}
+
+.p-toast-message-content>:last-child {
+  align-self: flex-start !important;
+}
+
+.p-toast-message-text {
+  --p-toast-text-gap: .20em;
+}
+
+.p-toast-summary {
+  --p-toast-summary-font-weight: 600;
+  --p-toast-summary-font-size: 1rem;
+}
+
+.p-toast-detail {
+  --p-toast-detail-font-weight: 400;
+  --p-toast-detail-font-size: 0.875rem;
+}
+
+.p-toast-message-content .p-toast-message-icon {
+  --p-toast-icon-size: 2.25rem;
+  padding: 0.3em;
+  border-radius: 0.2em;
+  font-size: 1.5rem;
+  line-height: 1;
+  position: relative;;
+}
+
+$toast-types: (
+  'success': 'green',
+  'warn': 'yellow',
+  'error': 'red',
+  'info': 'slate',
+  'secondary': 'blue',
+  'contrast': 'theme'
+);
+
+@each $type, $color in $toast-types {
+  .p-toast-message-#{$type} {
+    --p-toast-#{$type}-background: linear-gradient(65deg, rgb(var(--color-#{$color}-12)/80%), rgb(var(--color-#{$color}-11)/80%));
+    --p-toast-#{$type}-border-color: rgb(var(--color-#{$color}-11)/60%);
+    --p-toast-#{$type}-color: rgb(var(--color-#{$color}-5));
+    --p-toast-#{$type}-shadow: rgb(var(--color-#{$color}-10));
+
+    .p-toast-detail {
+      --p-toast-#{$type}-detail-color: rgb(var(--color-#{$color}-5));
+    }
+
+    .p-toast-message-icon {
+      color: rgb(var(--color-#{$color}-5)/80%);
+      //background-color: rgb(var(--color-#{$color}-11)/30%);
+    }
+  }
+}
+.p-toast-message-secondary .p-toast-message-icon {
+  background-color: transparent;
+}
+.p-toast-message-contrast .p-toast-message-icon {
+  background-color: transparent;
+}
+
+html.scheme-dark {
+  @each $type, $color in $toast-types {
+    .p-toast-message-#{$type} {
+      --p-toast-#{$type}-background: linear-gradient(65deg, rgb(var(--color-#{$color}-1)/80%), rgb(var(--color-#{$color}-7)/80%));
+      --p-toast-#{$type}-border-color: rgb(var(--color-#{$color}-7)/80%);
+      --p-toast-#{$type}-color: rgb(var(--color-#{$color}-12));
+      --p-toast-#{$type}-shadow: rgb(var(--color-#{$color}-3));
+
+      .p-toast-detail {
+        --p-toast-#{$type}-detail-color: rgb(var(--color-#{$color}-12));
+      }
+
+      .p-toast-message-icon {
+        color: rgb(var(--color-#{$color}-11)/80%);
+        //background-color: rgb(var(--color-#{$color}-9)/10%);
+      }
+    }
+  }
+  .p-toast-message-secondary .p-toast-message-icon {
+    background-color: transparent;
+  }
+  .p-toast-message-contrast .p-toast-message-icon {
+    background-color: transparent;
+  }
 }

@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { ref } from 'vue';
+import { onMounted, ref } from 'vue';
 import { IonContent, IonPage } from '@ionic/vue';
 import { useToast } from 'primevue/usetoast';
 
@@ -65,6 +65,75 @@ function setCurrentStep(step: string) {
 function setNextButtonLocked(value: boolean) {
 	nextButtonLocked.value = value;
 }
+
+onMounted(() => {
+	toast.add({
+		severity: 'info',
+		summary: translate('This is an informational message.'),
+		life: 500000,
+	});
+	toast.add({
+		severity: 'info',
+		summary: translate('Info'),
+		detail: translate('This is an informational message.'),
+		life: 500000,
+	});
+	toast.add({
+		severity: 'success',
+		summary: translate('This is a success message.'),
+		life: 500000,
+	});
+	toast.add({
+		severity: 'success',
+		summary: translate('Success'),
+		detail: translate('This is a success message.'),
+		life: 500000,
+	});
+	toast.add({
+		severity: 'warn',
+		summary: translate('This is a warning message.'),
+		life: 500000,
+	});
+	toast.add({
+		severity: 'warn',
+		summary: translate('Warning'),
+		detail: translate('This is a warning message.'),
+		life: 500000,
+	});
+	toast.add({
+		severity: 'error',
+		summary: translate('This is an error message.'),
+		life: 500000,
+	});
+	toast.add({
+		severity: 'error',
+		summary: translate('Error'),
+		detail: translate('This is an error message.'),
+		life: 500000,
+	});
+	toast.add({
+		severity: 'secondary',
+		summary: translate('This is an secondary message.'),
+		life: 500000,
+	});
+	toast.add({
+		severity: 'secondary',
+		summary: translate('Secondary'),
+		detail: translate('This is an secondary message.'),
+		life: 500000,
+	});
+	toast.add({
+		severity: 'contrast',
+		summary: translate('This is an contrast message.'),
+		life: 500000,
+	});
+	toast.add({
+		severity: 'contrast',
+		summary: translate('Contrast'),
+		detail: translate('This is an contrast message.'),
+		life: 500000,
+	});
+});
 </script>
 
 <template>

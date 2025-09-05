@@ -1,22 +1,17 @@
 .album-grid {
-	//grid-template-columns: [index] minmax(60px, 1fr) [first] 4fr [var2] 2fr [last] minmax(60px, 1fr);
 	grid-template-columns: [index] minmax(60px, 1fr) [first] 4fr [var2] minmax(100px, 1fr);
 	@media (min-width: 640px) {
 		grid-template-columns: [index] 42px [first] 2fr [var1] 2fr [var2] 1fr [last] minmax(170px, auto);
-		//grid-template-columns: [index] 42px [first] 8fr [var1] 4fr [last] minmax(120px, auto);
 	}
 }
 
 .artist-grid {
 	grid-template-columns: [index] minmax(60px, 1fr) [first] 4fr [var2] minmax(100px, 1fr);
 	@media (min-width: 640px) {
-		// grid-template-columns: [index] 42px [first] 2fr [var1] 3fr [var2] 1fr [last] minmax(120px, auto)
 		grid-template-columns:
 			[index] 42px [first] minmax(360px, 4fr) [var1] minmax(360px, 3fr) [var2] minmax(360px, 2fr)
 			[last] minmax(150px, 1fr);
-
-		//grid-template-columns: [index] 42px [first] 3fr [var1] 4fr [var2] 1fr [last] minmax(120px, auto)
-	}
+    }
 }
 .home-grid {
 	grid-template-columns: [index] minmax(41px, 1fr) [first] 4fr [var2] minmax(40px, 1fr);
@@ -24,14 +19,6 @@
 		grid-template-columns: [index] 42px [first] 4fr [var1] 4fr [var2] 1fr [last] 60px;
 	}
 }
-
-//.card-poster {
-//    @apply basis-[27vw] sm:basis-[14.7vw] md:basis-[19.7vw] lg:basis-[9.7vw] xl:basis-[9.7vw] 2xl:basis-[10.8vw] 3xl:basis-[9.7vw] 4xl:basis-[9.7vw] 5xl:basis-[7vw];
-//}
-//
-//.card-backdrop {
-//    @apply h-[27vw] basis-auto sm:h-[9.7vw] md:h-[14.7vw] lg:h-[9.7vw] xl:h-[9.7vw] 2xl:h-[10.8vw] 3xl:h-[9.7vw] 4xl:h-[9.7vw] 5xl:h-[7vw];
-//}
 
 .media-grid {
 	@apply grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-7 3xl:grid-cols-8 4xl:grid-cols-9 5xl:grid-cols-14;

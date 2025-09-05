@@ -1,0 +1,70 @@
+
+ion-content::part(background),
+ion-content::part(background) *,
+ion-content::part(scroll),
+ion-content::part(scroll) *,
+.scheme-transition *:not(img, .relative, .absolute, picture) {
+  //transition: all calc(var(--speed) * 1ms) ease-in-out !important;
+  -webkit-overflow-scrolling: touch;
+}
+
+
+ion-content::part(background) {
+  @apply bg-slate-lightA-4 dark:bg-slate-darkA-4;
+  //transition: all calc(var(--speed) * 1ms) ease-in-out !important;
+}
+
+@media (min-width: 800px) {
+  ion-content::part(background) {
+    @apply bg-slate-lightA-4 dark:bg-slate-darkA-4;
+    //transition: all calc(var(--speed) * 1ms) ease-in-out !important;
+  }
+}
+
+ion-content::part(scroll) {
+  scroll-behavior: smooth;
+}
+
+
+ion-content::part(scroll) {
+  @apply scrollbar-none;
+  --offset-bottom: 0px;
+}
+
+ion-item::part(native) {
+  background: transparent;
+}
+
+@media screen and (max-width: 800px) {
+  ion-content::part(scroll) {
+    @apply bg-slate-light-1 dark:bg-slate-dark-1;
+  }
+  ion-modal:nth-of-type(2) {
+    display: none !important;
+  }
+  html.plt-cordova:has(#miniPlayer) ion-content::part(scroll) {
+    @apply pb-safe-offset-2;
+  }
+
+  html.plt-mobileweb:has(#miniPlayer) ion-content::part(scroll) {
+    --offset-bottom: -3.5rem;
+  }
+
+  html.plt-mobileweb ion-content::part(scroll) {
+    --offset-top: -0rem;
+  }
+  html:has(.toolbar) ion-content::part(scroll) {
+    --offset-top: -3.5rem;
+  }
+
+  html.plt-mobileweb:has(ion-toolbar:first-child:nth-last-child(2) ~ *) ion-content::part(scroll) {
+    --offset-top: -8rem;
+  }
+  html.plt-mobileweb:has(#fullPlayer:not(.overlay-hidden)) ion-content::part(scroll) {
+    --offset-top: 0.5rem;
+  }
+}
+
+.ion-page-invisible {
+  pointer-events: none;
+}

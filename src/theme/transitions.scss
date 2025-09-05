@@ -198,25 +198,6 @@
 	}
 }
 
-//.focus-shift {
-//    &:hover,
-//    &:focus {
-//        transform: translateY(-7px);
-//        & .focus-text-shift {
-//            transform: translateY(-14px);
-//        }
-//    }
-//}
-//.focus-shift-child > div {
-//    &:hover,
-//    &:focus {
-//        transform: translateY(-7px);
-//        & .focus-text-shift {
-//            transform: translateY(-14px);
-//        }
-//    }
-//}
-
 .focus-outline-child > div {
 	&:hover,
     &:active,
@@ -227,8 +208,6 @@
 }
 
 .bounce-div {
-	// transition: all;
-	// transition: transform cubic-bezier(.47,1.64,.41,.8) !important;
 	transition-delay: var(--trickle-delay-1) !important;
 	transition-duration: 420ms !important;
 }

@@ -103,7 +103,7 @@ const classes = computed(() => {
 			? '!bg-gradient-to-b  from-[var(--color-9)] to-[var(--color-7)] hover:from-[var(--color-10)] hover:to-[var(--color-6)] active:from-[var(--color-9)] active:to-[var(--color-6)] dark:from-[var(--color-10)] dark:to-[var(--color-8)] dark:hover:from-[var(--color-11)] dark:hover:to-[var(--color-9)] dark:active:from-[var(--color-9)] dark:active:to-[var(--color-7)] button-filled !text-[var(--color-12)] shadow-lg'
 			: '',
 		props.variant === 'text'
-			? 'hover:outline-[rgba(var(--color-7),.1)] hover:outline-1 hover:outline text-[rgb(var(--background-auto-10))]'
+			? 'hover:outline-[rgba(var(--color-7),.1)] hover:outline-1 hover:outline text-[rgb(var(--background-auto-12)/80%)]'
 			: `
 				 shadow-[0_1px_0_0_rgba(255,255,255,0.20)_inset,0_-1px_0_0_rgba(var(--background-auto-2)/60%)_inset,0_6px_10px_-4px_rgba(var(--background-auto-2)/70%)]
 				 dark:shadow-[0_1px_0_0_rgba(255,255,255,0.20)_inset,0_-1px_0_0_rgba(var(--background-auto-1)/30%)_inset,0_6px_10px_-4px_rgba(var(--background-auto-1)/70%)]
@@ -118,7 +118,7 @@ const classes = computed(() => {
 			? props.color === 'theme'
 				? 'text-white'
 				: props.color
-			: 'text-[rgb(var(--background-auto-10))]',
+			: 'text-[rgb(var(--background-auto-12)/80%)]',
 		props.disabled ? 'grayscale cursor-not-allowed' : '',
 	);
 });

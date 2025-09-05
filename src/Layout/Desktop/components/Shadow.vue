@@ -3,7 +3,7 @@ import { background } from '@/store/ui.ts';
 </script>
 
 <template>
-	<div v-if="!background" class="w-screen h-[90vh] absolute opacity-40 dark:opacity-100 blur-lg pointer-events-none">
+	<div v-if="!background" class="w-[90vw] h-[90vh] absolute opacity-40 dark:opacity-100 blur-lg pointer-events-none">
 		<div class="background w-full h-auto aspect-square rounded-full  -translate-x-1/3 -translate-y-[70%]" />
 	</div>
 </template>

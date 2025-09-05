@@ -1,206 +1,184 @@
 @use 'sass:meta';
 
-@layer tailwind-base, primevue, tailwind-utilities;
+/*----------------------------------------------------------------------------
+  1. Define Layers & Tailwind Insertion Points
+----------------------------------------------------------------------------*/
+@layer base, components, utilities;
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-@view-transition {
-	navigation: auto;
-}
-
-:root {
-	interpolate-size: allow-keywords;
-	--color-background: rgb(var(--background-light-slate-3));
-	--background-auto: var(--background-light-slate-1);
-	--color-text: rgb(var(--background-auto-12));
-	--keyboard-height: 0px;
-	--safe-area-inset-bottom: env(safe-area-inset-bottom, 0px);
-	--safe-area-inset-top: env(safe-area-inset-top, 0px);
-}
-
-* {
-	text-box-trim: both;
-	text-box-edge: cap alphabetic;
-}
-
-html {
-	//height: -webkit-fill-available;
-	scroll-behavior: smooth;
-	--ion-font-family: 'Inter', sans-serif !important;
-	-webkit-overflow-scrolling: touch;
-	--safe-area-inset-top: 0px;
-}
-
-body {
-	height: -webkit-fill-available;
-	font-family: 'Inter', sans-serif;
-}
-
-a {
-	color: inherit;
-}
-
+/*----------------------------------------------------------------------------
+  2. Global Base Resets & View Transitions
+----------------------------------------------------------------------------*/
 @layer base {
-	[no-ring]:focus-visible {
-		outline: none !important;
-	}
+  /* Enable native view transitions where supported */
+  @view-transition {
+    navigation: auto;
+  }
 
-	html.scheme-light *:not([no-ring]):focus-visible {
-		outline: black solid 2px;
-	}
+  /* Box trimming (text) */
+  *,
+  *::before,
+  *::after {
+    text-box-trim: both;
+    text-box-edge: cap alphabetic;
+  }
 
-	html.scheme-dark *:not([no-ring]):focus-visible {
-		outline: white solid 1px;
-	}
+  /* Root-level custom properties */
+  :root {
+    interpolate-size: allow-keywords;
+
+    /* Core theme variables (light mode defaults) */
+    --color-background: rgb(var(--background-light-slate-3));
+    --background-auto: var(--background-light-slate-1);
+    --color-text: rgb(var(--background-auto-12));
+
+    /* Safe-area insets */
+    --keyboard-height: 0px;
+    --safe-area-inset-top: env(safe-area-inset-top, 0px);
+    --safe-area-inset-bottom: env(safe-area-inset-bottom, 0px);
+  }
+
+  /* Light/dark focus outlines */
+  [no-ring]:focus-visible {
+    outline: none !important;
+  }
+
+  html.scheme-light *:not([no-ring]):focus-visible {
+    outline: black solid 2px;
+  }
+
+  html.scheme-dark *:not([no-ring]):focus-visible {
+    outline: white solid 1px;
+  }
 }
 
-/* If using React, set height on the root div as well */
-#root {
-	height: -webkit-fill-available;
+/*----------------------------------------------------------------------------
+  3. Structural HTML & Body Styles
+----------------------------------------------------------------------------*/
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+    --ion-font-family: 'Inter', sans-serif !important;
+    /* reset safe-area-top when not needed */
+    --safe-area-inset-top: 0px;
+  }
+
+  body {
+    height: -webkit-fill-available;
+    font-family: 'Inter', sans-serif;
+    background-color: var(--color-background);
+    color: var(--color-text);
+
+    /* If using Tailwind’s JIT with @apply: */
+    @apply bg-slate-light-1 dark:bg-slate-dark-1
+    text-slate-dark-1 dark:text-slate-light-1;
+  }
+
+  a {
+    color: inherit;
+  }
+
+  /* React single-page root */
+  #root {
+    height: -webkit-fill-available;
+  }
 }
 
-@include meta.load-css('theme-base');
-@include meta.load-css('theme-colors');
-@include meta.load-css('theme');
-@include meta.load-css('animations');
-@include meta.load-css('transitions');
-@include meta.load-css('grid');
-@include meta.load-css('mooooom-icons');
-@include meta.load-css('primevue');
-@include meta.load-css('carousel');
-
-ion-content::part(background),
-ion-content::part(background) *,
-ion-content::part(scroll),
-ion-content::part(scroll) *,
-.scheme-transition *:not(img, .relative, .absolute, picture) {
-	//transition: all calc(var(--speed) * 1ms) ease-in-out !important;
-	-webkit-overflow-scrolling: touch;
+/*----------------------------------------------------------------------------
+  4. Dark-Mode Custom Properties
+----------------------------------------------------------------------------*/
+@layer base {
+  html.scheme-dark {
+    --color-background: rgb(var(--background-dark-slate-1));
+    --background-auto: var(--background-dark-slate-2);
+    --color-text: rgb(var(--background-auto-1));
+  }
 }
 
-html.scheme-dark {
-	--color-background: rgb(var(--background-dark-slate-1));
-	--background-auto: var(--background-dark-slate-2);
-	--color-text: rgb(var(--background-auto-1));
+/*----------------------------------------------------------------------------
+  5. PrimeVue & Theme Includes
+----------------------------------------------------------------------------*/
+
+  @include meta.load-css('theme-base');
+  @include meta.load-css('theme-colors');
+  @include meta.load-css('theme');
+  @include meta.load-css('animations');
+  @include meta.load-css('transitions');
+  @include meta.load-css('grid');
+  @include meta.load-css('mooooom-icons');
+  @include meta.load-css('primevue');
+  @include meta.load-css('form');
+  @include meta.load-css('ionic');
+  @include meta.load-css('carousel');
+
+/*----------------------------------------------------------------------------
+  6. Scrollbar & Text Selection
+----------------------------------------------------------------------------*/
+@layer components {
+  ion-content::part(scroll):not(svg),
+  *:not(svg) {
+    @apply text-slate-dark-3 dark:text-slate-light-3
+    scrollbar scrollbar-w-2 scrollbar-h-2
+    scrollbar-thumb-rounded-full scrollbar-corner-rounded-none
+    scrollbar-track-[#202425]/20 scrollbar-thumb-[#dfeffe]/[0.14]
+    scrollbar-track-rounded-full;
+
+    /* override native scrollbar-color if needed */
+    scrollbar-color: unset;
+    --scrollbar-thumb: rgb(var(--background-auto-8)/60%) !important;
+
+    @media (max-width: 640px) {
+      @apply scrollbar-none;
+    }
+
+    /* ::selection inside component scroll */
+    ::selection {
+      @apply bg-focus text-white;
+      background-color: var(--select-background, rgb(var(--color-focus)/calc(var(--tw-bg-opacity) - 0.5)));
+    }
+  }
+
+  /* Global text selection */
+  *:not(svg)::selection {
+    @apply bg-focus text-white;
+    background-color: var(--select-background, hsl(from rgb(var(--color-focus)) h s calc(l * 0.85)));
+  }
 }
 
-body {
-	@apply bg-slate-light-1 dark:bg-slate-dark-1 text-slate-dark-1 dark:text-slate-light-1;
-	//transition: all calc(var(--speed) * 1ms) ease-in-out !important;
-}
+/*----------------------------------------------------------------------------
+  7. Utility & Component-Specific Classes
+----------------------------------------------------------------------------*/
+@layer utilities {
+  /* Swiper adjustments */
+  .swiper {
+    overflow-y: visible !important;
+    overflow-x: clip !important;
+  }
 
-ion-content::part(background) {
-	@apply bg-slate-lightA-4 dark:bg-slate-darkA-4;
-	//transition: all calc(var(--speed) * 1ms) ease-in-out !important;
-}
+  .swiper .swiper-slide img {
+    width: stretch !important;
+    width: -moz-available !important;
+    width: -webkit-fill-available !important;
+    width: 100% !important;
+  }
 
-@media (min-width: 800px) {
-	ion-content::part(background) {
-		@apply bg-slate-lightA-4 dark:bg-slate-darkA-4;
-		//transition: all calc(var(--speed) * 1ms) ease-in-out !important;
-	}
-}
+  /* Monospaced numeric figures */
+  .monospace {
+    font-feature-settings: 'tnum' on,
+    'lnum' on !important;
+  }
 
-ion-content::part(scroll) {
-	//display: flex !important;
-	//flex-direction: column;
-	scroll-behavior: smooth;
-	//margin-top: var(--ion-safe-area-top);
-}
+  .shadow {
+    @apply shadow-[0_1px_0_0_rgba(255,255,255,0.20)_inset,0_-1px_0_0_rgba(var(--color-slate-9)/60%)_inset,0_22px_30px_-4px_rgba(var(--color-slate-9)/70%)]
+    dark:shadow-[0_1px_0_0_rgba(255,255,255,0.20)_inset,0_-1px_0_0_rgba(var(--color-slate-1)/30%)_inset,0_22px_30px_-4px_rgba(var(--color-slate-1)/70%)]
+    hover:shadow-[0_1px_0_0_rgba(255,255,255,0.20)_inset,0_-1px_0_0_rgba(var(--color-slate-11)/60%)_inset,0_22px_30px_-4px_rgba(var(--color-slate-11)/70%)]
+    dark:hover:shadow-[0_1px_0_0_rgba(255,255,255,0.20)_inset,0_-1px_0_0_rgba(var(--color-slate-1)/30%)_inset,0_22px_30px_-4px_rgba(var(--color-slate-1)/70%)]
+    active:shadow-none duration-100 delay-0
+    active:dark:shadow-none;
+  }
 
-ion-content::part(scroll):not(svg),
-*:not(svg) {
-	@apply text-slate-dark-3 dark:text-slate-light-3 scrollbar scrollbar-w-2 scrollbar-h-2 scrollbar-thumb-rounded-full scrollbar-corner-rounded-none scrollbar-track-[#202425]/20 scrollbar-thumb-[#dfeffe]/[0.14] scrollbar-track-rounded-full;
-	scrollbar-color: unset;
-
-	--scrollbar-thumb: rgb(var(--background-auto-8) / 60%) !important;
-
-	@media (max-width: 640px) {
-		@apply scrollbar-none;
-	}
-
-	::selection {
-		@apply bg-focus text-white;
-		background-color: var(--select-background, rgb(var(--color-focus) / calc(var(--tw-bg-opacity) - 0.5)));
-	}
-}
-
-*:not(svg)::selection {
-  @apply bg-focus text-white;
-  background-color: var(--select-background, hsl(from rgb(var(--color-focus)) h s calc(l * 0.85)));
-}
-
-ion-content::part(scroll) {
-	@apply scrollbar-none;
-	--offset-bottom: 0px;
-}
-
-ion-item::part(native) {
-	background: transparent;
-}
-
-.swiper {
-	overflow-y: visible !important;
-	overflow-x: clip !important;
-}
-
-.swiper .swiper-slide img {
-	width: -moz-available !important;
-	width: 100% !important;
-	width: -webkit-fill-available !important;
-	width: stretch !important;
-}
-
-.monospace {
-	font-feature-settings:
-		'tnum' on,
-		'lnum' on !important;
-}
-
-.shadow {
-	@apply shadow-[0_1px_0_0_rgba(255,255,255,0.20)_inset,0_-1px_0_0_rgba(var(--color-slate-9)/60%)_inset,0_22px_30px_-4px_rgba(var(--color-slate-9)/70%)]
-  dark:shadow-[0_1px_0_0_rgba(255,255,255,0.20)_inset,0_-1px_0_0_rgba(var(--color-slate-1)/30%)_inset,0_22px_30px_-4px_rgba(var(--color-slate-1)/70%)]
-  hover:shadow-[0_1px_0_0_rgba(255,255,255,0.20)_inset,0_-1px_0_0_rgba(var(--color-slate-11)/60%)_inset,0_22px_30px_-4px_rgba(var(--color-slate-11)/70%)]
-  dark:hover:shadow-[0_1px_0_0_rgba(255,255,255,0.20)_inset,0_-1px_0_0_rgba(var(--color-slate-1)/30%)_inset,0_22px_30px_-4px_rgba(var(--color-slate-1)/70%)]
-  active:shadow-none duration-100 delay-0
-  active:dark:shadow-none;
-}
-
-@media screen and (max-width: 800px) {
-	ion-content::part(scroll) {
-		@apply bg-slate-light-1 dark:bg-slate-dark-1;
-	}
-	ion-modal:nth-of-type(2) {
-		display: none !important;
-	}
-	//html.plt-cordova ion-content::part(scroll) {
-	//  @apply pt-safe ;
-	//}
-	html.plt-cordova:has(#miniPlayer) ion-content::part(scroll) {
-		@apply pb-safe-offset-2;
-	}
-
-	html.plt-mobileweb:has(#miniPlayer) ion-content::part(scroll) {
-		--offset-bottom: -3.5rem;
-	}
-
-	html.plt-mobileweb ion-content::part(scroll) {
-		--offset-top: -0rem;
-	}
-	html:has(.toolbar) ion-content::part(scroll) {
-		--offset-top: -3.5rem;
-	}
-
-	html.plt-mobileweb:has(ion-toolbar:first-child:nth-last-child(2) ~ *) ion-content::part(scroll) {
-		--offset-top: -8rem;
-	}
-	html.plt-mobileweb:has(#fullPlayer:not(.overlay-hidden)) ion-content::part(scroll) {
-		--offset-top: 0.5rem;
-	}
-}
-
-.ion-page-invisible {
-	pointer-events: none;
 }

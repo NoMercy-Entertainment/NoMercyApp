@@ -231,7 +231,7 @@ function handleUp() {
 
 <!-- <script setup lang="ts"> -->
 <!-- import {computed, onMounted, onUnmounted, ref, watch} from 'vue'; -->
-<!-- import {IonContent, IonPage, onIonViewDidEnter} from '@ionic/vue'; -->
+<!-- import {IonContent, IonPage, onIonViewDidEnter} from '@ionic.scss/vue'; -->
 
 <!-- import {getMutating, getMutation, getQuery} from '@/lib/routerHelper'; -->
 <!-- import router from '@/router'; -->
