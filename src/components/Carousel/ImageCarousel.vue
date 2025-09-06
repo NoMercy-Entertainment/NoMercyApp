@@ -72,7 +72,6 @@ function handleLeft() {
 		index: newIndex.value - 1,
 		type: temp.value.type,
 	});
-	setNewIndex(newIndex.value - 1);
 
 	setImageModalData({
 		...item,
@@ -81,6 +80,7 @@ function handleLeft() {
 			: ({ image: toRaw(colorPalette.value) } as ColorPalettes),
 		aspectRatio: props.type === 'poster' ? '2/3' : '16/9',
 	});
+	setNewIndex(newIndex.value - 1);
 }
 
 function handleRight() {
@@ -93,8 +93,6 @@ function handleRight() {
 		type: temp.value.type,
 	});
 
-	setNewIndex(newIndex.value + 1);
-
 	setImageModalData({
 		...item,
 		color_palette: item.color_palette
@@ -102,6 +100,8 @@ function handleRight() {
 			: ({ image: toRaw(colorPalette.value) } as ColorPalettes),
 		aspectRatio: props.type === 'poster' ? '2/3' : '16/9',
 	});
+
+	setNewIndex(newIndex.value + 1);
 }
 
 const timeout = ref<NodeJS.Timeout>();

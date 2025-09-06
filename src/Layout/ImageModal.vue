@@ -279,21 +279,22 @@ function onRightClick(e: MouseEvent) {
 </script>
 
 <template>
-	<Portal>
-		<dialog
+	<Portal
+		v-if="(showImageModal || showScreensaver) && !disableScreensaver"
+	>
+		<button
 			id="imageModal"
 			ref="imageModal"
-			class="fixed inset-0 w-full z-[999999999] bg-auto-4 dark:bg-auto-9 m-0"
+			class="fixed inset-0 w-screen h-screen z-[999999999] bg-auto-4 dark:bg-auto-9 m-0"
 			@click="handleClick"
 		>
 			<div
-				v-if="(showImageModal || showScreensaver) && !disableScreensaver"
 				ref="overlayRef"
 				:style="`--delay: ${showScreensaver ? '2400ms' : '400ms'}`"
 				class="pointer-events-none fixed inset-0 bg-black w-available h-available z-999 transitioning-slower"
 			/>
 			<div
-				class="fixed z-0 h-screen w-screen items-center border-solid border-black bg-black p-8 text-center left-50 border-1 transitioning-slower"
+				class="absolute inset-0 z-0 h-screen w-screen items-center border-solid border-black bg-black p-8 text-center left-50 border-1 transitioning-slower"
 			>
 				<img
 					:src="src ?? ''"
@@ -336,7 +337,7 @@ function onRightClick(e: MouseEvent) {
 						class="absolute left-0 z-0 p-4 bottom:2 sm:bottom-6 sm:left-8 tv:bottom-4 tv:left-6"
 					>
 						<div
-							class="pointer-events-none flex h-inherit w-full select-none items-start justify-start bg-cover min-h-[20vh] max-h-[20vh] min-w-[30vw] max-w-[30vw] tv:min-h-[15vh] tv:max-h-[15vh] tv:min-w-[30vw] tv:max-w-[30vw]"
+							class="flex h-inherit w-full select-none items-start justify-start bg-cover min-h-[20vh] max-h-[20vh] min-w-[30vw] max-w-[30vw] tv:min-h-[15vh] tv:max-h-[15vh] tv:min-w-[30vw] tv:max-w-[30vw]"
 						>
 							<TMDBImage
 								v-if="logoSrc"
@@ -383,6 +384,6 @@ function onRightClick(e: MouseEvent) {
 					<AppLogoSquare class="" />
 				</div>
 			</div>
-		</dialog>
+		</button>
 	</Portal>
 </template>

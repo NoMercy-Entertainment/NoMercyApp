@@ -53,9 +53,11 @@ export const imageModal = ref<VNodeRef>();
 
 watch([sim, sss], ([sim, sss]) => {
 	if ((sim || sss) && !dss.value) {
-		document.querySelector<HTMLDialogElement>('#imageModal')?.showModal();
+		setImageModalOpen(true);
+		// document.querySelector<HTMLDialogElement>('#imageModal')?.showModal();
 	}
 	else {
-		document.querySelector<HTMLDialogElement>('#imageModal')?.close();
+		setImageModalOpen(false);
+		// document.querySelector<HTMLDialogElement>('#imageModal')?.close();
 	}
 });

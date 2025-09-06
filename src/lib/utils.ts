@@ -54,6 +54,9 @@ export function episodeCounter(data: InfoResponse) {
 export function scrollIntoView(parent?: HTMLElement) {
 	const scrollDuration = 300;
 	const parentElement = parent ?? document.activeElement!.parentElement!;
+	if (!parentElement)
+		return;
+
 	const elementTop
     = document.activeElement!.getBoundingClientRect().top
     	+ document.activeElement!.getBoundingClientRect().height / 2
