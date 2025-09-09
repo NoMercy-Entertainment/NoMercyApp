@@ -1,0 +1,1 @@
+import{I as o,d as n,o as r,s as e,j as a,K as t,bu as s,bh as p}from"./index-DkQngsHe.js";import{E as l}from"./ExploreContainer-DTJhXepQ.js";import"./_plugin-vue_export-helper-DlAUqK2U.js";const d=o({__name:"Tv",setup(u){return(c,_)=>(r(),n(t(p),null,{default:e(()=>[a(t(s),{fullscreen:!0},{default:e(()=>[a(l,{name:"Display Tv page"})]),_:1})]),_:1}))}});export{d as default};
