@@ -1,0 +1,1 @@
+import{_ as t}from"./_plugin-vue_export-helper-DlAUqK2U.js";import{c as r,o as s,a as o,F as a}from"./index-C_qNKMWs.js";const l={};function n(f,e){return s(),r(a,null,[e[0]||(e[0]=o("h1",null,"Auth View Desktop",-1)),e[1]||(e[1]=o("div",{class:"overflow-auto h-available"},null,-1))],64)}const i=t(l,[["render",n]]);export{i as default};
