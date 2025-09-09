@@ -40,7 +40,7 @@ export default defineConfig(({ command }) => {
 					cleanupOutdatedCaches: true,
 					clientsClaim: true,
 					sourcemap: false,
-					skipWaiting: false,
+					skipWaiting: true,
 					mode: env.NODE_ENV === 'production' ? 'production' : 'development',
 					dontCacheBustURLsMatching: /\.\w{8}\./,
 					navigateFallback: 'index.html',
@@ -537,7 +537,7 @@ export default defineConfig(({ command }) => {
 				strict: false,
 			},
 			middlewareMode: false,
-			configureServer(server) {
+			configureServer(server: { middlewares: { use: (arg0: string, arg1: (req: any, res: any, next: any) => void) => void } }) {
 				server.middlewares.use('/icons', (req, res, next) => {
 					// Serve SVG icons from resources/icons for development
 					if (
@@ -586,59 +586,6 @@ export default defineConfig(({ command }) => {
 			cssMinify: 'esbuild',
 			rollupOptions: {
 				output: {
-					// manualChunks: (id) => {
-					// 	// Only separate vendor libraries, let Vite handle app code chunking automatically
-					// 	if (id.includes('node_modules')) {
-					// 		// Heavy libraries get their own chunks
-					// 		if (id.includes('subtitles-octopus')) {
-					// 			return 'subtitles-octopus';
-					// 		}
-					// 		if (id.includes('@nomercy-entertainment/nomercy-video-player')) {
-					// 			return 'video-player';
-					// 		}
-					// 		if (id.includes('@nomercy-entertainment/nomercy-music-player')) {
-					// 			return 'music-player';
-					// 		}
-					// 		if (id.includes('primevue') || id.includes('@primevue')) {
-					// 			return 'primevue';
-					// 		}
-					// 		// Combine Vue and Ionic into a single chunk to avoid circular dependencies
-					// 		if (
-					// 			id.includes('@ionic')
-					// 			|| id.includes('vue')
-					// 			|| id.includes('@vue')
-					// 		) {
-					// 			return 'vue-ionic';
-					// 		}
-					// 		if (id.includes('chart.js')) {
-					// 			return 'charts';
-					// 		}
-					// 		if (id.includes('swiper')) {
-					// 			return 'swiper';
-					// 		}
-					// 		if (id.includes('rxjs')) {
-					// 			return 'rxjs';
-					// 		}
-					// 		if (id.includes('axios') || id.includes('@tanstack')) {
-					// 			return 'api';
-					// 		}
-					// 		if (id.includes('hls.js') || id.includes('m3u8-parser')) {
-					// 			return 'media';
-					// 		}
-					// 		return 'vendor';
-					// 	}
-					//
-					// 	// Let Vite handle all app code chunking automatically to avoid circular dependencies
-					// 	// All manual app chunking has been removed to prevent initialization errors
-					//
-					// 	// Only separate heavy assets like icons which are typically safe
-					// 	if (id.includes('resources/icons/')) {
-					// 		return 'icons';
-					// 	}
-					//
-					// 	// Let Vite decide how to chunk the rest automatically
-					// 	return undefined;
-					// },
 					generatedCode: {
 						constBindings: true,
 						arrowFunctions: true,

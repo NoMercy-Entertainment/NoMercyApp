@@ -50,6 +50,19 @@ self.addEventListener('activate', (event) => {
 	);
 });
 
+self.addEventListener('activate', (event) => {
+	event.waitUntil(
+		Promise.all([
+			// Clear all old caches
+			caches.keys().then((cacheNames) => {
+				return Promise.all(cacheNames.map(cacheName => caches.delete(cacheName)));
+			}),
+			// Claim clients immediately
+			self.clients.claim(),
+		]),
+	);
+});
+
 // RUNTIME CACHING STRATEGIES
 
 // DEV ENVIRONMENT: Skip caching app files for local IPs and dev subdomains
@@ -68,7 +81,6 @@ registerRoute(
 		return (isLocalIP || isDevSubdomain) && isAppFile;
 	},
 	new NetworkOnly(),
-	'dev-no-cache',
 );
 
 // DEV ENVIRONMENT: Cache static assets (fonts, images) even from local/dev sources
@@ -102,7 +114,7 @@ registerRoute(
 registerRoute(
 	({ url }) => {
 		return (
-			/\.(woff2?|ttf|eot)$/i.test(url.pathname)
+			/\.(?:woff2?|ttf|eot)$/i.test(url.pathname)
 			|| url.pathname.includes('/fonts/')
 		);
 	},
@@ -123,7 +135,7 @@ registerRoute(
 // IMAGES: Cache first strategy for images
 registerRoute(
 	({ url }) => {
-		return /\.(jpg|jpeg|png|gif|webp|avif|svg)$/i.test(url.pathname);
+		return /\.(?:jpg|jpeg|png|gif|webp|avif|svg)$/i.test(url.pathname);
 	},
 	new CacheFirst({
 		cacheName: 'nomercy-images-v5',
@@ -147,7 +159,7 @@ registerRoute(
 				url.href,
 			);
 		const isDevSubdomain = /(?:^|\.)dev\.nomercy\.tv$/.test(url.hostname);
-		const isStaticAsset = /\.(js|css|json)$/i.test(url.pathname);
+		const isStaticAsset = /\.(?:js|css|json)$/i.test(url.pathname);
 		return !isLocalIP && !isDevSubdomain && isStaticAsset;
 	},
 	new CacheFirst({

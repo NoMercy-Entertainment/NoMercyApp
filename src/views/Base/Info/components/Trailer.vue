@@ -313,7 +313,7 @@ onUnmounted(() => {
 		>
 			<div
 				ref="trailerContainer"
-				class="relative rounded-2xl flex overflow-clip mx-auto children:overflow-clip h-auto top-1/4 sm:top-1/2 -translate-y-1/2 w-fit sm:h-full"
+				class="relative rounded-2xl flex overflow-clip mx-auto children:overflow-clip h-auto top-1/4 sm:top-1/2 -translate-y-1/2 w-fit max-w-available sm:h-full"
 				@click.stop=""
 			>
 				<div id="trailer" class="group nomercyplayer" />
