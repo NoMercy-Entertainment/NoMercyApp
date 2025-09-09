@@ -39,14 +39,13 @@ if (index === -1) {
 	index = 0;
 }
 
-const seasonSelectorData
-  = props.data?.map((s, index: number) => ({
-  	index,
-  	id: s.id,
-  	name: `${s.season_number} - ${s.title}`,
-  	season_number: s.season_number,
-  	episodes: s.episodes,
-  })) ?? [];
+const seasonSelectorData = props.data?.map((s, index: number) => ({
+	index,
+	id: s.id,
+	name: `${s.season_number} - ${s.title}`,
+	season_number: s.season_number,
+	episodes: s.episodes,
+})) ?? [];
 
 const currentSeason = ref(seasonSelectorData[index]);
 

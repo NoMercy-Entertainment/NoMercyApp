@@ -2,7 +2,8 @@
 import type { PropType } from 'vue';
 import { ref } from 'vue';
 import { useRoute } from 'vue-router';
-import { Share, type ShareOptions } from '@capacitor/share';
+import { Share } from '@capacitor/share';
+import type { ShareOptions } from '@capacitor/share';
 
 import OptimizedIcon from '@/components/OptimizedIcon.vue';
 import MusicButton from '@/components/MusicPlayer/components/MusicButton.vue';
@@ -29,10 +30,8 @@ async function share() {
 	await Share.share(
 		props.shareData ?? {
 			title: document.title,
-			text:
-        document
-        	.querySelector('meta[name="description"]')
-        	?.getAttribute('content') ?? '',
+			text: document.querySelector('meta[name="description"]')
+				?.getAttribute('content') ?? '',
 			url: `https://app.nomercy.tv${route.fullPath}`,
 			dialogTitle: t('Share with buddies'),
 		},

@@ -14,9 +14,7 @@ import FullTvPlayer from '@/components/MusicPlayer/tv/FullTvPlayer.vue';
 	<IonPage id="main-content" mode="md">
 		<IonTabs mode="md">
 			<Navbar />
-			<IonRouterOutlet
-				animated="false"
-			/>
+			<IonRouterOutlet />
 		</IonTabs>
 
 		<ImageModal />

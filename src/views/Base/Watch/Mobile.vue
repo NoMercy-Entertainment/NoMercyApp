@@ -73,7 +73,12 @@ function initPlayer(value?: NMPlaylistItem[] | undefined) {
 	player.value = nmplayer('player1').setup(config);
 
 	player.value?.once('back', () => {
-		//
+		if (history.state.back) {
+			router.back();
+		}
+		else {
+			router.replace('/');
+		}
 	});
 
 	if (user.value.features?.nomercyConnect) {
@@ -109,14 +114,23 @@ function initPlayer(value?: NMPlaylistItem[] | undefined) {
 	});
 
 	player.value?.on('playlistComplete', () => {
-		player.value?.dispose();
-		router.back();
+		if (history.state.back) {
+			router.back();
+		}
+		else {
+			router.replace('/');
+		}
 	});
 
 	player.value?.on('dispose', () => {
 		lockPortrait();
 		disableImmersiveMode();
-		router.back();
+		if (history.state.back) {
+			router.back();
+		}
+		else {
+			router.replace('/');
+		}
 	});
 
 	player.value?.on('back', () => {
@@ -143,7 +157,6 @@ function initPlayer(value?: NMPlaylistItem[] | undefined) {
 
 	App.addListener('backButton', () => {
 		player.value?.emit('back-button-hyjack');
-		router.back();
 	});
 }
 

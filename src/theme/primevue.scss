@@ -319,6 +319,19 @@ html.scheme-dark {
   position: relative;;
 }
 
+.p-tooltip {
+  --p-tooltip-background: rgb(var(--background-auto-4));
+  --p-tooltip-color: rgb(var(--background-auto-12));
+  --p-tooltip-border-color: rgb(var(--background-auto-9));
+  --p-tooltip-shadow: rgb(var(--color-auto-2));
+  --p-tooltip-arrow-color: rgb(var(--background-auto-4));
+  --p-tooltip-gutter: .75rem;
+  --p-tooltip-padding: 0.5rem 0.75rem;
+  --p-tooltip-font-size: 0.875rem;
+  --p-tooltip-border-radius: 0.375rem;
+  --p-tooltip-max-width: 16rem;
+}
+
 $toast-types: (
   'success': 'green',
   'warn': 'yellow',

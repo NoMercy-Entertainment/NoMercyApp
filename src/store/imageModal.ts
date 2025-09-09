@@ -1,4 +1,5 @@
-import { computed, ref, type VNodeRef, watch } from 'vue';
+import { computed, ref, watch } from 'vue';
+import type { VNodeRef } from 'vue';
 import type { LogoResponse } from '@/types/server';
 
 const sim = ref<boolean>(false);
@@ -53,11 +54,9 @@ export const imageModal = ref<VNodeRef>();
 
 watch([sim, sss], ([sim, sss]) => {
 	if ((sim || sss) && !dss.value) {
-		setImageModalOpen(true);
 		// document.querySelector<HTMLDialogElement>('#imageModal')?.showModal();
 	}
 	else {
-		setImageModalOpen(false);
 		// document.querySelector<HTMLDialogElement>('#imageModal')?.close();
 	}
 });

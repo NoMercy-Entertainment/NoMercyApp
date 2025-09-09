@@ -40,7 +40,7 @@ async function handleSelectServer(server: Server) {
 				else {
 					await router.replace(redirectUrl.value);
 				}
-			}, 50);
+			}, 500);
 		})
 		.catch(async () => {
 			await router.replace({ name: 'Server offline' });

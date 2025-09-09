@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onBeforeUnmount, onMounted, ref, watch } from 'vue';
+import { onMounted, onUnmounted, ref, watch } from 'vue';
 import { IonContent, IonPage, isPlatform } from '@ionic/vue';
 
 import { setDisableScreensaver } from '@/store/imageModal';
@@ -11,14 +11,13 @@ import type {
 	PlaylistItem,
 } from '@/lib/VideoPlayer';
 import {
-	SyncPlugin,
-} from '@/lib/VideoPlayer';
-import {
 	AutoSkipPlugin,
 	DesktopUIPlugin,
 	nmplayer,
 	OctopusPlugin,
+	SyncPlugin,
 } from '@/lib/VideoPlayer';
+
 import router from '@/router';
 import audioPlayer from '@/store/audioPlayer';
 
@@ -62,7 +61,12 @@ function initPlayer(value?: NMPlaylistItem[] | undefined) {
 	player.value = nmplayer('player1').setup(config);
 
 	player.value!.once('back', () => {
-		router.back();
+		if (history.state.back) {
+			router.back();
+		}
+		else {
+			router.replace('/');
+		}
 	});
 
 	if (user.value.features?.nomercyConnect) {
@@ -103,7 +107,12 @@ function initPlayer(value?: NMPlaylistItem[] | undefined) {
 
 	player.value!.on('playlistComplete', () => {
 		console.log('Playlist complete');
-		router.back();
+		if (history.state.back) {
+			router.back();
+		}
+		else {
+			router.replace('/');
+		}
 	});
 
 	player.value!.on('play', () => {
@@ -138,7 +147,7 @@ onMounted(() => {
 	}
 });
 
-onBeforeUnmount(() => {
+onUnmounted(() => {
 	player.value?.dispose();
 	setDisableScreensaver(false);
 });

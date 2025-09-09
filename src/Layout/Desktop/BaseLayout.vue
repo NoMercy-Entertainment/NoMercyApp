@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { computed } from 'vue';
-import { useRoute } from 'vue-router';
 import { IonPage, IonRouterOutlet, IonTabs } from '@ionic/vue';
 
 import ContextMenu from 'primevue/contextmenu';
@@ -10,8 +9,7 @@ import type { MenuItem } from 'primevue/menuitem';
 
 import { background } from '@/store/ui';
 import { currentServer } from '@/store/currentServer';
-import { contextMenu, contextMenuItems } from '@/store/contextMenuItems';
-import { cardMenu, trackContextMenuItems } from '@/store/contextMenuItems';
+import { cardMenu, contextMenu, contextMenuItems, trackContextMenuItems } from '@/store/contextMenuItems';
 
 import Indexer from '@/Layout/Indexer.vue';
 import ImageModal from '@/Layout/ImageModal.vue';
@@ -30,8 +28,6 @@ import EqualizerOverlay from '@/Layout/Desktop/components/Overlays/EqualizerOver
 import ChristmasSnow from '@/components/Seasonal/Christmas/ChristmasSnow.vue';
 import { isDarkMode } from '@/config/global.ts';
 import Shadow from '@/Layout/Desktop/components/Shadow.vue';
-
-const route = useRoute();
 
 const backgroundUrl = computed(() => {
 	if (!background.value)
@@ -64,8 +60,8 @@ function focusMain() {
 					<div
 						id="mainContent"
 						class="flex w-px flex-1 flex-col relative overflow-clip justify-start items-start w-available h-available sm:rounded-2xl border-auto-alpha-2 !bg-cover children:scrollbar-none z-0 bg-center"
+						style="box-shadow: 0 1px 3px 0 rgba(16,24,40,0.1), 0 1px 2px 0 rgba(16,24,40,0.06);"
 						:style="`
-                  box-shadow: 0 1px 3px 0 rgba(16,24,40,0.1), 0 1px 2px 0 rgba(16,24,40,0.06);
                   background-image: ${
 							backgroundUrl && !backgroundUrl.includes('null')
 								? `url(${backgroundUrl})`
@@ -100,10 +96,7 @@ function focusMain() {
 							>
 								<slot v-if="$slots.default" />
 								<IonTabs v-else>
-									<IonRouterOutlet
-										:key="route.path"
-										animated="false"
-									/>
+									<IonRouterOutlet animated="false" />
 								</IonTabs>
 							</main>
 						</div>

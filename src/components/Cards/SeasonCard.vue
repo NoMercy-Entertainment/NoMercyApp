@@ -35,7 +35,7 @@ const props = defineProps({
 			.replace(')', '')
 			.replace('rgb(', '')};`"
 		data-card="true"
-		:to="data?.available ? data?.link : '#'"
+		:to="data?.available ? data.link : '#'"
 	>
 		<div
 			class="relative mb-1 h-auto w-full overflow-clip rounded-t-md group-focus-visible/season:rounded-b-none group-hover/season:rounded-b-none aspect-backdrop bg-auto-1"

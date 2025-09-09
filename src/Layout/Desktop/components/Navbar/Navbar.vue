@@ -23,9 +23,6 @@ import libraries from '@/store/Libraries.ts';
 
 import MessagesMenu from '@/Layout/Desktop/components/Menus/MessagesMenu.vue';
 
-console.log('server', currentServer.value);
-console.log('libraries', libraries.value);
-
 const shouldShowLibraryLinks = computed(() => !!currentServer.value && (libraries.value?.length ?? 0) > 0);
 </script>
 

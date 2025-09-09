@@ -45,10 +45,13 @@ onMounted(() => {
 			<div
 				v-for="(item, index) in data[keyName]"
 				:key="item?.id"
-				:class="data[keyName]?.length > 5 ? 'children:grayscale' : ''"
+				:class="data[keyName]?.length > 5 && keyName === 'genres' ? 'children:grayscale' : ''"
 				class="gap-1 children:whitespace-nowrap text-sm leading-[140%] text-slate-lightA-12 dark:text-slate-darkA-12/90 font-semibold"
 			>
-				<template v-if="item?.id && prefix && keyName === 'genres'">
+				<span v-if="(typeof item === 'string')" class="inline-block">
+					{{ item }}
+				</span>
+				<template v-else-if="item?.id && prefix && keyName === 'genres'">
 					<GenrePill :genre="item" />
 				</template>
 				<RouterLink
@@ -66,9 +69,19 @@ onMounted(() => {
 				>
 					{{ item?.name }}
 				</RouterLink>
-				<span v-else class="inline-block">
-					{{ item?.name || item }}
-				</span>
+				<a
+					v-else
+					:href="item?.link"
+					target="_blank"
+					class="inline-block underline-offset-4 hover:underline focus-visible:underline"
+				>
+					<!--					<img v-if="item?.logo" -->
+					<!--						:src="`https://image.tmdb.org/t/p/w92${item?.logo}`" -->
+					<!--						:alt="item?.name" -->
+					<!--						class="inline h-6 w-auto rounded-sm align-middle col-span-1" -->
+					<!--					> -->
+					<span>{{ item?.name }}</span>
+				</a>
 				<span v-if="index !== data[keyName].length - 1 && keyName !== 'genres'">,</span>
 			</div>
 		</div>

@@ -14,10 +14,7 @@ import {
 import serverClient from '@/lib/clients/serverClient';
 import { currentServer } from '@/store/currentServer';
 
-const { idle, reset } = useIdle((screensaverDelay.value ?? 0) * 60 * 1000, {
-	window,
-	listenForVisibilityChange: false,
-});
+const { idle, reset } = useIdle((screensaverDelay.value ?? 0) * 60 * 1000);
 
 const index = ref(-1);
 const images = ref<LogoResponse[] | null>(null);
@@ -73,8 +70,13 @@ watch(images, () => {
 });
 
 watch([idle, images], ([idleValue]) => {
+	console.log('Idle state changed:', idleValue);
 	if (idleValue && images.value && images.value.length > 0) {
 		setShowScreensaver(true);
+	}
+	else if (idleValue) {
+		setShowScreensaver(false);
+		setImageModalData(null);
 	}
 	else {
 		setShowScreensaver(false);

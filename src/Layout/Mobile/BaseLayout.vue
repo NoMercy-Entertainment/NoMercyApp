@@ -51,9 +51,7 @@ onUnmounted(() => {
 			<ChristmasSnow />
 			<MobileLibraryHeader />
 
-			<IonRouterOutlet
-				animated="false"
-			/>
+			<IonRouterOutlet />
 
 			<ProfileMenu />
 			<!--			<EqualizerMenu /> -->

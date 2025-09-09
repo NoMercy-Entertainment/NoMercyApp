@@ -25,9 +25,7 @@ onMounted(async () => {
 
 <template>
 	<IonApp>
-		<IonRouterOutlet
-			animated="false"
-		/>
+		<IonRouterOutlet />
 		<Toast class="z-1199" />
 	</IonApp>
 </template>

@@ -1,5 +1,6 @@
 <script lang="ts" setup>
-import { onMounted, onUnmounted, type PropType, ref, watch } from 'vue';
+import { onMounted, onUnmounted, ref, watch } from 'vue';
+import type { PropType } from 'vue';
 
 import type { InfoResponse } from '@/types/api/base/info';
 
@@ -11,8 +12,11 @@ import type {
 } from '@/lib/VideoPlayer';
 import {
 	AutoSkipPlugin,
+	DesktopUIPlugin,
+	KeyHandlerPlugin,
+	nmplayer,
 } from '@/lib/VideoPlayer';
-import { DesktopUIPlugin, KeyHandlerPlugin, nmplayer } from '@/lib/VideoPlayer';
+
 import { closeSidebar, setSidebar, sidebar } from '@/store/sidebar';
 import { setDisableScreensaver } from '@/store/imageModal';
 import { musicVisibility } from '@/store/audioPlayer';
@@ -131,6 +135,10 @@ function initPlayer(value: NMPlaylistItem) {
 		else {
 			localStorage.setItem('trailerSubtitles', item.track);
 		}
+	});
+
+	trailer.value?.once('ready', () => {
+		trailer.value?.seek(0);
 	});
 
 	trailer.value?.on('play', () => {

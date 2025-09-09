@@ -129,10 +129,10 @@ function handleStop() {
 watch(showImageModal, (value) => {
 	if (!value) {
 		handleStop();
-		gesture.value?.destroy();
+		// gesture.value?.destroy();
 	}
 	else {
-		gesture.value?.enable();
+		// gesture.value?.enable();
 	}
 });
 

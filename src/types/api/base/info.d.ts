@@ -47,6 +47,9 @@ export interface InfoResponse {
 	similar: any[];
 	recommendations: any[];
 	seasons: Season[];
+	watch_providers: WatchProvider[];
+	companies: Company[];
+	networks: Network[];
 }
 
 export interface Season {
@@ -57,6 +60,31 @@ export interface Season {
 	title: string;
 	color_palette: SeasonColorPalette;
 	episodes: Episode[];
+}
+
+export interface Company {
+	id: number;
+	logo_path: string | null;
+	name: string;
+	origin_country: string;
+}
+
+export interface Network {
+	name: string;
+	id: number;
+	logo_path: string | null;
+	origin_country: string;
+}
+
+export interface WatchProvider {
+	id: string;
+	provider_id: number;
+	country_code: string;
+	type: string;
+	link: string;
+	name: string;
+	logo: string;
+	display_priority: number;
 }
 
 export interface SeasonColorPalette {

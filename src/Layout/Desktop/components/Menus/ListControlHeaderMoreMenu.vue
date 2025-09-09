@@ -16,19 +16,24 @@ defineProps({
 		type: Array as PropType<IMenuItem[]>,
 		required: true,
 	},
+	className: {
+		type: String,
+		required: false,
+		default: '',
+	},
 });
 </script>
 
 <template>
 	<Menu as="div" class="relative select-none z-[150]">
-		<div>
-			<MenuButton
-				:aria-label="$t('more')"
-				class="grid relative place-content-center w-10 h-10 active:outline outline-focus focus-visible:outline min-w-[2.5rem] z-0 justify-center disabled:opacity-50 disabled:text-auto-300 disabled:hover:!bg-transparent overflow-clip pointer-events-auto border-none focus:border-none active:border-none focus-visible:sm:ring-white focus-visible:sm:ring-2 group/button gap-2 p-2.5 items-center rounded-lg sm:bg-slate-lightA-2 dark:sm:bg-slate-darkA-2/[1%] active:sm:bg-slate-lightA-4 focus-visible:sm:bg-slate-lightA-4 hover:sm:bg-slate-lightA-4 dark:sm:active:bg-slate-darkA-4 dark:sm:focus-visible:sm:bg-slate-darkA-4 dark:sm:hover:bg-slate-darkA-4"
-			>
+		<MenuButton
+			:aria-label="$t('more')"
+			class=""
+		>
+			<slot name="button">
 				<OptimizedIcon icon="menuDotsHorizontal" />
-			</MenuButton>
-		</div>
+			</slot>
+		</MenuButton>
 
 		<transition
 			enter-active-class="transition duration-100 ease-out"
@@ -40,6 +45,7 @@ defineProps({
 		>
 			<MenuItems
 				class="absolute z-10 m-2 ml-8 flex w-min origin-top-right -translate-x-full flex-col gap-2 rounded-lg p-1 shadow-lg bg-slate-light-3 dark:bg-slate-dark-1 border-1 border-auto-2/11"
+				:class="className"
 			>
 				<slot />
 				<template v-for="(item, index) in items" :key="index">

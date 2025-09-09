@@ -105,18 +105,26 @@ function initPlayer(value?: NMPlaylistItem[] | undefined) {
 	});
 
 	player.value?.on('playlistComplete', () => {
-		player.value?.dispose();
-		router.back();
+		if (history.state.back) {
+			router.back();
+		}
+		else {
+			router.replace('/');
+		}
 	});
 
 	player.value?.on('dispose', () => {
 		lockPortrait();
 		disableImmersiveMode();
-		router.back();
 	});
 
 	player.value?.on('back', () => {
-		player.value?.dispose();
+		if (history.state.back) {
+			router.back();
+		}
+		else {
+			router.replace('/');
+		}
 	});
 
 	player.value?.on('play', () => {
@@ -138,7 +146,12 @@ function initPlayer(value?: NMPlaylistItem[] | undefined) {
 
 	App.addListener('backButton', () => {
 		player.value?.emit('back-button-hyjack');
-		router.back();
+		if (history.state.back) {
+			router.back();
+		}
+		else {
+			router.replace('/');
+		}
 	});
 
 	App.addListener('backButton', goBack);

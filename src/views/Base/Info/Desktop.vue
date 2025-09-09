@@ -3,6 +3,7 @@ import { computed, onMounted, onUnmounted, ref, watch } from 'vue';
 import { useRoute } from 'vue-router';
 import { useTranslation } from 'i18next-vue';
 import { IonContent, IonPage } from '@ionic/vue';
+import { MenuButton, MenuItem } from '@headlessui/vue';
 import type { ShareOptions } from '@capacitor/share';
 
 import type { InfoResponse } from '@/types/api/base/info';
@@ -43,7 +44,7 @@ import ScrollContainer from '@/Layout/Desktop/components/ScrollContainer.vue';
 import NotFound from '@/Layout/Desktop/components/NotFound.vue';
 import BannerButton from '@/components/Buttons/BannerButton.vue';
 import ShareButton from '@/components/Buttons/ShareButton.vue';
-import { MenuItem } from '@headlessui/vue';
+
 import MissingEpisodes from '@/views/Base/Info/components/MissingEpisodes.vue';
 import { useToast } from 'primevue/usetoast';
 import sidebar from '@/store/sidebar.ts';
@@ -384,7 +385,7 @@ const shareData = computed<ShareOptions>(() => ({
 						<FloatingBackButton />
 
 						<div
-							class="flex flex-col relative mx-auto w-full gap-4 rounded-lg p-4 max-w-screen-4xl justify-end min-h-[calc(100vh-6rem)]"
+							class="flex flex-col relative mx-auto w-full gap-4 rounded-lg p-4 max-w-screen-4xl justify-end min-h-[calc(100vh-6rem)] z-10"
 						>
 							<div class="z-0 flex w-full flex-grow flex-col min-h-40" />
 							<div
@@ -413,11 +414,14 @@ const shareData = computed<ShareOptions>(() => ({
 									<div
 										v-if="data?.poster"
 										class="absolute z-10 col-start-1 content-center col-end-2 h-auto w-full items-start justify-start rounded-lg top-0 -translate-y-[35%] sm:block"
+										:class="{
+											'': hasItem,
+										}"
 									>
 										<RouterLink
 											:to="`/${data?.media_type}/${data?.id}/watch`"
 											:aria-label="$t('Play')"
-											class="relative h-available m-auto mx-auto flex-1 flex max-w-[75%] scale-95 cursor-default group/card z-0 transitioning rounded-2xl aspect-poster overflow-clip select-none cover !shadow-none max-h-available  hover:!scale-100 hover:-translate-y-1"
+											class="relative h-available m-auto mx-auto flex-1 flex max-w-[75%] scale-95 cursor-default group/card z-0 transitioning rounded-2xl aspect-poster overflow-clip select-none cover !shadow-none max-h-available"
 											:class="{
 												' 4xl:-mt-10 5xl:-mt-20 6xl:-mt-28 mb-20 6xl:mb-28': sidebar === 'open',
 												' 4xl:-mt-2 5xl:-mt-60 6xl:-mt-28 mb-60 6xl:mb-28': sidebar !== 'open',
@@ -512,29 +516,66 @@ const shareData = computed<ShareOptions>(() => ({
 														</div>
 													</div>
 												</BannerButton>
+
+												<ListControlHeaderMoreMenu
+													v-else-if="data && data.watch_providers && data.watch_providers.length > 0"
+													:items="[]"
+													class="text-slate-lightA-12/70 dark:text-slate-darkA-12/80"
+													class-name="max-h-80 overflow-y-auto overflow-x-hidden  !ml-0 !-translate-x-1/3"
+												>
+													<template #button>
+														<MenuButton
+															class="flex flex-nowrap relative w-min active:outline outline-focus focus-visible:outline h-10 z-0 justify-center disabled:opacity-50 disabled:text-auto-300 disabled:hover:!bg-transparent overflow-clip pointer-events-auto border-none focus:border-none active:border-none focus-visible:sm:ring-white focus-visible:sm:ring-2 group/button gap-2 p-2.5 items-center rounded-lg sm:bg-slate-lightA-2 dark:sm:bg-slate-darkA-4 active:sm:bg-slate-lightA-6 focus-visible:sm:bg-slate-lightA-6 hover:sm:bg-slate-lightA-6 dark:sm:active:bg-slate-darkA-6 dark:sm:focus-visible:sm:bg-slate-darkA-6 dark:sm:hover:bg-slate-darkA-6"
+														>
+															<span
+																class="whitespace-nowrap text-base font-semibold"
+															>
+																{{ $t("Watch options") }}
+															</span>
+
+															<OptimizedIcon
+																icon="chevronDown"
+																class-name="w-6"
+															/>
+														</MenuButton>
+													</template>
+													<template v-for="provider in data.watch_providers.toSorted((a, b) => b.display_priority - a.display_priority)" :key="provider.id">
+														<MenuItem
+															as="a"
+															:href="provider.link"
+															target="_blank"
+															class="grid grid-cols-5 w-60 justify-center items-center self-stretch relative p-2 gap-3 rounded-sm border border-transparent hover:border-focus/4 active:bg-focus/9 active:border-focus/4 active:hover:border-focus/4 focus:bg-auto-12/2 hover:bg-focus/10 disabled:!bg-focus/2 disabled:!border-focus/2 transition-colors duration-200"
+														>
+															<img v-if="provider?.logo"
+																:src="`https://image.tmdb.org/t/p/w92${provider?.logo}`"
+																:alt="provider?.name"
+																class="inline h-10 w-10 rounded-sm align-middle col-span-1"
+															>
+															<span class="w-full whitespace-nowrap col-span-4 text-base font-semibold">
+																{{ provider?.name }}
+															</span>
+														</MenuItem>
+													</template>
+												</ListControlHeaderMoreMenu>
+
 												<div
 													v-else
-													class="grid relative place-content-center w-10 h-10 active:outline outline-focus focus-visible:outline min-w-[2.5rem] z-0 justify-center disabled:opacity-50 disabled:text-auto-300 disabled:hover:!bg-transparent overflow-clip pointer-events-auto border-none focus:border-none active:border-none focus-visible:sm:ring-white focus-visible:sm:ring-2 group/button gap-2 p-2.5 items-center rounded-lg sm:bg-slate-lightA-2 dark:sm:bg-slate-darkA-2/[1%] active:sm:bg-slate-lightA-6 focus-visible:sm:bg-slate-lightA-6 hover:sm:bg-slate-lightA-6 dark:sm:active:bg-slate-darkA-6 dark:sm:focus-visible:sm:bg-slate-darkA-6 dark:sm:hover:bg-slate-darkA-6 ${isActive ? 'text-focus' : 'text-auto-12"
+													class="flex !flex-nowrap relative h-10 z-0 justify-center overflow-clip pointer-events-auto border-none group/button gap-2 p-2.5 items-center rounded-lg sm:bg-slate-lightA-2 dark:sm:bg-slate-darkA-4"
 												>
-													<OptimizedIcon
-														icon="play"
-														class-name="w-6 text-red-dark-8"
-													/>
-
-													<div
-														class="absolute top-3 grid h-0 w-max flex-shrink-0 origin-bottom group-hover/play:grid-cols-1 items-center justify-start bg-black duration-200 grid-cols-[0fr] group-hover/play:h-[32.77px] transform-all left-[-31px] group-hover/play:top-[-38px] rounded-[5.46px]"
+													<span
+														class="whitespace-nowrap text-base font-semibold"
 													>
-														<div class="overflow-hidden">
-															<p
-																class="flex-shrink-0 py-0 text-xs font-bold px-2.5"
-															>
-																{{ $t("Not available") }}
-															</p>
-														</div>
-													</div>
+														{{ $t("Not available") }}
+													</span>
+
+													<OptimizedIcon
+														icon="playUnavailable"
+														class-name="w-6"
+													/>
 												</div>
+
 												<BannerButton
-													title="$t('Watch trailer')"
+													title="Watch trailer"
 													@click="trailerState === true ? toggleTrailer($event) : null"
 												>
 													<OptimizedIcon
@@ -549,7 +590,7 @@ const shareData = computed<ShareOptions>(() => ({
 												</BannerButton>
 
 												<BannerButton
-													title="$t('Mark as watched')"
+													title="Mark as watched"
 													@click="toggleWatched"
 												>
 													<OptimizedIcon
@@ -583,7 +624,7 @@ const shareData = computed<ShareOptions>(() => ({
 													>
 														<a
 															target="_blank"
-															:href="`https://www.themoviedb.org/${data.media_type}/${data.id}/edit`"
+															:href="`https://www.themoviedb.org/${data?.media_type}/${data?.id}/edit`"
 															class="relative flex w-full flex-grow items-center justify-center gap-2 text-base font-semibold"
 														>
 															<OptimizedIcon icon="edit" />
@@ -618,7 +659,7 @@ const shareData = computed<ShareOptions>(() => ({
 												<p
 													class="flex-shrink-0 flex-grow-0 text-sm font-bold uppercase text-auto-12"
 												>
-													{{ convertToHumanReact(t, data?.duration, true) }}
+													{{ convertToHumanReact(t, data.duration!, true) }}
 												</p>
 											</InfoHeaderItem>
 											<InfoHeaderItem v-if="data?.voteAverage">
@@ -691,31 +732,43 @@ const shareData = computed<ShareOptions>(() => ({
 												prefix="person"
 											/>
 											<InfoItem
-												v-if="data?.creators"
+												v-if="data?.creators?.length > 0"
 												:data="data"
 												title="Creators"
 												key-name="creators"
 												prefix="person"
 											/>
 											<InfoItem
-												v-if="data?.directors"
+												v-if="data?.directors?.length > 0"
 												:data="data"
 												title="Directors"
 												key-name="directors"
 												prefix="person"
 											/>
 											<InfoItem
-												v-if="data?.writers"
+												v-if="data?.writers?.length > 0"
 												:data="data"
 												title="Writers"
 												key-name="writers"
 												prefix="person"
 											/>
 											<InfoItem
-												v-if="data?.keywords"
+												v-if="data?.keywords?.length > 0"
 												:data="data"
 												title="Keywords"
 												key-name="keywords"
+											/>
+											<InfoItem
+												v-if="data?.networks?.length > 0"
+												:data="data"
+												title="Networks"
+												key-name="networks"
+											/>
+											<InfoItem
+												v-if="data?.companies?.length > 0"
+												:data="data"
+												title="Companies"
+												key-name="companies"
 											/>
 
 											<div
