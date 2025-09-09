@@ -57,17 +57,17 @@ export default defineConfig(({ command }) => {
 						{
 							urlPattern: ({ url }) => {
 								const isLocalIP
-                  = /^https?:\/\/(?:localhost|127\.0\.0\.1|192\.168\.\d+\.\d+|10\.\d+\.\d+\.\d+|172\.(?:1[6-9]|2\d|3[01])\.\d+\.\d+)(?::\d+)?/.test(
-                  	url.href,
-                  );
+									= /^https?:\/\/(?:localhost|127\.0\.0\.1|192\.168\.\d+\.\d+|10\.\d+\.\d+\.\d+|172\.(?:1[6-9]|2\d|3[01])\.\d+\.\d+)(?::\d+)?/.test(
+										url.href,
+									);
 								const isDevSubdomain = /(?:^|\.)dev\.nomercy\.tv$/.test(
 									url.hostname,
 								);
 								const isAppFile
-                  = url.pathname.match(/\.(js|css|html|json|xml|txt)$/i)
-                  	|| url.pathname === '/'
-                  	|| url.pathname.startsWith('/assets/')
-                  	|| !url.pathname.includes('.');
+									= url.pathname.match(/\.(js|css|html|json|xml|txt)$/i)
+										|| url.pathname === '/'
+										|| url.pathname.startsWith('/assets/')
+										|| !url.pathname.includes('.');
 
 								// Skip caching for Vue app files in dev environment
 								return (isLocalIP || isDevSubdomain) && isAppFile;
@@ -82,9 +82,9 @@ export default defineConfig(({ command }) => {
 						{
 							urlPattern: ({ url }) => {
 								const isLocalIP
-                  = /^https?:\/\/(?:localhost|127\.0\.0\.1|192\.168\.\d+\.\d+|10\.\d+\.\d+\.\d+|172\.(?:1[6-9]|2\d|3[01])\.\d+\.\d+)(?::\d+)?/.test(
-                  	url.href,
-                  );
+									= /^https?:\/\/(?:localhost|127\.0\.0\.1|192\.168\.\d+\.\d+|10\.\d+\.\d+\.\d+|172\.(?:1[6-9]|2\d|3[01])\.\d+\.\d+)(?::\d+)?/.test(
+										url.href,
+									);
 								const isDevSubdomain = /(?:^|\.)dev\.nomercy\.tv$/.test(
 									url.hostname,
 								);
@@ -152,9 +152,9 @@ export default defineConfig(({ command }) => {
 						{
 							urlPattern: ({ url }) => {
 								const isLocalIP
-                  = /^https?:\/\/(?:localhost|127\.0\.0\.1|192\.168\.\d+\.\d+|10\.\d+\.\d+\.\d+|172\.(?:1[6-9]|2\d|3[01])\.\d+\.\d+)(?::\d+)?/.test(
-                  	url.href,
-                  );
+									= /^https?:\/\/(?:localhost|127\.0\.0\.1|192\.168\.\d+\.\d+|10\.\d+\.\d+\.\d+|172\.(?:1[6-9]|2\d|3[01])\.\d+\.\d+)(?::\d+)?/.test(
+										url.href,
+									);
 								const isDevSubdomain = /(?:^|\.)dev\.nomercy\.tv$/.test(
 									url.hostname,
 								);
@@ -586,59 +586,59 @@ export default defineConfig(({ command }) => {
 			cssMinify: 'esbuild',
 			rollupOptions: {
 				output: {
-					manualChunks: (id) => {
-						// Only separate vendor libraries, let Vite handle app code chunking automatically
-						if (id.includes('node_modules')) {
-							// Heavy libraries get their own chunks
-							if (id.includes('subtitles-octopus')) {
-								return 'subtitles-octopus';
-							}
-							if (id.includes('@nomercy-entertainment/nomercy-video-player')) {
-								return 'video-player';
-							}
-							if (id.includes('@nomercy-entertainment/nomercy-music-player')) {
-								return 'music-player';
-							}
-							if (id.includes('primevue') || id.includes('@primevue')) {
-								return 'primevue';
-							}
-							// Combine Vue and Ionic into a single chunk to avoid circular dependencies
-							if (
-								id.includes('@ionic')
-								|| id.includes('vue')
-								|| id.includes('@vue')
-							) {
-								return 'vue-ionic';
-							}
-							if (id.includes('chart.js')) {
-								return 'charts';
-							}
-							if (id.includes('swiper')) {
-								return 'swiper';
-							}
-							if (id.includes('rxjs')) {
-								return 'rxjs';
-							}
-							if (id.includes('axios') || id.includes('@tanstack')) {
-								return 'api';
-							}
-							if (id.includes('hls.js') || id.includes('m3u8-parser')) {
-								return 'media';
-							}
-							return 'vendor';
-						}
-
-						// Let Vite handle all app code chunking automatically to avoid circular dependencies
-						// All manual app chunking has been removed to prevent initialization errors
-
-						// Only separate heavy assets like icons which are typically safe
-						if (id.includes('resources/icons/')) {
-							return 'icons';
-						}
-
-						// Let Vite decide how to chunk the rest automatically
-						return undefined;
-					},
+					// manualChunks: (id) => {
+					// 	// Only separate vendor libraries, let Vite handle app code chunking automatically
+					// 	if (id.includes('node_modules')) {
+					// 		// Heavy libraries get their own chunks
+					// 		if (id.includes('subtitles-octopus')) {
+					// 			return 'subtitles-octopus';
+					// 		}
+					// 		if (id.includes('@nomercy-entertainment/nomercy-video-player')) {
+					// 			return 'video-player';
+					// 		}
+					// 		if (id.includes('@nomercy-entertainment/nomercy-music-player')) {
+					// 			return 'music-player';
+					// 		}
+					// 		if (id.includes('primevue') || id.includes('@primevue')) {
+					// 			return 'primevue';
+					// 		}
+					// 		// Combine Vue and Ionic into a single chunk to avoid circular dependencies
+					// 		if (
+					// 			id.includes('@ionic')
+					// 			|| id.includes('vue')
+					// 			|| id.includes('@vue')
+					// 		) {
+					// 			return 'vue-ionic';
+					// 		}
+					// 		if (id.includes('chart.js')) {
+					// 			return 'charts';
+					// 		}
+					// 		if (id.includes('swiper')) {
+					// 			return 'swiper';
+					// 		}
+					// 		if (id.includes('rxjs')) {
+					// 			return 'rxjs';
+					// 		}
+					// 		if (id.includes('axios') || id.includes('@tanstack')) {
+					// 			return 'api';
+					// 		}
+					// 		if (id.includes('hls.js') || id.includes('m3u8-parser')) {
+					// 			return 'media';
+					// 		}
+					// 		return 'vendor';
+					// 	}
+					//
+					// 	// Let Vite handle all app code chunking automatically to avoid circular dependencies
+					// 	// All manual app chunking has been removed to prevent initialization errors
+					//
+					// 	// Only separate heavy assets like icons which are typically safe
+					// 	if (id.includes('resources/icons/')) {
+					// 		return 'icons';
+					// 	}
+					//
+					// 	// Let Vite decide how to chunk the rest automatically
+					// 	return undefined;
+					// },
 					generatedCode: {
 						constBindings: true,
 						arrowFunctions: true,

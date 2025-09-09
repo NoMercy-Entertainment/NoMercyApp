@@ -56,15 +56,15 @@ self.addEventListener('activate', (event) => {
 registerRoute(
 	({ url }) => {
 		const isLocalIP
-      = /^https?:\/\/(?:localhost|127\.0\.0\.1|192\.168\.\d+\.\d+|10\.\d+\.\d+\.\d+|172\.(?:1[6-9]|2\d|3[01])\.\d+\.\d+)(?::\d+)?/.test(
-      	url.href,
-      );
+			= /^https?:\/\/(?:localhost|127\.0\.0\.1|192\.168\.\d+\.\d+|10\.\d+\.\d+\.\d+|172\.(?:1[6-9]|2\d|3[01])\.\d+\.\d+)(?::\d+)?/.test(
+				url.href,
+			);
 		const isDevSubdomain = /(?:^|\.)dev\.nomercy\.tv$/.test(url.hostname);
 		const isAppFile
-      = url.pathname.match(/\.(js|css|html|json|xml|txt)$/i)
-      	|| url.pathname === '/'
-      	|| url.pathname.startsWith('/assets/')
-      	|| !url.pathname.includes('.');
+			= url.pathname.match(/\.(js|css|html|json|xml|txt)$/i)
+				|| url.pathname === '/'
+				|| url.pathname.startsWith('/assets/')
+				|| !url.pathname.includes('.');
 		return (isLocalIP || isDevSubdomain) && isAppFile;
 	},
 	new NetworkOnly(),
@@ -75,9 +75,9 @@ registerRoute(
 registerRoute(
 	({ url }) => {
 		const isLocalIP
-      = /^https?:\/\/(?:localhost|127\.0\.0\.1|192\.168\.\d+\.\d+|10\.\d+\.\d+\.\d+|172\.(?:1[6-9]|2\d|3[01])\.\d+\.\d+)(?::\d+)?/.test(
-      	url.href,
-      );
+			= /^https?:\/\/(?:localhost|127\.0\.0\.1|192\.168\.\d+\.\d+|10\.\d+\.\d+\.\d+|172\.(?:1[6-9]|2\d|3[01])\.\d+\.\d+)(?::\d+)?/.test(
+				url.href,
+			);
 		const isDevSubdomain = /(?:^|\.)dev\.nomercy\.tv$/.test(url.hostname);
 		const isAssetFile = url.pathname.match(
 			/\.(png|jpg|jpeg|gif|webp|avif|woff|woff2|ttf|eot|svg|ico)$/i,
@@ -143,9 +143,9 @@ registerRoute(
 registerRoute(
 	({ url }) => {
 		const isLocalIP
-      = /^https?:\/\/(?:localhost|127\.0\.0\.1|192\.168\.\d+\.\d+|10\.\d+\.\d+\.\d+|172\.(?:1[6-9]|2\d|3[01])\.\d+\.\d+)(?::\d+)?/.test(
-      	url.href,
-      );
+			= /^https?:\/\/(?:localhost|127\.0\.0\.1|192\.168\.\d+\.\d+|10\.\d+\.\d+\.\d+|172\.(?:1[6-9]|2\d|3[01])\.\d+\.\d+)(?::\d+)?/.test(
+				url.href,
+			);
 		const isDevSubdomain = /(?:^|\.)dev\.nomercy\.tv$/.test(url.hostname);
 		const isStaticAsset = /\.(js|css|json)$/i.test(url.pathname);
 		return !isLocalIP && !isDevSubdomain && isStaticAsset;
