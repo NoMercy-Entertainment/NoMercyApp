@@ -1,0 +1,1 @@
+import{_ as c}from"./_plugin-vue_export-helper-DlAUqK2U.js";import{c as o,o as e}from"./index-DhiqRu-L.js";const t={},r={class:"bg"};function s(_,a){return e(),o("div",r)}const p=c(t,[["render",s],["__scopeId","data-v-27843bed"]]);export{p as E};
