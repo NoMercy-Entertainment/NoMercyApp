@@ -1,35 +1,36 @@
 import { computed, ref, watch } from 'vue';
 import type { PaletteColors } from '@/lib/colorHelper';
-import { tooLight } from '@/lib/colorHelper';
-import { tooDark } from '@/lib/colorHelper';
-import { pickPaletteColor } from '@/lib/colorHelper';
+import { pickPaletteColor, tooDark, tooLight } from '@/lib/colorHelper';
 import { isPlatform, useKeyboard } from '@ionic/vue';
 import { SortOrder, SortType } from '@/types/musicPlayer';
 import { useAutoThemeColors } from '@/store/preferences';
 import { isXmasTime } from '@/lib/dateTime';
 import { Keyboard } from '@capacitor/keyboard';
-import { StatusBar } from '@capacitor/status-bar';
 import { rgbaToHex } from '@uiw/color-convert';
 import { rgbToHex } from '@/types/config.ts';
 import { disableImmersiveMode } from '@/lib/utils.ts';
+import { EdgeToEdge } from '@capawesome/capacitor-android-edge-to-edge-support';
 
 export const scrollContainerElement = ref<HTMLDivElement>();
 export const setupComplete = ref(false);
 
 const p = ref<string | null>();
 export const poster = computed(() => p.value);
+
 export function setPoster(value?: string | null) {
 	p.value = value;
 }
 
 const t = ref<string | null>();
 export const title = computed(() => t.value);
+
 export function setTitle(value?: string | null) {
 	p.value = value;
 }
 
 const b = ref<string | null>();
 export const background = computed(() => b.value);
+
 export function setBackground(value?: string | null) {
 	b.value = value;
 }
@@ -39,6 +40,7 @@ export const focusColor = computed(() => fc.value);
 
 const c = ref<PaletteColors | null>();
 export const colorPalette = computed(() => c.value);
+
 export function setColorPalette(value?: PaletteColors | null) {
 	c.value = value;
 
@@ -71,15 +73,14 @@ export function setColorPalette(value?: PaletteColors | null) {
 			color = rgbToHex(defaultColor, 1);
 		}
 
-		disableImmersiveMode();
-		StatusBar.setBackgroundColor({
-			color,
-		}).then();
+		disableImmersiveMode().then();
+		EdgeToEdge.setBackgroundColor({ color }).then();
 	}
 }
 
 const l = ref<string | null>();
 export const logo = computed(() => l.value);
+
 export function setLogo(value?: string | null) {
 	l.value = value;
 }
@@ -96,7 +97,8 @@ export const statusbar = computed(() => {
 			return StatusBar;
 		});
 	}
-	return () => {};
+	return () => {
+	};
 });
 
 export async function showStatusbar() {
@@ -113,27 +115,33 @@ export async function setStatusBarColor(color: string) {
 
 const st = ref<SortType>(SortType.index);
 export const sortType = computed(() => st.value);
+
 export function setSortType(value: any) {
 	st.value = value;
 }
 
 const so = ref<SortOrder>(SortOrder.asc);
 export const sortOrder = computed(() => so.value);
+
 export function setSortOrder(value: any) {
 	so.value = value;
 }
 
 const nav = ref(true);
 export const navBarVisible = computed(() => nav.value);
+
 export function setNavBarVisible(value: boolean) {
 	nav.value = value;
 }
+
 export function toggleNavBarVisible() {
 	nav.value = !nav.value;
 }
+
 export function showNavBar() {
 	nav.value = true;
 }
+
 export function hideNavBar() {
 	nav.value = false;
 }

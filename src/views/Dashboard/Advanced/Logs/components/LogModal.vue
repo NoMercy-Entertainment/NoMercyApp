@@ -1,5 +1,6 @@
 <script lang="ts" setup>
-import { computed, type PropType } from 'vue';
+import { computed } from 'vue';
+import type { PropType } from 'vue';
 
 import VueJsonPretty from 'vue-json-pretty';
 import 'vue-json-pretty/lib/styles.css';

@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import { ref, watch } from 'vue';
 import { IonContent, IonPage, isPlatform, onIonViewDidEnter, onIonViewDidLeave } from '@ionic/vue';
 import { App } from '@capacitor/app';
@@ -8,38 +8,22 @@ import { currentServer } from '@/store/currentServer';
 import { user } from '@/store/user';
 import { setDisableScreensaver } from '@/store/imageModal';
 
-import type {
-	NMPlayer,
-	NMPlaylistItem,
-	PlayerConfig,
-	PlaylistItem,
-} from '@/lib/VideoPlayer';
-import {
-	AutoSkipPlugin,
-	nmplayer,
-	OctopusPlugin,
-	SyncPlugin,
-	TVUIPlugin,
-} from '@/lib/VideoPlayer';
+import type { NMPlayer, NMPlaylistItem, PlayerConfig, PlaylistItem } from '@/lib/VideoPlayer';
+import { AutoSkipPlugin, nmplayer, OctopusPlugin, SyncPlugin, TVUIPlugin } from '@/lib/VideoPlayer';
 
 import audioPlayer from '@/store/audioPlayer';
 import router from '@/router';
-import { hideNavBar } from '@/store/ui';
+import { hideNavBar, showNavBar } from '@/store/ui';
 import useServerClient from '@/lib/clients/useServerClient';
 // import { VideoNoMercyConnectPlugin } from '@/lib/VideoPlayer/plugins/videoNoMercyConnectPlugin.ts';
 import KeyHandlerPlugin from '@/lib/VideoPlayer/plugins/keyHandlerPlugin.ts';
-import { disableImmersiveMode, lockPortrait } from '@/lib/utils.ts';
+import { lockPortrait } from '@/lib/utils.ts';
 
 const { data } = useServerClient<NMPlaylistItem[]>({
 	// enabled: !user.value.features?.nomercyConnect,
 });
 
 const player = ref<NMPlayer<NMPlaylistItem>>();
-
-function goBack() {
-	player.value?.emit('back-button');
-	player.value?.emit('back-button-hyjack');
-}
 
 function initPlayer(value?: NMPlaylistItem[] | undefined) {
 	const config: Partial<PlayerConfig<PlaylistItem>> = {
@@ -54,16 +38,18 @@ function initPlayer(value?: NMPlaylistItem[] | undefined) {
 		doubleClickDelay: 300,
 		playbackRates: [0.25, 0.5, 0.75, 1, 1.25, 1.5, 1.75, 2],
 		accessToken:
-      user.value?.accessToken || localStorage.getItem('access_token') || '',
+        user.value?.accessToken || localStorage.getItem('access_token') || '',
 		basePath: currentServer.value?.serverBaseUrl,
 		forceTvMode:
-      (isPlatform('android') || isPlatform('ios')) && !isPlatform('mobile'),
+        (isPlatform('android') || isPlatform('ios')) && !isPlatform('mobile'),
 		disableTouchControls: false,
 		disableMediaControls:
-      'mediaSession' in navigator || isPlatform('capacitor'),
+        'mediaSession' in navigator || isPlatform('capacitor'),
 		renderAhead: 10,
 		// disableAutoPlayback: user.value.features?.nomercyConnect,
 	};
+
+	player.value?.dispose();
 
 	// @ts-ignore
 	player.value = nmplayer('player1').setup(config);
@@ -99,7 +85,6 @@ function initPlayer(value?: NMPlaylistItem[] | undefined) {
 	// const sabrePlugin = new SabrePlugin();
 	// player.value?.registerPlugin('sabre', sabrePlugin);
 	// player.value?.usePlugin('sabre');
-
 	player.value?.once('play', () => {
 		player.value?.enterFullscreen();
 	});
@@ -115,16 +100,17 @@ function initPlayer(value?: NMPlaylistItem[] | undefined) {
 
 	player.value?.on('dispose', () => {
 		lockPortrait();
-		disableImmersiveMode();
-	});
-
-	player.value?.on('back', () => {
+		showNavBar();
 		if (history.state.back) {
 			router.back();
 		}
 		else {
 			router.replace('/');
 		}
+	});
+
+	player.value?.on('back', () => {
+		player.value?.dispose();
 	});
 
 	player.value?.on('play', () => {
@@ -145,16 +131,9 @@ function initPlayer(value?: NMPlaylistItem[] | undefined) {
 	});
 
 	App.addListener('backButton', () => {
+		player.value?.emit('back-button');
 		player.value?.emit('back-button-hyjack');
-		if (history.state.back) {
-			router.back();
-		}
-		else {
-			router.replace('/');
-		}
 	});
-
-	App.addListener('backButton', goBack);
 }
 
 watch(data, (value) => {
@@ -183,11 +162,11 @@ onIonViewDidLeave(() => {
 	<IonPage>
 		<IonContent :fullscreen="true">
 			<div
-				class="absolute inset-0 flex h-full w-full overflow-clip bg-black z-1199"
 				:class="{
 					'mb-28': isNative,
 					'mb-0': !isNative,
 				}"
+				class="absolute inset-0 flex h-full w-full overflow-clip bg-black z-1199"
 			>
 				<div id="player1" class="group nomercyplayer" />
 			</div>
@@ -199,9 +178,11 @@ onIonViewDidLeave(() => {
 .nomercyplayer .top-bar {
 	padding-top: calc(var(--safe-area-inset-top, 0px) + 1rem);
 }
+
 .nomercyplayer dialog {
 	background: #000000cc;
 }
+
 .nomercyplayer #slider-bar {
 	background: #ffffff50;
 }

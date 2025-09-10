@@ -1,20 +1,7 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import { RouterLink, useRoute } from 'vue-router';
-import {
-	IonIcon,
-	IonItem,
-	IonList,
-	IonRippleEffect,
-	isPlatform,
-} from '@ionic/vue';
-import {
-	arrowRefreshVertical,
-	doorOpen,
-	gridMasonry,
-	monitor,
-	moonDiagonal,
-	serverSwitch,
-} from '@Icons/index';
+import { IonIcon, IonItem, IonList, IonRippleEffect, isPlatform } from '@ionic/vue';
+import { arrowRefreshVertical, doorOpen, gridMasonry, monitor, moonDiagonal, serverSwitch } from '@Icons/index';
 
 import { darkMode } from '@/store/colorScheme';
 
@@ -26,11 +13,11 @@ import { logout } from '@/lib/auth/index';
 import { closeMenu, menuOpen } from '@/store/profileMenu';
 import { Browser } from '@capacitor/browser';
 import { phonePortrait } from 'ionicons/icons';
-import { isTv, tvModeOverride } from '@/config/global';
 
 const reload = () => window.location.reload();
 
 const route = useRoute();
+
 async function handleOpenApp() {
 	if (isPlatform('android')) {
 		Browser.open({ url: `nomercy://${route.path}` }).then(() => {
@@ -43,7 +30,7 @@ async function handleOpenApp() {
 </script>
 
 <template>
-	<BottomFlyout :menu-open="menuOpen" :close-menu="closeMenu">
+	<BottomFlyout :close-menu="closeMenu" :menu-open="menuOpen">
 		<IonList>
 			<IonItem lines="inset">
 				<ProfileMenuServerSection />
@@ -51,14 +38,14 @@ async function handleOpenApp() {
 
 			<IonItem lines="inset">
 				<RouterLink
-					to="/setup/select-servers"
 					class="flex justify-center items-center self-stretch w-full h-full flex-grow-0 flex-shrink-0 relative pl-1 py-2.5 rounded-md bg-transparent border border-transparent"
+					to="/setup/select-servers"
 				>
 					<IonRippleEffect />
 					<div class="flex-grow-0 flex-shrink-0 w-1 h-3.5" />
 					<IonIcon
-						aria-hidden="true"
 						:icon="serverSwitch"
+						aria-hidden="true"
 						class-name="size-6 min-w-6"
 					/>
 					<div
@@ -73,14 +60,14 @@ async function handleOpenApp() {
 
 			<IonItem lines="none">
 				<RouterLink
-					to="/preferences/display"
 					class="flex justify-center items-center self-stretch w-full h-full flex-grow-0 flex-shrink-0 relative pl-1 py-2.5 rounded-md bg-transparent border border-transparent"
+					to="/preferences/display"
 				>
 					<IonRippleEffect />
 					<div class="flex-grow-0 flex-shrink-0 w-1 h-3.5" />
 					<IonIcon
-						aria-hidden="true"
 						:icon="monitor"
+						aria-hidden="true"
 						class-name="size-6 min-w-6"
 					/>
 					<div
@@ -95,14 +82,14 @@ async function handleOpenApp() {
 
 			<IonItem lines="none">
 				<RouterLink
-					to="/dashboard/system"
 					class="flex justify-center items-center self-stretch w-full h-full flex-grow-0 flex-shrink-0 relative pl-1 py-2.5 rounded-md bg-transparent border border-transparent"
+					to="/dashboard/system"
 				>
 					<IonRippleEffect />
 					<div class="flex-grow-0 flex-shrink-0 w-1 h-3.5" />
 					<IonIcon
-						aria-hidden="true"
 						:icon="gridMasonry"
+						aria-hidden="true"
 						class-name="size-6 min-w-6"
 					/>
 					<div
@@ -117,15 +104,15 @@ async function handleOpenApp() {
 
 			<IonItem lines="none">
 				<button
-					no-ring
 					class="flex justify-center items-center self-stretch w-full h-full flex-grow-0 flex-shrink-0 relative pl-1 py-2.5 rounded-md bg-transparent border border-transparent"
+					no-ring
 					@click="reload()"
 				>
 					<IonRippleEffect />
 					<div class="flex-grow-0 flex-shrink-0 w-1 h-3.5" />
 					<IonIcon
-						aria-hidden="true"
 						:icon="arrowRefreshVertical"
+						aria-hidden="true"
 						class-name="size-6 min-w-6"
 					/>
 					<div
@@ -143,15 +130,15 @@ async function handleOpenApp() {
 				lines="none"
 			>
 				<button
-					no-ring
 					class="flex justify-center items-center self-stretch w-full h-full flex-grow-0 flex-shrink-0 relative pl-1 py-2.5 rounded-md bg-transparent border border-transparent"
+					no-ring
 					@click="handleOpenApp"
 				>
 					<IonRippleEffect />
 					<div class="flex-grow-0 flex-shrink-0 w-1 h-3.5" />
 					<IonIcon
-						aria-hidden="true"
 						:icon="phonePortrait"
+						aria-hidden="true"
 						class-name="size-6 min-w-6"
 					/>
 					<div
@@ -166,19 +153,19 @@ async function handleOpenApp() {
 
 			<IonItem lines="none">
 				<button
-					no-ring
 					class="flex justify-center items-center self-stretch w-available h-full flex-grow-0 flex-shrink-0 relative pl-2 py-2.5 rounded-md bg-transparent border border-transparent"
+					no-ring
 					@click="darkMode = !darkMode"
 				>
 					<IonIcon
-						aria-hidden="true"
 						:icon="moonDiagonal"
+						aria-hidden="true"
 						class-name="size-6 min-w-6"
 					/>
 
 					<label
-						for="ion-tg-0"
 						class="flex justify-center items-center flex-grow relative gap-2 px-2 w-available"
+						for="ion-tg-0"
 					>
 						<span class="flex-grow w-full text-lg font-medium text-left">
 							{{ $t("Dark mode") }}
@@ -189,44 +176,17 @@ async function handleOpenApp() {
 				</button>
 			</IonItem>
 
-			<IonItem v-show="!isTv && !isPlatform('mobileweb')" lines="inset">
-				<button
-					no-ring
-					class="flex justify-center items-center self-stretch w-available h-full flex-grow-0 flex-shrink-0 relative pl-2 py-2.5 rounded-md bg-transparent border border-transparent"
-					@click="tvModeOverride = !tvModeOverride"
-				>
-					<IonIcon
-						aria-hidden="true"
-						:icon="monitor"
-						class-name="size-6 min-w-6"
-					/>
-
-					<label
-						for="ion-tg-0"
-						class="flex justify-center items-center flex-grow relative gap-2 px-2 w-available"
-					>
-						<span class="flex-grow w-full text-lg font-medium text-left">
-							{{
-								tvModeOverride ? $t("Disable TV mode") : $t("Enable TV mode")
-							}}
-						</span>
-					</label>
-
-					<Toggle :model-value="tvModeOverride" class="pointer-events-none" />
-				</button>
-			</IonItem>
-
 			<IonItem lines="none">
 				<button
-					no-ring
 					class="flex justify-center items-center self-stretch w-full h-full flex-grow-0 flex-shrink-0 relative pl-1 py-2.5 rounded-md bg-transparent border border-transparent"
+					no-ring
 					@click="logout()"
 				>
 					<IonRippleEffect />
 					<div class="flex-grow-0 flex-shrink-0 w-1 h-3.5" />
 					<IonIcon
-						aria-hidden="true"
 						:icon="doorOpen"
+						aria-hidden="true"
 						class-name="size-6 min-w-6"
 					/>
 					<div

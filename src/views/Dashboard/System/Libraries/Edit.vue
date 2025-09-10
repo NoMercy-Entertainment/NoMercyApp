@@ -77,7 +77,7 @@ watch(libraries, (value) => {
 	if (!value)
 		return;
 	subtitleLanguages.value
-    = languages.value?.filter(l =>
+		= languages.value?.filter(l =>
 			settings.value?.subtitles?.includes(l.iso_639_1),
 		) ?? [];
 });

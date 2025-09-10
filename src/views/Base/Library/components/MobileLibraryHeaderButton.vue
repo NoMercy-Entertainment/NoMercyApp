@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { computed, type PropType, ref } from 'vue';
+import { computed, ref } from 'vue';
+import type { PropType } from 'vue';
 import type { MoooomIcons } from '@Icons/icons';
 import router from '@/router';
 

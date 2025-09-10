@@ -8,11 +8,11 @@ import type {
 	VueKeycloakTokenParsed,
 } from './types';
 
+import * as vue from 'vue';
+
 let installed = false;
 
 const KeycloakSymbol = Symbol('keycloak');
-
-import * as vue from 'vue';
 
 export default {
 	async install(app: Vue2Vue3App, params: VueKeycloakOptions = {}) {

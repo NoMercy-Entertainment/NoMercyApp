@@ -49,13 +49,13 @@ watch(props, (value) => {
 	}
 
 	endTime.value
-    = value.homeItem?.duration
-    	&& new Date(
-    		new Date().getTime() + value.homeItem?.duration * 60 * 1000,
-    	).toLocaleTimeString(i18next.language, {
-    		hour: '2-digit',
-    		minute: '2-digit',
-    	});
+		= value.homeItem?.duration
+			&& new Date(
+				new Date().getTime() + value.homeItem?.duration * 60 * 1000,
+			).toLocaleTimeString(i18next.language, {
+				hour: '2-digit',
+				minute: '2-digit',
+			});
 });
 
 function toggleWatched() {

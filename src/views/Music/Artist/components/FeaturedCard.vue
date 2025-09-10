@@ -1,11 +1,11 @@
 <script setup lang="ts">
-import { computed, type PropType } from 'vue';
+import { computed } from 'vue';
+import type { PropType } from 'vue';
 
-import type { ArtistResponse } from '@/types/api/music/artist';
+import type { Artist, ArtistResponse } from '@/types/api/music/artist';
 import type { PlaylistItem } from '@/types/musicPlayer';
 
 import CoverImage from '@/components/MusicPlayer/components/CoverImage.vue';
-import type { Artist } from '@/types/api/music/artist';
 
 const props = defineProps({
 	data: {

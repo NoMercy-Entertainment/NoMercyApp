@@ -10,22 +10,6 @@ import { preloadService } from '@/services/PreloadService';
 import * as Sentry from '@sentry/vue';
 import router from '@/router';
 
-let redirectUri = `nomercy://home`;
-if (location.href.includes('logout')) {
-	redirectUri = `nomercy:///logout`;
-}
-
-if (location.href.includes('redirectUri')) {
-	redirectUri = location.href.split('redirectUri=')[1].split('&')[0];
-}
-
-App.addListener('appUrlOpen', async (data) => {
-	redirectUri = data.url;
-	router.isReady().then(async () => {
-		await router.replace(data.url.replace('nomercy://', ''));
-	});
-}).then();
-
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/vue/css/core.css';
 
@@ -62,6 +46,24 @@ import { parseToken } from './lib/auth/helpers';
 import { useOnline } from '@vueuse/core';
 import { pwaMessages } from './i18n/pwa';
 import { redirectUrl } from '@/store/routeState';
+import { rgbToHex } from '@/types/config';
+import { EdgeToEdge } from '@capawesome/capacitor-android-edge-to-edge-support';
+
+let redirectUri = `nomercy://home`;
+if (location.href.includes('logout')) {
+	redirectUri = `nomercy:///logout`;
+}
+
+if (location.href.includes('redirectUri')) {
+	redirectUri = location.href.split('redirectUri=')[1].split('&')[0];
+}
+
+App.addListener('appUrlOpen', async (data) => {
+	redirectUri = data.url;
+	router.isReady().then(async () => {
+		await router.replace(data.url.replace('nomercy://', ''));
+	});
+}).then();
 
 function getCurrentLanguage(): string {
 	return (
@@ -71,7 +73,7 @@ function getCurrentLanguage(): string {
 
 const lang = getCurrentLanguage();
 const messages
-  = pwaMessages[lang as keyof typeof pwaMessages] || pwaMessages.en;
+	= pwaMessages[lang as keyof typeof pwaMessages] || pwaMessages.en;
 
 const app = createApp(AppComponent);
 
@@ -134,16 +136,13 @@ async function initializeMobileApp() {
 			import('@/config/config'),
 		]);
 
-		const StatusBar = await import('@capacitor/status-bar').then(m => m.default || m);
 		const disableImmersiveMode = await import('@/lib/utils.ts').then(m => m.disableImmersiveMode);
 
 		const style = window.getComputedStyle(document.body);
 		const color = `rgb(${style.getPropertyValue('--color-theme-7')})`;
 
-		disableImmersiveMode();
-		StatusBar.StatusBar.setBackgroundColor({
-			color,
-		}).then();
+		await disableImmersiveMode();
+		EdgeToEdge.setBackgroundColor({ color: rgbToHex(color, 1) }).then();
 
 		app.use(MobileKeycloak, {
 			init: {

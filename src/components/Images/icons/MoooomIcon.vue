@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { computed, type PropType, ref } from 'vue';
+import { computed, ref } from 'vue';
+import type { PropType } from 'vue';
 import { twMerge } from 'tailwind-merge';
 import type { MoooomIcons } from '@Icons/icons';
 

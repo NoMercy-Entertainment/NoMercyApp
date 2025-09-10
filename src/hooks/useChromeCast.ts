@@ -63,8 +63,8 @@ export function useChromecast() {
 						castContext.value = window.cast.framework.CastContext.getInstance();
 						castSession.value = event.session;
 						isConnected.value
-              = event.sessionState
-              	=== window.cast.framework.SessionState.SESSION_RESUMED;
+							= event.sessionState
+								=== window.cast.framework.SessionState.SESSION_RESUMED;
 						isCasting.value = !!event.session;
 						currentDevice.value = event.session.getCastDevice();
 						currentMedia.value = event.session.getMediaSession();

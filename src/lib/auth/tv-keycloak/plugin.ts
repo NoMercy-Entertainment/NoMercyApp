@@ -13,10 +13,10 @@ type KeycloakConfigFactory = () => KeycloakPluginConfig;
 type KeycloakConfigAsyncFactory = () => Promise<KeycloakPluginConfig>;
 
 type VueKeycloakPluginConfig
-  = | string
-  	| KeycloakPluginConfig
-  	| KeycloakConfigFactory
-  	| KeycloakConfigAsyncFactory;
+	= | string
+		| KeycloakPluginConfig
+		| KeycloakConfigFactory
+		| KeycloakConfigAsyncFactory;
 
 export const vueKeycloak: Plugin = {
 	async install(app, options: VueKeycloakPluginConfig) {

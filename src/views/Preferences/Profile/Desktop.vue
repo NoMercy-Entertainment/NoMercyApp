@@ -103,7 +103,7 @@ const classes = computed(() => {
 });
 
 const description
-  = 'Upload an image of max {{dimension}} pixels and {{size}} in size.\n We recommend a square image for best results.';
+	= 'Upload an image of max {{dimension}} pixels and {{size}} in size.\n We recommend a square image for best results.';
 </script>
 
 <template>

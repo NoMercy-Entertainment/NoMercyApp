@@ -1,16 +1,11 @@
-import type {
-	IDToken,
-	RefreshTokenRequestData,
-	TokenRequestData,
-	TokenResponse,
-} from './index.d';
+import type { IDToken, RefreshTokenRequestData, TokenRequestData, TokenResponse } from './index.d';
 import { generatePKCE, parseToken } from './helpers';
 import apiClient from '@/lib/clients/apiClient';
 import cdnClient from '../clients/cdnClient';
 
 import { setUser, user } from '@/store/user';
 import { isPlatform } from '@ionic/vue';
-import { authBaseUrl } from '@/config/config';
+import { authBaseUrl, suffix } from '@/config/config';
 
 const originalLocation = window.location.href.startsWith('file://')
 	? 'http://localhost:5173'
@@ -106,9 +101,9 @@ export function refreshToken() {
 	return new Promise((resolve, reject) => {
 		setTimeout(async () => {
 			const refreshToken
-        = location.search.split('refreshToken=')?.[1]?.split('&')?.[0]
-        	?? localStorage.getItem('refresh_token')
-        	?? undefined;
+				= location.search.split('refreshToken=')?.[1]?.split('&')?.[0]
+					?? localStorage.getItem('refresh_token')
+					?? undefined;
 
 			if (!refreshToken) {
 				reject('refreshToken: No refresh token');
@@ -236,7 +231,23 @@ async function checkAuth(): Promise<boolean | void> {
 }
 
 export function logout() {
-	redirectToOAuth(false).then();
+	let redirect = `${originalLocation}/#/oauth/callback`;
+	if (isPlatform('capacitor')) {
+		// redirect = 'nomercy:///logout';
+		redirect = `https://app${suffix}.nomercy.tv/logout`;
+	}
+
+	const queryParams = new URLSearchParams({
+		post_logout_redirect_uri: redirect,
+		id_token_hint: user.value.idToken,
+		prompt: 'false',
+	}).toString();
+
+	clearTokens();
+	sessionStorage.clear();
+	localStorage.clear();
+
+	window.location.href = `${authBaseUrl}logout?${queryParams}`;
 }
 
 export function isAuthenticated() {

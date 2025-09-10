@@ -85,7 +85,7 @@ export async function setupApp(app: AppContext['app']) {
 
 		// Set up service worker update detection
 		const { setupServiceWorkerUpdates } = await import(
-			'@/lib/serviceWorkerUpdates'
+			'@/lib/serviceWorkerUpdates',
 		);
 		setupServiceWorkerUpdates();
 	}

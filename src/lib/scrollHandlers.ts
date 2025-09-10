@@ -43,8 +43,8 @@ HTMLElement.prototype.scrollVerticalIntoView = function (
 	});
 };
 HTMLElement.prototype.animateVerticalIntoView = function (
-  parentElement: HTMLElement | null = null,
-  duration: number = 420,
+	parentElement: HTMLElement | null = null,
+	duration: number = 420,
 ) {
 	if (!(this instanceof HTMLElement))
 		return;
@@ -54,9 +54,9 @@ HTMLElement.prototype.animateVerticalIntoView = function (
 	if (!parentElement)
 		return;
 	const elementTop
-    = rect.top
-    	- parentElement.getBoundingClientRect().top
-    	- parentElement.getBoundingClientRect().height / 2;
+		= rect.top
+			- parentElement.getBoundingClientRect().top
+			- parentElement.getBoundingClientRect().height / 2;
 	const startTime = performance.now();
 	const startY = parentElement.scrollTop;
 	function scrollStep(timestamp: number) {

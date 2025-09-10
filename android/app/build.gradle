@@ -21,6 +21,7 @@ android {
             ignoreAssetsPattern '!.svn:!.git:!.ds_store:!*.scc:.*:!CVS:!thumbs.db:!picasa.ini:!*~'
         }
     }
+
     signingConfigs {
         debug {
             storeFile file("${rootDir}/keystore/debug.keystore")

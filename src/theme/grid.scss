@@ -11,7 +11,7 @@
 		grid-template-columns:
 			[index] 42px [first] minmax(360px, 4fr) [var1] minmax(360px, 3fr) [var2] minmax(360px, 2fr)
 			[last] minmax(150px, 1fr);
-    }
+	}
 }
 .home-grid {
 	grid-template-columns: [index] minmax(41px, 1fr) [first] 4fr [var2] minmax(40px, 1fr);

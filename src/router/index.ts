@@ -1,7 +1,4 @@
-import {
-	createRouter,
-	createWebHistory,
-} from '@ionic/vue-router';
+import { createRouter, createWebHistory } from '@ionic/vue-router';
 import { isPlatform } from '@ionic/vue';
 
 import { isTv } from '@/config/global';

@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { onMounted, type PropType, ref, watch } from 'vue';
+import { onMounted, ref, watch } from 'vue';
+import type { PropType } from 'vue';
 
 import type { HomeDataItem } from '@/types/api/music';
 import type {

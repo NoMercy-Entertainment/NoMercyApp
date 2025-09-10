@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { computed, type PropType } from 'vue';
+import { computed } from 'vue';
+import type { PropType } from 'vue';
 import { useTranslation } from 'i18next-vue';
 import md5 from 'md5';
 import { IonAvatar } from '@ionic/vue';

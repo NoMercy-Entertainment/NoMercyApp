@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { computed, type PropType } from 'vue';
+import { computed } from 'vue';
+import type { PropType } from 'vue';
 
 import type { LibraryResponse } from '@/types/api/base/library';
 
@@ -7,11 +8,12 @@ import { pickPaletteColor } from '@/lib/colorHelper';
 import { showBackdrops } from '@/store/preferences';
 import {
 	contextMenu,
-	type ContextMenuItem,
+
 	makeContextMenu,
 	setContextMenu,
 	setContextMenuContext,
 } from '@/store/contextMenuItems';
+import type { ContextMenuItem } from '@/store/contextMenuItems';
 import {
 	setBackground,
 	setColorPalette,

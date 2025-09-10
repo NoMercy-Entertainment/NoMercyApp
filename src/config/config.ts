@@ -3,12 +3,12 @@ import type { KeycloakConfig } from 'keycloak-js';
 export const siteTitle = 'NoMercy TV';
 
 export const suffix
-  = location.hostname.includes('dev')
-  	|| location.hostname.includes('vscode')
-  	|| location.hostname.includes('12')
-  	|| location.hostname.includes('192')
-  	? '-dev'
-  	: '';
+	= location.hostname.includes('dev')
+		|| location.hostname.includes('vscode')
+		|| location.hostname.includes('12')
+		|| location.hostname.includes('192')
+		? '-dev'
+		: '';
 
 export const ignoredRedirectQueries = [
 	'letter',

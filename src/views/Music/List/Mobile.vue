@@ -67,7 +67,7 @@ function sort(songs: PlaylistItem[], sortType: SortType, sortOrder: SortOrder, v
 	else {
 		// @ts-ignore
 		displayList.value
-      = newList?.filter(
+			= newList?.filter(
 				t =>
 					t.name?.toLowerCase().includes(value?.toLowerCase?.())
 					|| t.artist_track?.some(a =>

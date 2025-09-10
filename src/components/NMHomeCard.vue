@@ -1,5 +1,6 @@
 <script lang="ts" setup>
-import { computed, onMounted, type PropType, ref } from 'vue';
+import { computed, onMounted, ref } from 'vue';
+import type { PropType } from 'vue';
 
 import type { HomeItem } from '@/types/api/base/home';
 

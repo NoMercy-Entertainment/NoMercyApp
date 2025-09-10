@@ -124,7 +124,7 @@ export function formatDuration(value: number): string {
 export function generateRandomString(length: number): string {
 	let text = '';
 	const possible
-    = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+		= 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
 
 	for (let i = 0; i < length; i++) {
 		text += possible.charAt(Math.floor(Math.random() * possible.length));
@@ -417,7 +417,7 @@ export function Unique(value: any, index: any, self: string | any[]) {
 export function random_string(length: number) {
 	let result = '';
 	const characters
-    = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+		= 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
 	const charactersLength = characters.length;
 	for (let i = 0; i < length; i++) {
 		result += characters.charAt(Math.floor(Math.random() * charactersLength));
@@ -825,9 +825,9 @@ export function mappedEntries<O>(input: O) {
 
 export const alphaNumericRange = (function () {
 	const data
-    = '_#ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'.split(
-    	'',
-    );
+		= '_#ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'.split(
+			'',
+		);
 	return function (start: string, stop: string) {
 		const a = data.indexOf(start);
 		const b = data.indexOf(stop);
@@ -989,8 +989,8 @@ String.prototype.toTitleCase = function (): string {
  * @param  {boolean} withLowers true|false
  */
 String.prototype.titleCase = function (
-    lang = navigator.language.split('-')[0],
-    withLowers = true,
+	lang = navigator.language.split('-')[0],
+	withLowers = true,
 ): string {
 	let string: string;
 	let lowers: string[] = [];

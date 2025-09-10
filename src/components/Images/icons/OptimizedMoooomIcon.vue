@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { computed, type PropType, ref, watchEffect } from 'vue';
+import { computed, ref, watchEffect } from 'vue';
+import type { PropType } from 'vue';
 import { twMerge } from 'tailwind-merge';
 import type { MoooomIcons } from '@Icons/icons';
 import { ExtractedMoooomIcons } from '@Icons/mooooom/index';
@@ -40,7 +41,7 @@ async function loadOptimizedIcon(iconName: string): Promise<string> {
 	try {
 		// Try to load the individual optimized SVG file
 		const iconModule = await import(
-			`/resources/icons/mooooom/${iconName}.svg?import`
+			`/resources/icons/mooooom/${iconName}.svg?import`,
 		);
 		const svgContent = iconModule.default;
 

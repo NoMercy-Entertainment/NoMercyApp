@@ -189,7 +189,7 @@ watch(searchType, () => {
 						</div>
 					</div>
 
-					<div class="flex w-available">
+					<div class="flex w-0 flex-1">
 						<input
 							id="search"
 							ref="search"

@@ -1,5 +1,6 @@
 <script lang="ts" setup>
-import { type PropType, toRaw } from 'vue';
+import { toRaw } from 'vue';
+import type { PropType } from 'vue';
 import { useRoute } from 'vue-router';
 import { useQueryClient } from '@tanstack/vue-query';
 

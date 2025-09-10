@@ -21,9 +21,9 @@ function updateState<T>(configuration: Ref<T, T> | Ref<undefined, undefined>, ne
 }
 
 const { data: configuration, refetch: invalidate }
-  = useServerClient<ConfigurationResponse>({
-  	path: '/dashboard/configuration',
-  });
+	= useServerClient<ConfigurationResponse>({
+		path: '/dashboard/configuration',
+	});
 
 const ready = ref<boolean>(false);
 const newConfig = ref<ConfigurationResponse>({

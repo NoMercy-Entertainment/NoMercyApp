@@ -36,7 +36,7 @@ const thumbnail = computed(() => {
 		return null;
 
 	const baseUrl
-    = `${currentServer.value?.serverBaseUrl}\\${props.data.thumbnails}`;
+		= `${currentServer.value?.serverBaseUrl}\\${props.data.thumbnails}`;
 	return (
 		`${baseUrl.replace(/\\+/gu, '/').replace(/\/\/images/u, '/images')
 		}?token=${

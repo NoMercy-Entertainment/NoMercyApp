@@ -4,11 +4,13 @@ const config: CapacitorConfig = {
 	appId: 'tv.nomercy.app',
 	appName: 'NoMercy TV',
 	webDir: 'docs',
-	cordova: {},
-	server: {
-		// url: 'https://app-dev.nomercy.tv',
-		// androidScheme: 'nomercy',
-		// iosScheme: 'nomercy',
+	plugins: {
+		Keyboard: {
+			resizeOnFullScreen: false,
+		},
+		EdgeToEdge: {
+			backgroundColor: '#000000',
+		},
 	},
 };
 

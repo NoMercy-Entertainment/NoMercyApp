@@ -1,11 +1,6 @@
 <script lang="ts" setup>
-import { computed, type PropType } from 'vue';
-
-import type { ServerLibrary } from '@/types/server.ts';
-import type { EncoderProfile } from '@/types/api/dashboard/server.ts';
-import type { Language } from '@/types/api/shared';
-
-import useServerClient from '@/lib/clients/useServerClient';
+import type { PropType } from 'vue';
+import { computed } from 'vue';
 
 import Stepper from './Stepper.vue';
 import Button from '@/components/Button.vue';
@@ -52,33 +47,6 @@ function previousStep() {
 		props.setCurrentStep(props.steps[props.steps.findIndex(step => step === props.currentStep) - 1]);
 	}
 }
-
-const { data: languages } = useServerClient<Language[]>({
-	path: '/dashboard/configuration/languages',
-});
-// watch(languages, (value) => {
-// 	if (!value)
-// 		return;
-// 	setLanguages(value);
-// });
-
-const { data: libraries } = useServerClient<ServerLibrary[]>({
-	path: '/dashboard/libraries',
-});
-// watch(libraries, (value) => {
-// 	if (!value)
-// 		return;
-// 	setServerLibraries(value);
-// });
-
-const { data: encoderProfiles } = useServerClient<EncoderProfile[]>({
-	path: '/dashboard/encoderProfiles',
-});
-// watch(encoderProfiles, (value) => {
-// 	if (!value)
-// 		return;
-// 	setEncoderProfiles(value);
-// });
 </script>
 
 <template>
@@ -111,7 +79,9 @@ const { data: encoderProfiles } = useServerClient<EncoderProfile[]>({
 					</div>
 				</div>
 
-				<div class="mt-auto flex h-16 w-full justify-end gap-4 rounded-b-lg p-4 bg-slate-light-1/70 dark:bg-slate-dark-1/70">
+				<div
+					class="mt-auto flex h-16 w-full justify-end gap-4 rounded-b-lg p-4 bg-slate-light-1/70 dark:bg-slate-dark-1/70"
+				>
 					<Button v-if="!isFirstStep"
 						id="yes"
 						class="ml-auto !w-28"

@@ -10,6 +10,7 @@ import type { ColorScheme } from '@/types/config';
 import { isDarkMode } from '@/config/global';
 import { StatusBar, Style } from '@capacitor/status-bar';
 import { topNavColor } from '@/store/colorTheme';
+import { EdgeToEdge } from '@capawesome/capacitor-android-edge-to-edge-support';
 
 export const darkMode = ref(isDarkMode.value);
 
@@ -56,17 +57,20 @@ export async function setColorScheme(value: ColorScheme) {
 		}
 
 		if (value === 'dark') {
-			NavigationBar.setColor({ color: '#000000', darkButtons: true }).then();
-			// StatusBar.setBackgroundColor({ color: topNavColor.value }).then();
-			StatusBar.setStyle({ style: Style.Dark }).then();
+			await NavigationBar.setColor({ color: '#000000', darkButtons: true });
+			await StatusBar.setStyle({ style: Style.Dark });
+			await EdgeToEdge.setBackgroundColor({ color: '#000000' });
 		}
 		else {
-			NavigationBar.setColor({ color: '#FFFFFF', darkButtons: true }).then();
-			// StatusBar.setBackgroundColor({ color: topNavColor.value }).then();
-			StatusBar.setStyle({ style: Style.Dark }).then();
+			await NavigationBar.setColor({ color: '#FFFFFF', darkButtons: true });
+			await StatusBar.setStyle({ style: Style.Dark });
+			await EdgeToEdge.setBackgroundColor({ color: '#ffffff' });
 		}
 
-		StatusBar.setOverlaysWebView({ overlay: false }).then();
+		await EdgeToEdge.enable();
+
+		const result = await EdgeToEdge.getInsets();
+		console.log('Insets:', result);
 	}
 
 	await Preferences.set({
@@ -112,7 +116,8 @@ const setBackgroundColor = computed(() => {
 			return StatusBar.setBackgroundColor;
 		});
 	}
-	return () => {};
+	return () => {
+	};
 });
 
 export async function change(value: boolean) {

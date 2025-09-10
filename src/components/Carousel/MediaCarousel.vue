@@ -1,5 +1,6 @@
 <script lang="ts" setup>
-import { computed, type PropType, ref } from 'vue';
+import { computed, ref } from 'vue';
+import type { PropType } from 'vue';
 import { SwiperSlide } from 'swiper/vue';
 
 import type { KnownFor } from '@/types/api/base/person';

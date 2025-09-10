@@ -32,7 +32,7 @@ router.beforeEach(async (to) => {
 		return;
 
 	const mutations
-    = homeData.value?.filter?.(item => item?.update?.when === 'pageLoad') ?? [];
+		= homeData.value?.filter?.(item => item?.update?.when === 'pageLoad') ?? [];
 	mutate(mutations);
 });
 
@@ -98,7 +98,7 @@ function scrollToCenter(e: FocusEvent) {
 
 	setTimeout(() => {
 		const cardIndex
-      = (e.target as HTMLAnchorElement)?.getAttribute('index')?.toInt() ?? 0;
+			= (e.target as HTMLAnchorElement)?.getAttribute('index')?.toInt() ?? 0;
 
 		const carouselDiv = (e.target as HTMLAnchorElement).closest(
 			'[data-carousel]',

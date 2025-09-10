@@ -1,5 +1,5 @@
 const chars
-  = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=';
+	= 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=';
 
 function InvalidCharacterError(message: string) {
 	console.error(message);
@@ -40,8 +40,8 @@ function polyfill(input = '') {
 }
 
 const atob
-  = (typeof window !== 'undefined' && window.atob && window.atob.bind(window))
-  	|| polyfill;
+	= (typeof window !== 'undefined' && window.atob && window.atob.bind(window))
+		|| polyfill;
 
 function b64DecodeUnicode(str: string) {
 	return decodeURIComponent(

@@ -1,38 +1,16 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import { ref, watch } from 'vue';
-import {
-	IonContent,
-	IonPage,
-	isPlatform,
-	onIonViewDidEnter,
-	onIonViewDidLeave,
-} from '@ionic/vue';
+import { IonContent, IonPage, isPlatform, onIonViewDidEnter, onIonViewDidLeave } from '@ionic/vue';
 import { App } from '@capacitor/app';
 
-import {
-	disableImmersiveMode,
-	enableImmersiveMode,
-	lockLandscape,
-	lockPortrait,
-} from '@/lib/utils';
+import { disableImmersiveMode, enableImmersiveMode, lockLandscape, lockPortrait } from '@/lib/utils';
 import { isNative } from '@/config/global';
 import { currentServer } from '@/store/currentServer';
 import { user } from '@/store/user';
 import { setDisableScreensaver } from '@/store/imageModal';
 
-import type {
-	NMPlayer,
-	NMPlaylistItem,
-	PlayerConfig,
-	PlaylistItem,
-} from '@/lib/VideoPlayer';
-import {
-	AutoSkipPlugin,
-	DesktopUIPlugin,
-	nmplayer,
-	OctopusPlugin,
-	SyncPlugin,
-} from '@/lib/VideoPlayer';
+import type { NMPlayer, NMPlaylistItem, PlayerConfig, PlaylistItem } from '@/lib/VideoPlayer';
+import { AutoSkipPlugin, DesktopUIPlugin, nmplayer, OctopusPlugin, SyncPlugin } from '@/lib/VideoPlayer';
 
 import audioPlayer from '@/store/audioPlayer';
 import router from '@/router';
@@ -58,16 +36,18 @@ function initPlayer(value?: NMPlaylistItem[] | undefined) {
 		doubleClickDelay: 300,
 		playbackRates: [0.25, 0.5, 0.75, 1, 1.25, 1.5, 1.75, 2],
 		accessToken:
-      user.value?.accessToken || localStorage.getItem('access_token') || '',
+        user.value?.accessToken || localStorage.getItem('access_token') || '',
 		basePath: currentServer.value?.serverBaseUrl,
 		forceTvMode:
-      (isPlatform('android') || isPlatform('ios')) && !isPlatform('mobile'),
+        (isPlatform('android') || isPlatform('ios')) && !isPlatform('mobile'),
 		disableTouchControls: false,
 		disableMediaControls:
-      'mediaSession' in navigator || isPlatform('capacitor'),
+        'mediaSession' in navigator || isPlatform('capacitor'),
 		renderAhead: 100,
 		disableAutoPlayback: user.value.features?.nomercyConnect,
 	} satisfies PlayerConfig<PlaylistItem>;
+
+	player.value?.dispose();
 
 	// @ts-ignore
 	player.value = nmplayer('player1').setup(config);
@@ -157,6 +137,7 @@ function initPlayer(value?: NMPlaylistItem[] | undefined) {
 
 	App.addListener('backButton', () => {
 		player.value?.emit('back-button-hyjack');
+		player.value?.dispose();
 	});
 }
 
@@ -187,11 +168,11 @@ onIonViewDidLeave(() => {
 		<IonContent :fullscreen="true">
 			<Teleport to="body">
 				<div
-					class="absolute inset-0 flex h-full w-full overflow-clip bg-black z-1199"
 					:class="{
 						'mb-28': isNative,
 						'mb-0': !isNative,
 					}"
+					class="absolute inset-0 flex h-full w-full overflow-clip bg-black z-1199"
 				>
 					<div id="player1" class="group nomercyplayer" />
 				</div>
@@ -204,6 +185,7 @@ onIonViewDidLeave(() => {
 .nomercyplayer .top-bar {
 	@apply pt-safe-offset-4;
 }
+
 .nomercyplayer dialog {
 	background: #000000cc;
 }

@@ -79,7 +79,7 @@ onMounted(() => {
 			});
 
 			currentLyric.value
-        = lyrics_container.value.querySelector<HTMLDivElement>(
+				= lyrics_container.value.querySelector<HTMLDivElement>(
 					`[data-index='0']`,
 				)!;
 			if (currentLyric.value && lyrics_container.value) {
@@ -115,7 +115,7 @@ watch(currentTime, (value) => {
 	value = value + 0.5;
 
 	const newIndex
-    = (lyrics.value?.findIndex?.(l => l.time?.total >= value) ?? 0) - 1;
+		= (lyrics.value?.findIndex?.(l => l.time?.total >= value) ?? 0) - 1;
 
 	if (newIndex === -1 && value > 1)
 		return;
@@ -178,7 +178,7 @@ watch(lyrics, (value, oldValue) => {
 		return;
 
 	const currentLyric
-    = lyrics_container.value?.querySelector<HTMLDivElement>(`[data-index='0']`);
+		= lyrics_container.value?.querySelector<HTMLDivElement>(`[data-index='0']`);
 	if (currentLyric) {
 		currentLyric.style.opacity = '1';
 		currentLyric.style.color = 'white';

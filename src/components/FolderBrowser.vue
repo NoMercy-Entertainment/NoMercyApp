@@ -46,7 +46,7 @@ function getFolders(folder: string) {
 		.then(({ data }) => {
 			showFolders.value = data.data.filter(f => f.type === 'folder');
 			directorySeparator.value
-        = data.data.at(0)?.full_path?.match(/[\\/]/gu)?.at(-1) ?? '/';
+				= data.data.at(0)?.full_path?.match(/[\\/]/gu)?.at(-1) ?? '/';
 		})
 		.then(() => (loading.value = false));
 }

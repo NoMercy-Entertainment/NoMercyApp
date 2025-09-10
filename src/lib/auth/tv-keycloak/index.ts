@@ -8,9 +8,10 @@
  * https://www.keycloak.org/docs/latest/securing_apps/#_javascript_adapter
  */
 
+import { vueKeycloak } from './plugin';
+
 export * from './composable';
 export { getKeycloak, getToken, isTokenReady } from './keycloak';
 export * from './plugin';
-import { vueKeycloak } from './plugin';
 
 export default vueKeycloak;

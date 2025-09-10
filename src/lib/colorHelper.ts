@@ -397,10 +397,10 @@ export function getImageBrightness(imageSrc: string, cb: (arg: ImageBrightness) 
 		}
 
 		const transparency
-      = 100
-      	- Math.floor(
-      		(alphaSum / (img.naturalWidth * img.naturalHeight) / 255) * 100,
-      	);
+			= 100
+				- Math.floor(
+					(alphaSum / (img.naturalWidth * img.naturalHeight) / 255) * 100,
+				);
 		const brightness = Math.floor(
 			(colorSum / (img.naturalWidth * img.naturalHeight) / 255) * 100,
 		);

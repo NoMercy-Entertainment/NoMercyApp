@@ -1,5 +1,5 @@
-import {NMPlayer} from "@nomercy-entertainment/nomercy-video-player/src/types";
-import {Plugin} from "@/lib/VideoPlayer";
+import type { NMPlayer } from '@nomercy-entertainment/nomercy-video-player/src/types';
+import { Plugin } from '@/lib/VideoPlayer';
 
 export interface KeyHandlerPluginArgs {
 }
@@ -10,11 +10,12 @@ export class KeyHandlerPlugin extends Plugin {
 
 	initialize(player: NMPlayer<KeyHandlerPluginArgs>) {
 		this.player = player;
-		this.boundKeyHandler = this.keyHandler.bind(this)
+		this.boundKeyHandler = this.keyHandler.bind(this);
 	}
 
 	use() {
-		if (this.player.options.disableControls) return;
+		if (this.player.options.disableControls)
+			return;
 		document.addEventListener('keyup', this.boundKeyHandler, false);
 	}
 
@@ -27,12 +28,14 @@ export class KeyHandlerPlugin extends Plugin {
 	 * @param {KeyboardEvent} event - The keyboard event to handle.
 	 */
 	keyHandler(event: KeyboardEvent) {
-		if (document.activeElement?.nodeName == 'INPUT') return;
+		if (document.activeElement?.nodeName == 'INPUT')
+			return;
 
 		const keys = this.keyBindings();
 		let keyTimeout = false;
 
-		if (this.player.getVideoElement().getBoundingClientRect().width == 0) return;
+		if (this.player.getVideoElement().getBoundingClientRect().width == 0)
+			return;
 
 		if (!keyTimeout && this.player) {
 			keyTimeout = true;
@@ -40,7 +43,8 @@ export class KeyHandlerPlugin extends Plugin {
 			if (keys.some(k => k.key === event.key && k.control === event.ctrlKey)) {
 				event.preventDefault();
 				keys.find(k => k.key === event.key && k.control === event.ctrlKey)?.function();
-			} else {
+			}
+			else {
 				// alert(event.key);
 			}
 		}
@@ -69,73 +73,82 @@ export class KeyHandlerPlugin extends Plugin {
 				const socket = this.getNoMercyConnectSocket();
 				if (socket) {
 					socket.invoke('PlaybackCommand', command, value !== null ? value : null);
-				} else {
-					console.error("No NoMercyConnect socket available");
 				}
-			} catch (error) {
-				console.error("Error invoking PlaybackCommand:", error);
+				else {
+					console.error('No NoMercyConnect socket available');
+				}
 			}
-		} else {
-			console.warn("No NoMercyConnect plugin available");
+			catch (error) {
+				console.error('Error invoking PlaybackCommand:', error);
+			}
+		}
+		else {
+			console.warn('No NoMercyConnect plugin available');
 		}
 	}
 
 	handleForward() {
-		if(this.hasNoMercyConnect()){
-			this.sendNoMercyConnectCommand("forward");
-		} else {
+		if (this.hasNoMercyConnect()) {
+			this.sendNoMercyConnectCommand('forward');
+		}
+		else {
 			this.player.forwardVideo();
 		}
 	}
 
 	handleBackward() {
-		if(this.hasNoMercyConnect()){
-			this.sendNoMercyConnectCommand("backward");
-		} else {
+		if (this.hasNoMercyConnect()) {
+			this.sendNoMercyConnectCommand('backward');
+		}
+		else {
 			this.player.rewindVideo();
 		}
 	}
 
 	handlePlayback() {
-		if(this.hasNoMercyConnect()){
-			this.sendNoMercyConnectCommand(this.player.isPlaying ? "pause" : "play");
-		} else {
+		if (this.hasNoMercyConnect()) {
+			this.sendNoMercyConnectCommand(this.player.isPlaying ? 'pause' : 'play');
+		}
+		else {
 			this.player.togglePlayback();
 		}
 	}
 
 	handlePrevious() {
-		if(this.hasNoMercyConnect()){
-			this.sendNoMercyConnectCommand("previous");
-		} else {
+		if (this.hasNoMercyConnect()) {
+			this.sendNoMercyConnectCommand('previous');
+		}
+		else {
 			this.player.previous();
 		}
 	}
 
 	handleNext() {
-		if(this.hasNoMercyConnect()){
-			this.sendNoMercyConnectCommand("next");
-		} else {
+		if (this.hasNoMercyConnect()) {
+			this.sendNoMercyConnectCommand('next');
+		}
+		else {
 			this.player.next();
 		}
 	}
 
 	handleCycleCaption() {
-		if(this.hasNoMercyConnect()){
-			this.sendNoMercyConnectCommand("cycleCaption");
-		} else {
+		if (this.hasNoMercyConnect()) {
+			this.sendNoMercyConnectCommand('cycleCaption');
+		}
+		else {
 			this.player.cycleSubtitles();
 		}
 	}
 
 	handleCycleAudio() {
-		if(this.hasNoMercyConnect()){
-			this.sendNoMercyConnectCommand("cycleAudio");
-		} else {
+		if (this.hasNoMercyConnect()) {
+			this.sendNoMercyConnectCommand('cycleAudio');
+		}
+		else {
 			this.player.cycleAudioTracks();
 		}
 	}
-
 
 	keyBindings() {
 		return [
@@ -144,26 +157,30 @@ export class KeyHandlerPlugin extends Plugin {
 				key: 'MediaPlay',
 				control: false,
 				function: () => {
-					if(this.player.options.disableMediaControls) return;
-					if(this.hasNoMercyConnect()){
-						this.sendNoMercyConnectCommand("play");
-					} else {
+					if (this.player.options.disableMediaControls)
+						return;
+					if (this.hasNoMercyConnect()) {
+						this.sendNoMercyConnectCommand('play');
+					}
+					else {
 						this.player.play().then();
 					}
-				}
+				},
 			},
 			{
 				name: 'Pause',
 				key: 'MediaPause',
 				control: false,
 				function: () => {
-					if(this.player.options.disableMediaControls) return;
-					if(this.hasNoMercyConnect()){
-						this.sendNoMercyConnectCommand("pause");
-					} else {
+					if (this.player.options.disableMediaControls)
+						return;
+					if (this.hasNoMercyConnect()) {
+						this.sendNoMercyConnectCommand('pause');
+					}
+					else {
 						this.player.pause();
 					}
-				}
+				},
 			},
 			{
 				name: 'Toggle playback',
@@ -171,29 +188,32 @@ export class KeyHandlerPlugin extends Plugin {
 				control: false,
 				function: () => {
 					this.handlePlayback();
-				}
+				},
 			},
 			{
 				name: 'Toggle playback',
 				key: 'MediaPlayPause',
 				control: false,
 				function: () => {
-					if(this.player.options.disableMediaControls) return;
+					if (this.player.options.disableMediaControls)
+						return;
 					this.handlePlayback();
-				}
+				},
 			},
 			{
 				name: 'Stop',
 				key: 'MediaStop',
 				control: false,
 				function: () => {
-					if(this.player.options.disableMediaControls) return;
-					if(this.hasNoMercyConnect()){
-						this.sendNoMercyConnectCommand("stop");
-					} else {
+					if (this.player.options.disableMediaControls)
+						return;
+					if (this.hasNoMercyConnect()) {
+						this.sendNoMercyConnectCommand('stop');
+					}
+					else {
 						this.player.stop();
 					}
-				}
+				},
 			},
 			{
 				name: 'Rewind',
@@ -206,9 +226,10 @@ export class KeyHandlerPlugin extends Plugin {
 				key: 'MediaRewind',
 				control: false,
 				function: () => {
-					if(!this.player.isTv() && this.player.options.disableMediaControls) return;
+					if (!this.player.isTv() && this.player.options.disableMediaControls)
+						return;
 					this.handleBackward();
-				}
+				},
 			},
 			{
 				name: 'Fast forward',
@@ -221,18 +242,20 @@ export class KeyHandlerPlugin extends Plugin {
 				key: 'MediaFastForward',
 				control: false,
 				function: () => {
-					if(this.player.options.disableMediaControls) return;
+					if (this.player.options.disableMediaControls)
+						return;
 					this.handleForward();
-				}
+				},
 			},
 			{
 				name: 'Previous item',
 				key: 'MediaTrackPrevious',
 				control: false,
 				function: () => {
-					if(this.player.options.disableMediaControls) return;
+					if (this.player.options.disableMediaControls)
+						return;
 					this.handlePrevious();
-				}
+				},
 			},
 			{
 				name: 'Previous item',
@@ -245,9 +268,10 @@ export class KeyHandlerPlugin extends Plugin {
 				key: 'MediaTrackNext',
 				control: false,
 				function: () => {
-					if(this.player.options.disableMediaControls) return;
+					if (this.player.options.disableMediaControls)
+						return;
 					this.handleNext();
-				}
+				},
 			},
 			{
 				name: 'Next item',
@@ -296,96 +320,104 @@ export class KeyHandlerPlugin extends Plugin {
 				key: 'ColorF0Red',
 				control: false,
 				function: () => {
-					if(this.hasNoMercyConnect()){
-						this.sendNoMercyConnectCommand("forward", 30);
-					} else {
+					if (this.hasNoMercyConnect()) {
+						this.sendNoMercyConnectCommand('forward', 30);
+					}
+					else {
 						this.player.forwardVideo(30);
 					}
-				}
+				},
 			},
 			{
 				name: 'Forward 60 seconds',
 				key: 'ColorF1Green',
 				control: false,
 				function: () => {
-					if(this.hasNoMercyConnect()){
-						this.sendNoMercyConnectCommand("forward", 60);
-					} else {
+					if (this.hasNoMercyConnect()) {
+						this.sendNoMercyConnectCommand('forward', 60);
+					}
+					else {
 						this.player.forwardVideo(60);
 					}
-				}
+				},
 			},
 			{
 				name: 'Forward 90 seconds',
 				key: 'ColorF2Yellow',
 				control: false,
 				function: () => {
-					if(this.hasNoMercyConnect()){
-						this.sendNoMercyConnectCommand("forward", 90);
-					} else {
+					if (this.hasNoMercyConnect()) {
+						this.sendNoMercyConnectCommand('forward', 90);
+					}
+					else {
 						this.player.forwardVideo(90);
 					}
-				}
+				},
 			},
 			{
 				name: 'Forward 120 seconds',
 				key: 'ColorF3Blue',
 				control: false,
 				function: () => {
-					if(this.hasNoMercyConnect()){
-						this.sendNoMercyConnectCommand("forward", 120);
-					} else {
+					if (this.hasNoMercyConnect()) {
+						this.sendNoMercyConnectCommand('forward', 120);
+					}
+					else {
 						this.player.forwardVideo(120);
 					}
-				}
+				},
 			},
 			{
 				name: 'Forward 30 seconds',
 				key: '3',
 				control: false,
 				function: () => {
-					if(this.hasNoMercyConnect()){
-						this.sendNoMercyConnectCommand("forward", 30);
-					} else {
+					if (this.hasNoMercyConnect()) {
+						this.sendNoMercyConnectCommand('forward', 30);
+					}
+					else {
 						this.player.forwardVideo(30);
 					}
-				}
+				},
 			},
 			{
 				name: 'Forward 60 seconds',
 				key: '6',
 				control: false,
 				function: () => {
-					if(this.hasNoMercyConnect()){
-						this.sendNoMercyConnectCommand("forward", 60);
-					} else {
+					if (this.hasNoMercyConnect()) {
+						this.sendNoMercyConnectCommand('forward', 60);
+					}
+					else {
 						this.player.forwardVideo(60);
 					}
-				}
+				},
 			},
 			{
 				name: 'Forward 90 seconds',
 				key: '9',
 				control: false,
 				function: () => {
-					if(this.hasNoMercyConnect()){
-						this.sendNoMercyConnectCommand("forward", 90);
-					} else {
+					if (this.hasNoMercyConnect()) {
+						this.sendNoMercyConnectCommand('forward', 90);
+					}
+					else {
 						this.player.forwardVideo(90);
 					}
-				}
+				},
 			},
 			{
 				name: 'Forward 120 seconds',
 				key: '1',
 				control: false,
 				function: () => {
-					if(this.hasNoMercyConnect()){
-						this.sendNoMercyConnectCommand("forward", 120);
-					} else {
+					if (this.hasNoMercyConnect()) {
+						this.sendNoMercyConnectCommand('forward', 120);
+					}
+					else {
 						this.player.forwardVideo(120);
 					}
-				}
+				},
 			},
 			{
 				name: 'Fullscreen',
@@ -393,7 +425,7 @@ export class KeyHandlerPlugin extends Plugin {
 				control: false,
 				function: () => {
 					this.player.toggleFullscreen();
-				}
+				},
 			},
 			{
 				name: 'Volume up',
@@ -401,7 +433,7 @@ export class KeyHandlerPlugin extends Plugin {
 				control: false,
 				function: () => {
 					!this.player.isTv() && !this.player.isMobile() && this.player.volumeUp();
-				}
+				},
 			},
 			{
 				name: 'Volume down',
@@ -409,7 +441,7 @@ export class KeyHandlerPlugin extends Plugin {
 				control: false,
 				function: () => {
 					!this.player.isTv() && !this.player.isMobile() && this.player.volumeDown();
-				}
+				},
 			},
 			{
 				name: 'Mute',
@@ -417,7 +449,7 @@ export class KeyHandlerPlugin extends Plugin {
 				control: false,
 				function: () => {
 					this.player.toggleMute();
-				}
+				},
 			},
 			{
 				name: 'Cycle aspect ratio',
@@ -425,7 +457,7 @@ export class KeyHandlerPlugin extends Plugin {
 				control: false,
 				function: () => {
 					this.player.cycleAspectRatio();
-				}
+				},
 			},
 			{
 				name: 'Cycle aspect ratio',
@@ -433,7 +465,7 @@ export class KeyHandlerPlugin extends Plugin {
 				control: false,
 				function: () => {
 					this.player.cycleAspectRatio();
-				}
+				},
 			},
 			{
 				name: 'Show info',

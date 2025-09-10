@@ -1,5 +1,6 @@
 <script lang="ts" setup>
-import { type PropType, ref, watch } from 'vue';
+import { ref, watch } from 'vue';
+import type { PropType } from 'vue';
 
 import { useQueryClient } from '@tanstack/vue-query';
 

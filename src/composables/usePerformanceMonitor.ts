@@ -21,9 +21,9 @@ export function usePerformanceMonitor() {
 		)[0] as PerformanceNavigationTiming;
 		if (navigation) {
 			metrics.value.loadTime
-        = navigation.loadEventEnd - navigation.navigationStart;
+				= navigation.loadEventEnd - navigation.navigationStart;
 			metrics.value.domContentLoaded
-        = navigation.domContentLoadedEventEnd - navigation.navigationStart;
+				= navigation.domContentLoadedEventEnd - navigation.navigationStart;
 		}
 	};
 
@@ -80,7 +80,7 @@ export function usePerformanceMonitor() {
 			const observer = new PerformanceObserver((entryList) => {
 				for (const entry of entryList.getEntries()) {
 					metrics.value.firstInputDelay
-            = entry.processingStart - entry.startTime;
+						= entry.processingStart - entry.startTime;
 				}
 			});
 
@@ -295,7 +295,7 @@ export function usePerformanceMonitor() {
 
 			// Group by resource type
 			const extension
-        = resource.name.split('.').pop()?.toLowerCase() || 'other';
+				= resource.name.split('.').pop()?.toLowerCase() || 'other';
 			const type = getResourceType(extension);
 
 			if (!byType[type]) {

@@ -213,7 +213,7 @@ function updateMemoryChart() {
 
 	// Used memory
 	ctx.fillStyle
-    = usedPercentage > 0.8
+		= usedPercentage > 0.8
 			? '#ef4444'
 			: usedPercentage > 0.6
 				? '#f59e0b'
@@ -267,7 +267,7 @@ function updateTimelineChart() {
 			ctx.fillRect(x, y, barWidth * 0.8, barHeight);
 			// Labels - use theme-aware colors
 			const isDarkMode
-        = document.documentElement.classList.contains('scheme-dark');
+				= document.documentElement.classList.contains('scheme-dark');
 			ctx.fillStyle = isDarkMode ? '#a1a1aa' : '#374151'; // slate-400 for dark, gray-700 for light
 			ctx.font = '12px Arial';
 			ctx.textAlign = 'center';

@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { onMounted, onUnmounted, type PropType } from 'vue';
+import { onMounted, onUnmounted } from 'vue';
+import type { PropType } from 'vue';
 
 import type { ArtistResponse } from '@/types/api/music/artist';
 

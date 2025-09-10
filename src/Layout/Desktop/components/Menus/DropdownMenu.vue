@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { type PropType, ref } from 'vue';
+import { ref } from 'vue';
+import type { PropType } from 'vue';
 
 import { onClickOutside } from '@vueuse/core';
 import { twMerge } from 'tailwind-merge';

@@ -46,10 +46,10 @@ function handleProgress(data: ServerEncoderProgress) {
 
 const filteredQueueData = computed(() => {
 	const filtered
-    = queueData.value?.filter(
-    	item =>
-    		!encoderData.value.find(encoder => encoder.id === item.payload_id),
-    ) ?? [];
+		= queueData.value?.filter(
+			item =>
+				!encoderData.value.find(encoder => encoder.id === item.payload_id),
+		) ?? [];
 
 	if (displayAll.value) {
 		return filtered;

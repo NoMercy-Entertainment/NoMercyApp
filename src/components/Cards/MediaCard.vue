@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { computed, type PropType } from 'vue';
+import { computed } from 'vue';
+import type { PropType } from 'vue';
 
 import type { ContinueWatching, HomeItem } from '@/types/api/base/home';
 import type { Collection } from '@/types/api/base/collection';

@@ -25,7 +25,7 @@ interface Indicator {
 const { number_of_items, have_items } = episodeCounter(props.data);
 
 const percent
-  = have_items && number_of_items ? (have_items / number_of_items) * 100 : 0;
+	= have_items && number_of_items ? (have_items / number_of_items) * 100 : 0;
 const color = getColorFromPercent(percent, redToGreen);
 
 const isMovie = computed(() => {

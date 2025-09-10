@@ -1,9 +1,10 @@
-import {RouteLocationNormalizedLoaded, useRoute} from "vue-router";
+import type { RouteLocationNormalizedLoaded } from 'vue-router';
+import { useRoute } from 'vue-router';
 import Plugin from '@nomercy-entertainment/nomercy-video-player/src/plugin';
-import type { NMPlayer } from "@nomercy-entertainment/nomercy-video-player/src/types";
+import type { NMPlayer } from '@nomercy-entertainment/nomercy-video-player/src/types';
 
-import {useVideoSocket, videoSocketConnection} from "@/store/videoSocket";
-import type {NMPlaylistItem} from "@/lib/VideoPlayer";
+import { useVideoSocket } from '@/store/videoSocket';
+import type { NMPlaylistItem } from '@/lib/VideoPlayer';
 
 export interface SyncPluginArgs {
 	playlist: NMPlaylistItem[];
@@ -11,7 +12,7 @@ export interface SyncPluginArgs {
 
 export class SyncPlugin extends Plugin {
 	player: NMPlayer<SyncPluginArgs> = <NMPlayer<SyncPluginArgs>>{};
-	route:  RouteLocationNormalizedLoaded<string | symbol> = <RouteLocationNormalizedLoaded<string | symbol>>{};
+	route: RouteLocationNormalizedLoaded<string | symbol> = <RouteLocationNormalizedLoaded<string | symbol>>{};
 
 	async initialize(player: NMPlayer<SyncPluginArgs>) {
 		this.player = player;
@@ -55,40 +56,40 @@ export class SyncPlugin extends Plugin {
 		}
 	}
 
-  episodeData() {
-    const current = this.player.playlistItem();
+	episodeData() {
+		const current = this.player.playlistItem();
 
-    let path = this.route?.path;
-    if (!path) {
-      path = window.location.hash.replace("#", "");
-    }
-    if (!path) {
-      path = location.pathname;
-    }
+		let path = this.route?.path;
+		if (!path) {
+			path = window.location.hash.replace('#', '');
+		}
+		if (!path) {
+			path = location.pathname;
+		}
 
-    const route = path?.split("/");
+		const route = path?.split('/');
 
-    let specialId: string | undefined;
-    let collectionId: number | undefined;
-    let tmdbId: number | undefined =
-        current?.tmdb_id ?? (route.at(-2) as string);
-    if (route.at(-3) === "specials") {
-      specialId = route.at(-2) as string;
-    } else if (route.at(-3) === "collection") {
-      collectionId = route.at(-2) as unknown as number;
-      tmdbId = current.id as unknown as number;
-    }
+		let specialId: string | undefined;
+		let collectionId: number | undefined;
+		let tmdbId: number | undefined
+			= current?.tmdb_id ?? (route.at(-2) as string);
+		if (route.at(-3) === 'specials') {
+			specialId = route.at(-2) as string;
+		}
+		else if (route.at(-3) === 'collection') {
+			collectionId = route.at(-2) as unknown as number;
+			tmdbId = current.id as unknown as number;
+		}
 
-    return {
-      video_id: current?.video_id,
-      tmdb_id: tmdbId,
-      playlist_type: route.at(-3),
-      special_id: specialId,
-      collection_id: collectionId,
-      video_type: current?.video_type,
-      // @ts-ignore
-      time: Math.floor(this.player.getCurrentTime() || 0),
-    };
-  }
-
+		return {
+			video_id: current?.video_id,
+			tmdb_id: tmdbId,
+			playlist_type: route.at(-3),
+			special_id: specialId,
+			collection_id: collectionId,
+			video_type: current?.video_type,
+			// @ts-ignore
+			time: Math.floor(this.player.getCurrentTime() || 0),
+		};
+	}
 }

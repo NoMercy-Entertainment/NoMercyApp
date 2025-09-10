@@ -205,7 +205,7 @@ const chartOptions = computed(() => {
 				value: legendPosition.value,
 				onClick() {
 					legendPosition.value
-            = positionOptions[
+						= positionOptions[
 							(positionOptions.indexOf(legendPosition.value) + 1)
 							% positionOptions.length
 						];

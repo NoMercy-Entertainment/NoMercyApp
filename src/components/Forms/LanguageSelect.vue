@@ -71,7 +71,7 @@ watch(items, (value) => {
 	}
 	else {
 		filteredOptions.value
-      = query.value === ''
+			= query.value === ''
 				? value.filter(l => availableTranslations.includes(l.iso_639_1)) ?? []
 				: value
 					.filter(l => availableTranslations.includes(l.iso_639_1))
@@ -92,7 +92,7 @@ onMounted(() => {
 	}
 	else {
 		filteredOptions.value
-      = query.value === ''
+			= query.value === ''
 				? items.value.filter(l =>
 					availableTranslations.includes(l.iso_639_1),
 				) ?? []

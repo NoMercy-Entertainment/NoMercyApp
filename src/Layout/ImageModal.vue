@@ -1,8 +1,9 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import { computed, onBeforeUnmount, onMounted, ref, watch } from 'vue';
 import axios from 'axios';
 import type { MenuItem } from 'primevue/menuitem';
 import ContextMenu from 'primevue/contextmenu';
+import { Portal } from '@headlessui/vue';
 import {
 	disableScreensaver,
 	imageModal,
@@ -278,108 +279,111 @@ function onRightClick(e: MouseEvent) {
 </script>
 
 <template>
-	<button
-		v-if="(showImageModal || showScreensaver) && !disableScreensaver"
-		id="imageModal"
-		ref="imageModal"
-		class="fixed inset-0 w-screen h-screen z-[999999999] bg-auto-4 dark:bg-auto-9 m-0"
-		@click="handleClick"
-	>
-		<div
-			ref="overlayRef"
-			:style="`--delay: ${showScreensaver ? '2400ms' : '400ms'}`"
-			class="pointer-events-none fixed inset-0 bg-black w-available h-available z-999 transitioning-slower"
-		/>
-		<div
-			class="absolute inset-0 z-0 h-screen w-screen items-center border-solid border-black bg-black p-8 text-center left-50 border-1 transitioning-slower"
+	<Portal>
+		<dialog
+			id="imageModal"
+			ref="imageModal"
+			class="fixed inset-0 w-screen h-screen z-[999999999] bg-auto-4 dark:bg-auto-9 m-0 max-w-screen max-h-screen overflow-clip"
+			@click="handleClick"
 		>
-			<img
-				:src="src ?? ''"
-				alt=""
-				class="h-0 w-0 opacity-0"
-				@load="handleLoaded"
-			>
 			<div
-				class="absolute z-0 bg-center opacity-75 -inset-[50vh] w-[200vw] h-[400vh] bg-blur"
-				:style="`background-image: url(${src});`"
-			/>
-
-			<button
-				aria-hidden="true"
-				tabindex="-1"
-				class="absolute flex transitioning top-8 right-8 w-10 min-w-[2.5rem] h-10 min-h-[2.5rem] z-0 items-center justify-center disabled:opacity-50 disabled:text-auto-3 disabled:hover:!bg-transparent rounded-full overflow-clip hover:bg-transparent focus-visible:bg-transparent active:bg-transparent sm:focus-visible:bg-auto-4/80 sm:hover:bg-auto-4/80 pointer-events-auto"
-				:class="!showButton && !showScreensaver ? 'flex' : 'hidden'"
-				@click="handleClose"
-			>
-				<OptimizedIcon icon="cross" class="h-5 w-5" />
-			</button>
-
-			<ContextMenu
-				ref="cardMenu"
-				:model="trackContextMenuItems as MenuItem[]"
-				class="!z-[999999999999999999999]"
+				v-if="(showImageModal || showScreensaver) && !disableScreensaver"
+				ref="overlayRef"
+				:style="`--delay: ${showScreensaver ? '2400ms' : '400ms'}`"
+				class="pointer-events-none fixed inset-0 bg-black w-available h-available z-999 transitioning-slower"
 			/>
 			<div
-				class="absolute inset-2 tv:inset-2 z-0 m-auto h-auto overflow-clip rounded-xl bg-cover bg-center bg-no-repeat opacity-90 shadow-img max-w-[82vw] max-h-[83vh] bg-image-blur md:inset-16"
-				:style="`background-image: url(${src}); aspect-ratio: ${imageModalData?.aspectRatio}`"
-				@contextmenu="onRightClick($event)"
-			/>
-
-			<div
-				class="absolute inset-2 tv:inset-20 z-0 m-auto h-auto overflow-clip rounded-xl bg-cover bg-center bg-no-repeat shadow-img max-w-[82vw] max-h-[83vh] md:inset-24 pointer-events-none"
-				:style="`background-image: url(${src}); aspect-ratio: ${imageModalData?.aspectRatio}; box-shadow: 0 0 800px 80px rgba(0,0,0,.2) inset;`"
-				@contextmenu="onRightClick($event)"
+				class="absolute inset-0 z-0 h-screen w-screen items-center border-solid border-black bg-black p-8 text-center left-50 border-1 transitioning-slower"
 			>
+				<img
+					:src="src ?? ''"
+					alt=""
+					class="h-0 w-0 opacity-0"
+					@load="handleLoaded"
+				>
 				<div
-					class="absolute left-0 z-0 p-4 bottom:2 sm:bottom-6 sm:left-8 tv:bottom-4 tv:left-6"
+					:style="`background-image: url(${src});`"
+					class="absolute z-0 bg-center opacity-75 -inset-[50vh] w-[200vw] h-[400vh] bg-blur"
+				/>
+
+				<button
+					:class="!showButton && !showScreensaver ? 'flex' : 'hidden'"
+					aria-hidden="true"
+					class="absolute flex transitioning top-8 right-8 w-10 min-w-[2.5rem] h-10 min-h-[2.5rem] z-0 items-center justify-center disabled:opacity-50 disabled:text-auto-3 disabled:hover:!bg-transparent rounded-full overflow-clip hover:bg-transparent focus-visible:bg-transparent active:bg-transparent sm:focus-visible:bg-auto-4/80 sm:hover:bg-auto-4/80 pointer-events-auto"
+					tabindex="-1"
+					@click="handleClose"
+				>
+					<OptimizedIcon class="h-5 w-5" icon="cross" />
+				</button>
+
+				<ContextMenu
+					ref="cardMenu"
+					:model="trackContextMenuItems as MenuItem[]"
+					class="!z-[999999999999999999999]"
+				/>
+				<div
+					:style="`background-image: url(${src}); aspect-ratio: ${imageModalData?.aspectRatio}`"
+					class="absolute inset-2 tv:inset-2 z-0 m-auto h-auto overflow-clip rounded-xl bg-cover bg-center bg-no-repeat opacity-90 shadow-img max-w-[82vw] max-h-[83vh] bg-image-blur md:inset-16"
+					@contextmenu="onRightClick($event)"
+				/>
+
+				<div
+					:style="`background-image: url(${src}); aspect-ratio: ${imageModalData?.aspectRatio}; box-shadow: 0 0 800px 80px rgba(0,0,0,.2) inset;`"
+					class="absolute inset-2 tv:inset-20 z-0 m-auto h-auto overflow-clip rounded-xl bg-cover bg-center bg-no-repeat shadow-img max-w-[82vw] max-h-[83vh] md:inset-24 pointer-events-none"
+					@contextmenu="onRightClick($event)"
 				>
 					<div
-						class="flex h-inherit w-full select-none items-start justify-start bg-cover min-h-[20vh] max-h-[20vh] min-w-[30vw] max-w-[30vw] tv:min-h-[15vh] tv:max-h-[15vh] tv:min-w-[30vw] tv:max-w-[30vw]"
+						class="absolute left-0 z-0 p-4 bottom:2 sm:bottom-6 sm:left-8 tv:bottom-4 tv:left-6"
 					>
-						<TMDBImage
-							v-if="logoSrc"
-							:key="logoSrc"
-							:auto-shadow="true"
-							:path="logoSrc"
-							:shadow="logoColor"
-							:size="500"
-							class="w-auto !h-inherit object-contain h-available object-[0_0%] max-h-inherit !duration-700 children:!duration-700"
-							class-name="relative !h-inherit self-start px-4 py-4 !items-start"
-							type="logo"
-						/>
+						<div
+							class="flex h-inherit w-full select-none items-start justify-start bg-cover min-h-[20vh] max-h-[20vh] min-w-[30vw] max-w-[30vw] tv:min-h-[15vh] tv:max-h-[15vh] tv:min-w-[30vw] tv:max-w-[30vw]"
+						>
+							<TMDBImage
+								v-if="logoSrc"
+								:key="logoSrc"
+								:auto-shadow="true"
+								:path="logoSrc"
+								:shadow="logoColor"
+								:size="500"
+								class="w-auto !h-inherit object-contain h-available object-[0_0%] max-h-inherit !duration-700 children:!duration-700"
+								class-name="relative !h-inherit self-start px-4 py-4 !items-start"
+								type="logo"
+							/>
+						</div>
 					</div>
 				</div>
-			</div>
 
-			<div
-				class="absolute bottom-6 mx-auto -ml-8 flex w-full justify-center gap-8 text-crimson-11"
-				:class="showButton && !showScreensaver ? 'flex' : 'hidden'"
-			>
-				<button
-					aria-hidden="true"
-					tabindex="-1"
-					data-state="closed"
-					class="z-0 flex h-10 w-10 items-center justify-center min-w-[2.5rem] min-h-[2.5rem]"
-					style="opacity: 0.3"
+				<div
+					:class="showButton && !showScreensaver ? 'flex' : 'hidden'"
+					class="absolute bottom-6 mx-auto -ml-8 flex w-full justify-center gap-8 text-crimson-11"
 				>
-					<OptimizedIcon icon="arrowLeft" class="h-8 w-8 text-white/10" />
-				</button>
-				<button
-					aria-hidden="true"
-					tabindex="-1"
-					data-state="closed"
-					class="z-0 flex h-10 w-10 items-center justify-center transitioning min-w-[2.5rem] min-h-[2.5rem]"
-					style="opacity: 0.3"
+					<button
+						aria-hidden="true"
+						class="z-0 flex h-10 w-10 items-center justify-center min-w-[2.5rem] min-h-[2.5rem]"
+						data-state="closed"
+						style="opacity: 0.3"
+						tabindex="-1"
+					>
+						<OptimizedIcon class="h-8 w-8 text-white/10" icon="arrowLeft" />
+					</button>
+					<button
+						aria-hidden="true"
+						class="z-0 flex h-10 w-10 items-center justify-center transitioning min-w-[2.5rem] min-h-[2.5rem]"
+						data-state="closed"
+						style="opacity: 0.3"
+						tabindex="-1"
+					>
+						<OptimizedIcon class="h-8 w-8 text-white/10" icon="arrowRight" />
+					</button>
+				</div>
+				<div
+					:style="`--color-focus: ${logoColor ?? 'var(--color-theme-7)'};`"
+					class="absolute right-6 bottom-3 z-0 tv:h-12 h-20 tv:w-12 w-20 tv:right-3.5"
 				>
-					<OptimizedIcon icon="arrowRight" class="h-8 w-8 text-white/10" />
-				</button>
+					<AppLogoSquare class="" />
+				</div>
 			</div>
-			<div
-				class="absolute right-6 bottom-3 z-0 tv:h-12 h-20 tv:w-12 w-20 tv:right-3.5"
-				:style="`--color-focus: ${logoColor ?? 'var(--color-theme-7)'};`"
-			>
-				<AppLogoSquare class="" />
-			</div>
-		</div>
-	</button>
+			<ContextMenu ref="cardMenu" :model="trackContextMenuItems as MenuItem[]" append-to="#imageModal" />
+		</dialog>
+	</Portal>
 </template>

@@ -120,7 +120,7 @@ function handleUp(event: KeyboardEvent) {
 		const previousSibling = target.closest('ion-item')
 			?.previousSibling as HTMLElement;
 		const nextFocus
-      = previousSibling.querySelector<HTMLAnchorElement>('.focusable');
+			= previousSibling.querySelector<HTMLAnchorElement>('.focusable');
 
 		if (nextFocus) {
 			nextFocus.focus();
@@ -133,7 +133,7 @@ function handleUp(event: KeyboardEvent) {
 	else if (event.key === 'ArrowDown') {
 		const nextSibling = target.closest('ion-item')?.nextSibling as HTMLElement;
 		const nextFocus
-      = nextSibling.querySelector<HTMLAnchorElement>('.focusable');
+			= nextSibling.querySelector<HTMLAnchorElement>('.focusable');
 		if (nextFocus) {
 			nextFocus.focus();
 			nextFocus.scrollIntoView({

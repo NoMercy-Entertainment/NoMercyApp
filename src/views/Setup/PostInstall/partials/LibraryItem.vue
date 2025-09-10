@@ -1,7 +1,6 @@
 <script lang="ts" setup>
 import type { PropType } from 'vue';
-import { computed } from 'vue';
-import { ref } from 'vue';
+import { computed, ref } from 'vue';
 
 import type { LibrariesResponse } from '@/types/api/base/library';
 

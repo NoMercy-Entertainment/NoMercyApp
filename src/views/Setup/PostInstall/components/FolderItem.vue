@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { computed, type PropType, ref, toRaw, watch } from 'vue';
+import { computed, ref, toRaw, watch } from 'vue';
+import type { PropType } from 'vue';
 import { useToast } from 'primevue/usetoast';
 import { useQueryClient } from '@tanstack/vue-query';
 

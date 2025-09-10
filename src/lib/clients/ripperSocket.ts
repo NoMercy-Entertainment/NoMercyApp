@@ -1,4 +1,5 @@
-import { computed, type Ref, ref, watch } from 'vue';
+import { computed, ref, watch } from 'vue';
+import type { Ref } from 'vue';
 import { HubConnectionState } from '@microsoft/signalr/src/HubConnection';
 
 import SocketClient from '@/lib/clients/socketClient/SocketClient';

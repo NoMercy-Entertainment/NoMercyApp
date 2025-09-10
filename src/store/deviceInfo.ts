@@ -1,6 +1,7 @@
 import { computed, ref, toRaw } from 'vue';
 
-import { App as android, type AppInfo, type AppState } from '@capacitor/app';
+import { App as android } from '@capacitor/app';
+import type { AppInfo, AppState } from '@capacitor/app';
 import type { BatteryInfo, DeviceInfo } from '@capacitor/device';
 import { Device } from '@capacitor/device';
 import { Preferences } from '@capacitor/preferences';
@@ -33,9 +34,9 @@ export function setDeviceName(value: string) {
 async function getDeviceName() {
 	const deviceId = await Device.getId().then(device => device.identifier);
 	const deviceName
-    = (await Preferences.get({ key: 'deviceName' })).value
-    	?? deviceInfo.value?.name
-    	?? deviceId;
+		= (await Preferences.get({ key: 'deviceName' })).value
+			?? deviceInfo.value?.name
+			?? deviceId;
 	setDeviceName(deviceName);
 }
 

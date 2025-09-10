@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { type PropType, ref, watch } from 'vue';
+import { ref, watch } from 'vue';
+import type { PropType } from 'vue';
 
 import type { QueueResponse } from '@/types/api/dashboard/server';
 import OptimizedIcon from '@/components/OptimizedIcon.vue';

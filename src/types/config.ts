@@ -274,7 +274,7 @@ export function hslToHex(hsl: string, opacity: number): string {
 export function normalizeHex(hex: string, opacity: number): string {
 	if (hex.length === 4) {
 		hex
-      = `#${hex[1]}${hex[1]}${hex[2]}${hex[2]}${hex[3]}${hex[3]}`.toUpperCase();
+			= `#${hex[1]}${hex[1]}${hex[2]}${hex[2]}${hex[3]}${hex[3]}`.toUpperCase();
 	}
 	if (hex.length === 7) {
 		const alpha = Math.round(opacity * 255)

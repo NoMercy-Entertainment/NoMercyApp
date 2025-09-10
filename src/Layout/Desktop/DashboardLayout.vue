@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { computed, onMounted, type PropType, watch } from 'vue';
+import { computed, onMounted, watch } from 'vue';
+import type { PropType } from 'vue';
 import type { AxiosError } from 'axios';
 
 import type { ErrorResponse } from '@/types/server';

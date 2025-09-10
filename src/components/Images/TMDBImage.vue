@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import type { PropType } from 'vue';
 import { computed, onMounted, ref, watch } from 'vue';
 
@@ -100,10 +100,10 @@ const style = computed(() => {
 		'--c-4': 'rgb(var(--color-focus) / 1%)',
 
 		'backgroundImage':
-      props.type === 'logo' || !useAutoThemeColors
-      	? props.type === 'logo'
-      		? ''
-      		: `
+        props.type === 'logo' || !useAutoThemeColors
+        	? props.type === 'logo'
+        		? ''
+        		: `
                     radial-gradient(
                         farthest-corner at top left,
                                 rgb(var(--color-theme-9)),
@@ -125,7 +125,7 @@ const style = computed(() => {
                         hsl(0 0% 100% / 4%) 300px
                     )
                 `
-      	: `
+        	: `
 				radial-gradient(
 					farthest-corner at top left,
 							${
@@ -248,13 +248,13 @@ function onError(e: Event) {
 
 <template>
 	<div
-		class="pointer-events-none bottom-0 mx-auto flex w-full select-none place-self-start h-available overflow-clip"
 		:class="{
 			'aspect-poster  w-available h-auto': aspect === 'poster',
 			'aspect-backdrop  w-available h-auto': aspect === 'backdrop',
 			'w-auto h-available': aspect === null,
 		}"
 		:style="style"
+		class="pointer-events-none bottom-0 mx-auto flex w-full select-none place-self-start h-available overflow-clip"
 	>
 		<div
 			v-if="opacity === 0 && type === 'image'"
@@ -262,8 +262,8 @@ function onError(e: Event) {
 		/>
 		<picture
 			v-if="!error && path && !path?.includes?.('undefined')"
-			class="pointer-events-none absolute inset-0 h-inherit flex select-none flex-col items-end justify-end tv:justify-start self-end transition-all duration-500 max-h-inherit overflow-hidden"
 			:style="`opacity: ${opacity}; float: ${type === 'logo' ? 'right' : ''}`"
+			class="pointer-events-none absolute inset-0 h-inherit flex select-none flex-col items-end justify-end tv:justify-start self-end transition-all duration-500 max-h-inherit overflow-hidden"
 		>
 			<source :srcset="`${serverImageUrl} 1x`">
 			<!--      <source -->
@@ -273,17 +273,7 @@ function onError(e: Event) {
 			<!--      <source :srcset="`${serverImageUrl}?width=${size ? (size * 2) : null}&type=png&aspect_ratio=${aspectRatio} 1x`" -->
 			<!--              type="image/png"/> -->
 			<img
-				:src="tmdbImageUrl"
-				:width="size"
-				:height="height"
-				:fetchpriority="priority"
-				:loading="loading === 'eager' ? 'eager' : 'lazy'"
 				:alt="`tmdb image for ${title ?? 'image'}`"
-				:onload="onLoaded"
-				:onloadstart="onLoadStart"
-				:onerror="onError"
-				crossorigin="anonymous"
-				class="pointer-events-auto inset-0 bg-top transition-all duration-500 max-h-inherit"
 				:class="{
 					'aspect-poster w-available h-auto': aspect === 'poster',
 					'aspect-backdrop w-available h-auto': aspect === 'backdrop',
@@ -295,6 +285,13 @@ function onError(e: Event) {
 					[`${widthClass}`]: true,
 					[`${className}`]: true,
 				}"
+				:fetchpriority="priority"
+				:height="height"
+				:loading="loading === 'eager' ? 'eager' : 'lazy'"
+				:onerror="onError"
+				:onload="onLoaded"
+				:onloadstart="onLoadStart"
+				:src="tmdbImageUrl"
 				:style="`
               float: ${type === 'logo' ? 'right' : ''};
               filter: ${
@@ -302,12 +299,15 @@ function onError(e: Event) {
 						? `drop-shadow(0px 0px 6px rgb(${shadow})) drop-shadow(0px 0px 6px rgb(${shadow}))`
 						: ''
 				}`"
+				:width="size"
+				class="pointer-events-auto inset-0 bg-top transition-all duration-500 max-h-inherit"
+				crossorigin="anonymous"
 			>
 		</picture>
 		<div
 			v-else-if="type === 'image'"
-			class="inset-0 grid aspect-video h-full w-full place-items-center place-center"
 			:class="type === 'image' ? 'bg-auto-1' : ''"
+			class="inset-0 grid aspect-video h-full w-full place-items-center place-center"
 		>
 			<div
 				class="w-full h-full inset-0 grid place-items-center place-center bg-[rgb(var(--color-logo-dark)/20%)]"

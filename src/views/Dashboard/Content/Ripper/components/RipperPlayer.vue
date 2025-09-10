@@ -7,9 +7,9 @@ import {
 	DesktopUIPlugin,
 	KeyHandlerPlugin,
 	nmplayer,
-	type NMPlayer,
-	type PlayerConfig,
+
 } from '@/lib/VideoPlayer';
+import type { NMPlayer, PlayerConfig } from '@/lib/VideoPlayer';
 import {
 	discContents,
 	ripperPlaylist,

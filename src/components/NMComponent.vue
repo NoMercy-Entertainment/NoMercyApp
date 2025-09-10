@@ -1,15 +1,12 @@
-<script setup lang="ts">
-import { onMounted, onUnmounted, type PropType, watch } from 'vue';
+<script lang="ts" setup>
+import type { PropType } from 'vue';
+import { onMounted, onUnmounted, watch } from 'vue';
 import { useRoute } from 'vue-router';
-import { IonSpinner, onIonViewWillEnter } from '@ionic/vue';
+import { IonSpinner } from '@ionic/vue';
 import { useOnline } from '@vueuse/core';
 
-import {
-	getMutating,
-	getMutation,
-	getQuery,
-	queryKey as qk,
-} from '@/lib/routerHelper';
+import { getMutating, getMutation, getQuery, queryKey as qk } from '@/lib/routerHelper';
+import router from '@/router';
 
 const props = defineProps({
 	path: {
@@ -100,21 +97,24 @@ watch(homeData, (value) => {
 	}, 1000);
 });
 
-onIonViewWillEnter(() => {
-	if (!homeData.value || (route.name !== 'Home' && route.name !== 'Libraries' && route.name !== 'Music Start')) {
-		return;
-	}
+onMounted(() => {
+	watch(route, (value, oldValue) => {
+		console.log('onIonViewWillEnter triggered', value.name);
+		if (!homeData.value || value.name !== router.currentRoute.value.name || (value.name !== 'Home' && value.name !== 'Libraries' && value.name !== 'Music Start')) {
+			return;
+		}
 
-	if (onlineStatus.value) {
-		mutatePageLoad();
-	}
+		if (onlineStatus.value) {
+			mutatePageLoad();
+		}
+	});
 });
 </script>
 
 <template>
 	<template v-if="isLoading">
 		<div class="grid w-available h-available place-items-center">
-			<IonSpinner name="crescent" class="ion-padding" />
+			<IonSpinner class="ion-padding" name="crescent" />
 		</div>
 	</template>
 	<template v-else-if="(!isMutating || !onlineStatus)">

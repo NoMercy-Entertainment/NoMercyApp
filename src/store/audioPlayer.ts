@@ -17,10 +17,11 @@ import type {
 } from '@nomercy-entertainment/nomercy-music-player/src/types';
 
 import {
-	type PlaylistItem,
+
 	SizeState,
 	VisibilityState,
 } from '@/types/musicPlayer';
+import type { PlaylistItem } from '@/types/musicPlayer';
 
 import type { Device } from '@/types/server.ts';
 
@@ -410,7 +411,7 @@ export function handleReset(type: string, event: MouseEvent, band?: EQBand) {
 
 export function setEqualizerPreset(value?: EqualizerPreset) {
 	equalizerPreset.value
-    = equalizerPresets.value.find(
+		= equalizerPresets.value.find(
 			(p: EqualizerPreset) => p.name === (value?.name ?? 'Flat'),
 		) ?? equalizerPresets.value[0];
 

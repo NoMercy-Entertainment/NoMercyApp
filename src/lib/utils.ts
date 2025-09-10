@@ -1,15 +1,14 @@
 import { camelize, getCurrentInstance, ref, toHandlerKey } from 'vue';
-import { type ClassValue, clsx } from 'clsx';
+import type { ClassValue } from 'clsx';
+import { clsx } from 'clsx';
 import { twMerge } from 'tailwind-merge';
 
 import type { InfoResponse } from '@/types/api/base/info';
 import { isTv } from '@/config/global';
 import { isPlatform } from '@ionic/vue';
-import {
-	AndroidFullScreen,
-	AndroidSystemUiFlags,
-} from '@awesome-cordova-plugins/android-full-screen';
+import { AndroidFullScreen, AndroidSystemUiFlags } from '@awesome-cordova-plugins/android-full-screen';
 import { StatusBar } from '@capacitor/status-bar';
+import { EdgeToEdge } from '@capawesome/capacitor-android-edge-to-edge-support';
 
 export function cn(...inputs: ClassValue[]) {
 	return twMerge(clsx(inputs));
@@ -58,9 +57,9 @@ export function scrollIntoView(parent?: HTMLElement) {
 		return;
 
 	const elementTop
-    = document.activeElement!.getBoundingClientRect().top
-    	+ document.activeElement!.getBoundingClientRect().height / 2
-    	- parentElement.offsetHeight / 3;
+		= document.activeElement!.getBoundingClientRect().top
+			+ document.activeElement!.getBoundingClientRect().height / 2
+			- parentElement.offsetHeight / 3;
 	const startingY = parentElement.scrollTop;
 	const startTime = performance.now();
 
@@ -77,6 +76,7 @@ export function scrollIntoView(parent?: HTMLElement) {
 
 	requestAnimationFrame(scrollStep);
 }
+
 //
 // export const scrollCenter = (el: HTMLElement, container: HTMLElement, options?: {
 // 	duration?: number;
@@ -236,6 +236,7 @@ export function shouldMarquee(el: HTMLElement) {
 
 export const stopPropagation = (e: Event) => e.stopPropagation();
 export const preventDefault = (e: Event) => e.preventDefault();
+
 export function stopAndPrevent(e: Event) {
 	e.stopPropagation();
 	e.preventDefault();
@@ -305,11 +306,11 @@ export async function enableImmersiveMode() {
 			| AndroidSystemUiFlags.LayoutStable
 			| AndroidSystemUiFlags.Fullscreen,
 		);
-		await StatusBar.setOverlaysWebView({ overlay: false });
+		await EdgeToEdge.disable();
 	}
 }
 
-export function disableImmersiveMode() {
+export async function disableImmersiveMode() {
 	if (isPlatform('capacitor') && !isTv.value && isLeanModeEnabled.value) {
 		isLeanModeEnabled.value = false;
 
@@ -318,7 +319,7 @@ export function disableImmersiveMode() {
 
 		StatusBar.show().then();
 		AndroidFullScreen.showSystemUI().then();
-		StatusBar.setOverlaysWebView({ overlay: false }).then();
+		await EdgeToEdge.enable();
 	}
 }
 
@@ -367,7 +368,7 @@ export class ClickEventHandler {
 		el: HTMLElement,
 		singleClickEvtCallback: (event: MouseEvent) => void,
 		doubleClickEvtCallback: (event: MouseEvent) => void,
-    doubleClickLength: number = 350,
+		doubleClickLength: number = 350,
 	) {
 		this.singleClickEvtCallback = singleClickEvtCallback;
 		this.doubleClickEvtCallback = doubleClickEvtCallback;

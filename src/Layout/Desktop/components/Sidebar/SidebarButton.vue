@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { computed, onMounted, type PropType, ref } from 'vue';
+import { computed, onMounted, ref } from 'vue';
+import type { PropType } from 'vue';
 import { RouterLink } from 'vue-router';
 
 import router from '@/router';

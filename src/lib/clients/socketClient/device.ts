@@ -56,10 +56,10 @@ export async function makeDeviceInfo(): Promise<ClientInfo> {
 	}
 
 	const deviceName
-    = info.name
-    	?? localStorage.getItem('CapacitorStorage.deviceName')
-    	?? localStorage.getItem('CapacitorStorage.deviceId')
-    	?? deviceId.value;
+		= info.name
+			?? localStorage.getItem('CapacitorStorage.deviceName')
+			?? localStorage.getItem('CapacitorStorage.deviceId')
+			?? deviceId.value;
 
 	const volume = useLocalStorage('nmplayer-music-volume', 100);
 

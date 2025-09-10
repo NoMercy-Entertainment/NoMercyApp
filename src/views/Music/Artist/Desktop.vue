@@ -4,8 +4,7 @@ import { useRoute } from 'vue-router';
 import { IonContent, IonPage } from '@ionic/vue';
 
 import type { ArtistResponse } from '@/types/api/music/artist';
-import type { SortOrder, SortType } from '@/types/musicPlayer';
-import type { PlaylistItem } from '@/types/musicPlayer';
+import type { PlaylistItem, SortOrder, SortType } from '@/types/musicPlayer';
 
 import useServerClient from '@/lib/clients/useServerClient';
 import { setTitle, sortByType } from '@/lib/stringArray';
@@ -76,7 +75,7 @@ function sort(songs: PlaylistItem[], sortType: SortType, sortOrder: SortOrder, v
 	}
 	else {
 		displayList.value
-      = newList?.filter(
+			= newList?.filter(
 				t =>
 					t.name?.toLowerCase().includes(value?.toLowerCase?.())
 					|| t.artist_track?.some(a =>

@@ -1,8 +1,9 @@
 <script lang="ts" setup>
-import { computed, type PropType } from 'vue';
+import { computed } from 'vue';
+import type { PropType } from 'vue';
 
-import type { ArtistResponse } from '@/types/api/music/artist';
-import type { Artist } from '@/types/api/music/artist';
+import type { Artist, ArtistResponse } from '@/types/api/music/artist';
+
 import type { HomeDataItem, MusicHomeResponseItem } from '@/types/api/music';
 import type { PlaylistItem } from '@/types/musicPlayer';
 

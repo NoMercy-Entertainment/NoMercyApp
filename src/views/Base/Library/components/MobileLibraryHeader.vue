@@ -18,8 +18,8 @@ const show = ref(
 );
 router.afterEach((to) => {
 	show.value
-    = shownRoutes.some(route => to.fullPath.startsWith(route))
-    	|| endsWithRoutes.some(route => to.fullPath.endsWith(route));
+		= shownRoutes.some(route => to.fullPath.startsWith(route))
+			|| endsWithRoutes.some(route => to.fullPath.endsWith(route));
 });
 </script>
 

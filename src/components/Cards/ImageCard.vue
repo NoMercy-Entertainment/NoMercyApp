@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { type PropType, ref } from 'vue';
+import { ref } from 'vue';
+import type { PropType } from 'vue';
 
 import type { MediaItem } from '@/types/api/base/info';
 

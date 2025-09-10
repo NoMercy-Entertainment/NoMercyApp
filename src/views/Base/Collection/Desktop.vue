@@ -53,22 +53,22 @@ watch(data, (value) => {
 	}
 
 	endTime.value
-    = value.duration
-    	&& new Date(
-    		new Date().getTime() + value.duration * 60 * 1000,
-    	).toLocaleTimeString(i18next.language ?? 'en-US', {
-    		hour: '2-digit',
-    		minute: '2-digit',
-    	});
+		= value.duration
+			&& new Date(
+				new Date().getTime() + value.duration * 60 * 1000,
+			).toLocaleTimeString(i18next.language ?? 'en-US', {
+				hour: '2-digit',
+				minute: '2-digit',
+			});
 	interval.value = setInterval(() => {
 		endTime.value
-      = value.duration
-      	&& new Date(
-      		new Date().getTime() + value.duration * 60 * 1000,
-      	).toLocaleTimeString(i18next.language ?? 'en-US', {
-      		hour: '2-digit',
-      		minute: '2-digit',
-      	});
+			= value.duration
+				&& new Date(
+					new Date().getTime() + value.duration * 60 * 1000,
+				).toLocaleTimeString(i18next.language ?? 'en-US', {
+					hour: '2-digit',
+					minute: '2-digit',
+				});
 	}, 1000);
 });
 

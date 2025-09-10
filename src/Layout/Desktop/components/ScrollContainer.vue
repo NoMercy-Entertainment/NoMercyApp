@@ -106,12 +106,12 @@ function drag(e: MouseEvent) {
 	}
 
 	const y
-    = lim(0, e.clientY - bar!.getBoundingClientRect().top, bar!.clientHeight)
-    	- handle.clientHeight / 2;
+		= lim(0, e.clientY - bar!.getBoundingClientRect().top, bar!.clientHeight)
+			- handle.clientHeight / 2;
 
 	container.scrollTop
-    = (container.scrollHeight - container.clientHeight)
-    	* (y / (bar!.clientHeight - handle!.clientHeight));
+		= (container.scrollHeight - container.clientHeight)
+			* (y / (bar!.clientHeight - handle!.clientHeight));
 }
 
 function disable() {

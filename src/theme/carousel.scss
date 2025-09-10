@@ -1,377 +1,376 @@
 /* ===== CAROUSEL BASE STYLES ===== */
 .carousel {
-  isolation: isolate;
+	isolation: isolate;
 
-  grid-auto-flow: column;
-  anchor-name: --carousel;
-  container-type: inline-size;
-  overflow-x: auto;
-  overscroll-behavior-x: contain;
-  scroll-marker-group: before;
-  scroll-snap-type: x mandatory;
-  scrollbar-width: none;
-  --gap: .75rem;
-  --size: 3;
+	grid-auto-flow: column;
+	anchor-name: --carousel;
+	container-type: inline-size;
+	overflow-x: auto;
+	overscroll-behavior-x: contain;
+	scroll-marker-group: before;
+	scroll-snap-type: x mandatory;
+	scrollbar-width: none;
+	--gap: 0.75rem;
+	--size: 3;
 
-  &:focus-visible,
-  &:focus {
-    outline: none;
-    border: none;
-  }
+	&:focus-visible,
+	&:focus {
+		outline: none;
+		border: none;
+	}
 
-  /* ===== SLIDE STYLES ===== */
-  > * {
-    flex: 0 0 calc((100% - (var(--size) - 1) * var(--gap)) / var(--size));
-    scroll-snap-align: start;
-    position: relative;
-    container-type: scroll-state;
-    border-radius: 8px;
-    padding: 0.2rem;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 1.5rem;
-    color: #333;
-    aspect-ratio: 2/3;
-  }
+	/* ===== SLIDE STYLES ===== */
+	> * {
+		flex: 0 0 calc((100% - (var(--size) - 1) * var(--gap)) / var(--size));
+		scroll-snap-align: start;
+		position: relative;
+		container-type: scroll-state;
+		border-radius: 8px;
+		padding: 0.2rem;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		font-size: 1.5rem;
+		color: #333;
+		aspect-ratio: 2/3;
+	}
 
-  *:focus-visible,
-  *:focus {
-    outline: none;
-    border: none;
-  }
+	*:focus-visible,
+	*:focus {
+		outline: none;
+		border: none;
+	}
 
-  &.backdrop > * {
-    aspect-ratio: 16/9;
-  }
+	&.backdrop > * {
+		aspect-ratio: 16/9;
+	}
 
-  &.carousel-buttons {
-    /* ===== SCROLL BUTTONS ===== */
-    > *::scroll-marker,
-    &::scroll-button(*) {
-      background-color: rgb(var(--background-auto-10));
-      border: none;
-      width: 2rem;
-      height: 2rem;
-      border-radius: 0.5rem;
-      cursor: pointer;
-      margin: 0;
-      overflow: clip;
-      padding: 0.35em;
-      aspect-ratio: 1;
-      z-index: 5;
-      background-size: 1.5rem 1.5rem;
-      background-repeat: no-repeat;
-      background-position: center center;
-      overscroll-behavior-x: contain;
-      position-anchor: --carousel;
-      color: #eeecec;
-      position: absolute;
-      outline: 1px solid white;
-    }
+	&.carousel-buttons {
+		/* ===== SCROLL BUTTONS ===== */
+		> *::scroll-marker,
+		&::scroll-button(*) {
+			background-color: rgb(var(--background-auto-10));
+			border: none;
+			width: 2rem;
+			height: 2rem;
+			border-radius: 0.5rem;
+			cursor: pointer;
+			margin: 0;
+			overflow: clip;
+			padding: 0.35em;
+			aspect-ratio: 1;
+			z-index: 5;
+			background-size: 1.5rem 1.5rem;
+			background-repeat: no-repeat;
+			background-position: center center;
+			overscroll-behavior-x: contain;
+			position-anchor: --carousel;
+			color: #eeecec;
+			position: absolute;
+			outline: 1px solid white;
+		}
 
-    > *::scroll-marker,
-    &.carousel-horizontal::scroll-button(left),
-    &.carousel-horizontal::scroll-button(right) {
-      content: "";
-      color: #eeecec;
-      bottom: calc(anchor(top) + 14px);
-    }
+		> *::scroll-marker,
+		&.carousel-horizontal::scroll-button(left),
+		&.carousel-horizontal::scroll-button(right) {
+			content: '';
+			color: #eeecec;
+			bottom: calc(anchor(top) + 14px);
+		}
 
-    /* Left Button */
-    &::scroll-button(left) {
-      background-image: url("data:image/svg+xml,%3Csvg%20width%3D%2220%22%20height%3D%2220%22%20viewBox%3D%220%200%2020%2020%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Cpath%20d%3D%22M11.6667%2015.0024L6.66675%2010.0024L11.6667%205.00244%22%20stroke%3D%22%23EEECEC%22%20stroke-width%3D%221.5%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%2F%3E%3C%2Fsvg%3E");
-    }
+		/* Left Button */
+		&::scroll-button(left) {
+			background-image: url('data:image/svg+xml,%3Csvg%20width%3D%2220%22%20height%3D%2220%22%20viewBox%3D%220%200%2020%2020%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Cpath%20d%3D%22M11.6667%2015.0024L6.66675%2010.0024L11.6667%205.00244%22%20stroke%3D%22%23EEECEC%22%20stroke-width%3D%221.5%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%2F%3E%3C%2Fsvg%3E');
+		}
 
-    /* Right Button */
-    &::scroll-button(right) {
-      background-image: url("data:image/svg+xml,%3Csvg%20width%3D%2220%22%20height%3D%2220%22%20viewBox%3D%220%200%2020%2020%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Cpath%20d%3D%22M8.33325%2015.0024L13.3333%2010.0024L8.33325%205.00244%22%20stroke%3D%22%23EEECEC%22%20stroke-width%3D%221.5%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%2F%3E%3C%2Fsvg%3E");
-    }
+		/* Right Button */
+		&::scroll-button(right) {
+			background-image: url('data:image/svg+xml,%3Csvg%20width%3D%2220%22%20height%3D%2220%22%20viewBox%3D%220%200%2020%2020%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Cpath%20d%3D%22M8.33325%2015.0024L13.3333%2010.0024L8.33325%205.00244%22%20stroke%3D%22%23EEECEC%22%20stroke-width%3D%221.5%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%2F%3E%3C%2Fsvg%3E');
+		}
 
-    /* Scroll Marker */
-    > *::scroll-marker {
-      background-image: url("data:image/svg+xml,%3Csvg%20width%3D%2220%22%20height%3D%2220%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Cpath%20d%3D%22M13%2018L8.27279%2013.2728C7.7425%2012.7425%207.47735%2012.4774%207.42653%2012.1564C7.41011%2012.0528%207.41011%2011.9472%207.42653%2011.8436C7.47735%2011.5226%207.7425%2011.2575%208.27279%2010.7272L13%206M17%2018L12.2728%2013.2728C11.7425%2012.7425%2011.4774%2012.4774%2011.4265%2012.1564C11.4101%2012.0528%2011.4101%2011.9472%2011.4265%2011.8436C11.4774%2011.5226%2011.7425%2011.2575%2012.2728%2010.7272L17%206%22%20stroke%3D%22%23EEECEC%22%20stroke-width%3D%221.5%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%2F%3E%3C%2Fsvg%3E");
-      padding: 0px;
-    }
+		/* Scroll Marker */
+		> *::scroll-marker {
+			background-image: url('data:image/svg+xml,%3Csvg%20width%3D%2220%22%20height%3D%2220%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Cpath%20d%3D%22M13%2018L8.27279%2013.2728C7.7425%2012.7425%207.47735%2012.4774%207.42653%2012.1564C7.41011%2012.0528%207.41011%2011.9472%207.42653%2011.8436C7.47735%2011.5226%207.7425%2011.2575%208.27279%2010.7272L13%206M17%2018L12.2728%2013.2728C11.7425%2012.7425%2011.4774%2012.4774%2011.4265%2012.1564C11.4101%2012.0528%2011.4101%2011.9472%2011.4265%2011.8436C11.4774%2011.5226%2011.7425%2011.2575%2012.2728%2010.7272L17%206%22%20stroke%3D%22%23EEECEC%22%20stroke-width%3D%221.5%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%2F%3E%3C%2Fsvg%3E');
+			padding: 0px;
+		}
 
-    /* ===== SCROLL MARKERS ===== */
-    &::scroll-marker-group {
-      display: flex;
-      align-items: center;
-      justify-content: flex-end;
-      gap: 0.5em;
-      height: 2.8rem;
-      right: 2.4rem;
-      position: absolute;
-    }
+		/* ===== SCROLL MARKERS ===== */
+		&::scroll-marker-group {
+			display: flex;
+			align-items: center;
+			justify-content: flex-end;
+			gap: 0.5em;
+			height: 2.8rem;
+			right: 2.4rem;
+			position: absolute;
+		}
 
-    &::scroll-button(left) {
-      left: calc(anchor(right) - 110px);
-    }
+		&::scroll-button(left) {
+			left: calc(anchor(right) - 110px);
+		}
 
-    &::scroll-button(right) {
-      left: calc(anchor(right) - 70px);
-    }
+		&::scroll-button(right) {
+			left: calc(anchor(right) - 70px);
+		}
 
-    > *.marker::scroll-marker:hover,
-    &::scroll-button(*):hover {
-      background-color: rgb(var(--background-auto-11));
-    }
+		> *.marker::scroll-marker:hover,
+		&::scroll-button(*):hover {
+			background-color: rgb(var(--background-auto-11));
+		}
 
-    &::scroll-button(left):disabled {
-      opacity: 0.3;
-      cursor: not-allowed;
-    }
+		&::scroll-button(left):disabled {
+			opacity: 0.3;
+			cursor: not-allowed;
+		}
 
-    &:not(.carousel-buttons-under)::scroll-button(right):disabled {
-      opacity: 0;
-      pointer-events: none;
-    }
+		&:not(.carousel-buttons-under)::scroll-button(right):disabled {
+			opacity: 0;
+			pointer-events: none;
+		}
 
-    :not(.carousel-buttons-under)> *::scroll-marker:not(:target-current) {
-      pointer-events: none;
-      opacity: 0;
-    }
+		:not(.carousel-buttons-under) > *::scroll-marker:not(:target-current) {
+			pointer-events: none;
+			opacity: 0;
+		}
 
-    :not(.carousel-buttons-under)> *:not(:nth-child(1))::scroll-marker {
-      pointer-events: none;
-      opacity: 0;
-    }
+		:not(.carousel-buttons-under) > *:not(:nth-child(1))::scroll-marker {
+			pointer-events: none;
+			opacity: 0;
+		}
 
-    > *:nth-child(1)::scroll-marker {
-      z-index: 10;
-      opacity: 1;
-    }
+		> *:nth-child(1)::scroll-marker {
+			z-index: 10;
+			opacity: 1;
+		}
 
-    > *:nth-child(1)::scroll-marker:not(:target-current) {
-      pointer-events: auto !important;
-      opacity: 1 !important;
-    }
+		> *:nth-child(1)::scroll-marker:not(:target-current) {
+			pointer-events: auto !important;
+			opacity: 1 !important;
+		}
 
-    :not(.carousel-buttons-under)> *:nth-child(1)::scroll-marker:target-current {
-      pointer-events: none !important;
-      opacity: 0 !important;
-    }
-  }
+		:not(.carousel-buttons-under) > *:nth-child(1)::scroll-marker:target-current {
+			pointer-events: none !important;
+			opacity: 0 !important;
+		}
+	}
 
-  &.carousel-horizontal.carousel-buttons-overlay {
-    &::scroll-marker-group {
-      opacity: 0;
-      height: 100%;
-      right: 0.4rem;
-      z-index: 2;
-      pointer-events: none;
-    }
+	&.carousel-horizontal.carousel-buttons-overlay {
+		&::scroll-marker-group {
+			opacity: 0;
+			height: 100%;
+			right: 0.4rem;
+			z-index: 2;
+			pointer-events: none;
+		}
 
-    &::scroll-button(left) {
-      opacity: 0;
-      left: calc(anchor(left) + 6px);
-      bottom: calc(anchor(center) - 1rem);
-      background-color: rgb(25,25,25);
-      outline: 1px solid white;
-    }
+		&::scroll-button(left) {
+			opacity: 0;
+			left: calc(anchor(left) + 6px);
+			bottom: calc(anchor(center) - 1rem);
+			background-color: rgb(25, 25, 25);
+			outline: 1px solid white;
+		}
 
-    &::scroll-button(right) {
-      opacity: 0;
-      left: calc(anchor(right) - 40px);
-      bottom: calc(anchor(center) - 1rem);
-      background-color: rgb(25,25,25);
-      outline: 1px solid white;
-    }
+		&::scroll-button(right) {
+			opacity: 0;
+			left: calc(anchor(right) - 40px);
+			bottom: calc(anchor(center) - 1rem);
+			background-color: rgb(25, 25, 25);
+			outline: 1px solid white;
+		}
 
-    &:hover {
-      &::scroll-button(left):not(:disabled),
-      &::scroll-button(right):not(:disabled),
-      &::scroll-marker-group {
-        opacity: 1;
-      }
-      ::scroll-marker {
-        opacity: 1 !important;
-        pointer-events: auto !important;
-      }
-    }
+		&:hover {
+			&::scroll-button(left):not(:disabled),
+			&::scroll-button(right):not(:disabled),
+			&::scroll-marker-group {
+				opacity: 1;
+			}
+			::scroll-marker {
+				opacity: 1 !important;
+				pointer-events: auto !important;
+			}
+		}
 
-    &::scroll-button(left):not(:disabled):hover,
-    &::scroll-button(right):not(:disabled):hover,
-    ::scroll-marker:hover {
-      background-color: rgb(50,50,50);
-    }
+		&::scroll-button(left):not(:disabled):hover,
+		&::scroll-button(right):not(:disabled):hover,
+		::scroll-marker:hover {
+			background-color: rgb(50, 50, 50);
+		}
 
-    > *::scroll-marker {
-      translate: -2px 26px;
-      background-color: rgb(25,25,25);
-      outline: 1px solid rgb(150,150,150);
-    }
-  }
+		> *::scroll-marker {
+			translate: -2px 26px;
+			background-color: rgb(25, 25, 25);
+			outline: 1px solid rgb(150, 150, 150);
+		}
+	}
 
-  &.carousel-horizontal.carousel-buttons-under {
-    scroll-marker-group: after;
+	&.carousel-horizontal.carousel-buttons-under {
+		scroll-marker-group: after;
 
-    &::scroll-marker-group {
-      z-index: 2;
-      pointer-events: auto;
-      top: calc(anchor(bottom) + 1rem);
-      position: relative;
-      width: calc(100% - 4.4rem - 4.4rem);
-      left: 2.4rem;
-      right: 2.4rem;
-      justify-content: center;
-    }
+		&::scroll-marker-group {
+			z-index: 2;
+			pointer-events: auto;
+			top: calc(anchor(bottom) + 1rem);
+			position: relative;
+			width: calc(100% - 4.4rem - 4.4rem);
+			left: 2.4rem;
+			right: 2.4rem;
+			justify-content: center;
+		}
 
-    &::scroll-button(left) {
-      left: calc(anchor(left) + 24px);
-      top: calc(anchor(bottom) + 1rem);
-    }
+		&::scroll-button(left) {
+			left: calc(anchor(left) + 24px);
+			top: calc(anchor(bottom) + 1rem);
+		}
 
-    &::scroll-button(right) {
-      left: calc(anchor(right) - 40px);
-      top: calc(anchor(bottom) + 1rem);
-    }
+		&::scroll-button(right) {
+			left: calc(anchor(right) - 40px);
+			top: calc(anchor(bottom) + 1rem);
+		}
 
-    &::scroll-button(right):disabled {
-      opacity: 0.3;
-      cursor: not-allowed;
-    }
+		&::scroll-button(right):disabled {
+			opacity: 0.3;
+			cursor: not-allowed;
+		}
 
-    > *::scroll-marker {
-      display: block;
-      position: relative;
-      z-index: 10;
-      opacity: 1 !important;
-      translate: none;
-      background: rgb(25,25,25);
-      outline: 1px solid rgb(150,150,150);
-      width: 15px;
-      height: 15px;
-    }
-    > *::scroll-marker:target-current {
-      background: rgb(150,150,150);
-    }
-  }
+		> *::scroll-marker {
+			display: block;
+			position: relative;
+			z-index: 10;
+			opacity: 1 !important;
+			translate: none;
+			background: rgb(25, 25, 25);
+			outline: 1px solid rgb(150, 150, 150);
+			width: 15px;
+			height: 15px;
+		}
+		> *::scroll-marker:target-current {
+			background: rgb(150, 150, 150);
+		}
+	}
 
-  /* ===== MODIFIER CLASSES ===== */
-  &.person-page {
-    --size: max(1, var(--size) - 2);
-  }
+	/* ===== MODIFIER CLASSES ===== */
+	&.person-page {
+		--size: max(1, var(--size) - 2);
+	}
 }
 
 /* ===== RESPONSIVE BREAKPOINTS ===== */
 /* Mobile Default: 3 cards */
 @media (min-width: 600px) {
-  .carousel {
-    --size: 3;
-    &.carousel-buttons-under {
-      > *::scroll-marker {
-        display: none
-      }
-    }
-  }
-  .carousel.backdrop {
-    --size: 2;
-  }
+	.carousel {
+		--size: 3;
+		&.carousel-buttons-under {
+			> *::scroll-marker {
+				display: none;
+			}
+		}
+	}
+	.carousel.backdrop {
+		--size: 2;
+	}
 }
 
 @media (min-width: 800px) {
-  .carousel {
-    --size: 4;
-  }
-  .carousel.backdrop {
-    --size: 2;
-  }
+	.carousel {
+		--size: 4;
+	}
+	.carousel.backdrop {
+		--size: 2;
+	}
 }
 
 @media (min-width: 1000px) {
-  .carousel {
-    --size: 5;
-  }
-  .carousel.backdrop {
-    --size: 3;
-  }
+	.carousel {
+		--size: 5;
+	}
+	.carousel.backdrop {
+		--size: 3;
+	}
 }
 
 @media (min-width: 1200px) {
-  .carousel {
-    --size: 6;
-  }
-  .carousel.backdrop {
-    --size: 3;
-  }
+	.carousel {
+		--size: 6;
+	}
+	.carousel.backdrop {
+		--size: 3;
+	}
 }
 
 @media (min-width: 1400px) {
-  .carousel {
-    --size: 7;
-  }
-  .carousel.backdrop {
-    --size: 4;
-  }
+	.carousel {
+		--size: 7;
+	}
+	.carousel.backdrop {
+		--size: 4;
+	}
 }
 
 @media (min-width: 1600px) {
-  .carousel {
-    --size: 8;
-  }
-  .carousel.backdrop {
-    --size: 4;
-  }
+	.carousel {
+		--size: 8;
+	}
+	.carousel.backdrop {
+		--size: 4;
+	}
 }
 
 @media (min-width: 1900px) {
-  .carousel {
-    --size: 9;
-  }
-  .carousel.backdrop {
-    --size: 5;
-  }
+	.carousel {
+		--size: 9;
+	}
+	.carousel.backdrop {
+		--size: 5;
+	}
 }
 
 @media (min-width: 2200px) {
-  .carousel {
-    --size: 10;
-  }
-  .carousel.backdrop {
-    --size: 6;
-  }
+	.carousel {
+		--size: 10;
+	}
+	.carousel.backdrop {
+		--size: 6;
+	}
 }
 
 @media (min-width: 2500px) {
-  .carousel {
-    --size: 11;
-  }
-  .carousel.backdrop {
-    --size: 6;
-  }
+	.carousel {
+		--size: 11;
+	}
+	.carousel.backdrop {
+		--size: 6;
+	}
 }
 
 @media (min-width: 2800px) {
-  .carousel {
-    --size: 12;
-  }
-  .carousel.backdrop {
-    --size: 7;
-  }
+	.carousel {
+		--size: 12;
+	}
+	.carousel.backdrop {
+		--size: 7;
+	}
 }
 
 @media (min-width: 3100px) {
-  .carousel {
-    --size: 13;
-  }
-  .carousel.backdrop {
-    --size: 8;
-  }
+	.carousel {
+		--size: 13;
+	}
+	.carousel.backdrop {
+		--size: 8;
+	}
 }
 
 @media (min-width: 3400px) {
-  .carousel {
-    --size: 14;
-  }
-  .carousel.backdrop {
-    --size: 8;
-  }
+	.carousel {
+		--size: 14;
+	}
+	.carousel.backdrop {
+		--size: 8;
+	}
 }
 
 /* ===== MODIFIER CLASSES ===== */
 .carousel.person-page {
-  --size: max(1, var(--size) - 2);
+	--size: max(1, var(--size) - 2);
 }
-

@@ -197,8 +197,8 @@ export function useDownloadManager() {
 
 			const currentItems = downloadQueue.value.map(item => item.id);
 			const isNewQuery
-        = newItems.some(id => !currentItems.includes(id))
-        	|| currentItems.some(id => !newItems.includes(id));
+				= newItems.some(id => !currentItems.includes(id))
+					|| currentItems.some(id => !newItems.includes(id));
 
 			if (isNewQuery) {
 				// Reset everything for a new query
@@ -388,7 +388,7 @@ export function useDownloadManager() {
 									if (asset) {
 										asset.progress = Math.min(assetProgress, 100);
 										asset.status
-                      = asset.progress === 100 ? 'completed' : status;
+											= asset.progress === 100 ? 'completed' : status;
 									}
 								}
 
