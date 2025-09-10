@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import type { PropType } from 'vue';
 import type { ContinueWatching, HomeItem } from '@/types/api/base/home';
 
@@ -36,8 +36,8 @@ defineProps({
 <template>
 	<div
 		v-if="data.length"
-		data-row
 		class="grid grid-rows-[auto_1fr] grid-cols-7 relative justify-start flex-1 w-full gap-3 mb-2"
+		data-row
 	>
 		<h3
 			class="row-start-1 col-span-7 pointer-events-none font-semibold font-3xl"
@@ -46,11 +46,11 @@ defineProps({
 		</h3>
 		<template v-for="(item, index) in data.slice(0, 7)" :key="item.id">
 			<RouterLink
-				:to="`${item.link}${suffix}`"
 				:data-card="item.id"
 				:data-index="index"
+				:style="`background-image: url('https://app.nomercy.tv/tmdb-images${item.poster}?width=300')`"
+				:to="`${item.link}${suffix}`"
 				class="row-start-2 w-full h-auto rounded-xl bg-cover aspect-poster focus:scale-105 focus:outline outline-[2.2px] outline-white transition-transform duration-200 scroll-mb-20 scroll-mt-12 snap-center snap-mandatory"
-				:style="`background-image: url('https://app.nomercy.tv/tmdb-images${item.poster}?width=300&type=avif&aspect_ratio=null')`"
 				@focus="handleFocus($event, item)"
 				@keydown="handleDown($event)"
 				@keyup="handleUp($event)"
@@ -61,12 +61,12 @@ defineProps({
 	<Teleport to=".image-preload-container">
 		<template v-for="item in data?.slice(0, 7)" :key="item.id">
 			<img
-				:src="`https://app.nomercy.tv/tmdb-images${item.backdrop}`"
-				width="0"
-				height="0"
-				loading="eager"
+				:src="`https://app.nomercy.tv/tmdb-images${item.backdrop}?width=2160`"
 				alt=""
 				class="absolute"
+				height="0"
+				loading="eager"
+				width="0"
 			>
 		</template>
 	</Teleport>

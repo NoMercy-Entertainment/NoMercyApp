@@ -2,8 +2,6 @@
 import { ref, watch } from 'vue';
 import { IonContent, IonPage, isPlatform, onIonViewDidEnter, onIonViewDidLeave } from '@ionic/vue';
 import { App } from '@capacitor/app';
-
-import { isNative } from '@/config/global';
 import { currentServer } from '@/store/currentServer';
 import { user } from '@/store/user';
 import { setDisableScreensaver } from '@/store/imageModal';
@@ -161,15 +159,13 @@ onIonViewDidLeave(() => {
 <template>
 	<IonPage>
 		<IonContent :fullscreen="true">
-			<div
-				:class="{
-					'mb-28': isNative,
-					'mb-0': !isNative,
-				}"
-				class="absolute inset-0 flex h-full w-full overflow-clip bg-black z-1199"
-			>
-				<div id="player1" class="group nomercyplayer" />
-			</div>
+			<Teleport to="body">
+				<div
+					class="absolute inset-0 flex h-full w-full overflow-clip bg-black z-1199"
+				>
+					<div id="player1" class="group nomercyplayer" />
+				</div>
+			</Teleport>
 		</IonContent>
 	</IonPage>
 </template>

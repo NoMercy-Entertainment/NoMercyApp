@@ -7,7 +7,7 @@ import { NavigationBar } from '@hugotomazi/capacitor-navigation-bar';
 
 import type { ColorScheme } from '@/types/config';
 
-import { isDarkMode } from '@/config/global';
+import { isDarkMode, isTv } from '@/config/global';
 import { StatusBar, Style } from '@capacitor/status-bar';
 import { topNavColor } from '@/store/colorTheme';
 import { EdgeToEdge } from '@capawesome/capacitor-android-edge-to-edge-support';
@@ -58,12 +58,16 @@ export async function setColorScheme(value: ColorScheme) {
 
 		if (value === 'dark') {
 			await NavigationBar.setColor({ color: '#000000', darkButtons: true });
-			await StatusBar.setStyle({ style: Style.Dark });
+			if (isPlatform('capacitor') && !isTv.value) {
+				await StatusBar.setStyle({ style: Style.Dark });
+			}
 			await EdgeToEdge.setBackgroundColor({ color: '#000000' });
 		}
 		else {
 			await NavigationBar.setColor({ color: '#FFFFFF', darkButtons: true });
-			await StatusBar.setStyle({ style: Style.Dark });
+			if (isPlatform('capacitor') && !isTv.value) {
+				await StatusBar.setStyle({ style: Style.Dark });
+			}
 			await EdgeToEdge.setBackgroundColor({ color: '#ffffff' });
 		}
 

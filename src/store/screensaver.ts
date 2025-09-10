@@ -14,6 +14,7 @@ import {
 import serverClient from '@/lib/clients/serverClient';
 import { currentServer } from '@/store/currentServer';
 import { isPlatform } from '@ionic/vue';
+import { isTv } from '@/config/global.ts';
 
 const { idle, reset } = useIdle((screensaverDelay.value ?? 0) * 60 * 1000);
 
@@ -74,7 +75,7 @@ watch([idle, images], async ([idleValue]) => {
 	if (idleValue && images.value && images.value.length > 0) {
 		setShowScreensaver(true);
 		document.querySelector<HTMLDialogElement>('#imageModal')?.showModal();
-		if (isPlatform('capacitor')) {
+		if (isPlatform('capacitor' && !isTv.value)) {
 			const StatusBar = await import('@capacitor/status-bar').then(m => m.StatusBar);
 			StatusBar.setOverlaysWebView({ overlay: true }).then();
 		}
@@ -83,7 +84,7 @@ watch([idle, images], async ([idleValue]) => {
 		setShowScreensaver(false);
 		setImageModalData(null);
 		document.querySelector<HTMLDialogElement>('#imageModal')?.close();
-		if (isPlatform('capacitor')) {
+		if (isPlatform('capacitor') && !isTv.value) {
 			const StatusBar = await import('@capacitor/status-bar').then(m => m.StatusBar);
 			StatusBar.setOverlaysWebView({ overlay: false }).then();
 		}
@@ -92,7 +93,7 @@ watch([idle, images], async ([idleValue]) => {
 		setShowScreensaver(false);
 		setImageModalData(null);
 		document.querySelector<HTMLDialogElement>('#imageModal')?.close();
-		if (isPlatform('capacitor')) {
+		if (isPlatform('capacitor') && !isTv.value) {
 			const StatusBar = await import('@capacitor/status-bar').then(m => m.StatusBar);
 			StatusBar.setOverlaysWebView({ overlay: false }).then();
 		}

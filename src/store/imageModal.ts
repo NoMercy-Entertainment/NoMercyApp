@@ -2,6 +2,7 @@ import type { VNodeRef } from 'vue';
 import { computed, ref, watch } from 'vue';
 import type { LogoResponse } from '@/types/server';
 import { isPlatform } from '@ionic/vue';
+import { isTv } from '@/config/global.ts';
 
 const sim = ref<boolean>(false);
 export const showImageModal = computed(() => sim.value);
@@ -65,14 +66,14 @@ export const imageModal = ref<VNodeRef>();
 watch([sim, sss], async ([sim, sss]) => {
 	if ((sim || sss) && !dss.value) {
 		document.querySelector<HTMLDialogElement>('#imageModal')?.showModal();
-		if (isPlatform('capacitor')) {
+		if (isPlatform('capacitor') && !isTv.value) {
 			const StatusBar = await import('@capacitor/status-bar').then(m => m.StatusBar);
 			StatusBar.setOverlaysWebView({ overlay: true }).then();
 		}
 	}
 	else {
 		document.querySelector<HTMLDialogElement>('#imageModal')?.close();
-		if (isPlatform('capacitor')) {
+		if (isPlatform('capacitor') && !isTv.value) {
 			const StatusBar = await import('@capacitor/status-bar').then(m => m.StatusBar);
 			StatusBar.setOverlaysWebView({ overlay: false }).then();
 		}

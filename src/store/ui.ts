@@ -10,6 +10,7 @@ import { rgbaToHex } from '@uiw/color-convert';
 import { rgbToHex } from '@/types/config.ts';
 import { disableImmersiveMode } from '@/lib/utils.ts';
 import { EdgeToEdge } from '@capawesome/capacitor-android-edge-to-edge-support';
+import { isTv } from '@/config/global.ts';
 
 export const scrollContainerElement = ref<HTMLDivElement>();
 export const setupComplete = ref(false);
@@ -92,7 +93,7 @@ interface StatusBarPlugin {
 }
 
 export const statusbar = computed(() => {
-	if (isPlatform('capacitor')) {
+	if (isPlatform('capacitor') && !isTv.value) {
 		return import('@capacitor/status-bar').then(({ StatusBar }) => {
 			return StatusBar;
 		});

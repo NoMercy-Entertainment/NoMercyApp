@@ -16,12 +16,8 @@ import type {
 	RepeatState,
 } from '@nomercy-entertainment/nomercy-music-player/src/types';
 
-import {
-
-	SizeState,
-	VisibilityState,
-} from '@/types/musicPlayer';
 import type { PlaylistItem } from '@/types/musicPlayer';
+import { SizeState, VisibilityState } from '@/types/musicPlayer';
 
 import type { Device } from '@/types/server.ts';
 
@@ -158,6 +154,7 @@ export function setLyricsMenuOpen(value: boolean): void {
 	deviceMenuOpen.value = false;
 	equalizerMenuOpen.value = false;
 }
+
 export function toggleLyricsMenuOpen(): void {
 	lyricsMenuOpen.value = !lyricsMenuOpen.value;
 	queueMenuOpen.value = false;
@@ -175,6 +172,7 @@ export function setDeviceMenuOpen(value: boolean): void {
 	queueMenuOpen.value = false;
 	equalizerMenuOpen.value = false;
 }
+
 export function toggleDeviceMenuOpen(): void {
 	deviceMenuOpen.value = !deviceMenuOpen.value;
 	lyricsMenuOpen.value = false;
@@ -191,13 +189,16 @@ export function setFullPlayerModalOpen(value: boolean): void {
 		setMusicSize(SizeState.compact);
 	}
 }
+
 export function toggleFullPlayerModalOpen(): void {
 	modalOpen.value = !modalOpen.value;
 }
+
 export function openFullPlayer(): void {
 	fullPlayerModalOpen.value = true;
 	setMusicSize(SizeState.full);
 }
+
 export function closeFullPlayer(): void {
 	fullPlayerModalOpen.value = false;
 	setMusicSize(SizeState.compact);
@@ -213,6 +214,7 @@ export function setQueueMenuOpen(value: boolean): void {
 	deviceMenuOpen.value = false;
 	equalizerMenuOpen.value = false;
 }
+
 export function toggleQueueMenuOpen(): void {
 	queueMenuOpen.value = !queueMenuOpen.value;
 	lyricsMenuOpen.value = false;
@@ -221,11 +223,13 @@ export function toggleQueueMenuOpen(): void {
 }
 
 export const musicVisibility = ref<VisibilityState>(VisibilityState.hidden);
+
 export function setMusicVisibility(value: VisibilityState): void {
 	musicVisibility.value = value;
 }
 
 export const musicSize = ref<SizeState>(SizeState.compact);
+
 export function setMusicSize(value: SizeState): void {
 	musicSize.value = value;
 }
@@ -286,6 +290,7 @@ export function setEqualizerMenuOpen(value: boolean): void {
 	queueMenuOpen.value = false;
 	deviceMenuOpen.value = false;
 }
+
 export function toggleEqualizerMenuOpen(): void {
 	equalizerMenuOpen.value = !equalizerMenuOpen.value;
 	lyricsMenuOpen.value = false;
@@ -372,7 +377,8 @@ export function handleChange(type: string, event: Event, band?: EQBand) {
 export function handleReset(type: string, event: MouseEvent, band?: EQBand) {
 	onDoubleClick(
 		event,
-		() => {},
+		() => {
+		},
 		() => {
 			if (type === 'panning') {
 				panning.value = 0;
@@ -502,7 +508,6 @@ audioPlayer.on('volume', (value) => {
 });
 
 if (isPlatform('capacitor')) {
-	VolumeButtons.clearWatch().then();
 	const options: VolumeButtonsOptions = {};
 	const callback: VolumeButtonsCallback = (
 		result: VolumeButtonsResult,
