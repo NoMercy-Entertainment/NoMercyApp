@@ -1,0 +1,1 @@
+import{I as n,d as o,o as r,s as e,j as a,K as t,bu as s,bh as l}from"./index-BzddMR-Z.js";import{E as p}from"./ExploreContainer-cM_TNqDb.js";import"./_plugin-vue_export-helper-DlAUqK2U.js";const d=n({__name:"Tv",setup(u){return(c,_)=>(r(),o(t(l),null,{default:e(()=>[a(t(s),{fullscreen:!0},{default:e(()=>[a(p,{name:"General Tv page"})]),_:1})]),_:1}))}});export{d as default};
