@@ -60,6 +60,9 @@ export default defineConfig(({ command }) => {
 									= /^https?:\/\/(?:localhost|127\.0\.0\.1|192\.168\.\d+\.\d+|10\.\d+\.\d+\.\d+|172\.(?:1[6-9]|2\d|3[01])\.\d+\.\d+)(?::\d+)?/.test(
 										url.href,
 									);
+								const isApiServer = /^[^.]+\.[^.]+\.nomercy\.tv/.test(
+									url.hostname,
+								);
 								const isDevSubdomain = /(?:^|\.)dev\.nomercy\.tv$/.test(
 									url.hostname,
 								);
@@ -70,7 +73,7 @@ export default defineConfig(({ command }) => {
 										|| !url.pathname.includes('.');
 
 								// Skip caching for Vue app files in dev environment
-								return (isLocalIP || isDevSubdomain) && isAppFile;
+								return (isLocalIP || isDevSubdomain) && isAppFile && !isApiServer;
 							},
 							handler: 'NetworkOnly',
 							options: {
@@ -85,6 +88,9 @@ export default defineConfig(({ command }) => {
 									= /^https?:\/\/(?:localhost|127\.0\.0\.1|192\.168\.\d+\.\d+|10\.\d+\.\d+\.\d+|172\.(?:1[6-9]|2\d|3[01])\.\d+\.\d+)(?::\d+)?/.test(
 										url.href,
 									);
+								const isApiServer = /^[^.]+\.[^.]+\.nomercy\.tv/.test(
+									url.hostname,
+								);
 								const isDevSubdomain = /(?:^|\.)dev\.nomercy\.tv$/.test(
 									url.hostname,
 								);
@@ -92,7 +98,7 @@ export default defineConfig(({ command }) => {
 									/\.(png|jpg|jpeg|gif|webp|avif|woff|woff2|ttf|eot|svg|ico)$/i,
 								);
 
-								return (isLocalIP || isDevSubdomain) && isAssetFile;
+								return (isLocalIP || isDevSubdomain) && isAssetFile && !isApiServer;
 							},
 							handler: 'CacheFirst',
 							options: {
@@ -131,9 +137,12 @@ export default defineConfig(({ command }) => {
 						// IMAGES: Cache first strategy for images (matches enhanced-sw IMAGE_CACHE)
 						{
 							urlPattern: ({ url }) => {
-								return /\.(jpg|jpeg|png|gif|webp|avif|svg)$/i.test(
-									url.pathname,
+								const isApiServer = /^[^.]+\.[^.]+\.nomercy\.tv/.test(
+									url.hostname,
 								);
+								return /\.(?:jpg|jpeg|png|gif|webp|avif|svg)$/i.test(
+									url.pathname,
+								) && !isApiServer;
 							},
 							handler: 'CacheFirst',
 							options: {
@@ -158,7 +167,7 @@ export default defineConfig(({ command }) => {
 								const isDevSubdomain = /(?:^|\.)dev\.nomercy\.tv$/.test(
 									url.hostname,
 								);
-								const isStaticAsset = /\.(js|css|json)$/i.test(url.pathname);
+								const isStaticAsset = /\.(?:js|css|json)$/i.test(url.pathname);
 
 								// Only cache static assets from production sources
 								return !isLocalIP && !isDevSubdomain && isStaticAsset;
@@ -269,12 +278,16 @@ export default defineConfig(({ command }) => {
 						// DYNAMIC CONTENT: Default handler for other requests
 						{
 							urlPattern: ({ url }) => {
+								const isApiServer = /^[^.]+\.[^.]+\.nomercy\.tv/.test(
+									url.hostname,
+								);
 								// Catch-all for navigation and other requests (not already handled)
 								return (
 									!url.pathname.startsWith('/api/')
 									&& !url.pathname.startsWith('/auth/')
+									&& !isApiServer
 									&& !url.pathname.match(
-										/\.(ts|vtt|ass|js|css|json|woff2?|ttf|eot|jpg|jpeg|png|gif|webp|avif|svg)$/i,
+										/\.(js|css|json|woff2?|ttf|eot|jpg|jpeg|png|gif|webp|avif|svg)$/i,
 									)
 								);
 							},
