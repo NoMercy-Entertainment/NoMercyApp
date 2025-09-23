@@ -1,0 +1,1 @@
+import{As as e,Jo as _,ls as r}from"./index-ZKQbrg8Z.js";import{t as a}from"./_plugin-vue_export-helper-CksOYaUN.js";_();var t={},o={class:"bg"};function s(c,n){return e(),r("div",o)}var l=a(t,[["render",s],["__scopeId","data-v-386a0916"]]);export{l as t};
