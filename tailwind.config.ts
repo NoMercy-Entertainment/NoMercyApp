@@ -9,8 +9,8 @@ import safeArea from 'tailwindcss-safe-area-capacitor';
 import scrollBar from 'tailwind-scrollbar';
 import animate from 'tailwindcss-animate';
 import primeui from 'tailwindcss-primeui';
-import colorsPlugin, { themeColors } from './colorsPlugin';
-import surfacePlugin, { surfaceColors } from './surfacePlugin';
+import colorsPlugin, { lightColors } from './colorsPlugin';
+import surfacePlugin, { surfaceLightColors } from './surfacePlugin';
 
 const scales = Array.from({ length: 12 }, (_, i) => String(i + 1));
 
@@ -312,8 +312,8 @@ export default {
 				12: '93%',
 			},
 			colors: {
-				...themeColors,
-				...surfaceColors,
+				...lightColors,
+				...surfaceLightColors,
 				focus: 'rgb(from var(--color-theme-8, var(--color-theme-9)) r g b / <alpha-value>)',
 				theme: {
 

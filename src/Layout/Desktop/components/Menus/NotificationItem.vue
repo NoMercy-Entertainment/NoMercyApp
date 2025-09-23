@@ -40,7 +40,7 @@ function handleUpdateDismiss() {
 <template>
 	<div
 		:class="{
-			'border-1 bg-surface-alpha-4  border-slate-7 dark:bg-surface-alpha-2 dark:border-slate-4':
+			'border-1 bg-surface-4/11  border-slate-7 dark:bg-surface-2/11 dark:border-slate-4':
 				!data.read,
 		}"
 		class="flex justify-start items-start relative gap-2 p-2 rounded-lg"

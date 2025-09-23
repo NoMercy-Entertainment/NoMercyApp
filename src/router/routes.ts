@@ -60,9 +60,6 @@ const PreferencesSubtitles = () => import('@/views/Preferences/Subtitles');
 // Lazy load dev views
 const DevCast = () => import('@/views/Dev/Cast');
 const DevDownload = () => import('@/views/Dev/Download');
-function DevPerformanceDashboard() {
-	return import('@/views/Dev/Performance/Dashboard.vue');
-}
 
 // Lazy load setup views
 const SetupSelectServer = () => import('@/views/Setup/SelectServers');
@@ -454,11 +451,6 @@ export const routes: Array<RouteRecordRaw> = [
 				path: 'download',
 				name: 'Download',
 				component: DevDownload,
-			},
-			{
-				path: 'performance',
-				name: 'Performance Dashboard',
-				component: DevPerformanceDashboard,
 			},
 		],
 	},

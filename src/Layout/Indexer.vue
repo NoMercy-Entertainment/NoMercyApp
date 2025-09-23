@@ -134,7 +134,7 @@ onUnmounted(() => {
 			<button
 				v-else
 				:data-indexer="letter"
-				class="pointer-events-auto relative flex p-1.5 size-6 sm:size-8 aspect-square rounded-lg overflow-clip cursor-pointer flex-col items-center justify-center hover:bg-surface-alpha-5"
+				class="pointer-events-auto relative flex p-1.5 size-6 sm:size-8 aspect-square rounded-lg overflow-clip cursor-pointer flex-col items-center justify-center hover:bg-surface-5/11"
 				tabindex="-1"
 				@click="scrollToDiv(letter)"
 			>

@@ -117,7 +117,7 @@ export default defineConfig(({ command }) => {
 						{
 							urlPattern: ({ url }) => {
 								return (
-									/\.(woff2?|ttf|eot)$/i.test(url.pathname)
+									/\.(?:woff2?|ttf|eot)$/i.test(url.pathname)
 									|| url.pathname.includes('/fonts/')
 								);
 							},
@@ -634,7 +634,7 @@ export default defineConfig(({ command }) => {
 			],
 			exclude: ['subtitles-octopus'],
 			force: true,
-			esbuildOptions: {
+			rollupOptions: {
 				minify: true,
 				minifySyntax: true,
 				minifyIdentifiers: true,
