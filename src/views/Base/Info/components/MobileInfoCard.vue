@@ -155,7 +155,7 @@ const shareData = computed<ShareOptions>(() => ({
 		</div>
 
 		<div
-			class="flex justify-end items-start w-[280px] absolute left-0 top-0 gap-2 p-4"
+			class="flex justify-end items-start w-[280px] absolute left-0 top-0 gap-2 p-4 text-surface-12"
 		>
 			<div
 				class="flex justify-start items-center flex-grow-0 flex-shrink-0 relative overflow-hidden gap-2 p-2 rounded-3xl bg-black/[0.48] border border-black/2 w-10 h-10"

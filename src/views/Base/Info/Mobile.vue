@@ -204,7 +204,7 @@ onUnmounted(() => {
 			};`"
 		>
 			<div
-				class="flex flex-col justify-start items-center self-stretch flex-grow h-auto gap-4 will-change-auto text-slate-12/70 dark:text-slate-12/80 z-0"
+				class="flex flex-col justify-start items-center self-stretch flex-grow h-auto gap-4 will-change-auto text-surface-12 z-0"
 				style="box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.16)"
 			>
 				<div

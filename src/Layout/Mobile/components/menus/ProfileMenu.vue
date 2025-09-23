@@ -9,6 +9,7 @@ import ProfileMenuServerSection from '@/Layout/Mobile/components/ProfileMenuServ
 import BottomFlyout from '@/Layout/Mobile/components/BottomFlyout.vue';
 
 import Toggle from '@/components/Forms/Toggle.vue';
+
 import { logout } from '@/lib/auth/index';
 import { closeMenu, menuOpen } from '@/store/profileMenu';
 import { Browser } from '@capacitor/browser';
@@ -46,7 +47,7 @@ async function handleOpenApp() {
 					<IonIcon
 						:icon="serverSwitch"
 						aria-hidden="true"
-						class-name="size-6 min-w-6"
+						class-name="size-8 min-w-8"
 					/>
 					<div
 						class="flex justify-center items-center flex-grow relative gap-2 pl-2"
@@ -68,7 +69,7 @@ async function handleOpenApp() {
 					<IonIcon
 						:icon="monitor"
 						aria-hidden="true"
-						class-name="size-6 min-w-6"
+						class-name="size-8 min-w-8"
 					/>
 					<div
 						class="flex justify-center items-center flex-grow relative gap-2 pl-2"
@@ -90,7 +91,7 @@ async function handleOpenApp() {
 					<IonIcon
 						:icon="gridMasonry"
 						aria-hidden="true"
-						class-name="size-6 min-w-6"
+						class-name="size-8 min-w-8"
 					/>
 					<div
 						class="flex justify-center items-center flex-grow relative gap-2 pl-2"
@@ -113,7 +114,7 @@ async function handleOpenApp() {
 					<IonIcon
 						:icon="arrowRefreshVertical"
 						aria-hidden="true"
-						class-name="size-6 min-w-6"
+						class-name="size-8 min-w-8"
 					/>
 					<div
 						class="flex justify-center items-center flex-grow relative gap-2 pl-2"
@@ -139,7 +140,7 @@ async function handleOpenApp() {
 					<IonIcon
 						:icon="phonePortrait"
 						aria-hidden="true"
-						class-name="size-6 min-w-6"
+						class-name="size-8 min-w-8"
 					/>
 					<div
 						class="flex justify-center items-center flex-grow relative gap-2 pl-2"
@@ -160,7 +161,7 @@ async function handleOpenApp() {
 					<IonIcon
 						:icon="moonDiagonal"
 						aria-hidden="true"
-						class-name="size-6 min-w-6"
+						class-name="size-8 min-w-8"
 					/>
 
 					<label
@@ -191,7 +192,7 @@ async function handleOpenApp() {
 					<IonIcon
 						:icon="doorOpen"
 						aria-hidden="true"
-						class-name="size-6 min-w-6"
+						class-name="size-8 min-w-8"
 					/>
 					<div
 						class="flex justify-center items-center flex-grow relative gap-2 pl-2"

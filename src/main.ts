@@ -251,14 +251,7 @@ async function initialize() {
 	catch (error) {
 		console.error('Failed to initialize app:', error);
 
-		// Fallback initialization
-		document.body.innerHTML = `
-          <div style="display: flex; justify-content: center; align-items: center; height: 100vh; flex-direction: column;">
-            <h1>Failed to load application</h1>
-            <p>Please check your connection and try again.</p>
-            <button onclick="location.reload()">Reload</button>
-          </div>
-        `;
+		location.reload();
 	}
 }
 

@@ -148,7 +148,7 @@ const yearSpan = computed(() => `${collect(data.value?.collection).min('year')} 
 			<MobileInfoCard :data="data" />
 
 			<div
-				class="flex z-0 flex-col justify-start items-center self-stretch h-auto flex-grow gap-4 will-change-auto text-slate-12/70 dark:text-slate-12/80"
+				class="flex z-0 flex-col justify-start items-center self-stretch h-auto flex-grow gap-4 will-change-auto text-surface-12"
 				style="box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.16)"
 			>
 				<div

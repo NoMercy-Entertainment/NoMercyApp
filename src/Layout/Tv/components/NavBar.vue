@@ -57,7 +57,7 @@ import PlayerIcon from '@/components/Images/icons/PlayerIcon.vue';
 							class="px-2 children:pr-4 text-2xs leading-none !flex-grow-0"
 						/>
 						<span class="pl-2 text-3xs line-clamp-1 leading-none">
-							{{ currentSong.artist_track.map(at => at.name).join(', ') }}
+							{{ currentSong.artist_track?.map(at => at.name).join(', ') }}
 						</span>
 					</div>
 				</button>

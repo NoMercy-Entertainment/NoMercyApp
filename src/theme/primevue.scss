@@ -729,3 +729,11 @@ $toast-types: (
 .p-dialog-content {
   height: 100%;
 }
+
+.p-toggleswitch {
+  --p-toggleswitch-width: 3.5rem;
+}
+
+.p-toggleswitch.p-toggleswitch-checked .p-toggleswitch-handle  {
+  --p-toggleswitch-gap: 15px;
+}

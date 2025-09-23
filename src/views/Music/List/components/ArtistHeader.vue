@@ -129,7 +129,7 @@ const light = computed(() => tooLight(pickPaletteColor(colorPalette.value), 150)
 	<div
 		id="artist-header"
 		:class="{
-			'pt-safe-offset-12 px-8 gap-4': isPlatform('capacitor'),
+			'pt-safe-offset-16 px-8 gap-4': isPlatform('capacitor'),
 			'pt-24 px-6 gap-2 sm:gap-12': !isPlatform('capacitor'),
 			'text-black/12': light,
 			'text-white/12': !light,

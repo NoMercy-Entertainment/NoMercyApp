@@ -1,8 +1,15 @@
 <script lang="ts" setup>
 import type { PropType } from 'vue';
+import { useRoute } from 'vue-router';
+import { isPlatform } from '@ionic/vue';
 
 import { scheme } from '@/store/colorScheme';
 import { user } from '@/store/user';
+
+import { isTv, tvModeOverride } from '@/config/global';
+import { redirectUrl } from '@/store/routeState';
+import { konamiEnabledState } from '@/store/konami.ts';
+import { logout } from '@/lib/auth/index.ts';
 
 import DropdownMenu from '@/Layout/Desktop/components/Menus/DropdownMenu.vue';
 import ProfileMenuServerSection from '@/Layout/Desktop/components/Menus/ProfileMenuServerSection.vue';
@@ -12,12 +19,6 @@ import OptimizedIcon from '@/components/OptimizedIcon.vue';
 import Toggle from '@/components/Forms/Toggle.vue';
 import DropdownLink from '@/Layout/Desktop/components/Menus/DropdownLink.vue';
 import AppLogoSquare from '@/components/Images/icons/AppLogoSquare.vue';
-import { isTv, tvModeOverride } from '@/config/global';
-import { isPlatform } from '@ionic/vue';
-import { redirectUrl } from '@/store/routeState';
-import { useRoute } from 'vue-router';
-import { konamiEnabledState } from '@/store/konami.ts';
-import { logout } from '@/lib/auth/index.ts';
 
 defineProps({
 	direction: {

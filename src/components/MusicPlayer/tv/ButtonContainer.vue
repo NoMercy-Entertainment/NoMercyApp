@@ -55,6 +55,7 @@ function handleQueue(e?: MouseEvent) {
 <template>
 	<div
 		v-if="currentSong"
+		:style="`${color ? `--color-theme-8: ${color};` : ''}`"
 		class="relative flex w-full items-center justify-between"
 	>
 		<div class="flex gap-4">

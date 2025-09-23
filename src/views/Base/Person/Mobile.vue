@@ -19,6 +19,7 @@ import { isNative } from '@/config/global';
 import SocialLinkItems from '@/views/Base/Person/components/SocialLinkItems.vue';
 import HeaderItem from '@/views/Base/Person/components/HeaderItem.vue';
 import Collapsible from '@/views/Base/Person/components/Collapsible.vue';
+import i18next from '@/config/i18next.ts';
 
 const route = useRoute();
 const { data, isError } = useServerClient<PersonResponseItem>({
@@ -114,11 +115,11 @@ watch(data, (value) => {
 			};`"
 		>
 			<div
-				class="flex flex-col justify-start items-center self-stretch flex-grow h-auto gap-4 will-change-auto text-slate-12/70 dark:text-slate-12/80 z-10 absolute left-0 w-full"
+				class="flex flex-col justify-start items-center self-stretch flex-grow h-auto gap-4 will-change-auto text-surface-12 z-10 absolute left-0 w-full"
 				style="box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.16)"
 			>
 				<div
-					class="flex justify-start items-end flex-grow-0 flex-shrink-0 -mx-4 w-available h-[410px] relative gap-2"
+					class="flex justify-start items-end flex-grow-0 flex-shrink-0 -mx-4 w-available h-[400px] relative gap-2"
 				>
 					<SwiperComponent
 						ref="swiper"
@@ -164,14 +165,14 @@ watch(data, (value) => {
 			</div>
 
 			<div
-				class="flex flex-col justify-start items-center self-stretch flex-grow gap-4 will-change-auto text-slate-12/70 dark:text-slate-12/80 z-0"
+				class="flex flex-col justify-start items-center self-stretch flex-grow gap-4 will-change-auto text-surface-12 z-0 bg-surface-3 dark:bg-surface-1"
 				style="box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.16)"
 			>
 				<div
-					class="flex justify-start items-end -mx-4 w-available h-[410px] relative gap-2"
+					class="flex justify-start items-end -mx-4 w-available h-[400px] relative gap-2"
 				>
 					<div
-						class="absolute flex flex-col justify-start items-end flex-grow w-available -mx-20 h-[410px] bg-cover bg-top"
+						class="absolute flex flex-col justify-start items-end flex-grow w-available -mx-20 h-[400px] bg-cover bg-top"
 						style="
               background: linear-gradient(
                   0deg,
@@ -182,16 +183,16 @@ watch(data, (value) => {
             "
 					/>
 					<div
-						class="absolute flex flex-col justify-start items-end flex-grow w-available -mx-20 h-[410px] bg-cover dark:bg-black/50"
+						class="absolute flex flex-col justify-start items-end flex-grow w-available -mx-20 h-[400px] bg-cover dark:bg-black/50"
 					/>
 				</div>
 
 				<div
-					class="flex bg-surface-3 dark:bg-surface-1 flex-col justify-start items-start self-stretch gap-3 mt-16 pb-5 will-change-auto w-inherit px-6"
+					class="flex bg-surface-3 dark:bg-surface-1 flex-col justify-start items-start self-stretch gap-3 pb-5 will-change-auto w-inherit px-6"
 				>
 					<p
 						v-if="data?.name"
-						class="self-stretch w-[351px] text-3xl font-bold text-left z-10"
+						class="self-stretch w-[351px] text-3xl font-bold text-left z-10 pt-10"
 						v-html="breakTitle2(data?.name ?? ' ', 'text-lg line-clamp-2')"
 					/>
 					<IonSkeletonText

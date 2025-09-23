@@ -82,7 +82,7 @@ const modelValue = defineModel<any>({
 						'h-8 min-h-8 px-2': variant === 'dense',
 						'h-5 min-h-5 px-0': variant === 'tight',
 					}"
-					class="relative flex items-center w-full cursor-default rounded-md text-slate-12/70 dark:text-slate-12/80 shadow-sm sm:text-sm data-[headlessui-state='disabled']:grayscale *:last:data-[headlessui-state='disabled']:hidden"
+					class="relative flex items-center w-full cursor-default rounded-md text-surface-12 shadow-sm sm:text-sm data-[headlessui-state='disabled']:grayscale *:last:data-[headlessui-state='disabled']:hidden"
 				>
 					<span class="!flex truncate text-left leading-none w-full">
 						{{
@@ -143,7 +143,7 @@ const modelValue = defineModel<any>({
 									'h-8 min-h-8': variant === 'normal',
 									'h-6 min-h-6': variant === 'dense',
 								}"
-								class="relative flex w-full min-w-fit cursor-default select-none items-center rounded-sm text-slate-12/70 dark:text-slate-12/80"
+								class="relative flex w-full min-w-fit cursor-default select-none items-center rounded-sm text-surface-12"
 							>
 								<span
 									:class="{
