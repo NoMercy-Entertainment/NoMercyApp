@@ -113,7 +113,7 @@ onUnmounted(() => {
 			'sm:ml-2': !isNative && indexer,
 			'bottom-0': isNative,
 		}"
-		class="pointer-events-none z-0 h-available sm:h-available flex flex-col items-center justify-between self-stretch overflow-clip transition-width duration-200  sm:-translate-x-3 pt-2"
+		class="pointer-events-none z-0 h-available sm:h-available flex flex-col items-center justify-between self-stretch overflow-clip transition-width duration-200  sm:-translate-x-3 pt-2 text-surface-12"
 		indexer
 	>
 		<template v-for="letter in alphaNumericRange('#', 'Z')" :key="letter">
