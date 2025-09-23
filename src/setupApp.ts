@@ -62,12 +62,7 @@ import { queryClient } from '@/config/tanstack-query';
 import konamiEnabled from '@/store/konami';
 import { redirectUrl } from '@/store/routeState';
 import router from './router';
-import { isMobile } from '@/config/global.ts'; /* Theme variables */
-import './theme/variables.css';
-import './theme/app.scss';
-
-import 'swiper/css';
-import 'swiper/element/css/keyboard';
+import { isMobile } from '@/config/global.ts';
 import NMMusicCard from '@/components/NMMusicCard.vue';
 
 export async function setupApp(app: AppContext['app']) {
