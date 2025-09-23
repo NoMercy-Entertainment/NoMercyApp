@@ -80,10 +80,10 @@ export function swiperConfig(isBackdrop: boolean) {
 		breakpoints: breakpoints(isBackdrop),
 		allowTouchMove: true,
 		mousewheelControl: {
-			enabled: true,
+			enabled: false,
 		},
 		breakpointsBase: 'window',
-		virtual: true,
+		virtual: false,
 		updateOnWindowResize: true,
 		speed: 100,
 		spaceBefore: 10,
