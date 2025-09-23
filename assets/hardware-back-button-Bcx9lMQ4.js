@@ -1,0 +1,1 @@
+import{Co as t,Do as r,Eo as s,So as _,To as a,wo as B}from"./index-DHmO9d-Y.js";a();export{_ as MENU_BACK_BUTTON_PRIORITY,t as OVERLAY_BACK_BUTTON_PRIORITY,B as blockHardwareBackButton,s as shouldUseCloseWatcher,r as startHardwareBackButton};
