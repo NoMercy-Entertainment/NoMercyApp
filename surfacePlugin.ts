@@ -1,5 +1,6 @@
 import plugin from 'tailwindcss/plugin';
 import type { PluginAPI } from 'tailwindcss/types/config';
+import { colorPalette } from './colorsPlugin';
 
 type Entries<T> = {
 	[K in keyof T]: [K, T[K]]
@@ -413,7 +414,7 @@ function flattenSurfaces(colors: Record<string, Modes>): Record<string, Modes> {
 	return out;
 }
 
-export const surfaceColors = flattenSurfaces(surfaceColorPalette);
+export const surfaceColors = flattenSurfaces(colorPalette);
 
 export const surfacePlugin = plugin(({ addBase }: PluginAPI) => {
 	const STEPS = Array.from({ length: 12 }, (_, i) => String(i + 1));

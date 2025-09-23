@@ -10,7 +10,7 @@ import scrollBar from 'tailwind-scrollbar';
 import animate from 'tailwindcss-animate';
 import primeui from 'tailwindcss-primeui';
 import colorsPlugin, { lightColors } from './colorsPlugin';
-import surfacePlugin, { surfaceLightColors } from './surfacePlugin';
+import surfacePlugin, { surfaceColors, surfaceLightColors } from './surfacePlugin';
 
 const scales = Array.from({ length: 12 }, (_, i) => String(i + 1));
 
@@ -312,6 +312,7 @@ export default {
 				12: '93%',
 			},
 			colors: {
+				...surfaceColors,
 				...lightColors,
 				...surfaceLightColors,
 				focus: 'rgb(from var(--color-theme-8, var(--color-theme-9)) r g b / <alpha-value>)',
