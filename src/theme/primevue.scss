@@ -1,388 +1,731 @@
-/* === Textarea === */
-.p-textarea {
-	--p-textarea-filled-background: #151718;
-	--p-textarea-border-color: rgb(126 134 140);
-	--p-textarea-focus-border-color: rgb(var(--color-focus));
-	--p-textarea-filled-focus-background: #151718;
+///* === PrimeVue Custom Variables (OKLCH Edition) === */
+//
+//@charset "UTF-8";
+//
+///* === Textarea === */
+//.p-textarea {
+//  --p-textarea-filled-background: theme('colors.surface.4');
+//  --p-textarea-border-color: theme('colors.surface.7');
+//  --p-textarea-focus-border-color: theme('colors.theme.12');
+//  --p-textarea-filled-focus-background: theme('colors.surface.4');
+//}
+//
+///* === Meter Group === */
+//.p-metergroup {
+//  --p-metergroup-meters-background: theme('colors.surface.4');
+//  --p-metergroup-gap: 0.5rem;
+//  --p-metergroup-label-list-horizontal-gap: 0.5rem;
+//}
+//
+///* === Input Text === */
+//.p-inputtext {
+//  --p-inputtext-focus-border-color: theme('colors.theme.12');
+//  --p-inputtext-filled-background: theme('colors.surface.4');
+//  --p-inputtext-border-color: theme('colors.surface.4');
+//
+//  --p-inputtext-color: theme('colors.surface.12');
+//
+//  --p-inputtext-background: rgb(from theme('colors.surface.2') r g b / 10%);
+//  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.16) inset,
+//  0 -1px 0 rgba(255, 255, 255, 0.08) inset,
+//  0 2px 2px rgba(0, 0, 0, 0.16) inset;
+//}
+//
+///* === Checkbox === */
+//.p-checkbox-box {
+//  --p-checkbox-border-color: theme('colors.surface.2');
+//  --p-checkbox-background: rgb(from theme('colors.surface.11') r g b / 10%);
+//}
+//
+//.p-checkbox.p-inputfield-sm {
+//  --p-checkbox-sm-width: 1.25rem;
+//  --p-checkbox-sm-height: 1.25rem;
+//  padding: 0;
+//}
+//
+//.p-checkbox-checked .p-checkbox-box {
+//  --p-checkbox-checked-border-color: theme('colors.theme.12');
+//  --p-checkbox-checked-background: theme('colors.theme.9');
+//}
+//
+//.p-checkbox-checked .p-checkbox-icon {
+//  --p-checkbox-icon-checked-color: theme('colors.surface.12');
+//}
+//
+//.p-checkbox-checked:not(.p-disabled):has(.p-checkbox-input:hover) .p-checkbox-icon {
+//  --p-checkbox-icon-checked-hover-color: theme('colors.surface.12');
+//}
+//
+//.p-checkbox-checked:not(.p-disabled):has(.p-checkbox-input:hover) .p-checkbox-box {
+//  --p-checkbox-checked-hover-background: theme('colors.theme.9');
+//  --p-checkbox-checked-hover-border-color: theme('colors.theme.12');
+//}
+//
+///* === Select & Multiselect === */
+//.p-select{
+//  --p-select-focus-border-color: rgb(from var(--color-theme-12) r g b / 1);
+//  --p-select-filled-background: rgb(from var(--surface-4) r g b / 1);
+//  --p-select-border-color: rgb(from var(--surface-4) r g b / 1);
+//  --p-select-color: rgb(from var(--surface-950) r g b / 1);
+//  --p-select-background: rgb(from rgb(from var(--surface-2) r g b / 1) r g b / 10%);
+//
+//  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.16) inset,
+//  0 -1px 0 rgba(255, 255, 255, 0.08) inset,
+//  0 2px 2px rgba(0, 0, 0, 0.16) inset;
+//
+//    &:hover {
+//        --p-select-border-color: theme('colors.surface.7');
+//    }
+//}
+//
+//.p-select-label {
+//  --p-select-color: theme('colors.surface.11');
+//}
+//
+//.p-multiselect {
+//  --p-multiselect-focus-border-color: rgb(from var(--color-theme-12) r g b / 1);
+//  --p-multiselect-filled-background: rgb(from var(--surface-4) r g b / 1);
+//  --p-multiselect-border-color: rgb(from var(--surface-4) r g b / 1);
+//  --p-multiselect-color: rgb(from var(--surface-950) r g b / 1);
+//  --p-multiselect-background: rgb(from rgb(from var(--surface-2) r g b / 1) r g b / 10%);
+//
+//
+//  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.16) inset,
+//  0 -1px 0 rgba(255, 255, 255, 0.08) inset,
+//  0 2px 2px rgba(0, 0, 0, 0.16) inset;
+//
+//  &:hover {
+//    --p-multiselect-border-color: theme('colors.surface.7');
+//  }
+//}
+//
+//.p-multiselect-label {
+//  --p-multiselect-color: theme('colors.surface.11');
+//}
+//
+///* Selected option */
+//.p-select-option.p-select-option-selected,
+//.p-multiselect-option.p-multiselect-option-selected {
+//  --p-select-option-selected-background: theme('colors.theme.8');
+//
+//  color: theme('colors.surface.12');
+//}
+//
+///* Selected + focus */
+//.p-select-option.p-select-option-selected.p-focus,
+//.p-multiselect-option.p-multiselect-option-selected.p-focus {
+//  --p-select-option-selected-focus-background: theme('colors.theme.9');
+//
+//  color: theme('colors.surface.12');
+//}
+//
+///* Focus ring */
+//.p-select:not(.p-disabled):not([no-ring]).p-focus,
+//.p-multiselect:not(.p-disabled).p-focus {
+//  --p-select-focus-border-color: theme('colors.theme.12');
+//  --p-multiselect-focus-border-color: theme('colors.theme.12');
+//  box-shadow: var(--p-select-focus-ring-shadow);
+//  outline: var(--p-select-focus-ring-width) var(--p-select-focus-ring-style) var(--p-select-focus-ring-color);
+//  outline-offset: var(--p-select-focus-ring-offset);
+//}
+//
+///* Overlay menus */
+//.p-select-overlay,
+//.p-multiselect-overlay {
+//  --p-select-overlay-background: hsl(from theme('colors.surface.2') h s 17%);
+//  --p-multiselect-overlay-background: hsl(from theme('colors.surface.2') h s 17%);
+//
+//  --p-select-overlay-color: theme('colors.surface.12');
+//
+//  --p-select-overlay-border-color: theme('colors.surface.9');
+//  --p-select-overlay-shadow: theme('colors.surface.2');
+//}
+//
+///* Option base */
+//.p-select-option,
+//.p-multiselect-option {
+//  --p-select-option-color: theme('colors.surface.12');
+//}
+//
+///* Option focus */
+//.p-select-option:not(.p-select-option-selected):not(.p-disabled).p-focus,
+//.p-multiselect-option:not(.p-multiselect-option-selected):not(.p-disabled).p-focus {
+//  --p-select-option-focus-background: theme('colors.surface.4');
+//
+//  --p-select-option-focus-color: theme('colors.surface.12');
+//
+//  --p-multiselect-option-focus-background: rgb(from theme('colors.surface.1') r g b / 10%);
+//
+//  --p-multiselect-option-focus-color: theme('colors.surface.12');
+//}
+//
+//.p-select-option.p-select-option-selected.p-focus {
+//  --p-select-option-selected-focus-background: theme('colors.theme.9');
+//  --p-select-option-selected-focus-color: theme('colors.surface.12');
+//}
+//
+///* Dropdown arrow */
+//.p-select-dropdown,
+//.p-multiselect-dropdown {
+//  transition: rotate 0.2s ease;
+//  transform-origin: center;
+//}
+//
+//.p-select-dropdown:hover,
+//.p-multiselect-dropdown:hover {
+//  --p-select-dropdown-color: theme('colors.surface.12');
+//}
+//
+//.p-multiselect-open .p-select-dropdown,
+//.p-multiselect-open .p-multiselect-dropdown {
+//  rotate: -180deg;
+//}
+//
+///* === Dialog === */
+//.p-dialog {
+//  --tw-bg-opacity: 0.8;
+//  --p-dialog-background: theme('colors.surface.4');
+//  --p-dialog-color: theme('colors.surface.11');
+//  --p-dialog-border-color: theme('colors.surface.4');
+//  --p-dialog-shadow: theme('colors.surface.2');
+//  --p-dialog-border-radius: 0.5rem;
+//}
+//
+//.p-dialog-header {
+//  --p-dialog-header-padding: 0.75rem 0.75rem 1.25rem 1.5rem;
+//}
+//
+//.p-dialog-content {
+//  --p-dialog-content-padding: 0 1.25rem 0.25rem 1.25rem;
+//  z-index: 0;
+//}
+//
+//.p-dialog-footer {
+//  z-index: 1;
+//}
+//
+//.p-dialog.no-close .p-button {
+//  display: none;
+//}
+//
+///* === Card === */
+//.p-card {
+//  @apply relative flex items-start justify-start gap-2 self-stretch rounded-lg p-3;
+//
+//  --p-card-background: rgb(from theme('colors.surface.5') r g b / 13%);
+//}
+//
+///* Card title/body text */
+//.p-card-title {
+//  --p-card-title-font-size: theme(fontSize.sm);
+//}
+//
+//.p-card-body {
+//  @apply flex-1 w-full;
+//  --p-card-body-padding: 0;
+//}
+//
+///* === FloatLabel === */
+//.p-floatlabel {
+//  @apply left-0;
+//}
+//
+//.p-floatlabel label {
+//  transform: translateY(-100%);
+//  --p-floatlabel-position-x: 0.5rem;
+//  --p-floatlabel-position-y: 0.5rem;
+//}
+//
+//.p-floatlabel:has(.p-textarea) label {
+//  --p-floatlabel-position-y: 50%;
+//}
+//
+//.p-floatlabel-on:has(input:focus) label,
+//.p-floatlabel-on:has(input.p-filled) label,
+//.p-floatlabel-on:has(input:-webkit-autofill) label,
+//.p-floatlabel-on:has(textarea:focus) label,
+//.p-floatlabel-on:has(textarea.p-filled) label,
+//.p-floatlabel-on:has(.p-inputwrapper-focus) label,
+//.p-floatlabel-on:has(.p-inputwrapper-filled) label {
+//  @apply pl-2 left-0 text-3xs;
+//  transform: translateY(-50%);
+//}
+//
+///* === Utilities & Misc === */
+//.p-inputfield-sm {
+//  @apply text-sm py-1;
+//}
+//
+//.p-multiselect-header {
+//  @apply mt-1;
+//}
+//
+///* Secondary-button text */
+//.p-button-text.p-button-secondary:not(:disabled):hover {
+//  --p-button-text-secondary-hover-background: theme('colors.theme.1');
+//  --p-button-text-secondary-color: theme('colors.theme.12');
+//}
+//
+//.p-button-text.p-button-secondary:not(:disabled):active {
+//  --p-button-text-secondary-active-background: theme('colors.theme.2');
+//  --p-button-text-secondary-color: theme('colors.theme.12');
+//}
+//
+///* Scrollbar */
+//.p-scrollpanel-bar {
+//  --p-scrollpanel-bar-background: theme('colors.surface.9');
+//}
+//
+///* Option sizing */
+//.p-select-option {
+//  @apply text-sm h-8;
+//}
+
+
+:root.scheme-light {
+  --p-text-color: var(--p-surface-950);
+
+  --p-form-field-color: var(--p-text-color);
+  --p-form-field-background: rgb(from var(--p-surface-0) r g b / 6%);
+  --p-form-field-disabled-background: rgb(from var(--p-surface-700) r g b / 6%);
+  --p-form-field-filled-background: rgb(from var(--p-surface-800) r g b / 6%);
+  --p-form-field-filled-hover-background: rgb(from var(--p-surface-800) r g b / 6%);
+  --p-form-field-filled-focus-background: rgb(from var(--p-surface-800) r g b / 6%);
+
+  --p-overlay-modal-color: var(--p-text-color);
+  --p-overlay-modal-background: var(--p-surface-200);
+  --p-overlay-modal-border-color: var(--p-surface-700);
+  --p-button-text-secondary-color: var(--p-text-color);
+
+  --p-overlay-popover-color: var(--p-text-color);
+  --p-overlay-popover-background: var(--p-surface-200);
+  --p-overlay-popover-border-color: var(--p-surface-700);
+
+  --p-overlay-select-background: var(--p-surface-200);
+  --p-overlay-select-border-color: var(--p-surface-700);
+  --p-overlay-select-color: var(--p-text-color);
+
+  --p-form-field-icon-color: var(--p-surface-950);
+  --p-mask-color: var(--p-surface-200);
+
+  --p-highlight-color: var(--p-primary-950);
+  --p-highlight-background: var(--p-primary-400);
+
+  --p-highlight-focus-color: var(--p-primary-50);
+  --p-highlight-focus-background: var(--p-primary-800);
+
+  --p-select-option-selected-color: var(--p-surface-50);
+  --p-select-option-selected-background: var(--p-primary-700);
+
+  --p-select-option-focus-color: var(--p-surface-50);
+  --p-select-option-focus-background: var(--p-primary-800);
+
+  --p-select-option-selected-focus-color: var(--p-surface-50);
+  --p-select-option-selected-focus-background: var(--p-primary-800);
+
+  --p-toggleswitch-background: rgb(from var(--p-surface-950) r g b / 15%);
+  --p-toggleswitch-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.24) inset;
+
+  --p-toggleswitch-handle-color: var(--p-surface-50);
+  --p-toggleswitch-handle-background: var(--p-surface-50);
+  --p-toggleswitch-handle-checked-background: var(--p-surface-50);
+  --p-toggleswitch-checked-background: linear-gradient(0deg,
+          rgb(from var(--color-theme-8) r g b / 0.43),
+          rgb(from var(--color-theme-8) r g b / 0.74)
+  );
+
+  --p-tooltip-background: var(--p-surface-400);
+  --p-tooltip-color: var(--p-surface-950);
+  --p-tooltip-border-color: var(--p-surface-500);
+  --p-tooltip-shadow: var(--p-surface-100);
+  --p-tooltip-arrow-color: var(--p-surface-100);
+
+  --p-surface-0: theme('colors.surface.1');
+  --p-surface-50: theme('colors.surface.2');
+  --p-surface-100: theme('colors.surface.3');
+  --p-surface-200: theme('colors.surface.4');
+  --p-surface-300: theme('colors.surface.5');
+  --p-surface-400: theme('colors.surface.6');
+  --p-surface-500: theme('colors.surface.7');
+  --p-surface-600: theme('colors.surface.8');
+  --p-surface-700: theme('colors.surface.8');
+  --p-surface-800: theme('colors.surface.10');
+  --p-surface-900: theme('colors.surface.11');
+  --p-surface-950: theme('colors.surface.12');
+
+  --p-primary-50: theme('colors.theme.1');
+  --p-primary-100: theme('colors.theme.2');
+  --p-primary-200: theme('colors.theme.3');
+  --p-primary-300: theme('colors.theme.4');
+  --p-primary-400: theme('colors.theme.5');
+  --p-primary-500: theme('colors.theme.6');
+  --p-primary-600: theme('colors.theme.7');
+  --p-primary-700: theme('colors.theme.8');
+  --p-primary-800: theme('colors.theme.9');
+  --p-primary-900: theme('colors.theme.10');
+  --p-primary-950: theme('colors.theme.11');
 }
 
-/* === Meter Group === */
-.p-metergroup {
-	--p-metergroup-meters-background: rgb(var(--background-auto-2));
-	--p-metergroup-gap: 0.5rem;
-	--p-metergroup-label-list-horizontal-gap: 0.5rem;
+@media (prefers-color-scheme: light) {
+  :root.scheme-system {
+    --p-text-color: var(--p-surface-950);
+
+    --p-form-field-color: var(--p-text-color);
+    --p-form-field-background: rgb(from var(--p-surface-0) r g b / 6%);
+    --p-form-field-disabled-background: rgb(from var(--p-surface-700) r g b / 6%);
+    --p-form-field-filled-background: rgb(from var(--p-surface-800) r g b / 6%);
+    --p-form-field-filled-hover-background: rgb(from var(--p-surface-800) r g b / 6%);
+    --p-form-field-filled-focus-background: rgb(from var(--p-surface-800) r g b / 6%);
+
+    --p-overlay-modal-color: var(--p-text-color);
+    --p-overlay-modal-background: var(--p-surface-200);
+    --p-overlay-modal-border-color: var(--p-surface-700);
+    --p-button-text-secondary-color: var(--p-text-color);
+
+    --p-overlay-popover-color: var(--p-text-color);
+    --p-overlay-popover-background: var(--p-surface-200);
+    --p-overlay-popover-border-color: var(--p-surface-700);
+
+    --p-overlay-select-background: var(--p-surface-200);
+    --p-overlay-select-border-color: var(--p-surface-700);
+    --p-overlay-select-color: var(--p-text-color);
+
+    --p-form-field-icon-color: var(--p-surface-950);
+    --p-mask-color: var(--p-surface-200);
+
+    --p-highlight-color: var(--p-primary-950);
+    --p-highlight-background: var(--p-primary-400);
+
+    --p-highlight-focus-color: var(--p-primary-50);
+    --p-highlight-focus-background: var(--p-primary-800);
+
+    --p-select-option-selected-color: var(--p-surface-50);
+    --p-select-option-selected-background: var(--p-primary-700);
+
+    --p-select-option-focus-color: var(--p-surface-50);
+    --p-select-option-focus-background: var(--p-primary-800);
+
+    --p-select-option-selected-focus-color: var(--p-surface-50);
+    --p-select-option-selected-focus-background: var(--p-primary-800);
+
+    --p-toggleswitch-background: rgb(from var(--p-surface-950) r g b / 15%);
+    --p-toggleswitch-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.24) inset;
+
+    --p-toggleswitch-handle-color: var(--p-surface-50);
+    --p-toggleswitch-handle-background: var(--p-surface-50);
+    --p-toggleswitch-handle-checked-background: var(--p-surface-50);
+    --p-toggleswitch-checked-background: linear-gradient(0deg,
+            rgb(from var(--color-theme-8) r g b / 0.43),
+            rgb(from var(--color-theme-8) r g b / 0.74)
+    );
+
+    --p-tooltip-background: var(--p-surface-400);
+    --p-tooltip-color: var(--p-surface-950);
+    --p-tooltip-border-color: var(--p-surface-500);
+    --p-tooltip-shadow: var(--p-surface-100);
+    --p-tooltip-arrow-color: var(--p-surface-100);
+
+    --p-surface-0: theme('colors.surface.1');
+    --p-surface-50: theme('colors.surface.2');
+    --p-surface-100: theme('colors.surface.3');
+    --p-surface-200: theme('colors.surface.4');
+    --p-surface-300: theme('colors.surface.5');
+    --p-surface-400: theme('colors.surface.6');
+    --p-surface-500: theme('colors.surface.7');
+    --p-surface-600: theme('colors.surface.8');
+    --p-surface-700: theme('colors.surface.8');
+    --p-surface-800: theme('colors.surface.10');
+    --p-surface-900: theme('colors.surface.11');
+    --p-surface-950: theme('colors.surface.12');
+  }
 }
 
-/* === Input Text === */
-.p-inputtext {
-	--p-inputtext-focus-border-color: rgb(var(--color-focus));
-	--p-inputtext-filled-background: rgb(var(--background-auto-2));
-	--p-inputtext-border-color: rgb(var(--background-auto-4));
-	--p-inputtext-color: rgb(var(--background-auto-11));
-	--p-inputtext-background: rgb(var(--background-auto-1) / 80%);
-	box-shadow:
-		0 1px 0 rgba(0, 0, 0, 0.16) inset,
-		0 -1px 0 rgba(255, 255, 255, 0.08) inset,
-		0 2px 2px rgba(0, 0, 0, 0.16) inset;
+:root.scheme-dark {
+  --p-text-color: var(--p-surface-0);
+
+  --p-form-field-color: var(--p-text-color);
+  --p-form-field-background: rgb(from var(--p-surface-0) r g b / 6%);
+  --p-form-field-disabled-background: rgb(from var(--p-surface-700) r g b / 6%);
+  --p-form-field-filled-background: rgb(from var(--p-surface-800) r g b / 6%);
+  --p-form-field-filled-hover-background: rgb(from var(--p-surface-800) r g b / 6%);
+  --p-form-field-filled-focus-background: rgb(from var(--p-surface-800) r g b / 6%);
+
+  --p-overlay-modal-color: var(--p-text-color);
+  --p-overlay-modal-background: var(--p-surface-900);
+  --p-overlay-modal-border-color: var(--p-surface-700);
+  --p-button-text-secondary-color: var(--p-text-color);
+
+  --p-overlay-popover-color: var(--p-text-color);
+  --p-overlay-popover-background: var(--p-surface-900);
+  --p-overlay-popover-border-color: var(--p-surface-700);
+
+  --p-overlay-select-background: var(--p-surface-900);
+  --p-overlay-select-border-color: var(--p-surface-700);
+  --p-overlay-select-color: var(--p-text-color);
+
+  --p-form-field-icon-color: var(--p-surface-950);
+  --p-mask-color: var(--p-surface-900);
+
+  --p-highlight-color: var(--p-primary-50);
+  --p-highlight-background: var(--p-primary-400);
+
+  --p-highlight-focus-color: var(--p-primary-50);
+  --p-highlight-focus-background: var(--p-primary-500);
+
+  --p-select-option-selected-color: var(--p-surface-50);
+  --p-select-option-selected-background: var(--p-primary-700);
+
+  --p-select-option-focus-color: var(--p-surface-50);
+  --p-select-option-focus-background: var(--p-primary-500);
+
+  --p-select-option-selected-focus-color: var(--p-surface-50);
+  --p-select-option-selected-focus-background: var(--p-primary-500);
+
+  --p-toggleswitch-background: rgb(from var(--surface-900) r g b / 15%);
+  --p-toggleswitch-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.24) inset;
+
+  --p-toggleswitch-handle-color: var(--p-surface-0);
+  --p-toggleswitch-handle-background: linear-gradient(0deg,
+      rgb(from var(--surface-950) r g b / 0.43),
+      rgb(from var(--surface-950) r g b / 0.74)
+  );
+  --p-toggleswitch-handle-checked-background: var(--p-surface-0);
+  --p-toggleswitch-checked-background: linear-gradient(0deg,
+    rgb(from var(--color-theme-9) r g b / 0.43),
+    rgb(from var(--color-theme-9) r g b / 0.74)
+  );
+
+  --p-tooltip-background: var(--p-surface-600);
+  --p-tooltip-color: var(--p-surface-0);
+  --p-tooltip-border-color: var(--p-surface-500);
+  --p-tooltip-shadow: var(--p-surface-100);
+  --p-tooltip-arrow-color: var(--p-surface-100);
+
+  --p-surface-0: theme('colors.surface.12');
+  --p-surface-50: theme('colors.surface.11');
+  --p-surface-100: theme('colors.surface.10');
+  --p-surface-200: theme('colors.surface.9');
+  --p-surface-300: theme('colors.surface.8');
+  --p-surface-400: theme('colors.surface.7');
+  --p-surface-500: theme('colors.surface.6');
+  --p-surface-600: theme('colors.surface.5');
+  --p-surface-700: theme('colors.surface.4');
+  --p-surface-800: theme('colors.surface.3');
+  --p-surface-900: theme('colors.surface.2');
+  --p-surface-950: theme('colors.surface.1');
+
+  --p-primary-50: theme('colors.theme.12');
+  --p-primary-100: theme('colors.theme.11');
+  --p-primary-200: theme('colors.theme.10');
+  --p-primary-300: theme('colors.theme.9');
+  --p-primary-400: theme('colors.theme.8');
+  --p-primary-500: theme('colors.theme.7');
+  --p-primary-600: theme('colors.theme.6');
+  --p-primary-700: theme('colors.theme.5');
+  --p-primary-800: theme('colors.theme.4');
+  --p-primary-900: theme('colors.theme.3');
+  --p-primary-950: theme('colors.theme.2');
 }
 
-html.scheme-dark .p-inputtext {
-	--p-inputtext-background: rgb(var(--background-auto-11) / 8%);
-}
 
-/* === Checkbox === */
-.p-checkbox-box {
-	--p-checkbox-border-color: rgb(var(--background-auto-2));
-	--p-checkbox-background: rgb(var(--background-auto-1) / 80%);
-}
+@media (prefers-color-scheme: dark) {
+  :root.scheme-system {
+        --p-text-color: var(--p-surface-0);
 
-.p-checkbox.p-inputfield-sm {
-	--p-checkbox-sm-width: 1.25rem;
-	--p-checkbox-sm-height: 1.25rem;
-	padding: 0;
-}
+        --p-form-field-color: var(--p-text-color);
+        --p-form-field-background: rgb(from var(--p-surface-0) r g b / 6%);
+        --p-form-field-disabled-background: rgb(from var(--p-surface-700) r g b / 6%);
+        --p-form-field-filled-background: rgb(from var(--p-surface-800) r g b / 6%);
+        --p-form-field-filled-hover-background: rgb(from var(--p-surface-800) r g b / 6%);
+        --p-form-field-filled-focus-background: rgb(from var(--p-surface-800) r g b / 6%);
 
-.p-checkbox-checked .p-checkbox-box {
-	--p-checkbox-checked-border-color: rgb(var(--color-focus));
-	--p-checkbox-checked-background: rgb(var(--color-focus));
-}
+        --p-overlay-modal-color: var(--p-text-color);
+        --p-overlay-modal-background: var(--p-surface-900);
+        --p-overlay-modal-border-color: var(--p-surface-700);
+      --p-button-text-secondary-color: var(--p-text-color);
 
-.p-checkbox-checked:not(.p-disabled):has(.p-checkbox-input:hover) .p-checkbox-box {
-	--p-checkbox-checked-hover-background: rgb(var(--color-focus));
-	--p-checkbox-checked-hover-border-color: rgb(var(--color-focus));
-}
+        --p-overlay-popover-color: var(--p-text-color);
+        --p-overlay-popover-background: var(--p-surface-900);
+        --p-overlay-popover-border-color: var(--p-surface-700);
 
-/* === Select & Multiselect === */
-.p-select,
-.p-multiselect {
-	--p-select-background: rgb(var(--background-auto-1) / 80%);
-	--p-select-color: rgb(var(--background-auto-11));
-	--p-select-border-color: rgb(var(--background-auto-10) / 20%);
-	--p-select-focus-border-color: rgb(var(--background-auto-4));
-	--p-select-placeholder-color: rgb(var(--background-auto-11) / 80%);
-	box-shadow:
-		0 1px 0 rgba(0, 0, 0, 0.16) inset,
-		0 -1px 0 rgba(255, 255, 255, 0.08) inset,
-		0 2px 2px rgba(0, 0, 0, 0.16) inset;
-}
+        --p-overlay-select-background: var(--p-surface-900);
+        --p-overlay-select-border-color: var(--p-surface-700);
+        --p-overlay-select-color: var(--p-text-color);
 
-.p-select:hover {
-	--p-select-border-color: rgb(165, 174, 182);
-}
+        --p-form-field-icon-color: var(--p-surface-950);
+        --p-mask-color: var(--p-surface-900);
 
-.p-select-label {
-	--p-select-color: rgb(var(--background-auto-11));
-}
+        --p-highlight-color: var(--p-primary-50);
+        --p-highlight-background: var(--p-primary-400);
 
-/* Selected option */
-.p-select-option.p-select-option-selected,
-.p-multiselect-option.p-multiselect-option-selected {
-	--p-select-option-selected-background: rgb(var(--color-focus) / 80%);
-	color: var(--p-select-option-selected-color);
-}
+        --p-highlight-focus-color: var(--p-primary-50);
+        --p-highlight-focus-background: var(--p-primary-500);
 
-/* Selected + focus */
-.p-select-option.p-select-option-selected.p-focus,
-.p-multiselect-option.p-multiselect-option-selected.p-focus {
-	--p-select-option-selected-focus-background: rgb(var(--color-focus));
-	color: var(--p-select-option-selected-focus-color);
-}
+        --p-select-option-selected-color: var(--p-surface-50);
+        --p-select-option-selected-background: var(--p-primary-700);
 
-/* Focus ring */
-.p-select:not(.p-disabled):not([no-ring]).p-focus,
-.p-multiselect:not(.p-disabled).p-focus {
-	--p-select-focus-border-color: rgb(var(--color-focus));
-	--p-multiselect-focus-border-color: rgb(var(--color-focus));
-	box-shadow: var(--p-select-focus-ring-shadow);
-	outline: var(--p-select-focus-ring-width) var(--p-select-focus-ring-style) var(--p-select-focus-ring-color);
-	outline-offset: var(--p-select-focus-ring-offset);
-}
+        --p-select-option-focus-color: var(--p-surface-50);
+        --p-select-option-focus-background: var(--p-primary-500);
 
-/* Overlay menus */
-.p-select-overlay,
-.p-multiselect-overlay {
-	--p-select-overlay-background: rgb(var(--background-auto-1));
-	--p-select-overlay-color: rgb(var(--background-auto-12));
-	--p-select-overlay-border-color: rgb(var(--background-auto-9));
-	--p-select-overlay-shadow: rgb(var(--color-auto-2));
-}
+        --p-select-option-selected-focus-color: var(--p-surface-50);
+        --p-select-option-selected-focus-background: var(--p-primary-500);
 
-/* Option base */
-.p-select-option,
-.p-multiselect-option {
-	--p-select-option-color: rgb(var(--background-auto-12));
-}
+      --p-toggleswitch-background: rgb(from var(--surface-900) r g b / 15%);
+      --p-toggleswitch-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.24) inset;
 
-/* Option focus */
-.p-select-option:not(.p-select-option-selected):not(.p-disabled).p-focus,
-.p-multiselect-option:not(.p-multiselect-option-selected):not(.p-disabled).p-focus {
-	--p-select-option-focus-background: rgb(var(--background-auto-2));
-	--p-select-option-focus-color: rgb(var(--background-auto-1) / 80%);
-	--p-multiselect-option-focus-background: rgb(var(--background-auto-2));
-	--p-multiselect-option-focus-color: rgb(var(--background-auto-1) / 80%);
-}
+      --p-toggleswitch-handle-color: var(--p-surface-0);
+      --p-toggleswitch-handle-background: linear-gradient(0deg,
+              rgb(from var(--surface-950) r g b / 0.43),
+              rgb(from var(--surface-950) r g b / 0.74)
+      );
+      --p-toggleswitch-handle-checked-background: var(--p-surface-0);
+      --p-toggleswitch-checked-background: linear-gradient(0deg,
+              rgb(from var(--color-theme-9) r g b / 0.43),
+              rgb(from var(--color-theme-9) r g b / 0.74)
+      );
 
-/* Dropdown arrow */
-.p-select-dropdown,
-.p-multiselect-dropdown {
-	transition: rotate 0.2s ease;
-	transform-origin: center;
-}
+      --p-tooltip-background: var(--p-surface-600);
+      --p-tooltip-color: var(--p-surface-0);
+      --p-tooltip-border-color: var(--p-surface-500);
+      --p-tooltip-shadow: var(--p-surface-100);
+      --p-tooltip-arrow-color: var(--p-surface-100);
 
-.p-select-dropdown:hover,
-.p-multiselect-dropdown:hover {
-	--p-select-dropdown-color: rgb(var(--background-auto-12));
-}
-
-.p-multiselect-open .p-select-dropdown,
-.p-multiselect-open .p-multiselect-dropdown {
-	rotate: -180deg;
-}
-
-/* === Dialog === */
-.p-dialog {
-	--p-dialog-border-color: transparent;
-	--p-dialog-background: rgb(var(--background-auto-1));
-	--p-dialog-color: rgb(var(--background-auto-12));
-}
-
-.p-dialog-header {
-	--p-dialog-header-padding: 0.75rem 0.75rem 1.25rem 1.5rem;
-}
-
-.p-dialog-header .p-dialog-title {
-	line-height: 1;
-}
-
-.p-dialog-content {
-	--p-dialog-content-padding: 0 1.25rem 0.25rem 1.25rem;
-	z-index: 0;
-}
-
-.p-dialog-footer {
-	z-index: 1;
-}
-
-.p-dialog.no-close .p-button {
-	display: none;
+        --p-surface-0 : theme('colors.surface.12');
+        --p-surface-50: theme('colors.surface.11');
+        --p-surface-100: theme('colors.surface.10');
+        --p-surface-200: theme('colors.surface.9');
+        --p-surface-300: theme('colors.surface.8');
+        --p-surface-400: theme('colors.surface.7');
+        --p-surface-500: theme('colors.surface.6');
+        --p-surface-600: theme('colors.surface.5');
+        --p-surface-700: theme('colors.surface.4');
+        --p-surface-800: theme('colors.surface.3');
+        --p-surface-900: theme('colors.surface.2');
+        --p-surface-950: theme('colors.surface.1');
+    }
 }
 
 /* === Card === */
 .p-card {
-	@apply relative flex items-start justify-start gap-2 self-stretch
-  rounded-lg p-3 bg-slate-lightA-3 dark:bg-slate-darkA-3
-  !important;
+  --p-card-background: rgb(from theme('colors.surface.12') r g b / 3%);
+  --p-card-color: theme('colors.surface.11');
+  --p-card-shadow: theme('colors.surface.2');
+  width: 100%;
 }
 
 .p-card-title {
-	@apply text-base font-semibold text-slate-dark-1 dark:text-slate-light-1
-  !important;
+  --p-card-title-font-size: theme(fontSize.sm);
 }
 
 .p-card-body {
-	@apply flex-1 w-full;
-	--p-card-body-padding: 0rem;
+  --p-card-body-padding: theme(spacing.3) theme(spacing.4);
 }
 
-/* === FloatLabel === */
-.p-floatlabel {
-	@apply left-0;
+.p-component {
+  max-width: 90vw;
+  right: 0;
 }
 
-.p-floatlabel label {
-	transform: translateY(-100%) !important;
-	--p-floatlabel-position-x: 0.5rem;
-	--p-floatlabel-position-y: 0.5rem;
-}
-
-.p-floatlabel:has(.p-textarea) label {
-	--p-floatlabel-position-y: 50%;
-}
-
-.p-floatlabel-on:has(input:focus) label,
-.p-floatlabel-on:has(input.p-filled) label,
-.p-floatlabel-on:has(input:-webkit-autofill) label,
-.p-floatlabel-on:has(textarea:focus) label,
-.p-floatlabel-on:has(textarea.p-filled) label,
-.p-floatlabel-on:has(.p-inputwrapper-focus) label,
-.p-floatlabel-on:has(.p-inputwrapper-filled) label {
-	@apply pl-2 left-0 text-3xs
-  text-slate-light-12 dark:text-slate-dark-12 !important;
-	transform: translateY(-50%) !important;
-}
-
-/* === Utilities & Misc === */
-.p-inputfield-sm {
-	@apply text-sm py-1 !important;
-}
-
-.p-multiselect-header {
-	@apply mt-1 mx-1;
-}
-
-.p-button-text.p-button-secondary:not(:disabled):hover {
-	--p-button-text-secondary-hover-background: rgb(var(--color-focus) / 10%);
-	--p-button-text-secondary-color: rgb(var(--color-focus));
-}
-
-.p-button-text.p-button-secondary:not(:disabled):active {
-	--p-button-text-secondary-active-background: rgb(var(--color-focus) / 20%);
-	--p-button-text-secondary-color: rgb(var(--color-focus));
-}
-
-.p-scrollpanel-bar {
-	--p-scrollpanel-bar-background: rgb(var(--background-auto-9) / 70%);
-}
-
-.p-select-option {
-	@apply text-sm h-8 !important;
-}
-
-/* === Dark Mode Overrides === */
-html.scheme-dark {
-	.p-select,
-	.p-multiselect {
-		--p-select-background: rgb(var(--background-auto-11) / 8%);
-		--p-multiselect-background: rgb(var(--background-auto-11) / 8%);
-	}
-
-	.p-select-overlay,
-	.p-multiselect-overlay {
-		--p-select-overlay-background: rgb(var(--background-auto-3));
-		--p-multiselect-overlay-background: rgb(var(--background-auto-3));
-		--p-select-overlay-color: rgb(var(--background-auto-12));
-		--p-multiselect-overlay-color: rgb(var(--background-auto-12));
-	}
-
-	.p-select-option:not(.p-select-option-selected):not(.p-disabled).p-focus,
-	.p-multiselect-option:not(.p-multiselect-option-selected):not(.p-disabled).p-focus {
-		--p-select-option-focus-background: rgb(var(--background-auto-5));
-		--p-select-option-focus-color: rgb(var(--background-auto-12));
-		--p-multiselect-option-focus-background: rgb(var(--background-auto-5));
-		--p-multiselect-option-focus-color: rgb(var(--background-auto-12));
-	}
-}
-
+/* Toast messages */
 .p-toast-message-info,
 .p-toast-message-success,
 .p-toast-message-warn,
 .p-toast-message-error,
 .p-toast-message-secondary,
 .p-toast-message-contrast {
-	--p-toast-border-width: 1px;
-	//--p-toast-blur: '';
-	--p-toast-border-radius: 0.5rem;
+  --p-toast-border-width: 1px;
+  --p-toast-border-radius: 0.5rem;
 }
 
 .p-toast-message-content {
-	align-items: center !important;
-	//--p-toast-content-padding: '';
-	//--p-toast-content-gap: '';
+  align-items: center !important;
 }
 
 .p-toast-message-content > :last-child {
-	align-self: flex-start !important;
+  align-self: flex-start;
 }
 
 .p-toast-message-text {
-	--p-toast-text-gap: 0.2em;
+  --p-toast-text-gap: 0.2em;
 }
 
 .p-toast-summary {
-	--p-toast-summary-font-weight: 600;
-	--p-toast-summary-font-size: 1rem;
+  --p-toast-summary-font-weight: 600;
+  --p-toast-summary-font-size: 1rem;
 }
 
 .p-toast-detail {
-	--p-toast-detail-font-weight: 400;
-	--p-toast-detail-font-size: 0.875rem;
+  --p-toast-detail-font-weight: 400;
+  --p-toast-detail-font-size: 0.875rem;
 }
 
-.p-toast-message-content .p-toast-message-icon {
-	--p-toast-icon-size: 2.25rem;
-	padding: 0.3em;
-	border-radius: 0.2em;
-	font-size: 1.5rem;
-	line-height: 1;
-	position: relative;
+.p-toast-message-icon {
+  --p-toast-icon-size: 1.25rem;
+  padding: 0.1em;
+  border-radius: 0.2em;
+  font-size: 1.5rem;
+  line-height: 1;
+  position: relative;
 }
 
-.p-tooltip {
-	--p-tooltip-background: rgb(var(--background-auto-4));
-	--p-tooltip-color: rgb(var(--background-auto-12));
-	--p-tooltip-border-color: rgb(var(--background-auto-9));
-	--p-tooltip-shadow: rgb(var(--color-auto-2));
-	--p-tooltip-arrow-color: rgb(var(--background-auto-4));
-	--p-tooltip-gutter: 0.75rem;
-	--p-tooltip-padding: 0.5rem 0.75rem;
-	--p-tooltip-font-size: 0.875rem;
-	--p-tooltip-border-radius: 0.375rem;
-	--p-tooltip-max-width: 16rem;
+.p-toggleswitch-handle {
+  --p-toggleswitch-transition-duration: 0.5s;
 }
 
+// === Toast Variants ===
 $toast-types: (
-	'success': 'green',
-	'warn': 'yellow',
-	'error': 'red',
-	'info': 'slate',
-	'secondary': 'blue',
-	'contrast': 'theme',
+        'success':   'green',
+        'warn':      'amber',
+        'error':     'red',
+        'info':      'slate',
+        'secondary': 'blue',
+        'contrast':  'slate'
 );
 
 @each $type, $color in $toast-types {
-	.p-toast-message-#{$type} {
-		--p-toast-#{$type}-background: linear-gradient(
-			65deg,
-			rgb(var(--color-#{$color}-12) / 80%),
-			rgb(var(--color-#{$color}-11) / 80%)
-		);
-		--p-toast-#{$type}-border-color: rgb(var(--color-#{$color}-11) / 60%);
-		--p-toast-#{$type}-color: rgb(var(--color-#{$color}-5));
-		--p-toast-#{$type}-shadow: rgb(var(--color-#{$color}-10));
+  .p-toast-message-#{$type} {
+    --p-toast-#{$type}-background: linear-gradient(
+        65deg,
+        rgb(from theme('colors.surface.1') r g b / 80%),
+        rgb(from theme('colors.#{$color}.900') r g b / 80%)
+    );
+    --p-toast-#{$type}-border-color: rgb(from theme('colors.#{$color}.900') r g b / 80%);
+    --p-toast-#{$type}-color: hsl(from theme('colors.#{$color}.950') h s 20%);
+    --p-toast-#{$type}-shadow: theme('colors.#{$color}.800');
 
-		.p-toast-detail {
-			--p-toast-#{$type}-detail-color: rgb(var(--color-#{$color}-5));
-		}
+    .p-toast-detail {
+      --p-toast-#{$type}-detail-color: theme('colors.surface.12');
+    }
 
-		.p-toast-message-icon {
-			color: rgb(var(--color-#{$color}-5) / 80%);
-			//background-color: rgb(var(--color-#{$color}-11)/30%);
-		}
-	}
-}
-.p-toast-message-secondary .p-toast-message-icon {
-	background-color: transparent;
-}
-.p-toast-message-contrast .p-toast-message-icon {
-	background-color: transparent;
+    .p-toast-message-icon {
+      color: rgb(from theme('colors.#{$color}.700') r g b / 80%);
+    }
+  }
 }
 
-html.scheme-dark {
-	@each $type, $color in $toast-types {
-		.p-toast-message-#{$type} {
-			--p-toast-#{$type}-background: linear-gradient(
-				65deg,
-				rgb(var(--color-#{$color}-1) / 80%),
-				rgb(var(--color-#{$color}-7) / 80%)
-			);
-			--p-toast-#{$type}-border-color: rgb(var(--color-#{$color}-7) / 80%);
-			--p-toast-#{$type}-color: rgb(var(--color-#{$color}-12));
-			--p-toast-#{$type}-shadow: rgb(var(--color-#{$color}-3));
+.scheme-dark {
+  @each $type, $color in $toast-types {
+    .p-toast-message-#{$type} {
+      --p-toast-#{$type}-background: linear-gradient(
+          65deg,
+          rgb(from theme('colors.surface.3') r g b / 80%) 20%,
+          rgb(from theme('colors.#{$color}.800') r g b / 80%)
+      );
+      --p-toast-#{$type}-border-color: rgb(from theme('colors.#{$color}.800') r g b / 80%);
+      --p-toast-#{$type}-color: hsl(from theme('colors.#{$color}.900') h s 70%);
+      --p-toast-#{$type}-shadow: theme('colors.#{$color}.100');
 
-			.p-toast-detail {
-				--p-toast-#{$type}-detail-color: rgb(var(--color-#{$color}-12));
-			}
+      .p-toast-detail {
+        --p-toast-#{$type}-detail-color: hsl(from theme('colors.#{$color}.100') h s 80%);
+      }
 
-			.p-toast-message-icon {
-				color: rgb(var(--color-#{$color}-11) / 80%);
-				//background-color: rgb(var(--color-#{$color}-9)/10%);
-			}
-		}
-	}
-	.p-toast-message-secondary .p-toast-message-icon {
-		background-color: transparent;
-	}
-	.p-toast-message-contrast .p-toast-message-icon {
-		background-color: transparent;
-	}
+      .p-toast-message-icon {
+        color: rgb(from theme('colors.#{$color}.300') r g b / 80%);
+      }
+    }
+  }
+}
+
+.p-dialog-content {
+  height: 100%;
 }

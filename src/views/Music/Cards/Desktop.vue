@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import { nextTick, onMounted, ref, watch } from 'vue';
 import { useRoute } from 'vue-router';
 import { IonContent, IonPage } from '@ionic/vue';
@@ -8,7 +8,6 @@ import { isNative } from '@/config/global';
 import { currentSong } from '@/store/audioPlayer';
 
 import ScrollContainer from '@/Layout/Desktop/components/ScrollContainer.vue';
-import MusicCard from '@/components/Cards/MusicCard.vue';
 import { setBackground, setColorPalette } from '@/store/ui';
 import NotFound from '@/Layout/Desktop/components/NotFound.vue';
 import type { MusicCardPageResponseData } from '@/types/api/music/musicPlayer';
@@ -52,7 +51,7 @@ onMounted(() => {
 				>
 					<template v-if="Array.isArray(data)">
 						<template v-for="item in data" :key="item.id">
-							<MusicCard :data="item" />
+							<NMMusicCard :data="item" />
 						</template>
 					</template>
 				</div>

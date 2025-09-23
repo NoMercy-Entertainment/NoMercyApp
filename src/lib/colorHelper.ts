@@ -102,13 +102,6 @@ export function getColorFromPercent(pct: number, scheme = greenToRed) {
 	return `rgb(${[color.r, color.g, color.b].join(',')})`;
 }
 
-export function setPrimaryDegree(value: number) {
-	document.documentElement.style.setProperty('--primary-deg', `${value}deg`);
-}
-export function setPrimarySaturation(value: number) {
-	document.documentElement.style.setProperty('--primary-sat', `${value}%`);
-}
-
 export function setCustomColor(key: string, value: number[]) {
 	document.documentElement.style.setProperty(
 		`--custom-${key}`,
@@ -185,71 +178,29 @@ export function hexToRGB(hex: string) {
 
 export function pickPaletteColor(color_palette?: PaletteColors | null | undefined, dark = 60, light = 160): string {
 	if (!color_palette || !color_palette.darkVibrant) {
-		return 'var(--color-theme-7)';
+		return '';
 	}
-	if (
-		!tooLight(color_palette.lightVibrant, light)
-		&& !tooDark(color_palette.lightVibrant, dark)
-	) {
-		if (color_palette.lightVibrant!.includes('#')) {
-			const rgb = hexToRgba(color_palette.lightVibrant!);
-			return `${rgb.r} ${rgb.g} ${rgb.b}`;
-		}
-		return color_palette.lightVibrant ?? 'var(--color-theme-7)';
+	if (!tooLight(color_palette.lightVibrant, light) && !tooDark(color_palette.lightVibrant, dark)) {
+		return color_palette.lightVibrant!;
 	}
-	if (
-		!tooDark(color_palette.primary, dark)
-		&& !tooLight(color_palette.primary, light)
-	) {
-		if (color_palette.primary!.includes('#')) {
-			const rgb = hexToRgba(color_palette.primary!);
-			return `${rgb.r} ${rgb.g} ${rgb.b}`;
-		}
-		return color_palette.primary ?? 'var(--color-theme-7)';
+	if (!tooDark(color_palette.primary, dark) && !tooLight(color_palette.primary, light)) {
+		return color_palette.primary!;
 	}
-	if (
-		!tooDark(color_palette.dominant, dark)
-		&& !tooLight(color_palette.dominant, light)
-	) {
-		if (color_palette.dominant!.includes('#')) {
-			const rgb = hexToRgba(color_palette.dominant!);
-			return `${rgb.r} ${rgb.g} ${rgb.b}`;
-		}
-		return color_palette.dominant ?? 'var(--color-theme-7)';
+	if (!tooDark(color_palette.dominant, dark) && !tooLight(color_palette.dominant, light)) {
+		return color_palette.dominant!;
 	}
 
-	if (
-		!tooDark(color_palette.darkVibrant, dark)
-		&& !tooLight(color_palette.darkVibrant, light)
-	) {
-		if (color_palette.darkVibrant!.includes('#')) {
-			const rgb = hexToRgba(color_palette.darkVibrant!);
-			return `${rgb.r} ${rgb.g} ${rgb.b}`;
-		}
-		return color_palette.darkVibrant ?? 'var(--color-theme-7)';
+	if (!tooDark(color_palette.darkVibrant, dark) && !tooLight(color_palette.darkVibrant, light)) {
+		return color_palette.darkVibrant!;
 	}
-	if (
-		!tooDark(color_palette.darkMuted, dark)
-		&& !tooLight(color_palette.darkMuted, light)
-	) {
-		if (color_palette.darkMuted!.includes('#')) {
-			const rgb = hexToRgba(color_palette.darkMuted!);
-			return `${rgb.r} ${rgb.g} ${rgb.b}`;
-		}
-		return color_palette.darkMuted ?? 'var(--color-theme-7)';
+	if (!tooDark(color_palette.darkMuted, dark) && !tooLight(color_palette.darkMuted, light)) {
+		return color_palette.darkMuted!;
 	}
-	if (
-		!tooLight(color_palette.lightMuted, light)
-		&& !tooDark(color_palette.lightMuted, dark)
-	) {
-		if (color_palette.lightMuted!.includes('#')) {
-			const rgb = hexToRgba(color_palette.lightMuted!);
-			return `${rgb.r} ${rgb.g} ${rgb.b}`;
-		}
-		return color_palette.lightMuted ?? 'var(--color-theme-7)';
+	if (!tooLight(color_palette.lightMuted, light) && !tooDark(color_palette.lightMuted, dark)) {
+		return color_palette.lightMuted!;
 	}
 
-	return 'var(--color-theme-7)';
+	return '';
 }
 
 export enum TailwindColors {
@@ -281,57 +232,69 @@ export enum TailwindColors {
 	tomato = 'tomato',
 	violet = 'violet',
 	yellow = 'yellow',
+	neutral = 'neutral',
+	zinc = 'zinc',
+	stone = 'stone',
+	soho = 'soho',
+	viva = 'viva',
+	ocean = 'ocean',
 }
 
 export const themeColors: {
 	title: keyof typeof TailwindColors;
 	color: string;
 }[] = [
-	{ title: 'red', color: 'rgb(var(--color-red-9))' },
-	{ title: 'tomato', color: 'rgb(var(--color-tomato-9))' },
-	{ title: 'orange', color: 'rgb(var(--color-orange-9))' },
-	{ title: 'amber', color: 'rgb(var(--color-amber-9))' },
-	{ title: 'yellow', color: 'rgb(var(--color-yellow-9))' },
+	// Reds → Oranges → Yellows
+	{ title: 'red', color: 'var(--color-red-6)' },
+	{ title: 'tomato', color: 'var(--color-tomato-6)' },
+	{ title: 'orange', color: 'var(--color-orange-6)' },
+	{ title: 'amber', color: 'var(--color-amber-6)' },
+	{ title: 'yellow', color: 'var(--color-yellow-6)' },
 
-	{ title: 'lime', color: 'rgb(var(--color-lime-9))' },
-	{ title: 'grass', color: 'rgb(var(--color-grass-9))' },
-	{ title: 'green', color: 'rgb(var(--color-green-9))' },
-	{ title: 'teal', color: 'rgb(var(--color-teal-9))' },
+	// Greens
+	{ title: 'lime', color: 'var(--color-lime-6)' },
+	{ title: 'grass', color: 'var(--color-grass-6)' },
+	{ title: 'green', color: 'var(--color-green-6)' },
 
-	{ title: 'mint', color: 'rgb(var(--color-mint-9))' },
-	{ title: 'cyan', color: 'rgb(var(--color-cyan-9))' },
-	{ title: 'sky', color: 'rgb(var(--color-sky-9))' },
-	{ title: 'blue', color: 'rgb(var(--color-blue-9))' },
-	{ title: 'indigo', color: 'rgb(var(--color-indigo-9))' },
+	// Cyans → Blues
+	{ title: 'mint', color: 'var(--color-mint-6)' },
+	{ title: 'teal', color: 'var(--color-teal-6)' },
+	{ title: 'cyan', color: 'var(--color-cyan-6)' },
+	{ title: 'sky', color: 'var(--color-sky-6)' },
+	{ title: 'blue', color: 'var(--color-blue-6)' },
+	{ title: 'indigo', color: 'var(--color-indigo-6)' },
 
-	{ title: 'violet', color: 'rgb(var(--color-violet-9))' },
-	{ title: 'purple', color: 'rgb(var(--color-purple-9))' },
-	{ title: 'plum', color: 'rgb(var(--color-plum-9))' },
-	{ title: 'pink', color: 'rgb(var(--color-pink-9))' },
-	{ title: 'crimson', color: 'rgb(var(--color-crimson-9))' },
+	// Purples → Pinks
+	{ title: 'violet', color: 'var(--color-violet-6)' },
+	{ title: 'purple', color: 'var(--color-purple-6)' },
+	{ title: 'plum', color: 'var(--color-plum-6)' },
+	{ title: 'pink', color: 'var(--color-pink-6)' },
+	{ title: 'crimson', color: 'var(--color-crimson-6)' },
 
-	{ title: 'brown', color: 'rgb(var(--color-brown-9))' },
-	{ title: 'gold', color: 'rgb(var(--color-gold-9))' },
-	{ title: 'bronze', color: 'rgb(var(--color-bronze-9))' },
+	// Browns
+	{ title: 'bronze', color: 'var(--color-bronze-6)' },
+	{ title: 'brown', color: 'var(--color-brown-6)' },
+	{ title: 'gold', color: 'var(--color-gold-6)' },
 
-	{ title: 'olive', color: 'rgb(var(--color-olive-9))' },
-	{ title: 'sage', color: 'rgb(var(--color-sage-9))' },
-	{ title: 'slate', color: 'rgb(var(--color-slate-9))' },
-	{ title: 'mauve', color: 'rgb(var(--color-mauve-9))' },
-	{ title: 'sand', color: 'rgb(var(--color-sand-9))' },
-	{ title: 'gray', color: 'rgb(var(--color-gray-9))' },
+	// Neutrals
+	{ title: 'olive', color: 'var(--color-olive-6)' },
+	{ title: 'sage', color: 'var(--color-sage-6)' },
+	{ title: 'mauve', color: 'var(--color-mauve-6)' },
+	{ title: 'sand', color: 'var(--color-sand-6)' },
 ];
 
-export const backgroundColors: {
+export const surfaceColors: {
 	title: keyof typeof TailwindColors;
 	color: string;
 }[] = [
-	{ title: 'olive', color: 'rgb(var(--background-olive-9))' },
-	{ title: 'sage', color: 'rgb(var(--background-sage-9))' },
-	{ title: 'slate', color: 'rgb(var(--background-slate-9))' },
-	{ title: 'mauve', color: 'rgb(var(--background-mauve-9))' },
-	{ title: 'sand', color: 'rgb(var(--background-sand-9))' },
-	{ title: 'gray', color: 'rgb(var(--background-gray-9))' },
+	{ title: 'slate', color: 'var(--surface-slate-6)' },
+	{ title: 'gray', color: 'var(--surface-gray-6)' },
+	{ title: 'neutral', color: 'var(--surface-neutral-6)' },
+	{ title: 'zinc', color: 'var(--surface-zinc-6)' },
+	{ title: 'stone', color: 'var(--surface-stone-6)' },
+	{ title: 'soho', color: 'var(--surface-soho-6)' },
+	{ title: 'viva', color: 'var(--surface-viva-6)' },
+	{ title: 'ocean', color: 'var(--surface-ocean-6)' },
 ];
 
 export type ThemeColors = TailwindColors | 'custom';
@@ -344,9 +307,8 @@ export interface ColorList {
 export function setCustomColors(colors: ColorList[]) {
 	if (!colors)
 		return;
-	Object.entries(colors).map((color) => {
-		setCustomColor(color[1].key, color[1].value);
-	});
+	Object.entries(colors)
+		.map(color => setCustomColor(color[1].key, color[1].value));
 }
 
 export interface ImageBrightness {

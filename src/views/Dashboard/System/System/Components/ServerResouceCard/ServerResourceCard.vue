@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import { computed, onMounted, ref } from 'vue';
 import Chart from 'primevue/chart';
 
@@ -17,7 +17,6 @@ import { currentServer } from '@/store/currentServer';
 import SystemCard from '../ServerSystemCard.vue';
 import ResourceBar from './ResourceBar.vue';
 import ResourceCircle from './ResourceCircle.vue';
-import { darkMode } from '@/store/colorScheme';
 import type { ChartOptions } from 'chart.js';
 import { useLocalStorage } from '@vueuse/core';
 
@@ -136,6 +135,7 @@ function handleResourceUpdate(data: Resource) {
 	];
 	gpuGraph.value = [...gpuGraph.value.slice(-MAX_DATA_POINTS), gpuCores.value];
 }
+
 useHubListener(connection, 'ResourceUpdate', handleResourceUpdate);
 
 const chartData = computed(() => {
@@ -179,9 +179,7 @@ const legendPosition = useLocalStorage<'left' | 'top' | 'right' | 'bottom'>(
 
 const chartOptions = computed(() => {
 	const documentStyle = getComputedStyle(document.documentElement);
-	const textColor = darkMode.value
-		? `rgb(${documentStyle.getPropertyValue('--color-slate-12')})`
-		: `rgb(${documentStyle.getPropertyValue('--color-slate-1')})`;
+	const textColor = documentStyle.getPropertyValue('--surface-12');
 
 	const surfaceBorder = documentStyle.getPropertyValue(
 		'--p-content-border-color',
@@ -260,21 +258,21 @@ const chartHeight = computed(() => {
 		<template #cta />
 
 		<div
-			class="flex items-start justify-between gap-2 overflow-clip w-available text-slate-light-12/80 dark:text-slate-dark-12/80"
+			class="flex items-start justify-between gap-2 overflow-clip w-available text-surface-12/80"
 		>
-			<ResourceCircle name="CPU" :value="cpuUsage" :size="size" />
+			<ResourceCircle :size="size" :value="cpuUsage" name="CPU" />
 
 			<div
 				class="w-px flex-shrink-0 flex-grow-0 self-stretch bg-white/10"
 			/>
 
-			<ResourceCircle name="Memory" :value="memoryUsage" :size="size" />
+			<ResourceCircle :size="size" :value="memoryUsage" name="Memory" />
 
 			<div
 				class="w-px flex-shrink-0 flex-grow-0 self-stretch bg-white/10"
 			/>
 
-			<ResourceCircle name="GPU" :value="gpuUsage" :size="size" />
+			<ResourceCircle :size="size" :value="gpuUsage" name="GPU" />
 		</div>
 		<div
 			class="flex flex-shrink-0 flex-grow-0 flex-col items-start justify-start self-stretch"
@@ -294,11 +292,11 @@ const chartHeight = computed(() => {
 
 			<template v-if="display === 'graph'">
 				<Chart
-					type="line"
 					:data="chartData"
 					:options="chartOptions"
 					:style="`height: ${chartHeight}`"
 					class="w-available"
+					type="line"
 				/>
 			</template>
 		</div>

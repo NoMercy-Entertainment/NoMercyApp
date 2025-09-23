@@ -3,7 +3,7 @@ import { generatePKCE, parseToken } from './helpers';
 import apiClient from '@/lib/clients/apiClient';
 import cdnClient from '../clients/cdnClient';
 
-import { setUser, user } from '@/store/user';
+import { keycloak, setUser, user } from '@/store/user';
 import { isPlatform } from '@ionic/vue';
 import { authBaseUrl, suffix } from '@/config/config';
 
@@ -12,7 +12,8 @@ const originalLocation = window.location.href.startsWith('file://')
 	: window.location.origin;
 
 const clientId = 'nomercy-ui';
-const clientSecret = 'BXZFX7FzoRplLuKjDrSHB04epMJbRv04';
+// const clientSecret = 'BXZFX7FzoRplLuKjDrSHB04epMJbRv04';
+const clientSecret = '';
 
 export default () => {
 	return new Promise(async (resolve, reject) => {
@@ -106,7 +107,6 @@ export function refreshToken() {
 					?? undefined;
 
 			if (!refreshToken) {
-				reject('refreshToken: No refresh token');
 				return;
 			}
 
@@ -237,9 +237,12 @@ export function logout() {
 		redirect = `https://app${suffix}.nomercy.tv/logout`;
 	}
 
+	keycloak.value.logout();
+	return;
+
 	const queryParams = new URLSearchParams({
 		post_logout_redirect_uri: redirect,
-		id_token_hint: user.value.idToken,
+		id_token_hint: keycloak.value.idToken,
 		prompt: 'false',
 	}).toString();
 

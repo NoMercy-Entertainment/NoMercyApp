@@ -1,6 +1,6 @@
 <script lang="ts" setup>
-import { toRaw } from 'vue';
 import type { PropType } from 'vue';
+import { toRaw } from 'vue';
 import { useRoute } from 'vue-router';
 import { useQueryClient } from '@tanstack/vue-query';
 
@@ -99,8 +99,8 @@ function handleCreateFolder() {
 			<Button
 				id="no"
 				:onclick="close"
+				color="auto"
 				type="button"
-				color="auto-alpha"
 				variant="text"
 			>
 				{{ $t("Cancel") }}

@@ -2,20 +2,10 @@
 import { onMounted, ref, watch } from 'vue';
 import { IonContent, IonPage } from '@ionic/vue';
 
-import type {
-	BluRayPlaylist,
-	DriveState,
-	Episode,
-	RipperResponse,
-} from '@/types/api/dashboard/ripper';
+import type { BluRayPlaylist, DriveState, Episode, RipperResponse } from '@/types/api/dashboard/ripper';
 
 import { pad } from '@/lib/stringArray';
-import {
-	discContents,
-	discs,
-	ripperPlaylist,
-	ripperPlaylistLoading,
-} from '@/store/ripper';
+import { discContents, discs, ripperPlaylist, ripperPlaylistLoading } from '@/store/ripper';
 import serverClient from '@/lib/clients/serverClient';
 import serverBaseClient from '@/lib/clients/serverBaseClient';
 
@@ -143,6 +133,7 @@ function propagateSettings(playlist: BluRayPlaylist) {
 }
 
 const playButtonLocked = ref(false);
+
 function handlePlay(playlist: BluRayPlaylist) {
 	const url = `/dashboard/optical/${discContents.value?.path}/play/${playlist.playlist_id}`;
 	const playlistUrl = `/transcode/ripper/master.m3u8`;
@@ -315,21 +306,21 @@ watch(discContents, async (value) => {
 										>
 											<div
 												:class="{
-													'bg-slate-light-6 dark:bg-slate-dark-5':
+													'bg-surface-6 dark:bg-surface-5':
 														playlistIndex > 0,
 													'bg-gradient-to-t from-focus/50': playlistIndex === 0,
 												}"
-												class="mb-8 first:mb-0 last:mb-0 to-slate-light-6 dark:to-slate-dark-5 w-full-h-full rounded-xl p-0.5 overflow-clip z-10"
+												class="mb-8 first:mb-0 last:mb-0 to-slate-6 dark:to-slate-5 w-full-h-full rounded-xl p-0.5 overflow-clip z-10"
 												style="
                           --tw-gradient-from: hsl(
-                              from rgb(var(--color-focus, var(--color-theme-9)))
+                              from rgb(var(--color-theme-8, var(--color-theme-9)))
                                 h s calc(l / 2)
                             )
                             var(--tw-gradient-from-position);
                         "
 											>
 												<div
-													class="rounded-[10px] w-full bg-slate-light-4 dark:bg-slate-dark-2"
+													class="rounded-[10px] w-full bg-surface-4 dark:bg-surface-10"
 												>
 													<div
 														class="mb-1 w-full flex items-center overflow-clip p-4"
@@ -557,7 +548,7 @@ watch(discContents, async (value) => {
 												class="flex flex-nowrap mb-8 items-center w-available relative gap-1 px-4 pt-5 pb-1 rounded-b-xl -mt-4 z-0"
 												style="
                           background-color: hsl(
-                            from rgb(var(--color-focus, var(--color-theme-9))) h
+                            from rgb(var(--color-theme-8, var(--color-theme-9))) h
                               s calc(l / 2)
                           );
                         "

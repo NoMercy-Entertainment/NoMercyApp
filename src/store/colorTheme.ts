@@ -20,14 +20,6 @@ const theme = useLocalStorage('theme', 'violet');
 export const colorTheme = computed(() => theme.value);
 
 export async function setColorTheme(value: string) {
-	document.body.classList.add('scheme-transition');
-	document.body.style.setProperty('--speed', '300');
-
-	setTimeout(() => {
-		document.body.classList.remove('scheme-transition');
-		document.body.style.setProperty('--speed', '0');
-	}, 300);
-
 	theme.value = value;
 
 	const el = document.body.parentElement!;
@@ -48,7 +40,7 @@ export async function setColorTheme(value: string) {
 
 	if (isPlatform('capacitor')) {
 		const style = window.getComputedStyle(document.body);
-		const color = `rgb(${style.getPropertyValue('--color-theme-7')})`;
+		const color = `rgb(${style.getPropertyValue('--theme-7')})`;
 		EdgeToEdge.setBackgroundColor({ color: rgbToHex(color, 1) }).then();
 	}
 

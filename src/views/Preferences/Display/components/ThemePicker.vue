@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import { themeColors } from '@/lib/colorHelper';
 
 import ThemeButton from './ThemeButton.vue';

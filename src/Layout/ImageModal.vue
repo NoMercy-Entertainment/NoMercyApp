@@ -13,7 +13,7 @@ import {
 	showImageModal,
 	showScreensaver,
 } from '@/store/imageModal';
-import { pickPaletteColor, RGBString2hex } from '@/lib/colorHelper';
+import { pickPaletteColor } from '@/lib/colorHelper';
 import AppLogoSquare from '@/components/Images/icons/AppLogoSquare.vue';
 import OptimizedIcon from '@/components/OptimizedIcon.vue';
 import TMDBImage from '@/components/Images/TMDBImage.vue';
@@ -48,11 +48,8 @@ watch(imageModalData, (data) => {
 		return;
 
 	if (src.value === null && data.src) {
-		src.value = `${imageBaseUrl.value}${data.src}?width=3840&type=avif&aspect_ratio=null`;
-		logoColor.value = pickPaletteColor(data.color_palette?.image)
-			?.replace('rgb(', '')
-			.replace(')', '')
-			.replace(/,/gu, ' ');
+		src.value = `${imageBaseUrl.value}${data.src}?width=3840`;
+		logoColor.value = pickPaletteColor(data.color_palette?.image);
 
 		timeout2.value = setTimeout(() => {
 			handleLoaded();
@@ -66,15 +63,12 @@ watch(imageModalData, (data) => {
 	else if (data.src) {
 		timeout2.value = setTimeout(() => {
 			handleLoaded();
-			src.value = `${imageBaseUrl.value}${data.src}?width=3840&type=avif&aspect_ratio=null`;
-			logoColor.value = pickPaletteColor(data.color_palette?.image)
-				?.replace('rgb(', '')
-				.replace(')', '')
-				.replace(/,/gu, ' ');
+			src.value = `${imageBaseUrl.value}${data.src}?width=3840`;
+			logoColor.value = pickPaletteColor(data.color_palette?.image);
 
 			logoSrc.value = undefined;
 			setTimeout(() => {
-				logoSrc.value = `${data.meta?.logo?.src}?width=3840&type=avif&aspect_ratio=null`;
+				logoSrc.value = `${data.meta?.logo?.src}?width=3840`;
 				logoAspect.value = data.meta?.logo?.aspectRatio || 1;
 			}, 4000);
 		}, delay.value);
@@ -150,7 +144,7 @@ function setAsWallpaper() {
 	serverClient().post('dashboard/server/wallpaper', {
 		path: imageModalData.value?.src,
 		color: logoColor.value
-			? RGBString2hex(`rgb(${logoColor.value})`)
+			? logoColor.value
 			: imageModalData.value?.color_palette?.image?.darkVibrant ?? '',
 		style: wallpaperStyle.value,
 	});
@@ -283,7 +277,8 @@ function onRightClick(e: MouseEvent) {
 		<dialog
 			id="imageModal"
 			ref="imageModal"
-			class="fixed inset-0 w-screen h-screen z-[999999999] bg-auto-4 dark:bg-auto-9 m-0 max-w-screen max-h-screen overflow-clip"
+			:style="logoColor ? `--color-theme-8: ${logoColor};` : ''"
+			class="fixed inset-0 w-screen h-screen z-[999999999] bg-surface-4 dark:bg-surface-9 m-0 max-w-screen max-h-screen overflow-clip"
 			@click="handleClick"
 		>
 			<div
@@ -309,7 +304,7 @@ function onRightClick(e: MouseEvent) {
 				<button
 					:class="!showButton && !showScreensaver ? 'flex' : 'hidden'"
 					aria-hidden="true"
-					class="absolute flex transitioning top-8 right-8 w-10 min-w-[2.5rem] h-10 min-h-[2.5rem] z-0 items-center justify-center disabled:opacity-50 disabled:text-auto-3 disabled:hover:!bg-transparent rounded-full overflow-clip hover:bg-transparent focus-visible:bg-transparent active:bg-transparent sm:focus-visible:bg-auto-4/80 sm:hover:bg-auto-4/80 pointer-events-auto"
+					class="absolute flex transitioning top-8 right-8 w-10 min-w-[2.5rem] h-10 min-h-[2.5rem] z-0 items-center justify-center disabled:opacity-50 disabled:text-surface-3 disabled:hover:!bg-transparent rounded-full overflow-clip hover:bg-transparent focus-visible:bg-transparent active:bg-transparent sm:focus-visible:bg-surface-4/80 sm:hover:bg-surface-4/80 pointer-events-auto"
 					tabindex="-1"
 					@click="handleClose"
 				>
@@ -345,8 +340,8 @@ function onRightClick(e: MouseEvent) {
 								:path="logoSrc"
 								:shadow="logoColor"
 								:size="500"
-								class="w-auto !h-inherit object-contain h-available object-[0_0%] max-h-inherit !duration-700 children:!duration-700"
-								class-name="relative !h-inherit self-start px-4 py-4 !items-start"
+								class="object-contain h-available object-[0_0%] !duration-700 children:!duration-700"
+								class-name="relative self-start px-4 py-4 !items-start"
 								type="logo"
 							/>
 						</div>
@@ -364,7 +359,7 @@ function onRightClick(e: MouseEvent) {
 						style="opacity: 0.3"
 						tabindex="-1"
 					>
-						<OptimizedIcon class="h-8 w-8 text-white/10" icon="arrowLeft" />
+						<OptimizedIcon class="h-8 w-8/10" icon="arrowLeft" />
 					</button>
 					<button
 						aria-hidden="true"
@@ -373,11 +368,10 @@ function onRightClick(e: MouseEvent) {
 						style="opacity: 0.3"
 						tabindex="-1"
 					>
-						<OptimizedIcon class="h-8 w-8 text-white/10" icon="arrowRight" />
+						<OptimizedIcon class="h-8 w-8/10" icon="arrowRight" />
 					</button>
 				</div>
 				<div
-					:style="`--color-focus: ${logoColor ?? 'var(--color-theme-7)'};`"
 					class="absolute right-6 bottom-3 z-0 tv:h-12 h-20 tv:w-12 w-20 tv:right-3.5"
 				>
 					<AppLogoSquare class="" />

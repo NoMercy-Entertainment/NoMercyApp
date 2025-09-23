@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import { onMounted, onUnmounted } from 'vue';
 import router from '@/router';
 import { useIsFetching } from '@tanstack/vue-query';
@@ -45,8 +45,8 @@ onUnmounted(() => {
 		<IonTabs>
 			<IonProgressBar
 				v-if="isFetching > 0"
-				type="indeterminate"
 				class="absolute top-0 z-1199 bg-black"
+				type="indeterminate"
 			/>
 			<ChristmasSnow />
 			<MobileLibraryHeader />

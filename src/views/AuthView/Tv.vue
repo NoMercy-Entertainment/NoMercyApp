@@ -119,7 +119,7 @@ watch(servers, (value) => {
 		<IonContent :fullscreen="true">
 			<div
 				v-if="show && deviceResponse?.user_code && !hasToken"
-				class="flex h-screen w-screen flex-nowrap items-center justify-between gap-4 overflow-hidden p-24 text-slate-light-12 dark:text-slate-dark-12 bg-slate-light-3 dark:bg-slate-dark-1"
+				class="flex h-screen w-screen flex-nowrap items-center justify-between gap-4 overflow-hidden p-24 text-slate-12 dark:text-slate-12 bg-surface-2 dark:bg-surface-1"
 			>
 				<div class="flex w-2/3 flex-col gap-4 font-semibold">
 					<h1 class="text-3xl">
@@ -127,7 +127,7 @@ watch(servers, (value) => {
 					</h1>
 					<div class="flex items-start gap-4">
 						<span
-							class="whitespace-nowrap rounded-md px-3 leading-8 text-white bg-theme-600"
+							class="whitespace-nowrap rounded-md px-3 leading-8 bg-theme-600"
 						>{{ $t("Step") }} 1</span>
 						<div class="flex flex-col gap-2 text-lg">
 							<p>{{ $t("Scan the QR with your phone or go to") }}:</p>
@@ -138,7 +138,7 @@ watch(servers, (value) => {
 					</div>
 					<div class="flex items-start gap-4">
 						<span
-							class="whitespace-nowrap rounded-md px-3 leading-8 text-white bg-theme-600"
+							class="whitespace-nowrap rounded-md px-3 leading-8 bg-theme-600"
 						>{{ $t("Step") }} 2</span>
 						<div class="flex flex-col gap-2 text-lg">
 							<p>{{ $t("Sign in to NoMercy") }}.</p>

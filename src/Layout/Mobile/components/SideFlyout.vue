@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import { computed, onMounted, ref, watch } from 'vue';
 import { useSwipe } from '@vueuse/core';
 
@@ -93,63 +93,63 @@ const { isSwiping, lengthX } = useSwipe(target, {
 		:class="{
 			'transition-left duration-200 ease-in-out ': !isSwiping,
 		}"
+		:style="{ left }"
 		class="flex flex-col h-available absolute top-14 z-999 w-5/6 overflow-hidden"
 		style="box-shadow: 0 4px 7px 0 rgba(0, 0, 0, 0.08)"
-		:style="{ left }"
 	>
 		<button
-			class="fixed inset-0 top-14 w-[500%] h-screen bg-black/40 -z-10"
-			:style="{ opacity }"
 			:class="{
 				'transition-opacity duration-200 ease-in-out ': !isSwiping,
 				'pointer-events-none': sidebar !== 'open',
 			}"
+			:style="{ opacity }"
+			class="fixed inset-0 top-14 w-[500%] h-screen bg-black/40 -z-10"
 			@click="closeSidebar"
 		/>
 		<div
 			ref="container"
-			class="flex flex-shrink-0 flex-grow-0 flex-col items-start justify-start self-stretch overflow-hidden bg-slate-light-1 dark:bg-slate-dark-3 h-full"
+			class="flex flex-shrink-0 flex-grow-0 flex-col items-start justify-start self-stretch overflow-hidden bg-surface-1 h-full"
 		>
 			<ProfileMenuServerSection />
 
 			<div
 				v-if="currentServer"
-				class="flex flex-shrink-0 flex-grow-0 flex-col items-start justify-start gap-1 self-stretch border-t border-r-0 border-b border-l-0 px-3 py-2 border-auto-12/[0.08]"
+				class="flex flex-shrink-0 flex-grow-0 flex-col items-start justify-start gap-1 self-stretch border-t border-r-0 border-b border-l-0 px-3 py-2 border-surface-12/[0.08]"
 			>
 				<SideFlyoutButton
+					href="/setup/select-servers"
 					icon="serverSwitch"
 					title="Switch server"
-					href="/setup/select-servers"
 					@click="closeSidebar"
 				/>
 			</div>
 
 			<div
 				v-if="currentServer"
-				class="flex flex-shrink-0 flex-grow-0 flex-col items-start justify-start gap-1 self-stretch border-t-0 border-r-0 border-b border-l-0 px-3 py-2 border-auto-12/[0.08]"
+				class="flex flex-shrink-0 flex-grow-0 flex-col items-start justify-start gap-1 self-stretch border-t-0 border-r-0 border-b border-l-0 px-3 py-2 border-surface-12/[0.08]"
 			>
 				<SideFlyoutButton
 					v-if="shouldShowLibraryLinks"
+					:active="isHomeRoute"
+					href="/home"
 					icon="home1"
 					title="Home"
-					href="/home"
-					:active="isHomeRoute"
 					@click="closeSidebar"
 				/>
 				<SideFlyoutButton
 					v-if="shouldShowLibraryLinks && hasMusicLibrary"
+					:active="isLibraryRoute"
+					href="/libraries"
 					icon="folder"
 					title="Libraries"
-					href="/libraries"
-					:active="isLibraryRoute"
 					@click="closeSidebar"
 				/>
 				<SideFlyoutButton
 					v-if="shouldShowLibraryLinks && hasMusicLibrary"
+					:active="isMusicRoute"
+					href="/music/start"
 					icon="noteDouble"
 					title="Music"
-					href="/music/start"
-					:active="isMusicRoute"
 					@click="closeSidebar"
 				/>
 			</div>
@@ -158,24 +158,24 @@ const { isSwiping, lengthX } = useSwipe(target, {
 			>
 				<SideFlyoutButton
 					v-if="currentServer"
+					:active="isDashboardRoute"
+					href="/dashboard/system"
 					icon="gridMasonry"
 					title="System"
-					href="/dashboard/system"
-					:active="isDashboardRoute"
 					@click="closeSidebar"
 				/>
 				<SideFlyoutButton
 					v-if="currentServer"
-					icon="paintSwatches"
-					title="Preferences"
 					:active="isPreferencesRoute"
 					href="/preferences/display"
+					icon="paintSwatches"
+					title="Preferences"
 					@click="closeSidebar"
 				/>
 				<SideFlyoutButton
+					:onclick="reload"
 					icon="arrowRefreshHorizontal"
 					title="Refresh"
-					:onclick="reload"
 					@click="closeSidebar"
 				/>
 
@@ -202,7 +202,7 @@ const { isSwiping, lengthX } = useSwipe(target, {
 			</div>
 
 			<div
-				class="flex flex-shrink-0 flex-grow-0 flex-col items-start justify-start gap-1 self-stretch px-3 py-2 mt-auto border-t border-r-0 border-b-0 border-l-0 border-auto-12/[0.08]"
+				class="flex flex-shrink-0 flex-grow-0 flex-col items-start justify-start gap-1 self-stretch px-3 py-2 mt-auto border-t border-r-0 border-b-0 border-l-0 border-surface-12/[0.08]"
 			>
 				<SideFlyoutButton
 					icon="doorOpen"

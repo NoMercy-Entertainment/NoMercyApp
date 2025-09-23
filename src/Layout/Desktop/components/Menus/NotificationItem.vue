@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import type { PropType } from 'vue';
 import VueMarkdown from 'vue-markdown-render';
 
@@ -39,11 +39,11 @@ function handleUpdateDismiss() {
 
 <template>
 	<div
-		class="flex justify-start items-start relative gap-2 p-2 rounded-lg"
 		:class="{
-			'border-1 bg-slate-lightA-4  border-slate-light-7 dark:bg-slate-darkA-2 dark:border-slate-dark-4':
+			'border-1 bg-surface-alpha-4  border-slate-7 dark:bg-surface-alpha-2 dark:border-slate-4':
 				!data.read,
 		}"
+		class="flex justify-start items-start relative gap-2 p-2 rounded-lg"
 	>
 		<NoMercyAvatar
 			v-if="(data.from as User).email"
@@ -52,28 +52,28 @@ function handleUpdateDismiss() {
 		/>
 		<OptimizedIcon
 			v-else-if="data.type === 'update'"
-			icon="download"
 			class-name="w-10 p-2.5 text-focus"
+			icon="download"
 		/>
 		<OptimizedIcon
 			v-else-if="data.type === 'notice' && data.from === 'System'"
-			icon="wrench"
 			class-name="w-10 p-2.5"
+			icon="wrench"
 		/>
 		<OptimizedIcon
 			v-else-if="data.type === 'notice'"
-			icon="infoCircle"
 			class-name="w-10 p-2.5"
+			icon="infoCircle"
 		/>
 		<OptimizedIcon
 			v-else-if="data.type === 'event'"
-			icon="wrench"
 			class-name="w-10 p-2.5"
+			icon="wrench"
 		/>
 		<OptimizedIcon
 			v-else-if="data.type === 'message'"
-			icon="emailReceived"
 			class-name="w-10 p-2.5"
+			icon="emailReceived"
 		/>
 
 		<div class="flex flex-grow flex-col items-start justify-start gap-3">
@@ -84,12 +84,12 @@ function handleUpdateDismiss() {
 					{{ data.title || ((data.from as User).name ?? data.from) }}
 				</p>
 				<div
-					class="flex-shrink-0 flex-grow-0 self-stretch text-sm w-available text-auto-12"
+					class="flex-shrink-0 flex-grow-0 self-stretch text-sm w-available"
 				>
-					<VueMarkdown class="markdown" :source="data.body" />
+					<VueMarkdown :source="data.body" class="markdown" />
 				</div>
 				<p class="flex-shrink-0 flex-grow-0 self-stretch text-xs w-available">
-					<KeepCounting :start-time="data.created_at" :relative="true" />
+					<KeepCounting :relative="true" :start-time="data.created_at" />
 				</p>
 
 				<!-- Special update notification actions -->
@@ -98,13 +98,13 @@ function handleUpdateDismiss() {
 					class="flex gap-2 mt-2"
 				>
 					<button
-						class="px-3 py-1 text-xs bg-theme-5 hover:bg-theme-6 text-white rounded-md transition-colors"
+						class="px-3 py-1 text-xs bg-theme-5 hover:bg-theme-6 rounded-md transition-colors"
 						@click="handleUpdateAccept"
 					>
 						{{ data.body }}
 					</button>
 					<button
-						class="px-3 py-1 text-xs bg-gray-500 hover:bg-gray-600 text-white rounded-md transition-colors"
+						class="px-3 py-1 text-xs bg-gray-500 hover:bg-gray-600 rounded-md transition-colors"
 						@click="handleUpdateDismiss"
 					>
 						Later
@@ -115,7 +115,7 @@ function handleUpdateDismiss() {
 
 		<!-- Regular close button for non-update notifications -->
 		<button v-if="data.type !== 'update'" @click="handleClick">
-			<OptimizedIcon icon="cross" class-name="w-5" />
+			<OptimizedIcon class-name="w-5" icon="cross" />
 		</button>
 	</div>
 </template>

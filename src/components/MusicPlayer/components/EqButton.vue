@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import { MoooomIcons } from '@Icons/icons';
 
 import {
@@ -16,13 +16,13 @@ function handleClick(e?: MouseEvent) {
 </script>
 
 <template>
-	<MusicButton label="Equalizer" :onclick="handleClick">
+	<MusicButton :onclick="handleClick" label="Equalizer">
 		<OptimizedIcon
-			:icon="MoooomIcons.faderOnOff"
-			class="absolute h-7 w-7 inset-1.5"
 			:class="{
 				'text-focus': equalizerMenuOpen,
 			}"
+			:icon="MoooomIcons.faderOnOff"
+			class="absolute h-7 w-7 inset-1.5"
 		/>
 	</MusicButton>
 </template>

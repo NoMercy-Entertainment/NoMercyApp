@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import { computed, onMounted, onUnmounted, watch } from 'vue';
 import { useRoute } from 'vue-router';
 import { IonContent, IonPage } from '@ionic/vue';
@@ -6,12 +6,7 @@ import { IonContent, IonPage } from '@ionic/vue';
 import type { PersonResponseItem } from '@/types/api/base/person';
 
 import { setBackground, setColorPalette } from '@/store/ui';
-import {
-	breakDescription,
-	breakTitle,
-	setTitle,
-	unique,
-} from '@/lib/stringArray';
+import { breakDescription, breakTitle, setTitle, unique } from '@/lib/stringArray';
 import useServerClient from '@/lib/clients/useServerClient';
 import { isNative } from '@/config/global';
 import i18next from '@/config/i18next';
@@ -105,7 +100,7 @@ const filter = 'combined';
 						'pb-40': isNative && currentSong,
 						'children:pb-4 sm:children:pb-3': !isNative && currentSong,
 					}"
-					class="flex bg-black/50 w-available relative"
+					class="flex bg-black/50 w-available relative text-surface-12"
 				>
 					<div
 						class="relative mx-auto flex w-full flex-shrink-0 flex-grow-0 items-end justify-start gap-4 self-stretch rounded-lg p-4 max-w-screen-5xl"
@@ -114,8 +109,8 @@ const filter = 'combined';
 							class="flex flex-grow flex-col items-end justify-start gap-2 pt-[290px] w-available"
 						>
 							<div
-								:class="`flex w-full items-start justify-start self-stretch rounded-2xl pr-4 pl-52 gap-[280px]  bg-gradient-to-b from-auto-1/12 via-auto-1/12 to-auto-1/11 border-1 sm:py-2 sm:pl-64 2xl:pl-96 ${
-									!!data?.deathday ? 'border-auto-12' : 'border-auto-12/4'
+								:class="`flex w-full items-start justify-start self-stretch rounded-2xl pr-4 pl-52 gap-[280px]  bg-gradient-to-b from-surface-1/12 via-surface-1/12 to-surface-1/11 border-1 sm:py-2 sm:pl-64 2xl:pl-96 ${
+									!!data?.deathday ? 'border-surface-12' : 'border-surface-12/4'
 								}`"
 							>
 								<div
@@ -141,74 +136,74 @@ const filter = 'combined';
 										>
 											<a
 												:href="`https://www.themoviedb.org/person/${data?.id}`"
+												aria-label="TMDB"
 												class="relative mr-2 flex items-center justify-center overflow-hidden rounded-lg p-1.5 sm:p-2"
 												target="_blank"
-												aria-label="TMDB"
 											>
-												<SpriteIcon icon="tmdb" class="!w-12" />
+												<SpriteIcon class="!w-12" icon="tmdb" />
 											</a>
 											<a
 												v-if="data?.external_ids?.facebook_id"
 												:href="`https://www.facebook.com/${data?.external_ids.facebook_id}`"
+												aria-label="Facebook"
 												class="relative flex items-center justify-center overflow-hidden rounded-lg p-1.5 sm:p-2"
 												target="_blank"
-												aria-label="Facebook"
 											>
-												<SpriteIcon icon="facebook" class="w-6" />
+												<SpriteIcon class="w-6" icon="facebook" />
 											</a>
 											<a
 												v-if="data?.external_ids?.twitter_id"
 												:href="`https://twitter.com/${data?.external_ids?.twitter_id}`"
+												aria-label="Twitter"
 												class="relative flex items-center justify-center overflow-hidden rounded-lg p-1.5 sm:p-2"
 												target="_blank"
-												aria-label="Twitter"
 											>
-												<SpriteIcon icon="twitter" class="w-6" />
+												<SpriteIcon class="w-6" icon="twitter" />
 											</a>
 											<a
 												v-if="data?.external_ids?.instagram_id"
 												:href="`https://instagram.com/${data?.external_ids?.instagram_id}`"
+												aria-label="Instagram"
 												class="relative flex items-center justify-center overflow-hidden rounded-lg p-1.5 sm:p-2"
 												target="_blank"
-												aria-label="Instagram"
 											>
-												<SpriteIcon icon="instagram" class="w-6" />
+												<SpriteIcon class="w-6" icon="instagram" />
 											</a>
 											<a
 												v-if="data?.external_ids?.youtube_id"
 												:href="`https://youtube.com/channel/${data?.external_ids?.youtube_id}`"
+												aria-label="YouTube"
 												class="relative flex items-center justify-center overflow-hidden rounded-lg p-1.5 sm:p-2"
 												target="_blank"
-												aria-label="YouTube"
 											>
-												<SpriteIcon icon="youtube" class="w-6" />
+												<SpriteIcon class="w-6" icon="youtube" />
 											</a>
 											<a
 												v-if="data?.external_ids?.tiktok_id"
 												:href="`https://tiktok.com/@${data?.external_ids?.tiktok_id}`"
+												aria-label="TikTok"
 												class="relative flex items-center justify-center overflow-hidden rounded-lg p-1.5 sm:p-2"
 												target="_blank"
-												aria-label="TikTok"
 											>
-												<SpriteIcon icon="tiktok" class="w-6" />
+												<SpriteIcon class="w-6" icon="tiktok" />
 											</a>
 											<a
 												v-if="data?.external_ids?.imdb_id"
 												:href="`https://www.imdb.com/name/${data?.external_ids?.imdb_id}`"
+												aria-label="IMDb"
 												class="relative flex items-center justify-center overflow-hidden rounded-lg p-1.5 sm:p-2"
 												target="_blank"
-												aria-label="IMDb"
 											>
-												<SpriteIcon icon="imdb" class="w-6" />
+												<SpriteIcon class="w-6" icon="imdb" />
 											</a>
 											<a
 												v-if="data?.external_ids?.wikidata_id"
 												:href="`https://www.wikidata.org/wiki/${data?.external_ids?.wikidata_id}`"
+												aria-label="Wikidata"
 												class="relative flex items-center justify-center overflow-hidden rounded-lg p-1.5 sm:p-2"
 												target="_blank"
-												aria-label="Wikidata"
 											>
-												<SpriteIcon icon="wikipedia" class="w-6" />
+												<SpriteIcon class="w-6" icon="wikipedia" />
 											</a>
 											<DropdownMenu>
 												<template #button>
@@ -216,15 +211,15 @@ const filter = 'combined';
 														class="relative flex items-center justify-center overflow-hidden rounded-lg p-1.5 sm:p-2"
 													>
 														<OptimizedIcon
-															class="w-6 text-auto-12"
+															class="w-6"
 															icon="menuDotsVertical"
 														/>
 													</div>
 												</template>
 
 												<DropdownLink
-													target="_blank"
 													:href="`https://www.themoviedb.org/person/${data.id}/edit`"
+													target="_blank"
 												>
 													{{ $t("Edit on TMDb") }}
 												</DropdownLink>
@@ -245,7 +240,7 @@ const filter = 'combined';
 											>
 												<p
 													v-if="data?.known_for_department"
-													class="flex-shrink-0 flex-grow-0 text-xs font-bold uppercase text-auto-alpha-11"
+													class="flex-shrink-0 flex-grow-0 text-xs font-bold uppercase text-surface-11"
 												>
 													{{ $t("Known For") }}
 												</p>
@@ -258,7 +253,7 @@ const filter = 'combined';
 											>
 												<p
 													v-if="data?.combined_credits?.cast"
-													class="flex-shrink-0 flex-grow-0 text-xs font-bold uppercase text-auto-alpha-11"
+													class="flex-shrink-0 flex-grow-0 text-xs font-bold uppercase text-surface-11"
 												>
 													{{ $t("Known Credits") }}
 												</p>
@@ -271,7 +266,7 @@ const filter = 'combined';
 											>
 												<p
 													v-if="gender"
-													class="flex-shrink-0 flex-grow-0 text-xs font-bold uppercase text-auto-alpha-11"
+													class="flex-shrink-0 flex-grow-0 text-xs font-bold uppercase text-surface-11"
 												>
 													{{ $t("Gender") }}
 												</p>
@@ -284,12 +279,12 @@ const filter = 'combined';
 											>
 												<p
 													v-if="age"
-													class="flex w-full flex-shrink-0 flex-grow-0 gap-2 text-xs font-bold uppercase text-auto-alpha-10"
+													class="flex w-full flex-shrink-0 flex-grow-0 gap-2 text-xs font-bold uppercase text-surface-10"
 												>
 													{{ $t("Birthday") }}
 													<span
 														v-if="data.deathday"
-														class="mr-8 ml-auto flex flex-shrink-0 flex-grow-0 gap-2 text-xs font-bold uppercase text-auto-alpha-10"
+														class="mr-8 ml-auto flex flex-shrink-0 flex-grow-0 gap-2 text-xs font-bold uppercase text-surface-10"
 													>
 														<span
 															v-if="data.deathday"
@@ -326,7 +321,7 @@ const filter = 'combined';
 											>
 												<p
 													v-if="data?.place_of_birth"
-													class="flex-shrink-0 flex-grow-0 self-stretch text-xs font-bold uppercase text-auto-alpha-10"
+													class="flex-shrink-0 flex-grow-0 self-stretch text-xs font-bold uppercase text-surface-10"
 												>
 													{{ $t("Place of Birth") }}
 												</p>
@@ -345,7 +340,7 @@ const filter = 'combined';
 										class="relative flex w-full flex-col items-start justify-start gap-2"
 									>
 										<p
-											class="flex-shrink-0 flex-grow-0 text-xs font-bold uppercase text-auto-alpha-11"
+											class="flex-shrink-0 flex-grow-0 text-xs font-bold uppercase text-surface-11"
 										>
 											{{ $t("Biography") }}
 										</p>
@@ -353,7 +348,7 @@ const filter = 'combined';
 											v-if="data?.biography"
 											class="self-stretch whitespace-pre-line text-base font-medium leading-[173%]"
 										>
-											{{ breakDescription(data?.biography) }}
+											{{ breakDescription(data?.biography ?? '') }}
 										</p>
 									</div>
 									<div class="mb-8 -ml-1 w-[101.5%]">
@@ -362,9 +357,9 @@ const filter = 'combined';
 												v-if="data?.known_for && data?.known_for?.length > 0"
 												:color-palette="data?.color_palette"
 												:data="unique(data.known_for, 'id')"
+												:disable-auto-aspect="true"
 												:limit-card-count-by="2"
 												title="Known for"
-												:disable-auto-aspect="true"
 												type="poster"
 											/>
 										</div>
@@ -404,3 +399,9 @@ const filter = 'combined';
 		</IonContent>
 	</IonPage>
 </template>
+
+<style scoped>
+ion-content::part(background) {
+	background: transparent;
+}
+</style>

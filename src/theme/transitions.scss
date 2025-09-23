@@ -42,7 +42,7 @@
 }
 
 .no-focus-background {
-	background-color: rgb(var(--color-focus, var(--color-theme-6)) / 70%) !important;
+	background-color: rgb(from var(--color-theme-8, var(--color-theme-6)) r g b / 70%) !important;
 }
 
 .focus-background {
@@ -50,7 +50,7 @@
 	&:active,
 	&:focus-visible,
 	&:focus {
-		background-color: rgb(var(--color-focus, var(--color-theme-6)) / 70%) !important;
+		background-color: rgb(from var(--color-theme-8, var(--color-theme-6)) r g b / 70%) !important;
 	}
 }
 
@@ -68,11 +68,11 @@
 }
 
 .no-focus-outline-thin {
-	box-shadow: 0 0 0 2px rgb(var(--color-focus, var(--color-theme-6)) / 70%);
+	box-shadow: 0 0 0 2px rgb(from var(--color-theme-8, var(--color-theme-6)) r g b / 70%);
 }
 
 .no-focus-outline {
-	box-shadow: 0 0 0 3px rgb(var(--color-focus, var(--color-theme-6)) / 70%);
+	box-shadow: 0 0 0 3px rgb(from var(--color-theme-8, var(--color-theme-6)) r g b / 70%);
 }
 
 .focus-outline {
@@ -81,7 +81,7 @@
 	&:focus-visible,
 	&:focus-visible,
 	&:focus {
-		box-shadow: 0 0 0 3px rgb(var(--color-focus, var(--color-theme-6)) / 70%);
+		box-shadow: 0 0 0 3px rgb(from var(--color-theme-8, var(--color-theme-6)) r g b / 70%);
 	}
 }
 .focus-outline-hex {
@@ -89,18 +89,18 @@
 	&:active,
 	&:focus-visible,
 	&:focus {
-		box-shadow: 0 0 0 3px var(--color-focus);
+		box-shadow: 0 0 0 3px var(--color-theme-8);
 	}
 }
 
 .no-focus-outline-child {
 	& > picture,
 	& > div {
-		box-shadow: 0 0 0 3px rgb(var(--color-focus, var(--color-theme-6)) / 70%);
+		box-shadow: 0 0 0 3px rgb(from var(--color-theme-8, var(--color-theme-6)) r g b / 70%);
 	}
 
 	& > div {
-		box-shadow: 0 0 0 3px rgb(var(--color-focus, var(--color-theme-6)) / 70%);
+		box-shadow: 0 0 0 3px rgb(from var(--color-theme-8, var(--color-theme-6)) r g b / 70%);
 	}
 
 	& > div:last-child {
@@ -118,14 +118,14 @@
 	&:focus {
 		& > picture,
 		& > div {
-			box-shadow: 0 0 0 3px rgb(var(--color-focus, var(--color-theme-6)) / 70%);
+			box-shadow: 0 0 0 3px rgb(from var(--color-theme-8, var(--color-theme-6)) r g b / 70%);
 		}
 	}
 
 	&:active,
 	&:focus {
 		& > div {
-			box-shadow: 0 0 0 3px rgb(var(--color-focus, var(--color-theme-6)) / 70%);
+			box-shadow: 0 0 0 3px rgb(from var(--color-theme-8, var(--color-theme-6)) r g b / 70%);
 		}
 
 		& > div:last-child {
@@ -139,7 +139,7 @@
 
 .no-focus-outline-picture {
 	& picture {
-		box-shadow: 0 0 0 3px rgb(var(--color-focus, var(--color-theme-6)) / 70%);
+		box-shadow: 0 0 0 3px rgb(from var(--color-theme-8, var(--color-theme-6)) r g b / 70%);
 	}
 }
 
@@ -149,22 +149,22 @@
 	&:focus-visible,
 	&:focus {
 		& picture {
-			box-shadow: 0 0 0 3px rgb(var(--color-focus, var(--color-theme-6)) / 70%);
+			box-shadow: 0 0 0 3px rgb(from var(--color-theme-8, var(--color-theme-6)) r g b / 70%);
 		}
 	}
 }
 
 .no-focus-background-child {
 	& > div {
-		background-color: rgb(var(--color-focus, var(--color-theme-6)) / 70%) !important;
+		background-color: rgb(from var(--color-theme-8, var(--color-theme-6)) r g b / 70%) !important;
 	}
 
 	& > div {
-		background-color: rgb(var(--color-focus, var(--color-theme-6)) / 70%) !important;
+		background-color: rgb(from var(--color-theme-8, var(--color-theme-6)) r g b / 70%) !important;
 	}
 
 	& > div:last-child {
-		background-color: rgb(var(--color-focus, var(--color-theme-6)) / 70%) !important;
+		background-color: rgb(from var(--color-theme-8, var(--color-theme-6)) r g b / 70%) !important;
 	}
 }
 
@@ -174,18 +174,18 @@
 	&:focus-visible,
 	&:focus {
 		& > div {
-			background-color: rgb(var(--color-focus, var(--color-theme-6)) / 70%) !important;
+			background-color: rgb(from var(--color-theme-8, var(--color-theme-6)) r g b / 70%) !important;
 		}
 	}
 
 	&:active,
 	&:focus {
 		& > div {
-			background-color: rgb(var(--color-focus, var(--color-theme-6)) / 70%) !important;
+			background-color: rgb(from var(--color-theme-8, var(--color-theme-6)) r g b / 70%) !important;
 		}
 
 		& > div:last-child {
-			background-color: rgb(var(--color-focus, var(--color-theme-6)) / 70%) !important;
+			background-color: rgb(from var(--color-theme-8, var(--color-theme-6)) r g b / 70%) !important;
 		}
 	}
 }
@@ -203,7 +203,7 @@
 	&:active,
 	&:focus-visible,
 	&:focus {
-		box-shadow: 0 0 0 3px rgb(var(--color-focus, var(--color-theme-6)) / 70%);
+		box-shadow: 0 0 0 3px rgb(from var(--color-theme-8, var(--color-theme-6)) r g b / 70%);
 	}
 }
 

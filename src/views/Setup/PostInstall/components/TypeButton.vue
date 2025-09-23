@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import type { PropType } from 'vue';
 import { computed } from 'vue';
 import type { MoooomIcons } from '@Icons/icons.ts';
@@ -49,17 +49,17 @@ const icon = computed<keyof typeof MoooomIcons>(() => {
 </script>
 
 <template>
-	<div class="flex justify-start items-start flex-grow gap-1 px-2 py-4 rounded-xl "
-		:class="{
+	<div :class="{
 			'bg-white/11 dark:bg-black/8 outline outline-2 outline-focus hover:bg-focus/[0.15]': selected,
 			'hover:bg-focus/[0.15]': !selected,
 		}"
+		class="flex justify-start items-start flex-grow gap-1 px-2 py-4 rounded-xl"
 	>
 		<div class="flex flex-col justify-start items-center flex-grow gap-4">
 			<div
 				class="flex justify-start items-start flex-grow-0 flex-shrink-0 relative gap-2 rounded-lg"
 			>
-				<MoooomIcon :icon="icon" :class-name="className" />
+				<MoooomIcon :class-name="className" :icon="icon" />
 			</div>
 			<div
 				class="flex flex-col justify-start items-start self-stretch flex-grow-0 flex-shrink-0 gap-0.5"
@@ -68,7 +68,7 @@ const icon = computed<keyof typeof MoooomIcons>(() => {
 					class="flex justify-start items-start self-stretch flex-grow-0 flex-shrink-0 relative gap-1.5"
 				>
 					<p
-						class="flex-grow w-full text-base font-medium text-center text-slate-dark-1/70 dark:text-slate-light-1/70"
+						class="flex-grow w-full text-base font-medium text-center"
 					>
 						{{ type.name }}
 					</p>

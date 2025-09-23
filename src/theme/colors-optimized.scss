@@ -1,0 +1,511 @@
+@charset "UTF-8";
+@use "sass:map";
+
+//======================================================
+// 0. CSS Properties for theme & background bases
+//======================================================
+@property --theme-l {
+  syntax: "<percentage>";
+  inherits: true;
+  initial-value: 52%;
+}
+
+@property --theme-c {
+  syntax: "<number>";
+  inherits: true;
+  initial-value: 0.18;
+}
+
+@property --theme-h {
+  syntax: "<number>";
+  inherits: true;
+  initial-value: 280;
+}
+
+@property --bg-l {
+  syntax: "<percentage>";
+  inherits: true;
+  initial-value: 52%;
+}
+
+@property --bg-c {
+  syntax: "<number>";
+  inherits: true;
+  initial-value: 0.01;
+}
+
+@property --bg-h {
+  syntax: "<number>";
+  inherits: true;
+  initial-value: 240;
+}
+
+$shadcn-colors: (
+    'amber': (l:0.76927, c:0.16163, h:73.118),
+    'blue': (l:0.65149, c:0.19205, h:251.488),
+    'bronze': (l:0.62742, c:0.04591, h:44.101),
+    'brown': (l:0.63285, c:0.07843, h:60.963),
+    'crimson': (l:0.63403, c:0.21299, h:1.256),
+    'cyan': (l:0.65811, c:0.11811, h:218.701),
+    'gold': (l:0.62044, c:0.04909, h:77.686),
+    'grass': (l:0.65124, c:0.14677, h:147.416),
+    'gray': (l:0.54517, c:0.00006, h:271.152),
+    'green': (l:0.64061, c:0.13286, h:157.708),
+    'indigo': (l:0.54376, c:0.1911, h:267.019),
+    'lime': (l:0.73621, c:0.18275, h:128.278),
+    'mauve': (l:0.54563, c:0.01393, h:290.96),
+    'mint': (l:0.76767, c:0.14095, h:173.102),
+    'olive': (l:0.54224, c:0.02384, h:140.967),
+    'orange': (l:0.68641, c:0.19451, h:44.85),
+    'pink': (l:0.61677, c:0.20766, h:345.983),
+    'plum': (l:0.57873, c:0.1878, h:322.092),
+    'purple': (l:0.55562, c:0.183, h:305.853),
+    'red': (l:0.62554, c:0.19334, h:23.008),
+    'sage': (l:0.54274, c:0.01812, h:166.427),
+    'sand': (l:0.54388, c:0.01067, h:100.188),
+    'sky': (l:0.77279, c:0.13118, h:219.505),
+    'slate': (l:0.54385, c:0.01356, h:240.227),
+    'teal': (l:0.64909, c:0.11358, h:181.999),
+    'tomato': (l:0.62706, c:0.19357, h:33.324),
+    'violet': (l:0.54168, c:0.17912, h:288.036),
+    'yellow': (l:0.8267, c:0.1689, h:90.464),
+);
+
+$shadcn-surface-colors: (
+    "zinc":    (l:0.551, c:0.0119, h:287.7),
+    "neutral": (l:0.556, c:0.0000, h:  0.0),
+    "stone":   (l:0.556, c:0.0076, h:357.0),
+    "soho":    (l:0.601, c:0.0066, h:264.0),
+    "viva":    (l:0.628, c:0.0036, h:225.0),
+    "ocean":   (l:0.617, c:0.0061, h:211.0),
+    "gray":    (l:0.548, c:0.0244, h:269.0),
+    "slate":   (l:0.554, c:0.0414, h:261.0)
+);
+
+$scale-steps: (
+  1: ("l-light":0.42, "c-light":0.10, "l-dark": -0.35, "c-dark":0.10),
+  2: ("l-light":0.38, "c-light":0.20, "l-dark": -0.30, "c-dark":0.20),
+  3: ("l-light":0.32, "c-light":0.40, "l-dark": -0.25, "c-dark":0.40),
+  4: ("l-light":0.26, "c-light":0.60, "l-dark": -0.20, "c-dark":0.60),
+  5: ("l-light":0.20, "c-light":0.70, "l-dark": -0.15, "c-dark":0.70),
+  6: ("l-light":0.12, "c-light":0.80, "l-dark": -0.10, "c-dark":0.80),
+  7: ("l-light":0.04, "c-light":0.90, "l-dark": -0.05, "c-dark":0.90),
+  8: ("l-light":-0.04, "c-light":1.00, "l-dark": 0.05, "c-dark":1.00),
+  9: ("l-light":0.00, "c-light":1.00),
+  // base only
+  10: ("l-light":0.08, "c-light":1.00, "l-dark": 0.10, "c-dark":1.00),
+  11: ("l-light":0.16, "c-light":1.00, "l-dark": 0.20, "c-dark":1.00),
+  12: ("l-light":0.32, "c-light":0.20, "l-dark": 0.35, "c-dark":0.20)
+);
+
+$alpha-steps: (
+  1: (l:0.42, c:0.10, a:0.05),
+  2: (l:0.38, c:0.20, a:0.10),
+  3: (l:0.32, c:0.40, a:0.15),
+  4: (l:0.26, c:0.60, a:0.25),
+  5: (l:0.20, c:0.70, a:0.35),
+  6: (l:0.12, c:0.80, a:0.50),
+  7: (l:0.04, c:0.90, a:0.65),
+  8: (l:-0.04, c:1.00, a:0.80),
+  9: (l:0.00, c:1.00, a:0.90),
+  10: (l:0.08, c:1.00, a:0.85),
+  11: (l:0.16, c:1.00, a:0.70),
+  12: (l:0.32, c:0.20, a:0.15)
+);
+
+//@each $name, $vals in $shadcn-colors {
+//  @property --#{$name} {
+//    syntax: "<color>";
+//    inherits: true;
+//    initial-value: oklch(0% 0 0 / 0);
+//  }
+//  @each $name, $vals in $shadcn-colors {
+//    @for $i from 1 through 12 {
+//      @property --color-#{$name}-#{$i} {
+//        syntax: "<color>";
+//        inherits: true;
+//        initial-value: oklch(0% 0 0 / 0);
+//      }
+//      @property --color-#{$name}-alpha-#{$i} {
+//        syntax: "<color>";
+//        inherits: true;
+//        initial-value: oklch(0% 0 0 / 0);
+//      }
+//    }
+//  }
+//
+//  @each $name, $vals in $shadcn-surface-colors {
+//    @for $i from 1 through 12 {
+//      @property --surface-#{$name}-#{$i} {
+//        syntax: "<color>";
+//        inherits: true;
+//        initial-value: oklch(0% 0 0 / 0);
+//      }
+//        @property --color-#{$name}-alpha-#{$i} {
+//            syntax: "<color>";
+//            inherits: true;
+//            initial-value: oklch(0% 0 0 / 0);
+//        }
+//    }
+//  }
+//}
+//@for $i from 1 through 12 {
+//  @property --background-auto-#{$i} {
+//    syntax: "<color>";
+//    inherits: true;
+//    initial-value: oklch(0% 0 0 / 0);
+//  }
+//  @property --color-auto-#{$i} {
+//    syntax: "<color>";
+//    inherits: true;
+//    initial-value: oklch(0% 0 0 / 0);
+//  }
+//  @property --color-auto-alpha-#{$i} {
+//    syntax: "<color>";
+//    inherits: true;
+//    initial-value: oklch(0% 0 0 / 0);
+//  }
+//  @property --surface-auto-#{$i} {
+//    syntax: "<color>";
+//    inherits: true;
+//    initial-value: oklch(0% 0 0 / 0);
+//  }
+//}
+
+//:root {
+//  color-scheme: light dark;
+//
+//  @each $name, $vals in $shadcn-colors {
+//    --#{$name}: oklch(#{map.get($vals, "l")} #{map.get($vals, "c")} #{map.get($vals, "h")});
+//  }
+//
+//  @each $name, $vals in $shadcn-colors {
+//    $L: map.get($vals, "l");
+//    $C: map.get($vals, "c");
+//    $H: map.get($vals, "h");
+//
+//    @each $i, $step in $scale-steps {
+//      $lL: map.get($step, "l-light");
+//      $cL: map.get($step, "c-light");
+//
+//      @if map.has-key($step, "l-dark") {
+//        $lD: map.get($step, "l-dark");
+//        $cD: map.get($step, "c-dark");
+//
+//        --color-#{$name}-#{$i}: light-dark(oklch(#{ $L + $lL } #{ $C * $cL } #{ $H }),
+//          oklch(#{ $L + $lD } #{ $C * $cD } #{ $H }));
+//      }
+//
+//      @else {
+//        --color-#{$name}-#{$i}: oklch(#{ $L + $lL } #{ $C * $cL } #{ $H });
+//      }
+//    }
+//
+//    @each $i, $a in $alpha-steps {
+//      --color-#{$name}-alpha-#{$i}: oklch(#{ $L + map.get($a, "l") } #{ $C * map.get($a, "c") } #{ $H } / #{ map.get($a, "a") });
+//    }
+//  }
+//
+//  @each $name, $vals in $shadcn-surface-colors {
+//    $sl: map.get($vals, "l");
+//    $sc: map.get($vals, "c");
+//    $sh: map.get($vals, "h");
+//
+//    @each $i, $step in $scale-steps {
+//      $lL: map.get($step, "l-light");
+//      $cL: map.get($step, "c-light");
+//
+//      @if map.has-key($step, "l-dark") {
+//        $lD: map.get($step, "l-dark");
+//        $cD: map.get($step, "c-dark");
+//        --surface-#{$name}-#{$i}: light-dark(oklch(#{$sl + $lL} #{$sc * $cL} #{$sh}),
+//          oklch(#{$sl + $lD} #{$sc * $cD} #{$sh}));
+//      }
+//
+//      @else {
+//        --surface-#{$name}-#{$i}: oklch(#{$sl} #{$sc} #{$sh});
+//      }
+//    }
+//  }
+//
+//  @for $i from 1 through 12 {
+//    --background-auto-#{$i}: light-dark(var(--surface-auto-#{$i}), var(--surface-auto-#{13 - $i}));
+//    --color-auto-#{$i}: light-dark(var(--surface-auto-#{$i}), var(--surface-auto-#{13 - $i}));
+//    --color-auto-alpha-#{$i}: light-dark(var(--surface-auto-#{$i} / 0.90), var(--surface-auto-#{13 - $i} / 0.90));
+//  }
+//
+//  --color-theme-1: light-dark(oklch(calc(var(--color-theme-l) + 32%) calc(var(--color-theme-c) * 0.15) var(--color-theme-h)), oklch(calc(var(--color-theme-l) - 40%) calc(var(--color-theme-c) * 0.2) var(--color-theme-h)));
+//  --color-theme-2: light-dark(oklch(calc(var(--color-theme-l) + 24%) calc(var(--color-theme-c) * 0.25) var(--color-theme-h)), oklch(calc(var(--color-theme-l) - 32%) calc(var(--color-theme-c) * 0.3) var(--color-theme-h)));
+//  --color-theme-3: light-dark(oklch(calc(var(--color-theme-l) + 16%) calc(var(--color-theme-c) * 0.4) var(--color-theme-h)), oklch(calc(var(--color-theme-l) - 24%) calc(var(--color-theme-c) * 0.5) var(--color-theme-h)));
+//  --color-theme-8: light-dark(oklch(calc(var(--color-theme-l) + 8%) calc(var(--color-theme-c) * 0.6) var(--color-theme-h)), oklch(calc(var(--color-theme-l) - 16%) calc(var(--color-theme-c) * 0.7) var(--color-theme-h)));
+//  --color-theme-5: light-dark(oklch(calc(var(--color-theme-l) + 4%) calc(var(--color-theme-c) * 0.8) var(--color-theme-h)), oklch(calc(var(--color-theme-l) - 8%) calc(var(--color-theme-c) * 0.9) var(--color-theme-h)));
+//  --color-theme-6: light-dark(oklch(var(--color-theme-l) calc(var(--color-theme-c) * 1) var(--color-theme-h)), oklch(var(--color-theme-l) calc(var(--color-theme-c) * 1) var(--color-theme-h)));
+//  --color-theme-7: light-dark(oklch(calc(var(--color-theme-l) - 4%) calc(var(--color-theme-c) * 1.1) var(--color-theme-h)), oklch(calc(var(--color-theme-l) + 8%) calc(var(--color-theme-c) * 1.1) var(--color-theme-h)));
+//  --color-theme-8: light-dark(oklch(calc(var(--color-theme-l) - 8%) calc(var(--color-theme-c) * 1.2) var(--color-theme-h)), oklch(calc(var(--color-theme-l) + 16%) calc(var(--color-theme-c) * 1.2) var(--color-theme-h)));
+//  --color-theme-9: light-dark(oklch(calc(var(--color-theme-l) - 12%) calc(var(--color-theme-c) * 1.3) var(--color-theme-h)), oklch(calc(var(--color-theme-l) + 24%) calc(var(--color-theme-c) * 1.3) var(--color-theme-h)));
+//  --color-theme-10: light-dark(oklch(calc(var(--color-theme-l) - 16%) calc(var(--color-theme-c) * 1.2) var(--color-theme-h)), oklch(calc(var(--color-theme-l) + 32%) calc(var(--color-theme-c) * 1.2) var(--color-theme-h)));
+//  --color-theme-11: light-dark(oklch(calc(var(--color-theme-l) - 20%) calc(var(--color-theme-c) * 1.1) var(--color-theme-h)), oklch(calc(var(--color-theme-l) + 40%) calc(var(--color-theme-c) * 1.1) var(--color-theme-h)));
+//  --color-theme-12: light-dark(oklch(calc(var(--color-theme-l) - 24%) calc(var(--color-theme-c) * 1) var(--color-theme-h)), oklch(calc(var(--color-theme-l) + 48%) calc(var(--color-theme-c) * 1) var(--color-theme-h)));
+//
+//
+//  --color-theme-8: var(--color-theme-9);
+//  --color-logo-front: hsl(from var(--color-theme-8) h 50% 85%);
+//  --color-logo-back: hsl(from var(--color-theme-8) h 50% 50%);
+//  --color-logo-text: hsl(from var(--color-theme-8) h 50% 50%);
+//  --color-logo-brand: light-dark(var(--surface-auto-9), var(--surface-auto-12));
+//  --ion-text-color: light-dark(var(--surface-auto-1), var(--surface-auto-12));
+//}
+//
+//@each $name, $value in $shadcn-surface-colors {
+//  .surface-#{$name} {
+//    @for $i from 0 through 12 {
+//      --surface-auto-#{$i}: var(--surface-#{$name}-#{$i});
+//    }
+//  }
+//}
+
+.theme-purple {
+  --theme-l: 64%;
+  --theme-c: 0.1;
+  --theme-h: 295;
+}
+
+.theme-blue {
+  --theme-l: 64%;
+  --theme-c: 0.1;
+  --theme-h: 240;
+}
+
+.theme-cyan {
+  --theme-l: 64%;
+  --theme-c: 0.08;
+  --theme-h: 192;
+}
+
+.theme-teal {
+  --theme-l: 64%;
+  --theme-c: 0.08;
+  --theme-h: 180;
+}
+
+.theme-green {
+  --theme-l: 55%;
+  --theme-c: 0.08;
+  --theme-h: 152;
+}
+
+.theme-lime {
+  --theme-l: 78%;
+  --theme-c: 0.12;
+  --theme-h: 85;
+}
+
+.theme-yellow {
+  --theme-l: 84%;
+  --theme-c: 0.12;
+  --theme-h: 60;
+}
+
+.theme-amber {
+  --theme-l: 80%;
+  --theme-c: 0.12;
+  --theme-h: 45;
+}
+
+.theme-orange {
+  --theme-l: 75%;
+  --theme-c: 0.12;
+  --theme-h: 30;
+}
+
+.theme-red {
+  --theme-l: 65%;
+  --theme-c: 0.12;
+  --theme-h: 10;
+}
+
+.theme-pink {
+  --theme-l: 70%;
+  --theme-c: 0.12;
+  --theme-h: 350;
+}
+
+.theme-red {
+  --theme-l: 57.12%;
+  --theme-c: 0.2939;
+  --theme-h: 356.8;
+}
+
+.theme-tomato {
+  --theme-l: 58.70%;
+  --theme-c: 0.3071;
+  --theme-h: 350.8;
+}
+
+.theme-crimson {
+  --theme-l: 59.04%;
+  --theme-c: 0.4235;
+  --theme-h: 329.7;
+}
+
+.theme-orange {
+  --theme-l: 63.45%;
+  --theme-c: 0.4353;
+  --theme-h: 69.3;
+}
+
+.theme-amber {
+  --theme-l: 74.81%;
+  --theme-c: 0.2245;
+  --theme-h: 99.1;
+}
+
+.theme-yellow {
+  --theme-l: 93.20%;
+  --theme-c: 0.5045;
+  --theme-h: 105.8;
+}
+
+.theme-lime {
+  --theme-l: 75.30%;
+  --theme-c: 0.2574;
+  --theme-h: 132.2;
+}
+
+.theme-grass {
+  --theme-l: 60.07%;
+  --theme-c: 0.2446;
+  --theme-h: 135.9;
+}
+
+.theme-green {
+  --theme-l: 60.01%;
+  --theme-c: 0.1988;
+  --theme-h: 138.4;
+}
+
+.theme-teal {
+  --theme-l: 81.04%;
+  --theme-c: 0.4095;
+  --theme-h: 159.3;
+}
+
+.theme-mint {
+  --theme-l: 81.04%;
+  --theme-c: 0.4095;
+  --theme-h: 159.3;
+}
+
+.theme-sky {
+  --theme-l: 68.04%;
+  --theme-c: 0.4058;
+  --theme-h: 196.1;
+}
+
+.theme-cyan {
+  --theme-l: 57.30%;
+  --theme-c: 0.4980;
+  --theme-h: 198.2;
+}
+
+.theme-blue {
+  --theme-l: 62.39%;
+  --theme-c: 0.5851;
+  --theme-h: 232.6;
+}
+
+.theme-indigo {
+  --theme-l: 39.02%;
+  --theme-c: 0.5066;
+  --theme-h: 243.0;
+}
+
+.theme-violet {
+  --theme-l: 45.60%;
+  --theme-c: 0.4574;
+  --theme-h: 268.5;
+}
+
+.theme-purple {
+  --theme-l: 49.81%;
+  --theme-c: 0.4428;
+  --theme-h: 290.2;
+}
+
+.theme-plum {
+  --theme-l: 61.90%;
+  --theme-c: 0.3545;
+  --theme-h: 300.2;
+}
+
+.theme-pink {
+  --theme-l: 65.49%;
+  --theme-c: 0.4695;
+  --theme-h: 323.5;
+}
+
+.theme-brown {
+  --theme-l: 51.23%;
+  --theme-c: 0.1488;
+  --theme-h: 59.8;
+}
+
+.theme-gold {
+  --theme-l: 57.56%;
+  --theme-c: 0.1424;
+  --theme-h: 74.9;
+}
+
+.theme-bronze {
+  --theme-l: 56.22%;
+  --theme-c: 0.1126;
+  --theme-h: 69.4;
+}
+
+.theme-olive {
+  --theme-l: 48.32%;
+  --theme-c: 0.0552;
+  --theme-h: 115.6;
+}
+
+.theme-sage {
+  --theme-l: 48.23%;
+  --theme-c: 0.0581;
+  --theme-h: 132.7;
+}
+
+.theme-sand {
+  --theme-l: 54.91%;
+  --theme-c: 0.0303;
+  --theme-h: 97.5;
+}
+
+.theme-slate {
+  --theme-l: 50.79%;
+  --theme-c: 0.0206;
+  --theme-h: 237.6;
+}
+
+.theme-gray {
+  --theme-l: 43.91%;
+  --theme-c: 0.0001;
+  --theme-h: 0.0;
+}
+
+.theme-mauve {
+  --theme-l: 49.82%;
+  --theme-c: 0.0365;
+  --theme-h: 311.3;
+}
+
+.scheme-light {
+  color-scheme: only light;
+}
+
+.scheme-dark {
+  color-scheme: only dark;
+}
+
+.scheme-system {
+  color-scheme: light dark;
+}

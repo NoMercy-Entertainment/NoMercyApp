@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import type { PropType } from 'vue';
 import type { Device } from '@/types/api/dashboard/server';
 import type { DeviceIcons } from '@Icons/icons';
@@ -19,7 +19,7 @@ const props = defineProps({
 });
 
 let icon: keyof typeof DeviceIcons;
-switch (props.server.browser) {
+switch (props.server.browser.replace(/[\d.]+/gu, '').trim()) {
 	case 'android':
 	case 'Android':
 	case 'android tv':
@@ -55,6 +55,7 @@ switch (props.server.browser) {
 	case 'Chrome':
 	case 'chromium':
 	case 'Chromium':
+	case 'Mobile Chrome':
 	case 'google chrome':
 	case 'Google Chrome':
 		icon = 'chrome';
@@ -126,6 +127,8 @@ switch (props.server.browser) {
 		icon = 'linux';
 		break;
 	default:
+		icon = 'html5';
+		break;
 }
 console.log('ServerDeviceCard', props.server.browser, icon);
 </script>
@@ -138,10 +141,10 @@ console.log('ServerDeviceCard', props.server.browser, icon);
 	>
 		<template #image>
 			<div
-				class="flex flex-col justify-start items-start self-stretch bg-auto-1 bg-[radial-gradient(81.87%_66.22%_at_0%_0%,rgba(255,255,255,0.2)_0%,rgba(255,255,255,0)_100%)] w-full h-auto aspect-video"
+				class="flex flex-col justify-start items-start self-stretch bg-surface-1 bg-[radial-gradient(81.87%_66.22%_at_0%_0%,rgba(255,255,255,0.2)_0%,rgba(255,255,255,0)_100%)] w-full h-auto aspect-video"
 			>
 				<div
-					class="relative m-auto flex aspect-video h-auto w-full flex-shrink-0 flex-grow-0 flex-col items-center justify-center self-stretch text-auto-12 bg-focus/8"
+					class="relative m-auto flex aspect-video h-auto w-full flex-shrink-0 flex-grow-0 flex-col items-center justify-center self-stretch bg-focus/8"
 				>
 					<DeviceIcon :icon="icon" class-name="!w-[40%]" />
 				</div>

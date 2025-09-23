@@ -1,35 +1,15 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import { computed, onUnmounted, ref, watch } from 'vue';
 import { useRoute } from 'vue-router';
-import {
-	IonContent,
-	IonPage,
-	IonSkeletonText,
-	onIonViewWillEnter,
-	onIonViewWillLeave,
-} from '@ionic/vue';
-import { t } from 'i18next';
+import { IonContent, IonPage, IonSkeletonText, onIonViewWillEnter, onIonViewWillLeave } from '@ionic/vue';
 
 import type { InfoResponse } from '@/types/api/base/info';
 
 import i18next from '@/config/i18next';
 import useServerClient from '@/lib/clients/useServerClient';
 import serverClient from '@/lib/clients/serverClient'; // Add this import
-
-import {
-	breakTitle2,
-	setTitle,
-	sortByPosterAlphabetized,
-} from '@/lib/stringArray';
-import { convertToHumanReact } from '@/lib/dateTime';
-import {
-	background,
-	setBackground,
-	setColorPalette,
-	setLogo,
-	setPoster,
-	title,
-} from '@/store/ui';
+import { breakTitle2, setTitle, sortByPosterAlphabetized } from '@/lib/stringArray';
+import { background, setBackground, setColorPalette, setLogo, setPoster, title } from '@/store/ui';
 import { currentServer } from '@/store/currentServer';
 import router from '@/router';
 
@@ -43,6 +23,7 @@ import HeaderItem from '@/views/Base/Person/components/HeaderItem.vue';
 import Collapsible from '@/views/Base/Person/components/Collapsible.vue';
 import MobileInfoCard from '@/views/Base/Info/components/MobileInfoCard.vue';
 import SeasonCarousel from '@/components/Carousel/SeasonCarousel.vue';
+import { convertToHumanReact } from '@/lib/dateTime.ts';
 
 const route = useRoute();
 const enabled = ref(false);
@@ -223,7 +204,7 @@ onUnmounted(() => {
 			};`"
 		>
 			<div
-				class="flex flex-col justify-start items-center self-stretch flex-grow h-auto gap-4 will-change-auto text-slate-lightA-12/70 dark:text-slate-darkA-12/80 z-0"
+				class="flex flex-col justify-start items-center self-stretch flex-grow h-auto gap-4 will-change-auto text-slate-12/70 dark:text-slate-12/80 z-0"
 				style="box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.16)"
 			>
 				<div
@@ -246,7 +227,7 @@ onUnmounted(() => {
 				</div>
 
 				<div
-					class="flex bg-slate-light-3 dark:bg-slate-dark-1 flex-col justify-start items-start self-stretch flex-grow-0 flex-shrink-0 gap-3 pt-16 pb-5 will-change-auto w-inherit px-6"
+					class="flex bg-surface-3 dark:bg-surface-1 flex-col justify-start items-start self-stretch flex-grow-0 flex-shrink-0 gap-3 pt-16 pb-5 will-change-auto w-inherit px-6"
 				>
 					<p
 						class="self-stretch flex-grow-0 flex-shrink-0 w-[351px] text-2xl font-bold text-left z-10"
@@ -257,8 +238,8 @@ onUnmounted(() => {
 
 					<Collapsible
 						v-if="data?.overview"
-						:text="data?.overview"
 						:max-lines="3"
+						:text="data?.overview"
 					/>
 
 					<div
@@ -267,27 +248,27 @@ onUnmounted(() => {
 					>
 						<HeaderItem
 							v-if="data?.year"
-							title=""
 							:data="data?.year.toString()"
+							title=""
 						/>
 
 						<HeaderItem v-if="data?.content_ratings.length" title="">
 							<ContentRating
+								:ratings="data?.content_ratings"
 								:size="4"
 								class="h-full object-scale-down rounded-lg overflow-clip"
-								:ratings="data?.content_ratings"
 							/>
 						</HeaderItem>
 
 						<HeaderItem
 							v-if="data?.have_items"
-							title=""
 							:data="`${data?.have_items}/${data?.number_of_items}`"
+							title=""
 						/>
 
 						<HeaderItem v-if="data?.duration" title="">
 							<span class="whitespace-nowrap">
-								{{ convertToHumanReact(t, data?.duration, true) }}
+								{{ convertToHumanReact($t, data.duration, true) }}
 							</span>
 						</HeaderItem>
 
@@ -302,15 +283,15 @@ onUnmounted(() => {
 						class="h-6 will-change-auto"
 					/>
 					<div
-						class="self-stretch flex-grow-0 flex-shrink-0 h-px bg-slate-dark-7/[0.1] dark:bg-slate-dark-11/[0.1]"
+						class="self-stretch flex-grow-0 flex-shrink-0 h-px bg-surface-7/[0.1] dark:bg-surface-11/[0.1]"
 					/>
 
 					<InfoItem
 						v-if="data?.genres"
 						:data="data"
-						title="Genres"
 						key-name="genres"
 						prefix="genres"
+						title="Genres"
 					/>
 					<IonSkeletonText
 						v-else
@@ -319,121 +300,121 @@ onUnmounted(() => {
 					/>
 
 					<div
-						class="self-stretch flex-grow-0 flex-shrink-0 h-px bg-slate-dark-7/[0.1] dark:bg-slate-dark-11/[0.1]"
+						class="self-stretch flex-grow-0 flex-shrink-0 h-px bg-surface-7/[0.1] dark:bg-surface-11/[0.1]"
 					/>
 
 					<InfoItem
 						v-if="data?.writer"
 						:data="{ writer: [data?.writer] }"
-						title="Writer"
 						key-name="writer"
 						prefix="person"
+						title="Writer"
 					/>
 
 					<InfoItem
 						v-if="data?.creator"
 						:data="{ creator: [data?.creator] }"
-						title="Creator"
 						key-name="creator"
 						prefix="person"
+						title="Creator"
 					/>
 
 					<InfoItem
 						v-if="data?.director"
 						:data="{ director: [data?.director] }"
-						title="Director"
 						key-name="director"
 						prefix="person"
+						title="Director"
 					/>
 
 					<InfoItem
 						v-if="data?.creators"
 						:data="data"
-						title="Creators"
 						key-name="creators"
 						prefix="person"
+						title="Creators"
 					/>
 
 					<InfoItem
 						v-if="data?.directors"
 						:data="data"
-						title="Directors"
 						key-name="directors"
 						prefix="person"
+						title="Directors"
 					/>
 
 					<InfoItem
 						v-if="data?.writers"
 						:data="data"
-						title="Writers"
 						key-name="writers"
 						prefix="person"
+						title="Writers"
 					/>
 
 					<InfoItem
 						v-if="data?.keywords"
 						:data="data"
-						title="Keywords"
 						key-name="keywords"
+						title="Keywords"
 					/>
 
 					<div
-						class="self-stretch flex-grow-0 flex-shrink-0 h-px bg-slate-dark-7/[0.1] dark:bg-slate-dark-11/[0.1]"
+						class="self-stretch flex-grow-0 flex-shrink-0 h-px bg-surface-7/[0.1] dark:bg-surface-11/[0.1]"
 					/>
 
 					<SeasonCarousel
 						v-if="data?.seasons && data?.seasons?.length > 0"
 						:data="data?.seasons"
-						type="backdrop"
-						class="-mx-6"
 						:limit-card-count-by="0"
+						class="-mx-6"
+						type="backdrop"
 					/>
 
 					<PersonCarousel
 						v-if="data?.cast && data?.cast?.length > 0"
-						class="-mx-6"
 						:data="data?.cast"
+						class="-mx-6"
 						title="Cast"
 					/>
 
 					<PersonCarousel
 						v-if="data?.crew && data?.crew?.length > 0"
-						class="-mx-6"
 						:data="sortByPosterAlphabetized(data?.crew, 'profile', 'id')"
+						class="-mx-6"
 						title="Crew"
 					/>
 
 					<ImageCarousel
 						v-if="data?.posters && data?.posters?.length > 0"
-						class="-mx-6"
 						:data="data?.posters"
+						class="-mx-6"
 						title="Poster"
 						type="poster"
 					/>
 
 					<ImageCarousel
 						v-if="data?.backdrops && data?.backdrops?.length > 0"
-						class="-mx-6"
 						:color-palette="data?.color_palette?.poster"
 						:data="data?.backdrops"
+						class="-mx-6"
 						title="Backdrop"
 						type="backdrop"
 					/>
 
 					<MediaCarousel
 						v-if="data?.recommendations && data?.recommendations?.length > 0"
-						class="-mx-6"
 						:color-palette="data?.color_palette"
 						:data="data?.recommendations"
+						class="-mx-6"
 						title="Recommendations"
 						type="poster"
 					/>
 
 					<MediaCarousel
 						v-if="data?.similar && data?.similar?.length > 0"
-						class="-mx-6"
 						:color-palette="data?.color_palette"
 						:data="data?.similar"
+						class="-mx-6"
 						title="Similar"
 						type="poster"
 					/>

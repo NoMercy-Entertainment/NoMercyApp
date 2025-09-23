@@ -1,6 +1,6 @@
-<script setup lang="ts">
-import { computed, ref } from 'vue';
+<script lang="ts" setup>
 import type { PropType } from 'vue';
+import { computed, ref } from 'vue';
 import { useTranslation } from 'i18next-vue';
 
 import type { HomeDataItem } from '@/types/api/music';
@@ -15,7 +15,12 @@ const props = defineProps({
 		type: Object as PropType<HomeDataItem> | undefined,
 		required: true,
 	},
-	context_menu_items: {
+	className: {
+		type: String,
+		required: false,
+		default: '',
+	},
+	contextMenuItems: {
 		type: Array as PropType<ContextMenuItem[]>,
 		required: false,
 		default: () => [],
@@ -58,20 +63,15 @@ const footText = computed(() => {
 	return text;
 });
 
-const ringColor = ref(
-	pickPaletteColor(props.data.color_palette?.cover)
-		?.replace('rgb(', '')
-		.replace(')', '')
-		.replace(/,/gu, ' ') ?? 'var(--color-primary)',
-);
+const ringColor = ref(pickPaletteColor(props.data.color_palette?.cover));
 </script>
 
 <template>
 	<RouterLink
 		v-if="data?.link"
-		class="relative flex flex-grow flex-col items-center justify-end transition-transform duration-100 group/musicCard active:scale-[98%] w-full"
+		:style="ringColor ? `--ring-color: ${ringColor}` : ''"
 		:to="data.link"
-		:style="`--color-focus: ${ringColor}`"
+		class="relative flex flex-grow flex-col items-center justify-end transition-transform duration-100 group/musicCard active:scale-[98%] w-full text-surface-12"
 	>
 		<MusicCardImage :data="data" />
 		<div
@@ -81,13 +81,13 @@ const ringColor = ref(
 				class="relative flex flex-grow flex-col items-start justify-center text-left w-available overflow-clip"
 			>
 				<p
-					class="h-6 w-full flex-shrink-0 flex-grow-0 self-stretch text-xs font-semibold line-clamp-1"
 					:title="data?.name ?? (data as HomeDataItem)?.title"
+					class="h-6 w-full flex-shrink-0 flex-grow-0 self-stretch text-xs font-semibold line-clamp-1"
 				>
 					{{ data?.name ?? (data as HomeDataItem)?.title }}
 				</p>
 				<p
-					class="h-6 w-full flex-shrink-0 flex-grow-0 self-stretch whitespace-nowrap text-2xs font-medium text-auto-11 line-clamp-1 empty:hidden dark:font-normal"
+					class="h-6 w-full flex-shrink-0 flex-grow-0 self-stretch whitespace-nowrap text-2xs font-medium text-surface-12/11 line-clamp-1 empty:hidden dark:font-normal"
 				>
 					{{ footText }}&nbsp;
 				</p>

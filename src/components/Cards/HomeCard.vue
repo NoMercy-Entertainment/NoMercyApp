@@ -4,7 +4,6 @@ import { computed, ref, watch } from 'vue';
 
 import i18next from '@/config/i18next';
 import { isMobile } from '@/config/global';
-import { breakLogoTitle } from '@/lib/stringArray';
 import { pickPaletteColor } from '@/lib/colorHelper';
 
 import TMDBImage from '@/components/Images/TMDBImage.vue';
@@ -24,21 +23,9 @@ const props = defineProps({
 const hasWatched = ref(false);
 const endTime = ref<string | 0 | null | undefined>(null);
 
-const ringPosterColor = computed(
-	() =>
-		pickPaletteColor(props.homeItem?.color_palette?.poster)
-			?.replace('rgb(', '')
-			.replace(')', '')
-			.replace(/,/gu, ' ') ?? 'var(--color-primary)',
-);
+const ringPosterColor = computed(() => pickPaletteColor(props.homeItem?.color_palette?.poster));
 
-const ringBackdropColor = computed(
-	() =>
-		pickPaletteColor(props.homeItem?.color_palette?.backdrop)
-			?.replace('rgb(', '')
-			.replace(')', '')
-			.replace(/,/gu, ' ') ?? 'var(--color-primary)',
-);
+const ringBackdropColor = computed(() => pickPaletteColor(props.homeItem?.color_palette?.backdrop));
 
 watch(props, (value) => {
 	if (!value.homeItem)
@@ -66,36 +53,41 @@ function toggleWatched() {
 <template>
 	<div
 		v-if="!isMobile"
+		v-once
+		class="scheme-dark relative m-4 mt-0 sm:mt-4 flex flex-shrink-0 flex-grow-0 items-end justify-start gap-4 self-stretch overflow-clip rounded-2xl bg-black/50 p-4 h-[65vh] sm:flex-col"
 		data-scroll
-		class="scheme-dark relative m-4 mt-0 sm:mt-4 flex flex-shrink-0 flex-grow-0 items-end justify-start gap-4 self-stretch overflow-clip rounded-2xl bg-black/50 p-4 text-auto-12 h-[65vh] sm:flex-col"
 	>
 		<TMDBImage
 			v-if="homeItem && !isMobile"
-			:path="homeItem?.backdrop"
-			:title="homeItem?.title"
 			:color-palette="homeItem?.color_palette?.backdrop"
-			:style="`--color-focus: ${ringBackdropColor};`"
+			:path="homeItem?.backdrop"
+			:style="ringBackdropColor ? `
+       --color-theme-8: ${ringBackdropColor};
+    ` : ''"
+			:title="homeItem?.title"
 			:width="null"
-			priority="high"
-			loading="eager"
 			class="!absolute !inset-0 children:!w-available hidden sm:flex overflow-clip border-2 border-focus rounded-2xl"
-			class-name="relative flex !w-available min-h-full flex-shrink-0 flex-grow-0 items-end justify-start gap-4 self-stretch overflow-clip transition-opacity duration-700 bg-auto-1 h-full"
+			class-name="relative flex !w-available min-h-full flex-shrink-0 flex-grow-0 items-end justify-start gap-4 self-stretch overflow-clip transition-opacity duration-700 bg-surface-1 h-full"
+			loading="eager"
+			priority="high"
 		/>
 
 		<TMDBImage
 			v-if="homeItem && isMobile"
-			:path="homeItem?.poster"
-			:title="homeItem?.title"
 			:color-palette="homeItem?.color_palette?.poster"
-			:style="`--color-focus: ${ringPosterColor};`"
+			:path="homeItem?.poster"
+			:style="ringPosterColor ? `
+       --color-theme-8: ${ringPosterColor};
+    ` : ''"
+			:title="homeItem?.title"
 			:width="null"
 			class="!absolute !inset-0 children:!w-available flex sm:hidden overflow-clip border-2 border-focus rounded-2xl"
-			class-name="relative flex !w-available min-h-full flex-shrink-0 flex-grow-0 items-end justify-start gap-4 self-stretch overflow-clip transition-opacity duration-700 bg-auto-50 h-full"
+			class-name="relative flex !w-available min-h-full flex-shrink-0 flex-grow-0 items-end justify-start gap-4 self-stretch overflow-clip transition-opacity duration-700 bg-surface-50 h-full"
 			loading="eager"
 		/>
 
 		<div
-			class="pointer-events-none absolute inset-0 z-0 mt-auto h-4/5 bg-gradient-to-t from-auto-1 via-auto-1/60"
+			class="pointer-events-none absolute inset-0 z-0 mt-auto h-4/5 bg-gradient-to-t from-surface-1 via-surface-1/60"
 		/>
 
 		<div class="flex w-full flex-grow flex-col items-end justify-end gap-2">
@@ -134,13 +126,13 @@ function toggleWatched() {
 							class="flex flex-shrink-0 flex-grow-0 items-start justify-start gap-4"
 						>
 							<BannerButton
-								title="Play"
+								:href="`/${homeItem?.link}/watch`"
 								class="group/play"
-								:href="`/${homeItem?.media_type}/${homeItem?.id}/watch`"
+								title="Play"
 							>
 								<OptimizedIcon class="w-7" icon="playbackSpeed" />
 								<div
-									class="absolute top-3 grid h-0 w-max flex-shrink-0 flex-grow-0 origin-bottom group-hover/play:grid-cols-1 items-center justify-start gap-1 rounded-md duration-200 bg-auto-1 grid-cols-[0fr] group-hover/play:h-[32.77px] transform-all left-[-31px] group-hover/play:top-[-38px]"
+									class="absolute top-3 grid h-0 w-max flex-shrink-0 flex-grow-0 origin-bottom group-hover/play:grid-cols-1 items-center justify-start gap-1 rounded-md duration-200 bg-surface-1 grid-cols-[0fr] group-hover/play:h-[32.77px] transform-all left-[-31px] group-hover/play:top-[-38px]"
 								>
 									<div class="overflow-clip">
 										<p
@@ -155,19 +147,19 @@ function toggleWatched() {
 
 							<BannerButton title="Toggle watched" @click="toggleWatched">
 								<OptimizedIcon
-									class="w-7"
-									icon="check"
 									:stroke="
 										hasWatched ? 'var(--color-green-600) ' : 'currentColor'
 									"
+									class="w-7"
+									icon="check"
 								/>
 							</BannerButton>
 
 							<MediaLikeButton v-if="homeItem" :data="homeItem" />
 
 							<BannerButton
+								:href="`/${homeItem?.link}`"
 								title="Info"
-								:href="`/${homeItem?.media_type}/${homeItem?.id}`"
 							>
 								<OptimizedIcon class="w-7" icon="infoCircle" />
 							</BannerButton>
@@ -182,22 +174,22 @@ function toggleWatched() {
 				>
 					<div v-if="homeItem" class="z-50 flex w-full justify-evenly gap-4">
 						<BannerButton
-							:href="`/${homeItem?.media_type}/${homeItem?.id}/watch`"
+							:href="`/${homeItem?.link}/watch`"
+							class="flex h-10 w-1/2 items-center justify-between gap-2 whitespace-nowrap rounded-md pr-4 pl-3 text-black bg-surface-1 py-1.5"
 							title="Play"
-							class="flex h-10 w-1/2 items-center justify-between gap-2 whitespace-nowrap rounded-md pr-4 pl-3 text-black bg-auto-12 py-1.5"
 						>
-							<OptimizedIcon icon="playCircle" class-name="w-6" />
+							<OptimizedIcon class-name="w-6" icon="playCircle" />
 							<span class="w-full whitespace-nowrap text-center">{{
 								$t("Play")
 							}}</span>
 						</BannerButton>
 
 						<BannerButton
-							:href="`/${homeItem?.media_type}/${homeItem?.id}`"
+							:href="`/${homeItem?.link}`"
+							class="flex justify-center items-center relative gap-2 p-2 rounded-lg hover:bg-surface-5/6 transition-colors duration-200"
 							title="Info"
-							class="flex justify-center items-center relative gap-2 p-2 rounded-lg hover:bg-auto-5/6 transition-colors duration-200"
 						>
-							<OptimizedIcon icon="add" class-name="w-6" />
+							<OptimizedIcon class-name="w-6" icon="add" />
 							<span class="w-full whitespace-nowrap text-center">
 								{{ $t("Info") }}
 							</span>
@@ -217,86 +209,89 @@ function toggleWatched() {
 		>
 			<TMDBImage
 				v-if="homeItem"
-				:path="homeItem?.poster"
-				:title="homeItem?.title"
 				:color-palette="homeItem?.color_palette?.poster"
-				:style="`--color-focus: ${ringPosterColor};`"
+				:path="homeItem?.poster"
+				:style="
+					ringPosterColor
+						? `--color-theme-8: ${ringPosterColor};`
+						: ''"
+				:title="homeItem?.title"
 				:width="null"
 				class="children:!w-available flex sm:hidden overflow-clip border-2 border-focus rounded-lg z-0 absolute -inset-0"
-				class-name="relative flex h-auto aspect-poster !w-available min-h-full flex-shrink-0 flex-grow-0 items-end justify-start gap-4 self-stretch overflow-clip transition-opacity duration-700 bg-auto-50"
+				class-name="relative flex h-auto aspect-poster !w-available min-h-full flex-shrink-0 flex-grow-0 items-end justify-start gap-4 self-stretch overflow-clip transition-opacity duration-700 bg-surface-50"
 				loading="eager"
 			/>
 
 			<svg
-				viewBox="0 0 343 178"
-				fill="none"
-				xmlns="http://www.w3.org/2000/svg"
 				class="absolute inset-0 top-auto bottom-0 z-0 h-2/5 w-full flex-shrink-0 flex-grow-0 blur-xl"
+				fill="none"
 				preserveAspectRatio="none"
+				viewBox="0 0 343 178"
+				xmlns="http://www.w3.org/2000/svg"
 			>
 				<g filter="url(#filter0_bf_5147_33391)">
 					<rect
-						width="100%"
-						height="177"
-						transform="matrix(1 0 0 -1 0 178)"
 						fill="#1B1B1B"
 						fill-opacity="0.2"
+						height="177"
+						transform="matrix(1 0 0 -1 0 178)"
+						width="100%"
 					/>
 				</g>
 				<g filter="url(#filter1_bf_5147_33391)">
 					<rect
-						width="100%"
-						height="161"
-						transform="matrix(1 0 0 -1 0 178)"
 						fill="#1B1B1B"
 						fill-opacity="0.2"
+						height="161"
+						transform="matrix(1 0 0 -1 0 178)"
+						width="100%"
 					/>
 				</g>
 				<g filter="url(#filter2_bf_5147_33391)">
 					<rect
-						width="100%"
-						height="145"
-						transform="matrix(1 0 0 -1 0 178)"
 						fill="#1B1B1B"
 						fill-opacity="0.2"
+						height="145"
+						transform="matrix(1 0 0 -1 0 178)"
+						width="100%"
 					/>
 				</g>
 				<g filter="url(#filter3_bf_5147_33391)">
 					<rect
-						width="100%"
-						height="129"
-						transform="matrix(1 0 0 -1 0 178)"
 						fill="#1B1B1B"
 						fill-opacity="0.2"
+						height="129"
+						transform="matrix(1 0 0 -1 0 178)"
+						width="100%"
 					/>
 				</g>
 				<g filter="url(#filter4_bf_5147_33391)">
 					<rect
-						width="100%"
-						height="113"
-						transform="matrix(1 0 0 -1 0 178)"
 						fill="#1B1B1B"
 						fill-opacity="0.2"
+						height="113"
+						transform="matrix(1 0 0 -1 0 178)"
+						width="100%"
 					/>
 				</g>
 				<g filter="url(#filter5_bf_5147_33391)">
 					<rect
-						width="100%"
-						height="97"
-						transform="matrix(1 0 0 -1 0 178)"
 						fill="#1B1B1B"
 						fill-opacity="0.2"
+						height="97"
+						transform="matrix(1 0 0 -1 0 178)"
+						width="100%"
 					/>
 				</g>
 				<defs>
 					<filter
 						id="filter0_bf_5147_33391"
+						color-interpolation-filters="sRGB"
+						filterUnits="userSpaceOnUse"
+						height="179"
+						width="100%"
 						x="-1"
 						y="0"
-						width="100%"
-						height="179"
-						filterUnits="userSpaceOnUse"
-						color-interpolation-filters="sRGB"
 					>
 						<feFlood flood-opacity="0" result="BackgroundImageFix" />
 						<feGaussianBlur
@@ -309,24 +304,24 @@ function toggleWatched() {
 							result="effect1_backgroundBlur_5147_33391"
 						/>
 						<feBlend
-							mode="normal"
 							in="SourceGraphic"
 							in2="effect1_backgroundBlur_5147_33391"
+							mode="normal"
 							result="shape"
 						/>
 						<feGaussianBlur
-							stdDeviation="0.5"
 							result="effect2_foregroundBlur_5147_33391"
+							stdDeviation="0.5"
 						/>
 					</filter>
 					<filter
 						id="filter1_bf_5147_33391"
+						color-interpolation-filters="sRGB"
+						filterUnits="userSpaceOnUse"
+						height="165"
+						width="100%"
 						x="-2"
 						y="15"
-						width="100%"
-						height="165"
-						filterUnits="userSpaceOnUse"
-						color-interpolation-filters="sRGB"
 					>
 						<feFlood flood-opacity="0" result="BackgroundImageFix" />
 						<feGaussianBlur
@@ -339,24 +334,24 @@ function toggleWatched() {
 							result="effect1_backgroundBlur_5147_33391"
 						/>
 						<feBlend
-							mode="normal"
 							in="SourceGraphic"
 							in2="effect1_backgroundBlur_5147_33391"
+							mode="normal"
 							result="shape"
 						/>
 						<feGaussianBlur
-							stdDeviation="1"
 							result="effect2_foregroundBlur_5147_33391"
+							stdDeviation="1"
 						/>
 					</filter>
 					<filter
 						id="filter2_bf_5147_33391"
+						color-interpolation-filters="sRGB"
+						filterUnits="userSpaceOnUse"
+						height="151"
+						width="100%"
 						x="-3"
 						y="30"
-						width="100%"
-						height="151"
-						filterUnits="userSpaceOnUse"
-						color-interpolation-filters="sRGB"
 					>
 						<feFlood flood-opacity="0" result="BackgroundImageFix" />
 						<feGaussianBlur
@@ -369,24 +364,24 @@ function toggleWatched() {
 							result="effect1_backgroundBlur_5147_33391"
 						/>
 						<feBlend
-							mode="normal"
 							in="SourceGraphic"
 							in2="effect1_backgroundBlur_5147_33391"
+							mode="normal"
 							result="shape"
 						/>
 						<feGaussianBlur
-							stdDeviation="1.5"
 							result="effect2_foregroundBlur_5147_33391"
+							stdDeviation="1.5"
 						/>
 					</filter>
 					<filter
 						id="filter3_bf_5147_33391"
+						color-interpolation-filters="sRGB"
+						filterUnits="userSpaceOnUse"
+						height="137"
+						width="100%"
 						x="-4"
 						y="45"
-						width="100%"
-						height="137"
-						filterUnits="userSpaceOnUse"
-						color-interpolation-filters="sRGB"
 					>
 						<feFlood flood-opacity="0" result="BackgroundImageFix" />
 						<feGaussianBlur
@@ -399,24 +394,24 @@ function toggleWatched() {
 							result="effect1_backgroundBlur_5147_33391"
 						/>
 						<feBlend
-							mode="normal"
 							in="SourceGraphic"
 							in2="effect1_backgroundBlur_5147_33391"
+							mode="normal"
 							result="shape"
 						/>
 						<feGaussianBlur
-							stdDeviation="2"
 							result="effect2_foregroundBlur_5147_33391"
+							stdDeviation="2"
 						/>
 					</filter>
 					<filter
 						id="filter4_bf_5147_33391"
+						color-interpolation-filters="sRGB"
+						filterUnits="userSpaceOnUse"
+						height="123"
+						width="100%"
 						x="-5"
 						y="60"
-						width="100%"
-						height="123"
-						filterUnits="userSpaceOnUse"
-						color-interpolation-filters="sRGB"
 					>
 						<feFlood flood-opacity="0" result="BackgroundImageFix" />
 						<feGaussianBlur
@@ -429,24 +424,24 @@ function toggleWatched() {
 							result="effect1_backgroundBlur_5147_33391"
 						/>
 						<feBlend
-							mode="normal"
 							in="SourceGraphic"
 							in2="effect1_backgroundBlur_5147_33391"
+							mode="normal"
 							result="shape"
 						/>
 						<feGaussianBlur
-							stdDeviation="2.5"
 							result="effect2_foregroundBlur_5147_33391"
+							stdDeviation="2.5"
 						/>
 					</filter>
 					<filter
 						id="filter5_bf_5147_33391"
+						color-interpolation-filters="sRGB"
+						filterUnits="userSpaceOnUse"
+						height="109"
+						width="100%"
 						x="-6"
 						y="75"
-						width="100%"
-						height="109"
-						filterUnits="userSpaceOnUse"
-						color-interpolation-filters="sRGB"
 					>
 						<feFlood flood-opacity="0" result="BackgroundImageFix" />
 						<feGaussianBlur
@@ -459,14 +454,14 @@ function toggleWatched() {
 							result="effect1_backgroundBlur_5147_33391"
 						/>
 						<feBlend
-							mode="normal"
 							in="SourceGraphic"
 							in2="effect1_backgroundBlur_5147_33391"
+							mode="normal"
 							result="shape"
 						/>
 						<feGaussianBlur
-							stdDeviation="3"
 							result="effect2_foregroundBlur_5147_33391"
+							stdDeviation="3"
 						/>
 					</filter>
 				</defs>
@@ -500,16 +495,16 @@ function toggleWatched() {
 					class="flex flex-shrink-0 flex-grow-0 items-start justify-start gap-6 self-stretch p-6"
 				>
 					<RouterLink
-						:to="`/${homeItem?.media_type}/${homeItem?.id}/watch`"
+						:to="`/${homeItem?.link}/watch`"
 						class="flex justify-center items-center flex-grow h-10 relative overflow-hidden gap-3 px-6 py-4 rounded-lg bg-[#fdfeff]/[0.93] text-black"
 					>
 						<OptimizedIcon
-							icon="play"
 							class-name="w-6"
+							icon="play"
 							style="--fill-color: black"
 						/>
 						<p
-							class="flex-grow-0 flex-shrink-0 text-[15px] font-medium text-center text-[rgb(var(--color-auto-2))]"
+							class="flex-grow-0 flex-shrink-0 text-[15px] font-medium text-center text-[var(--surface-2)]"
 						>
 							{{ $t("Play") }}
 						</p>
@@ -518,7 +513,7 @@ function toggleWatched() {
 						class="flex justify-center items-center flex-grow h-10 relative overflow-hidden gap-3 px-6 py-4 rounded-lg bg-black/50 mix-blend-screen"
 						@click="toggleWatched"
 					>
-						<OptimizedIcon icon="addCircle" class-name="w-6" />
+						<OptimizedIcon class-name="w-6" icon="addCircle" />
 						<p
 							class="flex-shrink-0 flex-grow-0 text-center font-medium text-[15px]"
 						>

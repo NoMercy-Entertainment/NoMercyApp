@@ -232,17 +232,26 @@ export function parseColorToHex(color: string, opacity: number = 1): string | nu
 }
 
 export function rgbToHex(rgb: string, opacity: number): string {
-	const match = rgb.match(/\d+/g);
+	const match = rgb.match(/rgba?\((\d+),\s*(\d+),\s*(\d+)(?:,\s*([\d.]+))?\)/i);
 	if (!match)
 		return '#00000000';
 
-	const [r, g, b] = match.map(Number);
-	const a = Math.round(opacity * 255);
+	const r = Number(match[1]);
+	const g = Number(match[2]);
+	const b = Number(match[3]);
+	const a = match[4] !== undefined ? Number(match[4]) : opacity;
+
+	const alpha = Math.round(a * 255)
+		.toString(16)
+		.padStart(2, '0')
+		.toUpperCase();
+
 	return (
-		`#${r.toString(16).padStart(2, '0').toUpperCase()}`
-		+ `${g.toString(16).padStart(2, '0').toUpperCase()}`
-		+ `${b.toString(16).padStart(2, '0').toUpperCase()}`
-		+ `${a.toString(16).padStart(2, '0').toUpperCase()}`
+		`#${
+			r.toString(16).padStart(2, '0').toUpperCase()
+		}${g.toString(16).padStart(2, '0').toUpperCase()
+		}${b.toString(16).padStart(2, '0').toUpperCase()
+		}${alpha}`
 	);
 }
 

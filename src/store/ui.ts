@@ -46,14 +46,13 @@ export function setColorPalette(value?: PaletteColors | null) {
 	c.value = value;
 
 	if (!useAutoThemeColors.value) {
-		fc.value = 'var(--color-theme-7)';
+		fc.value = '';
+		document.documentElement.style.removeProperty('--color-theme-8');
 	}
 	else {
-		fc.value = pickPaletteColor(value, 20, 160)
-			.replace(/,/gu, ' ')
-			.replace('rgb(', '');
+		fc.value = pickPaletteColor(value, 20, 160);
 
-		document.documentElement.style.setProperty('--color-focus', value ? fc.value : 'var(--color-theme-9)');
+		document.documentElement.style.setProperty('--color-theme-8', fc.value);
 	}
 
 	if (isPlatform('capacitor')) {
@@ -65,7 +64,7 @@ export function setColorPalette(value?: PaletteColors | null) {
 		});
 
 		const style = window.getComputedStyle(document.body);
-		const defaultColor = `rgb(${style.getPropertyValue('--color-theme-7')})`;
+		const defaultColor = style.getPropertyValue('--color-theme-7');
 
 		if (tooDark(color, 10)) {
 			color = rgbToHex(defaultColor, 1);

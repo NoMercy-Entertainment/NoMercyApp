@@ -1,13 +1,9 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import { computed, onMounted, ref, watch } from 'vue';
 import { IonContent, IonPage } from '@ionic/vue';
 import { useLocalStorage } from '@vueuse/core';
 
-import {
-	defaultSubtitleStyles,
-	edgeStyles,
-	fontFamilies,
-} from '@/lib/VideoPlayer/plugins/UIPlugin/buttons';
+import { defaultSubtitleStyles, edgeStyles, fontFamilies } from '@/lib/VideoPlayer/plugins/UIPlugin/buttons';
 import type { SubtitleStyle } from '@nomercy-entertainment/nomercy-video-player/src/types';
 
 import { getEdgeStyle, parseColorToHex } from '@/types/config';
@@ -102,9 +98,9 @@ watch(currentEdgeStyle, (value) => {
 	<IonPage>
 		<IonContent :fullscreen="true">
 			<DashboardLayout
+				:allow-anyone="true"
 				:grid-style="4"
 				title="Subtitle settings"
-				:allow-anyone="true"
 			>
 				<template #cta>
 					<!--          <Button id="invite" color="theme" startIcon="userAdd" @click="{}"> -->
@@ -118,21 +114,21 @@ watch(currentEdgeStyle, (value) => {
 						class="relative w-3/4 mx-auto h-40 overflow-clip rounded-md"
 					>
 						<img
-							src="https://app.nomercy.tv/tmdb-images/eplbcueeqEz6qUilG1HTVz1smEE.jpg"
 							alt=""
-							class="absolute inset-0 object-cover object-[0_75%] w-full h-full"
+							class="absolute inset-0 object-cover object-[0_61%] w-full h-full"
+							src="https://app.nomercy.tv/tmdb-images/eplbcueeqEz6qUilG1HTVz1smEE.jpg"
 						>
 						<div id="player1-subtitle-overlay" class="subtitle-overlay">
 							<div id="player1-subtitle-safezone" class="subtitle-safezone">
 								<div
 									id="player1-subtitle-area"
-									class="subtitle-area sized aligned-center"
 									:style="areaStyle"
+									class="subtitle-area sized aligned-center"
 								>
 									<span
 										id="player1-subtitle-text"
-										class="subtitle-text"
 										:style="textStyle"
+										class="subtitle-text"
 									>
 										English subtitle 1 -Unforced- (00:00:01.000)
 									</span>
@@ -146,28 +142,28 @@ watch(currentEdgeStyle, (value) => {
 					>
 						<div class="col-span-1 col-start-1 flex flex-col gap-4 w-1/4">
 							<SliderBar
-								:min="0"
 								:max="200"
-								:step="1"
+								:min="0"
 								:percentage="100"
 								:position="100"
+								:step="1"
+								color="textColor"
 								title="Text size"
 								type="fontSize"
-								color="textColor"
 							/>
 							<Select
 								v-model="currentFontFamily"
-								title="Font family"
-								type="fontFamily"
 								:options="[...fontFamilies]"
 								option-label="name"
+								title="Font family"
+								type="fontFamily"
 							/>
 							<Select
 								v-model="currentEdgeStyle"
-								title="Edge style"
-								type="edgeStyle"
 								:options="[...edgeStyles]"
 								option-label="name"
+								title="Edge style"
+								type="edgeStyle"
 							/>
 						</div>
 
@@ -181,27 +177,27 @@ watch(currentEdgeStyle, (value) => {
 
 						<div class="col-span-1 col-start-3 flex flex-col gap-4 w-1/4">
 							<SliderBar
-								:min="0"
 								:max="100"
+								:min="0"
 								:step="1"
-								title="Text opacity"
 								color="textColor"
+								title="Text opacity"
 								type="textOpacity"
 							/>
 							<SliderBar
-								:min="0"
 								:max="100"
+								:min="0"
 								:step="1"
-								title="Background opacity"
 								color="backgroundColor"
+								title="Background opacity"
 								type="backgroundOpacity"
 							/>
 							<SliderBar
-								:min="0"
 								:max="100"
+								:min="0"
 								:step="1"
-								title="Window opacity"
 								color="areaColor"
+								title="Window opacity"
 								type="windowOpacity"
 							/>
 						</div>

@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 defineProps({
 	title: {
 		type: String,
@@ -14,13 +14,13 @@ defineProps({
 <template>
 	<div v-if="data || $slots" class="flex flex-col gap-2">
 		<div class="flex gap-2">
-			<p class="text-xs font-bold uppercase text-auto-alpha-10 leading-none">
+			<p class="text-xs font-bold uppercase text-surface-10 leading-none">
 				{{ $t(title) }}
 			</p>
 			<slot name="head" />
 		</div>
 		<div
-			class="flex gap-1 items-center relative h-7 px-2 rounded-md border bg-slate-dark-7/[0.1] border-slate-dark-8/[0.3] dark:bg-slate-dark-11/[0.1] dark:border-slate-dark-11/[0.25] text-center w-min"
+			class="flex gap-1 items-center relative h-7 px-2 rounded-md border bg-surface-7/[0.1] border-slate-8/[0.3] dark:bg-surface-11/[0.1] dark:border-slate-11/[0.25] text-center w-min"
 		>
 			<slot v-if="$slots.default" />
 			<p

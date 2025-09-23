@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import { onMounted, ref, watch } from 'vue';
 import type { MoooomIcons } from '@Icons/icons';
 import MeterGroup from 'primevue/metergroup';
@@ -134,11 +134,11 @@ onMounted(() => {
 		<!--          class="relative flex flex-shrink-0 flex-grow-0 flex-col items-start justify-start self-stretch overflow-clip w-available" -->
 		<!--      > -->
 		<!--        <p -->
-		<!--            class="self-stretch text-sm font-semibold  text-slate-light-11 dark:text-slate-dark-11 whitespace-nowrap" -->
+		<!--            class="self-stretch text-sm font-semibold  text-slate-11 dark:text-slate-11 whitespace-nowrap" -->
 		<!--        > -->
 		<!--          {{ path.key }}: -->
 		<!--        </p> -->
-		<!--        <p class="flex-shrink-0 flex-grow-0 self-stretch text-sm text-auto-alpha-10 line-clamp-1"> -->
+		<!--        <p class="flex-shrink-0 flex-grow-0 self-stretch text-sm text-surface-10 line-clamp-1"> -->
 		<!--          {{ path.value }} -->
 		<!--        </p> -->
 		<!--      </div> -->
@@ -147,15 +147,15 @@ onMounted(() => {
 		<div
 			v-for="drive in drives"
 			:key="drive.name"
-			class="relative flex flex-shrink-0 flex-grow-0 flex-col items-start justify-start self-stretch overflow-clip w-available text-slate-light-12/80 dark:text-slate-dark-12/70"
+			class="relative flex flex-shrink-0 flex-grow-0 flex-col items-start justify-start self-stretch overflow-clip w-available text-slate-12/80 dark:text-slate-12/70"
 		>
 			<p class="self-stretch text-sm font-semibold whitespace-nowrap">
 				{{ drive.name }}
 			</p>
 			<MeterGroup
-				:value="drive.data"
 				:max="100"
-				class="flex-shrink-0 flex-grow-0 self-stretch text-xs line-clamp-1 mt-2 children:first:children:bg-auto-2 dark:children:first:children:bg-auto-1"
+				:value="drive.data"
+				class="flex-shrink-0 flex-grow-0 self-stretch text-xs line-clamp-1 mt-2 children:first:children:bg-surface-2 dark:children:first:children:bg-surface-1"
 			/>
 		</div>
 	</SystemCard>

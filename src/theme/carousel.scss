@@ -49,7 +49,7 @@
 		/* ===== SCROLL BUTTONS ===== */
 		> *::scroll-marker,
 		&::scroll-button(*) {
-			background-color: rgb(var(--background-auto-10));
+			background-color: rgb(var(--surface-10));
 			border: none;
 			width: 2rem;
 			height: 2rem;
@@ -115,7 +115,7 @@
 
 		> *.marker::scroll-marker:hover,
 		&::scroll-button(*):hover {
-			background-color: rgb(var(--background-auto-11));
+			background-color: rgb(var(--surface-11));
 		}
 
 		&::scroll-button(left):disabled {

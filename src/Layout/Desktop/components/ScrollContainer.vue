@@ -153,45 +153,45 @@ function handleFocus() {
 <template>
 	<div
 		ref="scrollContainerElement"
-		class="flex flex-1 h-available music-showing:h-[calc(100vh-7rem)] z-0 isolate overflow-auto will-change-scroll w-full flex-col scrollbar-none pb-2 scroll-container min-h-[91.2%]"
 		:class="{
 			'group/scrollContainer': !frame,
 			'group/scrollContainer-frame': frame,
 		}"
-		tabindex="1"
 		:data-music="musicVisibility"
-		@scroll="$emit('scroll', $event as unknown as VueScrollEvent)"
-		@mousemove="mouseEnter"
-		@mouseleave="mouseLeave"
+		class="flex flex-1 h-available music-showing:h-[calc(100vh-11rem)] z-0 isolate overflow-auto will-change-scroll w-full flex-col scrollbar-none scroll-container min-h-[91.2%] text-surface-12"
+		tabindex="1"
 		@focus="handleFocus"
+		@mouseleave="mouseLeave"
+		@mousemove="mouseEnter"
+		@scroll="$emit('scroll', $event as unknown as VueScrollEvent)"
 	>
 		<slot />
 
 		<Teleport v-if="static" to="body">
 			<div
 				ref="refBar"
-				data-scrollbar
-				:style="`position: ${static ? 'fixed' : 'absolute'}`"
 				:class="{
 					'opacity-100': show,
 					'opacity-0 pointer-events-none': !show,
-					'top-16 mr-1': static,
-					'top-0 mr-1': !static,
+					'top-16 bottom-6 mr-1': static,
+					'top-0 bottom-0 mr-1': !static,
 					'bottom-20': musicVisibility === 'showing',
 					className,
 				}"
-				class="right-0 bottom-0 mt-2 mb-2 hidden rounded-full border-r-2 border-l-4 border-transparent w-3.5 group-active/scrollContainer-frame:bg-auto-2/9 hover:bg-auto-2/9 sm:flex"
+				:style="`position: ${static ? 'fixed' : 'absolute'}`"
+				class="right-0 mt-2 mb-2 hidden rounded-full border-r-2 border-l-4 border-transparent w-3.5  group-active/scrollContainer-frame:bg-surface-12/6 hover:bg-surface-12/6 sm:flex"
+				data-scrollbar
 			>
 				<span
 					ref="refHandle"
-					draggable="true"
-					data-scrollbar
 					:class="{
 						'opacity-0 group-hover/scrollContainer-frame:opacity-100':
 							autoHide && !show,
 						'!transition-none': !show,
 					}"
-					class="absolute w-2 rounded-full transition-all right-[1px] bg-auto-12/11 active:opacity-100 [transition-duration:75ms] [animation-duration:75ms] active:[transition-duration:0ms] active:[animation-duration:0ms]"
+					class="absolute top-0 z-10 h-available right-0 bottom-0 hidden rounded-full border-r-2 border-l-4 border-transparent w-2.5 bg-surface-12/11 sm:flex scale-y-[105%]"
+					data-scrollbar
+					draggable="true"
 				/>
 			</div>
 		</Teleport>
@@ -199,23 +199,23 @@ function handleFocus() {
 		<div
 			v-else
 			ref="refBar"
-			data-scrollbar
-			class="absolute top-2 mr-1 z-10 h-available right-0 bottom-6 hidden rounded-full border-r-2 border-l-4 border-transparent w-3.5 hover:bg-auto-2/9 sm:flex"
 			:class="{
 				'opacity-100': show,
 				'opacity-0 pointer-events-none': !show,
 			}"
+			class="group/bar absolute top-0 mr-1 z-10 h-available right-0 bottom-0 hidden rounded-full border-r-2 border-l-4 border-transparent w-3.5 group-active/scrollContainer-frame:bg-surface-12/6 hover:bg-surface-12/6 sm:flex scale-[100%_96%]"
+			data-scrollbar
 		>
 			<span
 				ref="refHandle"
-				draggable="true"
-				data-scrollbar
 				:class="{
-					'opacity-0 group-hover/scrollContainer:opacity-100 group-active/scrollContainer:bg-auto-2/9':
+					'opacity-0 group-hover/scrollContainer:opacity-100 group-active/scrollContainer:bg-surface-2/9':
 						!static && autoHide,
 					'!transition-none': !show,
 				}"
-				class="absolute w-2 rounded-full transition-all right-[1px] bg-auto-12/11 active:opacity-100 [transition-duration:75ms] [animation-duration:75ms] active:[transition-duration:0ms] active:[animation-duration:0ms]"
+				class="absolute top-0 z-10 h-available right-0 bottom-0 hidden rounded-full border-r-2 border-l-4 border-transparent w-2.5 bg-surface-12/11 sm:flex scale-y-[105%]"
+				data-scrollbar
+				draggable="true"
 			/>
 		</div>
 	</div>

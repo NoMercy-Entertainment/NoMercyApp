@@ -1,7 +1,7 @@
-<script setup lang="ts">
+<script lang="ts" setup>
+import type { PropType } from 'vue';
 /* eslint-disable vue/prop-name-casing */
 import { ref } from 'vue';
-import type { PropType } from 'vue';
 import { useRoute } from 'vue-router';
 
 import type { Component } from '@/types/config';
@@ -126,7 +126,7 @@ function scrollToCenter() {
 				<h3
 					v-if="title"
 					ref="titleEl"
-					class="mr-2 ml-3 sm:ml-3 my-2 text-slate-lightA-12/90 dark:text-slate-darkA-12/90 self-stretch flex-grow-0 flex-shrink-0 text-xl font-bold"
+					class="mr-2 ml-3 sm:ml-3 my-2 text-slate-12/90 dark:text-slate-12/90 self-stretch flex-grow-0 flex-shrink-0 text-xl font-bold"
 				>
 					{{ title }}
 				</h3>
@@ -150,22 +150,22 @@ function scrollToCenter() {
 				<RouterLink
 					v-if="more_link"
 					:to="more_link"
+					class="text-base text-slate-8/90 dark:text-slate-8/90 flex items-center ml-auto sm:ml-4 mr-2 sm:mr-auto"
 					tabindex="1"
-					class="text-base text-slate-lightA-8/90 dark:text-slate-darkA-8/90 flex items-center ml-auto sm:ml-4 mr-2 sm:mr-auto"
 				>
 					<span class="leading-none pt-0.5">{{ more_link_text }}</span>
-					<OptimizedIcon icon="chevronRight" class-name="w-6 mt-1" />
+					<OptimizedIcon class-name="w-6 mt-1" icon="chevronRight" />
 				</RouterLink>
 			</div>
 
 			<div
-				class="carousel horizontal flex flex-shrink-0 flex-grow-0 items-stretch self-stretch overflow-x-auto scroll-smooth whitespace-nowrap snap-x snap-mandatory gap-1.5 px-5 scroll-ps-12 scroll-pe-12 scrollbar-none py-1"
 				:class="{
 					'backdrop': showBackdrops,
 					'person-page': route.path.startsWith('/person'),
 					'carousel-buttons': !isMobile,
 					'carousel-buttons-overlay': useOverlayCarouselButtons && !isMobile,
 				}"
+				class="carousel horizontal flex flex-shrink-0 flex-grow-0 items-stretch self-stretch overflow-x-auto scroll-smooth whitespace-nowrap snap-x snap-mandatory gap-1.5 px-5 scroll-ps-12 scroll-pe-12 scrollbar-none py-1"
 			>
 				<template v-for="item in items" :key="item.id">
 					<figure class="slide">
@@ -177,7 +177,7 @@ function scrollToCenter() {
 					</figure>
 				</template>
 			</div>
-		<!--		</div> -->
+			<!--		</div> -->
 		</div>
 	</div>
 </template>

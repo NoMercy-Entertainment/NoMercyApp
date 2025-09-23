@@ -1,16 +1,10 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import type { PropType } from 'vue';
 import { useRoute } from 'vue-router';
 
 import type { PlaylistItem } from '@/types/musicPlayer';
 
-import {
-	audioPlayer,
-	currentSong,
-	isPlaying,
-	musicSize,
-	setCurrentPlaylist,
-} from '@/store/audioPlayer';
+import { audioPlayer, currentSong, isPlaying, musicSize, setCurrentPlaylist } from '@/store/audioPlayer';
 
 import DropdownMenu from '@/Layout/Desktop/components/Menus/DropdownMenu.vue';
 
@@ -39,6 +33,7 @@ const props = defineProps({
 });
 
 const router = useRoute();
+
 function setCurrentList() {
 	setCurrentPlaylist(router.fullPath);
 }
@@ -54,10 +49,10 @@ function handleClick() {
 
 <template>
 	<button
-		tabindex="0"
 		:data-track-id="data?.id"
+		class="grid justify-start items-center self-stretch rounded-lg hover:bg-surface-6/8 group/track text-sm font-medium z-0 px-2 sm:py-1 group/track home-grid gap-2"
 		data-target="track"
-		class="grid justify-start items-center self-stretch rounded-lg hover:bg-slate-lightA-6 dark:hover:bg-slate-darkA-6 text-auto-12 group/track text-sm font-medium z-0 px-2 sm:py-1 group/track home-grid gap-2"
+		tabindex="0"
 		@click="handleClick()"
 		@contextmenu="onTrackRowRightClick($event, data)"
 	>
@@ -66,12 +61,12 @@ function handleClick() {
 		>
 			<CoverImage
 				v-if="isMusicSearchRoute"
-				:data="data"
-				:size="100"
-				class="absolute inset-0 group-hover/track:brightness-[25%] transition-all duration-150"
 				:class="{
 					'brightness-[25%]': isPlaying && currentSong?.id === data.id,
 				}"
+				:data="data"
+				:size="100"
+				class="absolute inset-0 group-hover/track:brightness-[25%] transition-all duration-150"
 				class-name="relative hidden h-10 w-10 overflow-hidden min-w-[2.5rem] sm:block"
 				loading="eager"
 			/>
@@ -90,7 +85,7 @@ function handleClick() {
 					v-if="currentSong?.id === data.id"
 					:playing="isPlaying"
 					class="hidden group-focus-visible/track:sm:!hidden group-hover/track:sm:!hidden"
-					color="rgb(var(--color-focus))"
+					color="var(--color-theme-8)"
 				/>
 				<OptimizedIcon
 					v-if="currentSong?.id === data.id && isPlaying"
@@ -124,7 +119,7 @@ function handleClick() {
 
 				<span
 					:data-size="musicSize"
-					class="flex h-4 sm:h-5 leading-none w-fit gap-1 overflow-hidden whitespace-nowrap text-auto-9 line-clamp-1 text-2xs hover:animate-pause items-center"
+					class="flex h-4 sm:h-5 leading-none w-fit gap-1 overflow-hidden whitespace-nowrap text-surface-9 line-clamp-1 text-2xs hover:animate-pause items-center"
 					@click="(e) => e.stopPropagation()"
 				>
 					<TrackLinks
@@ -132,8 +127,8 @@ function handleClick() {
 						:id="data.id"
 						:data="data.artist_track"
 						:onclick="(e: MouseEvent) => e.stopPropagation()"
-						data-target="artist"
 						class="children:children:children:leading-none"
+						data-target="artist"
 						type="artists"
 					/>
 				</span>
@@ -141,9 +136,9 @@ function handleClick() {
 		</span>
 
 		<TrackLinks
-			type="albums"
 			:data="data.album_track"
 			class="hidden sm:flex items-center justify-between gap-2 text-end"
+			type="albums"
 		/>
 
 		<!--    <template v-if="data"> -->
@@ -170,7 +165,7 @@ function handleClick() {
 				:key="data.id"
 				:data="data"
 				class="hidden sm:flex"
-				color="var(--color-focus)"
+				color="var(--color-theme-8)"
 			/>
 			<span class="mr-4 monospace sm:mr-0">
 				{{ data.duration }}

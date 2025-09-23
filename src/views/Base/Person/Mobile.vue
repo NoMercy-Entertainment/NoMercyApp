@@ -1,19 +1,12 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import { computed, ref, watch } from 'vue';
-import {
-	IonContent,
-	IonPage,
-	IonSkeletonText,
-	onIonViewWillEnter,
-	onIonViewWillLeave,
-} from '@ionic/vue';
+import { IonContent, IonPage, IonSkeletonText, onIonViewWillEnter, onIonViewWillLeave } from '@ionic/vue';
 import { useRoute } from 'vue-router';
 import { Swiper as SwiperComponent } from 'swiper/vue';
 
 import type { PersonResponseItem } from '@/types/api/base/person';
 
 import { tmdbImageBaseUrl } from '@/config/config';
-import i18next from '@/config/i18next';
 import { background, setBackground, setColorPalette } from '@/store/ui';
 
 import useServerClient from '@/lib/clients/useServerClient';
@@ -121,7 +114,7 @@ watch(data, (value) => {
 			};`"
 		>
 			<div
-				class="flex flex-col justify-start items-center self-stretch flex-grow h-auto gap-4 will-change-auto text-slate-lightA-12/70 dark:text-slate-darkA-12/80 z-10 absolute left-0 w-full"
+				class="flex flex-col justify-start items-center self-stretch flex-grow h-auto gap-4 will-change-auto text-slate-12/70 dark:text-slate-12/80 z-10 absolute left-0 w-full"
 				style="box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.16)"
 			>
 				<div
@@ -129,22 +122,22 @@ watch(data, (value) => {
 				>
 					<SwiperComponent
 						ref="swiper"
-						:slides-per-view="1"
-						:loop="true"
-						class="w-available swiper h-[420px] !absolute"
 						:class="{
 							'top-safe-offset-4': isNative,
 							'top-12': !isNative,
 						}"
+						:loop="true"
+						:slides-per-view="1"
+						class="w-available swiper h-[420px] !absolute"
 					>
 						<template
 							v-for="(item, index) in data?.images?.profiles ?? []"
 							:key="item.id"
 						>
 							<swiper-slide
-								class="h-full"
-								:data-index="index"
 								:data-id="item.src"
+								:data-index="index"
+								class="h-full"
 							>
 								<div
 									class="frosting w-[280px] h-[420px] z-10 absolute left-1/2 -translate-x-1/2 overflow-clip rounded-2xl"
@@ -155,12 +148,12 @@ watch(data, (value) => {
 										:auto-shadow="true"
 										:path="item.src"
 										:size="760"
-										priority="high"
 										:title="data?.name"
 										aspect="poster"
-										loading="eager"
-										class-name="pointer-events-none absolute -inset-1 z-20 flex h-auto scale-100 select-none items-center overflow-hidden w-available h-available max-h-available"
 										class="m-auto children:w-full scale-100 max-h-available 5xl:w-inherit"
+										class-name="pointer-events-none absolute -inset-1 z-20 flex h-auto scale-100 select-none items-center overflow-hidden w-available h-available max-h-available"
+										loading="eager"
+										priority="high"
 										type="image"
 									/>
 								</div>
@@ -171,7 +164,7 @@ watch(data, (value) => {
 			</div>
 
 			<div
-				class="flex flex-col justify-start items-center self-stretch flex-grow gap-4 will-change-auto text-slate-lightA-12/70 dark:text-slate-darkA-12/80 z-0"
+				class="flex flex-col justify-start items-center self-stretch flex-grow gap-4 will-change-auto text-slate-12/70 dark:text-slate-12/80 z-0"
 				style="box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.16)"
 			>
 				<div
@@ -194,7 +187,7 @@ watch(data, (value) => {
 				</div>
 
 				<div
-					class="flex bg-slate-light-3 dark:bg-slate-dark-1 flex-col justify-start items-start self-stretch gap-3 mt-16 pb-5 will-change-auto w-inherit px-6"
+					class="flex bg-surface-3 dark:bg-surface-1 flex-col justify-start items-start self-stretch gap-3 mt-16 pb-5 will-change-auto w-inherit px-6"
 				>
 					<p
 						v-if="data?.name"
@@ -209,29 +202,29 @@ watch(data, (value) => {
 
 					<Collapsible
 						v-if="data?.biography"
-						:text="data?.biography"
 						:max-lines="3"
+						:text="data?.biography"
 					/>
 
 					<div class="flex flex-col gap-3 items-start flex-nowrap w-full">
 						<div class="flex justify-between items-start flex-nowrap w-full">
 							<HeaderItem
 								v-if="data?.known_for_department"
-								title="Known for"
 								:data="data?.known_for_department"
+								title="Known for"
 							/>
 
 							<HeaderItem
 								v-if="data?.combined_credits?.cast"
-								title="Credits"
 								:data="data?.combined_credits?.cast.length.toString()"
+								title="Credits"
 							/>
 
 							<HeaderItem v-if="age" title="Birthday">
 								<template #head>
 									<span
 										v-if="data?.deathday"
-										class="ml-auto flex gap-1 text-xs font-bold uppercase text-auto-alpha-10 whitespace-nowrap"
+										class="ml-auto flex gap-1 text-xs font-bold uppercase text-surface-10 whitespace-nowrap"
 									>
 										<span v-if="data.deathday" class="-mr-1 text-base -mt-[3px]">&#8224;</span>
 										{{
@@ -269,18 +262,18 @@ watch(data, (value) => {
 						<div
 							class="flex gap-3 items-start justify-between flex-nowrap w-full"
 						>
-							<HeaderItem v-if="gender" title="Gender" :data="gender" />
+							<HeaderItem v-if="gender" :data="gender" title="Gender" />
 
 							<HeaderItem
 								v-if="data?.place_of_birth"
-								title="Place of birth"
 								:data="data?.place_of_birth"
+								title="Place of birth"
 							/>
 						</div>
 					</div>
 
 					<div
-						class="self-stretch h-px bg-slate-dark-7/[0.1] dark:bg-slate-dark-11/[0.1]"
+						class="self-stretch h-px bg-surface-7/[0.1] dark:bg-surface-11/[0.1]"
 					/>
 
 					<SocialLinkItems v-if="data" :data="data" />
@@ -299,7 +292,7 @@ watch(data, (value) => {
 					</div>
 
 					<div
-						class="self-stretch h-px bg-slate-dark-7/[0.1] dark:bg-slate-dark-11/[0.1]"
+						class="self-stretch h-px bg-surface-7/[0.1] dark:bg-surface-11/[0.1]"
 					/>
 
 					<CreditGroup

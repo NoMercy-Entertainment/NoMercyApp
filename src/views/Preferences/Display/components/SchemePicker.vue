@@ -1,33 +1,9 @@
-<script setup lang="ts">
-import { watch } from 'vue';
-
-import { useColorMode } from '@vueuse/core';
-import { darkMode, setColorScheme } from '@/store/colorScheme';
+<script lang="ts" setup>
+import { scheme } from '@/store/colorScheme';
 import type { ColorScheme } from '@/types/config';
-
-const scheme = useColorMode({
-	attribute: 'class',
-	modes: {
-		light: 'light',
-		system: 'system',
-		dark: 'dark',
-	},
-});
-
-watch(darkMode, (value) => {
-	console.log(value);
-	if (value) {
-		changeTheme('dark');
-	}
-	else {
-		changeTheme('light');
-	}
-});
 
 function changeTheme(value: ColorScheme) {
 	scheme.value = value;
-
-	setColorScheme(value);
 }
 </script>
 
@@ -42,65 +18,64 @@ function changeTheme(value: ColorScheme) {
 			>
 				<button
 					id="light"
-					title="Light"
-					class="relative flex h-8 w-8 flex-shrink-0 flex-grow-0 items-center justify-center rounded-3xl outline border-2"
 					:class="
 						scheme === 'light' ? 'outline-focus' : 'outline-transparent'
 					"
+					class="relative flex h-8 w-8 flex-shrink-0 flex-grow-0 items-center justify-center rounded-3xl outline border-2"
+					title="Light"
 					@click="changeTheme('light')"
 				>
 					<svg
-						width="32"
-						height="32"
-						viewBox="0 0 30 30"
-						fill="none"
-						xmlns="http://www.w3.org/2000/svg"
 						class="flex-shrink-0 flex-grow-0"
+						fill="none"
+						height="32"
 						preserveAspectRatio="xMidYMid meet"
+						viewBox="0 0 30 30"
+						width="32"
+						xmlns="http://www.w3.org/2000/svg"
 					>
-						<circle cx="15.0002" cy="15" r="15" fill="#EEECEC" />
+						<circle cx="15.0002" cy="15" fill="#EEECEC" r="15" />
 					</svg>
 				</button>
-				<!--                <button id="auto" title="System default" @click="changeTheme('system')" -->
-				<!--                    class="relative flex h-8 w-8 flex-shrink-0 flex-grow-0 items-center justify-center rounded-3xl outline outline-2" -->
-				<!--                    :class="scheme === 'system' -->
-				<!--                        ? 'outline-focus' -->
-				<!--                        : 'outline-transparent'"> -->
-				<!--                    <svg width="32" height="32" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg" -->
-				<!--                        class="flex-shrink-0 flex-grow-0 opacity-80" preserveAspectRatio="xMidYMid meet"> -->
-				<!--                        <circle opacity="0.8" cx="15.0005" cy="15" r="15" fill="url(#paint0_linear_4609_14480)"> -->
-				<!--                        </circle> -->
-				<!--                        <defs> -->
-				<!--                            <linearGradient id="paint0_linear_4609_14480" x1="0.333822" y1="0.333333" x2="30.3338" -->
-				<!--                                y2="30.3333" gradientUnits="userSpaceOnUse"> -->
-				<!--                                <stop offset="0.479993" stop-color="#EEECEC"></stop> -->
-				<!--                                <stop offset="0.480523" stop-color="rgb(var(&#45;&#45;color-slate-1))"></stop> -->
-				<!--                            </linearGradient> -->
-				<!--                        </defs> -->
-				<!--                    </svg> -->
-				<!--                </button> -->
+				<button id="auto" :class="scheme === 'system'
+						? 'outline-focus'
+						: 'outline-transparent'" class="relative flex h-8 w-8 flex-shrink-0 flex-grow-0 items-center justify-center rounded-full outline outline-2"
+					title="System default"
+					@click="changeTheme('system')"
+				>
+					<!--        square div NO SVG with a diagonal separation white and black  -->
+					<div class="absolute inset-0 rounded-full"
+						style="background: linear-gradient(
+                -45deg,
+                var(--surface-1),
+                var(--surface-1) 50%,
+                var(--surface-12) 50%,
+                var(--surface-12)
+              );"
+					/>
+				</button>
 				<button
 					id="dark"
-					title="Dark"
-					class="relative flex h-8 w-8 flex-shrink-0 flex-grow-0 items-center justify-center rounded-3xl outline outline-2"
 					:class="scheme === 'dark' ? 'outline-focus' : 'border-transparent'"
+					class="relative flex h-8 w-8 flex-shrink-0 flex-grow-0 items-center justify-center rounded-3xl outline outline-2"
+					title="Dark"
 					@click="changeTheme('dark')"
 				>
 					<svg
-						width="32"
-						height="32"
-						viewBox="0 0 30 30"
-						fill="none"
-						xmlns="http://www.w3.org/2000/svg"
 						class="flex-shrink-0 flex-grow-0 opacity-80"
+						fill="none"
+						height="32"
 						preserveAspectRatio="xMidYMid meet"
+						viewBox="0 0 30 30"
+						width="32"
+						xmlns="http://www.w3.org/2000/svg"
 					>
 						<circle
-							opacity="0.8"
 							cx="15.0005"
 							cy="15"
+							fill="black"
+							opacity="0.8"
 							r="15"
-							fill="rgb(var(--color-slate-1))"
 						/>
 					</svg>
 				</button>

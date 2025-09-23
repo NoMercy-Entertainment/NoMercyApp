@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import { IonContent, IonPage } from '@ionic/vue';
 
 import DashboardLayout from '@/Layout/Desktop/DashboardLayout.vue';
@@ -15,9 +15,9 @@ import AutoColorTheming from '@/views/Preferences/Display/components/AutoColorTh
 	<IonPage>
 		<IonContent :fullscreen="true">
 			<DashboardLayout
-				title="Display settings"
-				:grid-style="2"
 				:allow-anyone="true"
+				:grid-style="2"
+				title="Display settings"
 			>
 				<template #cta />
 

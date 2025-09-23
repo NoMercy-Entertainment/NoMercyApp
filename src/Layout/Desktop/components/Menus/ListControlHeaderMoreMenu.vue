@@ -4,6 +4,7 @@ import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/vue';
 
 import type { MoooomIcons } from '@Icons/icons';
 import OptimizedIcon from '@/components/OptimizedIcon.vue';
+import { buttonClasses } from '@/config/global.ts';
 
 interface IMenuItem {
 	icon: keyof typeof MoooomIcons;
@@ -44,21 +45,22 @@ defineProps({
 			leave-to-class="scale-95 transform opacity-0"
 		>
 			<MenuItems
-				class="absolute z-10 m-2 ml-8 flex w-min origin-top-right -translate-x-full flex-col gap-2 rounded-lg p-1 shadow-lg bg-slate-light-3 dark:bg-slate-dark-1 border-1 border-auto-2/11"
 				:class="className"
+				class="absolute z-10 m-2 ml-8 flex w-min origin-top-right -translate-x-full flex-col gap-2 rounded-lg p-1 shadow-lg bg-surface-3 dark:bg-surface-1 border-1 border-surface-8/11"
 			>
 				<slot />
 				<template v-for="(item, index) in items" :key="index">
 					<MenuItem
+						:class="buttonClasses"
 						as="div"
-						class="flex justify-center items-center self-stretch h-10 relative p-2 gap-3 rounded-sm border border-transparent hover:border-focus/4 active:bg-focus/9 active:border-focus/4 active:hover:border-focus/4 focus:bg-auto-12/2 hover:bg-focus/10 disabled:!bg-focus/2 disabled:!border-focus/2 transition-colors duration-200"
+						class="w-60 min-w-60 !flex"
 						@click="item.onclick"
 					>
 						<span
-							class="relative flex w-full flex-grow items-center justify-center gap-2 text-base font-semibold"
+							class="relative flex flex-1 items-center justify-start gap-2 text-base font-semibold"
 						>
 							<OptimizedIcon :icon="item.icon" :title="item.title" />
-							<span class="w-full whitespace-nowrap">
+							<span class="flex flex-1 w-full whitespace-nowrap">
 								{{ $t(item.title) }}
 							</span>
 						</span>

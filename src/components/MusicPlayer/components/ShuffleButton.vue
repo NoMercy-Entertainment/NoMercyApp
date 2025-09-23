@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import audioPlayer, { isShuffling } from '@/store/audioPlayer';
 import { musicSocketConnection } from '@/store/musicSocket';
 import { user } from '@/store/user';
@@ -17,12 +17,12 @@ function handleClick(e?: MouseEvent) {
 </script>
 
 <template>
-	<MusicButton label="shuffle" :onclick="handleClick">
+	<MusicButton :onclick="handleClick" label="shuffle" no-tooltip>
 		<PlayerIcon
 			v-if="isShuffling"
-			icon="nmShuffle"
 			class="h-6 w-6 text-focus"
+			icon="nmShuffle"
 		/>
-		<PlayerIcon v-else icon="nmShuffleHalftone" class="h-6 w-6" />
+		<PlayerIcon v-else class="h-6 w-6" icon="nmShuffleHalftone" />
 	</MusicButton>
 </template>

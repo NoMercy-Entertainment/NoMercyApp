@@ -26,7 +26,6 @@ import RipperOverlay from './components/Overlays/RipperOverlay.vue';
 import MusicPlayerDesktop from '@/components/MusicPlayer/MusicPlayerDesktop.vue';
 import EqualizerOverlay from '@/Layout/Desktop/components/Overlays/EqualizerOverlay.vue';
 import ChristmasSnow from '@/components/Seasonal/Christmas/ChristmasSnow.vue';
-import { isDarkMode } from '@/config/global.ts';
 import Shadow from '@/Layout/Desktop/components/Shadow.vue';
 
 const route = useRoute();
@@ -46,14 +45,14 @@ function focusMain() {
 	<IonPage>
 		<button
 			:onclick="focusMain"
-			class="skip-navigation absolute z-999 top-[-50px] left-2 bg-slate-light-1 dark:bg-slate-dark-1 text-white p-2 rounded-md"
+			class="skip-navigation absolute z-999 top-[-50px] left-2 bg-surface-1 p-2 rounded-md text-slate-11"
 		>
 			{{ $t("Skip navigation") }}
 		</button>
-		<div class="contents text-auto-12">
+		<div class="contents">
 			<Navbar />
 			<div
-				class="bg-slate-light-1 dark:bg-slate-dark-1 relative z-0 flex h-px flex-1 flex-grow items-start justify-start self-stretch overflow-clip w-available h-available scrollbar-none group"
+				class="relative z-0 flex h-px flex-1 flex-grow items-start justify-start self-stretch overflow-clip w-available h-available scrollbar-none group"
 			>
 				<ChristmasSnow />
 				<Sidebar />
@@ -68,24 +67,15 @@ function focusMain() {
 								: ''
 						};
                `"
-						class="flex w-px flex-1 flex-col relative overflow-clip justify-start items-start w-available h-available sm:rounded-2xl border-auto-alpha-2 !bg-cover children:scrollbar-none z-0 bg-center"
+						class="flex w-px flex-1 flex-col relative overflow-clip justify-start items-start w-available h-available sm:rounded-2xl border-surface-2 !bg-cover children:scrollbar-none z-0 bg-center"
 						style="box-shadow: 0 1px 3px 0 rgba(16,24,40,0.1), 0 1px 2px 0 rgba(16,24,40,0.06);"
 					>
 						<div
 							id="overlay"
-							:style="`
-                 background: ${
-								!background
-									? ''
-									: isDarkMode
-										? 'rgba(0, 0, 0, 0.7)'
-										: 'rgba(0, 0, 0, 0.4)'
-							};
-               `"
-							class="pointer-events-none absolute inset-0 dark:flex w-full h-full"
+							class="pointer-events-none absolute inset-0 dark:flex w-full h-full bg-surface-12/9 dark:bg-surface-1/9"
 						/>
 						<div
-							class="flex flex-col relative overflow-auto justify-start items-start w-available h-available sm:rounded-2xl flex-1 border-auto-alpha-2 !bg-cover children:scrollbar-none sm:border-3"
+							class="flex flex-col relative overflow-clip justify-start items-start w-available h-available sm:rounded-2xl flex-1 border-surface-2 !bg-cover children:scrollbar-none sm:border-3"
 						>
 							<Shadow />
 							<main
@@ -98,7 +88,7 @@ function focusMain() {
 							>
 								<slot v-if="$slots.default" />
 								<IonTabs v-else>
-									<IonRouterOutlet :key="route.name" animated="false" />
+									<IonRouterOutlet :key="route.name" :animated="false" />
 								</IonTabs>
 							</main>
 						</div>

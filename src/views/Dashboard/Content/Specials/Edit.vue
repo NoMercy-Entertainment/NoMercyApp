@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import { onBeforeMount, onMounted, ref, watch } from 'vue';
 import { useRoute } from 'vue-router';
 
@@ -43,9 +43,11 @@ watch(specials, (value) => {
 });
 
 const deleteConfirmOpen = ref(false);
+
 function openDeleteConfirm() {
 	deleteConfirmOpen.value = true;
 }
+
 function closeDeleteConfirm() {
 	deleteConfirmOpen.value = false;
 }
@@ -87,38 +89,38 @@ function handleSave() {
 
 <template>
 	<DashboardLayout
-		:grid-style="1"
 		:error="error"
-		title="Special: {{title}}"
+		:grid-style="1"
 		:params="{ title: settings?.title }"
+		title="Special: {{title}}"
 	>
 		<template #cta />
 		<template #actions>
 			<Button
 				id="remove"
+				class="children:text-gray-400 children:transition-colors children:duration-100 children:hover:text-red-dark-8"
+				color="auto"
+				start-icon="folderRemove"
 				type="button"
 				variant="text"
-				start-icon="folderRemove"
-				class="children:text-gray-400 children:transition-colors children:duration-100 children:hover:text-red-dark-8"
-				color="auto-alpha"
 				@click="openDeleteConfirm"
 			>
 				{{ $t("Remove") }}
 			</Button>
 			<Button
 				id="cancel"
+				color="white"
 				type="button"
 				variant="text"
-				color="white"
 				@click="handleCancel"
 			>
 				{{ $t("Cancel") }}
 			</Button>
 			<Button
 				id="save"
-				type="button"
 				class="ml-auto"
 				color="theme"
+				type="button"
 				@click="handleSave"
 			>
 				{{ $t("Save") }}
@@ -128,16 +130,16 @@ function handleSave() {
 		<div class="flex flex-col gap-5 col-span-5 col-start-1 2xl:col-start-1">
 			<div class="flex flex-col gap-2">
 				<label for="name">Name</label>
-				<InputText id="name" v-model="title" variant="filled" class="w-full" />
+				<InputText id="name" v-model="title" class="w-full" variant="filled" />
 			</div>
 			<div class="flex flex-col gap-2">
 				<label for="overview">Overview</label>
 				<Textarea
 					id="overview"
 					v-model="overview"
-					variant="filled"
 					:rows="8"
 					class="w-full"
+					variant="filled"
 				/>
 			</div>
 
@@ -148,16 +150,16 @@ function handleSave() {
 						<InputText
 							id="backdrop"
 							v-model="backdrop"
-							variant="filled"
 							class="w-full"
+							variant="filled"
 						/>
 					</div>
 					<Image
 						:src="`${currentServer?.serverBaseUrl}/images/original${backdrop}`"
 						alt="Image"
-						width="100%"
 						class="mx-2"
 						preview
+						width="100%"
 					/>
 				</div>
 				<div class="flex flex-col gap-4 w-full">
@@ -166,16 +168,16 @@ function handleSave() {
 						<InputText
 							id="logo"
 							v-model="logo"
-							variant="filled"
 							class="w-full"
+							variant="filled"
 						/>
 					</div>
 					<Image
 						:src="`${currentServer?.serverBaseUrl}/images/original${logo}`"
 						alt="Image"
-						width="100%"
 						class="mx-2"
 						preview
+						width="100%"
 					/>
 				</div>
 			</div>
@@ -190,16 +192,16 @@ function handleSave() {
 					<InputText
 						id="poster"
 						v-model="poster"
-						variant="filled"
 						class="w-full"
+						variant="filled"
 					/>
 				</div>
 				<Image
 					:src="`${currentServer?.serverBaseUrl}/images/original${poster}`"
 					alt="Image"
-					width="100%"
 					class="mx-2"
 					preview
+					width="100%"
 				/>
 			</div>
 		</div>
@@ -207,8 +209,8 @@ function handleSave() {
 		<DeleteSpecialModal
 			v-if="settings?.id"
 			:id="settings?.id"
-			:name="settings?.title"
 			:close="closeDeleteConfirm"
+			:name="settings?.title"
 			:open="deleteConfirmOpen"
 		/>
 	</DashboardLayout>

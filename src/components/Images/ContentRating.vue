@@ -55,7 +55,7 @@ onMounted(() => {
             height: ${size * 6}px;
             width: ${size * 8}px;
         `"
-			class="flex w-auto whitespace-nowrap text-base font-medium text-white"
+			class="flex w-auto whitespace-nowrap text-base font-medium"
 		>
 			<img
 				:alt="rating?.iso_3166_1"

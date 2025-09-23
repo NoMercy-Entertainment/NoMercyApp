@@ -1,13 +1,10 @@
-<script setup lang="ts">
-import { computed, ref } from 'vue';
+<script lang="ts" setup>
 import type { PropType } from 'vue';
+import { computed, ref } from 'vue';
 
 import type { HomeDataItem } from '@/types/api/music';
 import type { PaletteColors } from '@/types/api/shared';
-import type {
-	DisplayList,
-	MusicCardPageResponseData,
-} from '@/types/api/music/musicPlayer';
+import type { DisplayList, MusicCardPageResponseData } from '@/types/api/music/musicPlayer';
 import type { Album, AlbumResponse } from '@/types/api/music/album';
 import type { Artist } from '@/types/api/music/artist';
 import type { PlaylistItem } from '@/types/musicPlayer';
@@ -100,10 +97,10 @@ function onLoadStart() {
 
 const style = computed(() => {
 	return {
-		'--c-1': 'rgb(var(--color-focus))',
-		'--c-2': 'rgb(var(--color-focus) / 3%)',
-		'--c-3': 'rgb(var(--color-focus) / 14%)',
-		'--c-4': 'rgb(var(--color-focus) / 1%)',
+		'--c-1': 'var(--color-theme-8)',
+		'--c-2': 'rgb(var(--color-theme-8) / 3%)',
+		'--c-3': 'rgb(var(--color-theme-8) / 14%)',
+		'--c-4': 'rgb(var(--color-theme-8) / 1%)',
 
 		'backgroundImage':
       props.disableGradient || !useAutoThemeColors
@@ -112,22 +109,22 @@ const style = computed(() => {
       		: `
                     radial-gradient(
                         farthest-corner at top left,
-                                rgb(var(--color-theme-9)),
+                                var(--color-theme-9),
                                 hsl(0 0% 100% / 4%) 300px
                             ),
                             radial-gradient(
                                 farthest-corner at top right,
-                                rgb(var(--color-theme-2)),
+                                var(--color-theme-2),
                                 hsl(0 0% 100% / 4%) 300px
                             ),
                             radial-gradient(
                                 farthest-corner at bottom left,
-                                rgb(var(--color-theme-6)),
+                                var(--color-theme-6),
                                 hsl(0 0% 100% / 4%)
                             ),
                             radial-gradient(
                                 farthest-corner at bottom right,
-                                rgb(var(--color-theme-12)),
+                                var(--color-theme-12),
                         hsl(0 0% 100% / 4%) 300px
                     )
                 `
@@ -161,8 +158,8 @@ const style = computed(() => {
 	<div :class="`${className} aspect-square`" :style="style">
 		<picture
 			v-if="data?.cover"
-			class="aspect-square inset-0 !absolute top-0 overflow-clip z-10 h-available w-available object-cover transition-all duration-200"
 			:style="`opacity: ${opacity};`"
+			class="aspect-square inset-0 !absolute top-0 overflow-clip z-10 h-available w-available object-cover transition-all duration-200"
 		>
 			<source
 				:srcset="`${baseImageUrl}?width=300&type=avif 1x`"
@@ -178,16 +175,16 @@ const style = computed(() => {
 			>
 			<img
 				:id="id"
-				:src="baseImageUrl"
 				:alt="`cover image for ${data?.name ?? 'image'}`"
-				class="aspect-square !absolute top-0 z-10 h-available w-available object-cover"
-				:loading="loading"
-				crossorigin="anonymous"
 				:data-id="data?.id"
+				:loading="loading"
+				:onerror="remove"
 				:onfocus="handleFocus"
 				:onload="onLoad"
 				:onloadstart="onLoadStart"
-				:onerror="remove"
+				:src="baseImageUrl"
+				class="aspect-square !absolute top-0 z-10 h-available w-available object-cover"
+				crossorigin="anonymous"
 			>
 		</picture>
 		<div

@@ -70,8 +70,8 @@ function handleCreateFolder() {
 </script>
 
 <template>
-	<Modal :close="close" :open="open" max-width="max-w-5xl" title="Add folder">
-		<div class="mx-auto flex w-full flex-col h-available overflow-clip">
+	<Modal :close="close" :open="open" max-width="max-w-5xl overflow-clip max-h-[60vh] h-[60vh]" title="Add folder">
+		<div class="mx-auto flex w-full flex-col h-available">
 			<FolderBrowser :selected="folder" :set-selected="setFolder" />
 		</div>
 
@@ -88,8 +88,8 @@ function handleCreateFolder() {
 			<Button
 				id="no"
 				:onclick="close"
+				color="auto"
 				type="button"
-				color="auto-alpha"
 				variant="text"
 			>
 				{{ $t("Cancel") }}

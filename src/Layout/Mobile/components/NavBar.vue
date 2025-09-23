@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import { RouterLink } from 'vue-router';
 
 import { IonHeader, IonProgressBar, IonToolbar, isPlatform } from '@ionic/vue';
@@ -23,22 +23,22 @@ const isFetching = useIsFetching();
 			>
 				<button
 					aria-label="menu"
-					class="text-slate-dark-1 dark:text-slate-light-1 flex justify-center items-center flex-grow-0 flex-shrink-0 h-14 w-14 relative overflow-hidden gap-2 p-2.5 rounded-lg bg-transparent children:absolute children:transition-opacity children:duration-100 children:inset-4"
+					class=" flex justify-center items-center flex-grow-0 flex-shrink-0 h-14 w-14 relative overflow-hidden gap-2 p-2.5 rounded-lg bg-transparent children:absolute children:transition-opacity children:duration-100 children:inset-4"
 					@click="toggleSidebar"
 				>
 					<OptimizedIcon
-						icon="cross"
 						:class="{
 							'opacity-0': sidebar === 'closed' || sidebar === 'hidden',
 							'opacity-100': sidebar === 'open',
 						}"
+						icon="cross"
 					/>
 					<OptimizedIcon
-						icon="menuBurger"
 						:class="{
 							'opacity-100': sidebar === 'closed' || sidebar === 'hidden',
 							'opacity-0': sidebar === 'open',
 						}"
+						icon="menuBurger"
 					/>
 				</button>
 				<div
@@ -53,8 +53,8 @@ const isFetching = useIsFetching();
 					@click="closeSidebar"
 				>
 					<OptimizedIcon
+						class=""
 						icon="searchMagnifyingGlass"
-						class="text-slate-dark-1 dark:text-slate-light-1"
 					/>
 				</RouterLink>
 			</div>
@@ -64,8 +64,8 @@ const isFetching = useIsFetching();
 
 	<IonProgressBar
 		v-if="isFetching > 0"
-		type="indeterminate"
 		class="absolute top-0 z-1199 bg-black"
+		type="indeterminate"
 	/>
 </template>
 

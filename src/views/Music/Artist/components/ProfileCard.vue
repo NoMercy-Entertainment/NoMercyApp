@@ -1,6 +1,6 @@
-<script setup lang="ts">
-import { onMounted, onUnmounted } from 'vue';
+<script lang="ts" setup>
 import type { PropType } from 'vue';
+import { onMounted, onUnmounted } from 'vue';
 
 import type { ArtistResponse } from '@/types/api/music/artist';
 
@@ -41,11 +41,11 @@ onUnmounted(() => {
 			/>
 		</div>
 		<div
-			class="w-full whitespace-pre-line font-semibold leading-normal text-auto-12"
+			class="w-full whitespace-pre-line font-semibold leading-normal"
 		>
 			{{
-				data.disambiguation ?? data.description
-					? limitSentenceByCharacters(data.description!, 150)
+				data.disambiguation || data.description
+					? limitSentenceByCharacters(data.description ?? data.disambiguation!, 200)
 					: ""
 			}}
 		</div>

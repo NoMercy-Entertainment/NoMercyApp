@@ -1,6 +1,6 @@
-<script setup lang="ts">
-import { computed, ref } from 'vue';
+<script lang="ts" setup>
 import type { PropType } from 'vue';
+import { computed, ref } from 'vue';
 
 import type { MoooomIcons } from '@Icons/icons';
 import OptimizedIcon from '@/components/OptimizedIcon.vue';
@@ -27,7 +27,7 @@ const toggle = () => (open.value = !open.value);
 
 const classes = computed(
 	() =>
-		'hover:shadow-[0_1px_0_0_rgba(255,255,255,0.20)_inset,0_-1px_0_0_rgba(var(--color-slate-9)/60%)_inset,0_22px_30px_-4px_rgba(var(--color-slate-9)/70%)]  hover:!shadow-[0_1px_0_0_rgba(255,255,255,0.20)_inset,0_-1px_0_0_rgba(var(--color-slate-11)/60%)_inset,0_22px_30px_-4px_rgba(var(--color-slate-11)/70%)] dark:hover:shadow-[0_1px_0_0_rgba(255,255,255,0.20)_inset,0_-1px_0_0_rgba(var(--color-slate-1)/30%)_inset,0_22px_30px_-4px_rgba(var(--color-slate-1)/70%)] dark:hover:!shadow-[0_1px_0_0_rgba(255,255,255,0.20)_inset,0_-1px_0_0_rgba(var(--color-slate-1)/30%)_inset,0_22px_30px_-4px_rgba(var(--color-slate-1)/70%)] '
+		'hover:shadow-[0_1px_0_0_rgba(255,255,255,0.20)_inset,0_-1px_0_0_rgb(from_var(--color-slate-9)_r_g_b/60%)_inset,0_22px_30px_-4px_rgb(from_var(--color-slate-9)_r_g_b/70%)]  hover:!shadow-[0_1px_0_0_rgba(255,255,255,0.20)_inset,0_-1px_0_0_rgb(from_var(--color-slate-11)_r_g_b/60%)_inset,0_22px_30px_-4px_rgb(from_var(--color-slate-11)_r_g_b/70%)] dark:hover:shadow-[0_1px_0_0_rgba(255,255,255,0.20)_inset,0_-1px_0_0_rgb(from_var(--color-slate-1)_r_g_b/30%)_inset,0_22px_30px_-4px_rgb(from_var(--color-slate-1)_r_g_b/70%)] dark:hover:!shadow-[0_1px_0_0_rgba(255,255,255,0.20)_inset,0_-1px_0_0_rgb(from_var(--color-slate-1)_r_g_b/30%)_inset,0_22px_30px_-4px_rgb(from_var(--color-slate-1)_r_g_b/70%)] '
 		+ `${sidebar.value === 'open' ? 'flex' : 'flex sm:hidden'}`,
 );
 </script>
@@ -38,8 +38,8 @@ const classes = computed(
 		class="flex h-auto w-full flex-col gap-1 transition-transform duration-200 handle"
 	>
 		<button
-			class="relative h-10 flex-shrink-0 flex-grow-0 items-center justify-start gap-3 self-stretch overflow-hidden rounded-md px-3 py-2 transition-transform duration-200 group hover:bg-neutral-200/60 dark:hover:bg-neutral-800/60"
 			:class="classes"
+			class="relative h-10 flex-shrink-0 flex-grow-0 items-center justify-start gap-3 self-stretch overflow-hidden rounded-md px-3 py-2 transition-transform duration-200 group hover:bg-surface-2/60"
 			@click="toggle"
 		>
 			<OptimizedIcon v-if="!!icon" :icon="icon!" class="" />
@@ -49,17 +49,17 @@ const classes = computed(
 				{{ $t(title) }}
 			</span>
 			<OptimizedIcon
-				icon="chevronRight"
 				:class="`transition-transform duration-200 ${
 					open ? 'rotate-90' : 'rotate-0'
 				}`"
+				icon="chevronRight"
 			/>
 		</button>
 
 		<div
 			:class="open || sidebar !== 'open' ? 'grid-rows-1' : 'grid-rows-0'"
-			class="grid h-auto w-full grid-rows-1 transition-transform duration-200"
 			:inert="!open"
+			class="grid h-auto w-full grid-rows-1 transition-transform duration-200"
 		>
 			<div
 				class="flex flex-col gap-1 overflow-hidden transition-transform duration-200 p-0.5"

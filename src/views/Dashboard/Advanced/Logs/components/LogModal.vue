@@ -1,6 +1,6 @@
 <script lang="ts" setup>
-import { computed } from 'vue';
 import type { PropType } from 'vue';
+import { computed } from 'vue';
 
 import VueJsonPretty from 'vue-json-pretty';
 import 'vue-json-pretty/lib/styles.css';
@@ -50,7 +50,7 @@ const logMessage = computed(() => {
 
 <template>
 	<Modal :close="close" :open="true" max-width="max-w-7xl max-h-[80vh]" title="">
-		<div v-if="data" class="my-6 w-full text-sm text-white">
+		<div v-if="data" class="my-6 w-full text-sm">
 			<div
 				class="flex h-min w-full flex-1 flex-col justify-center overflow-auto"
 			>
@@ -65,8 +65,8 @@ const logMessage = computed(() => {
 				>
 					<span>{{ $t("Type") }}:</span>
 					<span
-						class="h-5 w-20 rounded-full px-2 text-center leading-5"
 						:style="`background: ${data.color}`"
+						class="h-5 w-20 rounded-full px-2 text-center leading-5"
 					>
 						{{ data.type }}
 					</span>
@@ -82,7 +82,7 @@ const logMessage = computed(() => {
 				>
 					<span>{{ $t("Message") }}:</span>
 					<ScrollContainer :static="false">
-						<VueJsonPretty class="h-fit" :data="logMessage" />
+						<VueJsonPretty :data="logMessage" class="h-fit" />
 					</ScrollContainer>
 				</div>
 			</div>
@@ -92,8 +92,8 @@ const logMessage = computed(() => {
 			<Button
 				id="no"
 				:onclick="close"
+				color="auto"
 				type="button"
-				color="auto-alpha"
 				variant="text"
 			>
 				{{ $t("Close") }}

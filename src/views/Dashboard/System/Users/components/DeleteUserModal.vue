@@ -73,12 +73,12 @@ function handleDelete() {
 
 <template>
 	<Modal
-		:open="open"
 		:close="close"
+		:open="open"
 		:params="{ name }"
 		title="Delete server member {{name}}"
 	>
-		<p class="my-6 text-sm text-auto-10">
+		<p class="my-6 text-sm text-surface-10">
 			{{ $t("Are you sure you want to delete this server member?") }}<br>
 			{{
 				$t(
@@ -90,15 +90,15 @@ function handleDelete() {
 		<template #actions>
 			<Button
 				id="yes"
-				type="button"
 				color="red"
-				variant="contained"
 				end-icon="userRemove"
+				type="button"
+				variant="contained"
 				@click="handleDelete"
 			>
 				{{ $t("Yes") }}
 			</Button>
-			<Button id="no" type="button" variant="text" color="white" @click="close">
+			<Button id="no" color="white" type="button" variant="text" @click="close">
 				{{ $t("Cancel") }}
 			</Button>
 		</template>

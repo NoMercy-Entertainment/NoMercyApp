@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import { onBeforeMount, onMounted, ref, toRaw, watch } from 'vue';
 import { useRoute } from 'vue-router';
 import { useToast } from 'primevue/usetoast';
@@ -6,12 +6,7 @@ import { useToast } from 'primevue/usetoast';
 import { useQueryClient } from '@tanstack/vue-query';
 import { IonContent, IonPage } from '@ionic/vue';
 
-import type {
-	EncoderProfile,
-	FolderLibrary,
-	LibrariesResponse,
-	StatusResponse,
-} from '@/types/api/base/library';
+import type { EncoderProfile, FolderLibrary, LibrariesResponse, StatusResponse } from '@/types/api/base/library';
 import type { Language } from '@/types/api/shared';
 import type { Library, NameVal } from '@/types/api/dashboard/server';
 
@@ -27,6 +22,7 @@ import NewFolderModal from './components/NewFolderModal.vue';
 import DeleteLibraryModal from './components/DeleteLibraryModal.vue';
 import Folder from './components/Folder.vue';
 import AddContentModal from '@/views/Dashboard/System/Libraries/components/AddContentModal.vue';
+import router from '@/router';
 
 const route = useRoute();
 const query = useQueryClient();
@@ -181,7 +177,7 @@ function handleRescan() {
 }
 
 function handleCancel() {
-	window.history.back();
+	router.back();
 }
 
 function handleSave() {
@@ -249,10 +245,10 @@ function handleDeleteFolder(folder: FolderLibrary) {
 		<IonContent :fullscreen="true">
 			<DashboardLayout
 				v-model="addModalOpen"
-				:error="error"
-				title="Library: {{title}}"
-				:params="{ title: settings?.title }"
 				:back="true"
+				:error="error"
+				:params="{ title: settings?.title }"
+				title="Library: {{title}}"
 			>
 				<template #cta />
 
@@ -277,8 +273,8 @@ function handleDeleteFolder(folder: FolderLibrary) {
 									<InputText
 										id="special_name"
 										v-model="title"
-										type="text"
 										tabindex="-1"
+										type="text"
 										@change="title = $event.target.value"
 									/>
 								</div>
@@ -289,9 +285,9 @@ function handleDeleteFolder(folder: FolderLibrary) {
 										v-if="media_types"
 										id="media_types"
 										v-model="media_type"
-										placeholder="Select a media type"
-										option-label="title"
 										:options="media_types ?? []"
+										option-label="title"
+										placeholder="Select a media type"
 									/>
 								</div>
 
@@ -315,11 +311,11 @@ function handleDeleteFolder(folder: FolderLibrary) {
 										v-if="languages"
 										id="subtitleLanguages"
 										v-model="subtitleLanguages"
-										name="Subtitle download languages"
+										:languages="languages"
 										class="mb-4"
 										multiple
-										:items="languages"
-										:set-selected="(value: typeof subtitleLanguages) => {
+										name="Subtitle download languages"
+										@update:model-value="(value: typeof subtitleLanguages) => {
 											if (Array.isArray(value)) {
 												subtitleLanguages = value;
 												return;
@@ -337,12 +333,12 @@ function handleDeleteFolder(folder: FolderLibrary) {
 
 								<Button
 									id="yes"
+									:onclick="openNewFolderModal"
+									class="ml-auto"
+									color="white"
+									start-icon="folderAdd"
 									type="button"
 									variant="text"
-									color="white"
-									class="ml-auto"
-									start-icon="folderAdd"
-									:onclick="openNewFolderModal"
 								>
 									{{ $t("Add new folder") }}
 								</Button>
@@ -355,9 +351,9 @@ function handleDeleteFolder(folder: FolderLibrary) {
 									>
 										<Folder
 											:folder="folderLibrary"
-											:type="settings.type"
-											:set-encoder-qualities="setEncoderQualities"
 											:handle-delete-folder="handleDeleteFolder"
+											:set-encoder-qualities="setEncoderQualities"
+											:type="settings.type"
 										/>
 									</template>
 								</template>
@@ -369,72 +365,72 @@ function handleDeleteFolder(folder: FolderLibrary) {
 				<template #actions>
 					<Button
 						id="refresh"
-						type="button"
-						variant="text"
-						start-icon="folderSwap"
-						:disabled="loadingRefresh"
-						color="auto"
 						:class="
 							loadingRefresh
 								? 'first:children:animate-spin !cursor-not-allowed'
 								: ''
 						"
+						:disabled="loadingRefresh"
+						color="auto"
+						start-icon="folderSwap"
+						type="button"
+						variant="text"
 						@click="handleRefresh"
 					>
 						{{ $t("Refresh") }}
 					</Button>
 					<Button
 						id="rescan"
-						type="button"
-						variant="text"
-						start-icon="folderSwap"
-						:disabled="loadingRescan"
-						color="auto"
 						:class="
 							loadingRescan
 								? 'first:children:animate-spin !cursor-not-allowed'
 								: ''
 						"
+						:disabled="loadingRescan"
+						color="auto"
+						start-icon="folderSwap"
+						type="button"
+						variant="text"
 						@click="handleRescan"
 					>
 						{{ $t("Rescan") }}
 					</Button>
 					<Button
 						id="remove"
+						class="children:text-gray-400 children:transition-colors children:duration-100 children:hover:text-red-dark-8"
+						color="red"
+						start-icon="folderRemove"
 						type="button"
 						variant="text"
-						class="children:text-gray-400 children:transition-colors children:duration-100 children:hover:text-red-dark-8"
-						start-icon="folderRemove"
-						color="red"
 						@click="openDeleteConfirm"
 					>
 						{{ $t("Remove") }}
 					</Button>
 					<Button
 						id="add"
-						type="button"
-						variant="text"
 						class="mr-auto"
 						color="auto"
 						start-icon="folderAdd"
+						type="button"
+						variant="text"
 						@click="openAddContentModal"
 					>
 						{{ $t("Add content") }}
 					</Button>
 					<Button
 						id="cancel"
+						color="white"
 						type="button"
 						variant="text"
-						color="white"
 						@click="handleCancel"
 					>
 						{{ $t("Cancel") }}
 					</Button>
 					<Button
 						id="save"
+						color="theme"
 						type="button"
 						variant="default"
-						color="theme"
 						@click="handleSave"
 					>
 						{{ $t("Save") }}
@@ -451,15 +447,15 @@ function handleDeleteFolder(folder: FolderLibrary) {
 				<DeleteLibraryModal
 					v-if="settings?.id"
 					:id="settings?.id"
-					:name="settings?.title"
 					:close="closeDeleteConfirm"
+					:name="settings?.title"
 					:open="deleteConfirmOpen"
 				/>
 
 				<AddContentModal
 					v-if="settings"
-					:close-add-content-modal="closeAddModal"
 					:add-content-modal-open="addModalOpen"
+					:close-add-content-modal="closeAddModal"
 					:library-settings="settings"
 				/>
 			</DashboardLayout>

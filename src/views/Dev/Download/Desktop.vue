@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import { ref } from 'vue';
 import { IonContent, IonPage } from '@ionic/vue';
 
@@ -53,16 +53,16 @@ async function downloadShow() {
 										totalItems
 									}})</span>
 									<button
-										class="text-xs px-2 py-0.5 rounded bg-neutral-800"
+										class="text-xs px-2 py-0.5 rounded bg-surface-800"
 										@click="isPaused ? resumeDownloads() : pauseDownloads()"
 									>
 										{{ isPaused ? "Resume All" : "Pause All" }}
 									</button>
 								</div>
-								<div class="w-full bg-neutral-700 rounded h-1.5 mt-1">
+								<div class="w-full bg-surface-700 rounded h-1.5 mt-1">
 									<div
-										class="bg-primary h-full rounded"
 										:style="`width: ${progress}%`"
+										class="bg-primary h-full rounded"
 									/>
 								</div>
 							</div>
@@ -76,7 +76,7 @@ async function downloadShow() {
 								<div
 									v-for="item in downloadQueue"
 									:key="item.id"
-									class="bg-neutral-900/50 rounded p-4 flex flex-col gap-2"
+									class="bg-surface-900/50 rounded p-4 flex flex-col gap-2"
 								>
 									<div class="flex justify-between items-center">
 										<div
@@ -85,16 +85,16 @@ async function downloadShow() {
 											{{ item.title }}
 											<span
 												v-if="item.status === 'downloading'"
-												class="text-2xs text-neutral-400"
+												class="text-2xs text-slate-400"
 											>(Downloading...)</span>
 											<span
 												v-else-if="item.status === 'waiting'"
-												class="text-2xs text-neutral-400"
+												class="text-2xs text-slate-400"
 											>(Waiting...)</span>
 										</div>
 										<button
 											v-if="item.status !== 'completed'"
-											class="text-2xs px-2 py-0.5 rounded bg-neutral-800"
+											class="text-2xs px-2 py-0.5 rounded bg-surface-800"
 											@click="
 												item.status === 'downloading'
 													|| item.status === 'pending'
@@ -115,11 +115,11 @@ async function downloadShow() {
 									<div class="flex gap-2">
 										<div class="w-1/4 flex flex-col gap-2">
 											<img
-												alt="Item Image"
 												:src="`${tmdbImageBaseUrl}${item.image}`"
+												alt="Item Image"
 												class="w-full h-auto aspect-video object-fit my-auto rounded"
 											>
-											<!-- <div class="w-full bg-neutral-700 rounded h-1.5 mt-1">
+											<!-- <div class="w-full bg-surface-700 rounded h-1.5 mt-1">
                       <div class="bg-primary h-full rounded" :style="`width: ${item.progress}%`" />
                     </div> -->
 										</div>
@@ -136,7 +136,7 @@ async function downloadShow() {
 														<span>{{ asset.name }}</span>
 														<span>{{ asset.progress }}%</span>
 													</div>
-													<div class="w-full bg-neutral-700 rounded h-1">
+													<div class="w-full bg-surface-700 rounded h-1">
 														<div
 															:class="{
 																'bg-blue-500': asset.type === 'video',
@@ -145,8 +145,8 @@ async function downloadShow() {
 																'bg-purple-500': asset.type === 'preview',
 																'bg-pink-500': asset.type === 'font',
 															}"
-															class="h-full rounded"
 															:style="`width: ${asset.progress}%`"
+															class="h-full rounded"
 														/>
 													</div>
 												</div>

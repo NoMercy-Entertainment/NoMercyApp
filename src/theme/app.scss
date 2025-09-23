@@ -1,8 +1,5 @@
 @use 'sass:meta';
 
-/*----------------------------------------------------------------------------
-  1. Define Layers & Tailwind Insertion Points
-----------------------------------------------------------------------------*/
 @layer base, components, utilities;
 
 @tailwind base;
@@ -13,99 +10,99 @@
   2. Global Base Resets & View Transitions
 ----------------------------------------------------------------------------*/
 @layer base {
-	/* Enable native view transitions where supported */
-	@view-transition {
-		navigation: auto;
-	}
+  /* Enable native view transitions where supported */
+  @view-transition {
+    navigation: auto;
+  }
 
-	/* Box trimming (text) */
-	*,
-	*::before,
-	*::after {
-		text-box-trim: both;
-		text-box-edge: cap alphabetic;
-	}
+  /* Box trimming (text) */
+  *,
+  *::before,
+  *::after {
+    text-box-trim: both;
+    text-box-edge: cap alphabetic;
+  }
 
-	/* Root-level custom properties */
-	:root {
-		interpolate-size: allow-keywords;
+  /* Root-level custom properties */
+  html {
+    interpolate-size: allow-keywords;
 
-		/* Core theme variables (light mode defaults) */
-		--color-background: rgb(var(--background-light-slate-3));
-		--background-auto: var(--background-light-slate-1);
-		--color-text: rgb(var(--background-auto-12));
+    /* Core theme variables using modern system */
+    --color-background: var(--background-3);
+    --background-auto: var(--background-1);
+    --color-text: var(--background-12);
+    --color: light-dark(var(--color-text), var(--color-text));
 
-		/* Safe-area insets */
-		--keyboard-height: 0px;
-		--safe-area-inset-top: env(safe-area-inset-top, 0px);
-		--safe-area-inset-bottom: env(safe-area-inset-bottom, 0px);
-	}
+    /* Safe-area insets */
+    --keyboard-height: 0px;
+    --safe-area-inset-top: env(safe-area-inset-top, 0px);
+    --safe-area-inset-bottom: env(safe-area-inset-bottom, 0px);
+  }
 
-	/* Light/dark focus outlines */
-	[no-ring]:focus-visible {
-		outline: none !important;
-	}
+  /* Light/dark focus outlines */
+  [no-ring]:focus-visible {
+    outline: none !important;
+  }
 
-	html.scheme-light *:not([no-ring]):focus-visible {
-		outline: black solid 2px;
-	}
+  //html.scheme-light *:not([no-ring]):focus-visible {
+  //  outline: black solid 2px;
+  //}
 
-	html.scheme-dark *:not([no-ring]):focus-visible {
-		outline: white solid 1px;
-	}
+  //html.scheme-dark *:not([no-ring]):focus-visible {
+  //  outline: white solid 1px;
+  //}
 }
 
 /*----------------------------------------------------------------------------
   3. Structural HTML & Body Styles
 ----------------------------------------------------------------------------*/
 @layer base {
-	html {
-		scroll-behavior: smooth;
-		-webkit-overflow-scrolling: touch;
-		--ion-font-family: 'Inter', sans-serif !important;
-		/* reset safe-area-top when not needed */
-		--safe-area-inset-top: 0px;
-	}
+  html {
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+    --ion-font-family: 'Inter', sans-serif !important;
+    /* reset safe-area-top when not needed */
+    --safe-area-inset-top: 0px;
+  }
 
-	body {
-		height: -webkit-fill-available;
-		font-family: 'Inter', sans-serif;
-		background-color: var(--color-background);
-		color: var(--color-text);
+  body {
+    height: -webkit-fill-available;
+    font-family: 'Inter', sans-serif;
+    background-color: var(--color-background);
+    color: var(--color-text);
 
-		/* If using Tailwind’s JIT with @apply: */
-		@apply bg-slate-light-1 dark:bg-slate-dark-1
-    text-slate-dark-1 dark:text-slate-light-1;
-	}
+    /* If using Tailwind’s JIT with @apply: */
+    @apply bg-surface-1 dark:bg-surface-11;
+  }
 
-	a {
-		color: inherit;
-	}
+  a {
+    color: inherit;
+  }
 
-	/* React single-page root */
-	#root {
-		height: -webkit-fill-available;
-	}
+  /* React single-page root */
+  #root {
+    height: -webkit-fill-available;
+  }
 }
 
 /*----------------------------------------------------------------------------
-  4. Dark-Mode Custom Properties
+  4. Dark-Mode Custom Properties (Modern system handles this automatically)
 ----------------------------------------------------------------------------*/
 @layer base {
-	html.scheme-dark {
-		--color-background: rgb(var(--background-dark-slate-1));
-		--background-auto: var(--background-dark-slate-2);
-		--color-text: rgb(var(--background-auto-1));
-	}
+  html.scheme-dark {
+    /* Modern system handles these automatically via light-dark() */
+    /* These overrides are now optional */
+    --color-background: var(--background-1);
+    --background-auto: var(--background-2);
+    --color-text: var(--background-1);
+  }
 }
 
 /*----------------------------------------------------------------------------
-  5. PrimeVue & Theme Includes
+  5. Modern Theme System & PrimeVue Includes
 ----------------------------------------------------------------------------*/
 
-@include meta.load-css('theme-base');
-@include meta.load-css('theme-colors');
-@include meta.load-css('theme');
+//@include meta.load-css('colors-optimized');
 @include meta.load-css('animations');
 @include meta.load-css('transitions');
 @include meta.load-css('grid');
@@ -114,71 +111,95 @@
 @include meta.load-css('form');
 @include meta.load-css('ionic');
 @include meta.load-css('carousel');
+@include meta.load-css('card');
+
+@property --surface-strength {
+  syntax: "<percentage>";
+  inherits: true;
+  initial-value: 0%;
+}
+
+html {
+  color-scheme: light dark;
+  --surface-strength: 0%;
+  --color-theme-8: var(--color-theme-9);
+  --ion-text-color: light-dark(var(--surface-12),var(--surface-1));
+}
+
+:root:has(.scheme-light),
+.scheme-light {
+  color-scheme: only light;
+  --color-logo-brand: rgb(from var(--surface-12) r g b / 50%);
+}
+
+:root:has(.scheme-dark),
+.scheme-dark {
+  color-scheme: only dark;
+  --color-logo-brand: hsl(from var(--color-theme-8) h 50% 85%);
+}
+
+:root:has(.scheme-system),
+.scheme-system {
+  color-scheme: light dark;
+  --color-logo-brand: light-dark(rgb(from var(--surface-12) r g b / 50%), hsl(from var(--color-theme-8) h 50% 85%));
+}
 
 /*----------------------------------------------------------------------------
   6. Scrollbar & Text Selection
 ----------------------------------------------------------------------------*/
 @layer components {
-	ion-content::part(scroll):not(svg),
-	*:not(svg) {
-		@apply text-slate-dark-3 dark:text-slate-light-3
+  ion-content::part(scroll):not(svg),
+  *:not(svg) {
+    @apply
     scrollbar scrollbar-w-2 scrollbar-h-2
     scrollbar-thumb-rounded-full scrollbar-corner-rounded-none
     scrollbar-track-[#202425]/20 scrollbar-thumb-[#dfeffe]/[0.14]
     scrollbar-track-rounded-full;
 
-		/* override native scrollbar-color if needed */
-		scrollbar-color: unset;
-		--scrollbar-thumb: rgb(var(--background-auto-8) / 60%) !important;
+    /* override native scrollbar-color if needed */
+    scrollbar-color: unset;
+    --scrollbar-thumb: color-mix(in oklch, var(--background-8) 60%, transparent) !important;
 
-		@media (max-width: 640px) {
-			@apply scrollbar-none;
-		}
+    @media (max-width: 640px) {
+      @apply scrollbar-none;
+    }
 
-		/* ::selection inside component scroll */
-		::selection {
-			@apply bg-focus text-white;
-			background-color: var(--select-background, rgb(var(--color-focus) / calc(var(--tw-bg-opacity) - 0.5)));
-		}
-	}
+    /* ::selection inside component scroll */
+    ::selection {
+      @apply bg-focus;
+      background-color: var(--select-background, rgb(var(--color-theme-8) / calc(var(--tw-bg-opacity) - 0.5)));
+    }
+  }
 
-	/* Global text selection */
-	*:not(svg)::selection {
-		@apply bg-focus text-white;
-		background-color: var(--select-background, hsl(from rgb(var(--color-focus)) h s calc(l * 0.85)));
-	}
+  /* Global text selection */
+  *:not(svg)::selection {
+    @apply bg-focus;
+    background-color: var(--select-background, hsl(from var(--color-theme-8) h s calc(l * 0.85)));
+  }
 }
 
 /*----------------------------------------------------------------------------
   7. Utility & Component-Specific Classes
 ----------------------------------------------------------------------------*/
 @layer utilities {
-	/* Swiper adjustments */
-	.swiper {
-		overflow-y: visible !important;
-		overflow-x: clip !important;
-	}
+  /* Swiper adjustments */
+  .swiper {
+    overflow-y: visible !important;
+    overflow-x: clip !important;
+  }
+  /* Monospaced numeric figures */
+  .monospace {
+    font-feature-settings: 'tnum' on,
+    'lnum' on !important;
+  }
 
-	.swiper .swiper-slide img {
-		width: stretch !important;
-		width: -moz-available !important;
-		width: -webkit-fill-available !important;
-		width: 100% !important;
-	}
-
-	/* Monospaced numeric figures */
-	.monospace {
-		font-feature-settings:
-			'tnum' on,
-			'lnum' on !important;
-	}
-
-	.shadow {
-		@apply shadow-[0_1px_0_0_rgba(255,255,255,0.20)_inset,0_-1px_0_0_rgba(var(--color-slate-9)/60%)_inset,0_22px_30px_-4px_rgba(var(--color-slate-9)/70%)]
-    dark:shadow-[0_1px_0_0_rgba(255,255,255,0.20)_inset,0_-1px_0_0_rgba(var(--color-slate-1)/30%)_inset,0_22px_30px_-4px_rgba(var(--color-slate-1)/70%)]
-    hover:shadow-[0_1px_0_0_rgba(255,255,255,0.20)_inset,0_-1px_0_0_rgba(var(--color-slate-11)/60%)_inset,0_22px_30px_-4px_rgba(var(--color-slate-11)/70%)]
-    dark:hover:shadow-[0_1px_0_0_rgba(255,255,255,0.20)_inset,0_-1px_0_0_rgba(var(--color-slate-1)/30%)_inset,0_22px_30px_-4px_rgba(var(--color-slate-1)/70%)]
+  .shadow {
+    @apply shadow-[0_1px_0_0_rgba(255,255,255,0.20)_inset,0_-1px_0_0_rgba(from_var(--color-slate-9)_r_g_b/60%)_inset,0_22px_30px_-4px_rgba(from_var(--color-slate-9)_r_g_b/70%)]
+    dark:shadow-[0_1px_0_0_rgba(255,255,255,0.20)_inset,0_-1px_0_0_rgba(from_var(--color-slate-1)_r_g_b/30%)_inset,0_22px_30px_-4px_rgba(from_var(--color-slate-1)_r_g_b/70%)]
+    hover:shadow-[0_1px_0_0_rgba(255,255,255,0.20)_inset,0_-1px_0_0_rgba(from_var(--color-slate-11)_r_g_b/60%)_inset,0_22px_30px_-4px_rgba(from_var(--color-slate-11)_r_g_b/70%)]
+    dark:hover:shadow-[0_1px_0_0_rgba(255,255,255,0.20)_inset,0_-1px_0_0_rgba(from_var(--color-slate-1)_r_g_b/30%)_inset,0_22px_30px_-4px_rgba(from_var(--color-slate-1)_r_g_b/70%)]
     active:shadow-none duration-100 delay-0
     active:dark:shadow-none;
-	}
+  }
 }
+

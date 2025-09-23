@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import { link } from '@Icons/index';
 import { IonIcon } from '@ionic/vue';
 
@@ -11,15 +11,15 @@ import { RouterLink } from 'vue-router';
 
 <template>
 	<RouterLink
-		to="/preferences/profile"
 		class="flex justify-start items-center self-stretch flex-grow-0 flex-shrink-0 relative gap-2.5 mb-2"
+		to="/preferences/profile"
 	>
-		<NoMercyAvatar :user="user" :size="40" />
+		<NoMercyAvatar :size="40" :user="user" />
 		<div
 			class="flex flex-col justify-start items-start flex-grow relative gap-0.5"
 		>
 			<p
-				class="flex-grow-0 flex-shrink-0 w-48 text-base font-semibold text-left text-slate-dark-1 dark:text-slate-light-1"
+				class="flex-grow-0 flex-shrink-0 w-48 text-base font-semibold text-left "
 			>
 				{{ user.name }}
 			</p>
@@ -28,13 +28,13 @@ import { RouterLink } from 'vue-router';
 			>
 				<IonIcon
 					v-if="currentServer"
-					aria-hidden="true"
 					:icon="link"
+					aria-hidden="true"
 					class="w-4 h-4"
 				/>
-				<IonIcon v-else aria-hidden="true" :icon="link" class="w-4 h-4" />
+				<IonIcon v-else :icon="link" aria-hidden="true" class="w-4 h-4" />
 				<p
-					class="flex-grow text-sm text-left text-slate-dark-3 dark:text-slate-light-3"
+					class="flex-grow text-sm text-left text-slate-3 dark:text-slate-3"
 				>
 					{{ currentServer?.name ?? $t("Not connected") }}
 				</p>

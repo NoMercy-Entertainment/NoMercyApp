@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html class="scheme-system theme-violet" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>Modern Color System Test</title>
+    <link href="./src/theme/colors-ultra-modern.scss" rel="stylesheet">
+    <style>
+        body {
+            font-family: system-ui, sans-serif;
+            margin: 2rem;
+            background: var(--background-1);
+            color: var(--background-12);
+            line-height: 1.6;
+        }
+
+        .theme-selector {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .theme-btn {
+            padding: 0.5rem 1rem;
+            border: 2px solid var(--color-theme-6);
+            background: var(--color-theme-2);
+            color: var(--color-theme-11);
+            border-radius: 0.5rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .theme-btn:hover {
+            background: var(--color-theme-3);
+        }
+
+        .theme-btn.active {
+            background: var(--color-theme-9);
+            color: var(--color-theme-1);
+        }
+
+        .color-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .color-scale {
+            border: 1px solid var(--background-6);
+            border-radius: 0.5rem;
+            overflow: hidden;
+        }
+
+        .color-swatch {
+            height: 40px;
+            display: flex;
+            align-items: center;
+            padding: 0 1rem;
+            font-size: 0.875rem;
+            font-weight: 500;
+        }
+
+        .bg-scale .color-swatch:nth-child(1) { background: var(--background-1); color: var(--background-12); }
+        .bg-scale .color-swatch:nth-child(2) { background: var(--background-2); color: var(--background-12); }
+        .bg-scale .color-swatch:nth-child(3) { background: var(--background-3); color: var(--background-12); }
+        .bg-scale .color-swatch:nth-child(4) { background: var(--background-4); color: var(--background-11); }
+        .bg-scale .color-swatch:nth-child(5) { background: var(--background-5); color: var(--background-11); }
+        .bg-scale .color-swatch:nth-child(6) { background: var(--background-6); color: var(--background-11); }
+        .bg-scale .color-swatch:nth-child(7) { background: var(--background-7); color: var(--background-11); }
+        .bg-scale .color-swatch:nth-child(8) { background: var(--background-8); color: var(--background-1); }
+        .bg-scale .color-swatch:nth-child(9) { background: var(--background-9); color: var(--background-1); }
+        .bg-scale .color-swatch:nth-child(10) { background: var(--background-10); color: var(--background-1); }
+        .bg-scale .color-swatch:nth-child(11) { background: var(--background-11); color: var(--background-1); }
+        .bg-scale .color-swatch:nth-child(12) { background: var(--background-12); color: var(--background-1); }
+
+        .theme-scale .color-swatch:nth-child(1) { background: var(--color-theme-1); color: var(--color-theme-12); }
+        .theme-scale .color-swatch:nth-child(2) { background: var(--color-theme-2); color: var(--color-theme-12); }
+        .theme-scale .color-swatch:nth-child(3) { background: var(--color-theme-3); color: var(--color-theme-12); }
+        .theme-scale .color-swatch:nth-child(4) { background: var(--focus); color: var(--color-theme-11); }
+        .theme-scale .color-swatch:nth-child(5) { background: var(--color-theme-5); color: var(--color-theme-11); }
+        .theme-scale .color-swatch:nth-child(6) { background: var(--color-theme-6); color: var(--color-theme-11); }
+        .theme-scale .color-swatch:nth-child(7) { background: var(--color-theme-7); color: var(--color-theme-11); }
+        .theme-scale .color-swatch:nth-child(8) { background: var(--color-theme-8); color: var(--color-theme-1); }
+        .theme-scale .color-swatch:nth-child(9) { background: var(--color-theme-9); color: var(--color-theme-1); }
+        .theme-scale .color-swatch:nth-child(10) { background: var(--color-theme-10); color: var(--color-theme-1); }
+        .theme-scale .color-swatch:nth-child(11) { background: var(--color-theme-11); color: var(--color-theme-1); }
+        .theme-scale .color-swatch:nth-child(12) { background: var(--color-theme-12); color: var(--color-theme-1); }
+
+        .scheme-selector {
+            margin-bottom: 2rem;
+        }
+
+        .scheme-btn {
+            margin-right: 1rem;
+            padding: 0.5rem 1rem;
+            background: var(--background-3);
+            border: 1px solid var(--background-6);
+            color: var(--background-11);
+            border-radius: 0.25rem;
+            cursor: pointer;
+        }
+
+        .scheme-btn.active {
+            background: var(--color-theme-9);
+            color: var(--color-theme-1);
+            border-color: var(--color-theme-9);
+        }
+    </style>
+</head>
+<body>
+    <h1>Modern Color System Test</h1>
+    <p>This demonstrates the new ultra-modern color system with drastically reduced CSS.</p>
+
+    <div class="scheme-selector">
+        <h2>Color Scheme</h2>
+        <button class="scheme-btn" onclick="setScheme('system')">System</button>
+        <button class="scheme-btn" onclick="setScheme('light')">Light</button>
+        <button class="scheme-btn active" onclick="setScheme('dark')">Dark</button>
+    </div>
+
+    <div>
+        <h2>Theme Colors</h2>
+        <div class="theme-selector">
+            <button class="theme-btn" onclick="setTheme('red')">Red</button>
+            <button class="theme-btn" onclick="setTheme('orange')">Orange</button>
+            <button class="theme-btn" onclick="setTheme('amber')">Amber</button>
+            <button class="theme-btn" onclick="setTheme('yellow')">Yellow</button>
+            <button class="theme-btn" onclick="setTheme('lime')">Lime</button>
+            <button class="theme-btn" onclick="setTheme('green')">Green</button>
+            <button class="theme-btn" onclick="setTheme('teal')">Teal</button>
+            <button class="theme-btn" onclick="setTheme('cyan')">Cyan</button>
+            <button class="theme-btn" onclick="setTheme('blue')">Blue</button>
+            <button class="theme-btn" onclick="setTheme('indigo')">Indigo</button>
+            <button class="theme-btn active" onclick="setTheme('violet')">Violet</button>
+            <button class="theme-btn" onclick="setTheme('purple')">Purple</button>
+            <button class="theme-btn" onclick="setTheme('pink')">Pink</button>
+        </div>
+    </div>
+
+    <div class="color-grid">
+        <div class="color-scale bg-scale">
+            <h3 style="margin: 0; padding: 1rem; background: var(--background-3); color: var(--background-11);">Background Scale</h3>
+            <div class="color-swatch">bg-1</div>
+            <div class="color-swatch">bg-2</div>
+            <div class="color-swatch">bg-3</div>
+            <div class="color-swatch">bg-4</div>
+            <div class="color-swatch">bg-5</div>
+            <div class="color-swatch">bg-6</div>
+            <div class="color-swatch">bg-7</div>
+            <div class="color-swatch">bg-8</div>
+            <div class="color-swatch">bg-9</div>
+            <div class="color-swatch">bg-10</div>
+            <div class="color-swatch">bg-11</div>
+            <div class="color-swatch">bg-12</div>
+        </div>
+
+        <div class="color-scale theme-scale">
+            <h3 style="margin: 0; padding: 1rem; background: var(--color-theme-3); color: var(--color-theme-11);">Theme Scale</h3>
+            <div class="color-swatch">theme-1</div>
+            <div class="color-swatch">theme-2</div>
+            <div class="color-swatch">theme-3</div>
+            <div class="color-swatch">theme-4</div>
+            <div class="color-swatch">theme-5</div>
+            <div class="color-swatch">theme-6</div>
+            <div class="color-swatch">theme-7</div>
+            <div class="color-swatch">theme-8</div>
+            <div class="color-swatch">theme-9</div>
+            <div class="color-swatch">theme-10</div>
+            <div class="color-swatch">theme-11</div>
+            <div class="color-swatch">theme-12</div>
+        </div>
+    </div>
+
+    <script>
+        function setScheme(scheme) {
+            // Remove existing scheme classes
+            document.documentElement.classList.remove('scheme-system', 'scheme-light', 'scheme-dark');
+            
+            // Add new scheme class
+            document.documentElement.classList.add(`scheme-${scheme}`);
+            
+            // Update active button
+            document.querySelectorAll('.scheme-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+        }
+
+        function setTheme(theme) {
+            // Remove existing theme classes
+            document.documentElement.classList.remove(
+                'theme-red', 'theme-orange', 'theme-amber', 'theme-yellow', 'theme-lime',
+                'theme-green', 'theme-teal', 'theme-cyan', 'theme-blue', 'theme-indigo',
+                'theme-violet', 'theme-purple', 'theme-pink', 'theme-crimson'
+            );
+            
+            // Add new theme class
+            document.documentElement.classList.add(`theme-${theme}`);
+            
+            // Update active button
+            document.querySelectorAll('.theme-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+        }
+    </script>
+</body>
+</html>

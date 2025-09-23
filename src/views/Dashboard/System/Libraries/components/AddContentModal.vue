@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import type { PropType } from 'vue';
 import { computed, onMounted, ref, watch } from 'vue';
 import { useRoute } from 'vue-router';
@@ -199,9 +199,9 @@ const continueAvailable = computed(() => {
 						<InputText
 							id="source_folder"
 							v-model="folder"
+							:onclick="openModal"
 							class="w-full"
 							variant="filled"
-							:onclick="openModal"
 						/>
 					</div>
 
@@ -211,13 +211,13 @@ const continueAvailable = computed(() => {
 							v-if="destinationFolder"
 							id="destination_folder"
 							v-model="destinationFolder"
-							placeholder="Select a destination folder"
-							vairant="filled"
 							:options="(currentLibrary?.folder_library?.map((fl) => ({
 								id: fl.folder_id,
 								name: fl.folder.path,
 							})) as DestinationFolder[]) ?? []"
 							option-label="name"
+							placeholder="Select a destination folder"
+							vairant="filled"
 						/>
 					</div>
 				</div>
@@ -225,15 +225,15 @@ const continueAvailable = computed(() => {
 
 			<div class="mt-8 flex h-0 w-full flex-1 flex-col gap-2 overflow-clip">
 				<div class="relative flex h-full w-full flex-col overflow-clip">
-					<ScrollContainer :static="false" :auto-hide="false" class-name="ml-2">
+					<ScrollContainer :auto-hide="false" :static="false" class-name="ml-2">
 						<div v-if="fileList.length > 0" class="flex flex-col gap-2 pb-2">
 							<FolderItem
-								v-for="file in fileList ?? []"
+								v-for="file in fileList?.toSorted((a, b) => a.parsed?.title.localeCompare(b.parsed?.title)) ?? []"
 								:key="file.path"
 								:data="file"
 								:files="files"
-								:push-file="pushFile"
 								:pop-file="popFile"
+								:push-file="pushFile"
 							/>
 						</div>
 						<div
@@ -256,9 +256,9 @@ const continueAvailable = computed(() => {
 								<div role="status">
 									<svg
 										aria-hidden="true"
-										class="inline h-10 w-10 animate-spin text-auto-11 fill-focus dark:text-auto-1"
-										viewBox="0 0 100 101"
+										class="inline h-10 w-10 animate-spin text-surface-11 fill-focus dark:text-surface-1"
 										fill="none"
+										viewBox="0 0 100 101"
 										xmlns="http://www.w3.org/2000/svg"
 									>
 										<path
@@ -282,20 +282,20 @@ const continueAvailable = computed(() => {
 		<template #actions>
 			<Button
 				id="Add"
+				:disabled="continueAvailable"
+				:onclick="submit"
+				class=""
 				color="theme"
 				variant="default"
-				class=""
-				:onclick="submit"
-				:disabled="continueAvailable"
 			>
 				{{ $t("Add selection") }}
 			</Button>
 
 			<Checkbox
 				id="checked"
+				:model-value="checkboxState"
 				class="mr-auto ml-4"
 				name="Select all"
-				:model-value="checkboxState"
 				@click="handleSelectAll"
 			>
 				<span class="whitespace-pre-wrap text-sm font-semibold">
@@ -305,8 +305,8 @@ const continueAvailable = computed(() => {
 		</template>
 
 		<Modal
-			:open="showModal"
 			:close="closeModal"
+			:open="showModal"
 			max-width="max-w-5xl"
 			title="Add folder"
 		>
@@ -316,10 +316,10 @@ const continueAvailable = computed(() => {
 			<template #actions>
 				<Button
 					id="no"
+					:onclick="getFileList"
+					color="theme"
 					type="button"
 					variant="default"
-					color="theme"
-					:onclick="getFileList"
 				>
 					{{ $t("Select") }}
 				</Button>

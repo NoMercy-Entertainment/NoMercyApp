@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import type { PropType } from 'vue';
 import { computed, onMounted, ref } from 'vue';
 import { useRoute } from 'vue-router';
@@ -6,10 +6,15 @@ import { useRoute } from 'vue-router';
 import type { ArtistResponse } from '@/types/api/music/artist';
 
 import { calculateDuration } from '@/lib/dateTime';
-import { stringFormat } from '@/lib/stringArray';
 
 import { currentServer } from '@/store/currentServer';
-import audioPlayer, { currentPlaylist, isPlaying } from '@/store/audioPlayer';
+import audioPlayer, {
+	currentMusicDeviceId,
+	currentPlaylist,
+	currentSong,
+	isPlaying,
+	setCurrentPlaylist,
+} from '@/store/audioPlayer';
 import { isSongRoute } from '@/store/routeState';
 
 import OptimizedIcon from '@/components/OptimizedIcon.vue';
@@ -19,6 +24,9 @@ import { musicSocketConnection } from '@/store/musicSocket';
 import ShareButton from '@/components/Buttons/ShareButton.vue';
 import type { ShareOptions } from '@capacitor/share';
 import { user } from '@/store/user';
+import { deviceId } from '@/store/deviceInfo.ts';
+import { pickPaletteColor, tooLight } from '@/lib/colorHelper.ts';
+import { colorPalette } from '@/store/ui.ts';
 
 const props = defineProps({
 	data: {
@@ -49,39 +57,69 @@ const backdrop = computed(() => {
 	return `${currentServer.value?.serverBaseUrl}${image?.src}`;
 });
 
+const playlistName = computed(
+	() => `/music/${props.data?.type?.replace(/s$/u, '')}/${props.data?.id}`,
+);
+
 function handleClick() {
+	if (!props.data?.tracks)
+		return;
+
 	if (!user.value.features?.nomercyConnect) {
+		if (currentPlaylist.value === playlistName.value) {
+			audioPlayer.togglePlayback();
+			return;
+		}
 		audioPlayer.playTrack(props.data.tracks.at(0)!, props.data.tracks);
+		setCurrentPlaylist(playlistName.value);
 		return;
 	}
 
+	if (!currentMusicDeviceId.value) {
+		musicSocketConnection.value
+			?.invoke('ChangeDeviceCommand', deviceId.value)
+			.then(() => {
+				console.log('Switched to device:', deviceId.value);
+			})
+			.catch((error) => {
+				console.error('Error switching device:', error);
+			});
+	}
+
+	const trackId = props.data.tracks.some(t => t.id === currentSong.value?.id)
+		? currentSong.value?.id
+		: props.data.tracks.at(0)?.id;
+
 	musicSocketConnection.value?.invoke(
 		'StartPlaybackCommand',
-		props.data?.type.replace(/s$/u, ''),
-		props.data?.id,
-		props.data?.tracks.at(0)?.id,
+		props.data.type.replace(/s$/u, ''),
+		props.data.id,
+		trackId,
 	);
 }
-
-const playlistName = computed(
-	() => `${props.data?.type?.replace(/s$/u, '')}/${props.data?.id}`,
-);
 
 const shareData = computed<ShareOptions>(() => ({
 	title: props.data?.name ?? '',
 	url: `https://app.nomercy.tv${route.fullPath}`,
 }));
+
+const light = computed(() => tooLight(pickPaletteColor(colorPalette.value), 150));
 </script>
 
 <template>
 	<div
-		class="relative -mx-2 flex flex-shrink-0 flex-grow-0 items-end justify-between self-stretch overflow-hidden bg-cover bg-start bg-no-repeat object-cover p-9 w-available !h-[306px]"
-		:class="backdrop ? 'h-[425px]' : 'h-[200px]'"
+		:class="{
+			'h-[425px]': backdrop,
+			'h-[200px]': !backdrop,
+			'text-black/12': light,
+			'text-white/12': !light,
+		}"
 		:style="
 			backdrop
 				? `background-image: url('${backdrop}')`
-				: `background-image: linear-gradient(180deg, rgb(var(--color-focus)) 0%, rgb(var(--color-focus)) 100%)`
+				: `background-image: linear-gradient(180deg, var(--color-theme-8) 0%, var(--color-theme-8) 100%)`
 		"
+		class="relative -mx-2 flex flex-shrink-0 flex-grow-0 items-end justify-between self-stretch overflow-hidden bg-cover bg-start bg-no-repeat object-cover p-9 w-available !h-[306px]"
 	>
 		<div
 			class="pointer-events-none absolute inset-0 z-0 mt-auto h-4/5 bg-gradient-to-t from-black via-black/60"
@@ -104,7 +142,7 @@ const shareData = computed<ShareOptions>(() => ({
 				<!--                    {{ data.name }} -->
 				<!--                </p> -->
 				<p
-					class="flex-shrink-0 flex-grow-0 self-stretch text-5xl font-bold text-white w-[710px]"
+					class="flex-shrink-0 flex-grow-0 self-stretch text-5xl font-bold w-[710px]"
 				>
 					{{ data.name }}
 				</p>
@@ -113,7 +151,7 @@ const shareData = computed<ShareOptions>(() => ({
 				>
 					<p
 						v-if="data.playlists?.length"
-						class="flex-shrink-0 flex-grow-0 text-sm text-white"
+						class="flex-shrink-0 flex-grow-0 text-sm"
 					>
 						<span>{{
 							stringFormat(
@@ -122,33 +160,33 @@ const shareData = computed<ShareOptions>(() => ({
 							)
 						}}</span>
 						<svg
-							width="3"
-							height="4"
-							viewBox="0 0 3 4"
-							fill="none"
-							xmlns="http://www.w3.org/2000/svg"
 							class="flex-shrink-0 flex-grow-0"
+							fill="none"
+							height="4"
 							preserveAspectRatio="xMidYMid meet"
+							viewBox="0 0 3 4"
+							width="3"
+							xmlns="http://www.w3.org/2000/svg"
 						>
-							<circle cx="1.5" cy="2" r="1.5" fill="#9BA1A6" />
+							<circle cx="1.5" cy="2" fill="#9BA1A6" r="1.5" />
 						</svg>
 					</p>
-					<p class="flex-shrink-0 flex-grow-0 text-sm text-white">
+					<p class="flex-shrink-0 flex-grow-0 text-sm">
 						{{ data.tracks?.length }}
 						{{ data.tracks?.length === 1 ? $t("song") : $t("songs") }}
 					</p>
 					<svg
-						width="3"
-						height="4"
-						viewBox="0 0 3 4"
-						fill="none"
-						xmlns="http://www.w3.org/2000/svg"
 						class="flex-shrink-0 flex-grow-0"
+						fill="none"
+						height="4"
 						preserveAspectRatio="xMidYMid meet"
+						viewBox="0 0 3 4"
+						width="3"
+						xmlns="http://www.w3.org/2000/svg"
 					>
-						<circle cx="1.5" cy="2" r="1.5" fill="#9BA1A6" />
+						<circle cx="1.5" cy="2" fill="#9BA1A6" r="1.5" />
 					</svg>
-					<p class="flex-shrink-0 flex-grow-0 text-sm text-white">
+					<p class="flex-shrink-0 flex-grow-0 text-sm">
 						{{ duration }}
 					</p>
 				</div>
@@ -158,49 +196,49 @@ const shareData = computed<ShareOptions>(() => ({
 			class="flex flex-shrink-0 flex-grow-0 items-center justify-start gap-2"
 		>
 			<BannerButton
-				:title="isPlaying ? $t('Pause') : $t('Play')"
 				:onclick="handleClick"
+				:title="isPlaying && currentPlaylist === playlistName ? $t('Pause') : $t('Play')"
 			>
 				<OptimizedIcon
 					v-if="isPlaying && currentPlaylist === playlistName"
+					class-name="relative h-6 w-6"
 					icon="pause"
-					class-name="relative h-5 w-5 text-white"
 				/>
 				<OptimizedIcon
 					v-else
+					class-name="relative h-6 w-6"
 					icon="play"
-					class-name="relative h-5 w-5 text-white"
 				/>
 			</BannerButton>
 			<!--			<BannerButton title=""> -->
-			<!--				<MoooomIcon icon="shuffle" className="relative h-5 w-5 text-white"/> -->
+			<!--				<MoooomIcon icon="shuffle" className="relative h-6 w-6"/> -->
 			<!--			</BannerButton> -->
-			<ShareButton :share-data="shareData" class="!p-0 text-white" />
+			<ShareButton :share-data="shareData" class="!p-1" />
 			<MediaLikeButton
 				v-if="data && !isSongRoute"
 				:data="data"
-				color="var(--color-focus)"
 				class-name="h-5 w-5"
+				color="var(--color-theme-8)"
 			/>
 			<!--			<BannerButton title=""> -->
-			<!--				<MoooomIcon icon="addCircle" className="relative h-5 w-5 text-white"/> -->
+			<!--				<MoooomIcon icon="addCircle" className="relative h-5 w-5"/> -->
 			<!--			</BannerButton> -->
 			<!--			<BannerButton title=""> -->
-			<!--				<MoooomIcon icon="download" className="relative h-5 w-5 text-white"/> -->
+			<!--				<MoooomIcon icon="download" className="relative h-5 w-5"/> -->
 			<!--			</BannerButton> -->
 			<!--			<BannerButton title=""> -->
-			<!--				<MoooomIcon icon="shareSquare" className="relative h-5 w-5 text-white"/> -->
+			<!--				<MoooomIcon icon="shareSquare" className="relative h-5 w-5"/> -->
 			<!--			</BannerButton> -->
 			<!--			<BannerButton title=""> -->
-			<!--				<MoooomIcon icon="currentPlaylist" className="relative h-5 w-5 text-white"/> -->
+			<!--				<MoooomIcon icon="currentPlaylist" className="relative h-5 w-5"/> -->
 			<!--			</BannerButton> -->
 			<!--			<BannerButton title=""> -->
-			<!--				<MoooomIcon icon="searchMagnifyingGlass" className="relative h-5 w-5 text-white"/> -->
+			<!--				<MoooomIcon icon="searchMagnifyingGlass" className="relative h-5 w-5"/> -->
 			<!--			</BannerButton> -->
 			<BannerButton :title="$t('More')">
 				<OptimizedIcon
+					class-name="relative h-5 w-5"
 					icon="menuDotsHorizontal"
-					class-name="relative h-5 w-5 text-white"
 				/>
 			</BannerButton>
 		</div>

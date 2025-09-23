@@ -9,11 +9,11 @@ import { isPlatform } from '@ionic/vue';
 <template>
 	<div
 		id="sortHeaderElement"
-		class="sticky -mx-4 px-4 z-30 mt-4 block h-10 content-center items-center justify-start self-stretch bg-transparent text-sm font-medium transition-all duration-200 w-available group/track sm:w-available sm:-top-px"
 		:class="{
-			'top-safe-offset-10': isPlatform('capacitor'),
+			'top-safe-offset-[4rem]': isPlatform('capacitor'),
 			'top-safe-offset-16': !isPlatform('capacitor'),
 		}"
+		class="sticky -mx-4 px-4 z-30 mt-4 block h-10 content-center items-center justify-start self-stretch bg-transparent text-sm font-medium transition-all duration-200 w-available group/track sm:w-available sm:-top-px"
 	>
 		<span
 			id="sorterChild"
@@ -24,7 +24,7 @@ import { isPlatform } from '@ionic/vue';
 				'album-grid': isAlbumRoute,
 				'artist-grid': !isAlbumRoute,
 			}"
-			class="grid justify-start items-center self-stretch pr-3 sm:px-3 rounded-lg sm:hover:bg-slate-lightA-6 dark:hover:bg-slate-darkA-6 text-auto-12 group/track text-sm font-medium py-2 z-0 group/track gap-2"
+			class="grid justify-start items-center self-stretch pr-3 sm:px-3 rounded-lg group/track text-sm font-medium py-2 z-0 group/track gap-2"
 		>
 			<SortButton
 				id="sortIndex"
@@ -45,22 +45,22 @@ import { isPlatform } from '@ionic/vue';
 
 			<SortButton
 				:aria-label="$t('Sort by album')"
-				:sorting-type="SortType.album"
-				class="!hidden sm:!flex"
 				:class="{
 					'opacity-0': !isAlbumRoute,
 					'opacity-100': isAlbumRoute,
 				}"
+				:sorting-type="SortType.album"
+				class="!hidden sm:!flex"
 				icon-spacer="w-6 h-6"
 				name="Album"
 			/>
 			<!-- routeIs('app.music.tracks') ? 'Date added' : -->
 			<SortButton
-				name="Release date"
 				:aria-label="$t('Sort by date')"
 				:sorting-type="SortType.date"
 				class="!hidden sm:!flex"
 				icon-spacer="w-6 h-6"
+				name="Release date"
 			/>
 
 			<SortButton
@@ -80,10 +80,13 @@ import { isPlatform } from '@ionic/vue';
 
 	> *:first-child {
 		@container scroll-state(stuck: top) {
-			background: hsl(
-				from rgb(var(--color-focus, var(--color-theme-9)) / var(--tw-bg-opacity, 1)) h calc(s / 1) calc(l / 1.8)
-			);
+			background: var(--color-theme-8);
 		}
+	}
+}
+.scheme-dark .sticky > *:first-child {
+	@container scroll-state(stuck: top) {
+		background: hsl(from var(--color-theme-8) h s 23%);
 	}
 }
 </style>

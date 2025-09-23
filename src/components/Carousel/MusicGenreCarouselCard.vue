@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import type { PropType } from 'vue';
 import { ref } from 'vue';
 
@@ -19,8 +19,8 @@ const props = defineProps({
 
 const ringColor = ref(
 	pickPaletteColor(props.data?.color_palette?.poster)
-		?.replace('rgb(', '')
-		.replace(')', '')
+		// ?.replace('rgb(', '')
+		// .replace(')', '')
 		.replace(/,/gu, ' ') ?? 'var(--color-primary)',
 );
 </script>
@@ -29,15 +29,15 @@ const ringColor = ref(
 	<RouterLink
 		v-if="data"
 		:id="data?.id"
-		class="pointer-events-auto relative mr-2 w-full transition-all duration-200 group trickle-div changing focus-outline-child"
-		:to="data?.link"
-		data-card="true"
-		:style="`--color-focus: ${ringColor};`"
 		:data-scroll="`scroll_${data?.name?.[0]?.toUpperCase()}`"
+		:style="`--color-theme-8: ${ringColor};`"
+		:to="data?.link"
+		class="pointer-events-auto relative mr-2 w-full transition-all duration-200 group trickle-div changing focus-outline-child"
+		data-card="true"
 		data-target="navigate"
 	>
 		<div
-			class="relative flex h-full flex-col overflow-clip rounded-lg bg-frame shadow-card transitioning group-hover:bg-auto-200"
+			class="relative flex h-full flex-col overflow-clip rounded-lg bg-frame shadow-card transitioning group-hover:bg-surface-200"
 		>
 			<div
 				class="pointer-events-none absolute inset-0 z-10 aspect-square h-auto w-full rounded-lg shadow-top"
@@ -49,12 +49,11 @@ const ringColor = ref(
                     type="image" /> -->
 
 				<div
-					class="absolute top-0 flex items-center justify-center w-full h-auto aspect-square !text-white p-10 bg-black/30"
 					:style="{
-						'--c-1': 'rgb(var(--color-focus))',
-						'--c-2': 'rgb(var(--color-focus) / 3%)',
-						'--c-3': 'rgb(var(--color-focus) / 14%)',
-						'--c-4': 'rgb(var(--color-focus) / 1%)',
+						'--c-1': 'var(--color-theme-8)',
+						'--c-2': 'rgb(var(--color-theme-8) / 3%)',
+						'--c-3': 'rgb(var(--color-theme-8) / 14%)',
+						'--c-4': 'rgb(var(--color-theme-8) / 1%)',
 
 						'backgroundImage': `
                             radial-gradient(
@@ -79,6 +78,7 @@ const ringColor = ref(
                             )
                         `,
 					}"
+					class="absolute top-0 flex items-center justify-center w-full h-auto aspect-square !text-white p-10 bg-black/30"
 				>
 					<!--                    <PianoOutlined v-if="index % 7 === 0" -->
 					<!--                                   class="stroke-2" /> -->
@@ -100,7 +100,7 @@ const ringColor = ref(
 					class="absolute right-2 bottom-2 z-30 flex h-12 w-12 origin-center cursor-pointer items-center justify-center rounded-full border-none opacity-0 outline-transparent transitioning p-1.5 bg-theme-500 group-hover:opacity-100 hover:scale-110"
 					data-target="play"
 				>
-					<PlayerIcon icon="nmPlay" class="h-14 w-14" />
+					<PlayerIcon class="h-14 w-14" icon="nmPlay" />
 				</div>
 			</div>
 			<div class="flex flex-col justify-evenly gap-2 px-4 py-2 min-h-[60px]">

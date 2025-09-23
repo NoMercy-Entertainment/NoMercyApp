@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import { computed, onMounted, onUnmounted, ref, watch } from 'vue';
 import { IonContent, IonPage, onIonViewDidEnter } from '@ionic/vue';
 
@@ -47,6 +47,7 @@ const bottom = ref<HTMLElement>();
 const cardsPerScroll = ref(7);
 
 const content = ref<VueDivElement>();
+
 function jumpTo(id: string) {
 	const element = document.querySelector<HTMLElement>(id);
 	if (element) {
@@ -79,10 +80,13 @@ onIonViewDidEnter(() => {
 });
 
 const scrollIndex = ref(0);
+
 function setScrollIndex(index: number) {
 	scrollIndex.value = index;
 }
+
 const hasMoreCardsToRight = ref(false);
+
 function setHasMoreCardsToRight(value: boolean) {
 	hasMoreCardsToRight.value = value;
 }
@@ -139,6 +143,7 @@ function scrollToCenter(e: FocusEvent) {
 const timeout = ref<NodeJS.Timeout>();
 
 const keysLocked = ref(false);
+
 function unlockKeys() {
 	clearTimeout(timeout.value);
 	keysLocked.value = false;
@@ -193,8 +198,8 @@ const carouselsData = computed(
 			>
 				<div
 					ref="top"
+					class="flex items-center mx-12 w-available min-h-[60vh] relative overflow-hidden rounded-2xl border-2 border-slate-9 transition-opacity duration-200"
 					tabindex="0"
-					class="flex items-center mx-12 w-available min-h-[60vh] relative overflow-hidden rounded-2xl border-2 border-slate-light-9 transition-opacity duration-200"
 					@focus="jumpTo('#watch_now')"
 				>
 					<template
@@ -208,8 +213,8 @@ const carouselsData = computed(
 				<div
 					v-if="carouselsData.length > 0"
 					ref="bottom"
-					tabindex="0"
 					class="mx-11 flex flex-col justify-start items-start w-available gap-5 h-[calc(100vh-6rem)] overflow-auto"
+					tabindex="0"
 					@focus="scrollToBottom"
 				>
 					<template v-if="!isMutating">
@@ -219,14 +224,14 @@ const carouselsData = computed(
 						>
 							<TvCarousel
 								v-if="carousel.props.items.length > 0"
+								:cards-per-scroll="cardsPerScroll"
 								:carousel="carousel"
 								:index="index"
-								:scroll-to-center="scrollToCenter"
 								:scroll-index="scrollIndex"
-								:set-scroll-index="setScrollIndex"
-								:cards-per-scroll="cardsPerScroll"
-								:unlock-keys="unlockKeys"
+								:scroll-to-center="scrollToCenter"
 								:set-has-more-cards-to-right="setHasMoreCardsToRight"
+								:set-scroll-index="setScrollIndex"
+								:unlock-keys="unlockKeys"
 							/>
 						</template>
 					</template>
@@ -238,6 +243,6 @@ const carouselsData = computed(
 
 <style scoped>
 ion-content::part(background) {
-	@apply bg-slate-light-3 dark:bg-slate-dark-1;
+	@apply bg-surface-3 dark:bg-surface-1;
 }
 </style>

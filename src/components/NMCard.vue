@@ -1,28 +1,18 @@
-<script setup lang="ts">
-import { computed } from 'vue';
+<script lang="ts" setup>
 import type { PropType } from 'vue';
+import { computed } from 'vue';
 
 import type { LibraryResponse } from '@/types/api/base/library';
 
 import { pickPaletteColor } from '@/lib/colorHelper';
 import { showBackdrops } from '@/store/preferences';
-import {
-	contextMenu,
-
-	makeContextMenu,
-	setContextMenu,
-	setContextMenuContext,
-} from '@/store/contextMenuItems';
 import type { ContextMenuItem } from '@/store/contextMenuItems';
-import {
-	setBackground,
-	setColorPalette,
-	setPoster,
-	setTitle,
-} from '@/store/ui';
+import { contextMenu, makeContextMenu, setContextMenu, setContextMenuContext } from '@/store/contextMenuItems';
+import { setBackground, setColorPalette, setPoster, setTitle } from '@/store/ui';
 
 import TMDBImage from '@/components/Images/TMDBImage.vue';
 import CardIndicator from '@/components/Cards/CardIndicator.vue';
+import { breakTitle } from '@/lib/stringArray.ts';
 
 const props = defineProps({
 	data: {
@@ -39,7 +29,7 @@ const props = defineProps({
 		required: false,
 		default: false,
 	},
-	context_menu_items: {
+	contextMenuItems: {
 		type: Array as PropType<ContextMenuItem[]>,
 		required: false,
 		default: () => [],
@@ -65,15 +55,15 @@ const focusColor = computed(() => {
 		? pickPaletteColor(
 				props.data?.color_palette?.[backdropStyle.value ? 'backdrop' : 'poster'],
 			)
-				.replace(/,/gu, ' ')
-				.replace(')', '')
-				.replace('rgb(', '')
+	// .replace(/,/gu, ' ')
+	// .replace(')', '')
+	// .replace('rgb(', '')
 		: '';
 });
 
 function onRightClick(event: Event) {
-	if (props.context_menu_items) {
-		setContextMenu(makeContextMenu(props.context_menu_items));
+	if (props.contextMenuItems) {
+		setContextMenu(makeContextMenu(props.contextMenuItems));
 		setContextMenuContext(props.data);
 		contextMenu.value.show(event);
 	}
@@ -100,82 +90,85 @@ function handleClick(item: any) {
 <template>
 	<RouterLink
 		v-if="data?.link"
-		:data-scroll="scrollLetter"
+		:class="{
+			'border-2': !!data.deathday,
+			'aspect-backdrop': showBackdrops,
+			'aspect-poster': !showBackdrops,
+		}"
 		:data-card="data?.link"
+		:data-scroll="scrollLetter"
 		:onclick="() => handleClick(data)"
-		:to="data.link" no-ring
-		class="group/card frosting flex flex-col h-full items-center focus-outline relative rounded-lg select-none shadow-[0px_0px_0_1px_rgb(var(--color-focus,var(--color-theme-6))/70%)] w-full z-0 bg-auto-50/70 flex-grow-0"
-		:class="showBackdrops ? 'aspect-backdrop' : 'aspect-poster'"
-		:style="`--color-focus: ${focusColor};`"
+		:style="focusColor ? `
+       --color-theme-8: ${data.deathday ? '#fff' : focusColor};
+    ` : ''"
+		:to="data.link"
+		class="group/card frosting flex flex-col h-full items-center focus-outline relative rounded-lg select-none shadow-[0px_0px_0_1px_rgb(from_var(--color-theme-8,var(--color-theme-6))_r_g_b/70%)] w-full z-0 bg-surface-50/70 flex-grow-0"
+		no-ring
 		@contextmenu="onRightClick($event)"
 	>
 		<div class="w-full h-full overflow-clip rounded-lg inset-0 absolute">
 			<div class="backdropCard-overlay" />
 
 			<TMDBImage
-				:path="image"
-				:title="data.title"
-				loading="lazy"
-				:size="showBackdrops ? 330 : 180"
 				:aspect="showBackdrops ? 'backdrop' : 'poster'"
 				:color-palette="
 					data.color_palette?.[showBackdrops ? 'backdrop' : 'poster']
 				"
+				:path="image"
+				:size="showBackdrops ? 330 : 180"
+				:title="data.title"
 				class-name="h-full overflow-clip rounded-lg"
+				loading="lazy"
 			/>
 
-			<template v-if="showBackdrops">
+			<template v-if="backdropStyle">
 				<div v-if="!!data.logo" class="absolute inset-0 h-full w-full">
 					<div
-						class="pointer-events-none absolute inset-0 z-0 mt-auto h-4/5 bg-gradient-to-t from-neutral-100 via-neutral-100 dark:from-neutral-950 dark:via-neutral-950/60"
+						class="pointer-events-none absolute inset-0 z-0 mt-auto h-4/5 bg-gradient-to-t from-surface-12 via-surface-12 dark:from-surface-1 dark:via-surface-1/60"
 					/>
 					<div
 						class="absolute bottom-0 left-0 h-full max-h-24 w-full max-w-[66%]"
 					>
 						<TMDBImage
-							:path="data.logo"
-							:title="data.title"
 							:color-palette="data.color_palette?.logo"
+							:path="data.logo"
 							:size="500"
-							loading="lazy"
+							:title="data.title"
 							class="w-auto object-contain h-available object-[0_0%] max-h-inherit !duration-700 children:!duration-700"
 							class-name="mr-auto p-4 !duration-700 children:!duration-700"
+							loading="lazy"
 							type="logo"
 						/>
 					</div>
 				</div>
 				<div v-else class="absolute inset-0 h-full w-full">
 					<div
-						class="pointer-events-none absolute inset-0 z-0 mt-auto h-4/5 bg-gradient-to-t from-neutral-100 via-neutral-100 dark:from-neutral-950 dark:via-neutral-950/60"
+						class="pointer-events-none absolute inset-0 z-0 mt-auto h-4/5 bg-gradient-to-t from-surface-12 via-surface-12 dark:from-surface-1 dark:via-surface-1/60"
 					/>
-					<div class="absolute bottom-4 left-4 w-full max-w-[66%]">
-						<p
-							class="z-10 w-auto text-xl font-bold line-clamp-2 leading-[1.2] text-neutral-950 dark:text-neutral-100 empty:hidden dark:font-medium"
-						>
-							{{ data.title }}
-						</p>
+					<div class="absolute bottom-4 left-4 w-full">
+						<div class="z-10 w-available text-xl font-bold line-clamp-2 leading-[1.2] text-surface-12 dark:text-slate-1 empty:hidden dark:font-medium text-xl font-semibold whitespace-pre-line flex-col flex"
+							v-html="breakTitle(data.title, 'text-sm')"
+						/>
 					</div>
 				</div>
 			</template>
 			<template v-else>
 				<div
-					class="flex flex-col justify-start items-start w-full h-12 z-0 absolute left-0 transition-all duration-200 px-2 py-1 group-hover/card:-bottom-0 text-left"
 					:class="{
 						'-bottom-20': image,
 						'bottom-0': !image,
 					}"
+					class="flex flex-col justify-start items-start w-full h-12 z-0 absolute left-0 transition-all duration-200 px-2 py-1 group-hover/card:-bottom-0 text-left"
 				>
 					<div
-						class="absolute inset-0 z-0 transition-all duration-200 bg-neutral-100/80 dark:bg-neutral-950/80"
 						:class="{
 							'opacity-0 group-hover/card:opacity-100': image,
 						}"
+						class="absolute inset-0 z-0 transition-all duration-200 bg-surface-1/80"
 					/>
-					<p
-						class="z-10 w-auto flex-shrink-0 flex-grow-0 self-stretch text-xs font-semibold line-clamp-2 leading-[1.2] text-neutral-950 dark:text-neutral-100 empty:hidden dark:font-medium text-wrap"
-					>
+					<div class="z-10 w-available text-xl font-bold line-clamp-2 leading-[1.2] text-surface-12 dark:text-slate-1 empty:hidden dark:font-medium font-semibold whitespace-pre-line text-xs">
 						{{ data.title }}
-					</p>
+					</div>
 				</div>
 			</template>
 			<CardIndicator :data="data" />

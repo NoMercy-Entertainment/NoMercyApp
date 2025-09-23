@@ -1,0 +1,57 @@
+
+.backdropCard {
+
+  @apply relative overflow-clip rounded-lg w-full h-full max-w-xs;
+
+  &-overlay {
+    @apply absolute inset-0 z-[1] h-full w-full rounded-t-lg rounded-b-none bg-black/15 bg-cover;
+
+    --tw-shadow: inset 0px 1px 0px rgba(255, 255, 255, 0.24);
+    --tw-shadow-colored: inset 0px 1px 0px var(--tw-shadow-color);
+    box-shadow: var(--tw-ring-offset-shadow, 0 0 #000), var(--tw-ring-shadow, 0 0 #000), var(--tw-shadow);
+
+    background: radial-gradient(143.04% 143.04% at -10% -10%, rgba(255, 255, 255, 0.15) 0%, rgba(255, 255, 255, 0.00) 100%);
+  }
+
+  &-image {
+    @apply relative h-auto w-full overflow-hidden z-0;
+
+    &.border {
+      @apply border-[3px] border-surface-6;
+    }
+
+    & .online-false,
+    & .online-true {
+      @apply absolute bottom-2 right-2 h-4 w-4;
+    }
+
+    & span {
+      @apply absolute inset-0 z-0 flex h-full w-full items-center justify-center;
+    }
+
+    &-overlay {
+      @apply absolute inset-0 bg-black/50;
+    }
+
+    &-text {
+      @apply absolute inset-0 flex items-center justify-center font-bold;
+    }
+  }
+
+  &-footer {
+    & span:last-child {
+      padding-top: 0.5em;
+    }
+  }
+}
+
+.shadow-highlight {
+  --tw-shadow: inset 0px 1px 0px rgba(255, 255, 255, 0.24);
+  --tw-shadow-colored: inset 0px 1px 0px var(--tw-shadow-color);
+  //noinspection CssInvalidFunction
+  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #000), var(--tw-shadow);
+}
+
+#preview g, #preview rect, #preview path {
+  transition: all .3s ease-in-out;
+}

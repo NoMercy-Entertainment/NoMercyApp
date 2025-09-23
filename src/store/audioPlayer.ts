@@ -513,7 +513,8 @@ if (isPlatform('capacitor')) {
 		result: VolumeButtonsResult,
 		err?: any,
 	) => {
-		console.log(result.direction, err);
+		if (!result)
+			return;
 		audioPlayer.setVolume(
 			result.direction === 'up' ? volume.value + 10 : volume.value - 10,
 		);

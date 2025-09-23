@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import { computed, onMounted, ref, watch } from 'vue';
 import { useRoute } from 'vue-router';
 import {
@@ -192,18 +192,18 @@ function handleClick(song: PlaylistItem) {
 		<IonContent :fullscreen="true">
 			<div
 				:key="data?.id"
+				:style="focusColor ? `--color-theme-8: ${focusColor}` : ''"
 				class="w-full h-full absolute left-0 top-0 bg-[#131314] pointer-events-none -z-10"
-				:style="focusColor ? `--color-focus: ${focusColor}` : ''"
 			>
 				<div
 					class="w-available h-available absolute left-[202px] top-0 overflow-hidden bg-focus"
 				>
 					<img
-						class="w-available h-available absolute left-[-0.39px] top-[-0.39px] opacity-40 object-cover object-center"
 						:src="`${currentServer?.serverBaseUrl}${
 							data?.backdrop ?? data?.cover
 						}`"
 						alt=""
+						class="w-available h-available absolute left-[-0.39px] top-[-0.39px] opacity-40 object-cover object-center"
 					>
 					<div
 						class="w-[150vw] h-[150vw] absolute left-[-30%] bottom-[-50%]"
@@ -225,8 +225,8 @@ function handleClick(song: PlaylistItem) {
 							class="flex justify-center w-available aspect-square my-8 ml-8 mr-16"
 						>
 							<CoverImage
-								:data="data"
 								:alt="data?.name"
+								:data="data"
 								class="w-auto h-full aspect-square"
 							/>
 						</div>
@@ -276,92 +276,92 @@ function handleClick(song: PlaylistItem) {
 
 					<IonCol
 						ref="scrollContainer"
+						class="w-full h-available overflow-auto scroll-smooth"
 						size="6"
 						tabindex="0"
-						class="w-full h-available overflow-auto scroll-smooth"
 						@focus="handleListFocus($event)"
 					>
-						<IonList mode="md" lines="none">
+						<IonList lines="none" mode="md">
 							<template
 								v-for="(song, index) in data?.tracks"
 								:key="song.id + song?.favorite"
 							>
 								<IonItem
-									tabindex="-1"
-									mode="md"
 									class="group/track focus-within:bg-white/4 rounded-md overflow-clip"
+									mode="md"
+									tabindex="-1"
 								>
 									<IonGrid>
 										<IonRow
-											:data-index="index"
 											:data-id="song.id"
-											tabindex="-1"
+											:data-index="index"
 											class="items-center !rounded-md !overflow-clip"
+											tabindex="-1"
 										>
 											<IonCol size="2" tabindex="-1">
 												<button
-													tabindex="0"
-													:data-index="index"
 													:data-id="song.id"
+													:data-index="index"
 													class="focusable flex justify-center w-full aspect-video focus:outline outline-focus outline-2 outline-offset-2 mr-2 overflow-clip"
-													@focus="handleListItemFocus($event)"
+													tabindex="0"
 													@click="handleClick(song)"
+													@focus="handleListItemFocus($event)"
 												>
 													<CoverImage
-														:data="song"
 														:alt="song.name"
+														:data="song"
 														class="w-auto h-full aspect-square"
 													/>
 												</button>
 											</IonCol>
 
-											<IonCol size="8" tabindex="-1" class="my-auto mt-2">
+											<IonCol class="my-auto mt-2" size="8" tabindex="-1">
 												<IonLabel tabindex="-1">
 													<div class="flex w-available overflow-clip items-end">
 														<div
-															class="flex items-center justify-center h-full aspect-square overflow-clip transition-width duration-200"
 															:class="{
 																'w-0': currentSong?.id !== song.id,
 																'w-6 mr-1': currentSong?.id === song.id,
 															}"
+															class="flex items-center justify-center h-full aspect-square overflow-clip transition-width duration-200"
 														>
 															<EqSpinner :playing="isPlaying" />
 														</div>
 														<Marquee
 															:playing="!!currentSong?.id"
 															:text="song.name"
-															class="!w-[calc(100%-30px)] text-auto-12 children:leading-none w-available overflow-clip"
+															class="!w-[calc(100%-30px)] children:leading-none w-available overflow-clip"
 														/>
 													</div>
 
 													<TrackLinks
 														:id="song.id"
 														:data="song.artist_track"
-														type="artists"
 														suffix="track"
+														type="artists"
+														@keyup="handleUp($event)"
 														@keydown.up.prevent
 														@keydown.down.prevent
-														@keyup="handleUp($event)"
 													/>
 												</IonLabel>
 											</IonCol>
 
 											<IonCol
+												class="opacity-0 group-focus-within/track:opacity-100 -ml-2"
 												size="2"
 												tabindex="-1"
-												class="opacity-0 group-focus-within/track:opacity-100 -ml-2"
 											>
-												<IonRow tabindex="-1" class="flex flex-nowrap">
+												<IonRow class="flex flex-nowrap" tabindex="-1">
 													<MediaLikeButton :data="song" />
 													<MusicButton
-														label=""
-														tabindex="0"
 														:onclick="() => {}"
 														class="!bg-transparent mr-2"
+														label=""
+														tabindex="0"
 													>
 														<OptimizedIcon
-															icon="menuDotsHorizontal"
 															class="text-white"
+															icon="menuDotsHorizontal"
 														/>
 													</MusicButton>
 												</IonRow>
@@ -427,7 +427,7 @@ ion-list {
 
 ion-item {
 	--background: transparent;
-	--color: rgb(var(--color-text));
+	--color: var(--color-text);
 }
 
 ion-item::part(detail-icon) {

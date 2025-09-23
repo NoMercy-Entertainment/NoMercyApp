@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import type { PropType } from 'vue';
 
 import type { ColorPalettes } from '@/types/api/shared';
@@ -53,24 +53,24 @@ function handleClick() {
 <template>
 	<div
 		v-if="data"
-		class="frosting mt-4 mb-3 flex flex-col w-auto flex-shrink-0 flex-grow-1 items-start justify-start gap-2 self-stretch will-change-auto text-left"
 		:class="{
 			'sm:w-[33.3333%]': data.width,
 		}"
+		class="frosting mt-4 mb-3 flex flex-col w-auto flex-shrink-0 flex-grow-1 items-start justify-start gap-2 self-stretch will-change-auto text-left"
 	>
 		<h3
 			v-if="title"
-			class="text-[20px] font-bold text-auto-12 mr-2 ml-1 sm:ml-3 text-slate-dark-1 dark:text-slate-light-1"
+			class="text-[20px] font-bold mr-2 ml-1 sm:ml-3 "
 		>
 			{{ title }}
 		</h3>
 
 		<div
-			class="relative bg-slate-lightA-6 dark:bg-slate-darkA-6 rounded-md p-2 sm:p-4 isolate w-full flex sm:flex-col gap-4"
+			class="relative bg-surface-6/8 dark:bg-surface-6/8 rounded-md p-2 sm:p-4 isolate w-full flex sm:flex-col gap-4"
 		>
 			<CoverImage
-				:data="data"
 				:color-palette="data.colorPalette"
+				:data="data"
 				class="w-24 rounded-md"
 			/>
 			<div class="w-full flex flex-col gap-2">
@@ -79,14 +79,14 @@ function handleClick() {
 				</div>
 				<div class="flex text-left text-base items-center gap-2">
 					<span class="leading-none text-sm">{{ data.type }}</span>
-					<p class="text-left text-sm font-medium text-white">
+					<p class="text-left text-sm font-medium">
 						•
 					</p>
 					<TrackLinks
 						:id="data.title"
 						:data="data.artists"
-						type="artists"
 						class="text-base"
+						type="artists"
 					/>
 				</div>
 			</div>
@@ -100,4 +100,4 @@ function handleClick() {
 	</div>
 </template>
 
-<style scoped lang="scss"></style>
+<style lang="scss" scoped></style>

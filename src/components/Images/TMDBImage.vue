@@ -5,7 +5,7 @@ import { computed, onMounted, ref, watch } from 'vue';
 import type { PaletteColors } from '@/types/api/shared';
 
 import { isDarkMode } from '@/config/global';
-import { getImageBrightness, hexLighter } from '@/lib/colorHelper';
+import { getImageBrightness } from '@/lib/colorHelper';
 import { currentServer } from '@/store/currentServer';
 import { useAutoThemeColors } from '@/store/preferences';
 import AppLogoSquare from '@/components/Images/icons/AppLogoSquare.vue';
@@ -59,7 +59,7 @@ const props = defineProps({
 	shadow: {
 		type: String,
 		required: false,
-		default: 'white',
+		default: 'var(--color-theme-8)',
 	},
 	onload: {
 		type: Function as PropType<
@@ -94,10 +94,10 @@ const luminosityValue = computed(() => {
 
 const style = computed(() => {
 	return {
-		'--c-1': 'rgb(var(--color-focus))',
-		'--c-2': 'rgb(var(--color-focus) / 3%)',
-		'--c-3': 'rgb(var(--color-focus) / 14%)',
-		'--c-4': 'rgb(var(--color-focus) / 1%)',
+		'--c-1': 'var(--color-theme-8)',
+		'--c-2': 'rgb(from var(--color-theme-8) r g b / 3%)',
+		'--c-3': 'rgb(from var(--color-theme-8) r g b / 14%)',
+		'--c-4': 'rgb(from var(--color-theme-8) r g b / 1%)',
 
 		'backgroundImage':
         props.type === 'logo' || !useAutoThemeColors
@@ -106,78 +106,49 @@ const style = computed(() => {
         		: `
                     radial-gradient(
                         farthest-corner at top left,
-                                rgb(var(--color-theme-9)),
+                                var(--color-theme-9),
                                 hsl(0 0% 100% / 4%) 300px
                             ),
                             radial-gradient(
                                 farthest-corner at top right,
-                                rgb(var(--color-theme-2)),
+                                var(--color-theme-2),
                                 hsl(0 0% 100% / 4%) 300px
                             ),
                             radial-gradient(
                                 farthest-corner at bottom left,
-                                rgb(var(--color-theme-6)),
+                                var(--color-theme-6),
                                 hsl(0 0% 100% / 4%)
                             ),
                             radial-gradient(
                                 farthest-corner at bottom right,
-                                rgb(var(--color-theme-12)),
+                                var(--color-theme-12),
                         hsl(0 0% 100% / 4%) 300px
                     )
                 `
         	: `
 				radial-gradient(
 					farthest-corner at top left,
-							${
-								hexLighter(
-									props.colorPalette?.lightVibrant,
-									luminosityValue.value,
-								) ?? 'var(--c-1)'
-							},
+							${props.colorPalette?.lightVibrant ?? 'var(--c-1)'},
 							hsl(0 0% 100% / 4%) 300px
 						),
 						radial-gradient(
 							farthest-corner at top right,
-							${
-								hexLighter(
-									props.colorPalette?.dominant,
-									luminosityValue.value,
-								) ?? 'var(--c-2)'
-							},
+							${props.colorPalette?.dominant ?? 'var(--c-2)'},
 							hsl(0 0% 100% / 4%) 300px
 						),
 						radial-gradient(
 							farthest-corner at bottom left,
-							${
-								hexLighter(
-									props.colorPalette?.darkVibrant,
-									luminosityValue.value,
-								) ?? 'var(--c-3)'
-							},
+							${props.colorPalette?.darkVibrant ?? 'var(--c-3)'},
 							hsl(0 0% 100% / 4%)
 						),
 						radial-gradient(
 							farthest-corner at bottom right,
-							${
-								hexLighter(
-									props.colorPalette?.dominant,
-									luminosityValue.value,
-								) ?? 'var(--c-4)'
-							},
+							${props.colorPalette?.dominant ?? 'var(--c-4)'},
 					hsl(0 0% 100% / 4%) 300px
 				)
 			`,
 	};
 });
-
-function remove(e: ErrorEvent) {
-	if ((e.target as HTMLImageElement)?.parentNode?.children?.length ?? 0 > 1) {
-		(e.target as HTMLImageElement)?.parentNode?.children[0].remove();
-	}
-	(
-		e.target as HTMLImageElement
-	).src = `https://image.tmdb.org/t/p/original${props.path}`;
-}
 
 const aspectRatio = computed(() => {
 	return props.aspect === 'poster'
@@ -189,7 +160,7 @@ const aspectRatio = computed(() => {
 
 const widthClass = computed(() => {
 	return props.aspect === 'poster' || props.aspect === 'backdrop'
-		? 'w-full'
+		? 'w-available'
 		: 'w-auto';
 });
 
@@ -238,7 +209,6 @@ function onLoadStart() {
 	opacity.value = 0;
 }
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 function onError(e: Event) {
 	(e.target as HTMLImageElement).onerror = null;
 	error.value = true;
@@ -249,21 +219,20 @@ function onError(e: Event) {
 <template>
 	<div
 		:class="{
-			'aspect-poster  w-available h-auto': aspect === 'poster',
-			'aspect-backdrop  w-available h-auto': aspect === 'backdrop',
-			'w-auto h-available': aspect === null,
+			'aspect-poster': aspect === 'poster',
+			'aspect-backdrop': aspect === 'backdrop',
 		}"
 		:style="style"
-		class="pointer-events-none bottom-0 mx-auto flex w-full select-none place-self-start h-available overflow-clip"
+		class="transform-gpu pointer-events-none bottom-0 mx-auto flex select-none place-self-start max-w-available max-h-available w-available h-available"
 	>
 		<div
 			v-if="opacity === 0 && type === 'image'"
-			class="absolute inset-0 h-full w-full bg-black/30 dark:bg-black/50 shadow"
+			class="absolute inset-0 h-available w-available bg-black/30 dark:bg-black/50 shadow"
 		/>
 		<picture
 			v-if="!error && path && !path?.includes?.('undefined')"
 			:style="`opacity: ${opacity}; float: ${type === 'logo' ? 'right' : ''}`"
-			class="pointer-events-none absolute inset-0 h-inherit flex select-none flex-col items-end justify-end tv:justify-start self-end transition-all duration-500 max-h-inherit overflow-hidden"
+			class="pointer-events-none absolute inset-0 h-inherit flex select-none flex-col items-end justify-end tv:justify-start self-end transition-all duration-500 max-w-available max-h-available"
 		>
 			<source :srcset="`${serverImageUrl} 1x`">
 			<!--      <source -->
@@ -273,12 +242,13 @@ function onError(e: Event) {
 			<!--      <source :srcset="`${serverImageUrl}?width=${size ? (size * 2) : null}&type=png&aspect_ratio=${aspectRatio} 1x`" -->
 			<!--              type="image/png"/> -->
 			<img
+				v-once
 				:alt="`tmdb image for ${title ?? 'image'}`"
 				:class="{
-					'aspect-poster w-available h-auto': aspect === 'poster',
-					'aspect-backdrop w-available h-auto': aspect === 'backdrop',
-					'w-available h-available': aspect === null,
-					'object-contain w-auto h-inherit': type === 'logo',
+					'aspect-poster w-available h-available': aspect === 'poster',
+					'aspect-backdrop w-available h-available': aspect === 'backdrop',
+					'w-auto !h-inherit': aspect === null,
+					'object-fit w-auto h-available': type === 'logo',
 					'object-cover object-top': type === 'image',
 					'[filter:drop-shadow(0px_0px_6px_black)_drop-shadow(0px_0px_6px_black)_drop-shadow(0px_0px_6px_black)]':
 						shouldDarken,
@@ -296,21 +266,21 @@ function onError(e: Event) {
               float: ${type === 'logo' ? 'right' : ''};
               filter: ${
 					shouldLighten || shouldDarken
-						? `drop-shadow(0px 0px 6px rgb(${shadow})) drop-shadow(0px 0px 6px rgb(${shadow}))`
+						? `drop-shadow(0px 0px 6px rgb(from ${shadow} r g b)) drop-shadow(0px 0px 6px rgb(from ${shadow} r g b))`
 						: ''
 				}`"
 				:width="size"
-				class="pointer-events-auto inset-0 bg-top transition-all duration-500 max-h-inherit"
+				class="pointer-events-auto bg-bottom transition-all duration-500 max-h-available max-w-available"
 				crossorigin="anonymous"
 			>
 		</picture>
 		<div
 			v-else-if="type === 'image'"
-			:class="type === 'image' ? 'bg-auto-1' : ''"
-			class="inset-0 grid aspect-video h-full w-full place-items-center place-center"
+			:class="type === 'image' ? 'bg-surface-1' : ''"
+			class="inset-0 grid aspect-video h-available w-available place-items-center place-center"
 		>
 			<div
-				class="w-full h-full inset-0 grid place-items-center place-center bg-[rgb(var(--color-logo-dark)/20%)]"
+				class="w-available h-available inset-0 grid place-items-center place-center bg-[rgb(from_var(--color-logo-dark)_r_g_b/20%)]"
 			>
 				<AppLogoSquare class="h-auto w-3/5 max-h-[60%] -translate-y-[5%]" />
 			</div>

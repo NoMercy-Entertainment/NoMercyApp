@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import { computed, ref, watch } from 'vue';
 import { useSwipe } from '@vueuse/core';
 
@@ -56,19 +56,19 @@ const { isSwiping, lengthY } = useSwipe(target, {
 
 <template>
 	<div
-		class="h-screen absolute w-available flex-shrink-0 flex-grow-0 transition-colors duration-200"
 		:class="{
 			'bg-black/25 dark:bg-black/50 ': menuOpen,
 			'pointer-events-none': !menuOpen,
 		}"
+		class="h-screen absolute w-available flex-shrink-0 flex-grow-0 transition-colors duration-200"
 	/>
 	<div
 		ref="target"
-		class="fixed flex w-full flex-shrink-0 flex-grow-0 select-none bg-slate-light-1 dark:bg-slate-dark-3 flex-col items-center justify-end gap-3 overflow-hidden rounded-t-3xl rounded-tl-lg rounded-tr-lg p-2 px-0 -bottom-[125%]"
-		:style="{ bottom }"
 		:class="{
 			'transition-bottom duration-200 ease-in-out ': !isSwiping,
 		}"
+		:style="{ bottom }"
+		class="fixed flex w-full flex-shrink-0 flex-grow-0 select-none bg-surface-1 flex-col items-center justify-end gap-3 overflow-hidden rounded-t-3xl rounded-tl-lg rounded-tr-lg p-2 px-0 -bottom-[125%]"
 	>
 		<div
 			v-if="allowSwipeToClose"
@@ -78,7 +78,7 @@ const { isSwiping, lengthY } = useSwipe(target, {
 
 		<div
 			ref="container"
-			class="flex flex-shrink-0 w-available flex-grow-0 flex-col items-start justify-start self-stretch overflow-hidden text-slate-dark-1 dark:text-slate-light-1"
+			class="flex flex-shrink-0 w-available flex-grow-0 flex-col items-start justify-start self-stretch overflow-hidden "
 		>
 			<slot />
 		</div>

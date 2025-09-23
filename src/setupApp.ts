@@ -49,7 +49,6 @@ import NMGenreCard from '@/components/NMGenreCard.vue';
 import NMGrid from '@/components/NMGrid.vue';
 import HomeCard from '@/components/NMHomeCard.vue';
 import NMList from '@/components/NMList.vue';
-import NMMusicCard from '@/components/NMMusicCard.vue';
 import NMSeasonCard from '@/components/NMSeasonCard.vue';
 import NMSeasonTitle from '@/components/NMSeasonTitle.vue';
 
@@ -63,7 +62,13 @@ import { queryClient } from '@/config/tanstack-query';
 import konamiEnabled from '@/store/konami';
 import { redirectUrl } from '@/store/routeState';
 import router from './router';
-import { isMobile } from '@/config/global.ts';
+import { isMobile } from '@/config/global.ts'; /* Theme variables */
+import './theme/variables.css';
+import './theme/app.scss';
+
+import 'swiper/css';
+import 'swiper/element/css/keyboard';
+import NMMusicCard from '@/components/NMMusicCard.vue';
 
 export async function setupApp(app: AppContext['app']) {
 	if ('serviceWorker' in navigator && !import.meta.env.DEV) {
@@ -127,7 +132,7 @@ export async function setupApp(app: AppContext['app']) {
 
 	app.use(MasonryWall);
 
-	const supportsCarousel = CSS.supports('scroll-marker-group', 'after') && isMobile.value;
+	const supportsCarousel = CSS.supports('scroll-marker-group', 'after') && isMobile.value && false;
 
 	app.component('Modal', Modal);
 	app.component('NMCard', NMCard);

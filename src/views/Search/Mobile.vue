@@ -1,11 +1,6 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import { onMounted, ref, watch } from 'vue';
-import {
-	IonContent,
-	IonPage,
-	onIonViewDidEnter,
-	onIonViewWillEnter,
-} from '@ionic/vue';
+import { IonContent, IonPage, onIonViewDidEnter, onIonViewWillEnter } from '@ionic/vue';
 import { useRoute } from 'vue-router';
 
 import { setBackground, setColorPalette } from '@/store/ui';
@@ -92,7 +87,7 @@ watch(searchType, () => {
 					class="relative z-10 mt-16 flex flex-shrink-0 flex-grow-0 flex-col items-center justify-end gap-3"
 				>
 					<p
-						class="flex-grow-0 flex-shrink-0 text-5xl font-black text-left text-slate-light-11 dark:text-slate-dark-11"
+						class="flex-grow-0 flex-shrink-0 text-5xl font-black text-left text-surface-12"
 					>
 						{{ $t(`Good ${greetingValue}`) }}
 					</p>
@@ -123,7 +118,7 @@ watch(searchType, () => {
 							class="z-50 mt-4 flex justify-center"
 						>
 							<button
-								class="h-12 rounded bg-blue-500 px-4 py-2 text-white"
+								class="h-12 rounded bg-blue-500 px-4 py-2"
 								@click="fetchNextPage()"
 							>
 								{{ $t("Load more") }}
@@ -156,34 +151,28 @@ watch(searchType, () => {
 							class="relative flex justify-center items-start flex-grow-0 flex-shrink-0 gap-2"
 						>
 							<div
-								class="absolute w-9 h-available inset-0 bg-focus z-0 rounded-lg transition-all duration-150"
 								:class="{
 									'translate-x-0': searchType === 'video',
 									'translate-x-[120%]': searchType === 'music',
 								}"
+								class="absolute w-9 h-available inset-0 bg-focus z-0 rounded-lg transition-all duration-150"
 							/>
 							<button
-								class="flex justify-center items-center flex-grow-0 flex-shrink-0 relative gap-2 p-1 rounded-lg w-9 h-9"
-								:class="{
-									'text-slate-dark-12': searchType === 'video',
-								}"
+								class="text-surface-1 dark:text-surface-12 flex justify-center items-center flex-grow-0 flex-shrink-0 relative gap-2 p-1 rounded-lg w-9 h-9"
 								@click="searchType = 'video'"
 							>
 								<OptimizedIcon
-									icon="film"
 									class="h-6 w-6 flex-grow-0 flex-shrink-0 transition-all duration-150"
+									icon="film"
 								/>
 							</button>
 							<button
-								class="flex justify-center items-center flex-grow-0 flex-shrink-0 relative gap-2 p-1 rounded-lg w-9 h-9"
-								:class="{
-									'text-slate-dark-12': searchType === 'music',
-								}"
+								class="text-surface-1 dark:text-surface-12 flex justify-center items-center flex-grow-0 flex-shrink-0 relative gap-2 p-1 rounded-lg w-9 h-9"
 								@click="searchType = 'music'"
 							>
 								<OptimizedIcon
-									icon="noteDouble"
 									class="h-6 w-6 flex-grow-0 flex-shrink-0 transition-all duration-150"
+									icon="noteDouble"
 								/>
 							</button>
 						</div>
@@ -194,8 +183,6 @@ watch(searchType, () => {
 							id="search"
 							ref="search"
 							v-model="searchValue"
-							enterkeyhint="search"
-							pattern="[A-Za-z0-9\s]{1,}"
 							:placeholder="
 								searchType === 'video'
 									? `${$t('Movie')}, ${$t('Show')} ${$t('or')} ${$t(
@@ -205,10 +192,12 @@ watch(searchType, () => {
 										'Track',
 									)}...`
 							"
-							class="w-available flex-shrink-0 border-transparent bg-transparent px-1 mr-1 text-lg shadow-transparent flex-grow-1 focus:outline-none"
-							name="search"
-							type="search"
 							autocomplete="off"
+							class="w-available flex-shrink-0 border-transparent bg-transparent px-1 mr-1 text-lg shadow-transparent flex-grow-1 focus:outline-none"
+							enterkeyhint="search"
+							name="search"
+							pattern="[A-Za-z0-9\s]{1,}"
+							type="search"
 						>
 					</div>
 				</div>
@@ -217,19 +206,25 @@ watch(searchType, () => {
 	</IonPage>
 </template>
 
-<style scoped lang="scss">
+<style lang="scss" scoped>
 #search-bar {
 	translate: 0 -50dvh;
 	bottom: var(--keyboard-height, 0px);
 	margin-left: 0.5rem;
 	margin-right: 0.5rem;
 }
+
 html.keyboard-open #search-bar {
 	translate: 0 0;
 	border-radius: 0;
 	margin: 0;
 	bottom: 0;
 }
+html.plt-mobileweb.keyboard-open #search-bar {
+	top: 0;
+	bottom: unset;
+}
+
 ion-content:has(input:not(:placeholder-shown)) #search-bar {
 	translate: 0 0;
 	bottom: 0;

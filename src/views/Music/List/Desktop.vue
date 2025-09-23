@@ -1,12 +1,7 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import { ref, watch } from 'vue';
 import { useRoute } from 'vue-router';
-import {
-	IonContent,
-	IonPage,
-	onIonViewWillEnter,
-	onIonViewWillLeave,
-} from '@ionic/vue';
+import { IonContent, IonPage, onIonViewWillEnter, onIonViewWillLeave } from '@ionic/vue';
 
 import type { DisplayList } from '@/types/api/music/musicPlayer';
 import type { PlaylistItem, SortOrder, SortType } from '@/types/musicPlayer';
@@ -14,13 +9,7 @@ import type { PlaylistItem, SortOrder, SortType } from '@/types/musicPlayer';
 import { isNative } from '@/config/global';
 import useServerClient from '@/lib/clients/useServerClient';
 import { setTitle, sortByType } from '@/lib/stringArray';
-import {
-	setBackground,
-	setColorPalette,
-	setSortOrder,
-	sortOrder,
-	sortType,
-} from '@/store/ui';
+import { setBackground, setColorPalette, setSortOrder, sortOrder, sortType } from '@/store/ui';
 import { currentSong } from '@/store/audioPlayer';
 
 import ControlHeader from '@/views/Music/List/components/ControlHeader.vue';
@@ -150,14 +139,14 @@ function onScroll() {
 						!route.params.id || (route.params.id && data?.id === route.params.id)
 					"
 					ref="main"
-					class="flex flex-col overflow-x-clip w-available h-available sm:rounded-2xl"
+					class="flex flex-col w-available h-available sm:rounded-2xl"
 				>
 					<ArtistHeader :data="data" />
 					<div
 						class="relative z-0 flex h-auto flex-shrink-0 flex-grow flex-col items-start justify-start self-stretch"
 					>
 						<div
-							class="pointer-events-none absolute z-0 h-96 w-full bg-spotifyBottom bg-focus"
+							class="pointer-events-none absolute z-0 h-96 w-full bg-spotifyBottom"
 						/>
 
 						<ControlHeader
@@ -168,14 +157,14 @@ function onScroll() {
 						/>
 
 						<div
-							class="flex flex-1 flex-shrink-0 flex-col items-start justify-start self-stretch bg-slate-light-1 dark:bg-slate-dark-2 flex-grow-1 gap-0.5 sm:p-4"
 							:class="{
 								'pb-24': isNative && !currentSong,
 								'pb-40': isNative && currentSong,
 								'pb-4 sm:pb-4': !isNative && currentSong,
 							}"
+							class="flex flex-1 flex-shrink-0 flex-col items-start justify-start self-stretch bg-surface-3 flex-grow-1 gap-0.5 sm:p-4"
 						>
-							<SortHeader ref="sortHeader" :key="data?.id" />
+							<SortHeader :key="data?.id" ref="sortHeader" />
 							<template
 								v-for="(item, index) in displayList"
 								:key="item.id + item?.favorite"

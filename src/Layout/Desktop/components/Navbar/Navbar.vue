@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import { computed } from 'vue';
 import { RouterLink } from 'vue-router';
 import { isPlatform } from '@ionic/vue';
@@ -11,13 +11,7 @@ import ProfileMenu from '@/Layout/Desktop/components/Menus/ProfileMenu.vue';
 import OptimizedIcon from '@/components/OptimizedIcon.vue';
 import AppLogo from '@/components/Images/icons/AppLogo.vue';
 import NavbarButton from './NavbarButton.vue';
-import {
-	hasMusicLibrary,
-	isHomeRoute,
-	isLibraryRoute,
-	isMusicRoute,
-	searchUrl,
-} from '@/store/routeState';
+import { hasMusicLibrary, isHomeRoute, isLibraryRoute, isMusicRoute, searchUrl } from '@/store/routeState';
 import { currentServer } from '@/store/currentServer';
 import libraries from '@/store/Libraries.ts';
 
@@ -33,15 +27,15 @@ const shouldShowLibraryLinks = computed(() => !!currentServer.value && (librarie
 			isPlatform('android') ? 'block' : 'hidden'
 		}`"
 		style="
-             --tw-gradient-from: rgb(var(--color-focus)) var(--tw-gradient-from-position);
+             --tw-gradient-from: var(--color-theme-8) var(--tw-gradient-from-position);
              --tw-gradient-stops: var(--tw-gradient-from), white var(--tw-gradient-via-position), var(--tw-gradient-to);
-             --tw-gradient-to: rgb(var(--color-focus)) var(--tw-gradient-to-position);
+             --tw-gradient-to: var(--color-theme-8) var(--tw-gradient-to-position);
             background-image: linear-gradient(var(--angle), var(--tw-gradient-stops));
         "
 	/>
 	<nav
 		id="navbar"
-		:class="`relative flex w-available h-16 justify-start items-center bg-slate-light-2 dark:bg-slate-dark-1 self-stretch z-10 sm:z-10 sm:!h-16 ${
+		:class="`relative flex w-available h-16 justify-start items-center self-stretch z-10 sm:z-10 sm:!h-16 ${
 			isPlatform('android') ? 'mt-0' : ''
 		}`"
 	>
@@ -49,7 +43,7 @@ const shouldShowLibraryLinks = computed(() => !!currentServer.value && (librarie
 		<!--        id="toggleSidebar" -->
 		<!--        v-if="sidebar !== 'hidden'" -->
 		<!--        @click="toggleSidebar" -->
-		<!--        class="ml-2 flex h-12 w-12 items-center justify-center rounded-md transition-transform duration-200 border-1 border-auto-alpha-5 text-auto-alpha-11 sm:hidden"> -->
+		<!--        class="ml-2 flex h-12 w-12 items-center justify-center rounded-md transition-transform duration-200 border-1 border-surface-5 text-surface-11 sm:hidden"> -->
 		<!--      <MoooomIcon v-if="sidebar === 'open'" icon="cross" class="w-6"/> -->
 		<!--      <MoooomIcon v-else-if="sidebar === 'closed'" icon="menuBurger" class="w-6"/> -->
 		<!--    </button> -->
@@ -64,8 +58,8 @@ const shouldShowLibraryLinks = computed(() => !!currentServer.value && (librarie
 					class="relative flex flex-shrink-0 flex-grow-0 items-center justify-center gap-2 self-stretch px-1"
 				>
 					<RouterLink
-						aria-label="Home"
 						:to="`${currentServer ? '/home' : ''}`"
+						aria-label="Home"
 						class="relative -mr-6 my-1 flex w-48 flex-shrink-0 flex-grow-0 items-center justify-center gap-2 self-stretch px-1 pl-4 md:w-56"
 					>
 						<AppLogo class="h-10 w-auto" />
@@ -76,24 +70,24 @@ const shouldShowLibraryLinks = computed(() => !!currentServer.value && (librarie
 				>
 					<NavbarButton
 						v-if="shouldShowLibraryLinks"
-						:href="`${currentServer ? '/home' : ''}`"
 						:active="isHomeRoute"
+						:href="`${currentServer ? '/home' : ''}`"
 						icon="home1"
 						name="Home"
 					/>
 
 					<NavbarButton
 						v-if="shouldShowLibraryLinks"
-						href="/libraries"
 						:active="isLibraryRoute"
+						href="/libraries"
 						icon="folder"
 						name="Libraries"
 					/>
 
 					<NavbarButton
 						v-if="shouldShowLibraryLinks && hasMusicLibrary"
-						href="/music/start"
 						:active="isMusicRoute"
+						href="/music/start"
 						icon="noteDouble"
 						name="Music"
 					/>
@@ -110,9 +104,9 @@ const shouldShowLibraryLinks = computed(() => !!currentServer.value && (librarie
 					<RouterLink
 						:to="searchUrl"
 						aria-label="Search"
-						class="relative my-1 flex flex-shrink-0 flex-grow-0 items-start justify-start gap-2 overflow-hidden rounded-md text-auto-12 p-2.5 hover:bg-focus/10 focus:bg-auto-12/2"
+						class="relative my-1 flex flex-shrink-0 flex-grow-0 items-start justify-start gap-2 overflow-hidden rounded-md p-2.5 hover:bg-focus/10 focus:bg-surface-1/2"
 					>
-						<OptimizedIcon icon="searchMagnifyingGlass" class="w-6" />
+						<OptimizedIcon class="w-6" icon="searchMagnifyingGlass" />
 					</RouterLink>
 				</div>
 

@@ -4,10 +4,7 @@ import { ref, watch } from 'vue';
 
 import type { InfoResponse } from '@/types/api/base/info';
 import type { PlaylistItem } from '@/types/musicPlayer';
-import type {
-	Collection,
-	CollectionResponse,
-} from '@/types/api/base/collection';
+import type { Collection, CollectionResponse } from '@/types/api/base/collection';
 import type { ContinueWatching, HomeItem } from '@/types/api/base/home';
 import type { LibraryResponse, StatusResponse } from '@/types/api/base/library';
 import type { ArtistResponse } from '@/types/api/music/artist';
@@ -43,13 +40,18 @@ const props = defineProps({
 		type: String,
 		required: false,
 	},
+	noBackground: {
+		type: Boolean,
+		required: false,
+		default: false,
+	},
 });
+
+const liked = ref(props.data?.favorite);
 
 watch(props, (prop) => {
 	liked.value = prop.data?.favorite;
 });
-
-const liked = ref(props.data?.favorite);
 
 function handleLike(e?: MouseEvent) {
 	e?.stopPropagation();
@@ -64,30 +66,30 @@ function handleLike(e?: MouseEvent) {
 </script>
 
 <template>
-	<MusicButton :onclick="handleLike" label="Favorite">
+	<MusicButton :no-background="noBackground" :onclick="handleLike" label="Favorite">
 		<OptimizedIcon
-			icon="heart"
 			:class="{
 				'heart': liked,
 				'opacity-0 ': !liked,
 				className,
 			}"
 			class="ease-in-out transition-all duration-150"
+			icon="heart"
 			style="
-        --fill-color: rgb(var(--color-focus, var(--color-red-8)));
-        color: rgb(var(--color-focus, var(--color-red-8)));
+        --fill-color: rgb(from var(--color-theme-8, var(--color-red-8)) r g b);
+        color: rgb(from var(--color-theme-8, var(--color-red-8)) r g b);
 			"
 		/>
 		<OptimizedIcon
 			v-if="!liked"
-			icon="heart"
-			class="absolute inset-2 transition-all duration-150"
 			:class="{ className }"
+			class="absolute inset-2 transition-all duration-150"
+			icon="heart"
 		/>
 	</MusicButton>
 </template>
 
-<style scoped lang="scss">
+<style lang="scss" scoped>
 .heart {
 	font-size: 150px;
 	color: #e00;

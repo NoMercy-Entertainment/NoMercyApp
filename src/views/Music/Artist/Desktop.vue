@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import { computed, onMounted, onUnmounted, ref, watch } from 'vue';
 import { useRoute } from 'vue-router';
 import { IonContent, IonPage } from '@ionic/vue';
@@ -8,13 +8,7 @@ import type { PlaylistItem, SortOrder, SortType } from '@/types/musicPlayer';
 
 import useServerClient from '@/lib/clients/useServerClient';
 import { setTitle, sortByType } from '@/lib/stringArray';
-import {
-	setBackground,
-	setColorPalette,
-	setSortOrder,
-	sortOrder,
-	sortType,
-} from '@/store/ui';
+import { setBackground, setColorPalette, setSortOrder, sortOrder, sortType } from '@/store/ui';
 
 import ScrollContainer from '@/Layout/Desktop/components/ScrollContainer.vue';
 
@@ -132,34 +126,34 @@ function setDisplayType(type: 'list' | 'card') {
 			<ScrollContainer v-else :auto-hide="true" :static="true">
 				<div
 					v-if="data?.id === route.params.id"
-					class="inline-flex w-full flex-1 flex-col items-start justify-start overflow-clip rounded-2xl bg-auto-2/1"
+					class="inline-flex w-full flex-1 flex-col items-start justify-start overflow-clip rounded-2xl bg-surface-2/1"
 				>
 					<Header v-if="data" :data="data" />
 
-					<Tabs :tabs="tabs">
+					<Tabs :tabs="tabs" class="min-h-[calc(100vh-175px)] !flex-1">
 						<template #extra="{ activeTab }">
 							<div
 								v-if="activeTab === tabs[0].name"
 								class="absolute right-4 inline-flex items-center justify-start top-[9.65px] gap-2.5"
 							>
 								<BannerButton
-									title="List"
 									:is-active="displayType === 'list'"
+									title="List"
 									@click="setDisplayType('list')"
 								>
 									<OptimizedIcon
-										icon="bulletList"
 										class-name="relative h-5 w-5"
+										icon="bulletList"
 									/>
 								</BannerButton>
 								<BannerButton
-									title="Grid"
 									:is-active="displayType === 'card'"
+									title="Grid"
 									@click="setDisplayType('card')"
 								>
 									<OptimizedIcon
-										icon="collection"
 										class-name="relative h-5 w-5"
+										icon="collection"
 									/>
 								</BannerButton>
 							</div>

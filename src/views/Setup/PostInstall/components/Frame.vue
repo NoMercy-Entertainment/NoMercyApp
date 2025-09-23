@@ -50,18 +50,18 @@ function previousStep() {
 </script>
 
 <template>
-	<div class="mx-auto grid h-available place-content-center px-4 sm:px-6 lg:px-8">
+	<div class="mx-auto grid h-available place-content-center px-4 sm:px-6 lg:px-8 text-surface-12">
 		<div class="mx-auto w-screen max-w-6xl">
 			<div
 				:class="true ? 'animate-loading' : ''"
-				class="w-full h-full gap-2.5 flex flex-col ml-auto overflow-hidden rounded-xl bg-slate-light-1 dark:bg-slate-dark-1 bg-cover border-2 border-transparent text-start transition-all duration-300"
+				class="w-full h-full gap-2.5 flex flex-col ml-auto overflow-hidden rounded-xl bg-surface-1 dark:bg-surface-2 bg-cover border-2 border-transparent text-start transition-all duration-300"
 				style="
-					--bg-color: linear-gradient(rgb(var(--background-auto-3)), rgb(var(--background-auto-3)));
+					--bg-color: linear-gradient(rgb(var(--surface-2)), rgb(var(--surface-2)));
 					--border-color: linear-gradient(var(--angle, 45deg),
-						rgb(var(--color-focus) / 0.7) 0%,
-						rgb(var(--color-focus) / 0.3) 33.33%,
-						rgb(var(--color-focus) / 0.14) 66.67%,
-						rgb(var(--color-focus) / 0.1) 100%
+						rgb(var(--color-theme-8) / 0.7) 0%,
+						rgb(var(--color-theme-8) / 0.3) 33.33%,
+						rgb(var(--color-theme-8) / 0.14) 66.67%,
+						rgb(var(--color-theme-8) / 0.1) 100%
 					);
 				"
 			>
@@ -80,12 +80,12 @@ function previousStep() {
 				</div>
 
 				<div
-					class="mt-auto flex h-16 w-full justify-end gap-4 rounded-b-lg p-4 bg-slate-light-1/70 dark:bg-slate-dark-1/70"
+					class="mt-auto flex h-16 w-full justify-end gap-4 rounded-b-lg p-4"
 				>
 					<Button v-if="!isFirstStep"
 						id="yes"
 						class="ml-auto !w-28"
-						color="slate"
+						color="contrast"
 						type="button"
 						variant="text"
 						@click="previousStep"

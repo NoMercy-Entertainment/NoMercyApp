@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import { computed } from 'vue';
 
 import { getColorFromPercent, greenToRed } from '@/lib/colorHelper';
@@ -21,13 +21,13 @@ const color = computed(() => {
 	if (usePercentageColors.value)
 		return getColorFromPercent(props.value, greenToRed);
 
-	return 'rgb(var(--color-focus))';
+	return 'var(--color-theme-8)';
 });
 </script>
 
 <template>
 	<div
-		class="flex flex-shrink-0 flex-grow-0 items-start justify-start gap-4 self-stretch text-slate-light-11/80 dark:text-slate-dark-11/80"
+		class="flex flex-shrink-0 flex-grow-0 items-start justify-start gap-4 self-stretch text-slate-11/80 dark:text-slate-11/80"
 	>
 		<div
 			class="flex flex-grow flex-col items-start justify-start gap-1 text-left"
@@ -40,14 +40,14 @@ const color = computed(() => {
 				</p>
 				<div class="relative h-2 flex-grow rounded-lg">
 					<div
-						class="absolute h-2 w-full rounded left-[-1px] top-[-1px] bg-auto-2 dark:bg-auto-1"
+						class="absolute h-2 w-full rounded left-[-1px] top-[-1px] bg-surface-2 dark:bg-surface-1"
 					/>
 					<div
-						class="absolute h-2 rounded transition-all duration-500 left-[-1px] top-[-1px]"
 						:style="{
 							width: `${value}%`,
 							backgroundImage: `linear-gradient(90deg, ${color} 0%, ${color} 100%)`,
 						}"
+						class="absolute h-2 rounded transition-all duration-500 left-[-1px] top-[-1px]"
 					/>
 				</div>
 				<p class="w-10 flex-shrink-0 flex-grow-0 text-right text-sm">

@@ -1,10 +1,11 @@
-<script setup lang="ts">
-import { ref, watch } from 'vue';
+<script lang="ts" setup>
 import type { PropType } from 'vue';
+import { ref, watch } from 'vue';
 
 import type { QueueResponse } from '@/types/api/dashboard/server';
 import OptimizedIcon from '@/components/OptimizedIcon.vue';
 import serverClient from '@/lib/clients/serverClient';
+import { Card } from 'primevue';
 
 const props = defineProps({
 	data: {
@@ -41,71 +42,61 @@ watch(priority, (value) => {
 </script>
 
 <template>
-	<div
-		class="flex flex-shrink-0 flex-grow-0 items-start gap-4 self-stretch overflow-hidden rounded-lg py-4 px-4 bg-slate-lightA-3 dark:bg-slate-darkA-3 text-slate-light-12/80 dark:text-slate-dark-12/80"
-	>
-		<div
-			class="relative flex flex-1 flex-grow flex-col items-start space-y-[-2px] w-full"
-		>
+	<Card>
+		<template #title>
 			<span class="flex flex-nowrap w-full justify-between">
-				<p
-					class="text-sm font-semibold text-auto-12 line-clamp-1 h-6"
-					:title="data.title.replace(/NoMercy/giu, '')"
-				>
+				<span class="text-surface-12">
 					{{ data.title.replace(/NoMercy/giu, "") }}
-				</p>
+				</span>
 				<button
 					class="float-right flex items-center justify-center gap-2 overflow-hidden rounded-lg bg-transparent w-10 -mt-1.5 -mr-1.5 aspect-square"
 					@click="deleteItem"
 				>
 					<OptimizedIcon
+						class="relative h-5 w-5 flex-shrink-0 flex-grow-1"
 						icon="cross"
-						class="relative h-5 w-5 flex-shrink-0 flex-grow-0"
 					/>
 				</button>
 			</span>
-
-			<p
-				class="flex-shrink-0 flex-grow-0 self-stretch text-xs w-available !mt-1 text-slate-light-12/80 dark:text-slate-dark-12/80"
-			>
-				{{ $t("Id") }}:
-				<span class="text-slate-light-11 dark:text-slate-dark-11">
-					{{ data.id }}
+		</template>
+		<template #content>
+			<div class="flex flex-col text-surface-12">
+				<p class="flex-shrink-0 flex-grow-1 self-stretch text-sm">
+					{{ $t("Id") }}:
+					<span class="text-surface-12/11">
+						{{ data.id }}
+					</span>
+				</p>
+				<span class="flex-shrink-0 flex-grow-1 self-stretch text-sm flex justify-between">
+					<span class="mr-auto">
+						{{ $t("Priority") }}:
+					</span>
+					<InputNumber
+						v-model="priority"
+						:max="100"
+						:min="0"
+						:step="1"
+						class="ml-auto h-8 first:children:!w-12 last:children:!w-4 children:last:children:!w-4 overflow-clip -mb-2"
+						show-buttons
+						size="small"
+						variant="filled"
+					/>
 				</span>
-			</p>
-			<p
-				class="flex-shrink-0 flex-grow-0 self-stretch text-xs w-available text-slate-light-12/80 dark:text-slate-dark-12/80 w-full flex justify-between"
-			>
-				<span>{{ $t("Priority") }}:</span>
-				<InputNumber
-					v-model="priority"
-					size="small"
-					variant="filled"
-					show-buttons
-					class="ml-auto h-8 first:children:!w-12 last:children:!w-4 children:last:children:!w-4 overflow-clip -mb-2"
-					:min="0"
-					:max="100"
-					:step="1"
-				/>
-			</p>
-			<p
-				class="flex-shrink-0 flex-grow-0 self-stretch text-xs w-available text-slate-light-12/80 dark:text-slate-dark-12/80"
-			>
-				{{ $t("Profile") }}:
-				<span class="text-slate-light-11 dark:text-slate-dark-11">
-					{{ data.profile }}
+				<span class="flex-shrink-0 flex-grow-1 self-stretch text-sm">
+					{{ $t("Profile") }}:
+					<span class="text-surface-12/11">
+						{{ data.profile }}
+					</span>
 				</span>
-			</p>
-			<p
-				class="flex-shrink-0 flex-grow-0 self-stretch break-all text-xs w-available text-slate-light-12/80 dark:text-slate-dark-12/80"
-			>
-				{{ $t("File") }}:
-				<span class="text-slate-light-11 dark:text-slate-dark-11">
-					{{ data.input_file }}
+				<span class="flex-shrink-0 flex-grow-1 self-stretch text-sm">
+					{{ $t("File") }}:
+					<span class="text-surface-12/11">
+						{{ data.input_file }}
+					</span>
 				</span>
-			</p>
-		</div>
-	</div>
+			</div>
+		</template>
+	</Card>
 </template>
 
 <style scoped>

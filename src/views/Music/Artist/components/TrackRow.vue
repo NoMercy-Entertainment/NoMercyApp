@@ -1,15 +1,9 @@
 <script lang="ts" setup>
 import type { PropType } from 'vue';
 // import { useRoute } from 'vue-router';
-
 import type { PlaylistItem } from '@/types/musicPlayer';
 
-import {
-	audioPlayer,
-	currentSong,
-	isPlaying,
-	musicSize,
-} from '@/store/audioPlayer';
+import { audioPlayer, currentSong, isPlaying, musicSize } from '@/store/audioPlayer';
 
 import DropdownMenu from '@/Layout/Desktop/components/Menus/DropdownMenu.vue';
 
@@ -59,10 +53,10 @@ function handleClick() {
 
 <template>
 	<button
-		tabindex="0"
 		:data-track-id="data?.id"
+		class="grid justify-start items-center self-stretch pr-3 sm:px-3 rounded-lg hover:bg-surface-6/8 group/track text-sm font-medium py-2 z-0 group/track home-grid gap-2"
 		data-target="track"
-		class="grid justify-start items-center self-stretch pr-3 sm:px-3 rounded-lg hover:bg-slate-lightA-6 dark:hover:bg-slate-darkA-6 text-auto-12 group/track text-sm font-medium py-2 z-0 group/track home-grid gap-2"
+		tabindex="0"
 		@click="handleClick()"
 		@contextmenu="onTrackRowRightClick($event, data)"
 	>
@@ -77,7 +71,7 @@ function handleClick() {
 				v-if="currentSong?.id === data.id"
 				:playing="isPlaying"
 				class="hidden group-focus-visible/track:sm:!hidden group-hover/track:sm:!hidden"
-				color="rgb(var(--color-focus))"
+				color="var(--color-theme-8)"
 			/>
 
 			<PlayerIcon
@@ -110,7 +104,7 @@ function handleClick() {
 				</span>
 				<span
 					:data-size="musicSize"
-					class="inline-flex h-5 w-fit gap-1 overflow-hidden whitespace-nowrap text-auto-9 line-clamp-1 text-2xs hover:animate-pause"
+					class="inline-flex h-5 w-fit gap-1 overflow-hidden whitespace-nowrap text-surface-9 line-clamp-1 text-2xs hover:animate-pause"
 				>
 					<TrackLinks
 						v-if="data"
@@ -131,11 +125,11 @@ function handleClick() {
 				class="max-w-sm items-center overflow-clip pr-2 line-clamp-2 h-inherit w-inherit"
 			>
 				<RouterLink
+					:onclick="(e: MouseEvent) => e.stopPropagation()"
 					:to="item?.link"
 					class="flex items-center gap-1 whitespace-nowrap text-xs font-semibold line-clamp-1 hover:underline focus:underline dark:font-medium"
 					data-target="album"
 					tabindex="0"
-					:onclick="(e: MouseEvent) => e.stopPropagation()"
 				>
 					<span class="flex whitespace-nowrap">
 						{{ item.name }}
@@ -149,9 +143,9 @@ function handleClick() {
 			<MediaLikeButton
 				:key="data.id"
 				:data="data"
-				class="hidden sm:flex"
-				color="var(--color-focus)"
 				:onclick="(e: MouseEvent) => e.stopPropagation()"
+				class="hidden sm:flex"
+				color="var(--color-theme-8)"
 			/>
 			<span class="mr-4 monospace sm:mr-0">
 				{{ data.duration }}

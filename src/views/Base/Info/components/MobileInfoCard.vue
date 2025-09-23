@@ -1,16 +1,13 @@
-<script setup lang="ts">
-import { computed } from 'vue';
+<script lang="ts" setup>
 import type { PropType } from 'vue';
+import { computed } from 'vue';
 import { useRoute } from 'vue-router';
 import type { ShareOptions } from '@capacitor/share';
 
 import type { LibraryResponse } from '@/types/api/base/library';
 import type { InfoResponse } from '@/types/api/base/info';
 import type { ContinueWatching, HomeItem } from '@/types/api/base/home';
-import type {
-	Collection,
-	CollectionResponse,
-} from '@/types/api/base/collection';
+import type { Collection, CollectionResponse } from '@/types/api/base/collection';
 import type { PlaylistItem } from '@/types/musicPlayer';
 
 import { isNative } from '@/config/global';
@@ -38,7 +35,7 @@ const props = defineProps({
 		required: false,
 	},
 	trailerState: {
-		required: true,
+		required: false,
 	},
 	toggleTrailer: {
 		type: Function as PropType<() => void>,
@@ -80,11 +77,11 @@ const shareData = computed<ShareOptions>(() => ({
 <template>
 	<div
 		v-if="data?.poster || poster"
-		class="frosting flex-grow-0 flex-shrink-0 w-[280px] h-[420px] z-10 absolute left-1/2 -translate-x-1/2 overflow-clip rounded-2xl"
 		:class="{
 			'top-safe-offset-8': isNative,
 			'top-12': !isNative,
 		}"
+		class="frosting flex-grow-0 flex-shrink-0 w-[280px] h-[420px] z-10 absolute left-1/2 -translate-x-1/2 overflow-clip rounded-2xl"
 	>
 		<div
 			class="flex flex-col justify-start items-start w-[280px] absolute left-0 top-0 bg-cover bg-no-repeat bg-center"
@@ -92,15 +89,15 @@ const shareData = computed<ShareOptions>(() => ({
 			<TMDBImage
 				:key="poster ?? 'poster'"
 				:auto-shadow="true"
-				:path="data?.poster ?? poster"
 				:color-palette="data?.color_palette?.poster"
+				:path="data?.poster ?? poster"
 				:size="760"
-				priority="high"
 				:title="title"
 				aspect="poster"
-				loading="eager"
-				class-name="pointer-events-none absolute -inset-1 z-20 flex h-auto scale-100 select-none items-center place-self-start overflow-hidden w-available h-available max-h-available"
 				class="m-auto children:w-full scale-100 max-h-available 5xl:w-inherit"
+				class-name="pointer-events-none absolute -inset-1 z-20 flex h-auto scale-100 select-none items-center place-self-start overflow-hidden w-available h-available max-h-available"
+				loading="eager"
+				priority="high"
 				type="image"
 			/>
 		</div>
@@ -111,10 +108,10 @@ const shareData = computed<ShareOptions>(() => ({
 			class="flex justify-start items-start w-[280px] absolute left-0 top-[348px] gap-4 p-4 z-40"
 		>
 			<RouterLink
+				:class="{ 'opacity-70': !hasItem?.available }"
+				:disabled="!hasItem?.available"
 				:to="`${data?.link}/watch`"
 				class="frosting flex justify-start items-center flex-grow h-10 relative overflow-hidden gap-2 px-2 py-4 rounded-3xl bg-white/80"
-				:disabled="!hasItem?.available"
-				:class="{ 'opacity-70': !hasItem?.available }"
 			>
 				<p
 					class="flex-grow w-[100px] text-[15px] font-semibold text-center text-[#151718]"
@@ -123,36 +120,22 @@ const shareData = computed<ShareOptions>(() => ({
 				</p>
 			</RouterLink>
 
-			<!--			<button -->
-			<!--          v-if="trailerState === true" -->
-			<!--				class="frosting flex justify-start items-center flex-grow h-10 relative overflow-hidden gap-2 px-2 py-4 rounded-3xl text-slate-light-1 bg-slate-light-12" -->
-			<!--				@click="toggleTrailer($event)" -->
-			<!--			> -->
-			<!--        <OptimizedIcon -->
-			<!--            icon="film" -->
-			<!--            class-name="w-6 text-green-8" -->
-			<!--        /> -->
-			<!--				<p class="flex-grow w-[100px] text-[15px] font-semibold text-center"> -->
-			<!--					{{ $t("Watch trailer") }} -->
-			<!--				</p> -->
-			<!--			</button> -->
-
 			<button
 				v-if="trailerState === true"
+				class="frosting flex justify-start items-center flex-grow h-10 relative overflow-hidden gap-2 px-2 py-4 rounded-3xl text-surface-12 bg-black/80"
 				title="Watch trailer"
-				class="frosting flex justify-start items-center flex-grow h-10 relative overflow-hidden gap-2 px-2 py-4 rounded-3xl text-slate-light-1 bg-slate-light-12"
 				@click="toggleTrailer"
 			>
-				<p class="flex-grow w-[100px] text-[15px] font-semibold text-center text-green-8">
+				<p class="flex-grow w-[100px] text-[15px] font-semibold text-center">
 					{{ $t("Watch trailer") }}
 				</p>
 			</button>
 
 			<button
 				v-else-if="trailerState === false"
-				title="Trailer unavailable"
-				class="frosting flex justify-start items-center flex-grow h-10 relative overflow-hidden gap-2 px-2 py-4 rounded-3xl text-slate-light-1 bg-slate-light-12"
+				class="frosting flex justify-start items-center flex-grow h-10 relative overflow-hidden gap-2 px-2 py-4 rounded-3xl text-surface-12 bg-black/80"
 				disabled
+				title="Trailer unavailable"
 			>
 				<p class="flex-grow w-[100px] text-[15px] font-semibold text-center text-red-8">
 					{{ $t("Watch trailer") }}
@@ -161,9 +144,9 @@ const shareData = computed<ShareOptions>(() => ({
 
 			<button
 				v-else-if="trailerState === 'loading'"
-				title="Loading trailer..."
-				class="frosting flex justify-start items-center flex-grow h-10 relative overflow-hidden gap-2 px-2 py-4 rounded-3xl text-slate-light-1 bg-slate-light-12"
+				class="frosting flex justify-start items-center flex-grow h-10 relative overflow-hidden gap-2 px-2 py-4 rounded-3xl text-surface-12 bg-black/80"
 				disabled
+				title="Loading trailer..."
 			>
 				<p class="flex-grow w-[100px] text-[15px] font-semibold text-center text-gray-8">
 					{{ $t("Watch trailer") }}
@@ -177,17 +160,17 @@ const shareData = computed<ShareOptions>(() => ({
 			<div
 				class="flex justify-start items-center flex-grow-0 flex-shrink-0 relative overflow-hidden gap-2 p-2 rounded-3xl bg-black/[0.48] border border-black/2 w-10 h-10"
 			>
-				<OptimizedIcon icon="check" class-name="w-6 text-white" />
+				<OptimizedIcon class-name="w-6" icon="check" />
 			</div>
 			<div
 				class="flex justify-start items-center flex-grow-0 flex-shrink-0 relative overflow-hidden gap-2 rounded-3xl bg-black/[0.48] border border-black/2"
 			>
-				<MediaLikeButton :data="data" class="!p-0 text-white" />
+				<MediaLikeButton :data="data" class="!p-0" />
 			</div>
 			<div
 				class="flex justify-start items-center flex-grow-0 flex-shrink-0 relative overflow-hidden gap-2 rounded-3xl bg-black/[0.48] border border-black/2"
 			>
-				<ShareButton :share-data="shareData" class="!p-0 text-white" />
+				<ShareButton :share-data="shareData" class="!p-0" />
 			</div>
 		</div>
 	</div>

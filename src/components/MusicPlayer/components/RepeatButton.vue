@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import { onMounted } from 'vue';
 import { useCycleList } from '@vueuse/core';
 
@@ -35,25 +35,25 @@ function handleClick(e?: MouseEvent) {
 </script>
 
 <template>
-	<MusicButton
-		:key="isRepeating"
+	<MusicButton :key="isRepeating"
 		:label="`repeat ${isRepeating}`"
 		:onclick="handleClick"
+		no-tooltip
 	>
 		<PlayerIcon
 			v-if="isRepeating === 'off'"
-			icon="nmRepeatHalftone"
 			class="h-6 w-6"
+			icon="nmRepeatHalftone"
 		/>
 		<PlayerIcon
 			v-else-if="isRepeating === 'one'"
-			icon="nmRepeat"
 			class="h-6 w-6 text-focus"
+			icon="nmRepeat"
 		/>
 		<PlayerIcon
 			v-else-if="isRepeating === 'all'"
-			icon="nmRepeatdoublearrowHalftone"
 			class="h-6 w-6 text-focus"
+			icon="nmRepeatdoublearrowHalftone"
 		/>
 	</MusicButton>
 </template>

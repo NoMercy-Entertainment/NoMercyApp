@@ -963,7 +963,7 @@ export class DesktopUIPlugin extends BaseUIPlugin {
 			.createElement('div', 'main-menu')
 			.addClasses([
 				'main-menu',
-				'bg-neutral-900/95',
+				'bg-surface-900/95',
 				'flex',
 				'flex-col',
 				'gap-1',
@@ -988,7 +988,7 @@ export class DesktopUIPlugin extends BaseUIPlugin {
 
 		this.player.addClasses(this.mainMenu, [
 			'main-menu',
-			'bg-neutral-900/95',
+			'bg-surface-900/95',
 			'flex',
 			'flex-col',
 			'gap-1',
@@ -1025,7 +1025,7 @@ export class DesktopUIPlugin extends BaseUIPlugin {
 			.createElement('div', 'sub-menu')
 			.addClasses([
 				'sub-menu',
-				'bg-neutral-900/95',
+				'bg-surface-900/95',
 				'flex-col',
 				'gap-1',
 				'group-[&.nomercyplayer:has(.sub-menu-open)]:flex',
@@ -2206,7 +2206,7 @@ export class DesktopUIPlugin extends BaseUIPlugin {
 				'slider-pop',
 				'-translate-x-1/2',
 				'absolute',
-				'bg-neutral-900/95',
+				'bg-surface-900/95',
 				'bottom-4',
 				'flex',
 				'flex-col',
@@ -2722,7 +2722,7 @@ export class DesktopUIPlugin extends BaseUIPlugin {
 				'focus-visible:outline-2',
 				'focus-visible:outline-white',
 				'gap-2',
-				'hover:bg-neutral-600/20',
+				'hover:bg-surface-600/20',
 				'outline',
 				'outline-1',
 				'outline-solid',
@@ -3008,7 +3008,7 @@ export class DesktopUIPlugin extends BaseUIPlugin {
 			.addClasses([
 				'tooltip',
 				'absolute',
-				'bg-neutral-900/95',
+				'bg-surface-900/95',
 				'bottom-0',
 				'font-medium',
 				'hidden',
@@ -3056,7 +3056,7 @@ export class DesktopUIPlugin extends BaseUIPlugin {
 				'!w-96',
 				'-bottom-8',
 				'absolute',
-				'bg-neutral-900/95',
+				'bg-surface-900/95',
 				'font-medium',
 				'gap-2',
 				'h-24',

@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import type { PropType } from 'vue';
 import { computed, nextTick, ref, watch } from 'vue';
 import { useTranslation } from 'i18next-vue';
@@ -67,20 +67,18 @@ const footText = computed(() => {
 	return text;
 });
 
-const ringColor = ref(
-	pickPaletteColor(props.data.color_palette?.cover)
-		?.replace('rgb(', '')
-		.replace(')', '')
-		.replace(/,/gu, ' ') ?? 'var(--color-primary)',
-);
+const ringColor = ref(pickPaletteColor(props.data.color_palette?.cover));
 </script>
 
 <template>
 	<RouterLink
 		v-if="data?.link"
-		class="relative flex flex-grow flex-col items-center justify-end transition-transform duration-100 group/musicCard active:scale-[98%] w-full"
+		:style="
+			ringColor
+				? `--color-theme-8: ${ringColor};`
+				: ''"
 		:to="data.link"
-		:style="`--color-focus: ${ringColor}`"
+		class="relative flex flex-grow flex-col items-center justify-end transition-transform duration-100 group/musicCard active:scale-[98%] w-full text-surface-12"
 	>
 		<MusicCardImage :data="data" />
 		<div
@@ -90,13 +88,13 @@ const ringColor = ref(
 				class="relative flex flex-grow flex-col items-start justify-center text-left"
 			>
 				<p
-					class="h-6 w-full flex-shrink-0 flex-grow-0 self-stretch text-sm font-semibold line-clamp-1"
 					:title="data?.name ?? (data as HomeDataItem)?.title"
+					class="h-6 w-full flex-shrink-0 flex-grow-0 self-stretch text-sm font-semibold line-clamp-1"
 				>
 					{{ data?.name ?? (data as HomeDataItem)?.title }}
 				</p>
 				<p
-					class="h-6 w-full flex-shrink-0 flex-grow-0 self-stretch whitespace-nowrap text-xs font-medium text-auto-10 line-clamp-1 empty:hidden dark:font-normal"
+					class="h-6 w-full flex-shrink-0 flex-grow-0 self-stretch whitespace-nowrap text-xs font-medium text-surface-10 line-clamp-1 empty:hidden dark:font-normal"
 				>
 					{{ footText }}&nbsp;
 				</p>

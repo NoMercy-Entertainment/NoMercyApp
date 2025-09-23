@@ -50,7 +50,7 @@ const artistCarousel = computed(() => {
 <template>
 	<div
 		v-if="activeTab"
-		class="flex flex-1 basis-0 items-start justify-start self-stretch overflow-clip px-8 py-8 w-available text-white"
+		class="flex flex-1 basis-0 items-start justify-start self-stretch overflow-clip px-8 py-8 w-available"
 	>
 		<TabFrame :data="data" :active-tab="activeTab">
 			<div class="flex flex-col gap-2 overflow-clip w-available max-w-[75ch]">

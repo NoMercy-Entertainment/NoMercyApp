@@ -1,6 +1,7 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import SchemePicker from './SchemePicker.vue';
 import ThemePicker from './ThemePicker.vue';
+import SurfacePicker from './SurfacePicker.vue';
 </script>
 
 <template>
@@ -9,5 +10,6 @@ import ThemePicker from './ThemePicker.vue';
 	>
 		<SchemePicker />
 		<ThemePicker />
+		<SurfacePicker />
 	</div>
 </template>

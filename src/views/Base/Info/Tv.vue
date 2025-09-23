@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import { computed, onMounted, onUnmounted, ref, watch } from 'vue';
 import { useRoute } from 'vue-router';
 import { IonContent, IonPage, IonSkeletonText } from '@ionic/vue';
@@ -8,12 +8,7 @@ import type { InfoResponse } from '@/types/api/base/info';
 import { tmdbImageBaseUrl } from '@/config/config';
 import useServerClient from '@/lib/clients/useServerClient';
 import { setTitle, sortByPosterAlphabetized } from '@/lib/stringArray';
-import {
-	background,
-	setBackground,
-	setColorPalette,
-	setLogo,
-} from '@/store/ui';
+import { background, setBackground, setColorPalette, setLogo } from '@/store/ui';
 import router from '@/router';
 
 import InfoItem from '@/views/Base/Info/components/InfoItem.vue';
@@ -105,7 +100,7 @@ router.afterEach(() => {
 			};`"
 		>
 			<div
-				class="flex flex-col justify-start items-center self-stretch flex-grow overflow-hidden bg-slate-light-3 dark:bg-slate-dark-1 -mr-2 px-2 pr-0 pt-safe pb-safe gap-4 will-change-auto"
+				class="flex flex-col justify-start items-center self-stretch flex-grow overflow-hidden bg-surface-3 dark:bg-surface-1 -mr-2 px-2 pr-0 pt-safe pb-safe gap-4 will-change-auto"
 				style="box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.16)"
 			>
 				<div
@@ -128,91 +123,91 @@ router.afterEach(() => {
 								v-if="data?.poster"
 								:key="data?.poster ?? 'poster'"
 								:auto-shadow="true"
-								:path="data?.poster"
 								:color-palette="data?.color_palette?.poster"
+								:path="data?.poster"
 								:size="760"
-								priority="high"
 								:title="data?.title"
 								aspect="poster"
-								loading="eager"
-								class-name="pointer-events-none absolute -inset-1 z-20 flex h-auto scale-100 select-none items-center place-self-start overflow-hidden rounded-2xl w-available h-available max-h-available"
 								class="m-auto children:w-full scale-100 rounded-2xl max-h-available 5xl:w-inherit"
+								class-name="pointer-events-none absolute -inset-1 z-20 flex h-auto scale-100 select-none items-center place-self-start overflow-hidden rounded-2xl w-available h-available max-h-available"
+								loading="eager"
+								priority="high"
 								type="image"
 							/>
 						</div>
 
 						<svg
-							width="280"
-							height="123"
-							viewBox="0 0 280 123"
-							fill="none"
-							xmlns="http://www.w3.org/2000/svg"
 							class="w-[280px] h-[122px] absolute left-0 top-[298px] blur-sm"
+							fill="none"
+							height="123"
 							preserveAspectRatio="none"
+							viewBox="0 0 280 123"
+							width="280"
+							xmlns="http://www.w3.org/2000/svg"
 						>
 							<g filter="url(#filter0_bf_5719_22815)">
 								<rect
-									width="280"
+									fill="var(--color-theme-8)"
+									fill-opacity="0.05"
 									height="122"
 									transform="matrix(1 0 0 -1 0 123)"
-									fill="rgb(var(--color-focus))"
-									fill-opacity="0.05"
+									width="280"
 								/>
 							</g>
 							<g filter="url(#filter1_bf_5719_22815)">
 								<rect
-									width="280"
+									fill="var(--color-theme-8)"
+									fill-opacity="0.05"
 									height="106"
 									transform="matrix(1 0 0 -1 0 123)"
-									fill="rgb(var(--color-focus))"
-									fill-opacity="0.05"
+									width="280"
 								/>
 							</g>
 							<g filter="url(#filter2_bf_5719_22815)">
 								<rect
-									width="280"
+									fill="var(--color-theme-8)"
+									fill-opacity="0.05"
 									height="90"
 									transform="matrix(1 0 0 -1 0 123)"
-									fill="rgb(var(--color-focus))"
-									fill-opacity="0.05"
+									width="280"
 								/>
 							</g>
 							<g filter="url(#filter3_bf_5719_22815)">
 								<rect
-									width="280"
+									fill="var(--color-theme-8)"
+									fill-opacity="0.05"
 									height="74"
 									transform="matrix(1 0 0 -1 0 123)"
-									fill="rgb(var(--color-focus))"
-									fill-opacity="0.05"
+									width="280"
 								/>
 							</g>
 							<g filter="url(#filter4_bf_5719_22815)">
 								<rect
-									width="280"
+									fill="var(--color-theme-8)"
+									fill-opacity="0.05"
 									height="58"
 									transform="matrix(1 0 0 -1 0 123)"
-									fill="rgb(var(--color-focus))"
-									fill-opacity="0.05"
+									width="280"
 								/>
 							</g>
 							<g filter="url(#filter5_bf_5719_22815)">
 								<rect
-									width="280"
+									fill="var(--color-theme-8)"
+									fill-opacity="0.05"
 									height="42"
 									transform="matrix(1 0 0 -1 0 123)"
-									fill="rgb(var(--color-focus))"
-									fill-opacity="0.05"
+									width="280"
 								/>
 							</g>
 							<defs>
 								<filter
 									id="filter0_bf_5719_22815"
+									color-interpolation-filters="sRGB"
+									filterUnits="userSpaceOnUse"
+									height="124"
+									width="282"
 									x="-1"
 									y="0"
-									width="282"
-									height="124"
-									filterUnits="userSpaceOnUse"
-									color-interpolation-filters="sRGB"
 								>
 									<feFlood
 										flood-opacity="0"
@@ -228,24 +223,24 @@ router.afterEach(() => {
 										result="effect1_backgroundBlur_5719_22815"
 									/>
 									<feBlend
-										mode="normal"
 										in="SourceGraphic"
 										in2="effect1_backgroundBlur_5719_22815"
+										mode="normal"
 										result="shape"
 									/>
 									<feGaussianBlur
-										stdDeviation="0.5"
 										result="effect2_foregroundBlur_5719_22815"
+										stdDeviation="0.5"
 									/>
 								</filter>
 								<filter
 									id="filter1_bf_5719_22815"
+									color-interpolation-filters="sRGB"
+									filterUnits="userSpaceOnUse"
+									height="110"
+									width="284"
 									x="-2"
 									y="15"
-									width="284"
-									height="110"
-									filterUnits="userSpaceOnUse"
-									color-interpolation-filters="sRGB"
 								>
 									<feFlood
 										flood-opacity="0"
@@ -261,24 +256,24 @@ router.afterEach(() => {
 										result="effect1_backgroundBlur_5719_22815"
 									/>
 									<feBlend
-										mode="normal"
 										in="SourceGraphic"
 										in2="effect1_backgroundBlur_5719_22815"
+										mode="normal"
 										result="shape"
 									/>
 									<feGaussianBlur
-										stdDeviation="1"
 										result="effect2_foregroundBlur_5719_22815"
+										stdDeviation="1"
 									/>
 								</filter>
 								<filter
 									id="filter2_bf_5719_22815"
+									color-interpolation-filters="sRGB"
+									filterUnits="userSpaceOnUse"
+									height="96"
+									width="286"
 									x="-3"
 									y="30"
-									width="286"
-									height="96"
-									filterUnits="userSpaceOnUse"
-									color-interpolation-filters="sRGB"
 								>
 									<feFlood
 										flood-opacity="0"
@@ -294,24 +289,24 @@ router.afterEach(() => {
 										result="effect1_backgroundBlur_5719_22815"
 									/>
 									<feBlend
-										mode="normal"
 										in="SourceGraphic"
 										in2="effect1_backgroundBlur_5719_22815"
+										mode="normal"
 										result="shape"
 									/>
 									<feGaussianBlur
-										stdDeviation="1.5"
 										result="effect2_foregroundBlur_5719_22815"
+										stdDeviation="1.5"
 									/>
 								</filter>
 								<filter
 									id="filter3_bf_5719_22815"
+									color-interpolation-filters="sRGB"
+									filterUnits="userSpaceOnUse"
+									height="82"
+									width="288"
 									x="-4"
 									y="45"
-									width="288"
-									height="82"
-									filterUnits="userSpaceOnUse"
-									color-interpolation-filters="sRGB"
 								>
 									<feFlood
 										flood-opacity="0"
@@ -327,24 +322,24 @@ router.afterEach(() => {
 										result="effect1_backgroundBlur_5719_22815"
 									/>
 									<feBlend
-										mode="normal"
 										in="SourceGraphic"
 										in2="effect1_backgroundBlur_5719_22815"
+										mode="normal"
 										result="shape"
 									/>
 									<feGaussianBlur
-										stdDeviation="2"
 										result="effect2_foregroundBlur_5719_22815"
+										stdDeviation="2"
 									/>
 								</filter>
 								<filter
 									id="filter4_bf_5719_22815"
+									color-interpolation-filters="sRGB"
+									filterUnits="userSpaceOnUse"
+									height="68"
+									width="290"
 									x="-5"
 									y="60"
-									width="290"
-									height="68"
-									filterUnits="userSpaceOnUse"
-									color-interpolation-filters="sRGB"
 								>
 									<feFlood
 										flood-opacity="0"
@@ -360,24 +355,24 @@ router.afterEach(() => {
 										result="effect1_backgroundBlur_5719_22815"
 									/>
 									<feBlend
-										mode="normal"
 										in="SourceGraphic"
 										in2="effect1_backgroundBlur_5719_22815"
+										mode="normal"
 										result="shape"
 									/>
 									<feGaussianBlur
-										stdDeviation="2.5"
 										result="effect2_foregroundBlur_5719_22815"
+										stdDeviation="2.5"
 									/>
 								</filter>
 								<filter
 									id="filter5_bf_5719_22815"
+									color-interpolation-filters="sRGB"
+									filterUnits="userSpaceOnUse"
+									height="54"
+									width="292"
 									x="-6"
 									y="75"
-									width="292"
-									height="54"
-									filterUnits="userSpaceOnUse"
-									color-interpolation-filters="sRGB"
 								>
 									<feFlood
 										flood-opacity="0"
@@ -393,14 +388,14 @@ router.afterEach(() => {
 										result="effect1_backgroundBlur_5719_22815"
 									/>
 									<feBlend
-										mode="normal"
 										in="SourceGraphic"
 										in2="effect1_backgroundBlur_5719_22815"
+										mode="normal"
 										result="shape"
 									/>
 									<feGaussianBlur
-										stdDeviation="3"
 										result="effect2_foregroundBlur_5719_22815"
+										stdDeviation="3"
 									/>
 								</filter>
 							</defs>
@@ -410,10 +405,10 @@ router.afterEach(() => {
 							class="flex justify-start items-start w-[280px] absolute left-0 top-[348px] gap-4 p-4"
 						>
 							<RouterLink
+								:class="{ 'opacity-70': !hasItem?.available }"
+								:disabled="!hasItem?.available"
 								:to="`/${data?.media_type}/${data?.id}/watch`"
 								class="flex justify-start items-center flex-grow h-10 relative overflow-hidden gap-2 px-2 py-4 rounded-[30px] bg-white/80"
-								:disabled="!hasItem?.available"
-								:class="{ 'opacity-70': !hasItem?.available }"
 							>
 								<p
 									class="flex-grow w-[100px] text-[15px] font-semibold text-center text-[#151718]"
@@ -431,7 +426,7 @@ router.afterEach(() => {
 							</RouterLink>
 
 							<button
-								class="flex justify-start items-center flex-grow h-10 relative overflow-hidden gap-2 px-2 py-4 rounded-[30px] bg-black/50 border border-solid border-slate-lightA-9 dark:border-slate-darkA-9"
+								class="flex justify-start items-center flex-grow h-10 relative overflow-hidden gap-2 px-2 py-4 rounded-[30px] bg-black/50 border border-solid border-slate-9 dark:border-slate-9"
 								@click="trailerOpen = !trailerOpen"
 							>
 								<p
@@ -448,12 +443,12 @@ router.afterEach(() => {
 							<div
 								class="flex justify-start items-center flex-grow-0 flex-shrink-0 relative overflow-hidden gap-2 p-2 rounded-[30px] bg-black/[0.48] border border-black/2"
 							>
-								<OptimizedIcon icon="check" class-name="w-5" />
+								<OptimizedIcon class-name="w-5" icon="check" />
 							</div>
 							<div
 								class="flex justify-start items-center flex-grow-0 flex-shrink-0 relative overflow-hidden gap-2 p-2 rounded-[30px] bg-black/[0.48] border border-black/2"
 							>
-								<OptimizedIcon icon="heartFilled" class-name="w-5" />
+								<OptimizedIcon class-name="w-5" icon="heartFilled" />
 							</div>
 						</div>
 					</div>
@@ -479,12 +474,12 @@ router.afterEach(() => {
 						class="flex flex-col justify-start items-start self-stretch flex-grow-0 flex-shrink-0 relative gap-1"
 					>
 						<p
-							class="self-stretch flex-grow-0 flex-shrink-0 w-[352px] text-base font-medium text-left min-h-[4rem] transition-all duration-200 overflow-hidden relative pr-3.5"
 							:class="{
 								[`max-h-[4em] h-[4em] after:content-['...'] after:absolute after:top-[2.8em] after:ml-[64%]`]:
 									(data?.overview?.length ?? 0) > 170 && !showMore,
 								[`max-h-[40em] h-auto`]: showMore,
 							}"
+							class="self-stretch flex-grow-0 flex-shrink-0 w-[352px] text-base font-medium text-left min-h-[4rem] transition-all duration-200 overflow-hidden relative pr-3.5"
 						>
 							{{ data?.overview ?? "&nbsp;" }}
 						</p>
@@ -493,7 +488,7 @@ router.afterEach(() => {
 							class="flex justify-center items-center flex-grow-0 flex-shrink-0 h-5 relative overflow-hidden gap-2"
 						>
 							<button
-								class="flex-grow-0 flex-shrink-0 text-sm font-medium text-left text-white/[0.92] underline underline-offset-2"
+								class="flex-grow-0 flex-shrink-0 text-sm font-medium text-left/[0.92] underline underline-offset-2"
 								@click="showMore = !showMore"
 							>
 								{{ $t("Read more") }}
@@ -516,9 +511,9 @@ router.afterEach(() => {
 					>
 						<ContentRating
 							v-if="data?.content_ratings"
+							:ratings="data?.content_ratings"
 							:size="8"
 							class="h-full min-!h-[1rem] object-scale-down rounded-lg overflow-clip children:-m-0.5"
-							:ratings="data?.content_ratings"
 						/>
 
 						<div
@@ -571,9 +566,9 @@ router.afterEach(() => {
 						>
 							<InfoItem
 								:data="data"
-								title="Genres"
 								key-name="genres"
 								prefix="genres"
+								title="Genres"
 							/>
 						</div>
 					</div>

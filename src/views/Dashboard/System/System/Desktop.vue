@@ -1,11 +1,8 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import { computed, onMounted, ref, watch } from 'vue';
 import { IonContent, IonPage } from '@ionic/vue';
 
-import {
-	connection,
-	dashboardSocketIsConnected,
-} from '@/lib/clients/dashboardSocket';
+import { connection, dashboardSocketIsConnected } from '@/lib/clients/dashboardSocket';
 
 import DashboardLayout from '@/Layout/Desktop/DashboardLayout.vue';
 
@@ -47,9 +44,9 @@ const supportsMasonry = computed(() =>
 	<IonPage>
 		<IonContent :fullscreen="true">
 			<DashboardLayout
-				title="Dashboard overview"
 				:grid-style="supportsMasonry ? 3 : 2"
-				styles="grid-template-rows: masonry; masonry-auto-flow: next;"
+				styles="grid-template-rows: masonry; masonry-surface-flow: next;"
+				title="Dashboard overview"
 			>
 				<template #cta />
 
@@ -60,8 +57,8 @@ const supportsMasonry = computed(() =>
 					<ServerResourceCard v-if="dashboardSocketIsConnected" />
 					<ServerSystemCard
 						v-else
-						title="Resources monitor"
 						class="animate-pulse"
+						title="Resources monitor"
 					>
 						<template #cta />
 						<div class="min-h-80" />
@@ -77,8 +74,8 @@ const supportsMasonry = computed(() =>
 						<ServerResourceCard v-if="dashboardSocketIsConnected" />
 						<ServerSystemCard
 							v-else
-							title="Resources monitor"
 							class="animate-pulse"
+							title="Resources monitor"
 						>
 							<template #cta />
 							<div class="min-h-80" />

@@ -48,7 +48,7 @@ ion-list {
 
 ion-item {
 	--background: transparent;
-	--color: rgb(var(--color-text));
+	--color: var(--color-text);
 }
 
 ion-item::part(detail-icon) {

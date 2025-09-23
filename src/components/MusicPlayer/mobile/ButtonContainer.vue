@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import { useLocalStorage } from '@vueuse/core';
 
 import { musicSize } from '@/store/audioPlayer';
@@ -23,20 +23,20 @@ const supportsAudioContext = useLocalStorage(
 
 <template>
 	<div
-		class="flex w-full items-center justify-between px-6"
 		:data-size="musicSize"
+		class="flex w-full items-center justify-between px-6"
 	>
 		<ShuffleButton />
 		<PreviousButton />
 		<PlaybackButton
-			class="!h-14 !w-14 !bg-focus/50 !rounded-full shadow-[0_1px_0_0_rgba(255,255,255,0.20)_inset,0_-1px_0_0_rgba(var(--color-slate-9)/60%)_inset,0_22px_30px_-4px_rgba(var(--color-slate-9)/70%)] dark:shadow-[0_1px_0_0_rgba(255,255,255,0.20)_inset,0_-1px_0_0_rgba(var(--color-slate-1)/30%)_inset,0_22px_30px_-4px_rgba(var(--color-slate-1)/70%)] hover:shadow-[0_1px_0_0_rgba(255,255,255,0.20)_inset,0_-1px_0_0_rgba(var(--color-slate-11)/60%)_inset,0_22px_30px_-4px_rgba(var(--color-slate-11)/70%)] dark:hover:shadow-[0_1px_0_0_rgba(255,255,255,0.20)_inset,0_-1px_0_0_rgba(var(--color-slate-1)/30%)_inset,0_22px_30px_-4px_rgba(var(--color-slate-1)/70%)] active:!shadow-none active:!dark:shadow-none"
+			class="!h-14 !w-14 !bg-focus/50 !rounded-full shadow-[0_1px_0_0_rgba(255,255,255,0.20)_inset,0_-1px_0_0_rgb(from_var(--color-slate-9)_r_g_b/60%)_inset,0_22px_30px_-4px_rgb(from_var(--color-slate-9)_r_g_b/70%)] dark:shadow-[0_1px_0_0_rgba(255,255,255,0.20)_inset,0_-1px_0_0_rgb(from_var(--color-slate-1)_r_g_b/30%)_inset,0_22px_30px_-4px_rgb(from_var(--color-slate-1)_r_g_b/70%)] hover:shadow-[0_1px_0_0_rgba(255,255,255,0.20)_inset,0_-1px_0_0_rgb(from_var(--color-slate-11)_r_g_b/60%)_inset,0_22px_30px_-4px_rgb(from_var(--color-slate-11)_r_g_b/70%)] dark:hover:shadow-[0_1px_0_0_rgba(255,255,255,0.20)_inset,0_-1px_0_0_rgb(from_var(--color-slate-1)_r_g_b/30%)_inset,0_22px_30px_-4px_rgb(from_var(--color-slate-1)_r_g_b/70%)] active:!shadow-none active:!dark:shadow-none"
 		/>
 		<NextButton />
 		<RepeatButton />
 	</div>
 	<div
-		class="mb-12 flex h-12 w-full justify-between px-6 gap-2 z-10"
 		:data-size="musicSize"
+		class="mb-12 flex h-12 w-full justify-between px-6 gap-2 z-10"
 	>
 		<DeviceButton ref="deviceOverlay" class="!w-auto !justify-start" />
 		<StopButton class="ml-auto" />

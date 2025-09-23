@@ -65,7 +65,7 @@ export interface Message {
 }
 
 export interface ServerUser {
-	id: string;
+	user_id: string;
 	name: string;
 	email: string;
 	avatar: string;

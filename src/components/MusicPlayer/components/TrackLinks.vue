@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import type { PropType } from 'vue';
 import { onMounted, watch } from 'vue';
 
@@ -70,13 +70,13 @@ function handleClick(e: Event) {
 <template>
 	<div
 		:id="`trackLink-${type}-${id}-${suffix}`"
+		class="-ml-1 w-available text-surface-12/11"
 		data-marquee="container"
-		class="-ml-1 w-available"
 	>
 		<div
 			:data-size="musicSize"
-			data-marquee="scroller"
 			class="mb-1 ml-1 flex w-fit flex-nowrap gap-1 overflow-clip text-xs line-clamp-2 whitespace-break-spaces hover-animate-pause w-available sm:my-0.5 pr-2"
+			data-marquee="scroller"
 		>
 			<span
 				v-if="title"
@@ -92,8 +92,8 @@ function handleClick(e: Event) {
 			>
 				<span
 					v-if="noLink"
-					data-target="album"
 					class="pointer-events-auto flex gap-1 whitespace-nowrap text-xs font-semibold line-clamp-2 h-inherit hover:underline focus:underline dark:font-medium"
+					data-target="album"
 					@click="handleClick($event)"
 				>
 					<span class="flex whitespace-nowrap leading-5">
@@ -102,11 +102,11 @@ function handleClick(e: Event) {
 				</span>
 				<RouterLink
 					v-else
-					:to="item.link"
 					:onkeyup="onkeyup"
-					tabindex="1"
-					data-target="album"
+					:to="item.link"
 					class="pointer-events-auto flex gap-1 whitespace-nowrap text-xs font-semibold line-clamp-2 h-inherit hover:underline focus:underline dark:font-medium"
+					data-target="album"
+					tabindex="1"
 					@click="handleClick($event)"
 				>
 					<span class="flex whitespace-nowrap leading-5">

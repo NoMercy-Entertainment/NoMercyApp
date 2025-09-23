@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import { onMounted } from 'vue';
 import { IonContent, IonPage } from '@ionic/vue';
 import { setTitle } from '@/lib/stringArray';
@@ -18,7 +18,7 @@ onMounted(() => {
 	<IonPage>
 		<IonContent :fullscreen="true">
 			<ScrollContainer :auto-hide="true" :static="true">
-				<NMComponent />
+				<NMComponent path="/music/start" />
 			</ScrollContainer>
 		</IonContent>
 	</IonPage>

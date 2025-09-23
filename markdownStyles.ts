@@ -54,10 +54,10 @@ const markdownBase = {
 	},
 
 	a: {
-		'color': 'rgb(var(--color-focus))',
+		'color': 'var(--color-theme-8)',
 		'textDecoration': 'none',
 		'&:hover': {
-			color: 'rgb(var(--color-focus))',
+			color: 'var(--color-theme-8)',
 			textDecoration: 'none',
 		},
 	},

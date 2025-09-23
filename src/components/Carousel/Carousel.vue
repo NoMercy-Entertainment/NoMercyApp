@@ -1,6 +1,6 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import type { PropType } from 'vue';
-import { computed, ref, watch } from 'vue';
+import { computed, ref } from 'vue';
 import type { Swiper } from 'swiper';
 import { Swiper as SwiperComponent } from 'swiper/vue';
 import { register } from 'swiper/element/bundle';
@@ -104,6 +104,8 @@ const backdropCards = computed(() => {
 	return showBackdrops && !props.disableAutoAspect;
 });
 
+const beforeOffset = computed(() => window.innerWidth < 800 ? 24 : 20);
+
 const customSwiperConfig = computed(() => {
 	const newBp: Breakpoints = breakpoints(backdropCards.value);
 
@@ -120,11 +122,11 @@ const customSwiperConfig = computed(() => {
 	return {
 		...swiperConfig(backdropCards.value),
 		breakpoints: newBp,
-		slidesOffsetBefore: window.innerWidth < 800 ? 24 : 20,
+		lazy: true,
+		observer: true,
+		slidesOffsetBefore: beforeOffset.value,
 	};
 });
-
-watch(customSwiperConfig, value => console.log(value));
 
 function focusMain() {
 	document.querySelector<HTMLButtonElement>(`#${props.nextId}`)?.focus();
@@ -138,7 +140,7 @@ function focusMain() {
 		<div class="flex w-available flex-1 flex-col gap-2">
 			<div class="relative ml-3 w-full flex flex-shrink-0 flex-grow-1 items-center self-stretch">
 				<h3 v-if="title"
-					class="mr-2 ml-3 sm:ml-3 my-2 text-slate-lightA-12/70 dark:text-slate-darkA-12/80 self-stretch flex-grow-0 flex-shrink-0 text-xl font-bold"
+					class="mr-2 ml-3 sm:ml-3 my-2 text-white/12 self-stretch flex-grow-0 flex-shrink-0 text-xl font-bold"
 				>
 					{{ $t(title ?? 'Continue watching') }}
 				</h3>
@@ -154,15 +156,17 @@ function focusMain() {
 					class="flex flex-shrink-0 flex-grow-0 items-start justify-start gap-2 pr-4 ml-auto"
 				>
 					<button v-if="hasScroll" :aria-label="$t('Previous slide')"
+						:class="`hidden sm:flex justify-center items-center p-1 rounded-lg bg-surface-5 active:scale-95 hover:bg-surface- transition-transform duration-200 ${backButtonEnabled ? '' : 'cursor-not-allowed opacity-50'}`"
+						:onclick="prev"
 						tabindex="-1"
-						:class="`hidden sm:flex justify-center items-center p-1 rounded-lg bg-auto-alpha-9 active:scale-95 hover:bg-auto-alpha-11 transition-transform duration-200 ${backButtonEnabled ? '' : 'cursor-not-allowed opacity-50'}`" :onclick="prev"
 					>
 						<OptimizedIcon class="w-6" icon="chevronLeft" />
 					</button>
 
 					<button v-if="hasScroll" :aria-label="isLastSlide ? $t('Start slide') : $t('Next slide')"
+						:class="`hidden sm:flex justify-center items-center p-1 rounded-lg bg-surface-5 active:scale-95 hover:bg-surface- transition-transform duration-200 ${hasScroll ? '' : 'cursor-not-allowed opacity-50'}`"
+						:onclick="isLastSlide ? reset : next"
 						tabindex="-1"
-						:class="`hidden sm:flex justify-center items-center p-1 rounded-lg bg-auto-alpha-9 active:scale-95 hover:bg-auto-alpha-11 transition-transform duration-200 ${hasScroll ? '' : 'cursor-not-allowed opacity-50'}`" :onclick="isLastSlide ? reset : next"
 					>
 						<OptimizedIcon v-if="hasScroll && !isLastSlide"
 							:class="`w-6 ${!nextButtonEnabled && isLastSlide ? 'opacity-0' : ''}`" icon="chevronRight"
@@ -174,9 +178,9 @@ function focusMain() {
 				</div>
 			</div>
 			<div class="gap-3 py-1 pr-0 w-available swiper">
-				<SwiperComponent v-bind="customSwiperConfig as any" ref="swiper"
-					:class="`swiper-${title?.replace(/[\s&#]/gu, '-')} opacity-0`"
-					data-spatial-container="row" @progress="onProgress" @after-init="afterInit"
+				<SwiperComponent ref="swiper" :class="`swiper-${title?.replace(/[\s&#]/gu, '-')} opacity-0 transform-gpu`"
+					data-spatial-container="row"
+					v-bind="customSwiperConfig as any" @progress="onProgress" @after-init="afterInit"
 					@slide-change="onSlideChange"
 				>
 					<slot />

@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import { IonHeader, IonToolbar } from '@ionic/vue';
 
 import { user } from '@/store/user';
@@ -19,45 +19,45 @@ import PlayerIcon from '@/components/Images/icons/PlayerIcon.vue';
 <template>
 	<IonHeader
 		v-if="navBarVisible"
+		class="pt-safe transition-all duration-200 !h-[104px] text-surface-12"
 		mode="md"
-		class="pt-safe transition-all duration-200 !h-[104px]"
 	>
 		<IonToolbar mode="md">
 			<div class="flex justify-between items-center w-full relative px-14 h-14">
 				<button
 					v-if="currentSong"
-					class="flex w-60 -ml-1.5 -mr-48 h-10 my-auto bg-slate-dark-6 pr-2 rounded-full overflow-clip focus:outline-none focus-visible:outline-2 focus-visible:outline-focus focus-visible:outline"
+					class="flex w-60 -ml-1.5 -mr-48 h-10 my-auto bg-theme-8 pr-2 rounded-full overflow-clip focus:outline-none focus-visible:outline-2 focus-visible:outline-focus focus-visible:outline"
 					@click="openFullPlayer()"
 				>
 					<div
 						class="relative w-10 h-10 aspect-square rounded-full overflow-clip"
 					>
 						<CoverImage
-							:data="currentSong"
 							:alt="currentSong.name"
-							class="w-auto h-full aspect-square absolute top-0 left-0 brightness-50"
 							:class="{
 								'': isPlaying,
 							}"
+							:data="currentSong"
+							class="w-auto h-full aspect-square absolute top-0 left-0 brightness-50"
 						/>
 
 						<div
 							class="flex items-center justify-center w-auto h-full aspect-square absolute top-0 left-0"
 						>
 							<EqSpinner v-if="isPlaying" :playing="isPlaying" />
-							<PlayerIcon v-else icon="nmPause" class="w-5 h-5 text-white" />
+							<PlayerIcon v-else class="w-5 h-5" icon="nmPause" />
 						</div>
 					</div>
 
 					<div
-						class="w-[calc(100%-30px)] flex flex-col justify-center items-start gap-1.5 mr-2 overflow-clip py-0.5 border-[4px] border-l-0 rounded-r-full border-slate-dark-6"
+						class="w-[calc(100%-30px)] flex flex-col justify-center items-start gap-1.5 mr-2 overflow-clip py-0.5 rounded-r-full text-surface-12"
 					>
 						<Marquee
 							:text="currentSong.name"
 							class="px-2 children:pr-4 text-2xs leading-none !flex-grow-0"
 						/>
-						<span class="pl-2 text-3xs text-white line-clamp-1 leading-none">
-							{{ currentSong.artist_track?.at(0)?.name }}
+						<span class="pl-2 text-3xs line-clamp-1 leading-none">
+							{{ currentSong.artist_track.map(at => at.name).join(', ') }}
 						</span>
 					</div>
 				</button>
@@ -67,32 +67,32 @@ import PlayerIcon from '@/components/Images/icons/PlayerIcon.vue';
 					class="flex justify-start items-start flex-grow-0 flex-shrink-0 gap-3"
 				>
 					<NavBarButton
-						icon="home1"
-						href="/home"
-						name="Home"
 						:active="isHomeRoute"
+						href="/home"
+						icon="home1"
+						name="Home"
 					/>
 					<NavBarButton
-						icon="folder"
-						href="/libraries"
-						name="Libraries"
 						:active="isLibraryRoute"
+						href="/libraries"
+						icon="folder"
+						name="Libraries"
 					/>
 					<NavBarButton
-						icon="noteSixteenth"
-						href="/music/start"
-						name="Music"
 						:active="isMusicRoute"
+						href="/music/start"
+						icon="noteSixteenth"
+						name="Music"
 					/>
 				</div>
 
 				<RouterLink
-					to="/setup/select-servers"
 					class="relative flex flex-col rounded-full bg-black size-10 my-1"
+					to="/setup/select-servers"
 				>
 					<NoMercyAvatar
-						:user="user"
 						:size="40"
+						:user="user"
 						class="absolute focus-visible:ring-2 ring-inset focus-visible:ring-white"
 					/>
 					<span

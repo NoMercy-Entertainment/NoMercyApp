@@ -1,14 +1,10 @@
 2
-<script setup lang="ts">
+<script lang="ts" setup>
 import { computed, ref } from 'vue';
 import { useSwipe } from '@vueuse/core';
 
 import { pickPaletteColor } from '@/lib/colorHelper';
-import audioPlayer, {
-	currentSong,
-	openFullPlayer,
-	percentage,
-} from '@/store/audioPlayer';
+import audioPlayer, { currentSong, openFullPlayer, percentage } from '@/store/audioPlayer';
 import { useAutoThemeColors } from '@/store/preferences';
 import { menuOpen } from '@/store/profileMenu';
 
@@ -23,9 +19,9 @@ const focusColor = computed(() => {
 	if (!useAutoThemeColors.value)
 		return 'var(--color-theme-7)';
 
-	return pickPaletteColor(currentSong.value?.color_palette?.cover, 20, 160)
-		.replace(/,/gu, ' ')
-		.replace('rgb(', '');
+	return pickPaletteColor(currentSong.value?.color_palette?.cover, 20, 160);
+	// .replace(/,/gu, ' ')
+	// .replace('rgb(', '');
 });
 
 const target = ref<HTMLElement | null>(null);
@@ -79,8 +75,8 @@ const { isSwiping, lengthX } = useSwipe(target, {
 		v-if="!menuOpen && currentSong"
 		id="miniPlayer"
 		ref="container"
-		:style="`--color-focus: ${focusColor}`"
-		class="flex absolute w-available justify-between items-center self-stretch bottom-0 h-14 overflow-hidden p-2 bg-slate-light-1 dark:bg-slate-dark-3 mt-auto z-0"
+		:style="`--color-theme-8: ${focusColor}`"
+		class="flex absolute w-available justify-between items-center self-stretch bottom-0 h-14 overflow-hidden p-2 bg-surface-1 mt-auto z-0"
 		@click="openFullPlayer()"
 	>
 		<div
@@ -94,16 +90,16 @@ const { isSwiping, lengthX } = useSwipe(target, {
 			>
 				<CoverImage
 					v-if="currentSong"
-					:size="100"
-					class-name="relative aspect-square h-10 w-10 cursor-pointer overflow-hidden rounded-sm text-theme-400 min-w-[2.5rem] min-h-[2.5rem]"
 					:data="currentSong"
+					:size="100"
+					class-name="relative aspect-square h-10 w-10 cursor-pointer overflow-hidden rounded-sm text-focus00 min-w-[2.5rem] min-h-[2.5rem]"
 				/>
 			</div>
 			<div
 				ref="target"
-				class="relative flex h-full flex-grow flex-col items-start justify-evenly overflow-clip w-inherit"
 				:class="{ animated: !isSwiping }"
 				:style="{ left, opacity }"
+				class="relative flex h-full flex-grow flex-col items-start justify-evenly overflow-clip w-inherit"
 			>
 				<p
 					class="w-auto self-stretch text-left text-sm font-medium leading-6 line-clamp-1"
@@ -111,7 +107,7 @@ const { isSwiping, lengthX } = useSwipe(target, {
 					{{ currentSong?.name }}
 				</p>
 				<p
-					class="children:children:children:children:children:leading-6 w-auto self-stretch text-left text-sm text-auto-12/11"
+					class="children:children:children:children:children:leading-6 w-auto self-stretch text-left text-sm"
 				>
 					<TrackLinks
 						v-if="currentSong"
@@ -127,7 +123,7 @@ const { isSwiping, lengthX } = useSwipe(target, {
 			<MediaLikeButton
 				:key="currentSong?.id + currentSong?.favorite"
 				:data="currentSong"
-				color="var(--color-focus)"
+				color="var(--color-theme-8)"
 			/>
 			<PlaybackButton class="children:h-7 children:w-7" />
 		</div>
@@ -136,12 +132,12 @@ const { isSwiping, lengthX } = useSwipe(target, {
 				class="absolute w-full h-0.5 left-[-1px] top-[-1px] bg-black/[0.22]"
 			/>
 			<div
-				class="w-0 h-0.5 absolute left-[-1px] top-[-1px] rounded-sm bg-gradient-to-r from-black/5 to-[rgb(var(--color-focus))] z-10"
 				:style="`width: ${percentage}%;`"
+				class="w-0 h-0.5 absolute left-[-1px] top-[-1px] rounded-sm bg-gradient-to-r from-black/5 to-[var(--color-theme-8)] z-10"
 			/>
 			<div
-				class="w-1 h-0.5 absolute top-[-1px] rounded-sm bg-[#f1EEFE] -translate-x-[2px] z-0"
 				:style="`left: ${percentage}%;`"
+				class="w-1 h-0.5 absolute top-[-1px] rounded-sm bg-[#f1EEFE] -translate-x-[2px] z-0"
 			/>
 		</div>
 	</div>

@@ -1,22 +1,14 @@
-<script setup lang="ts">
-import { computed, onMounted, watch } from 'vue';
+<script lang="ts" setup>
 import type { PropType } from 'vue';
+import { computed, onMounted, watch } from 'vue';
 import type { AxiosError } from 'axios';
 
 import type { ErrorResponse } from '@/types/server';
 
-import {
-	dashboardBigCardGrid,
-	dashboardCardGrid,
-	dashboardColumnGrid,
-} from '@/config/global';
+import { dashboardBigCardGrid, dashboardCardGrid, dashboardColumnGrid } from '@/config/global';
 import useMounted from '@/hooks/useMounted';
 import useServerClient from '@/lib/clients/useServerClient';
-import {
-	dashboardSocketIsConnected,
-	startDashboardSocket,
-	stopDashboardSocket,
-} from '@/lib/clients/dashboardSocket';
+import { dashboardSocketIsConnected, startDashboardSocket, stopDashboardSocket } from '@/lib/clients/dashboardSocket';
 import { setBackground, setColorPalette } from '@/store/ui';
 
 import FloatingBackButton from '@/components/Buttons/FloatingBackButton.vue';
@@ -155,18 +147,18 @@ watch(dataUpdatedAt, (value) => {
 
 <template>
 	<KeepAlive>
-		<div v-if="showError" class="grid h-full w-full place-items-center">
+		<div v-if="showError" class="grid h-full w-full place-items-center text-surface-12">
 			<div
 				class="relative flex items-center justify-start gap-8 overflow-hidden"
 			>
 				<div class="relative flex w-full flex-col gap-4">
 					<p
-						class="text-7xl font-bold text-center text-slate-light-12/80 dark:text-slate-dark-12/80"
+						class="text-7xl font-bold text-center"
 					>
 						{{ accessError?.code ? accessError?.code : "Offline" }}
 					</p>
 					<p
-						class="left-0 text-2xl text-center text-slate-light-12/80 dark:text-slate-dark-12/80 whitespace-pre-line"
+						class="left-0 text-2xl text-center whitespace-pre-line"
 					>
 						{{ (accessError as any)?.message }}
 					</p>
@@ -180,19 +172,19 @@ watch(dataUpdatedAt, (value) => {
 				' min-h-[92vh] sm:min-h-[92.75vh]': !$slots.cta,
 				' min-h-[92vh] sm:min-h-[90.1vh]': !!$slots.cta,
 			}"
-			class="flex flex-col relative z-0 flex-1 h-available overflow-clip items-start justify-start self-stretch w-available "
+			class="flex flex-col relative z-0 flex-1 h-available overflow-clip items-start justify-start self-stretch w-available text-surface-12"
 		>
 			<div
-				class="sticky top-0 z-10 flex flex-shrink-0 flex-grow-0 flex-col items-start justify-start gap-5 self-stretch"
 				:inert="ripperMenuOpen"
+				class="sticky top-0 z-10 flex flex-shrink-0 flex-grow-0 flex-col items-start justify-start gap-5 self-stretch"
 			>
 				<div class="absolute inset-0 z-0 h-full w-full" />
 				<!--			<Shadow type="linear"/> -->
 				<div
-					class="z-10 flex h-20 items-center justify-between gap-4 self-stretch border-b px-4 py-4 border-auto-7/6 xl:px-6 "
+					class="z-10 flex h-20 items-center justify-between gap-4 self-stretch border-b px-4 py-4 border-surface-8/11 xl:px-6 "
 				>
 					<div
-						class="relative flex h-full flex-col items-start justify-center gap-1 text-slate-light-12/80 dark:text-slate-dark-12/80"
+						class="relative flex h-full flex-col items-start justify-center gap-1"
 					>
 						<p
 							class="w-auto flex-shrink-0 flex-grow-0 self-stretch whitespace-nowrap text-xl font-semibold"
@@ -201,12 +193,12 @@ watch(dataUpdatedAt, (value) => {
 						</p>
 						<FloatingBackButton
 							v-if="back"
+							class="left-4 -mt-1.5"
 							position="relative"
-							class="left-4"
 						/>
 						<p
 							v-else
-							class="hidden h-8 w-auto flex-shrink-0 flex-grow-0 items-center self-stretch text-sm empty:hidden lg:flex"
+							class="hidden w-auto flex-shrink-0 flex-grow-0 items-center self-stretch text-sm empty:hidden lg:flex text-surface-12/12"
 						>
 							{{ $t(description ?? "") }}
 						</p>
@@ -231,12 +223,12 @@ watch(dataUpdatedAt, (value) => {
 				>
 					<div class="relative flex w-full flex-col gap-4">
 						<p
-							class="text-7xl font-bold text-center text-slate-light-12/80 dark:text-slate-dark-12/80"
+							class="text-7xl font-bold text-center"
 						>
 							{{ error.code }}
 						</p>
 						<p
-							class="left-0 text-2xl text-center text-slate-light-12/80 dark:text-slate-dark-12/80 whitespace-pre-line"
+							class="left-0 text-2xl text-center whitespace-pre-line"
 						>
 							{{ error.message }}
 						</p>
@@ -246,13 +238,13 @@ watch(dataUpdatedAt, (value) => {
 			<ScrollContainer
 				v-else
 				:static="true"
+				class="z-0 w-full flex-1 overflow-y-auto overflow-x-hidden pt-2 pb-8 sm:p-4"
 				frame
-				class="z-0 w-full flex-1 overflow-y-auto overflow-x-hidden sm:p-4"
 			>
 				<div
-					class="h-auto w-full flex-wrap content-start gap-4 flex-1"
-					:style="styles"
 					:class="grid"
+					:style="styles"
+					class="h-auto w-full flex-wrap content-start gap-4 flex-1"
 				>
 					<slot />
 				</div>
@@ -260,7 +252,7 @@ watch(dataUpdatedAt, (value) => {
 
 			<div
 				v-if="!error && $slots.actions"
-				class="sticky bottom-0 z-0 flex w-full flex-wrap items-center gap-4 border-t px-4 py-4 border-auto-7/6 empty:hidden sm:h-16 xl:px-6"
+				class="sticky bottom-0 z-0 flex w-full flex-wrap items-center gap-4 border-t px-4 py-4 border-surface-8/11 empty:hidden sm:h-16 xl:px-6"
 			>
 				<div class="absolute inset-0 -z-10 h-full w-full" />
 				<slot name="actions" />

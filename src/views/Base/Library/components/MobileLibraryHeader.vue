@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import { ref } from 'vue';
 import { useRoute } from 'vue-router';
 import { IonLabel, IonSegment, IonSegmentButton, IonToolbar } from '@ionic/vue';
@@ -25,79 +25,79 @@ router.afterEach((to) => {
 
 <template>
 	<IonToolbar v-if="show" class="transition-all duration-200 toolbar">
-		<IonSegment :scrollable="true" mode="ios" :value="route.fullPath">
+		<IonSegment :scrollable="true" :value="route.fullPath" mode="ios">
 			<template
 				v-for="library in libraries?.filter((l) => l.type !== 'music') ?? []"
 				:key="library.id"
 			>
 				<IonSegmentButton
-					:value="`/libraries/${library.id}`"
-					layout="icon-start"
 					:class="{
 						'bg-focus': route.fullPath.startsWith(`/libraries/${library.id}`),
 					}"
+					:value="`/libraries/${library.id}`"
+					layout="icon-start"
 					@click="() => router.push(`/libraries/${library.id}`)"
 				>
-					<OptimizedIcon icon="folder" class="mr-2" />
+					<OptimizedIcon class="mr-2" icon="folder" />
 					<IonLabel>{{ library.title }}</IonLabel>
 				</IonSegmentButton>
 			</template>
 
 			<IonSegmentButton
 				v-if="libraries?.some?.((l) => l.type === 'movie')"
-				value="/collection"
-				layout="icon-start"
 				:class="{
 					'bg-focus': route.fullPath.startsWith('/collection'),
 				}"
+				layout="icon-start"
+				value="/collection"
 				@click="() => router.push('/collection')"
 			>
-				<OptimizedIcon icon="collection1" class="mr-2" />
+				<OptimizedIcon class="mr-2" icon="collection1" />
 				<IonLabel>{{ $t("Collections") }}</IonLabel>
 			</IonSegmentButton>
 
 			<IonSegmentButton
-				value="/specials"
-				layout="icon-start"
 				:class="{
 					'bg-focus': route.fullPath.startsWith('/specials'),
 				}"
+				layout="icon-start"
+				value="/specials"
 				@click="() => router.push('/specials')"
 			>
-				<OptimizedIcon icon="sparkles" class="mr-2" />
+				<OptimizedIcon class="mr-2" icon="sparkles" />
 				<IonLabel>{{ $t("Specials") }}</IonLabel>
 			</IonSegmentButton>
 
 			<IonSegmentButton
-				value="/genre"
-				layout="icon-start"
 				:class="{
 					'bg-focus': route.fullPath.startsWith('/genre'),
 				}"
+				layout="icon-start"
+				value="/genre"
 				@click="() => router.push('/genre')"
 			>
-				<OptimizedIcon icon="witchHat" class="mr-2" />
+				<OptimizedIcon class="mr-2" icon="witchHat" />
 				<IonLabel>{{ $t("Genres") }}</IonLabel>
 			</IonSegmentButton>
 
 			<IonSegmentButton
-				value="/person"
-				layout="icon-start"
 				:class="{
 					'bg-focus': route.fullPath.startsWith('/person'),
 				}"
+				layout="icon-start"
+				value="/person"
 				@click="() => router.push('/person')"
 			>
-				<OptimizedIcon icon="user" class="mr-2" />
+				<OptimizedIcon class="mr-2" icon="user" />
 				<IonLabel>{{ $t("People") }}</IonLabel>
 			</IonSegmentButton>
 		</IonSegment>
 	</IonToolbar>
 </template>
 
-<style scoped lang="scss">
+<style lang="scss" scoped>
 ion-toolbar {
-	@apply bg-slate-light-1 dark:bg-slate-dark-3;
+	@apply bg-surface-1;
 	--color-background: var(--color-background);
 	--background: transparent !important;
 }
@@ -110,6 +110,7 @@ ion-segment {
 ion-segment-button::part(indicator-background) {
 	@apply bg-focus;
 }
+
 ion-segment-button::part(native) {
 }
 </style>

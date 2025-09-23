@@ -80,13 +80,7 @@ function onNotify(data: any) {
 }
 
 function onUpdateContent(data: any) {
-	console.log('onUpdateContent', data);
 	queryClient.invalidateQueries(data).then();
-
-	// const currentSong = useStore(store, state => state.music.currentSong);
-	// if (data?.id === currentSong.value?.id) {
-	// 	setCurrentSong(currentSong.value);
-	// }
 }
 
 async function onCommand(data: any) {

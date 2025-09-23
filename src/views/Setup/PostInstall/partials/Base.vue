@@ -81,17 +81,17 @@ watch(serverName, (value) => {
 			<p class="mb-4 text-sm">
 				{{ $t('By using this NoMercy app, a NoMercy MediaServer, or any of our services, you agree to the') }}
 				<a
+					class="text-theme-10 hover:underline"
 					href="https://nomercy.tv/privacy-policy"
 					target="_blank"
-					class="text-theme-10 hover:underline"
 				>
 					{{ $t('Privacy Policy') }}
 				</a>
 				{{ $t('and') }}
 				<a
+					class="text-theme-10 hover:underline"
 					href="https://nomercy.tv/terms-of-service"
 					target="_blank"
-					class="text-theme-10 hover:underline"
 				>
 					{{ $t('Terms of Service') }}
 				</a>.

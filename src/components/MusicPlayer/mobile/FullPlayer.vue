@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import { computed, ref, watch } from 'vue';
 import { IonContent, IonModal } from '@ionic/vue';
 import type { Swiper } from 'swiper';
@@ -12,7 +12,6 @@ import {
 	queue,
 	setFullPlayerModalOpen,
 } from '@/store/audioPlayer';
-import { useAutoThemeColors } from '@/store/preferences';
 import type { PaletteColors } from '@/lib/colorHelper';
 import { pickPaletteColor } from '@/lib/colorHelper';
 import { colorPalette } from '@/store/ui';
@@ -84,19 +83,7 @@ watch(currentSong, (value) => {
 	swiper.value?.$el?.swiper.slideTo(current);
 });
 
-const focusColor = computed(() => {
-	if (!useAutoThemeColors.value)
-		return 'var(--color-theme-7)';
-
-	return pickPaletteColor(
-		currentSong.value?.color_palette?.backdrop
-		?? currentSong.value?.color_palette?.cover,
-		20,
-		160,
-	)
-		.replace(/,/gu, ' ')
-		.replace('rgb(', '');
-});
+const focusColor = computed(() => pickPaletteColor(currentSong.value?.color_palette?.cover, 20, 160));
 
 function handleSwiperChange(swiper: Swiper) {
 	if (swiper.touches.diff === 0)
@@ -146,38 +133,45 @@ async function onWillDismiss() {
 	<IonModal
 		id="fullPlayer"
 		key="fullPlayer"
-		:is-open="fullPlayerModalOpen"
-		:initial-breakpoint="1"
 		:breakpoints="[0, 1]"
+		:initial-breakpoint="1"
+		:is-open="fullPlayerModalOpen"
 		@will-dismiss="onWillDismiss"
 	>
 		<IonContent
 			ref="content"
+			:class="{
+				'is-open': lyricsSize === 'full',
+			}"
 			:fullscreen="true"
-			:style="`--color-focus: ${focusColor}`"
+			:style="
+				focusColor
+					? `--color-theme-8: ${focusColor};`
+					: ''"
 		>
 			<ChristmasSnow />
 
 			<div
-				class="relative z-0 flex h-screen min-h-screen flex-col items-center justify-between gap-2 w-inherit scrollbar-none text-slate-light-12 dark:text-slate-dark-12 overflow-clip"
+				class="relative z-0 flex h-screen min-h-screen flex-col items-center justify-between gap-2 w-inherit scrollbar-none text-surface-12 overflow-clip"
 			>
 				<div
-					class="pointer-events-none absolute inset-0 w-full bg-spotifyBottom bg-focus transition-all duration-500"
+					class="pointer-events-none absolute inset-0 w-full transition-all duration-500"
+					style="background: linear-gradient(to bottom, hsl(from var(--color-theme-8) h s 30%), hsl(from var(--color-theme-8) h s 5%));"
 				/>
 
 				<TopRow class="pt-safe px-6" />
 
 				<SwiperComponent
-					ref="swiper"
 					:key="currentPlaylist!"
-					:slides-per-view="1"
+					ref="swiper"
 					:initial-slide="currentFullPlaylistItem"
 					:loop="true"
+					:slides-per-view="1"
 					class="w-available swiper isolate z-0"
 					@touch-end="handleSwiperChange"
 				>
 					<template v-for="(item, index) in fullPlaylist ?? []" :key="item.id">
-						<swiper-slide class="h-full" :data-index="index" :data-id="item.id">
+						<swiper-slide :data-id="item.id" :data-index="index" class="h-full">
 							<div
 								class="frosting w-available max-w-2xl h-auto aspect-square shadow mx-6 relative items-center flex"
 							>
@@ -201,19 +195,19 @@ async function onWillDismiss() {
 			</div>
 
 			<div
-				class="frosting relative mx-3 mb-4 -mt-10 rounded-2xl pt-10 w-available bg-focus/60 shadow"
+				class="frosting relative mx-3 mb-4 -mt-10 mb-10 rounded-2xl pt-10 w-available bg-focus/60 shadow"
 			>
 				<div
 					class="absolute top-0 z-10 flex w-full items-center rounded-t-2xl pr-2 pl-4 font-semibold"
 				>
 					<span>{{ $t("Lyrics") }}</span>
-					<MusicButton label="expand" class="ml-auto" :onclick="handleExpand">
+					<MusicButton :onclick="handleExpand" class="ml-auto" label="expand">
 						<OptimizedIcon
 							v-if="lyricsSize === 'full'"
-							icon="arrowExitFullscreen"
 							class="h-5 w-5"
+							icon="arrowExitFullscreen"
 						/>
-						<OptimizedIcon v-else icon="arrowEnterFullscreen" class="h-5 w-5" />
+						<OptimizedIcon v-else class="h-5 w-5" icon="arrowEnterFullscreen" />
 					</MusicButton>
 				</div>
 				<div
@@ -222,7 +216,7 @@ async function onWillDismiss() {
 
 				<div
 					ref="lyricsContainer"
-					class="relative w-full mb-0 flex-col overflow-auto scroll-smooth rounded-b-2xl p-4 transition-transform duration-150 h-[25rem]"
+					class="relative w-full mb-0 flex-col overflow-auto scroll-smooth rounded-b-2xl p-4 transition-transform duration-150 h-[25rem] mb-[4.5rem]"
 				>
 					<LyricsOverlay class="sm:hidden" />
 				</div>
@@ -231,7 +225,7 @@ async function onWillDismiss() {
 	</IonModal>
 </template>
 
-<style scoped lang="scss">
+<style lang="scss" scoped>
 ion-modal {
 	--height: 100%;
 	--ion-color-step-350: transparent;
@@ -252,6 +246,9 @@ ion-modal::part(content) {
 }
 
 ion-content::part(background) {
-	@apply bg-slate-light-1 dark:bg-slate-dark-1;
+	background: linear-gradient(to bottom, hsl(from var(--color-theme-8) h s 16%), hsl(from var(--color-theme-8) h s 0%));
+}
+ion-content.is-open::part(background) {
+	background: linear-gradient(to bottom, hsl(from var(--color-theme-8) h s 6%), hsl(from var(--color-theme-8) h s 0%));
 }
 </style>

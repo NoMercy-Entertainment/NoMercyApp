@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import { IonContent, IonPage } from '@ionic/vue';
 import { useQueryClient } from '@tanstack/vue-query';
 import { useToast } from 'primevue/usetoast';
@@ -66,7 +66,7 @@ async function handleDelete() {
 					</button>
 				</template>
 
-				<template v-for="device in devices ?? []">
+				<template v-for="device in devices ?? []" :key="device.id">
 					<ServerDeviceCard
 						v-if="device?.id"
 						:server="device"

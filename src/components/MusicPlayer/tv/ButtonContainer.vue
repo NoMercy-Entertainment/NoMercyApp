@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import type { PropType } from 'vue';
 import { watch } from 'vue';
 
@@ -59,28 +59,28 @@ function handleQueue(e?: MouseEvent) {
 	>
 		<div class="flex gap-4">
 			<MediaLikeButton
-				:data="currentSong"
 				:color="color"
+				:data="currentSong"
 				class-name="children:h-7 h-10 children:w-7 w-10"
 			/>
 		</div>
 
 		<div
-			class="fixed left-1/2 mx-auto flex w-fit -translate-x-1/2 items-center justify-center gap-4 rounded-xl bg-black/20 text-white px-4 py-3"
 			:data-size="musicSize"
+			class="fixed left-1/2 mx-auto flex w-fit -translate-x-1/2 items-center justify-center gap-4 rounded-xl bg-black/20 px-4 py-3"
 		>
 			<ShuffleButton class="h-10 w-10" />
 			<PreviousButton class="h-10 w-10" />
 
 			<PlaybackButton
 				id="playback-button"
-				class="h-12 w-12 !rounded-full"
 				:class="
 					color === 'white'
-						? 'children:fill-auto-300 children:w-9 children:h-9 active:ring-2 ring-offset-4 focus:outline active:outline outline-4 outline-auto-300 text-black !rounded-full'
+						? 'children:fill-surface-5 children:w-9 children:h-9 active:ring-2 ring-offset-4 focus:outline active:outline outline-4 border-theme-8 !text-black !rounded-full bg-theme-8'
 						: 'text-black'
 				"
 				:style="`background-color: ${color};`"
+				class="h-12 w-12 !rounded-full"
 			/>
 
 			<NextButton class="h-10 w-10" />
@@ -93,21 +93,21 @@ function handleQueue(e?: MouseEvent) {
 			/>
 
 			<MusicButton
-				label="Queue"
 				:onclick="handleQueue"
 				class="h-11 w-11 children:w-7 children:h-7 children:!fill-white"
+				label="Queue"
 			>
-				<OptimizedIcon icon="currentPlaylist" class="h-11 w-11" />
+				<OptimizedIcon class="h-11 w-11" icon="currentPlaylist" />
 			</MusicButton>
 
 			<MusicButton
-				label="Dark mode"
 				:onclick="toggleDarkMode"
 				class="h-11 w-11 children:w-7 children:h-7 children:!fill-white"
+				label="Dark mode"
 			>
-				<OptimizedIcon v-if="isDarkMode" icon="moon" class="h-11 w-11" />
+				<OptimizedIcon v-if="isDarkMode" class="h-11 w-11" icon="moon" />
 
-				<OptimizedIcon v-else icon="sun" class="h-11 w-11" />
+				<OptimizedIcon v-else class="h-11 w-11" icon="sun" />
 			</MusicButton>
 		</div>
 	</div>

@@ -3,7 +3,7 @@ import { RouterLink, useRoute } from 'vue-router';
 import { IonIcon, IonItem, IonList, IonRippleEffect, isPlatform } from '@ionic/vue';
 import { arrowRefreshVertical, doorOpen, gridMasonry, monitor, moonDiagonal, serverSwitch } from '@Icons/index';
 
-import { darkMode } from '@/store/colorScheme';
+import { scheme } from '@/store/colorScheme';
 
 import ProfileMenuServerSection from '@/Layout/Mobile/components/ProfileMenuServerSection.vue';
 import BottomFlyout from '@/Layout/Mobile/components/BottomFlyout.vue';
@@ -155,7 +155,7 @@ async function handleOpenApp() {
 				<button
 					class="flex justify-center items-center self-stretch w-available h-full flex-grow-0 flex-shrink-0 relative pl-2 py-2.5 rounded-md bg-transparent border border-transparent"
 					no-ring
-					@click="darkMode = !darkMode"
+					@click="scheme = scheme === 'light' ? 'dark' : 'light'"
 				>
 					<IonIcon
 						:icon="moonDiagonal"
@@ -172,7 +172,11 @@ async function handleOpenApp() {
 						</span>
 					</label>
 
-					<Toggle :model-value="darkMode" class="pointer-events-none" />
+					<Toggle
+						id="toggleScheme"
+						:model-value="scheme === 'dark'"
+						@update:model-value="value => scheme = value ? 'dark' : 'light'"
+					/>
 				</button>
 			</IonItem>
 
@@ -209,7 +213,7 @@ ion-list {
 
 ion-item {
 	--background: transparent;
-	--color: rgb(var(--color-text));
+	--color: var(--color-text);
 }
 
 ion-item::part(detail-icon) {

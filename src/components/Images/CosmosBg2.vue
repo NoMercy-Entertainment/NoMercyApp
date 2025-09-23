@@ -1,5 +1,6 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import { isPlatform } from '@ionic/vue';
+import { tmdbImageBaseUrl } from '@/config/config.ts';
 
 const images = [
 	'/prSfAi1xGrhLQNxVSUFh61xQ4Qy.jpg',
@@ -29,10 +30,10 @@ function calculateTranslation(index: number, total: number) {
 
 <template>
 	<div
-		class="absolute inset-0 flex w-full h-full bg-white dark:bg-black z-0 overflow-clip rounded-md items-center justify-center"
+		class="absolute inset-0 flex w-full h-full bg-white/11 dark:bg-black/11 z-0 overflow-clip rounded-md items-center justify-center"
 	>
 		<div
-			class="absolute -inset-6 z-0 flex h-available w-available to-transparent bg-gradient-circle-t from-focus/8 dark:from-focus/6 from-10%"
+			class="absolute -inset-6 z-0 flex h-available w-available to-transparent bg-gradient-circle-t from-theme-8/10 dark:from-theme-8/6 from-10%"
 		/>
 		<div
 			class="absolute top-[45%] sm:top-[49%] z-10 flex sm:w-[2850px] sm:min-w-[2850px] -translate-x-0 mx-auto max-w-available"
@@ -42,40 +43,17 @@ function calculateTranslation(index: number, total: number) {
 			>
 				<template v-for="(image, index) in images" :key="image">
 					<div
-						class="z-10 h-auto w-36 rounded-lg aspect-poster sm:w-full"
 						:style="{
-							transform: `rotate(${calculateRotation(
-								index,
-								images.length,
-							)}deg) translateY(${calculateTranslation(
-								index,
-								images.length,
-							)}px)`,
+							transform: `
+							rotate(${calculateRotation(index, images.length)}deg)
+							translateY(${calculateTranslation(index, images.length)}px
+							)`,
 						}"
+						class="z-10 h-auto w-36 rounded-lg aspect-poster sm:w-full"
 					>
 						<img
-							:src="`https://media.themoviedb.org/t/p/w300${image}`"
-							alt=""
-							class="h-full w-full"
+							:src="`${tmdbImageBaseUrl}/w300${image}`"
 							:style="{
-								// maskImage: `linear-gradient(180deg,
-								// 			rgba(255, 255, 255, 0.00) 10%,
-								// 			rgba(255, 255, 255, 0.01) 16.67%,
-								// 			rgba(255, 255, 255, 0.04) 23.33%,
-								// 			rgba(255, 255, 255, 0.08) 30%,
-								// 			rgba(255, 255, 255, 0.15) 36.67%,
-								// 			rgba(255, 255, 255, 0.23) 43.33%,
-								// 			rgba(255, 255, 255, 0.33) 50%,
-								// 			rgba(255, 255, 255, 0.44) 56.67%,
-								// 			rgba(255, 255, 255, 0.56) 63.33%,
-								// 			rgba(255, 255, 255, 0.67) 70%,
-								// 			rgba(255, 255, 255, 0.77) 76.67%,
-								// 			rgba(255, 255, 255, 0.85) 83.33%,
-								// 			rgba(255, 255, 255, 0.92) 90%,
-								// 			rgba(255, 255, 255, 0.96) 96.67%,
-								// 			rgba(255, 255, 255, 0.99) 93.33%,
-								// 			#FFF 100%
-								// 		)`,
 								maskImage: `linear-gradient(180deg,
                     rgba(255, 255, 255, 0%) 0%,
                     rgba(255, 255, 255, 2%) 7%,
@@ -95,14 +73,16 @@ function calculateTranslation(index: number, total: number) {
                     #FFF 100%
                   )`,
 							}"
+							alt=""
+							class="h-full w-full"
 						>
 					</div>
 				</template>
 			</div>
 		</div>
 		<svg
-			xmlns="http://www.w3.org/2000/svg"
 			class="hidden z-0 dark:flex pointer-events-none absolute inset-0 opacity-40 h-full w-full"
+			xmlns="http://www.w3.org/2000/svg"
 		>
 			<filter id="noiseFilter">
 				<feTurbulence baseFrequency="0.22" />
@@ -114,7 +94,7 @@ function calculateTranslation(index: number, total: number) {
 				/>
 			</filter>
 
-			<rect width="100%" height="100%" filter="url(#noiseFilter)" />
+			<rect filter="url(#noiseFilter)" height="100%" width="100%" />
 		</svg>
 	</div>
 </template>

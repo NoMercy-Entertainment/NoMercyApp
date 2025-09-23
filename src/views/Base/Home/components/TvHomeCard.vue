@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import type { PropType } from 'vue';
 
 import type { Component } from '@/lib/routerHelper';
@@ -23,7 +23,7 @@ defineProps({
 <template>
 	<div
 		v-if="carousel?.props?.data"
-		class="w-full h-full absolute right-0 top-0 overflow-hidden bg-black"
+		class="w-full h-full absolute right-0 top-0 overflow-hidden bg-black text-surface-12"
 	>
 		<img
 			:src="`${currentServer?.serverBaseUrl}/images/original${carousel?.props?.data?.backdrop}`"
@@ -45,20 +45,20 @@ defineProps({
 	</div>
 
 	<div
-		class="flex flex-col justify-start items-start absolute left-8 gap-5 bottom-4"
+		class="flex flex-col justify-start items-start absolute left-8 gap-5 bottom-4 text-surface-12"
 	>
 		<div
 			class="flex flex-col justify-start items-start flex-grow-0 flex-shrink-0 relative gap-1"
 		>
 			<div
 				v-if="carousel.props.data?.content_ratings"
-				class="flex items-center gap-2 text-xs font-medium text-left text-slate-dark-11"
+				class="flex items-center gap-2 text-xs font-medium text-left"
 			>
 				<ContentRating :ratings="carousel.props.data?.content_ratings" />
 				<span class="text-3xs">( {{ carousel.props.data?.year }} )</span>
 			</div>
 
-			<p class="text-2xl text-left text-slate-dark-12 line-clamp-1 w-4/5">
+			<p class="text-2xl text-left line-clamp-1 w-4/5">
 				{{ carousel.props?.data?.title }}
 			</p>
 
@@ -74,8 +74,8 @@ defineProps({
 				v-if="carousel.props?.data?.link"
 				id="watch_now"
 				:to="carousel.props?.data?.link"
+				class="flex-grow-0 flex-shrink-0 px-4 py-2 rounded-3xl bg-surface-4 focus-visible:ring-[3px] ring-inset focus-visible:ring-focus"
 				tabindex="0"
-				class="text-black flex-grow-0 flex-shrink-0 px-4 py-2 rounded-3xl bg-slate-light-4 focus-visible:ring-[3px] ring-inset focus-visible:ring-focus"
 			>
 				{{ $t("Watch Now") }}
 			</RouterLink>

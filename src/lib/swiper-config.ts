@@ -83,36 +83,19 @@ export function swiperConfig(isBackdrop: boolean) {
 			enabled: true,
 		},
 		breakpointsBase: 'window',
-		virtual: false,
+		virtual: true,
 		updateOnWindowResize: true,
 		speed: 100,
 		spaceBefore: 10,
 		slidesOffsetAfter: 48,
 		spaceBetween: 12,
-		keyboard: true,
-		// mousewheel: true,
+		keyboard: false,
 		mouseWheelOptions: {
 			enabled: true,
 			forceToAxis: true,
 			invert: true,
 			releaseOnEdges: true,
 			sensitivity: 10,
-		},
-		onProgress: (swiper: any) => {
-			// const slides = swiper.slides;
-			// const progress = swiper.progress;
-			// slides.forEach((slide: any) => {
-			//     const slideProgress = slide.progress;
-			//     const slideOffset = slide.swiperSlideOffset;
-			//     const offset = (progress - slideProgress) * slideOffset;
-			//     slide.style.transform = `translateX(${offset}px)`;
-			// });
-		},
-		onSlideChange: (swiper: any) => {
-			// const slides = swiper.slides;
-			// slides.forEach((slide: any) => {
-			//     slide.style.transform = '';
-			// });
 		},
 	} as SwiperOptions;
 }

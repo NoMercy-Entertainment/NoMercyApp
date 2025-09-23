@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import { onMounted, watch } from 'vue';
 import type { PropType } from 'vue';
 
@@ -27,16 +27,16 @@ watch(props, (value) => {
 <template>
 	<div
 		:key="selected?.id"
+		:style="focusColor ? `--color-theme-8: ${focusColor}` : ''"
 		class="w-full h-full absolute left-0 top-0 bg-[#131314]"
-		:style="focusColor ? `--color-focus: ${focusColor}` : ''"
 	>
 		<div
 			class="w-available h-available absolute left-[202px] top-0 overflow-hidden bg-focus"
 		>
 			<img
-				class="w-available h-available absolute left-[-0.39px] top-[-0.39px] opacity-40 object-cover object-center"
 				:src="`${currentServer?.serverBaseUrl}${selected?.cover}`"
 				alt=""
+				class="w-available h-available absolute left-[-0.39px] top-[-0.39px] opacity-40 object-cover object-center"
 			>
 			<div
 				class="w-available h-available absolute left-[-0.39px] top-[-0.39px]"

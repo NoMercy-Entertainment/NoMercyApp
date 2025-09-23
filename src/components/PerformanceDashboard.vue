@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import { computed, onMounted, onUnmounted, ref } from 'vue';
 import { usePerformanceMonitor } from '@/composables/usePerformanceMonitor';
 
@@ -147,7 +147,7 @@ function generateRecommendations() {
 		newRecommendations.push({
 			title: 'Improve Largest Contentful Paint',
 			description:
-        'Optimize images, reduce server response times, and eliminate render-blocking resources',
+          'Optimize images, reduce server response times, and eliminate render-blocking resources',
 			impact: 'High',
 			priority: 'high' as const,
 		});
@@ -158,7 +158,7 @@ function generateRecommendations() {
 		newRecommendations.push({
 			title: 'Reduce Memory Usage',
 			description:
-        'Consider implementing virtual scrolling and cleaning up unused resources',
+          'Consider implementing virtual scrolling and cleaning up unused resources',
 			impact: 'Medium',
 			priority: 'medium' as const,
 		});
@@ -180,7 +180,7 @@ function generateRecommendations() {
 		newRecommendations.push({
 			title: 'Improve Cache Strategy',
 			description:
-        'Optimize service worker caching and implement better cache headers',
+          'Optimize service worker caching and implement better cache headers',
 			impact: 'Medium',
 			priority: 'medium' as const,
 		});
@@ -333,8 +333,8 @@ onMounted(() => {
 			<h3>Core Web Vitals</h3>
 			<div class="metric-grid">
 				<div
-					class="metric-card"
 					:class="getMetricStatus(webVitals.lcp, 2500, 4000)"
+					class="metric-card"
 				>
 					<div class="metric-title">
 						Largest Contentful Paint
@@ -348,8 +348,8 @@ onMounted(() => {
 				</div>
 
 				<div
-					class="metric-card"
 					:class="getMetricStatus(webVitals.fid, 100, 300)"
+					class="metric-card"
 				>
 					<div class="metric-title">
 						First Input Delay
@@ -363,8 +363,8 @@ onMounted(() => {
 				</div>
 
 				<div
-					class="metric-card"
 					:class="getMetricStatus(webVitals.cls, 0.1, 0.25)"
+					class="metric-card"
 				>
 					<div class="metric-title">
 						Cumulative Layout Shift
@@ -473,7 +473,7 @@ onMounted(() => {
 			<h3>Memory Usage</h3>
 			<div class="memory-metrics">
 				<div class="memory-chart">
-					<canvas ref="memoryChart" width="400" height="200" />
+					<canvas ref="memoryChart" height="200" width="400" />
 				</div>
 				<div class="memory-stats">
 					<div class="stat-item">
@@ -506,7 +506,7 @@ onMounted(() => {
 		<div class="metric-section">
 			<h3>Performance Timeline</h3>
 			<div class="timeline-container">
-				<canvas ref="timelineChart" width="800" height="300" />
+				<canvas ref="timelineChart" height="300" width="800" />
 			</div>
 		</div>
 
@@ -517,8 +517,8 @@ onMounted(() => {
 				<div
 					v-for="(recommendation, index) in recommendations"
 					:key="index"
-					class="recommendation-item"
 					:class="recommendation.priority"
+					class="recommendation-item"
 				>
 					<div class="recommendation-title">
 						{{ recommendation.title }}
@@ -539,7 +539,7 @@ onMounted(() => {
 			<div class="realtime-metrics">
 				<div class="realtime-item">
 					<span class="label">FPS:</span>
-					<span class="value" :class="getFPSStatus(currentFPS)">{{
+					<span :class="getFPSStatus(currentFPS)" class="value">{{
 						currentFPS
 					}}</span>
 				</div>
@@ -562,7 +562,7 @@ onMounted(() => {
 	max-width: 1200px;
 	margin: 0 auto;
 	font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-	@apply text-slate-lightA-12 dark:text-slate-darkA-12;
+	@apply text-slate-12 dark:text-slate-12;
 }
 
 .dashboard-header {
@@ -571,12 +571,12 @@ onMounted(() => {
 	align-items: center;
 	margin-bottom: 2rem;
 	padding-bottom: 1rem;
-	@apply border-b-2 border-slate-lightA-6 dark:border-slate-darkA-6;
+	@apply border-b-2 border-slate-6 dark:border-slate-6;
 }
 
 .dashboard-header h2 {
 	margin: 0;
-	@apply text-slate-lightA-12 dark:text-slate-darkA-12;
+	@apply text-slate-12 dark:text-slate-12;
 }
 
 .header-controls {
@@ -590,12 +590,12 @@ onMounted(() => {
 	border-radius: 0.375rem;
 	cursor: pointer;
 	transition: background-color 0.2s;
-	@apply border border-slate-lightA-7 dark:border-slate-darkA-7 bg-slate-lightA-1 dark:bg-slate-darkA-1 text-slate-lightA-12 dark:text-slate-darkA-12;
+	@apply border border-slate-7 dark:border-slate-7 bg-surface-alpha-1 dark:bg-surface-alpha-1 text-slate-12 dark:text-slate-alpha-12;
 }
 
 .refresh-btn:hover,
 .clear-btn:hover {
-	@apply bg-slate-lightA-3 dark:bg-slate-darkA-3;
+	@apply bg-surface-alpha-3 dark:bg-surface-alpha-3;
 }
 
 .refresh-btn:disabled {
@@ -604,7 +604,7 @@ onMounted(() => {
 }
 
 .clear-btn {
-	@apply bg-red-lightA-2 dark:bg-red-darkA-2 text-red-lightA-11 dark:text-red-darkA-11 border-red-lightA-7 dark:border-red-darkA-7;
+	@apply bg-red-alpha-2 dark:bg-red-alpha-2 text-red-alpha-11 dark:text-red-alpha-11 border-red-alpha-7 dark:border-red-alpha-7;
 }
 
 .metric-section {
@@ -614,7 +614,7 @@ onMounted(() => {
 .metric-section h3 {
 	margin: 0 0 1rem 0;
 	font-size: 1.25rem;
-	@apply text-slate-lightA-12 dark:text-slate-darkA-12;
+	@apply text-slate-alpha-12 dark:text-slate-alpha-12;
 }
 
 .metric-grid {
@@ -626,37 +626,37 @@ onMounted(() => {
 .metric-card {
 	padding: 1rem;
 	border-radius: 0.5rem;
-	@apply border-2 border-slate-lightA-6 dark:border-slate-darkA-6 bg-slate-lightA-1 dark:bg-slate-darkA-1;
+	@apply border-2 border-slate-alpha-6 dark:border-slate-alpha-6 bg-surface-alpha-1 dark:bg-surface-alpha-1;
 }
 
 .metric-card.good {
-	@apply border-green-lightA-8 dark:border-green-darkA-8 bg-green-lightA-2 dark:bg-green-darkA-2;
+	@apply border-green-alpha-8 dark:border-green-alpha-8 bg-green-alpha-2 dark:bg-green-alpha-2;
 }
 
 .metric-card.needs-improvement {
-	@apply border-amber-lightA-8 dark:border-amber-darkA-8 bg-amber-lightA-2 dark:bg-amber-darkA-2;
+	@apply border-amber-alpha-8 dark:border-amber-alpha-8 bg-amber-alpha-2 dark:bg-amber-alpha-2;
 }
 
 .metric-card.poor {
-	@apply border-red-lightA-8 dark:border-red-darkA-8 bg-red-lightA-2 dark:bg-red-darkA-2;
+	@apply border-red-alpha-8 dark:border-red-alpha-8 bg-red-alpha-2 dark:bg-red-alpha-2;
 }
 
 .metric-title {
 	font-weight: 600;
 	margin-bottom: 0.5rem;
-	@apply text-slate-lightA-11 dark:text-slate-darkA-11;
+	@apply text-slate-alpha-11 dark:text-slate-alpha-11;
 }
 
 .metric-value {
 	font-size: 1.5rem;
 	font-weight: 700;
 	margin-bottom: 0.25rem;
-	@apply text-slate-lightA-12 dark:text-slate-darkA-12;
+	@apply text-slate-alpha-12 dark:text-slate-alpha-12;
 }
 
 .metric-description {
 	font-size: 0.875rem;
-	@apply text-slate-lightA-10 dark:text-slate-darkA-10;
+	@apply text-slate-alpha-10 dark:text-slate-alpha-10;
 }
 
 .resource-metrics {
@@ -676,7 +676,7 @@ onMounted(() => {
 	justify-content: space-between;
 	padding: 0.5rem;
 	border-radius: 0.25rem;
-	@apply bg-slate-lightA-2 dark:bg-slate-darkA-2;
+	@apply bg-surface-alpha-2 dark:bg-surface-alpha-2;
 }
 
 .breakdown-grid {
@@ -693,7 +693,7 @@ onMounted(() => {
 .breakdown-item > div {
 	padding: 0.25rem;
 	border-radius: 0.25rem;
-	@apply bg-slate-lightA-2 dark:bg-slate-darkA-2;
+	@apply bg-surface-alpha-2 dark:bg-surface-alpha-2;
 }
 
 .memory-metrics {
@@ -713,13 +713,13 @@ onMounted(() => {
 	justify-content: space-between;
 	padding: 0.5rem;
 	border-radius: 0.25rem;
-	@apply bg-slate-lightA-2 dark:bg-slate-darkA-2;
+	@apply bg-surface-alpha-2 dark:bg-surface-alpha-2;
 }
 
 .timeline-container {
 	border-radius: 0.5rem;
 	padding: 1rem;
-	@apply bg-slate-lightA-1 dark:bg-slate-darkA-1 border border-slate-lightA-6 dark:border-slate-darkA-6;
+	@apply bg-surface-alpha-1 dark:bg-surface-alpha-1 border border-slate-alpha-6 dark:border-slate-alpha-6;
 }
 
 .recommendations {
@@ -735,45 +735,45 @@ onMounted(() => {
 }
 
 .recommendation-item.high {
-	@apply bg-red-lightA-2 dark:bg-red-darkA-2 border-red-lightA-8 dark:border-red-darkA-8;
+	@apply bg-red-alpha-2 dark:bg-red-alpha-2 border-red-alpha-8 dark:border-red-alpha-8;
 }
 
 .recommendation-item.medium {
-	@apply bg-amber-lightA-2 dark:bg-amber-darkA-2 border-amber-lightA-8 dark:border-amber-darkA-8;
+	@apply bg-amber-alpha-2 dark:bg-amber-alpha-2 border-amber-alpha-8 dark:border-amber-alpha-8;
 }
 
 .recommendation-item.low {
-	@apply bg-green-lightA-2 dark:bg-green-darkA-2 border-green-lightA-8 dark:border-green-darkA-8;
+	@apply bg-green-alpha-2 dark:bg-green-alpha-2 border-green-alpha-8 dark:border-green-alpha-8;
 }
 
 .recommendation-title {
 	font-weight: 600;
 	margin-bottom: 0.5rem;
-	@apply text-slate-lightA-12 dark:text-slate-darkA-12;
+	@apply text-slate-alpha-12 dark:text-slate-alpha-12;
 }
 
 .recommendation-description {
 	margin-bottom: 0.25rem;
-	@apply text-slate-lightA-10 dark:text-slate-darkA-10;
+	@apply text-slate-alpha-10 dark:text-slate-alpha-10;
 }
 
 .label {
-	@apply text-slate-lightA-11 dark:text-slate-darkA-11;
+	@apply text-slate-alpha-11 dark:text-slate-alpha-11;
 }
 
 .value {
-	@apply text-slate-lightA-12 dark:text-slate-darkA-12;
+	@apply text-slate-alpha-12 dark:text-slate-alpha-12;
 }
 
 .resource-type,
 .resource-count,
 .resource-size,
 .resource-time {
-	@apply text-slate-lightA-11 dark:text-slate-darkA-11;
+	@apply text-slate-alpha-11 dark:text-slate-alpha-11;
 }
 
 h4 {
-	@apply text-slate-lightA-12 dark:text-slate-darkA-12;
+	@apply text-slate-alpha-12 dark:text-slate-alpha-12;
 }
 
 .recommendation-impact {
@@ -792,29 +792,29 @@ h4 {
 	justify-content: space-between;
 	padding: 1rem;
 	border-radius: 0.5rem;
-	@apply bg-slate-lightA-1 dark:bg-slate-darkA-1 border border-slate-lightA-6 dark:border-slate-darkA-6;
+	@apply bg-surface-alpha-1 dark:bg-surface-alpha-1 border border-slate-alpha-6 dark:border-slate-alpha-6;
 }
 
 .label {
 	font-weight: 500;
-	@apply text-slate-lightA-11 dark:text-slate-darkA-11;
+	@apply text-slate-alpha-11 dark:text-slate-alpha-11;
 }
 
 .value {
 	font-weight: 600;
-	@apply text-slate-lightA-12 dark:text-slate-darkA-12;
+	@apply text-slate-alpha-12 dark:text-slate-alpha-12;
 }
 
 .value.good {
-	@apply text-green-lightA-11 dark:text-green-darkA-11;
+	@apply text-green-alpha-11 dark:text-green-alpha-11;
 }
 
 .value.needs-improvement {
-	@apply text-amber-lightA-11 dark:text-amber-darkA-11;
+	@apply text-amber-alpha-11 dark:text-amber-alpha-11;
 }
 
 .value.poor {
-	@apply text-red-lightA-11 dark:text-red-darkA-11;
+	@apply text-red-alpha-11 dark:text-red-alpha-11;
 }
 
 @media (max-width: 768px) {

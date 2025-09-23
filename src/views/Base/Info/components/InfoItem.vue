@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import { onMounted } from 'vue';
 import GenrePill from '@/components/Buttons/GenrePill.vue';
 
@@ -35,7 +35,7 @@ onMounted(() => {
 		class="relative grid w-full flex-shrink-0 flex-grow-0 grid-cols-7 items-start justify-start gap-1"
 	>
 		<p
-			class="flex-col sm:flex-row flex grid-cols-3 text-xs font-bold whitespace-nowrap uppercase text-slate-lightA-12/70 dark:text-slate-darkA-12/80"
+			class="flex-col sm:flex-row flex grid-cols-3 text-xs font-bold whitespace-nowrap uppercase text-surface-12/70 dark:text-surface-12/80"
 		>
 			{{ $t(title) }}
 		</p>
@@ -46,7 +46,7 @@ onMounted(() => {
 				v-for="(item, index) in data[keyName]"
 				:key="item?.id"
 				:class="data[keyName]?.length > 5 && keyName === 'genres' ? 'children:grayscale' : ''"
-				class="gap-1 children:whitespace-nowrap text-sm leading-[140%] text-slate-lightA-12 dark:text-slate-darkA-12/90 font-semibold"
+				class="gap-1 children:whitespace-nowrap text-sm leading-[140%] text-surface-12 dark:text-surface-12/90 font-semibold"
 			>
 				<span v-if="(typeof item === 'string')" class="inline-block">
 					{{ item }}
@@ -64,16 +64,16 @@ onMounted(() => {
 				<RouterLink
 					v-else-if="item?.url"
 					:to="item?.url"
-					target="_blank"
 					class="inline-block underline-offset-4 hover:underline focus-visible:underline"
+					target="_blank"
 				>
 					{{ item?.name }}
 				</RouterLink>
 				<a
 					v-else
 					:href="item?.link"
-					target="_blank"
 					class="inline-block underline-offset-4 hover:underline focus-visible:underline"
+					target="_blank"
 				>
 					<!--					<img v-if="item?.logo" -->
 					<!--						:src="`https://image.tmdb.org/t/p/w92${item?.logo}`" -->

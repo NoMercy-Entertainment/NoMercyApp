@@ -99,7 +99,7 @@ watch(serverList, (value) => {
 								<NoMercyAvatar :user="user" :size="40" />
 							</div>
 							<p
-								class="w-48 text-base font-semibold text-left text-slate-dark-1 dark:text-slate-light-1"
+								class="w-48 text-base font-semibold text-left "
 							>
 								{{ user.name }}
 							</p>
@@ -113,7 +113,7 @@ watch(serverList, (value) => {
 						>
 							<OptimizedIcon
 								icon="doorOut"
-								class="text-slate-dark-1 dark:text-slate-light-1"
+								class=""
 							/>
 							<span
 								class="flex-grow-0 flex-shrink-0 opacity-80 text-sm font-medium text-center text-[#e3e3e3]"
@@ -128,7 +128,7 @@ watch(serverList, (value) => {
 						>
 							<OptimizedIcon
 								icon="doorOut"
-								class="text-slate-dark-1 dark:text-slate-light-1"
+								class=""
 							/>
 							<span
 								class="flex-grow-0 flex-shrink-0 opacity-80 text-sm font-medium text-center text-[#e3e3e3]"

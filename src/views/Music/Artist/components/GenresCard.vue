@@ -23,12 +23,12 @@ defineProps({
 			>
 				<div class="flex items-center justify-start gap-2 px-2">
 					<div
-						class="text-center text-sm font-medium leading-tight"
 						:class="`${
 							tooDark(pickPaletteColor(colorPalette), 100)
-								? 'text-shite/12'
-								: 'text-black/12'
+								? 'text-black/12'
+								: 'text-white/12'
 						}`"
+						class="text-center text-sm font-medium leading-tight"
 					>
 						{{ $t(genre.name) }}
 					</div>

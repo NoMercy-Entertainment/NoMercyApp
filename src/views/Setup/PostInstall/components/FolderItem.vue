@@ -1,6 +1,6 @@
-<script setup lang="ts">
-import { computed, ref, toRaw, watch } from 'vue';
+<script lang="ts" setup>
 import type { PropType } from 'vue';
+import { computed, ref, toRaw, watch } from 'vue';
 import { useToast } from 'primevue/usetoast';
 import { useQueryClient } from '@tanstack/vue-query';
 
@@ -138,9 +138,11 @@ watch(library, () => {
 });
 
 const deleteConfirmOpen = ref(false);
+
 function openDeleteConfirm() {
 	deleteConfirmOpen.value = true;
 }
+
 function closeDeleteConfirm() {
 	deleteConfirmOpen.value = false;
 }
@@ -148,27 +150,30 @@ function closeDeleteConfirm() {
 
 <template>
 	<div
-		class="flex justify-start items-center self-stretch flex-grow-0 flex-shrink-0 gap-2"
+		class="flex justify-start items-center self-stretch flex-grow-0 flex-shrink-0 gap-2 text-surface-1"
 	>
 		<MultiSelect
 			id="encoderProfiles"
 			:model-value="encoderQualities"
-			placeholder="Select"
-			class="w-[160px]"
 			:options="availableQualities"
+			class="w-[160px]"
 			option-label="name"
+			placeholder="Select"
 			@update:model-value="handleEncoderQualitiesChange"
 		/>
 
 		<div class="flex flex-col justify-center items-center flex-grow gap-2">
 			<div
-				class="flex justify-start items-center self-stretch flex-grow-0 flex-shrink-0 h-10 relative overflow-hidden gap-2 pl-3 pr-2.5 py-2.5 rounded-[10px] bg-slate-light-12/3 dark:bg-slate-dark-12/[0.03] text-slate-dark-8 dark:text-slate-dark-11"
+				class="flex justify-start items-center self-stretch flex-grow-0 flex-shrink-0 h-10 relative overflow-hidden gap-2 pl-3 pr-2.5 py-2.5 rounded-[10px] bg-surface-10/5 hover:bg-surface-12/5 active:bg-surface-12/5 text-surface-12/12 hover:text-surface-12"
 			>
 				<p class="flex-grow w-available text-base font-semibold text-left">
 					{{ folder.folder.path }}
 				</p>
-				<button class="flex-grow-0 flex-shrink-0 cursor-pointer hover:text-slate-light-12 hover:dark:text-slate-dark-12" @click="openDeleteConfirm">
-					<MoooomIcon icon="trash" class-name="w-6 h-6" />
+				<button
+					class="flex-grow-0 flex-shrink-0 cursor-pointer hover:text-surface-1"
+					@click="openDeleteConfirm"
+				>
+					<MoooomIcon class-name="w-6 h-6" icon="trash" />
 				</button>
 			</div>
 		</div>
@@ -176,9 +181,9 @@ function closeDeleteConfirm() {
 
 	<DeleteFolderModal
 		:id="folder.folder.id"
+		:close="closeDeleteConfirm"
 		:library-id="library?.id"
 		:name="folder.folder.path"
-		:close="closeDeleteConfirm"
 		:open="deleteConfirmOpen"
 	/>
 </template>

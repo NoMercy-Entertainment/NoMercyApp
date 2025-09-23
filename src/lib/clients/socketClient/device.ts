@@ -8,6 +8,9 @@ import { deviceId } from '@/store/deviceInfo';
 
 const res = new UAParser().getResult();
 
+// @ts-ignore
+res.browser.name = navigator.brave ? 'Brave' : res.browser.name;
+
 export interface ClientInfo {
 	id: string;
 	browser: string;
@@ -65,7 +68,7 @@ export async function makeDeviceInfo(): Promise<ClientInfo> {
 
 	return {
 		id: localStorage.getItem('CapacitorStorage.deviceId') ?? deviceId.value,
-		browser: `${res.browser?.name} ${res.browser?.version}`,
+		browser: res.browser.name ?? '',
 		os: `${
 			info.model.toLowerCase().includes(info.operatingSystem.toLowerCase())
 				? ''

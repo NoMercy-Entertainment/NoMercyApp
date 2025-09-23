@@ -117,7 +117,7 @@ onMounted(() => {
 			<IonSpinner class="ion-padding" name="crescent" />
 		</div>
 	</template>
-	<template v-else-if="(!isMutating || !onlineStatus)">
+	<template v-else-if="!isMutating">
 		<component
 			:is="render?.component"
 			v-for="(render, index) in mutatedData ?? homeData ?? []"

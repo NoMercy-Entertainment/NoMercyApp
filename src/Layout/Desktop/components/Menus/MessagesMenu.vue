@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import { computed, onMounted, ref } from 'vue';
 
 import messagesState, { markAllMessagesRead } from '@/store/messages';
@@ -38,11 +38,11 @@ onMounted(() => {
 </script>
 
 <template>
-	<DropdownMenu class-name="my-1 rounded-md" :translate="translate">
+	<DropdownMenu :translate="translate" class-name="my-1 rounded-md">
 		<template #button>
 			<button
 				:aria-label="$t('Messages menu')"
-				class="relative my-1 flex flex-shrink-0 flex-grow-0 items-start justify-start gap-2 overflow-hidden rounded-md transition-colors duration-200 text-auto-12 hover:bg-focus/10 focus:bg-auto-12/2"
+				class="relative my-1 flex flex-shrink-0 flex-grow-0 items-start justify-start gap-2 overflow-hidden rounded-md transition-colors duration-200 hover:bg-focus/10 focus:bg-surface-1/2"
 			>
 				<template v-if="hasUnreadMessages">
 					<div
@@ -66,8 +66,8 @@ onMounted(() => {
 
 		<template #default="{ open }">
 			<div
-				class="flex w-screen flex-col items-start justify-start p-2 max-w-[89vw] sm:max-w-md"
 				:inert="!open"
+				class="flex w-screen flex-col items-start justify-start p-2 max-w-[89vw] sm:max-w-md"
 				style="box-shadow: 0 4px 7px 0 rgba(0, 0, 0, 0.08)"
 			>
 				<div
@@ -87,7 +87,7 @@ onMounted(() => {
 								@click="handleClick"
 							>
 								<p
-									class="flex-shrink-0 flex-grow-0 text-sm font-medium text-auto-10"
+									class="flex-shrink-0 flex-grow-0 text-sm font-medium text-surface-10"
 								>
 									{{ $t("Mark all as read") }}
 								</p>
@@ -104,7 +104,7 @@ onMounted(() => {
 								class="relative flex items-start justify-start gap-2 rounded-lg p-2"
 							>
 								<div
-									class="flex-shrink-0 flex-grow-0 self-stretch text-sm font-semibold text-slate-dark-10 dark:text-slate-light-10"
+									class="flex-shrink-0 flex-grow-0 self-stretch text-sm font-semibold text-slate-10 dark:text-slate-10"
 								>
 									{{ $t("No messages") }}
 								</div>

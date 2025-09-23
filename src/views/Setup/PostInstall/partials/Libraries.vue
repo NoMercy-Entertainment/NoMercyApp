@@ -12,6 +12,7 @@ import serverClient from '@/lib/clients/serverClient';
 import Button from '@/components/Button.vue';
 import LibraryItem from './LibraryItem.vue';
 import useServerClient from '@/lib/clients/useServerClient';
+import { IonSpinner } from '@ionic/vue';
 
 const props = defineProps({
 	setNextButtonLocked: {
@@ -22,7 +23,7 @@ const props = defineProps({
 
 const query = useQueryClient();
 
-const { data: libraries } = useServerClient<LibrariesResponse[]>({
+const { data: libraries, isLoading } = useServerClient<LibrariesResponse[]>({
 	path: 'dashboard/libraries',
 	queryKey: ['dashboard', 'libraries'],
 });
@@ -79,11 +80,14 @@ useSortable(el, list, {
 		<p class="mb-4 text-sm">
 			{{ $t('Add your media libraries to organize your content.') }}
 		</p>
-		<div ref="el" class="flex h-auto w-full flex-col overflow-y-auto text-start gap-1">
+		<template v-if="isLoading">
+			<div class="grid w-available h-available place-items-center overflow-hidden">
+				<IonSpinner class="ion-padding" name="crescent" />
+			</div>
+		</template>
+		<div v-else ref="el" class="flex h-auto w-full flex-col overflow-y-auto text-start gap-1">
 			<template v-for="(item, index) in list" :key="item.id">
-				<LibraryItem
-					v-model="list[index]"
-				/>
+				<LibraryItem v-model="list[index]" />
 			</template>
 		</div>
 		<div class="mt-4 flex w-full justify-start">

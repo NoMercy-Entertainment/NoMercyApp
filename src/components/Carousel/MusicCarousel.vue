@@ -1,14 +1,10 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import type { PropType } from 'vue';
 import { SwiperSlide } from 'swiper/vue';
 
-import type {
-	HomeDataItem,
-	MusicHomeResponseItem,
-} from '@/types/api/music/index.d';
+import type { HomeDataItem, MusicHomeResponseItem } from '@/types/api/music/index.d';
 
 import Carousel from '@/components/Carousel/Carousel.vue';
-import MusicCard from '@/components/Cards/MusicCard.vue';
 
 defineProps({
 	data: {
@@ -39,10 +35,10 @@ function handleClick(item: HomeDataItem) {
 <template>
 	<Carousel
 		v-if="data.items?.length > 0"
-		:title="data.title"
+		:disable-auto-aspect="true"
 		:index="index"
 		:limit-card-count-by="limitCardCountBy"
-		:disable-auto-aspect="true"
+		:title="data.title"
 	>
 		<template v-if="data.moreLink" #link>
 			<RouterLink
@@ -56,15 +52,15 @@ function handleClick(item: HomeDataItem) {
 		<SwiperSlide
 			v-for="item in data.items"
 			:key="item?.id"
-			class="flex py-1"
 			:virtual-index="index"
+			class="flex py-1"
 		>
-			<MusicCard
+			<NMMusicCard
 				v-if="item?.id"
 				:id="`item-${item?.name}-${item?.id}`"
 				:data="item"
-				class=""
 				:onclick="() => handleClick(item)"
+				class=""
 			/>
 		</SwiperSlide>
 	</Carousel>

@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import type { PropType } from 'vue';
 import { computed, onMounted, onUnmounted, ref } from 'vue';
 import { Card } from 'primevue';
@@ -47,27 +47,27 @@ const device = computed(() => {
 <template>
 	<Card>
 		<template #title>
-			<span class="text-slate-light-12/80 dark:text-slate-dark-12/70">
+			<span class="text-surface-12">
 				{{ activity?.user }} {{ $t(activity?.type) }}
 			</span>
 		</template>
 		<template #content>
-			<div class="flex flex-col text-slate-light-12 dark:text-slate-dark-12">
+			<div class="flex flex-col text-surface-12">
 				<p class="flex-shrink-0 flex-grow-0 self-stretch text-sm">
 					{{ $t("Time") }}:
-					<span class="text-slate-light-11 dark:text-slate-dark-11">
+					<span class="text-surface-12/11">
 						{{ showTime }}
 					</span>
 				</p>
 				<span class="flex-shrink-0 flex-grow-0 self-stretch text-sm">
 					{{ $t("Device") }}:
-					<span class="text-slate-light-11 dark:text-slate-dark-11">
+					<span class="text-surface-12/11">
 						{{ device.name }}
 					</span>
 				</span>
 				<span class="flex-shrink-0 flex-grow-0 self-stretch text-sm">
 					{{ $t("IP address") }}:
-					<span class="text-slate-light-11 dark:text-slate-dark-11">
+					<span class="text-surface-12/11">
 						{{ device.ip }}
 					</span>
 				</span>

@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import { computed } from 'vue';
 
 import {
@@ -36,22 +36,22 @@ const currentDevice = computed(() =>
 <template>
 	<MusicButton
 		v-if="user.features?.nomercyConnect"
-		data-target="devices"
-		label="Playing on this device"
+		:data-current_device="currentMusicDeviceId"
 		:onclick="handleClick"
 		class="flex gap-2 items-center flex-nowrap"
-		:data-current_device="currentMusicDeviceId"
+		data-target="devices"
+		label="Playing on this device"
 	>
 		<OptimizedIcon
 			v-if="deviceMenuOpen"
-			icon="devices"
 			class="h-6 w-6 text-focus"
+			icon="devices"
 		/>
-		<OptimizedIcon v-else icon="devices" class="h-6 w-6" />
+		<OptimizedIcon v-else class="h-6 w-6" icon="devices" />
 		<p
 			v-if="!noName"
 			:data-size="musicSize"
-			class="text-auto-900 flex sm:hidden compact:hidden pointer-events-none !text-sm min-w-full whitespace-nowrap pl-2 max-w-72"
+			class="text-surface-900 flex sm:hidden compact:hidden pointer-events-none !text-sm min-w-full whitespace-nowrap pl-2 max-w-72"
 		>
 			{{
 				currentMusicDeviceId === deviceId

@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import type { PropType } from 'vue';
 
 import type { LibrariesResponse } from '@/types/api/base/library';
@@ -16,17 +16,17 @@ defineProps({
 
 <template>
 	<DashboardCard
-		:route="`/dashboard/libraries/${data.id}`"
 		:line1="data.title"
 		:line2="
 			data.folder_library && data.folder_library?.length !== 1
 				? `${data.folder_library?.length} folders`
 				: `${data.folder_library?.length}  folder`
 		"
+		:route="`/dashboard/libraries/${data.id}`"
 	>
 		<template #image>
 			<div
-				class="relative flex aspect-video flex-shrink-0 flex-grow-0 flex-col items-center justify-center self-stretch overflow-clip rounded-lg bg-theme-11 dark:bg-theme-8 text-slate-light-12/80 dark:text-slate-dark-12/80"
+				class="relative flex aspect-video flex-shrink-0 flex-grow-0 flex-col items-center justify-center self-stretch overflow-clip rounded-lg bg-theme-8"
 			>
 				<div class="backdropCard-overlay" />
 				<TMDBImage v-if="data.image" :path="data.image" class="z-0" />

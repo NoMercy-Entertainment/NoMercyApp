@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import { RouterLink } from 'vue-router';
 
 import OptimizedIcon from '@/components/OptimizedIcon.vue';
@@ -29,16 +29,16 @@ defineProps({
 });
 
 const classes
-	= 'flex justify-center items-center self-stretch h-10 relative py-2.5 px-1 rounded-md border border-transparent hover:border-focus/4 active:!bg-focus/11 dark:active:!bg-focus/8 active:border-focus/4 active:hover:border-focus/4 focus:bg-focus-9 hover:!bg-focus/10 disabled:!bg-focus/2 disabled:!border-focus/2 transition-colors duration-200 hover:text-auto-12';
+	= 'flex justify-start items-center self-stretch h-11 relative gap-2 px-2.5 py-2 rounded-md border border-transparent hover:border-focus/4 active:!bg-focus/11 dark:active:!bg-focus/8 active:border-focus/4 active:hover:border-focus/4 focus:bg-focus-9 hover:!bg-focus/10 disabled:!bg-focus/2 disabled:!border-focus/2 transition-colors duration-200 overflow-clip';
 </script>
 
 <template>
 	<RouterLink
 		v-if="to"
-		:to="to"
 		:class="classes"
 		:data-nav-title="name"
 		:name="name"
+		:to="to"
 	>
 		<span
 			class="relative flex w-full flex-grow items-center justify-center gap-2 px-2 text-lg font-medium text-left"

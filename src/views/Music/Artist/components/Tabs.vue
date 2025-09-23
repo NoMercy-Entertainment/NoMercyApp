@@ -1,6 +1,6 @@
-<script setup lang="ts">
-import { ref } from 'vue';
+<script lang="ts" setup>
 import type { PropType } from 'vue';
+import { ref } from 'vue';
 
 const props = defineProps({
 	tabs: {
@@ -21,7 +21,7 @@ function setTab(value: number) {
 		class="z-0 flex shrink grow basis-0 flex-col items-start justify-start self-stretch"
 	>
 		<div
-			class="sticky -top-1 z-10 h-14 w-full border-b border-auto-12/6 bg-auto-1"
+			class="sticky -top-1 z-10 h-14 w-full border-b border-surface-12/6 bg-surface-1"
 		>
 			<nav
 				class="absolute left-4 inline-flex flex-col items-start justify-start gap-2 top-[15px]"

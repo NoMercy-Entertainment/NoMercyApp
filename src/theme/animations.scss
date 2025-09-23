@@ -61,45 +61,45 @@ html.nprogress-busy #gradientBorder {
 @-moz-keyframes flashing {
 	0% {
 		filter: brightness(1) saturate(1);
-		box-shadow: 0 0 0 3px rgb(var(--color-focus, var(--color-theme-6)) / 0%);
+		box-shadow: 0 0 0 3px rgb(var(--color-theme-8, var(--color-theme-6)) / 0%);
 	}
 	50% {
 		filter: brightness(0.5) saturate(0.8);
-		box-shadow: 0 0 0 3px rgb(var(--color-focus, var(--color-theme-6)) / 100%);
+		box-shadow: 0 0 0 3px rgb(var(--color-theme-8, var(--color-theme-6)) / 100%);
 	}
 	100% {
 		filter: brightness(1) saturate(1.2);
-		box-shadow: 0 0 0 3px rgb(var(--color-focus, var(--color-theme-6)) / 0%);
+		box-shadow: 0 0 0 3px rgb(var(--color-theme-8, var(--color-theme-6)) / 0%);
 	}
 }
 
 @-webkit-keyframes flashing {
 	0% {
 		filter: brightness(1) saturate(1);
-		box-shadow: 0 0 0 3px rgb(var(--color-focus, var(--color-theme-6)) / 0%);
+		box-shadow: 0 0 0 3px rgb(var(--color-theme-8, var(--color-theme-6)) / 0%);
 	}
 	50% {
 		filter: brightness(0.5) saturate(0.8);
-		box-shadow: 0 0 0 3px rgb(var(--color-focus, var(--color-theme-6)) / 100%);
+		box-shadow: 0 0 0 3px rgb(var(--color-theme-8, var(--color-theme-6)) / 100%);
 	}
 	100% {
 		filter: brightness(1) saturate(1.2);
-		box-shadow: 0 0 0 3px rgb(var(--color-focus, var(--color-theme-6)) / 0%);
+		box-shadow: 0 0 0 3px rgb(var(--color-theme-8, var(--color-theme-6)) / 0%);
 	}
 }
 
 @keyframes flashing {
 	0% {
 		filter: brightness(1) saturate(1);
-		box-shadow: 0 0 0 3px rgb(var(--color-focus, var(--color-theme-6)) / 0%);
+		box-shadow: 0 0 0 3px rgb(var(--color-theme-8, var(--color-theme-6)) / 0%);
 	}
 	50% {
 		filter: brightness(0.5) saturate(0.8);
-		box-shadow: 0 0 0 3px rgb(var(--color-focus, var(--color-theme-6)) / 100%);
+		box-shadow: 0 0 0 3px rgb(var(--color-theme-8, var(--color-theme-6)) / 100%);
 	}
 	100% {
 		filter: brightness(1) saturate(1.2);
-		box-shadow: 0 0 0 3px rgb(var(--color-focus, var(--color-theme-6)) / 0%);
+		box-shadow: 0 0 0 3px rgb(var(--color-theme-8, var(--color-theme-6)) / 0%);
 	}
 }
 
@@ -293,17 +293,17 @@ html.nprogress-busy #gradientBorder {
 }
 
 .gradient-border {
-	--bg-color: linear-gradient(rgb(var(--background-auto-1)), rgb(var(--background-auto-1)));
+    --background-color: linear-gradient(var(--surface-3), var(--surface-3));
 	--border-color: linear-gradient(
 		var(--angle, 145deg),
-		rgb(from rgb(var(--color-focus)) r g b / 100%) 0%,
-		rgb(from rgb(var(--color-focus)) r g b / 30%) 33.33%,
-		rgb(from rgb(var(--color-focus)) r g b / 14%) 66.67%,
-		rgb(from rgb(var(--color-focus)) r g b / 10%) 100%
+		rgb(from var(--color-theme-8) r g b / 100%) 0%,
+		rgb(from var(--color-theme-8) r g b / 30%) 33.33%,
+		rgb(from var(--color-theme-8) r g b / 14%) 66.67%,
+		rgb(from var(--color-theme-8) r g b / 10%) 100%
 	);
 
 	background:
-		padding-box var(--bg-color),
+		padding-box var(--background-color),
 		border-box var(--border-color);
 }
 

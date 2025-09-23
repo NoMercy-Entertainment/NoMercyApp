@@ -1,4 +1,4 @@
-<script setup lang="ts"></script>
+<script lang="ts" setup></script>
 
 <template>
 	<!--  <svg -->
@@ -53,13 +53,13 @@
 	position: absolute;
 	background: radial-gradient(
 		circle at 10% -10%,
-		hsl(from rgb(var(--color-focus)) h s 30% / 80%),
-		hsl(from rgb(var(--color-focus)) h s 30% / 60%),
-		hsl(from rgb(var(--color-focus)) h s 30% / 40%),
-		hsl(from rgb(var(--color-focus)) h s 30% / 20%),
-		hsl(from rgb(var(--color-focus)) h s 30% / 5%),
-		hsl(from rgb(var(--color-focus)) h s 30% / 0%),
-		hsl(from rgb(var(--color-focus)) h s 30% / 0%)
+		hsl(from var(--color-theme-8) h s 30% / 80%),
+		hsl(from var(--color-theme-8) h s 30% / 60%),
+		hsl(from var(--color-theme-8) h s 30% / 40%),
+		hsl(from var(--color-theme-8) h s 30% / 20%),
+		hsl(from var(--color-theme-8) h s 30% / 5%),
+		hsl(from var(--color-theme-8) h s 30% / 0%),
+		hsl(from var(--color-theme-8) h s 30% / 0%)
 	);
 }
 </style>

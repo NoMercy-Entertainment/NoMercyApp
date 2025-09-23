@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import { computed, ref, watch } from 'vue';
 import { useRoute } from 'vue-router';
 
@@ -42,7 +42,7 @@ const { data: permissions, error } = useServerClient<User>({
 });
 
 const name = computed(
-	() => serverUsers.value?.find(u => u.id === route.params.id)?.name,
+	() => serverUsers.value?.find(u => u.user_id === route.params.id)?.name,
 );
 
 const allowed = ref(permissions.value?.allowed);
@@ -73,9 +73,11 @@ watch(permissions, (value) => {
 });
 
 const deleteConfirmOpen = ref(false);
+
 function openDeleteConfirm() {
 	deleteConfirmOpen.value = true;
 }
+
 function closeDeleteConfirm() {
 	deleteConfirmOpen.value = false;
 }
@@ -128,45 +130,45 @@ watch(allowedLibraries, (value) => {
 
 <template>
 	<DashboardLayout
-		:error="error"
-		title="Server member: {{name}}"
-		:params="{ name }"
 		:back="true"
+		:error="error"
+		:params="{ name }"
+		title="Server member: {{name}}"
 	>
 		<template #cta />
 
-		<div v-if="permissions" class="mt-4 flex w-full flex-col sm:w-1/2">
+		<div v-if="permissions" class="mt-4 flex w-full flex-col sm:w-1/2 px-1">
 			<h3 class="mt-4 mb-2">
 				{{ $t("Base permissions") }}:
 			</h3>
 			<div class="flex flex-col gap-2">
 				<label
-					for="allowed"
 					class="pointer-events-auto inline-flex h-10 w-full touch-none items-center group"
 					data-selected="true"
+					for="allowed"
 				>
 					<Toggle
 						v-if="allowed !== undefined"
 						id="allowed"
 						v-model="allowed"
-						label="Manage"
 						class="mr-2"
+						label="Manage"
 					/>
 					<span class="whitespace-pre-wrap text-sm font-semibold">
 						{{ $t("Allow this user to access content") }}
 					</span>
 				</label>
 				<label
-					for="manage"
 					class="pointer-events-auto inline-flex h-10 w-full touch-none items-center group"
 					data-selected="true"
+					for="manage"
 				>
 					<Toggle
 						v-if="manage !== undefined"
 						id="manage"
 						v-model="manage"
-						label="Manage"
 						class="mr-2"
+						label="Manage"
 					/>
 					<span class="whitespace-pre-wrap text-sm font-semibold">
 						{{ $t("Allow this user to manage the server") }}
@@ -178,32 +180,32 @@ watch(allowedLibraries, (value) => {
 			</h3>
 			<div class="flex w-full flex-col gap-2">
 				<label
-					for="audioTranscoding"
 					class="pointer-events-auto inline-flex h-10 w-full touch-none items-center group"
 					data-selected="true"
+					for="audioTranscoding"
 				>
 					<Toggle
 						v-if="audioTranscoding !== undefined"
 						id="audioTranscoding"
 						v-model="audioTranscoding"
-						label="AudioTranscoding"
 						class="mr-2"
+						label="AudioTranscoding"
 					/>
 					<span class="whitespace-pre-wrap text-sm font-semibold">
 						{{ $t("Allow audio playback that requires transcoding") }}
 					</span>
 				</label>
 				<label
-					for="videoTranscoding"
 					class="pointer-events-auto inline-flex h-10 w-full touch-none items-center group"
 					data-selected="true"
+					for="videoTranscoding"
 				>
 					<Toggle
 						v-if="videoTranscoding !== undefined"
 						id="videoTranscoding"
 						v-model="videoTranscoding"
-						label="VideoTranscoding"
 						class="mr-2"
+						label="VideoTranscoding"
 					/>
 					<span class="whitespace-pre-wrap text-sm font-semibold">
 						{{ $t("Allow video playback that requires transcoding") }}
@@ -215,16 +217,16 @@ watch(allowedLibraries, (value) => {
 			</h3>
 			<div class="flex w-1/2 flex-col gap-2">
 				<label
-					for="allowedAllLibraries"
 					class="pointer-events-auto inline-flex h-10 w-full touch-none items-center group"
 					data-selected="true"
+					for="allowedAllLibraries"
 				>
 					<Toggle
 						v-if="allowedAllLibraries !== undefined"
 						id="allowedAllLibraries"
 						v-model="allowedAllLibraries"
-						label="AllowedAllLibraries"
 						class="mr-2"
+						label="AllowedAllLibraries"
 					/>
 					<span class="whitespace-pre-wrap text-sm font-semibold">
 						{{ $t("Enable access to all libraries") }}
@@ -235,11 +237,11 @@ watch(allowedLibraries, (value) => {
 					v-if="!allowedAllLibraries"
 					id="libraries"
 					v-model="allowedLibraries"
-					label="libraries"
-					placeholder="Select libraries"
-					multiple
 					:items="libraries"
+					label="libraries"
+					multiple
 					option-label="title"
+					placeholder="Select libraries"
 				/>
 			</div>
 		</div>
@@ -247,25 +249,25 @@ watch(allowedLibraries, (value) => {
 		<template #actions>
 			<Button
 				id="yes"
+				class="mr-auto"
+				color="auto"
+				start-icon="userDelete"
 				type="button"
 				variant="text"
-				class="mr-auto"
-				color="auto-alpha"
-				start-icon="userDelete"
 				@click="openDeleteConfirm"
 			>
 				{{ $t("Remove user") }}
 			</Button>
 			<Button
 				id="cancel"
+				color="white"
 				type="button"
 				variant="text"
-				color="white"
 				@click="handleCancel"
 			>
 				{{ $t("Cancel") }}
 			</Button>
-			<Button id="save" type="button" color="theme" @click="handleSave">
+			<Button id="save" color="theme" type="button" @click="handleSave">
 				{{ $t("Save") }}
 			</Button>
 		</template>
@@ -273,8 +275,8 @@ watch(allowedLibraries, (value) => {
 		<DeleteUserModal
 			v-if="permissions?.id"
 			:id="permissions?.id"
-			:name="permissions?.name"
 			:close="closeDeleteConfirm"
+			:name="permissions?.name"
 			:open="deleteConfirmOpen"
 		/>
 	</DashboardLayout>

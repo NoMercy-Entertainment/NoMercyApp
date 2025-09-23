@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import type { PlaylistItem } from '@/types/musicPlayer';
 
 import audioPlayer, {
@@ -61,12 +61,12 @@ function handleClick(song: PlaylistItem) {
 <template>
 	<div
 		:data-open="queueMenuOpen"
-		:inert="!queueMenuOpen"
 		:data-size="musicSize"
-		class="absolute right-4 top-safe-offset-4 bottom-8 data-[open='true']:full:bottom-28 data-[open='true']:compact:bottom-16 sm:data-[open='true']:full:bottom-4 sm:data-[open='true']:compact:bottom-4 sm:bottom-4 overflow-clip w-available ml-4 sm:w-1/3 bg-slate-light-3 dark:bg-slate-dark-1 flex items-center justify-center rounded-lg transition-all duration-500 border-2 border-focus data-[open='false']:translate-x-[150%] z-[29999]"
+		:inert="!queueMenuOpen"
+		class="absolute right-4 top-safe-offset-4 bottom-8 data-[open='true']:full:bottom-28 data-[open='true']:compact:bottom-16 sm:data-[open='true']:full:bottom-4 sm:data-[open='true']:compact:bottom-4 sm:bottom-4 overflow-clip w-available ml-4 sm:w-1/3 bg-surface-3 dark:bg-surface-1 flex items-center justify-center rounded-lg transition-all duration-500 border-2 border-focus data-[open='false']:translate-x-[150%] z-[29999]"
 	>
 		<div
-			class="pointer-events-none absolute inset-0 flex items-center justify-center rounded-lg opacity-60 bg-auto-3/40"
+			class="pointer-events-none absolute inset-0 flex items-center justify-center rounded-lg opacity-60 bg-surface-10/40"
 		/>
 
 		<div
@@ -89,10 +89,10 @@ function handleClick(song: PlaylistItem) {
 			</div>
 
 			<div
-				class="flex h-auto w-full items-center justify-start gap-2 rounded-lg px-2 py-2 hover:bg-auto-3/50"
+				class="flex h-auto w-full items-center justify-start gap-2 rounded-lg px-2 py-2 hover:bg-surface-10/50"
 			>
 				<div
-					class="relative aspect-square h-auto w-14 cursor-pointer overflow-hidden rounded-md text-theme-4"
+					class="relative aspect-square h-auto w-14 cursor-pointer overflow-hidden rounded-md text-focus"
 				>
 					<CoverImage v-if="currentSong" :data="currentSong" />
 				</div>
@@ -105,10 +105,10 @@ function handleClick(song: PlaylistItem) {
 					<div
 						class="mb-1 inline-flex h-6 gap-1 overflow-hidden whitespace-nowrap text-xs w-available line-clamp-1 hover-animate-pause"
 					>
-						<div data-marquee="container" class="-ml-1 w-available">
+						<div class="-ml-1 w-available" data-marquee="container">
 							<div
-								data-marquee="scroller"
 								class="ml-1 flex w-fit flex-nowrap gap-1 text-xs line-clamp-1 whitespace-break-spaces hover-animate-pause w-available h-available"
+								data-marquee="scroller"
 							>
 								<span
 									class="flex w-fit flex-wrap gap-1 whitespace-wrap line-clamp-2 h-inherit"
@@ -144,11 +144,11 @@ function handleClick(song: PlaylistItem) {
 					<template v-for="song in queue" :key="song?.id">
 						<button
 							v-if="song.id !== currentSong?.id"
-							class="flex h-auto w-full items-center justify-start gap-2 rounded-lg p-2 hover:bg-auto-3/50"
+							class="flex h-auto w-full items-center justify-start gap-2 rounded-lg p-2 hover:bg-surface-10/50"
 							@click="handleClick(song)"
 						>
 							<div
-								class="relative aspect-square h-auto w-14 cursor-pointer overflow-hidden rounded-md text-theme-4"
+								class="relative aspect-square h-auto w-14 cursor-pointer overflow-hidden rounded-md text-focus"
 							>
 								<CoverImage v-if="song" :data="song" />
 							</div>
@@ -163,10 +163,10 @@ function handleClick(song: PlaylistItem) {
 								<div
 									class="mb-1 inline-flex h-6 gap-1 overflow-hidden whitespace-nowrap text-xs w-available line-clamp-1 hover-animate-pause"
 								>
-									<div data-marquee="container" class="-ml-1 w-available">
+									<div class="-ml-1 w-available" data-marquee="container">
 										<div
-											data-marquee="scroller"
 											class="ml-1 flex w-fit flex-nowrap gap-1 text-xs line-clamp-1 whitespace-break-spaces hover-animate-pause w-available h-available"
+											data-marquee="scroller"
 										>
 											<span
 												class="flex w-fit flex-wrap gap-1 whitespace-wrap line-clamp-2 h-inherit"

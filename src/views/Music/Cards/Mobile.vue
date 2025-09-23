@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import { nextTick, ref, watch } from 'vue';
 import { useRoute } from 'vue-router';
 import { IonContent, IonPage, onIonViewDidEnter } from '@ionic/vue';
@@ -10,7 +10,6 @@ import { isNative } from '@/config/global';
 import { currentSong } from '@/store/audioPlayer';
 import { setBackground, setColorPalette } from '@/store/ui';
 
-import MusicCard from '@/components/Cards/MusicCard.vue';
 import Indexer from '@/Layout/Indexer.vue';
 import NotFound from '@/Layout/Desktop/components/NotFound.vue';
 
@@ -53,15 +52,15 @@ onIonViewDidEnter(() => {
 				>
 					<template v-if="Array.isArray(data)">
 						<template v-for="item in data" :key="item.id">
-							<MusicCard :data="item" />
+							<NMMusicCard :data="item" />
 						</template>
 					</template>
 					<Indexer
-						class="w-8 fixed right-0 bg-slate-light-1 dark:bg-slate-dark-3"
 						:class="{
 							'h-available': !isNative,
 							'h-full top-0': isNative,
 						}"
+						class="w-8 fixed right-0 bg-surface-1"
 					/>
 				</div>
 			</div>

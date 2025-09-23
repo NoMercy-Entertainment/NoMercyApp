@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import { ref, watch } from 'vue';
 import { IonContent, IonPage, onIonViewDidEnter } from '@ionic/vue';
 
@@ -153,8 +153,8 @@ function handleUp() {
 
 				<div
 					ref="scrollContainer"
-					tabindex="0"
 					class="flex flex-col justify-start items-start w-available -mx-3 px-3 absolute left-14 right-14 top-[320px] h-available overflow-auto scroll-smooth gap-4 flex-1 pb-8"
+					tabindex="0"
 					@focus="handleFocus($event)"
 				>
 					<template v-if="data">
@@ -163,11 +163,11 @@ function handleUp() {
 								(item) => item.component === 'NMCarousel',
 							) ?? []"
 							:key="render.id"
-							:title="render.props.title"
 							:data="render.props.items ?? []"
-							:handle-focus="handleFocus"
 							:handle-down="handleDown"
+							:handle-focus="handleFocus"
 							:handle-up="handleUp"
+							:title="render.props.title"
 						/>
 
 						<!--            <component -->

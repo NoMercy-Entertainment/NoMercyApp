@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import type { PropType } from 'vue';
 
 import type { ArtistResponse } from '@/types/api/music/artist';
@@ -34,15 +34,15 @@ const tabs = [
 
 <template>
 	<div
-		class="flex flex-1 basis-0 items-start justify-start gap-8 self-stretch p-8"
+		class="flex flex-1 basis-0 items-start justify-start gap-8 self-stretch p-8 pb-0"
 	>
-		<TabFrame :data="data" :active-tab="activeTab">
+		<TabFrame :active-tab="activeTab" :data="data">
 			<Tab :is-active="displayType === tabs[0].name">
 				<TrackCard
-					title="Your most played"
 					:data="data.favorite_tracks ?? []"
+					title="Your most played"
 				/>
-				<TrackCard title="All songs" :data="data.tracks ?? []" />
+				<TrackCard :data="data.tracks ?? []" title="All songs" />
 			</Tab>
 			<Tab :is-active="displayType === tabs[1].name" />
 		</TabFrame>

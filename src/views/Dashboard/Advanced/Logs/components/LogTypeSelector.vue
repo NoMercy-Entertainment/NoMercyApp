@@ -91,7 +91,7 @@ function toggleGroup(group: LogType) {
 
 <template>
 	<DropdownMenu
-		class="relative flex items-center justify-center gap-2 rounded-lg transition-colors duration-200 hover:bg-auto-5/6"
+		class="relative flex items-center justify-center gap-2 rounded-lg transition-colors duration-200 hover:bg-surface-5/6"
 	>
 		<template #button>
 			<OptimizedIcon class-name="w-6" icon="chevronDown" />
@@ -116,12 +116,6 @@ function toggleGroup(group: LogType) {
 					@click="() => toggleGroup(group[0])"
 				>
 					<Checkbox
-						:model-value="
-							checkboxValue(
-								selectedTypes?.filter((t) => t.type === group[0].type),
-								group,
-							)
-						"
 						:color="
 							checkboxValue(
 								selectedTypes?.filter((t) => t.type === group[0].type),
@@ -129,6 +123,12 @@ function toggleGroup(group: LogType) {
 							) === true
 								? `${group[0]?.color}44`
 								: ''
+						"
+						:model-value="
+							checkboxValue(
+								selectedTypes?.filter((t) => t.type === group[0].type),
+								group,
+							)
 						"
 					/>
 					<p class="text-center text-xs font-semibold uppercase">
@@ -139,16 +139,16 @@ function toggleGroup(group: LogType) {
 
 				<template v-for="logType in group" :key="logType.name">
 					<button
-						class="flex flex-grow items-center justify-start gap-3 rounded-md px-2.5"
 						:onclick="() => handleType(logType)"
+						class="flex flex-grow items-center justify-start gap-3 rounded-md px-2.5"
 					>
 						<Checkbox
-							:model-value="selectedTypes?.some((st) => st.name === logType.name)"
 							:color="
 								selectedTypes?.some((st) => st.name === logType.name)
 									? `${logType.color}44`
 									: ''
 							"
+							:model-value="selectedTypes?.some((st) => st.name === logType.name)"
 						/>
 						<span
 							:style="`background: ${logType.color}44`"

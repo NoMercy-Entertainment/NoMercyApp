@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import type { PropType } from 'vue';
 import { onMounted, ref } from 'vue';
 
@@ -40,6 +40,7 @@ const props = defineProps({
 });
 
 const carouselDiv = ref<HTMLDivElement>();
+
 function focusCard() {
 	const cards = Array.from(
 		carouselDiv.value?.querySelectorAll<HTMLAnchorElement>('a') ?? [],
@@ -83,16 +84,16 @@ onMounted(() => {
 	<div v-if="visible" class="flex flex-col gap-1 w-full">
 		<h3
 			v-if="carousel.props.title ?? carousel.title"
-			class="text-lg font-bold text-auto-12 text-slate-light-1 ml-2"
+			class="text-lg font-bold text-slate-1 ml-2"
 		>
 			{{ carousel.props.title ?? carousel.title }}
 		</h3>
 
 		<div
 			ref="carouselDiv"
-			tabindex="1"
-			class="flex flex-nowrap w-full p-1 snap-x snap-mandatory overflow-x-auto pointer-events-none scroll-mr-20"
 			:data-carousel="carousel.props.title ?? carousel.title"
+			class="flex flex-nowrap w-full p-1 snap-x snap-mandatory overflow-x-auto pointer-events-none scroll-mr-20"
+			tabindex="1"
 			@focus="focusCard"
 		>
 			<template
@@ -100,11 +101,11 @@ onMounted(() => {
 				:key="item"
 			>
 				<TvCard
-					tabindex="0"
-					:item="item"
 					:index="index"
+					:item="item"
 					:scroll-to-center="scrollToCenter"
 					:style="`flex-basis: calc(100% / ${cardsPerScroll} - 0.70rem)`"
+					tabindex="0"
 					@focus="handleKeysLocked()"
 				/>
 			</template>

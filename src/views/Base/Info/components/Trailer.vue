@@ -1,21 +1,11 @@
 <script lang="ts" setup>
-import { onMounted, onUnmounted, ref, watch } from 'vue';
 import type { PropType } from 'vue';
+import { onMounted, onUnmounted, ref, watch } from 'vue';
 
 import type { InfoResponse } from '@/types/api/base/info';
 
-import type {
-	NMPlayer,
-	NMPlaylistItem,
-	PlayerConfig,
-	PlaylistItem,
-} from '@/lib/VideoPlayer';
-import {
-	AutoSkipPlugin,
-	DesktopUIPlugin,
-	KeyHandlerPlugin,
-	nmplayer,
-} from '@/lib/VideoPlayer';
+import type { NMPlayer, NMPlaylistItem, PlayerConfig, PlaylistItem } from '@/lib/VideoPlayer';
+import { AutoSkipPlugin, DesktopUIPlugin, KeyHandlerPlugin, nmplayer } from '@/lib/VideoPlayer';
 
 import { closeSidebar, setSidebar, sidebar } from '@/store/sidebar';
 import { setDisableScreensaver } from '@/store/imageModal';
@@ -137,7 +127,7 @@ function initPlayer(value: NMPlaylistItem) {
 		}
 	});
 
-	trailer.value?.once('ready', () => {
+	trailer.value?.once('playing', () => {
 		trailer.value?.seek(0);
 	});
 

@@ -1,8 +1,4 @@
-import type {
-	NavigationGuardNext,
-	RouteLocationNormalizedGeneric,
-	RouteRecordRaw,
-} from 'vue-router';
+import type { NavigationGuardNext, RouteLocationNormalizedGeneric, RouteRecordRaw } from 'vue-router';
 import { isMobile, isTv, tvModeOverride } from '@/config/global';
 import libraries from '@/store/Libraries';
 

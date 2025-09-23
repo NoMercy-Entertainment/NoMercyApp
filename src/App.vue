@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import { onMounted } from 'vue';
 import { IonApp, IonRouterOutlet } from '@ionic/vue';
 import { useToast } from 'primevue/usetoast';
@@ -25,7 +25,7 @@ onMounted(async () => {
 
 <template>
 	<IonApp>
-		<IonRouterOutlet />
+		<IonRouterOutlet animations="false" />
 		<Toast class="z-1199" />
 	</IonApp>
 </template>

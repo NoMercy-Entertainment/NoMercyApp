@@ -1,6 +1,6 @@
-<script setup lang="ts">
-import { computed } from 'vue';
+<script lang="ts" setup>
 import type { PropType } from 'vue';
+import { computed } from 'vue';
 
 const props = defineProps({
 	id: {
@@ -29,7 +29,7 @@ const props = defineProps({
 	color: {
 		type: String,
 		required: false,
-		default: 'hsl(from rgb(var(--color-focus)) h s 20%)',
+		default: 'hsl(from var(--color-theme-8) h s 20%)',
 	},
 	onclick: {
 		type: Function as PropType<() => void>,
@@ -104,7 +104,7 @@ const svgPaths = computed(() => {
 	}
 	else {
 		return `
-      <rect x="0.5" y="0.5" width="17" height="17" rx="3.5" class="fill-auto-1" fill-opacity="1"/>
+      <rect x="0.5" y="0.5" width="17" height="17" rx="3.5" class="fill-surface-1" fill-opacity="1"/>
       <rect x="0.5" y="0.5" width="17" height="17" rx="3.5" fill="#DFEFFE" fill-opacity="0.14"/>
       <rect x="0.5" y="0.5" width="17" height="17" rx="3.5" stroke="#E5F2FE" stroke-opacity="0.26"/>
       <rect x="0.5" y="0.5" width="17" height="17" rx="3.5" stroke="url(#paint0_linear_4922_9259)"/>
@@ -121,19 +121,19 @@ const svgPaths = computed(() => {
 	>
 		<input
 			:id="id"
-			type="checkbox"
-			class="hidden item-selector"
 			:checked="!!modelValue"
+			class="hidden item-selector"
+			type="checkbox"
 		>
 		<svg
 			:id="id"
-			:width="width"
 			:height="height"
+			:width="width"
+			class="relative w-[18px] h-[18px]"
 			fill="none"
+			preserveAspectRatio="xMidYMid meet"
 			viewBox="0 0 18 18"
 			xmlns="http://www.w3.org/2000/svg"
-			class="relative w-[18px] h-[18px]"
-			preserveAspectRatio="xMidYMid meet"
 		>
 			<g v-html="svgPaths" />
 		</svg>

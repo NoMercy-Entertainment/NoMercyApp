@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import type { PropType } from 'vue';
-import { onMounted, ref, watch } from 'vue';
+import { computed, onMounted, ref, watch } from 'vue';
 import { useTranslation } from 'i18next-vue';
 import { isPlatform } from '@ionic/vue';
 
@@ -13,6 +13,8 @@ import audioPlayer from '@/store/audioPlayer';
 
 import FavoriteImage from '@/components/Images/FavoriteImage.vue';
 import CoverImage from '@/components/MusicPlayer/components/CoverImage.vue';
+import { pickPaletteColor, tooLight } from '@/lib/colorHelper.ts';
+import { colorPalette } from '@/store/ui.ts';
 
 const props = defineProps({
 	data: {
@@ -119,32 +121,37 @@ watch(audioColor, (value) => {
 
 	audioPlayer._audioElement2!.motion!.gradient = 'theme';
 });
+
+const light = computed(() => tooLight(pickPaletteColor(colorPalette.value), 150));
 </script>
 
 <template>
 	<div
 		id="artist-header"
-		class="relative z-0 flex flex-col items-end justify-start text-white sm:flex-row sm:gap-9 sm:pt-8 sm:pb-8 sm:px-8"
 		:class="{
 			'pt-safe-offset-12 px-8 gap-4': isPlatform('capacitor'),
 			'pt-24 px-6 gap-2 sm:gap-12': !isPlatform('capacitor'),
+			'text-black/12': light,
+			'text-white/12': !light,
 		}"
+		class="relative z-0 flex flex-col items-end justify-start sm:flex-row sm:gap-9 sm:pt-8 sm:pb-8 sm:px-8"
 	>
 		<div
 			id="audio-color"
 			ref="audioColor"
 			class="absolute top-0 left-0 h-full w-full overflow-clip bg-focus"
+			style="background: hsl(from var(--color-theme-8) h s 32%);"
 		/>
 		<div
-			class="absolute top-0 left-0 h-full w-full overflow-clip bg-black/50"
+			class="absolute top-0 left-0 h-full w-full overflow-clip"
 		/>
-		<!--        <canvas ref="canvas" id="audio-visualizer" class="absolute top-0 left-96 my-12 ml-6 mr-6 mt-full h-available w-available overflow-clip pointer-events-none"></canvas> -->
+		<canvas id="audio-visualizer" ref="canvas" class="absolute top-0 left-96 my-12 ml-6 mr-6 mt-full h-available w-available overflow-clip pointer-events-none" />
 		<div
-			class="frosting relative mx-auto flex aspect-square w-80 max-w-[90%] flex-col items-center justify-center overflow-clip rounded-xl bg-gradient-to-br min-w-64 bg-theme-7 from-theme-5 via-theme-7 to-theme-11 shadow"
 			:class="{
 				'-mt-4': isPlatform('capacitor'),
 				'': !isPlatform('capacitor'),
 			}"
+			class="frosting relative mx-auto flex aspect-square w-80 max-w-[90%] flex-col items-center justify-center rounded-xl bg-gradient-to-br min-w-64 bg-theme-6 from-theme-5 via-theme-6 to-theme-9 shadow"
 		>
 			<CoverImage
 				v-if="data?.cover"
@@ -177,7 +184,7 @@ watch(audioColor, (value) => {
 		<div
 			class="relative hidden flex-1 flex-shrink-0 flex-col items-start justify-start gap-1 flex-grow-1 sm:flex"
 		>
-			<p class="text-left font-semibold uppercase text-white">
+			<p class="text-left font-semibold uppercase">
 				{{ data?.type?.replace(/s$/u, "") }}
 			</p>
 			<div
@@ -213,18 +220,18 @@ watch(audioColor, (value) => {
 				</div>
 				<p
 					v-if="data?.tracks && isArtistRoute"
-					class="text-left text-sm font-medium text-white"
+					class="text-left text-sm font-medium"
 				>
 					•
 				</p>
-				<p class="text-left text-sm font-medium text-white">
+				<p class="text-left text-sm font-medium">
 					{{ data?.tracks?.length }}
 					{{ data?.tracks?.length === 1 ? t("song") : t("songs") }}
 				</p>
-				<p v-if="duration" class="text-left text-sm font-medium text-white">
+				<p v-if="duration" class="text-left text-sm font-medium">
 					•
 				</p>
-				<p class="text-left text-sm font-medium text-white">
+				<p class="text-left text-sm font-medium">
 					{{ duration }}
 				</p>
 			</div>

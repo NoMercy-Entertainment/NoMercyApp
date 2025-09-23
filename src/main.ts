@@ -1,11 +1,11 @@
-import { createApp } from 'vue';
+import { createApp, watch } from 'vue';
 import { isPlatform } from '@ionic/vue';
 import { App } from '@capacitor/app';
 
 import { isTv } from '@/config/global';
 import '@/store/deviceInfo';
 import { lockPortrait } from '@/lib/utils';
-import { setUser, setUserFromKeycloak, user } from '@/store/user';
+import { setUser, setUserFromKeycloak, setUserFromWebKeycloak, user } from '@/store/user';
 import { preloadService } from '@/services/PreloadService';
 import * as Sentry from '@sentry/vue';
 import router from '@/router';
@@ -17,29 +17,6 @@ import '@ionic/vue/css/core.css';
 import '@ionic/vue/css/normalize.css';
 import '@ionic/vue/css/structure.css';
 import '@ionic/vue/css/typography.css';
-
-/* Optional CSS utils that can be commented out */
-import '@ionic/vue/css/padding.css';
-import '@ionic/vue/css/float-elements.css';
-import '@ionic/vue/css/text-alignment.css';
-import '@ionic/vue/css/text-transformation.css';
-import '@ionic/vue/css/flex-utils.css';
-import '@ionic/vue/css/display.css';
-
-/**
- * Ionic Dark Mode
- * -----------------------------------------------------
- * For more info, please see:
- * https://ionicframework.com/docs/theming/dark-mode
- */
-import '@ionic/vue/css/palettes/dark.system.css';
-
-/* Theme variables */
-import './theme/variables.css';
-import './theme/app.scss';
-
-import 'swiper/css';
-import 'swiper/element/css/keyboard';
 
 import AppComponent from './App.vue';
 import { parseToken } from './lib/auth/helpers';
@@ -133,17 +110,18 @@ async function initializeMobileApp() {
 		await lockPortrait();
 		const [MobileKeycloak, configModule] = await Promise.all([
 			import('@/lib/auth/mobile-keycloak').then(m => m.default),
-			import('@/config/config'),
+			import('@/config/config').then(m => m.keycloakConfig),
 		]);
 
 		const disableImmersiveMode = await import('@/lib/utils.ts').then(m => m.disableImmersiveMode);
 
 		const style = window.getComputedStyle(document.body);
-		const color = `rgb(${style.getPropertyValue('--color-theme-7')})`;
+		const color = `rgb(${style.getPropertyValue('--theme-7')})`;
 
 		await disableImmersiveMode();
 		EdgeToEdge.setBackgroundColor({ color: rgbToHex(color, 1) }).then();
 
+		// @ts-ignore
 		app.use(MobileKeycloak, {
 			init: {
 				refreshToken: localStorage.getItem('refresh_token') || undefined,
@@ -154,7 +132,7 @@ async function initializeMobileApp() {
 				responseMode: 'query',
 				redirectUri: `nomercy://home`,
 			},
-			config: configModule.keycloakConfig,
+			config: configModule,
 			onReady: async (data: any) => {
 				setUserFromKeycloak(data);
 				await setupApplication();
@@ -165,13 +143,13 @@ async function initializeMobileApp() {
 
 async function initializeWebApp() {
 	if (!isPlatform('capacitor') && !location.search.includes('refreshToken')) {
-		const [WebKeycloak, configModule] = await Promise.all([
-			import('@dsb-norge/vue-keycloak-js').then(m => m.default),
+		const [keycloak, configModule] = await Promise.all([
+			import('@josempgon/vue-keycloak').then(m => m),
 			import('@/config/config'),
 		]);
 
-		app.use(WebKeycloak, {
-			init: {
+		app.use(keycloak.vueKeycloak, {
+			initOptions: {
 				onLoad: 'login-required',
 				checkLoginIframe: false,
 				enableLogging: true,
@@ -181,10 +159,12 @@ async function initializeWebApp() {
 				}`,
 			},
 			config: configModule.keycloakConfig,
-			onReady: async (data: any) => {
-				setUserFromKeycloak(data);
-				await setupApplication();
-			},
+		});
+
+		const kc = keycloak.useKeycloak();
+		watch(kc.decodedToken, async () => {
+			setUserFromWebKeycloak(kc);
+			await setupApplication();
 		});
 	}
 }

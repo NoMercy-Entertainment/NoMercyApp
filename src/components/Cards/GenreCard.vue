@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import type { PropType } from 'vue';
 import { computed } from 'vue';
 
@@ -35,9 +35,10 @@ const genreColor = computed(() => genreColors(props.data.title));
 
 <template>
 	<RouterLink
+		v-once
+		:class="`flex flex-col relative justify-start items-center w-full h-auto aspect-poster flex-grow flex-shrink-0 overflow-hidden rounded-lg border-1-light transition-all duration-200 select-none group/card ${genreColor.bg}`"
 		:data-scroll="scrollLetter"
 		:to="data.have_items > 1 ? data.link : '#'"
-		:class="`flex flex-col relative justify-start items-center w-full h-auto aspect-poster flex-grow flex-shrink-0 overflow-hidden rounded-lg border-1-light transition-all duration-200 select-none group/card ${genreColor.bg}`"
 	>
 		<div class="backdropCard-overlay" />
 		<div
@@ -45,10 +46,10 @@ const genreColor = computed(() => genreColors(props.data.title));
 		>
 			<div
 				:class="`flex items-center justify-center w-auto h-auto aspect-square p-4 object-cover rounded-3xl overflow-clip transition-all duration-200 ${rotate} ${genreColor.iconBg} rounded-3xl
-            shadow-[0_1px_0_0_rgba(255,255,255,0.20)_inset,0_-1px_0_0_rgba(var(--color-slate-9)/60%)_inset,0_22px_30px_-4px_rgba(var(--color-slate-9)/70%)]
-            hover:!shadow-[0_1px_0_0_rgba(255,255,255,0.20)_inset,0_-1px_0_0_rgba(var(--color-slate-11)/60%)_inset,0_22px_30px_-4px_rgba(var(--color-slate-11)/70%)]
-            dark:shadow-[0_1px_0_0_rgba(255,255,255,0.20)_inset,0_-1px_0_0_rgba(var(--color-slate-1)/30%)_inset,0_22px_30px_-4px_rgba(var(--color-slate-1)/70%)]
-            dark:hover:!shadow-[0_1px_0_0_rgba(255,255,255,0.20)_inset,0_-1px_0_0_rgba(var(--color-slate-1)/30%)_inset,0_22px_30px_-4px_rgba(var(--color-slate-1)/70%)]`"
+            shadow-[0_1px_0_0_rgba(255,255,255,0.20)_inset,0_-1px_0_0_rgb(from_var(--color-slate-9)_r_g_b/60%)_inset,0_22px_30px_-4px_rgb(from_var(--color-slate-9)_r_g_b/70%)]
+            hover:!shadow-[0_1px_0_0_rgba(255,255,255,0.20)_inset,0_-1px_0_0_rgb(from_var(--color-slate-11)_r_g_b/60%)_inset,0_22px_30px_-4px_rgb(from_var(--color-slate-11)_r_g_b/70%)]
+            dark:shadow-[0_1px_0_0_rgba(255,255,255,0.20)_inset,0_-1px_0_0_rgb(from_var(--color-slate-1)_r_g_b/30%)_inset,0_22px_30px_-4px_rgb(from_var(--color-slate-1)_r_g_b/70%)]
+            dark:hover:!shadow-[0_1px_0_0_rgba(255,255,255,0.20)_inset,0_-1px_0_0_rgb(from_var(--color-slate-1)_r_g_b/30%)_inset,0_22px_30px_-4px_rgb(from_var(--color-slate-1)_r_g_b/70%)]`"
 				style="
           background: radial-gradient(
               50% 50% at 50% 100%,
@@ -61,11 +62,11 @@ const genreColor = computed(() => genreColors(props.data.title));
               rgba(255, 255, 255, 0) 0%,
               rgba(255, 255, 255, 0.12) 100%
             ),
-            rgba(var(--background-auto-5) / 20%);
+            rgba(var(--surface-5) / 20%);
           background-blend-mode: normal, overlay, normal;
         "
 			>
-				<OptimizedIcon class-name="w-20" :icon="genreColor.icon" />
+				<OptimizedIcon :icon="genreColor.icon" class-name="w-20" />
 			</div>
 		</div>
 		<div

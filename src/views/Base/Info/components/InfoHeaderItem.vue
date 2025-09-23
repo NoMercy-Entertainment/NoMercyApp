@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 </script>
 
 <template>
@@ -9,7 +9,7 @@
 			class="relative flex flex-shrink-0 flex-grow-0 items-center justify-center gap-2 px-1"
 		>
 			<p
-				class="flex-grow-0 flex-shrink-0 text-sm font-medium text-center text-slate-light-11 dark:text-slate-dark-11"
+				class="flex-grow-0 flex-shrink-0 text-sm font-medium text-center"
 			>
 				<slot />
 			</p>

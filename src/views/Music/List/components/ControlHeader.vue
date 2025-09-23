@@ -43,7 +43,7 @@ const shareData = computed<ShareOptions>(() => ({
 
 <template>
 	<div
-		class="pointer-events-none absolute z-0 h-96 w-full bg-spotifyBottom bg-focus"
+		class="pointer-events-none absolute z-0 h-96 w-full"
 	/>
 	<div
 		class="flex sm:gap-4 items-center py-4 px-4 sm:px-8 w-full pl-3 pr-4 sm:pr-10 h-20 z-40"
@@ -52,15 +52,15 @@ const shareData = computed<ShareOptions>(() => ({
 		<BigPlayButton v-if="data?.tracks" :data="data" class="hidden sm:flex" />
 
 		<div
-			class="relative hidden h-fit cursor-pointer items-center justify-center text-auto-12/11 focus-within:text-auto sm:flex mr-auto"
+			class="relative hidden h-fit cursor-pointer items-center justify-center focus-within:text-surface sm:flex mr-auto"
 		>
 			<input
 				id="search"
 				:value="filter"
-				class="bg-transparent border-auto-12/5 border-2 rounded-md focus-visible:!border-auto-12/9 focus-visible:text-current placeholder-current p-2"
+				class="bg-transparent border-surface-12/5 border-2 rounded-md focus-visible:!border-surface-12/9 focus-visible:text-current placeholder-current p-2"
+				name="search"
 				placeholder="Filter…"
 				type="text"
-				name="search"
 				@input="
 					$emit('filterChange', ($event.target as HTMLInputElement)?.value)
 				"
@@ -68,41 +68,41 @@ const shareData = computed<ShareOptions>(() => ({
 			<div
 				class="absolute top-2 right-2 bottom-2 flex items-center justify-center"
 			>
-				<OptimizedIcon icon="searchMagnifyingGlass" class="!w-7" />
+				<OptimizedIcon class="!w-7" icon="searchMagnifyingGlass" />
 			</div>
 		</div>
 
 		<ShareButton
 			:share-data="shareData"
-			class="!p-0 text-white hidden sm:flex sm:ml-auto"
+			class="!p-0 hidden sm:flex sm:ml-auto"
 		/>
 		<MediaLikeButton
 			:data="data"
-			color="var(--color-focus)"
 			class-name="!w-8 !h-8"
+			color="var(--color-theme-8)"
 		/>
 
-		<ShareButton class="!p-0 text-white sm:hidden" />
+		<ShareButton class="!p-0 sm:hidden" />
 
 		<MusicButton
 			v-if="isTrackRoute"
 			id="add"
 			:onclick="handleAdd"
 			class=""
-			label="add"
+			label="Add"
 		>
-			<OptimizedIcon icon="add" class="!w-7" />
+			<OptimizedIcon class="!w-7" icon="add" />
 		</MusicButton>
 		<!--        <ListControlHeaderMoreMenuButton v-if="!isTrackRoute" :items="[]"/> -->
 	</div>
 
 	<div
-		class="sm:hidden sticky left-full -mt-16 z-1199 flex justify-center items-center gap-2 mr-4 h-auto"
-		style="box-shadow: 0 1px 2px 0 rgba(16, 24, 40, 0.05)"
 		:class="{
 			'top-11': !isPlatform('capacitor'),
 			'top-10': isPlatform('capacitor'),
 		}"
+		class="sm:hidden sticky left-full -mt-16 z-1199 flex justify-center items-center gap-2 mr-4 h-auto"
+		style="box-shadow: 0 1px 2px 0 rgba(16, 24, 40, 0.05)"
 	>
 		<BigPlayButton v-if="data?.tracks" :data="data" />
 	</div>

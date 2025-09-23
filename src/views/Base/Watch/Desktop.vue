@@ -1,22 +1,11 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import { onMounted, onUnmounted, ref, watch } from 'vue';
 import { IonContent, IonPage, isPlatform } from '@ionic/vue';
 
 import { setDisableScreensaver } from '@/store/imageModal';
 
-import type {
-	NMPlayer,
-	NMPlaylistItem,
-	PlayerConfig,
-	PlaylistItem,
-} from '@/lib/VideoPlayer';
-import {
-	AutoSkipPlugin,
-	DesktopUIPlugin,
-	nmplayer,
-	OctopusPlugin,
-	SyncPlugin,
-} from '@/lib/VideoPlayer';
+import type { NMPlayer, NMPlaylistItem, PlayerConfig, PlaylistItem } from '@/lib/VideoPlayer';
+import { AutoSkipPlugin, DesktopUIPlugin, nmplayer, OctopusPlugin, SyncPlugin } from '@/lib/VideoPlayer';
 
 import router from '@/router';
 import audioPlayer from '@/store/audioPlayer';
@@ -35,15 +24,8 @@ const player = ref<NMPlayer<PlaylistItem>>();
 
 function initPlayer(value?: NMPlaylistItem[] | undefined) {
 	const config: Partial<PlayerConfig<PlaylistItem>> = {
-		muted: false,
 		controls: false,
-		preload: 'auto',
-		debug: false,
-		autoPlay: true,
 		playlist: value?.filter(item => !!item.id) ?? [],
-		controlsTimeout: 3000,
-		doubleClickDelay: 300,
-		playbackRates: [0.25, 0.5, 0.75, 1, 1.25, 1.5, 1.75, 2],
 		accessToken: user.value?.accessToken,
 		basePath: currentServer.value?.serverBaseUrl,
 		forceTvMode:
@@ -156,13 +138,13 @@ onUnmounted(() => {
 <template>
 	<IonPage>
 		<IonContent :fullscreen="true">
-			<!--			<Teleport to="body"> -->
-			<!--				<div -->
-			<!--					class="absolute inset-0 flex h-full w-full overflow-clip bg-black z-1199" -->
-			<!--				> -->
-			<div id="player1" class="group nomercyplayer" />
+			<Teleport to="body">
+				<!--				<div -->
+				<!--					class="absolute inset-0 flex h-full w-full overflow-clip bg-black z-1199" -->
+				<!--				> -->
+				<div id="player1" class="group nomercyplayer text-white" />
 			<!--				</div> -->
-			<!--			</Teleport> -->
+			</Teleport>
 		</IonContent>
 	</IonPage>
 </template>

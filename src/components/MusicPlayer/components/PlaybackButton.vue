@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import audioPlayer, { isPlaying } from '@/store/audioPlayer';
 
 import MusicButton from './MusicButton.vue';
@@ -23,8 +23,8 @@ function handleClick(e?: MouseEvent) {
 </script>
 
 <template>
-	<MusicButton label="Toggle Playback" :onclick="handleClick">
-		<PlayerIcon v-if="isPlaying" icon="nmPause" class-name="h-9 w-9" />
-		<PlayerIcon v-else icon="nmPlay" class-name="h-9 w-9" />
+	<MusicButton :onclick="handleClick" label="Toggle Playback" no-tooltip>
+		<PlayerIcon v-if="isPlaying" class-name="h-9 w-9" icon="nmPause" />
+		<PlayerIcon v-else class-name="h-9 w-9" icon="nmPlay" />
 	</MusicButton>
 </template>

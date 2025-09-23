@@ -1,6 +1,6 @@
 <script lang="ts" setup>
-import { computed, ref } from 'vue';
 import type { PropType } from 'vue';
+import { computed, ref } from 'vue';
 import { SwiperSlide } from 'swiper/vue';
 
 import type { KnownFor } from '@/types/api/base/person';
@@ -11,12 +11,7 @@ import type { LibraryResponse } from '@/types/api/base/library';
 import type { ColorPalettes } from '@/types/api/shared';
 import type { MenuItem } from 'primevue/menuitem';
 
-import {
-	setBackground,
-	setColorPalette,
-	setPoster,
-	setTitle,
-} from '@/store/ui';
+import { setBackground, setColorPalette, setPoster, setTitle } from '@/store/ui';
 
 import Carousel from '@/components/Carousel/Carousel.vue';
 import MediaCard from '@/components/Cards/MediaCard.vue';
@@ -120,21 +115,21 @@ function onRightClick(event: MouseEvent, item: any) {
 	<!--  <ContextMenu v-if="menuItems" ref="cardMenu" :model="menuItems"/> -->
 
 	<Carousel
+		:disable-auto-aspect="!backdropCards"
 		:index="index"
 		:limit-card-count-by="limitCardCountBy"
 		:title="title"
-		class=""
 		:type="!backdropCards ? 'backdrop' : 'poster'"
-		:disable-auto-aspect="!backdropCards"
+		class=""
 	>
 		<template #link>
 			<RouterLink
 				v-if="moreLink"
 				:to="moreLink"
-				class="text-base text-slate-dark-9 dark:text-slate-light-9 flex items-center ml-auto mr-2"
+				class="text-base text-slate-9 dark:text-slate-9 flex items-center ml-auto mr-2"
 			>
 				<span>{{ $t("See more") }}</span>
-				<OptimizedIcon icon="chevronRight" class-name="w-6 mt-1" />
+				<OptimizedIcon class-name="w-6 mt-1" icon="chevronRight" />
 			</RouterLink>
 		</template>
 
@@ -143,11 +138,11 @@ function onRightClick(event: MouseEvent, item: any) {
 				<MediaCard
 					:id="`item-${title}-${item.id}`"
 					:data="item"
+					:disable-auto-aspect="!backdropCards"
 					:index="itemIndex"
 					:onclick="() => handleClick(item as LibraryResponse | InfoResponse | HomeItem | ContinueWatching | Collection | KnownFor)"
-					:watch="suffix === '/watch'"
-					:disable-auto-aspect="!backdropCards"
 					:type="!backdropCards ? 'backdrop' : 'poster'"
+					:watch="suffix === '/watch'"
 					class=""
 					@contextmenu="onRightClick($event, item)"
 				/>

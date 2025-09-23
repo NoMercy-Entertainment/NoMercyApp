@@ -1,10 +1,7 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import { computed, onMounted, ref } from 'vue';
 
-import type {
-	QueueResponse,
-	ServerEncoderProgress,
-} from '@/types/api/dashboard/server';
+import type { QueueResponse, ServerEncoderProgress } from '@/types/api/dashboard/server';
 
 import { sortBy } from '@/lib/stringArray';
 import useServerClient from '@/lib/clients/useServerClient';
@@ -59,7 +56,7 @@ const filteredQueueData = computed(() => {
 		return filtered;
 	}
 
-	return [...filtered.slice(0, 10), ...filtered.slice(-10)];
+	return [...filtered.slice(0, 5), ...filtered.slice(-5)];
 });
 
 function handleQueue(data: QueueResponse[]) {
@@ -84,12 +81,12 @@ useHubListener(connection, 'disconnected', handleClear);
 <template>
 	<SystemCard
 		v-if="encoderData.length || queueData?.length"
-		title="Running tasks"
 		:background="false"
+		title="Running tasks"
 	>
 		<template #cta>
 			<button
-				class="relative h-7 flex flex-shrink-0 flex-grow-0 items-center justify-center gap-2 overflow-hidden border border-solid border-slate-light-10 dark:border-slate-dark-10 text-slate-light-12/80 dark:text-slate-dark-12/80 rounded-lg px-2 py-1"
+				class="relative h-7 flex flex-shrink-0 flex-grow-0 items-center justify-center gap-2 overflow-hidden border border-solid border-surface-12/11 rounded-lg pl-1 pr-2 py-1 text-surface-12/11"
 				@click="toggleDisplayAll"
 			>
 				<p class="flex-shrink-0 flex-grow-0 text-sm">
@@ -112,9 +109,9 @@ useHubListener(connection, 'disconnected', handleClear);
 		</template>
 	</SystemCard>
 
-	<SystemCard v-else title="Running tasks" :background="false">
+	<SystemCard v-else :background="false" title="Running tasks">
 		<div
-			class="relative flex items-start justify-start gap-2 self-stretch rounded-lg p-4 bg-slate-lightA-3 dark:bg-slate-darkA-3 text-slate-light-12/80 dark:text-slate-dark-12/80"
+			class="relative flex items-start justify-start gap-2 self-stretch rounded-lg p-4 text-surface-11 bg-surface-12/2"
 		>
 			<span
 				class="flex-shrink-0 flex-grow-0 self-stretch text-sm font-semibold"

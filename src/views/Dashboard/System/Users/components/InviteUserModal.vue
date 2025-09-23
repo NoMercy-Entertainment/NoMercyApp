@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import type { PropType } from 'vue';
 import { computed, ref } from 'vue';
 import { useTranslation } from 'i18next-vue';
@@ -121,9 +121,9 @@ function handleInvite() {
 </script>
 
 <template>
-	<Modal :open="open" :close="closeInviteModal" title="Invite user">
+	<Modal :close="closeInviteModal" :open="open" title="Invite user">
 		<div class="flex w-full flex-col justify-start text-left">
-			<p class="py-4 text-sm text-auto-10">
+			<p class="py-4 text-sm text-surface-10">
 				{{
 					$t(
 						"Enter the email of the friend you want to invite to your server.",
@@ -148,12 +148,12 @@ function handleInvite() {
 				<MultiSelect
 					id="libraries"
 					v-model="allowedLibraries"
+					:options="libraries"
 					display="chip"
 					label="libraries"
-					placeholder="Select libraries"
 					multiple
-					:options="libraries"
 					option-label="title"
+					placeholder="Select libraries"
 				/>
 			</div>
 		</div>
@@ -161,11 +161,11 @@ function handleInvite() {
 		<template #actions>
 			<Button
 				id="yes"
-				type="button"
-				color="theme"
-				variant="contained"
-				end-icon="emailSend"
 				:disabled="!isValidEmail"
+				color="theme"
+				end-icon="emailSend"
+				type="button"
+				variant="contained"
 				@click="handleInvite"
 			>
 				{{ $t("Send") }}

@@ -1,13 +1,10 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import { computed, onMounted, onUnmounted, ref, watch } from 'vue';
 import { useRoute } from 'vue-router';
 import { IonContent, IonPage, onIonViewDidEnter } from '@ionic/vue';
 
 import type { LibraryResponse } from '@/types/api/base/library';
-import type {
-	PeopleResponse,
-	PersonResponseItem,
-} from '@/types/api/base/person';
+import type { PeopleResponse, PersonResponseItem } from '@/types/api/base/person';
 import type { GenreResponse } from '@/types/api/base/genre';
 
 import { isNative } from '@/config/global';
@@ -126,7 +123,7 @@ function onRightClick(event: Event, data: LibraryResponse | GenreResponse | Peop
 			style="--padding-bottom: 0"
 		>
 			<div
-				class="fixed top-0 pt-safe w-full bg-slate-light-1 dark:bg-slate-dark-3 z-1199"
+				class="fixed top-0 pt-safe w-full bg-surface-1 z-1199"
 			/>
 			<div
 				ref="lib"
@@ -134,11 +131,11 @@ function onRightClick(event: Event, data: LibraryResponse | GenreResponse | Peop
 			>
 				<div
 					:key="router.currentRoute.value.params?.id as string"
-					class="z-0 flex flex-col gap-4 rounded-3xl border-0 w-available scrollbar-none border-auto-3"
 					:class="{
 						'pb-2': isNative && currentSong,
 						'children:pb-4 sm:children:pb-3': !isNative && currentSong,
 					}"
+					class="z-0 flex flex-col gap-4 rounded-3xl border-0 w-available scrollbar-none border-surface-3"
 				>
 					<div
 						:class="`grid w-full gap-4 scroll-smooth music-showing:pb-0 pl-1 py-4 ${
@@ -187,13 +184,13 @@ function onRightClick(event: Event, data: LibraryResponse | GenreResponse | Peop
 				</div>
 				<Indexer
 					:id="id"
-					class="w-8 fixed right-0 bg-slate-light-1 dark:bg-slate-dark-3 transition-all duration-200"
 					:class="{
 						'h-available': !isNative,
 						'h-inherit top-24': isNative,
 						'-mt-4 pt-4 pb-4 mb-0': !currentSong,
 						'-mt-4 pt-4 pb-4 mb-14': currentSong,
 					}"
+					class="w-8 fixed right-0 bg-surface-1 transition-all duration-200"
 				/>
 			</div>
 		</IonContent>

@@ -1,14 +1,11 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import { computed, onMounted, onUnmounted, ref, watch } from 'vue';
 import { IonContent, IonPage, onIonViewDidEnter } from '@ionic/vue';
 import { isNative } from '@/config/global';
 import { currentSong } from '@/store/audioPlayer';
 
 import type { LibraryResponse } from '@/types/api/base/library';
-import type {
-	PeopleResponse,
-	PersonResponseItem,
-} from '@/types/api/base/person';
+import type { PeopleResponse, PersonResponseItem } from '@/types/api/base/person';
 import type { GenreResponse } from '@/types/api/base/genre';
 
 import useInfiniteServerClient from '@/lib/clients/useInfiniteServerClient';
@@ -80,7 +77,7 @@ const id = ref();
 onMounted(() => {
 	id.value = route.params.id ?? (route.name as string);
 
-	if (hasNextPage.value && (data?.value?.pages?.length ?? 0) < 50) {
+	if (hasNextPage.value && (data?.value?.pages?.length ?? 0) < 10) {
 		fetchNextPage();
 	}
 
@@ -101,7 +98,7 @@ watch(data, (value) => {
 	if (!value)
 		return;
 
-	if (hasNextPage.value && value?.pages?.length < 50) {
+	if (hasNextPage.value && value?.pages?.length < 10) {
 		fetchNextPage();
 	}
 });
@@ -126,21 +123,19 @@ function onRightClick(event: Event, data: LibraryResponse | GenreResponse | Peop
 				:static="true"
 			>
 				<div
-					ref="containerRef"
 					:key="router.currentRoute.value.params?.id as string"
-					class="z-0 flex flex-col gap-4 rounded-3xl border-0 p-4 w-available scrollbar-none border-auto-3 transform-gpu will-change-auto"
 					:class="{
 						'pb-24': isNative && !currentSong,
 						'pb-40': isNative && currentSong,
 						'children:pb-4 sm:children:pb-3': !isNative && currentSong,
 					}"
+					class="z-0 flex flex-col gap-4 rounded-3xl border-0 p-4 w-available scrollbar-none border-surface-3 transform-gpu will-change-auto"
 				>
 					<div
 						:class="`grid w-full gap-4 scroll-smooth music-showing:pb-0 whitespace-pre ${
 							useBackdropStyle ? backdropStyle : posterStyle
 						}`"
 					>
-						<!--        <ContextMenu ref="cardMenu" :model="items"/> -->
 						<template v-for="(group, index) in data?.pages ?? []" :key="index">
 							<template v-if="group.data.length > 0">
 								<template v-for="(item, index2) in group.data ?? []">

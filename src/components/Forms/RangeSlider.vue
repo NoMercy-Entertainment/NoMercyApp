@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import { computed, onMounted, ref } from 'vue';
 import { convertToPercentage } from '@/store/audioPlayer';
 
@@ -93,41 +93,41 @@ onMounted(() => {
 
 <template>
 	<div
-		class="flex justify-start items-center gap-1 range-container relative"
 		:class="{
 			'flex-col w-full': !vertical,
 			'h-min': vertical,
 		}"
+		class="flex justify-start items-center gap-1 range-container relative"
 	>
 		<div
-			class="flex justify-between items-start self-stretch relative"
 			:class="{
 				'flex-col-reverse py-1': vertical,
 				'hidden': index > 1,
 			}"
+			class="flex justify-between items-start self-stretch relative"
 		>
 			<template v-for="marker in markers" :key="marker.value">
 				<p
-					class="text-2xs leading-none font-medium text-right text-slate-light-9 dark:text-slate-dark-9 w-0 whitespace-nowrap mr-1"
 					:class="{
 						'first:opacity-0 last:opacity-0 self-center': !vertical,
 						'-ml-1 mb-1': !vertical,
 						'flex-col-reverse w-4': vertical,
 						'-ml-1 mt-0.5 mr-1.5': vertical,
 					}"
+					class="text-2xs leading-none font-medium text-right text-slate-9 dark:text-slate-9 w-0 whitespace-nowrap mr-1"
 				>
 					{{ marker.value }}
 				</p>
 			</template>
 		</div>
 		<div
-			class="flex flex-col justify-start items-start relative"
 			:class="{
 				'w-full': !vertical,
 				'h-min': vertical,
 			}"
+			class="flex flex-col justify-start items-start relative"
 		>
-			<slot :min="min" :max="max" :step="step" :left="left" />
+			<slot :left="left" :max="max" :min="min" :step="step" />
 		</div>
 	</div>
 </template>

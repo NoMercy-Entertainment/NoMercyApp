@@ -1,28 +1,16 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import { computed, ref, watch } from 'vue';
 import { useRoute } from 'vue-router';
-import {
-	IonContent,
-	IonPage,
-	IonSkeletonText,
-	onIonViewWillEnter,
-	onIonViewWillLeave,
-} from '@ionic/vue';
+import { IonContent, IonPage, IonSkeletonText, onIonViewWillEnter, onIonViewWillLeave } from '@ionic/vue';
+import { t } from 'i18next';
+import { collect } from 'collect.js';
 
 import type { CollectionResponse } from '@/types/api/base/collection';
 
+import i18next from '@/config/i18next.ts';
 import useServerClient from '@/lib/clients/useServerClient';
-import {
-	breakTitle2,
-	setTitle,
-	sortByPosterAlphabetized,
-} from '@/lib/stringArray';
-import {
-	background,
-	setBackground,
-	setColorPalette,
-	setPoster,
-} from '@/store/ui';
+import { breakTitle2, setTitle, sortByPosterAlphabetized } from '@/lib/stringArray';
+import { background, setBackground, setColorPalette, setPoster } from '@/store/ui';
 import { currentServer } from '@/store/currentServer';
 import router from '@/router';
 
@@ -34,9 +22,7 @@ import HeaderItem from '@/views/Base/Person/components/HeaderItem.vue';
 import Collapsible from '@/views/Base/Person/components/Collapsible.vue';
 import MobileInfoCard from '@/views/Base/Info/components/MobileInfoCard.vue';
 import MediaCard from '@/components/NMCard.vue';
-import collect from 'collect.js';
 import { convertToHumanReact } from '@/lib/dateTime';
-import { t } from 'i18next';
 
 const route = useRoute();
 
@@ -49,6 +35,8 @@ const { data } = useServerClient<CollectionResponse>({
 const enabled = ref(false);
 const showMore = ref(false);
 const trailerIndex = ref(-1);
+const endTime = ref<string | 0 | null | undefined>(null);
+const interval = ref<NodeJS.Timeout | null>(null);
 
 const content = ref<VueDivElement>();
 
@@ -60,6 +48,9 @@ const backgroundUrl = computed(() => {
 });
 
 watch(data, (value) => {
+	if (!value)
+		return;
+
 	content.value?.$el?.scrollToTop(window.innerHeight);
 	enabled.value = true;
 	trailerIndex.value = 0;
@@ -75,6 +66,25 @@ watch(data, (value) => {
 	if (value?.color_palette?.poster) {
 		setColorPalette(value?.color_palette?.poster);
 	}
+
+	endTime.value
+		= value.total_duration
+			&& new Date(
+				new Date().getTime() + value.total_duration * 60 * 1000,
+			).toLocaleTimeString(i18next.language ?? 'en-US', {
+				hour: '2-digit',
+				minute: '2-digit',
+			});
+	interval.value = setInterval(() => {
+		endTime.value
+			= value.total_duration
+				&& new Date(
+					new Date().getTime() + value.total_duration * 60 * 1000,
+				).toLocaleTimeString(i18next.language ?? 'en-US', {
+					hour: '2-digit',
+					minute: '2-digit',
+				});
+	}, 1000);
 });
 
 onIonViewWillEnter(() => {
@@ -120,6 +130,8 @@ watch(showMore, (value) => {
 
 const posterStyle
 	= 'grid-cols-2 md:grid-cols-5 lg:grid-cols-6 xl:grid-cols-7 2xl:grid-cols-7 3xl:grid-cols-9 4xl:grid-cols-10 5xl:grid-cols-[repeat(14,minmax(0,1fr))] tv:grid-cols-6';
+
+const yearSpan = computed(() => `${collect(data.value?.collection).min('year')} - ${collect(data.value?.collection).max('year')}`);
 </script>
 
 <template>
@@ -136,7 +148,7 @@ const posterStyle
 			<MobileInfoCard :data="data" />
 
 			<div
-				class="flex z-0 flex-col justify-start items-center self-stretch h-auto flex-grow gap-4 will-change-auto text-slate-lightA-12/70 dark:text-slate-darkA-12/80"
+				class="flex z-0 flex-col justify-start items-center self-stretch h-auto flex-grow gap-4 will-change-auto text-slate-12/70 dark:text-slate-12/80"
 				style="box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.16)"
 			>
 				<div
@@ -156,7 +168,7 @@ const posterStyle
 				</div>
 
 				<div
-					class="flex bg-slate-light-3 dark:bg-slate-dark-1 flex-col justify-start items-start self-stretch flex-grow-0 flex-shrink-0 gap-3 pt-16 pb-5 will-change-auto w-inherit px-6"
+					class="flex bg-surface-3 dark:bg-surface-1 flex-col justify-start items-start self-stretch flex-grow-0 flex-shrink-0 gap-3 pt-16 pb-5 will-change-auto w-inherit px-6"
 				>
 					<p
 						v-if="data?.title"
@@ -171,46 +183,45 @@ const posterStyle
 
 					<Collapsible
 						v-if="data?.overview"
-						:text="data?.overview"
 						:max-lines="3"
+						:text="data?.overview"
 					/>
 
 					<div
 						v-if="data"
 						class="flex flex-wrap justify-start items-center self-stretch flex-grow-0 flex-shrink-0 relative gap-2"
 					>
-						<HeaderItem v-if="data?.content_ratings" title="Age rating">
+						<HeaderItem v-if="data?.content_ratings" class="children:!border-none children:!bg-transparent" title="Age rating">
 							<ContentRating
 								v-if="data?.content_ratings"
+								:ratings="data?.content_ratings"
 								:size="6"
 								class="h-full min-!h-[1rem] object-scale-down rounded-lg overflow-clip children:-m-0.5"
-								:ratings="data?.content_ratings"
 							/>
 						</HeaderItem>
 
 						<HeaderItem
 							v-if="data?.have_items"
-							title="Availability"
 							:data="`${data?.have_items}/${data?.number_of_items}`"
+							title="Availability"
 						/>
 
 						<HeaderItem
 							v-if="data?.year"
-							title="Release date"
 							:data="data?.year.toString()"
+							title="Release date"
 						/>
 
 						<HeaderItem v-if="data?.collection" title="Timespan">
 							<span class="whitespace-nowrap">
-								{{ collect(data?.collection).min("year") }}
-								- {{ collect(data?.collection).max("year") }}
+								{{ yearSpan }}
 							</span>
 						</HeaderItem>
 
 						<HeaderItem
 							v-if="data?.total_duration"
-							title="Duration"
 							:data="convertToHumanReact(t, data?.total_duration)"
+							title="Duration"
 						/>
 					</div>
 
@@ -220,15 +231,15 @@ const posterStyle
 						class="h-6 will-change-auto"
 					/>
 					<div
-						class="self-stretch flex-grow-0 flex-shrink-0 h-px bg-slate-dark-7/[0.1] dark:bg-slate-dark-11/[0.1]"
+						class="self-stretch flex-grow-0 flex-shrink-0 h-px bg-surface-7/[0.1] dark:bg-surface-11/[0.1]"
 					/>
 
 					<InfoItem
 						v-if="data?.genres"
 						:data="data"
-						title="Genres"
 						key-name="genres"
 						prefix="genres"
+						title="Genres"
 					/>
 					<IonSkeletonText
 						v-else
@@ -237,18 +248,18 @@ const posterStyle
 					/>
 
 					<div
-						class="self-stretch flex-grow-0 flex-shrink-0 h-px bg-slate-dark-7/[0.1] dark:bg-slate-dark-11/[0.1]"
+						class="self-stretch flex-grow-0 flex-shrink-0 h-px bg-surface-7/[0.1] dark:bg-surface-11/[0.1]"
 					/>
 
 					<div class="flex w-available flex-1 flex-col gap-2">
 						<h3
-							class="text-2xl font-bold text-auto-12 mr-2 text-slate-dark-1 dark:text-slate-light-1"
+							class="text-2xl font-bold mr-2 "
 						>
 							{{ $t("Collection") }}
 						</h3>
 						<div
-							class="grid w-full gap-4 scroll-smooth music-showing:pb-0"
 							:class="posterStyle"
+							class="grid w-full gap-4 scroll-smooth music-showing:pb-0"
 						>
 							<template
 								v-for="movie in data?.collection ?? []"
@@ -260,36 +271,36 @@ const posterStyle
 					</div>
 
 					<div
-						class="self-stretch flex-grow-0 flex-shrink-0 h-px bg-slate-dark-7/[0.1] dark:bg-slate-dark-11/[0.1]"
+						class="self-stretch flex-grow-0 flex-shrink-0 h-px bg-surface-7/[0.1] dark:bg-surface-11/[0.1]"
 					/>
 
 					<PersonCarousel
 						v-if="data?.cast && data?.cast?.length > 0"
-						class="-mx-6"
 						:data="data?.cast"
+						class="-mx-6"
 						title="Cast"
 					/>
 
 					<PersonCarousel
 						v-if="data?.crew && data?.crew?.length > 0"
-						class="-mx-6"
 						:data="sortByPosterAlphabetized(data?.crew, 'profile', 'id')"
+						class="-mx-6"
 						title="Crew"
 					/>
 
 					<ImageCarousel
 						v-if="data?.posters && data?.posters?.length > 0"
-						class="-mx-6"
 						:data="data?.posters"
+						class="-mx-6"
 						title="Poster"
 						type="poster"
 					/>
 
 					<ImageCarousel
 						v-if="data?.backdrops && data?.backdrops?.length > 0"
-						class="-mx-6"
 						:color-palette="data?.color_palette?.poster"
 						:data="data?.backdrops"
+						class="-mx-6"
 						title="Backdrop"
 						type="backdrop"
 					/>

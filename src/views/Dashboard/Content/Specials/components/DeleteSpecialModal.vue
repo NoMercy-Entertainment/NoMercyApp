@@ -62,11 +62,11 @@ function handleDelete() {
 	<Modal
 		:close="close"
 		:open="open"
-		max-width="max-w-xl"
 		:params="{ special: props.name }"
+		max-width="max-w-xl"
 		title="Delete special {{special}}"
 	>
-		<div class="my-6 text-sm text-auto-10">
+		<div class="my-6 text-sm text-surface-10">
 			{{ $t("Are you sure you want to delete this special?") }}
 		</div>
 
@@ -74,8 +74,8 @@ function handleDelete() {
 			<Button
 				id="yes"
 				:onclick="handleDelete"
-				end-icon="trash"
 				color="red"
+				end-icon="trash"
 				type="button"
 			>
 				{{ $t("Delete") }}
@@ -83,8 +83,8 @@ function handleDelete() {
 			<Button
 				id="no"
 				:onclick="close"
+				color="auto"
 				type="button"
-				color="auto-alpha"
 				variant="text"
 			>
 				{{ $t("Cancel") }}

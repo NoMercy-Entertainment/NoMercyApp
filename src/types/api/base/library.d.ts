@@ -50,8 +50,11 @@ export interface LibraryResponse {
 	poster: string;
 	title: string;
 	titleSort: string;
+	duration: number;
 	year: number;
 	link: string;
+	deathday?: string;
+	tags: string[];
 }
 
 export interface StatusResponse<T> {

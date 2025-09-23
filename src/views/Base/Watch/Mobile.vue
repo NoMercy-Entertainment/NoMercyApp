@@ -172,7 +172,7 @@ onIonViewDidLeave(() => {
 						'mb-28': isNative,
 						'mb-0': !isNative,
 					}"
-					class="absolute inset-0 flex h-full w-full overflow-clip bg-black z-1199"
+					class="absolute inset-0 flex h-full w-full overflow-clip bg-black z-1199 text-white"
 				>
 					<div id="player1" class="group nomercyplayer" />
 				</div>

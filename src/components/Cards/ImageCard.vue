@@ -1,5 +1,4 @@
-<script setup lang="ts">
-import { ref } from 'vue';
+<script lang="ts" setup>
 import type { PropType } from 'vue';
 
 import type { MediaItem } from '@/types/api/base/info';
@@ -29,36 +28,34 @@ const props = defineProps({
 	},
 });
 
-const ringColor = ref(
-	pickPaletteColor(props.data?.color_palette?.image)
-		?.replace('rgb(', '')
-		.replace(')', '')
-		.replace(/,/gu, ' ') ?? 'var(--color-primary)',
-);
+const color = pickPaletteColor(props.data?.color_palette?.poster ?? props.data?.color_palette?.backdrop);
 </script>
 
 <template>
 	<button
 		v-if="data"
+		v-once
 		:onfocus="scrollIntoView"
-		:style="`--color-focus: ${ringColor};`"
+		:style="color ? `
+       --color-theme-8: ${color};
+    ` : ''"
+		class="frosting border-0 border-[var(--color-theme-8)] flex flex-col h-auto items-center focus-shift focus-outline transition-all duration-200 relative !rounded-lg select-none shadow-[0px_0px_0_1px_rgb(from_var(--color-theme-8,var(--color-theme-6))_r_g_b/70%)] w-full z-0 bg-surface-1/8"
 		data-card="true"
-		class="frosting border-0 border-[rgb(var(--color-focus))] flex flex-col h-auto items-center focus-shift focus-outline transition-all duration-200 relative !rounded-lg select-none shadow-[0px_0px_0_1px_rgb(var(--color-focus,var(--color-theme-6))/70%)] w-full z-0 bg-auto-1/8"
 		@click="setData(data)"
 	>
 		<span
-			class="relative h-auto w-full cursor-pointer overflow-clip rounded-lg"
 			:class="aspect === 'poster' ? ' aspect-poster' : 'aspect-backdrop'"
+			class="relative h-auto w-full cursor-pointer overflow-clip rounded-lg"
 		>
 			<TMDBImage
-				class-name="inset-0 h-full w-full overflow-clip rounded-lg"
-				class="!relative"
 				:aspect="aspect"
-				:path="data?.src"
-				type="image"
-				:title="data?.name"
 				:color-palette="data?.color_palette?.image"
+				:path="data?.src"
 				:size="aspect === 'poster' ? 162 : 660"
+				:title="data?.name"
+				class="!relative"
+				class-name="inset-0 h-full w-full overflow-clip rounded-lg"
+				type="image"
 			/>
 		</span>
 	</button>

@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import OptimizedIcon from '@/components/OptimizedIcon.vue';
 
 defineProps({
@@ -12,12 +12,12 @@ defineProps({
 
 <template>
 	<div
-		class="relative flex aspect-square h-auto w-full flex-col items-center justify-center overflow-clip rounded-xl bg-gradient-to-br text-white shadow-lg bg-theme-6 from-theme-6 via-theme-9 to-theme-12"
+		class="relative flex aspect-square h-auto w-full flex-col items-center justify-center overflow-clip rounded-xl bg-gradient-to-br shadow-lg from-theme-6 to-theme-9"
 		style="padding: 15%"
 	>
 		<OptimizedIcon
-			icon="heart"
 			class-name="h-60 w-60"
+			icon="heart"
 			style="--fill-color: white"
 		/>
 	</div>

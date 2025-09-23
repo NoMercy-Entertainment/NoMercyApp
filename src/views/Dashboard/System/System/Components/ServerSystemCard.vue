@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import { IonItem } from '@ionic/vue';
 
 import { dashboardSocketIsConnected } from '@/lib/clients/dashboardSocket';
@@ -20,24 +20,24 @@ defineProps({
 <template>
 	<IonItem v-if="isMobile && dashboardSocketIsConnected">
 		<div
-			class="flex flex-shrink-0 flex-grow-0 flex-col items-start justify-start gap-3 self-stretch w-full pt-1"
+			class="flex flex-shrink-0 flex-grow-0 flex-col items-start justify-start gap-3 self-stretch w-full pt-1 text-surface-12"
 		>
 			<div
-				class="relative flex flex-shrink-0 flex-grow-0 items-center justify-start gap-4 self-stretch text-slate-light-12 dark:text-slate-dark-12"
+				class="relative flex flex-shrink-0 flex-grow-0 items-center justify-start gap-4 self-stretch"
 			>
 				<p class="flex-grow text-xl font-medium">
 					{{ $t(title) }}
 				</p>
-				<div class="ml-auto flex gap-2">
+				<div class="ml-auto flex gap-2 text-surface-12 bg-surface-12/2">
 					<slot name="cta" />
 				</div>
 			</div>
 
 			<div
-				class="flex flex-shrink-0 flex-grow-0 flex-col items-start justify-start gap-4 self-stretch rounded-xl overflow-clip"
 				:class="{
-					'bg-slate-lightA-3 dark:bg-slate-darkA-3 p-4': background,
+					' bg-surface-5/6 text-surface-11 p-4': background,
 				}"
+				class="flex flex-shrink-0 flex-grow-0 flex-col items-start justify-start gap-4 self-stretch rounded-xl overflow-clip"
 			>
 				<slot />
 			</div>
@@ -45,24 +45,24 @@ defineProps({
 	</IonItem>
 	<div
 		v-else-if="dashboardSocketIsConnected"
-		class="flex flex-shrink-0 flex-grow-0 flex-col items-start justify-start gap-3 self-stretch"
+		class="flex flex-shrink-0 flex-grow-0 flex-col items-start justify-start gap-3 self-stretch text-surface-12"
 	>
 		<div
-			class="relative flex flex-shrink-0 flex-grow-0 items-center justify-start gap-4 self-stretch text-slate-light-12 dark:text-slate-dark-12"
+			class="relative flex flex-shrink-0 flex-grow-0 items-center justify-start gap-4 self-stretch"
 		>
 			<p class="flex-grow text-xl font-medium">
 				{{ $t(title) }}
 			</p>
-			<div class="ml-auto flex gap-2">
+			<div class="ml-auto flex gap-2 bg-surface-12/2">
 				<slot name="cta" />
 			</div>
 		</div>
 
 		<div
-			class="flex flex-shrink-0 flex-grow-0 flex-col items-start justify-start gap-4 self-stretch rounded-xl overflow-clip"
 			:class="{
-				'bg-slate-lightA-3 dark:bg-slate-darkA-3 p-4': background,
+				'bg-surface-12/3 text-surface-12/12 p-4': background,
 			}"
+			class="flex flex-shrink-0 flex-grow-0 flex-col items-start justify-start gap-4 self-stretch rounded-xl overflow-clip"
 		>
 			<slot />
 		</div>

@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import { computed } from 'vue';
 
 const props = defineProps({
@@ -38,12 +38,12 @@ const description = computed(() => {
 		>
 			<div class="relative flex w-full flex-col gap-4">
 				<p
-					class="text-7xl font-bold text-center text-slate-light-11 dark:text-slate-dark-11"
+					class="text-7xl font-bold text-center text-slate-11 dark:text-slate-11"
 				>
 					{{ title }}
 				</p>
 				<p
-					class="left-0 text-2xl text-center text-slate-light-11 dark:text-slate-dark-11 whitespace-pre-line"
+					class="left-0 text-2xl text-center text-slate-11 dark:text-slate-11 whitespace-pre-line"
 				>
 					{{ description }}
 				</p>
@@ -51,7 +51,7 @@ const description = computed(() => {
 			<div class="h-6 w-full flex-shrink-0 flex-grow-0">
 				<div class="h-6 w-full">
 					<button
-						class="absolute w-full text-base text-center text-slate-light-11 dark:text-slate-dark-11 underline underline-offset-4"
+						class="absolute w-full text-base text-center text-slate-11 dark:text-slate-11 underline underline-offset-4"
 					>
 						{{ $t("Send me back to the home page") }}
 					</button>

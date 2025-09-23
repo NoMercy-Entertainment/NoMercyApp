@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import { defineAsyncComponent, ref } from 'vue';
 import { useIntersectionObserver } from '@vueuse/core';
 
@@ -58,7 +58,7 @@ const LazyComponent = defineAsyncComponent({
 		<component :is="$slots.placeholder" v-else-if="$slots.placeholder" />
 		<div
 			v-else
-			class="lazy-placeholder min-h-32 bg-slate-100 dark:bg-slate-800 animate-pulse rounded"
+			class="lazy-placeholder min-h-32 bg-surface-1 animate-pulse rounded"
 		/>
 	</div>
 </template>

@@ -1,18 +1,19 @@
-<script setup lang="ts">
-import { onBeforeMount, onMounted, PropType, ref } from "vue";
-import { Swiper } from "swiper";
-import { Swiper as SwiperComponent, SwiperSlide } from "swiper/vue";
-import { register } from "swiper/element/bundle";
+<script lang="ts" setup>
+import {computed, onBeforeMount, onMounted, PropType, ref} from "vue";
+import {Swiper} from "swiper";
+import {Swiper as SwiperComponent, SwiperSlide} from "swiper/vue";
+import {register} from "swiper/element/bundle";
 
-import type { Component } from "@/types/config";
+import type {Component} from "@/types/config";
 
-import { isMobile } from "@/config/global";
-import { mappedEntries } from "@/lib/stringArray";
-import { Breakpoints, breakpoints, swiperConfig } from "@/lib/swiper-config";
+import {isMobile} from "@/config/global";
+import {mappedEntries} from "@/lib/stringArray";
+import {Breakpoints, breakpoints, swiperConfig} from "@/lib/swiper-config";
 
 import OptimizedIcon from "@/components/OptimizedIcon.vue";
-import { scrollCenter } from "@/lib/utils";
-import { scrollContainerElement } from "@/store/ui";
+import {scrollCenter} from "@/lib/utils";
+import {scrollContainerElement} from "@/store/ui";
+import {showBackdrops} from "@/store/preferences.ts";
 
 const props = defineProps({
   title: {
@@ -117,15 +118,17 @@ const offsetBefore = window.innerWidth < 800 ? 24 : 20;
 
 const bp = ref<Breakpoints>();
 
+const backdropCards = computed(() => showBackdrops.value);
+
 onBeforeMount(() => {
   if (!props.limitCardCountBy) {
-    bp.value = breakpoints(props.backdropCards);
+    bp.value = breakpoints(backdropCards.value);
     return;
   }
 
   const newBp: Breakpoints = <Breakpoints>{};
 
-  for (const [key, value] of mappedEntries(breakpoints(props.backdropCards))) {
+  for (const [key, value] of mappedEntries(breakpoints(backdropCards.value))) {
     newBp[key] = {
       ...value,
       slidesPerView: value.slidesPerView - props.limitCardCountBy,
@@ -144,11 +147,11 @@ onMounted(() => {
 
 const focusNext = () => {
   document
-    .querySelector<HTMLButtonElement>(`#carousel_${props.next_id} button`)
-    ?.focus();
+      .querySelector<HTMLButtonElement>(`#carousel_${props.next_id} button`)
+      ?.focus();
 
   const nextTitle = document.querySelector<HTMLHeadingElement>(
-    `#carousel_${props.next_id} h3`
+      `#carousel_${props.next_id} h3`
   );
 
   if (!nextTitle || !scrollContainerElement.value) return;
@@ -161,11 +164,11 @@ const focusNext = () => {
 
 const focusPrevious = () => {
   document
-    .querySelector<HTMLButtonElement>(`#carousel_${props.previous_id} button`)
-    ?.focus();
+      .querySelector<HTMLButtonElement>(`#carousel_${props.previous_id} button`)
+      ?.focus();
 
   const previousTitle = document.querySelector<HTMLHeadingElement>(
-    `#carousel_${props.previous_id} h3`
+      `#carousel_${props.previous_id} h3`
   )!;
 
   if (!previousTitle || !scrollContainerElement.value) return;
@@ -187,30 +190,30 @@ const scrollToCenter = () => {
 
 <template>
   <div
-    v-if="items?.length && show"
-    :id="`carousel_${id}`"
-    :data-next-id="`carousel_${next_id}`"
-    :data-previous-id="`carousel_${previous_id}`"
-    class="mt-2 sm:mt-6 mb-2 flex w-auto flex-shrink-0 flex-grow-0 flex-col items-start justify-start gap-2 self-stretch text-left"
+      v-if="items?.length && show"
+      :id="`carousel_${id}`"
+      :data-next-id="`carousel_${next_id}`"
+      :data-previous-id="`carousel_${previous_id}`"
+      class="mt-2 sm:mt-6 mb-2 flex w-auto flex-shrink-0 flex-grow-0 flex-col items-start justify-start gap-2 self-stretch text-left"
   >
     <div class="flex w-available flex-1 flex-col gap-2">
       <div
-        class="relative ml-2 flex flex-shrink-0 flex-grow-0 items-center self-stretch tv:hidden"
+          class="relative ml-2 flex flex-shrink-0 flex-grow-0 items-center self-stretch tv:hidden"
       >
         <h3
-          v-if="title"
-          ref="title"
-          class="mr-2 ml-3 sm:ml-3 my-2 text-slate-lightA-12/90 dark:text-slate-darkA-12/90 self-stretch flex-grow-0 flex-shrink-0 text-xl font-bold"
+            v-if="title"
+            ref="title"
+            class="mr-2 ml-3 sm:ml-3 my-2 text-surface-12/90 self-stretch flex-grow-0 flex-shrink-0 text-xl font-bold"
         >
           {{ title }}
         </h3>
         <slot v-else name="selector"></slot>
 
         <button
-          v-if="next_id"
-          class="skip-navigation hidden sm:flex sm:absolute opacity-0 focus-visible:opacity-100"
-          @click="focusNext"
-          @focus="scrollToCenter"
+            v-if="next_id"
+            class="skip-navigation hidden sm:flex sm:absolute opacity-0 focus-visible:opacity-100"
+            @click="focusNext"
+            @focus="scrollToCenter"
         >
           <span v-if="next_id === 'continue'">
             {{ $t("Back to first carousel") }}
@@ -230,78 +233,78 @@ const scrollToCenter = () => {
         <!--        </button>-->
 
         <RouterLink
-          v-if="more_link"
-          :to="more_link"
-          class="text-base text-slate-lightA-8/90 dark:text-slate-darkA-8/90 flex items-center ml-auto sm:ml-4 mr-2 sm:mr-auto"
+            v-if="more_link"
+            :to="more_link"
+            class="text-base flex items-center ml-auto sm:ml-4 mr-2 sm:mr-auto"
         >
           <span class="leading-none pt-0.5">{{ more_link_text }}</span>
-          <OptimizedIcon icon="chevronRight" className="w-6 mt-1" />
+          <OptimizedIcon className="w-6 mt-1" icon="chevronRight"/>
         </RouterLink>
 
         <div
-          class="flex flex-shrink-0 flex-grow-0 items-start justify-start gap-2 pr-4 ml-auto"
-          v-if="!isMobile"
+            v-if="!isMobile"
+            class="flex flex-shrink-0 flex-grow-0 items-start justify-start gap-2 pr-4 ml-auto text-surface-11/12"
         >
           <button
-            v-if="hasScroll"
-            :aria-label="$t('Previous slide')"
-            tabindex="-1"
-            class="hidden sm:flex justify-center items-center p-1 rounded-lg bg-auto-alpha-9 active:scale-95 hover:bg-auto-alpha-11 transition-transform duration-200"
-            :class="{
+              v-if="hasScroll"
+              :aria-label="$t('Previous slide')"
+              :class="{
               'cursor-not-allowed opacity-50': !backButtonEnabled,
             }"
-            :onclick="prev"
+              :onclick="prev"
+              class="hidden sm:flex justify-center items-center p-1 rounded-lg bg-surface-5 active:scale-95 hover:bg-surface-6 transition-transform duration-200"
+              tabindex="-1"
           >
-            <OptimizedIcon class="w-6" icon="chevronLeft" />
+            <OptimizedIcon class="w-6" icon="chevronLeft"/>
           </button>
 
           <button
-            v-if="hasScroll"
-            :aria-label="isLastSlide ? $t('Start slide') : $t('Next slide')"
-            tabindex="-1"
-            class="hidden sm:flex justify-center items-center p-1 rounded-lg bg-auto-alpha-9 active:scale-95 hover:bg-auto-alpha-11 transition-transform duration-200"
-            :class="{
+              v-if="hasScroll"
+              :aria-label="isLastSlide ? $t('Start slide') : $t('Next slide')"
+              :class="{
               'cursor-not-allowed opacity-50': !hasScroll,
             }"
-            :onclick="isLastSlide ? reset : next"
+              :onclick="isLastSlide ? reset : next"
+              class="hidden sm:flex justify-center items-center p-1 rounded-lg bg-surface-5 active:scale-95 hover:bg-surface-6 transition-transform duration-200"
+              tabindex="-1"
           >
             <OptimizedIcon
-              v-if="hasScroll && !isLastSlide"
-              icon="chevronRight"
-              class="w-6"
-              :class="{
+                v-if="hasScroll && !isLastSlide"
+                :class="{
                 'opacity-0': !nextButtonEnabled && isLastSlide,
               }"
+                class="w-6"
+                icon="chevronRight"
             />
             <OptimizedIcon
-              v-if="hasScroll && isLastSlide"
-              icon="chevronLeftDouble"
-              class="w-6"
-              :class="{
+                v-if="hasScroll && isLastSlide"
+                :class="{
                 'opacity-0': !isLastSlide,
               }"
+                class="w-6"
+                icon="chevronLeftDouble"
             />
           </button>
         </div>
       </div>
       <div class="gap-3 py-1 pr-0 w-available swiper">
         <SwiperComponent
-          v-bind="swiperConfig(backdropCards) as any"
-          ref="swiper"
-          class="opacity-0"
-          :slidesOffsetBefore="offsetBefore"
-          :breakpoints="bp"
-          data-spatial-container="row"
-          @progress="onProgress"
-          @afterInit="afterInit"
-          @slideChange="onSlideChange"
+            ref="swiper"
+            :breakpoints="bp"
+            :slidesOffsetBefore="offsetBefore"
+            class="opacity-0"
+            data-spatial-container="row"
+            v-bind="swiperConfig(backdropCards) as any"
+            @afterInit="afterInit"
+            @progress="onProgress"
+            @slideChange="onSlideChange"
         >
           <template v-for="item in items" :key="item?.id">
             <swiper-slide v-if="item?.id" class="flex">
               <component
-                :key="item.id"
-                :is="item.component"
-                v-bind="item.props"
+                  :is="item.component"
+                  :key="item.id"
+                  v-bind="item.props"
               />
             </swiper-slide>
           </template>

@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import { computed, onMounted, ref } from 'vue';
 import { useLocalStorage } from '@vueuse/core';
 
@@ -7,11 +7,7 @@ import { user } from '@/store/user';
 
 import serverClient from '@/lib/clients/serverClient';
 import { setTitle } from '@/lib/stringArray';
-import audioPlayer, {
-	currentSong,
-	musicSize,
-	musicVisibility,
-} from '@/store/audioPlayer';
+import audioPlayer, { currentSong, musicSize, musicVisibility } from '@/store/audioPlayer';
 import { currentServer } from '@/store/currentServer';
 import sidebar from '@/store/sidebar';
 
@@ -130,10 +126,10 @@ const rightSize = computed(() => {
 <template>
 	<div
 		id="fullPlayer"
-		class="bg-slate-lightA-4 dark:bg-slate-darkA-4 hidden h-0 music-showing:h-20 flex-shrink-0 flex-grow-0 flex-row items-center justify-start gap-12 self-stretch pr-6 sidebar-closed:ml-20 sidebar-open:ml-64 rounded-lg m-2 mt-2 mb-4 pl-4 mx-5 transition-all duration-200 sm:flex 2xl:sidebar-open:ml-[16.3rem]"
-		:inert="musicVisibility === 'hidden'"
 		:data-music="musicVisibility"
 		:data-sidebar="sidebar"
+		:inert="musicVisibility === 'hidden'"
+		class="bg-surface-12/3 hidden h-0 music-showing:h-20 flex-shrink-0 flex-grow-0 flex-row items-center justify-start gap-12 self-stretch pr-6 sidebar-closed:ml-16 sidebar-open:ml-64 rounded-lg m-2 mt-2 mb-4 pl-4 mx-5 transition-all duration-200 sm:flex 2xl:sidebar-open:ml-[16.3rem]"
 	>
 		<div
 			v-if="currentSong"
@@ -141,17 +137,17 @@ const rightSize = computed(() => {
 		>
 			<div
 				id="left"
-				class="flex flex-grow items-center justify-start transition-width duration-200 gap-2"
 				:style="{
 					width: `${leftSize}%`,
 				}"
+				class="flex flex-grow items-center justify-start transition-width duration-200 gap-2"
 				data-target="track"
 			>
 				<CoverImage
 					v-if="currentSong"
-					:size="100"
-					class-name="relative aspect-square h-auto w-16 cursor-pointer overflow-hidden rounded-md text-theme-4 min-w-[3rem]"
 					:data="currentSong"
+					:size="100"
+					class-name="relative aspect-square h-auto w-16 cursor-pointer overflow-hidden rounded-md text-focus min-w-[3rem]"
 				/>
 
 				<div
@@ -177,16 +173,16 @@ const rightSize = computed(() => {
 				<MediaLikeButton
 					:key="currentSong.id"
 					:data="currentSong"
-					color="var(--color-focus)"
 					class="hidden sm:flex"
+					color="var(--color-theme-8)"
 				/>
 			</div>
 			<div
 				id="center"
-				class="flex w-full flex-grow flex-col items-center justify-start transition-width duration-200"
 				:style="{
 					width: `${centerSize}%`,
 				}"
+				class="flex w-full flex-grow flex-col items-center justify-start transition-width duration-200"
 			>
 				<div class="flex justify-center">
 					<div
@@ -194,9 +190,7 @@ const rightSize = computed(() => {
 					>
 						<ShuffleButton />
 						<PreviousButton />
-						<PlaybackButton
-							class="children:h-10 h-12 children:w-10 w-12 !bg-white dark:!bg-slate-darkA-2"
-						/>
+						<PlaybackButton class="children:h-10 h-12 children:w-10 w-12 !bg-surface-12/4 hover:!bg-surface-12/6" />
 						<NextButton />
 						<RepeatButton />
 					</div>
@@ -205,11 +199,11 @@ const rightSize = computed(() => {
 			</div>
 			<div
 				id="right"
-				class="relative flex flex-grow items-center justify-end gap-2 transition-width duration-200"
+				:data-size="musicSize"
 				:style="{
 					width: `${rightSize}%`,
 				}"
-				:data-size="musicSize"
+				class="relative flex flex-grow items-center justify-end gap-2 transition-width duration-200"
 			>
 				<StopButton />
 

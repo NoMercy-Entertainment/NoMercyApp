@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import type { PropType } from 'vue';
 import { computed } from 'vue';
 
@@ -19,7 +19,7 @@ const backdropStyle
 	= 'grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 2xl:grid-cols-4 3xl:grid-cols-5 4xl:grid-cols-5 5xl:grid-cols-9 tv:grid-cols-6';
 
 const posterStyle
-	= 'grid-cols-2 md:grid-cols-5 lg:grid-cols-6 xl:grid-cols-7 2xl:grid-cols-7 3xl:grid-cols-9 4xl:grid-cols-10 5xl:grid-cols-[repeat(14,minmax(0,1fr))] tv:grid-cols-6';
+	= 'grid-cols-2 md:grid-cols-5 lg:grid-cols-6 xl:grid-cols-7 2xl:grid-cols-7 3xl:grid-cols-9 5xl:grid-cols-[repeat(14,minmax(0,1fr))] tv:grid-cols-6';
 
 const useBackdropStyle = computed(() => {
 	const firstItem = props.items.at(0) as any;
@@ -34,14 +34,14 @@ const useBackdropStyle = computed(() => {
 
 <template>
 	<div
-		ref="containerRef"
 		:key="router.currentRoute.value.params?.id as string"
-		class="z-0 flex flex-col gap-4 rounded-3xl border-0 p-4 w-available scrollbar-none border-auto-3 transform-gpu will-change-auto"
+		ref="containerRef"
 		:class="{
 			'pb-0': isNative && !currentSong,
 			'pb-40': isNative && currentSong,
 			'children:pb-4 sm:children:pb-3': !isNative && currentSong,
 		}"
+		class="z-0 flex flex-col gap-4 rounded-3xl border-0 p-4 w-available scrollbar-none border-surface-3 transform-gpu will-change-auto"
 	>
 		<div
 			:class="`grid w-full gap-4 scroll-smooth music-showing:pb-0 whitespace-pre ${

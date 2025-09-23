@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import { onMounted, onUnmounted, ref, watch } from 'vue';
 
 import { isNative } from '@/config/global';
@@ -115,11 +115,11 @@ watch(ripperSocketIsConnected, async (value) => {
 <template>
 	<div
 		ref="playerContainer"
-		class="absolute inset-0 flex h-full w-full overflow-clip bg-black"
 		:class="{
 			'mb-28': isNative,
 			'mb-0': !isNative,
 		}"
+		class="absolute inset-0 flex h-full w-full overflow-clip bg-black"
 	>
 		<div id="player1" class="group nomercyplayer" />
 
@@ -131,8 +131,8 @@ watch(ripperSocketIsConnected, async (value) => {
 				<svg
 					aria-hidden="true"
 					class="inline w-10 h-10 text-gray-200 animate-spin dark:text-gray-600 fill-focus"
-					viewBox="0 0 100 101"
 					fill="none"
+					viewBox="0 0 100 101"
 					xmlns="http://www.w3.org/2000/svg"
 				>
 					<path

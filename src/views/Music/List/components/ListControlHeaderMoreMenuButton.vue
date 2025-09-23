@@ -1,12 +1,7 @@
 <script lang="ts" setup>
 import { MenuItem } from '@headlessui/vue';
 
-import type {
-	FunctionalComponent,
-	HTMLAttributes,
-	PropType,
-	VNodeProps,
-} from 'vue';
+import type { FunctionalComponent, HTMLAttributes, PropType, VNodeProps } from 'vue';
 
 defineProps({
 	title: {
@@ -29,12 +24,12 @@ defineProps({
 <template>
 	<MenuItem v-slot="{ active }">
 		<button
-			class="group items-center flex gap-2 my-2 h-10 w-full notCurrentPage cursor-pointer rounded-md px-4 py-2 text-sm bg-auto-100" :class="[
+			:class="[
 				active
-					? 'bg-[rgb(var(--color-focus,var(--color-theme-700))/80%)]'
-					: 'text-auto-900',
-			]"
-			:onclick="onclick"
+					? 'bg-[rgb(var(--color-theme-8,var(--color-theme-700))/80%)]'
+					: 'text-surface-900',
+			]" :onclick="onclick"
+			class="group items-center flex gap-2 my-2 h-10 w-full notCurrentPage cursor-pointer rounded-md px-4 py-2 text-sm bg-surface-20"
 		>
 			<component :is="icon" v-if="icon" class="h-5 w-5" />
 			{{ $t(title) }}

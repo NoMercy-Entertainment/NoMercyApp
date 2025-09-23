@@ -28,17 +28,17 @@ defineProps({
 			{{ $t(title) }}
 		</p>
 
-		<IonList lines="inset" class="w-available">
+		<IonList class="w-available" lines="inset">
 			<IonItem v-for="item in items" :key="item?.id">
 				<div
-					class="grid w-available py-1 items-center relative gap-4 overflow-clip group/credit"
 					:class="{
 						'grid-cols-[[year]_5ch_[title]_minmax(auto,100%)_[buttons]_5ch]': (item as KnownFor)?.hasItem,
 						'grid-cols-[[year]_5ch_[title]_minmax(auto,100%)]': !(item as KnownFor)?.hasItem,
 					}"
+					class="grid w-available py-1 items-center relative gap-4 overflow-clip group/credit text-surface-12"
 				>
 					<p
-						class="w-10 text-base font-bold text-auto self-start whitespace-nowrap"
+						class="w-10 text-base font-bold self-start whitespace-nowrap"
 					>
 						{{ item.year === 0 ? "—" : item.year }}
 					</p>
@@ -59,13 +59,13 @@ defineProps({
 						>
 							<p
 								v-if="(item as KnownFor)?.episode_count"
-								class="text-contrast/60 whitespace-nowrap"
+								class="text-surface-12/11 whitespace-nowrap"
 							>
 								({{ (item as KnownFor)?.episode_count }}
-								{{ (item as KnownFor).episode_count! > 2 ? t("ep") : t("ep") }})
+								{{ (item as KnownFor).episode_count! > 2 ? $t("ep") : $t("ep") }})
 							</p>
 
-							<p class="text-contrast/60">
+							<p class="text-surface-12/11">
 								{{ $t("as") }}
 							</p>
 
@@ -92,9 +92,9 @@ defineProps({
 					<RouterLink
 						v-if="(item as KnownFor)?.hasItem"
 						:to="item.link"
-						class="relative flex items-center justify-center gap-2 rounded-lg p-2 aspect-square transition-colors duration-200 group/play hover:bg-auto-5/6"
+						class="relative flex items-center justify-center gap-2 rounded-lg p-2 aspect-square transition-colors duration-200 group/play hover:bg-surface-5/6"
 					>
-						<OptimizedIcon icon="play" class-name="h-5 w-5" />
+						<OptimizedIcon class-name="h-5 w-5" icon="play" />
 					</RouterLink>
 				</div>
 			</IonItem>

@@ -1,18 +1,11 @@
-<script setup lang="ts">
-import { onMounted, ref, watch } from 'vue';
+<script lang="ts" setup>
 import type { PropType } from 'vue';
+import { onMounted, ref, watch } from 'vue';
 
 import type { HomeDataItem } from '@/types/api/music';
-import type {
-	Artist,
-	ArtistResponse,
-	Featured,
-} from '@/types/api/music/artist';
+import type { Artist, ArtistResponse, Featured } from '@/types/api/music/artist';
 import type { Album, AlbumResponse } from '@/types/api/music/album';
-import type {
-	DisplayList,
-	MusicCardPageResponseData,
-} from '@/types/api/music/musicPlayer';
+import type { DisplayList, MusicCardPageResponseData } from '@/types/api/music/musicPlayer';
 import type { PlaylistItem } from '@/types/musicPlayer';
 
 import { currentServer } from '@/store/currentServer';
@@ -81,6 +74,11 @@ const props = defineProps({
 const source = ref<string | null>(null);
 
 function image() {
+	if (!props.data?.cover) {
+		source.value = null;
+		return;
+	}
+
 	const suffix = location.hostname.includes('dev') ? '-dev' : '';
 
 	if (
@@ -118,8 +116,10 @@ watch(props, () => {
 	image();
 });
 
-function onError() {
-	image();
+const error = ref(false);
+function onError(e: Event) {
+	(e.target as HTMLImageElement).onerror = null;
+	error.value = true;
 }
 
 function onClick() {
@@ -129,8 +129,8 @@ function onClick() {
 
 <template>
 	<div
-		v-if="data"
-		:class="`${className} aspect-square relative z-0 overflow-clip`"
+		v-if="data?.cover && !error"
+		:class="className"
 		:style="{
 			backgroundImage: `
             radial-gradient(
@@ -155,6 +155,7 @@ function onClick() {
             )`,
 			...style,
 		}"
+		class="aspect-square relative z-0 overflow-clip"
 	>
 		<picture
 			v-if="source"
@@ -166,27 +167,27 @@ function onClick() {
 			>
 			<source
 				:srcset="`${source}?width=${size ?? 500}&type=webp 1x`"
-				type="image/webp"
 				crossorigin="anonymous"
+				type="image/webp"
 			>
 			<source
 				:srcset="`${source}?width=${size ?? 500}&type=jpg 1x`"
-				type="image/jpeg"
 				crossorigin="anonymous"
+				type="image/jpeg"
 			>
 			<img
 				:id="id"
-				:src="`${source}`"
-				:alt="`tmdb image for ${data.name ?? 'image'}`"
-				class="aspect-square !absolute inset-0 overflow-clip z-10 h-available w-available object-cover"
-				:loading="loading"
-				tabindex="-1"
-				crossorigin="anonymous"
+				:alt="`cover image for ${data.name ?? 'image'}`"
 				:data-id="data?.id"
+				:loading="loading"
 				:onclick="onClick"
+				:onerror="onError"
 				:onfocus="handleFocus"
 				:onload="onload"
-				:onerror="onError"
+				:src="`${source}`"
+				class="aspect-square !absolute inset-0 overflow-clip z-10 h-available w-available object-cover"
+				crossorigin="anonymous"
+				tabindex="-1"
 			>
 		</picture>
 		<AppLogoSquare
@@ -194,4 +195,9 @@ function onClick() {
 			class="z-0 overflow-clip bg-black p-[15%] h-available w-available"
 		/>
 	</div>
+	<AppLogoSquare
+		v-else
+		:class="className"
+		class="z-0 overflow-clip bg-black p-[15%] h-available w-available aspect-square relative z-0 overflow-clip"
+	/>
 </template>

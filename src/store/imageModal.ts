@@ -62,7 +62,6 @@ export function setTemp(temp: any) {
 }
 
 export const imageModal = ref<VNodeRef>();
-
 watch([sim, sss], async ([sim, sss]) => {
 	if ((sim || sss) && !dss.value) {
 		document.querySelector<HTMLDialogElement>('#imageModal')?.showModal();

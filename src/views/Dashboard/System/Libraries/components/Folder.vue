@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import type { PropType } from 'vue';
 import { computed, ref, toRaw, watch } from 'vue';
 
@@ -83,9 +83,11 @@ watch(encoderQualities, (newVal) => {
 });
 
 const deleteConfirmOpen = ref(false);
+
 function openDeleteConfirm() {
 	deleteConfirmOpen.value = true;
 }
+
 function closeDeleteConfirm() {
 	deleteConfirmOpen.value = false;
 }
@@ -93,7 +95,7 @@ function closeDeleteConfirm() {
 
 <template>
 	<div
-		class="flex w-full flex-col items-center justify-between gap-2 rounded-md px-4 py-2 pr-2 odd:bg-auto-alpha-3 even:bg-auto-alpha-2 sm:flex-row"
+		class="flex w-full flex-col items-center justify-between gap-2 rounded-md px-4 py-2 pr-2 odd:bg-surface-5/6 even:bg-surface-7/6 sm:flex-row"
 	>
 		<span class="mr-auto flex w-full flex-1 flex-grow">
 			{{ folder.folder.path }}
@@ -103,26 +105,26 @@ function closeDeleteConfirm() {
 			<MultiSelect
 				id="encoderProfiles"
 				v-model="encoderQualities"
-				placeholder="Select encoder profiles"
-				class="w-full min-w-[200px] sm:w-auto"
 				:options="availableQualities"
+				class="w-full min-w-[200px] sm:w-auto"
 				option-label="name"
+				placeholder="Select encoder profiles"
 			/>
 
 			<Button
 				id="yes"
-				type="button"
-				variant="text"
 				class="children:text-gray-400 children:transition-colors children:duration-100 children:hover:text-red-dark-8"
 				color="red"
 				start-icon="folderRemove"
+				type="button"
+				variant="text"
 				@click="openDeleteConfirm"
 			/>
 
 			<DeleteFolderModal
 				:id="folder.folder.id"
-				:name="folder.folder.path"
 				:close="closeDeleteConfirm"
+				:name="folder.folder.path"
 				:open="deleteConfirmOpen"
 			/>
 		</div>

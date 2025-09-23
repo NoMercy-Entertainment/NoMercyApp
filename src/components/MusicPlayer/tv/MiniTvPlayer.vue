@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import type { PropType } from 'vue';
 import { watch } from 'vue';
 
@@ -82,12 +82,12 @@ watch(musicSize, () => {
 	<div
 		v-if="musicSize === SizeState.compact"
 		id="MiniTvPlayer"
-		class="absolute music-showing:flex hidden h-16 flex-col overflow-hidden rounded-lg bg-white/5 outline-white w-available focus-visible:outline active:outline"
-		:onclick="() => togglePlayerSize()"
-		:tabindex="musicSize === SizeState.compact ? 1 : -1"
-		:data-size="musicSize"
 		:data-music="musicVisibility"
 		:data-sidebar="sidebar"
+		:data-size="musicSize"
+		:onclick="() => togglePlayerSize()"
+		:tabindex="musicSize === SizeState.compact ? 1 : -1"
+		class="absolute music-showing:flex hidden h-16 flex-col overflow-hidden rounded-lg bg-white/5 outline-white w-available focus-visible:outline active:outline"
 	>
 		<div class="flex h-full items-center justify-between pb-2 p-1.5">
 			<div
@@ -95,9 +95,9 @@ watch(musicSize, () => {
 			>
 				<CoverImage
 					v-if="currentSong"
-					:size="180"
-					class-name="relative aspect-square h-auto w-14 cursor-pointer overflow-hidden rounded-md text-theme-400 min-w-[3rem]"
 					:data="currentSong"
+					:size="180"
+					class-name="relative aspect-square h-auto w-14 cursor-pointer overflow-hidden rounded-md text-focus00 min-w-[3rem]"
 				/>
 
 				<div
@@ -110,8 +110,8 @@ watch(musicSize, () => {
 						<EqSpinner v-if="isPlaying" :playing="isPlaying" />
 
 						<OptimizedIcon
-							icon="play"
 							class="block h-6 w-6 group-hover:sm:block"
+							icon="play"
 						/>
 					</div>
 

@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import type { PropType } from 'vue';
 
 import type { DisplayList } from '@/types/api/music/musicPlayer';
@@ -31,6 +31,11 @@ const props = defineProps({
 		type: String as PropType<'track' | 'artist' | 'album'>,
 		required: false,
 		default: 'track',
+	},
+	noBackground: {
+		type: Boolean as PropType<boolean>,
+		required: false,
+		default: false,
 	},
 });
 
@@ -69,17 +74,20 @@ function handleClick(e?: MouseEvent) {
 
 <template>
 	<MusicButton
-		label="Favorite"
+		:class="{
+			'!bg-transparent hover:bg-transparent': noBackground,
+		}"
 		:onclick="handleClick"
 		:style="`--fill: ${color};`"
+		label="Favorite"
 	>
 		<slot />
 
 		<OptimizedIcon
 			v-if="data.favorite"
-			icon="heart"
-			class="h-7 w-7"
 			:class="className"
+			class="h-7 w-7"
+			icon="heart"
 		/>
 	</MusicButton>
 </template>

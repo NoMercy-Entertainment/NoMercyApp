@@ -1,6 +1,6 @@
-<script setup lang="ts">
-import { computed, ref } from 'vue';
+<script lang="ts" setup>
 import type { PropType } from 'vue';
+import { computed, ref } from 'vue';
 import type { MoooomIcons } from '@Icons/icons';
 import router from '@/router';
 
@@ -43,7 +43,7 @@ function center() {
 
 const classes = computed(() =>
 	isCurrentRoute.value
-		? 'flex justify-center items-center flex-grow-0 flex-shrink-0 relative overflow-hidden gap-2 px-3.5 py-0.5 rounded-md bg-focus/10 border-focus/4 text-auto-12 shadow-[0_1px_0_0_rgba(255,255,255,0.20)_inset,0_-1px_0_0_rgba(var(--color-slate-1)/30%)_inset,0_22px_30px_-4px_rgba(var(--color-slate-1)/60%)] hover:!shadow-[0_1px_0_0_rgba(255,255,255,0.20)_inset,0_-1px_0_0_rgba(var(--color-slate-1)/30%)_inset,0_22px_30px_-4px_rgba(var(--color-slate-1)/60%)]'
+		? 'flex justify-center items-center flex-grow-0 flex-shrink-0 relative overflow-hidden gap-2 px-3.5 py-0.5 rounded-md bg-focus/10 border-focus/4 shadow-[0_1px_0_0_rgba(255,255,255,0.20)_inset,0_-1px_0_0_rgb(from_var(--color-slate-1)_r_g_b/30%)_inset,0_22px_30px_-4px_rgb(from_var(--color-slate-1)_r_g_b/60%)] hover:!shadow-[0_1px_0_0_rgba(255,255,255,0.20)_inset,0_-1px_0_0_rgb(from_var(--color-slate-1)_r_g_b/30%)_inset,0_22px_30px_-4px_rgb(from_var(--color-slate-1)_r_g_b/60%)]'
 		: 'flex justify-center items-center flex-grow-0 flex-shrink-0 relative overflow-hidden gap-2 px-3.5 py-0.5 rounded-md',
 );
 
@@ -51,7 +51,7 @@ const styles = computed(() =>
 	isCurrentRoute.value
 		? {
 				background:
-          'radial-gradient(50% 50% at 50% 100%, rgba(70, 70, 70, 0.09) 0%, rgba(70, 70, 70, 0.06) 40%, rgba(70, 70, 70, 0.00) 100%), linear-gradient(180deg, rgba(70, 70, 70, 0.00) 0%, rgba(70, 70, 70, 0.12) 100%), rgba(var(--color-focus) / 60%)',
+              'radial-gradient(50% 50% at 50% 100%, rgba(70, 70, 70, 0.09) 0%, rgba(70, 70, 70, 0.06) 40%, rgba(70, 70, 70, 0.00) 100%), linear-gradient(180deg, rgba(70, 70, 70, 0.00) 0%, rgba(70, 70, 70, 0.12) 100%), rgba(var(--color-theme-8) / 60%)',
 				backgroundBlendMode: 'normal, overlay, normal',
 			}
 		: {},
@@ -61,10 +61,10 @@ const styles = computed(() =>
 <template>
 	<RouterLink
 		ref="link"
-		:to="url"
 		:aria-label="title"
 		:class="classes"
 		:styles="styles"
+		:to="url"
 		@click="center"
 	>
 		<p class="flex-shrink-0 flex-grow-0 text-left text-base font-semibold">

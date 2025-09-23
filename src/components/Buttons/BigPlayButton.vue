@@ -1,12 +1,8 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import type { PropType } from 'vue';
 import { computed } from 'vue';
 
-import type {
-	AlbumResponse,
-	ArtistResponse,
-	DisplayList,
-} from '@/types/api/music/musicPlayer';
+import type { AlbumResponse, ArtistResponse, DisplayList } from '@/types/api/music/musicPlayer';
 import audioPlayer, {
 	currentMusicDeviceId,
 	currentPlaylist,
@@ -24,7 +20,7 @@ import { deviceId } from '@/store/deviceInfo';
 const props = defineProps({
 	data: {
 		type: Object as PropType<
-      DisplayList | ArtistResponse | AlbumResponse | undefined
+        DisplayList | ArtistResponse | AlbumResponse | undefined
 		>,
 		required: true,
 	},
@@ -85,17 +81,18 @@ function handleClick() {
 	<MusicButton
 		v-if="audioPlayer"
 		id="playList"
-		label="Play"
+		:class="className"
 		:onclick="handleClick"
 		:onkeyup="onkeyup"
-		:class="className"
-		class="h-12 w-12 min-w-12 min-h-12 max-w-12 max-h-12 relative !rounded-full overflow-clip !bg-focus transition-all duration-200 shadow-[0_1px_0_0_rgba(255,255,255,0.20)_inset,0_-1px_0_0_rgba(var(--color-slate-9)/60%)_inset,0_22px_30px_-4px_rgba(var(--color-slate-9)/70%)] dark:shadow-[0_1px_0_0_rgba(255,255,255,0.20)_inset,0_-1px_0_0_rgba(var(--color-slate-1)/30%)_inset,0_22px_30px_-4px_rgba(var(--color-slate-1)/70%)] hover:shadow-[0_1px_0_0_rgba(255,255,255,0.20)_inset,0_-1px_0_0_rgba(var(--color-slate-11)/60%)_inset,0_22px_30px_-4px_rgba(var(--color-slate-11)/70%)] dark:hover:shadow-[0_1px_0_0_rgba(255,255,255,0.20)_inset,0_-1px_0_0_rgba(var(--color-slate-1)/30%)_inset,0_22px_30px_-4px_rgba(var(--color-slate-1)/70%)] active:!bg-focus focus-visible:!bg-focus hover:!bg-focus dark:active:!bg-focus dark:focus-visible:!bg-focus dark:sm:hover:!bg-focus active:!shadow-none active:!dark:shadow-none"
+		class="h-12 w-12 min-w-12 min-h-12 max-w-12 max-h-12 relative !rounded-full overflow-clip !bg-focus transition-all duration-200 shadow-[0_1px_0_0_rgba(255,255,255,0.20)_inset,0_-1px_0_0_rgba(from_var(--color-slate-9)_g_g_b/60%)_inset,0_22px_30px_-4px_rgba(from_var(--color-slate-9)_g_g_b/70%)] dark:shadow-[0_1px_0_0_rgba(255,255,255,0.20)_inset,0_-1px_0_0_rgba(from_var(--color-slate-1)_g_g_b/30%)_inset,0_22px_30px_-4px_rgba(from_var(--color-slate-1)_g_g_b/70%)] hover:shadow-[0_1px_0_0_rgba(255,255,255,0.20)_inset,0_-1px_0_0_rgba(from_var(--color-slate-11)_g_g_b/60%)_inset,0_22px_30px_-4px_rgba(from_var(--color-slate-11)_g_g_b/70%)] dark:hover:shadow-[0_1px_0_0_rgba(255,255,255,0.20)_inset,0_-1px_0_0_rgba(from_var(--color-slate-1)_g_g_b/30%)_inset,0_22px_30px_-4px_rgba(from_var(--color-slate-1)_g_g_b/70%)] active:!bg-focus focus-visible:!bg-focus hover:!bg-focus dark:active:!bg-focus dark:focus-visible:!bg-focus dark:sm:hover:!bg-focus active:!shadow-none active:!dark:shadow-none text-white"
+		label="Play"
+		no-tooltip
 	>
 		<PlayerIcon
 			v-if="isPlaying && currentPlaylist === playlistName"
+			class="h-8 w-8"
 			icon="nmPause"
-			class="h-8 w-8 text-white"
 		/>
-		<PlayerIcon v-else icon="nmPlay" class="h-8 w-8 text-white" />
+		<PlayerIcon v-else class="h-8 w-8" icon="nmPlay" />
 	</MusicButton>
 </template>

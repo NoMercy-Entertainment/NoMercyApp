@@ -61,11 +61,11 @@ function handleDelete() {
 	<Modal
 		:close="close"
 		:open="open"
-		max-width="max-w-xl"
 		:params="{ folder: props.name }"
+		max-width="max-w-xl"
 		title="Delete folder {{folder}}"
 	>
-		<div class="my-6 text-sm text-auto-10">
+		<div class="my-6 text-sm text-surface-10">
 			{{ $t("Are you sure you want to delete this folder?") }}
 		</div>
 
@@ -73,8 +73,8 @@ function handleDelete() {
 			<Button
 				id="yes"
 				:onclick="handleDelete"
-				end-icon="trash"
 				color="red"
+				end-icon="trash"
 				type="button"
 				variant="contained"
 			>
@@ -83,8 +83,8 @@ function handleDelete() {
 			<Button
 				id="no"
 				:onclick="close"
+				color="auto"
 				type="button"
-				color="auto-alpha"
 				variant="text"
 			>
 				{{ $t("Cancel") }}

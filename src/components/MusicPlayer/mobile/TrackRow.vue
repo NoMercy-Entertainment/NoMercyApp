@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import { SizeState } from '@/types/musicPlayer';
 
 import { currentSong, musicSize, setMusicSize } from '@/store/audioPlayer';
@@ -43,8 +43,8 @@ function togglePlayerSize() {
 				v-if="currentSong"
 				:key="currentSong?.id + currentSong?.favorite"
 				:data="currentSong"
-				color="var(--color-focus)"
 				class="flex"
+				color="var(--color-theme-8)"
 			/>
 		</div>
 	</div>

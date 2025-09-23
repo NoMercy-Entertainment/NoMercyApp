@@ -1,10 +1,5 @@
-<script setup lang="ts">
-import {
-	folder,
-	home1,
-	noteEighthPair,
-	searchMagnifyingGlass,
-} from '@Icons/index';
+<script lang="ts" setup>
+import { folder, home1, noteEighthPair, searchMagnifyingGlass } from '@Icons/index';
 import { IonIcon, IonLabel, IonTabBar, IonTabButton } from '@ionic/vue';
 
 import { user } from '@/store/user';
@@ -18,54 +13,55 @@ import AppLogoSquare from '@/components/Images/icons/AppLogoSquare.vue';
 <template>
 	<IonTabBar
 		slot="bottom"
+		:class="{
+			'bg-sand-light-1 dark:bg-surface-2 hide-bg': menuOpen,
+			'bg-sand-light-1 dark:bg-surface-2': !menuOpen,
+		}"
+		class="w-available overflow-clip"
 		mode="md"
 		selected-tab="home"
-		class="w-available overflow-clip"
-		:class="{
-			'bg-sand-light-1 dark:bg-slate-dark-3 hide-bg': menuOpen,
-			'bg-sand-light-1 dark:bg-slate-dark-3': !menuOpen,
-		}"
 	>
 		<IonTabButton
 			v-if="currentServer"
-			tab="home"
 			href="/home"
+			rip
+			tab="home"
 			@click="closeMenu"
 		>
-			<IonIcon aria-hidden="true" :icon="home1" />
+			<IonIcon :icon="home1" aria-hidden="true" />
 			<IonLabel>{{ $t("Home") }}</IonLabel>
 		</IonTabButton>
 
-		<IonTabButton tab="search" href="/search" @click="closeMenu">
-			<IonIcon aria-hidden="true" :icon="searchMagnifyingGlass" />
+		<IonTabButton href="/search" tab="search" @click="closeMenu">
+			<IonIcon :icon="searchMagnifyingGlass" aria-hidden="true" />
 			<IonLabel>{{ $t("Search") }}</IonLabel>
 		</IonTabButton>
 
 		<IonTabButton
 			v-if="currentServer"
-			tab="library"
 			href="/libraries"
+			tab="library"
 			@click="closeMenu"
 		>
-			<IonIcon aria-hidden="true" :icon="folder" class="icon" />
+			<IonIcon :icon="folder" aria-hidden="true" class="icon" />
 			<IonLabel>{{ $t("Library") }}</IonLabel>
 		</IonTabButton>
 
 		<IonTabButton
 			v-if="currentServer"
-			tab="music"
 			href="/music/start"
+			tab="music"
 			@click="closeMenu"
 		>
-			<IonIcon aria-hidden="true" :icon="noteEighthPair" />
+			<IonIcon :icon="noteEighthPair" aria-hidden="true" />
 			<IonLabel>{{ $t("Music") }}</IonLabel>
 		</IonTabButton>
 
 		<IonTabButton
 			:_on-click="toggleMenu"
-			tab="/dashboard"
-			class="hide-bg"
 			:class="{ 'tab-selected': menuOpen }"
+			class="hide-bg"
+			tab="/dashboard"
 			@click="toggleMenu"
 		>
 			<div
@@ -75,7 +71,7 @@ import AppLogoSquare from '@/components/Images/icons/AppLogoSquare.vue';
 					alt="NoMercy Logo"
 					class="absolute w-8 h-8 rounded-full p-1.5"
 				/>
-				<NoMercyAvatar :user="user" :size="52" class="absolute" />
+				<NoMercyAvatar :size="52" :user="user" class="absolute" />
 			</div>
 			<IonLabel>{{ $t("Profile") }}</IonLabel>
 		</IonTabButton>
@@ -97,15 +93,15 @@ ion-tab-button::part(native) {
 }
 
 ion-tab-button ion-avatar x {
-	@apply w-7 h-7 min-w-7 min-h-7 relative flex mt-2.5 mb-1.5 text-slate-dark-1 dark:text-slate-light-1;
+	@apply w-7 h-7 min-w-7 min-h-7 relative flex mt-2.5 mb-1.5;
 }
 
 ion-tab-button ion-icon {
-	@apply w-7 h-7 min-w-7 min-h-7 relative flex -mb-1.5 text-slate-dark-1 dark:text-slate-light-1 p-[0.625rem_0.725rem_0.625rem];
+	@apply text-white w-7 h-7 min-w-7 min-h-7 relative flex -mb-1.5 p-[0.625rem_0.725rem_0.625rem];
 }
 
 ion-tab-button ion-label {
-	@apply text-slate-dark-1 dark:text-slate-light-1 overflow-visible mb-1.5 -mt-1 text-2xs text-center;
+	@apply overflow-visible mb-1.5 -mt-1 text-2xs text-center;
 }
 
 .tab-selected ion-icon {
@@ -115,6 +111,7 @@ ion-tab-button ion-label {
 ion-tab-bar:not(.hide-bg) .tab-selected ion-label {
 	@apply text-focus;
 }
+
 ion-tab-bar:not(.hide-bg) .tab-selected ion-icon:after {
 	@apply content-[''] -z-10 absolute w-8 h-8 inset-[8px_9px] justify-center items-center rounded-full bg-focus dark:brightness-[0.6] shadow-none dark:shadow-none hover:shadow-none dark:hover:shadow-none active:shadow-none active:dark:shadow-none;
 	box-shadow:

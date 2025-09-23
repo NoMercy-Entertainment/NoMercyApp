@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import { computed } from 'vue';
 import type { PropType } from 'vue';
 
@@ -38,7 +38,7 @@ const artists = computed(() => {
 		v-if="artists.length > 0"
 		class="flex w-full flex-col items-start justify-start gap-4"
 	>
-		<div class="text-xl font-bold leading-loose text-auto-11">
+		<div class="text-xl font-bold leading-loose text-surface-11">
 			{{ $t("Featured Artists") }}
 		</div>
 		<div class="grid grid-cols-2 gap-4">
@@ -58,7 +58,7 @@ const artists = computed(() => {
 					</div>
 					<div class="flex items-center justify-start gap-2.5">
 						<div
-							class="text-sm font-semibold text-auto-8 text-balance line-clamp-2"
+							class="text-sm font-semibold text-surface-8 text-balance line-clamp-2"
 						>
 							{{ artist.name }}
 						</div>

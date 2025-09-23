@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import { computed, onMounted, watch } from 'vue';
 import { ScrollPanel } from 'primevue';
 
@@ -6,12 +6,7 @@ import type { Playlist } from '@/types/api/music/playlists';
 
 import useServerClient from '@/lib/clients/useServerClient';
 
-import sidebar, {
-	closeSidebar,
-	hideSidebar,
-	openSidebar,
-	toggleSidebar,
-} from '@/store/sidebar';
+import sidebar, { closeSidebar, hideSidebar, openSidebar, toggleSidebar } from '@/store/sidebar';
 import router from '@/router';
 
 import SidebarButtonGroup from './SidebarButtonGroup.vue';
@@ -114,23 +109,24 @@ function libraryIconName(type: string) {
 	<aside
 		id="sidebar"
 		:data-sidebar="sidebar"
-		class="absolute bg-slate-light-1 dark:bg-slate-dark-1 top-0 bottom-0 left-0 flex sidebar-open:w-64 sidebar-closed:-translate-x-full sidebar-hidden:-translate-x-full items-start justify-start self-stretch overflow-x-visible transition-[transform,width] duration-200 sidebar h-available z-1099 group/aside sidebar-hidden:sm:w-0 sidebar-closed:sm:w-16 sidebar-closed:sm:translate-x-0 sidebar-hidden:sm:translate-x-0 sm:!relative max-h-available overflow-clip children:opacity-100 sidebar-hidden:children:opacity-0"
+		class="absolute top-0 bottom-0 left-0 flex sidebar-open:w-64 sidebar-closed:-translate-x-full sidebar-hidden:-translate-x-full items-start justify-start self-stretch overflow-x-visible transition-[transform,width] duration-200 sidebar h-available z-1099 group/aside sidebar-hidden:sm:w-0 sidebar-closed:sm:w-16 sidebar-closed:sm:translate-x-0 sidebar-hidden:sm:translate-x-0 sm:!relative max-h-available overflow-clip children:opacity-100 sidebar-hidden:children:opacity-0"
 	>
 		<div
-			class="flex sidebar-open:w-64 flex-grow flex-col items-start justify-start self-stretch overflow-clip h-available sidebar-hidden:sm:w-4 sidebar-closed:sm:w-20 sm:mt-4 overflow-x-hidden"
 			:data-sidebar="sidebar"
+			class="flex sidebar-open:w-64 flex-grow flex-col items-start justify-start self-stretch overflow-clip h-available sidebar-hidden:sm:w-4 sidebar-closed:sm:w-20 sm:mt-4 overflow-x-hidden"
 		>
 			<ScrollPanel
-				class="w-available h-available"
-				:inert="sidebar === 'hidden'"
 				:dt="{
 					bar: {
-						background: 'rgb(var(--background-auto-12) / 60%)',
+						background: 'rgb(var(--surface-1) / 60%)',
 					},
 				}"
+				:inert="sidebar === 'hidden'"
+				class="w-available h-available"
 			>
 				<div
-					class="flex flex-col items-start justify-start gap-1 self-stretch px-4 py-1"
+					:data-sidebar="sidebar"
+					class="flex flex-col items-start justify-start gap-1 self-stretch px-4 sidebar-closed:px-2 py-1"
 				>
 					<!--                    Base pages -->
 					<template
@@ -139,34 +135,34 @@ function libraryIconName(type: string) {
 					>
 						<SidebarButton
 							:href="`/libraries${library.link}`"
-							:show="isLibraryRoute"
 							:icon="libraryIconName(library.type)"
 							:name="library.title"
+							:show="isLibraryRoute"
 						/>
 					</template>
 					<SidebarButton
 						v-if="libraries?.some?.((l) => l.type === 'movie')"
-						href="/collection"
 						:show="isLibraryRoute"
+						href="/collection"
 						icon="collection1"
 						name="Collections"
 					/>
 					<SidebarButton
-						href="/specials"
 						:show="isLibraryRoute"
+						href="/specials"
 						icon="sparkles"
 						name="Specials"
 					/>
 					<SidebarButton
 						v-if="libraries?.some?.((l) => l.type !== 'music')"
-						href="/genre"
 						:show="isLibraryRoute"
+						href="/genre"
 						icon="witchHat"
 						name="Genres"
 					/>
 					<SidebarButton
-						href="/person"
 						:show="isLibraryRoute"
+						href="/person"
 						icon="user"
 						name="People"
 					/>
@@ -174,32 +170,32 @@ function libraryIconName(type: string) {
 
 					<!--                    Music pages -->
 					<SidebarButton
-						href="/music/start"
 						:show="isMusicRoute"
+						href="/music/start"
 						icon="speaker"
 						name="Start"
 					/>
 					<SidebarButton
-						href="/music/artists"
 						:show="isMusicRoute"
+						href="/music/artists"
 						icon="user"
 						name="Artists"
 					/>
 					<SidebarButton
-						href="/music/albums"
 						:show="isMusicRoute"
+						href="/music/albums"
 						icon="disk"
 						name="Albums"
 					/>
 					<SidebarButton
-						href="/music/genres"
 						:show="isMusicRoute"
+						href="/music/genres"
 						icon="noteClefTreble"
 						name="Genres"
 					/>
 					<SidebarButton
-						href="/music/tracks"
 						:show="isMusicRoute"
+						href="/music/tracks"
 						icon="heart"
 						name="Songs you like"
 					/>
@@ -218,8 +214,8 @@ function libraryIconName(type: string) {
 
 						<template v-for="playlist in playlists ?? []" :key="playlist.id">
 							<SidebarButton
-								:href="`/music/playlists/${playlist.id}`"
 								:cover="playlist.cover"
+								:href="`/music/playlists/${playlist.id}`"
 								:name="playlist.name"
 							/>
 						</template>
@@ -296,21 +292,21 @@ function libraryIconName(type: string) {
 
 					<!--                    Preferences pages -->
 					<SidebarButton
+						:show="isPreferencesRoute"
 						href="/preferences/display"
 						icon="tv"
-						:show="isPreferencesRoute"
 						name="Display"
 					/>
 					<SidebarButton
+						:show="isPreferencesRoute"
 						href="/preferences/profile"
 						icon="userEdit"
-						:show="isPreferencesRoute"
 						name="Profile"
 					/>
 					<SidebarButton
+						:show="isPreferencesRoute"
 						href="/preferences/subtitles"
 						icon="closedCaption"
-						:show="isPreferencesRoute"
 						name="Subtitles"
 					/>
 					<!--          <SidebarButton href="/preferences/controls" -->
@@ -320,21 +316,21 @@ function libraryIconName(type: string) {
 					<!--                    end Preferences pages -->
 
 					<SidebarButton
+						:show="isPreferencesRoute && konamiEnabled"
 						href="/dev/cast"
 						icon="chromecast"
-						:show="isPreferencesRoute && konamiEnabled"
 						name="ChromeCast"
 					/>
 					<SidebarButton
+						:show="isPreferencesRoute && konamiEnabled"
 						href="/dev/download"
 						icon="cloudDownload"
-						:show="isPreferencesRoute && konamiEnabled"
 						name="Download"
 					/>
 					<SidebarButton
+						:show="isPreferencesRoute && konamiEnabled"
 						href="/dev/notfound"
 						icon="eye"
-						:show="isPreferencesRoute && konamiEnabled"
 						name="Not Found"
 					/>
 				</div>
@@ -342,16 +338,16 @@ function libraryIconName(type: string) {
 		</div>
 		<button
 			v-if="sidebar !== 'hidden'"
-			:data-sidebar="sidebar"
-			style="box-shadow: 0 1px 2px 0 rgba(16, 24, 40, 0.05)"
 			:aria-label="sidebar === 'open' ? $t('Close sidebar') : $t('Open sidebar')"
-			class="bg-slate-light-5 dark:bg-slate-dark-5 border-slate-light-10 dark:border-slate-dark-10 flex absolute bottom-[30px] overflow-hidden z-1099 duration-200 w-8 h-8 p-1.5 rounded-md shadow justify-center items-center gap-2 border border-auto-alpha-7 sidebar-open:left-60 sidebar-closed:left-12 !opacity-[0.1%] group-hover/aside:!opacity-100 focus:!opacity-100"
+			:data-sidebar="sidebar"
+			class="bg-surface-5 dark:bg-surface-5 border-slate-10 dark:border-slate-10 flex absolute bottom-[30px] overflow-hidden z-1099 duration-200 w-8 h-8 p-1.5 rounded-md shadow justify-center items-center gap-2 border border-surface-7 sidebar-open:left-60 sidebar-closed:left-12 !opacity-[0.1%] group-hover/aside:!opacity-100 focus:!opacity-100"
+			style="box-shadow: 0 1px 2px 0 rgba(16, 24, 40, 0.05)"
 			@click="toggleSidebar()"
 		>
 			<OptimizedIcon
-				icon="chevronLeft"
 				:data-sidebar="sidebar"
 				class-name="rotate-0 sidebar-closed:rotate-180"
+				icon="chevronLeft"
 			/>
 		</button>
 	</aside>

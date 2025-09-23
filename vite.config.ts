@@ -547,9 +547,8 @@ export default defineConfig(({ command }) => {
 				'Cache-Control': 'no-store',
 			},
 			fs: {
-				strict: false,
+				strict: true,
 			},
-			middlewareMode: false,
 			configureServer(server: {
 				middlewares: { use: (arg0: string, arg1: (req: any, res: any, next: any) => void) => void };
 			}) {
@@ -600,18 +599,18 @@ export default defineConfig(({ command }) => {
 			minify: 'esbuild',
 			cssMinify: 'esbuild',
 			rollupOptions: {
-				output: {
-					generatedCode: {
-						constBindings: true,
-						arrowFunctions: true,
-						objectShorthand: true,
-						reservedNamesAsProps: false,
-					},
-					strict: false,
-					entryFileNames: 'assets/[name]-[hash].js',
-					assetFileNames: 'assets/[name]-[hash].[ext]',
-					chunkFileNames: 'assets/[name]-[hash].js',
-				},
+				// output: {
+				// 	generatedCode: {
+				// 		constBindings: true,
+				// 		arrowFunctions: true,
+				// 		objectShorthand: true,
+				// 		reservedNamesAsProps: false,
+				// 	},
+				// 	strict: false,
+				// 	entryFileNames: 'assets/[name]-[hash].js',
+				// 	assetFileNames: 'assets/[name]-[hash].[ext]',
+				// 	chunkFileNames: 'assets/[name]-[hash].js',
+				// },
 				external: (id) => {
 					// Externalize heavy optional dependencies
 					if (

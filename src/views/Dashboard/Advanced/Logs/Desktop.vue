@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import { onMounted, ref, watch } from 'vue';
 import { refDebounced } from '@vueuse/core';
 import { IonContent, IonPage } from '@ionic/vue';
@@ -7,8 +7,6 @@ import type { LogEntry, LogType } from '@/types/server';
 
 import useServerClient from '@/lib/clients/useServerClient';
 import serverClient from '@/lib/clients/serverClient';
-import { censorPublicIpAddresses } from '@/lib/stringArray';
-import { userTime } from '@/lib/dateTime';
 import { connection } from '@/lib/clients/dashboardSocket';
 import DashboardLayout from '@/Layout/Desktop/DashboardLayout.vue';
 import useHubListener from '@/hooks/useHubListener';
@@ -93,11 +91,13 @@ onMounted(() => {
 
 const currentLog = ref<LogEntry | null>(null);
 const showLogOpen = ref(false);
+
 function openLog(item: LogEntry) {
 	console.log(item);
 	currentLog.value = item;
 	showLogOpen.value = true;
 }
+
 function closeLog(e: Event) {
 	e.stopPropagation();
 	currentLog.value = null;
@@ -135,13 +135,13 @@ function handleLevel(value: string) {
 				<template #cta />
 
 				<table
-					class="mx-2 flex flex-col overflow-auto rounded-lg outline outline-1 min-w-available min-h-available divide-y divide-auto-12/8 h-inherit outline-auto-alpha-5 max-h-[78vh] min-h-[78vh]"
+					class="mx-2 flex flex-col overflow-auto rounded-lg outline outline-1 min-w-available min-h-available divide-y divide-surface-12/8 h-inherit outline-surface-5 max-h-[78vh] min-h-[78vh]"
 				>
 					<thead
 						class="flex flex-grow-0 items-start justify-start self-stretch rounded-tl-lg rounded-tr-lg w-available"
 					>
 						<tr
-							class="flex w-full flex-1 gap-4 text-xs font-medium bg-auto-2/10"
+							class="flex w-full flex-1 gap-4 text-xs font-medium bg-surface-2/10"
 						>
 							<th
 								class="relative flex h-11 items-center justify-between gap-3 self-stretch p-3 group/tableButton w-[150px] min-w-[150px]"
@@ -149,7 +149,7 @@ function handleLevel(value: string) {
 								<span>{{ $t("Limit") }} ({{ limit }})</span>
 
 								<DropdownMenu
-									class="relative flex items-center justify-center gap-2 rounded-lg transition-colors duration-200 hover:bg-auto-5/6"
+									class="relative flex items-center justify-center gap-2 rounded-lg transition-colors duration-200 hover:bg-surface-5/6"
 									translate="translate-x-1/4"
 								>
 									<template #button>
@@ -157,7 +157,7 @@ function handleLevel(value: string) {
 									</template>
 									<template #default>
 										<div
-											class="flex w-full flex-col items-start justify-between py-2 bg-auto-1"
+											class="flex w-full flex-col items-start justify-between py-2 bg-surface-1"
 										>
 											<template
 												v-for="l in [5, 10, 20, 50, 100, 500, 1000, 2000]"
@@ -166,7 +166,7 @@ function handleLevel(value: string) {
 													class="flex flex-grow items-center justify-start gap-3 rounded-md px-2.5"
 													@click="limit = l"
 												>
-													<Checkbox :model-value="limit === l" :label="l" />
+													<Checkbox :label="l" :model-value="limit === l" />
 													<span>{{ l }}</span>
 												</button>
 											</template>
@@ -190,14 +190,14 @@ function handleLevel(value: string) {
 							>
 								<span>{{ $t("Level") }}</span>
 								<DropdownMenu
-									class="relative flex items-center justify-center gap-2 rounded-lg transition-colors duration-200 hover:bg-auto-5/6"
+									class="relative flex items-center justify-center gap-2 rounded-lg transition-colors duration-200 hover:bg-surface-5/6"
 								>
 									<template #button>
 										<OptimizedIcon class-name="w-6" icon="chevronDown" />
 									</template>
 
 									<div
-										class="flex w-full flex-col items-start justify-between py-2 bg-auto-1"
+										class="flex w-full flex-col items-start justify-between py-2 bg-surface-1"
 									>
 										<template v-for="level in levels">
 											<button
@@ -205,8 +205,8 @@ function handleLevel(value: string) {
 												@click="() => handleLevel(level)"
 											>
 												<Checkbox
-													:model-value="selectedLevels?.includes(level)"
 													:label="level"
+													:model-value="selectedLevels?.includes(level)"
 												/>
 												<span>{{ level }}</span>
 											</button>
@@ -221,11 +221,11 @@ function handleLevel(value: string) {
 								<InputText
 									id="filter"
 									v-model="filter"
-									variant="filled"
-									size="small"
 									class="mr-auto ml-4 min-w-40"
 									name=""
 									placeholder="Filter..."
+									size="small"
+									variant="filled"
 								/>
 							</th>
 							<th
@@ -246,7 +246,7 @@ function handleLevel(value: string) {
 					</thead>
 
 					<tbody
-						class="overflow-auto divide-y divide-auto-12/5 max-h-available flex-1"
+						class="overflow-auto divide-y divide-surface-12/5 max-h-available flex-1"
 					>
 						<template v-for="log in logs ?? []">
 							<tr

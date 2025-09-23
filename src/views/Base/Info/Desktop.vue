@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import { computed, onMounted, onUnmounted, ref, watch } from 'vue';
 import { useRoute } from 'vue-router';
 import { useTranslation } from 'i18next-vue';
@@ -9,20 +9,14 @@ import type { ShareOptions } from '@capacitor/share';
 import type { InfoResponse } from '@/types/api/base/info';
 import type { MoooomIcons } from '@Icons/icons';
 
-import { isNative } from '@/config/global';
+import { buttonClasses, isNative } from '@/config/global';
 import i18next from '@/config/i18next';
 
 import useServerClient from '@/lib/clients/useServerClient';
 import { setTitle, sortByPosterAlphabetized, translate } from '@/lib/stringArray';
 import { pickPaletteColor } from '@/lib/colorHelper';
 import serverClient from '@/lib/clients/serverClient';
-import { convertToHumanReact } from '@/lib/dateTime';
-import {
-	background,
-	setBackground,
-	setColorPalette,
-	setLogo,
-} from '@/store/ui';
+import { background, setBackground, setColorPalette, setLogo } from '@/store/ui';
 import { currentSong } from '@/store/audioPlayer';
 import { currentServer } from '@/store/currentServer';
 
@@ -48,6 +42,7 @@ import ShareButton from '@/components/Buttons/ShareButton.vue';
 import MissingEpisodes from '@/views/Base/Info/components/MissingEpisodes.vue';
 import { useToast } from 'primevue/usetoast';
 import sidebar from '@/store/sidebar.ts';
+import { convertToHumanReact } from '@/lib/dateTime.ts';
 
 const route = useRoute();
 
@@ -68,16 +63,17 @@ const { data: hasItem } = useServerClient<{
 const trailerOpen = ref(false);
 const trailerState = ref<true | false | 'loading'>('loading');
 const trailerIndex = ref(-1);
-const endTime = ref<string | 0 | null | undefined>(null);
 const interval = ref<NodeJS.Timeout | null>(null);
 const { t } = useTranslation();
 
 const toast = useToast();
 
 const missingEpisodesModalOpen = ref(false);
+
 function openMissingEpisodesContentModal() {
 	missingEpisodesModalOpen.value = true;
 }
+
 function closeMissingEpisodesModal() {
 	missingEpisodesModalOpen.value = false;
 }
@@ -93,20 +89,6 @@ function processTrailer(value: InfoResponse | undefined) {
 		trailerState.value = false;
 		return;
 	}
-
-	endTime.value = value.duration && new Date(new Date().getTime() + value.duration * 60 * 1000)
-		.toLocaleTimeString(i18next.language ?? 'en-US', {
-			hour: '2-digit',
-			minute: '2-digit',
-		});
-
-	interval.value = setInterval(() => {
-		endTime.value = value.duration && new Date(new Date().getTime() + value.duration * 60 * 1000)
-			.toLocaleTimeString(i18next.language ?? 'en-US', {
-				hour: '2-digit',
-				minute: '2-digit',
-			});
-	}, 1000);
 
 	// axios
 	//     .head(
@@ -149,9 +131,7 @@ watch(data, (value) => {
 		setLogo(value?.logo);
 	}
 	if (value?.color_palette?.backdrop || value?.color_palette?.poster) {
-		setColorPalette(
-			value?.color_palette?.poster || value?.color_palette?.backdrop,
-		);
+		setColorPalette(value?.color_palette?.poster || value?.color_palette?.backdrop);
 	}
 
 	processTrailer(value);
@@ -171,9 +151,7 @@ onMounted(() => {
 		data?.value?.color_palette?.backdrop
 		|| data?.value?.color_palette?.poster
 	) {
-		setColorPalette(
-			data?.value?.color_palette?.backdrop ?? data?.value?.color_palette?.poster,
-		);
+		setColorPalette(data?.value?.color_palette?.poster ?? data?.value?.color_palette?.backdrop);
 	}
 
 	processTrailer(data?.value);
@@ -215,7 +193,8 @@ watch(trailerIndex, (value, oldValue) => {
 	processTrailer(data?.value);
 });
 
-function toggleWatched() {}
+function toggleWatched() {
+}
 
 function handleRescan() {
 	serverClient()
@@ -362,6 +341,18 @@ const shareData = computed<ShareOptions>(() => ({
 	text: data.value?.overview ?? '',
 	url: `https://app.nomercy.tv${route.fullPath}`,
 }));
+
+const duration = computed(() => convertToHumanReact(t, data.value?.duration ?? 0, true));
+
+const endTime = computed(() => {
+	if (!data?.value?.duration || !i18next?.language || i18next.language === 'undefined')
+		return null;
+	return new Date(new Date().getTime() + data.value.duration * 60 * 1000)
+		.toLocaleTimeString(i18next?.language ?? 'en-US', {
+			hour: '2-digit',
+			minute: '2-digit',
+		});
+});
 </script>
 
 <template>
@@ -370,17 +361,17 @@ const shareData = computed<ShareOptions>(() => ({
 			<NotFound v-if="isError && !data" />
 			<ScrollContainer v-else :auto-hide="true" :static="true">
 				<div
-					class="z-0 flex flex-col gap-4 rounded-3xl border-0 w-available scrollbar-none border-auto-3"
 					:class="{
 						'pb-2': isNative && currentSong,
 						'children:pb-4 sm:children:pb-3': !isNative && currentSong,
 					}"
+					class="z-0 flex flex-col gap-4 rounded-3xl border-0 w-available scrollbar-none border-surface-3 text-surface-12/70  dark:text-surface-12/80"
 				>
 					<div v-if="isError || error" class="">
 						<p>{{ error }}</p>
 					</div>
 					<div
-						class="flex flex-col gap-4 overflow-clip rounded-3xl border-0 pb-2 w-available scrollbar-none border-auto-3"
+						class="flex flex-col gap-4 overflow-clip rounded-3xl border-0 pb-2 w-available scrollbar-none border-surface-3"
 					>
 						<FloatingBackButton />
 
@@ -399,8 +390,8 @@ const shareData = computed<ShareOptions>(() => ({
 										:key="data?.logo"
 										:auto-shadow="true"
 										:path="data?.logo"
-										:size="500"
 										:shadow="pickPaletteColor(data?.color_palette?.poster)"
+										:size="500"
 										:title="data?.title"
 										class="pointer-events-none relative mx-auto flex h-full w-full select-none place-self-start overflow-hidden p-4"
 										class-name="relative bottom-0 h-auto w-auto p-4"
@@ -409,24 +400,24 @@ const shareData = computed<ShareOptions>(() => ({
 								</div>
 
 								<div
-									class="relative col-start-2 col-end-4 grid flex-shrink-0 flex-grow-0 grid-cols-3 items-start justify-start self-stretch rounded-2xl bg-gradient-to-b p-6 from-slate-light-3/12 via-slate-light-4/12 to-slate-light-4/11 dark:from-slate-dark-2/12 dark:via-slate-dark-2/12 dark:to-slate-dark-2/11 border-auto-5/8 border-1 min-h-[23.5rem]"
+									class="relative col-start-2 col-end-4 grid flex-shrink-0 flex-grow-0 grid-cols-3 items-start justify-start self-stretch rounded-2xl bg-gradient-to-b p-6 from-surface-1/12 via-surface-2/12 to-surface-2/11 border-surface-5/8 border-1 min-h-[23.5rem]"
 								>
 									<div
 										v-if="data?.poster"
-										class="absolute z-10 col-start-1 content-center col-end-2 h-auto w-full items-start justify-start rounded-lg top-0 -translate-y-[35%] sm:block"
 										:class="{
 											'': hasItem,
 										}"
+										class="absolute z-10 col-start-1 content-center col-end-2 h-auto w-full items-start justify-start rounded-lg top-0 -translate-y-[35%] sm:block"
 									>
 										<RouterLink
-											:to="`/${data?.media_type}/${data?.id}/watch`"
 											:aria-label="$t('Play')"
-											class="relative h-available m-auto mx-auto flex-1 flex max-w-[75%] scale-95 cursor-default group/card z-0 transitioning rounded-2xl aspect-poster overflow-clip select-none cover !shadow-none max-h-available"
 											:class="{
 												' 4xl:-mt-10 5xl:-mt-20 6xl:-mt-28 mb-20 6xl:mb-28': sidebar === 'open',
 												' 4xl:-mt-2 5xl:-mt-60 6xl:-mt-28 mb-60 6xl:mb-28': sidebar !== 'open',
 												'hover:!scale-100 hover:-translate-y-1': hasItem,
 											}"
+											:to="`/${data?.media_type}/${data?.id}/watch`"
+											class="relative h-available m-auto mx-auto flex-1 flex max-w-[75%] scale-95 cursor-default group/card z-0 transitioning rounded-2xl aspect-poster overflow-clip select-none cover !shadow-none max-h-available"
 											data-nav="true"
 											data-nav-r="play"
 											data-nav-reset="true"
@@ -434,28 +425,28 @@ const shareData = computed<ShareOptions>(() => ({
 											<TMDBImage
 												:key="data?.poster || 'poster'"
 												:auto-shadow="true"
-												:path="data?.poster"
 												:color-palette="data?.color_palette?.poster"
+												:path="data?.poster"
 												:size="760"
-												priority="high"
 												:title="data?.title"
 												aspect="poster"
-												class-name="pointer-events-none absolute -inset-1 z-20 flex aspect-poster scale-100 select-none items-center place-self-start overflow-hidden rounded-2xl !w-auto !h-auto max-h-available"
-												class="m-auto !w-full !h-full children:w-auto scale-100 rounded-2xl aspect-poster 5xl:w-inherit flex"
+												class="m-auto scale-100 rounded-2xl"
+												class-name="pointer-events-none absolute -inset-1 z-20 flex scale-100 select-none items-center place-self-start overflow-hidden rounded-2xl"
+												priority="high"
 												type="image"
 											/>
 
 											<span
-												:class="`tv:group-focus-visible/card:bg-black/3 absolute -inset-1 z-20 grid h-auto w-available items-center rounded-lg aspect-poster transition-transform duration-200 opacity-0 [background:radial-gradient(75%_50%_at_50%_50%,_rgba(0,_0,_0,_0.40)_0%,_rgba(0,_0,_0,_0.00)_100%),_rgba(0,_0,_0,_0.09)] mx-auto w-max ${
+												:class="`tv:group-focus-visible/card:bg-black/3 absolute -inset-1 z-20 grid h-available w-full items-center transition-transform duration-200 opacity-0 [background:radial-gradient(75%_50%_at_50%_50%,_rgba(0,_0,_0,_0.40)_0%,_rgba(0,_0,_0,_0.00)_100%),_rgba(0,_0,_0,_0.09)] mx-auto ${
 													hasItem ? 'group-hover/card:opacity-100' : ''
 												}`"
 											>
 												<span
-													class="inset-0 grid group-hover/card:grid h-full w-full place-content-center group-focus-visible/card:bg-none group-hover/card:bg-none text-5xl text-transparent transition-transform duration-200 group-focus-visible/card:transitioning group-hover/card:text-auto-12"
+													class="inset-0 grid group-hover/card:grid h-full w-full place-content-center group-focus-visible/card:bg-none group-hover/card:bg-none text-5xl text-transparent transition-transform duration-200 group-focus-visible/card:transitioning group-hover/card:text-surface-12"
 												>
 													<OptimizedIcon
+														class-name="w-20 text-surface-12/70 dark:text-surface-12/80"
 														icon="play"
-														class-name="w-20 text-slate-lightA-12/70 dark:text-slate-darkA-12/80"
 													/>
 												</span>
 											</span>
@@ -463,7 +454,7 @@ const shareData = computed<ShareOptions>(() => ({
 									</div>
 
 									<p
-										class="col-start-1 content-center col-end-2 mt-auto bottom-6 left-8 w-full flex-shrink-0 select-none flex-grow-0 text-sm text-slate-lightA-12/70 dark:text-slate-darkA-12/80"
+										class="col-start-1 content-center col-end-2 mt-auto bottom-6 left-8 w-full flex-shrink-0 select-none flex-grow-0 text-sm text-surface-12/70 dark:text-surface-12/80"
 									>
 										{{ $t("Data provided by The Movie Database(TMDb)") }}.
 									</p>
@@ -475,7 +466,7 @@ const shareData = computed<ShareOptions>(() => ({
 											class="relative flex flex-shrink-0 flex-grow-0 items-center justify-start gap-4 self-stretch"
 										>
 											<p
-												class="flex-grow text-5xl font-bold w-[806px] text-auto-12"
+												class="flex-grow text-5xl font-bold w-[806px]"
 												style="
                           font-size: clamp(1.25rem, 2.309vw + 0.652rem, 2rem);
                           line-height: clamp(
@@ -495,14 +486,15 @@ const shareData = computed<ShareOptions>(() => ({
 												<BannerButton
 													v-if="hasItem"
 													:href="`${data?.link}/watch`"
+													class="bg-surface-6"
 													title="Play"
 												>
 													<OptimizedIcon
+														class-name="w-6 text-surface-12/70  dark:text-surface-12/80"
 														icon="play"
-														class-name="w-6 text-slate-lightA-12/70  dark:text-slate-darkA-12/80"
 													/>
 													<div
-														class="absolute top-3 left-1/2 -translate-x-1/2 grid h-0 w-max flex-shrink-0 flex-grow-0 origin-bottom group-hover/play:grid-cols-1 items-center justify-start duration-200 grid-cols-[0fr] group-hover/play:h-[32.77px] transform-all group-hover/play:top-[-38px] rounded-[5.46px] bg-[#3a3f42] group-hover/play:border border-[#e2f0fd]/[0.08]"
+														class="absolute top-3 left-1/2 -translate-x-1/2 grid h-0 flex-shrink-0 flex-grow-0 origin-bottom group-hover/play:grid-cols-1 items-center justify-start duration-200 grid-cols-[0fr] group-hover/play:h-[32.77px] transform-all group-hover/play:top-[-38px] rounded-[5.46px] bg-[#3a3f42] group-hover/play:border border-[#e2f0fd]/[0.08]"
 														style="
                               box-shadow: 0 8px 12px -4px rgba(0, 0, 0, 0.08);
                             "
@@ -520,12 +512,13 @@ const shareData = computed<ShareOptions>(() => ({
 												<ListControlHeaderMoreMenu
 													v-else-if="data && data.watch_providers && data.watch_providers.length > 0"
 													:items="[]"
-													class="text-slate-lightA-12/70 dark:text-slate-darkA-12/80"
+													class="text-surface-12/70 dark:text-surface-12/80"
 													class-name="max-h-80 overflow-y-auto overflow-x-hidden  !ml-0 !-translate-x-1/3"
 												>
 													<template #button>
 														<MenuButton
-															class="flex flex-nowrap relative w-min active:outline outline-focus focus-visible:outline h-10 z-0 justify-center disabled:opacity-50 disabled:text-auto-300 disabled:hover:!bg-transparent overflow-clip pointer-events-auto border-none focus:border-none active:border-none focus-visible:sm:ring-white focus-visible:sm:ring-2 group/button gap-2 p-2.5 items-center rounded-lg sm:bg-slate-lightA-2 dark:sm:bg-slate-darkA-4 active:sm:bg-slate-lightA-6 focus-visible:sm:bg-slate-lightA-6 hover:sm:bg-slate-lightA-6 dark:sm:active:bg-slate-darkA-6 dark:sm:focus-visible:sm:bg-slate-darkA-6 dark:sm:hover:bg-slate-darkA-6"
+															:class="buttonClasses"
+															class="bg-surface-6"
 														>
 															<span
 																class="whitespace-nowrap text-base font-semibold"
@@ -534,21 +527,24 @@ const shareData = computed<ShareOptions>(() => ({
 															</span>
 
 															<OptimizedIcon
-																icon="chevronDown"
 																class-name="w-6"
+																icon="chevronDown"
 															/>
 														</MenuButton>
 													</template>
-													<template v-for="provider in data.watch_providers.toSorted((a, b) => b.display_priority - a.display_priority)" :key="provider.id">
+													<template
+														v-for="provider in data.watch_providers.toSorted((a, b) => b.display_priority - a.display_priority)"
+														:key="provider.id"
+													>
 														<MenuItem
-															as="a"
 															:href="provider.link"
+															as="a"
+															class="grid grid-cols-5 min-w-60 justify-center items-center self-stretch relative p-2 gap-3 rounded-sm border border-transparent hover:border-focus/4 active:bg-focus/9 active:border-focus/4 active:hover:border-focus/4 focus:bg-surface-1/2 hover:bg-focus/10 disabled:!bg-focus/2 disabled:!border-focus/2 transition-colors duration-200"
 															target="_blank"
-															class="grid grid-cols-5 w-60 justify-center items-center self-stretch relative p-2 gap-3 rounded-sm border border-transparent hover:border-focus/4 active:bg-focus/9 active:border-focus/4 active:hover:border-focus/4 focus:bg-auto-12/2 hover:bg-focus/10 disabled:!bg-focus/2 disabled:!border-focus/2 transition-colors duration-200"
 														>
 															<img v-if="provider?.logo"
-																:src="`https://image.tmdb.org/t/p/w92${provider?.logo}`"
 																:alt="provider?.name"
+																:src="`https://image.tmdb.org/t/p/w92${provider?.logo}`"
 																class="inline h-10 w-10 rounded-sm align-middle col-span-1"
 															>
 															<span class="w-full whitespace-nowrap col-span-4 text-base font-semibold">
@@ -560,7 +556,8 @@ const shareData = computed<ShareOptions>(() => ({
 
 												<div
 													v-else
-													class="flex !flex-nowrap relative h-10 z-0 justify-center overflow-clip pointer-events-auto border-none group/button gap-2 p-2.5 items-center rounded-lg sm:bg-slate-lightA-2 dark:sm:bg-slate-darkA-4"
+													:class="buttonClasses"
+													class="!flex !w-fit min-w-fit flex !flex-nowrap"
 												>
 													<span
 														class="whitespace-nowrap text-base font-semibold"
@@ -569,33 +566,35 @@ const shareData = computed<ShareOptions>(() => ({
 													</span>
 
 													<OptimizedIcon
-														icon="playUnavailable"
 														class-name="w-6"
+														icon="playUnavailable"
 													/>
 												</div>
 
 												<BannerButton
+													class="bg-surface-6"
 													title="Watch trailer"
 													@click="trailerState === true ? toggleTrailer($event) : null"
 												>
 													<OptimizedIcon
-														icon="film"
-														class-name="w-6"
 														:style="`color: ${
 															trailerState === true
-																? 'rgb(var(--color-green-8))'
-																: 'rgb(var(--color-red-8))'
+																? 'var(--color-green-8)'
+																: 'var(--color-red-8)'
 														}`"
+														class-name="w-6"
+														icon="film"
 													/>
 												</BannerButton>
 
 												<BannerButton
+													class="bg-surface-6"
 													title="Mark as watched"
 													@click="toggleWatched"
 												>
 													<OptimizedIcon
+														class-name="w-6 text-surface-12/70  dark:text-surface-12/80"
 														icon="check"
-														class-name="w-6 text-slate-lightA-12/70  dark:text-slate-darkA-12/80"
 													/>
 												</BannerButton>
 
@@ -616,16 +615,17 @@ const shareData = computed<ShareOptions>(() => ({
 																		|| currentServer?.is_manager)),
 														)
 													"
-													class="text-slate-lightA-12/70 dark:text-slate-darkA-12/80"
+													class="text-surface-12/70 dark:text-surface-12/80 "
 												>
 													<MenuItem
+														:class="buttonClasses"
 														as="div"
-														class="flex justify-center items-center self-stretch h-10 relative p-2 gap-3 rounded-sm border border-transparent hover:border-focus/4 active:bg-focus/9 active:border-focus/4 active:hover:border-focus/4 focus:bg-auto-12/2 hover:bg-focus/10 disabled:!bg-focus/2 disabled:!border-focus/2 transition-colors duration-200"
+														class="w-60 min-w-60 !flex"
 													>
 														<a
-															target="_blank"
 															:href="`https://www.themoviedb.org/${data?.media_type}/${data?.id}/edit`"
-															class="relative flex w-full flex-grow items-center justify-center gap-2 text-base font-semibold"
+															class="relative flex flex-1 items-center justify-start gap-2 text-base font-semibold"
+															target="_blank"
 														>
 															<OptimizedIcon icon="edit" />
 															<span class="w-full whitespace-nowrap">
@@ -643,28 +643,28 @@ const shareData = computed<ShareOptions>(() => ({
 										>
 											<InfoHeaderItem v-if="data?.year">
 												<p
-													class="flex-shrink-0 text-sm font-bold uppercase text-auto-12"
+													class="flex-shrink-0 text-sm font-bold uppercase"
 												>
 													{{ data?.year }}
 												</p>
 											</InfoHeaderItem>
 											<InfoHeaderItem v-if="data?.number_of_items">
 												<p
-													class="flex-shrink-0 flex-grow-0 text-sm font-bold uppercase text-auto-12"
+													class="flex-shrink-0 flex-grow-0 text-sm font-bold uppercase"
 												>
 													{{ data?.number_of_items }} {{ $t("ep") }}.
 												</p>
 											</InfoHeaderItem>
 											<InfoHeaderItem v-if="data?.duration">
 												<p
-													class="flex-shrink-0 flex-grow-0 text-sm font-bold uppercase text-auto-12"
+													class="flex-shrink-0 flex-grow-0 text-sm font-bold uppercase"
 												>
-													{{ convertToHumanReact(t, data.duration!, true) }}
+													{{ duration }}
 												</p>
 											</InfoHeaderItem>
 											<InfoHeaderItem v-if="data?.voteAverage">
 												<p
-													class="flex-shrink-0 flex-grow-0 text-sm font-bold text-auto-12 -ml-0.5"
+													class="flex-shrink-0 flex-grow-0 text-sm font-bold -ml-0.5"
 												>
 													⭐ ️{{ data?.voteAverage?.toFixed(0) }}/10
 												</p>
@@ -674,9 +674,9 @@ const shareData = computed<ShareOptions>(() => ({
 												class="relative overflow-hidden"
 											>
 												<ContentRating
+													:ratings="data?.content_ratings"
 													:size="6"
 													class="h-full min-!h-[1rem] object-scale-down rounded-lg overflow-clip"
-													:ratings="data?.content_ratings"
 												/>
 											</div>
 										</div>
@@ -685,8 +685,8 @@ const shareData = computed<ShareOptions>(() => ({
 											v-if="data"
 											class="relative flex flex-col items-start justify-start gap-2 self-stretch"
 										>
-											<div class="h-px bg-auto-12/10" />
-											<div class="w-full text-lg font-medium text-auto-12 mb-4">
+											<div class="h-px bg-surface-1/10" />
+											<div class="w-full text-lg font-medium mb-4">
 												<div v-if="!data?.overview" class="">
 													<span class="">
 														{{ $t("We don't have an overview for ") }}
@@ -706,85 +706,85 @@ const shareData = computed<ShareOptions>(() => ({
 											<InfoItem
 												v-if="data?.genres"
 												:data="data"
-												title="Genres"
 												key-name="genres"
 												prefix="genres"
+												title="Genres"
 											/>
 											<InfoItem
 												v-if="data?.writer"
 												:data="{ writer: [data?.writer] }"
-												title="Writer"
 												key-name="writer"
 												prefix="person"
+												title="Writer"
 											/>
 											<InfoItem
 												v-if="data?.creator"
 												:data="{ creator: [data?.creator] }"
-												title="Creator"
 												key-name="creator"
 												prefix="person"
+												title="Creator"
 											/>
 											<InfoItem
 												v-if="data?.director"
 												:data="{ director: [data?.director] }"
-												title="Director"
 												key-name="director"
 												prefix="person"
+												title="Director"
 											/>
 											<InfoItem
 												v-if="data?.creators?.length > 0"
 												:data="data"
-												title="Creators"
 												key-name="creators"
 												prefix="person"
+												title="Creators"
 											/>
 											<InfoItem
 												v-if="data?.directors?.length > 0"
 												:data="data"
-												title="Directors"
 												key-name="directors"
 												prefix="person"
+												title="Directors"
 											/>
 											<InfoItem
 												v-if="data?.writers?.length > 0"
 												:data="data"
-												title="Writers"
 												key-name="writers"
 												prefix="person"
+												title="Writers"
 											/>
 											<InfoItem
 												v-if="data?.keywords?.length > 0"
 												:data="data"
-												title="Keywords"
 												key-name="keywords"
+												title="Keywords"
 											/>
 											<InfoItem
 												v-if="data?.networks?.length > 0"
 												:data="data"
-												title="Networks"
 												key-name="networks"
+												title="Networks"
 											/>
 											<InfoItem
 												v-if="data?.companies?.length > 0"
 												:data="data"
-												title="Companies"
 												key-name="companies"
+												title="Companies"
 											/>
 
 											<div
 												class="relative grid w-full flex-shrink-0 flex-grow-0 grid-cols-7 items-start justify-start gap-1"
 											>
-												<p class="grid-cols-3 text-xs font-bold uppercase text-slate-lightA-12/70 dark:text-slate-darkA-12/80">
+												<p class="grid-cols-3 text-xs font-bold uppercase text-surface-12/70 dark:text-surface-12/80">
 													{{ $t("External links") }}
 												</p>
 												<div
-													class="col-span-6 col-start-3 flex w-full max-w-fit flex-wrap gap-1 self-center xl:col-start-3 2xl:col-start-2 text-slate-lightA-12 dark:text-slate-darkA-12/80 font-semibold"
+													class="col-span-6 col-start-3 flex w-full max-w-fit flex-wrap gap-1 self-center xl:col-start-3 2xl:col-start-2 text-surface-12 dark:text-surface-12/80 font-semibold"
 												>
 													<div class="gap-1 children:whitespace-nowrap text-sm">
 														<a
 															:href="`https://themoviedb.org/${data?.media_type}/${data?.id}`"
-															target="_blank"
 															class="inline-block underline-offset-4 hover:underline focus-visible:underline"
+															target="_blank"
 														>
 															TheMovieDb
 														</a>

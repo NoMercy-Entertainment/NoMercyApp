@@ -1,11 +1,8 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import type { PropType } from 'vue';
 import { onMounted, ref, watch } from 'vue';
 
-import type {
-	DirectoryTreeItem,
-	DirectoryTreeResponse,
-} from '@/types/api/dashboard/server';
+import type { DirectoryTreeItem, DirectoryTreeResponse } from '@/types/api/dashboard/server';
 
 import serverClient from '@/lib/clients/serverClient';
 import ScrollContainer from '@/Layout/Desktop/components/ScrollContainer.vue';
@@ -84,9 +81,9 @@ onMounted(() => {
 		<InputText
 			id="folderName"
 			v-model="path"
+			class="w-full"
 			name=""
 			no-ring
-			class="w-full"
 		/>
 	</div>
 	<div class="relative flex w-full flex-col overflow-clip h-[88%] even:text-lg">
@@ -99,23 +96,23 @@ onMounted(() => {
 			</span>
 		</div>
 		<div class="relative flex w-full flex-col h-inherit">
-			<ScrollContainer :static="false" :auto-hide="false" class-name="ml-2">
+			<ScrollContainer :auto-hide="false" :static="false" class-name="ml-2">
 				<div
-					class="bg-auto-6/4 hover:bg-auto-200 border-t-0 border-b border-solid border-[rgba(34,34,34,0.9)] contain flex items-center text-current cursor-pointer overflow-hidden py-1 px-2 align-middle h-10 min-h-10 leading-6 select-none"
 					:class="path === '/' ? 'opacity-50' : ''"
+					class="bg-surface-6/4 hover:bg-surface-2 border-t-0 border-b border-solid border-[rgba(34,34,34,0.9)] contain flex items-center text-current cursor-pointer overflow-hidden py-1 px-2 align-middle h-10 min-h-10 leading-6 select-none"
 					@click="handleGoUp"
 				>
-					<OptimizedIcon icon="returnPackage" class="mt-1 h-5 w-5" />
+					<OptimizedIcon class="mt-1 h-5 w-5" icon="returnPackage" />
 					<span class="mr-auto !ml-7">...</span>
 				</div>
 				<div class="relative w-full h-auto">
 					<div
 						v-for="folder in showFolders"
 						:key="folder.full_path"
-						class="even:bg-auto-6/2 odd:bg-auto-100 hover:bg-auto-200 border-t-0 border-b border-solid border-[rgba(34,34,34,0.9)] contain flex items-center bg-transparent text-current cursor-pointer overflow-hidden py-1 px-2 align-middle h-10 leading-6"
+						class="even:bg-surface-4 odd:bg-surface-2 even:hover:bg-surface-5 odd:hover:bg-surface-3 border-t-0 border-b border-solid border-[rgba(34,34,34,0.9)] contain flex items-center bg-transparent text-current cursor-pointer overflow-hidden py-1 px-2 align-middle h-10 leading-6"
 						@click="() => handleClick(folder)"
 					>
-						<OptimizedIcon icon="folder" class="h-5 w-5" />
+						<OptimizedIcon class="h-5 w-5" icon="folder" />
 						<span class="mr-auto !ml-7 text-sm select-none">
 							{{ folder.path.replace(/[\\\/]/u, "") }}
 						</span>

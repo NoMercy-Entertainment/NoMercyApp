@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import { toRaw, watch } from 'vue';
 
 import type { DriveState } from '@/types/api/dashboard/ripper';
@@ -12,13 +12,7 @@ import {
 	stopRipperSocket,
 } from '@/lib/clients/ripperSocket';
 import serverClient from '@/lib/clients/serverClient';
-import {
-	discContents,
-	discs,
-	lastShownDisc,
-	ripperMenuOpen,
-	setRipperMenuOpen,
-} from '@/store/ripper';
+import { discContents, discs, lastShownDisc, ripperMenuOpen, setRipperMenuOpen } from '@/store/ripper';
 
 import Button from '@/components/Button.vue';
 import router from '@/router';
@@ -140,15 +134,15 @@ useHubListener(ripperSocketConnection, 'DriveState', handleDriveState);
 		id="ripperContainer"
 		:data-open="ripperMenuOpen"
 		:inert="!ripperMenuOpen"
-		class="absolute flex-col p-4 inset-0 h-1/5 sm:h-2/5 xl:h-1/5 w-inherit sm:left-auto sm:right-4 sm:top-4 sm:bottom-4 sm:w-3/5 xl:w-1/3 sm:max-w-3xl tv:max-w-3/4 flex items-center justify-center rounded-xl transition-all duration-500 data-[open='false']:translate-x-[150%] overflow-clip z-[9999] tv:data-[open='false']:translate-x-[150%] tv:!w-available tv:data-[open='true']:delay-500 will-change-transform bg-slate-dark-12 dark:bg-slate-dark-1"
+		class="absolute flex-col p-4 inset-0 h-1/5 sm:h-2/5 xl:h-1/5 w-inherit sm:left-auto sm:right-4 sm:top-4 sm:bottom-4 sm:w-3/5 xl:w-1/3 sm:max-w-3xl tv:max-w-3/4 flex items-center justify-center rounded-xl transition-all duration-500 data-[open='false']:translate-x-[150%] overflow-clip z-[9999] tv:data-[open='false']:translate-x-[150%] tv:!w-available tv:data-[open='true']:delay-500 will-change-transform bg-surface-12 dark:bg-surface-1"
 	>
 		<div class="flex w-full gap-4 justify-between text-lg font-bold">
 			<span>{{ $t("Disc inserted") }}</span>
 			<Button
 				id="close"
-				variant="contained"
 				color="theme"
 				type="submit"
+				variant="contained"
 				@click.stop="setRipperMenuOpen(false)"
 			>
 				{{ $t("Close") }}
@@ -165,9 +159,9 @@ useHubListener(ripperSocketConnection, 'DriveState', handleDriveState);
 					<Button
 						v-if="!!disc.metadata"
 						id="close"
-						variant="contained"
 						color="theme"
 						type="submit"
+						variant="contained"
 						@click.stop="handleRip(disc)"
 					>
 						{{ $t("Rip") }}
@@ -182,8 +176,8 @@ useHubListener(ripperSocketConnection, 'DriveState', handleDriveState);
 			<svg
 				aria-hidden="true"
 				class="inline w-10 h-10 text-gray-200 animate-spin dark:text-gray-600 fill-focus"
-				viewBox="0 0 100 101"
 				fill="none"
+				viewBox="0 0 100 101"
 				xmlns="http://www.w3.org/2000/svg"
 			>
 				<path

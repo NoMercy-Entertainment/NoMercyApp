@@ -69,18 +69,8 @@ function setNextButtonLocked(value: boolean) {
 onMounted(() => {
 	toast.add({
 		severity: 'info',
-		summary: translate('This is an informational message.'),
-		life: 500000,
-	});
-	toast.add({
-		severity: 'info',
 		summary: translate('Info'),
 		detail: translate('This is an informational message.'),
-		life: 500000,
-	});
-	toast.add({
-		severity: 'success',
-		summary: translate('This is a success message.'),
 		life: 500000,
 	});
 	toast.add({
@@ -91,18 +81,8 @@ onMounted(() => {
 	});
 	toast.add({
 		severity: 'warn',
-		summary: translate('This is a warning message.'),
-		life: 500000,
-	});
-	toast.add({
-		severity: 'warn',
 		summary: translate('Warning'),
 		detail: translate('This is a warning message.'),
-		life: 500000,
-	});
-	toast.add({
-		severity: 'error',
-		summary: translate('This is an error message.'),
 		life: 500000,
 	});
 	toast.add({
@@ -113,23 +93,43 @@ onMounted(() => {
 	});
 	toast.add({
 		severity: 'secondary',
-		summary: translate('This is an secondary message.'),
-		life: 500000,
-	});
-	toast.add({
-		severity: 'secondary',
 		summary: translate('Secondary'),
 		detail: translate('This is an secondary message.'),
 		life: 500000,
 	});
 	toast.add({
 		severity: 'contrast',
-		summary: translate('This is an contrast message.'),
+		summary: translate('Contrast'),
+		detail: translate('This is an contrast message.'),
+		life: 500000,
+	});
+	toast.add({
+		severity: 'info',
+		detail: translate('This is an informational message.'),
+		life: 500000,
+	});
+	toast.add({
+		severity: 'success',
+		detail: translate('This is a success message.'),
+		life: 500000,
+	});
+	toast.add({
+		severity: 'warn',
+		detail: translate('This is a warning message.'),
+		life: 500000,
+	});
+	toast.add({
+		severity: 'error',
+		detail: translate('This is an error message.'),
+		life: 500000,
+	});
+	toast.add({
+		severity: 'secondary',
+		detail: translate('This is an secondary message.'),
 		life: 500000,
 	});
 	toast.add({
 		severity: 'contrast',
-		summary: translate('Contrast'),
 		detail: translate('This is an contrast message.'),
 		life: 500000,
 	});

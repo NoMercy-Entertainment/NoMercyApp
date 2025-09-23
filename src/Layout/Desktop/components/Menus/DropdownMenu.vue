@@ -1,16 +1,11 @@
-<script setup lang="ts">
-import { ref } from 'vue';
+<script lang="ts" setup>
 import type { PropType } from 'vue';
+import { ref } from 'vue';
 
 import { onClickOutside } from '@vueuse/core';
 import { twMerge } from 'tailwind-merge';
 import router from '@/router';
-import {
-	deviceMenuOpen,
-	equalizerMenuOpen,
-	lyricsMenuOpen,
-	queueMenuOpen,
-} from '@/store/audioPlayer';
+import { deviceMenuOpen, equalizerMenuOpen, lyricsMenuOpen, queueMenuOpen } from '@/store/audioPlayer';
 
 defineProps({
 	className: {
@@ -77,13 +72,13 @@ function handleKeyDown(e: KeyboardEvent) {
 		@keydown="handleKeyDown($event)"
 	>
 		<div
-			aria-label="Toggle dropdown menu"
 			:class="
 				twMerge(
-					'flex justify-center items-center relative gap-2 bg-transparent focus:bg-auto-2 hover:text-auto-12 transition-colors duration-200',
+					'flex justify-center items-center relative gap-2 bg-transparent focus:bg-surface-2 hover:text-surface-12 transition-colors duration-200',
 					className,
 				)
 			"
+			aria-label="Toggle dropdown menu"
 			@click="handleClick"
 		>
 			<slot :open="open" name="button" />
@@ -91,7 +86,6 @@ function handleKeyDown(e: KeyboardEvent) {
 
 		<div
 			:id="`_dropdown_menu_${id}`"
-			class="absolute w-max ml-[100%] sm:ml-[100%] mb-1 sm:mt-1 border grid transition-all duration-200 rounded-xl shadow-2xl overflow-clip grid-rows-[0fr] border-transparent right-0 z-10"
 			:class="{
 				'grid-rows-[1fr] border-[#e2f0fd]/4': open,
 				'grid-rows-[0fr] border-transparent': !open,
@@ -99,12 +93,13 @@ function handleKeyDown(e: KeyboardEvent) {
 				'top-auto origin-bottom bottom-full': direction === 'up',
 				[translate]: true,
 			}"
+			class="absolute w-max ml-[100%] sm:ml-[100%] mb-1 sm:mt-1 border grid transition-all duration-200 rounded-xl shadow-2xl overflow-clip grid-rows-[0fr] border-transparent right-0 z-10"
 		>
 			<div class="overflow-hidden">
 				<div
-					role="dialog"
 					:open="open"
-					class="flex w-full flex-col items-start justify-start rounded-xl min-w-40 min-h-20 overflow-clip children:rounded-xl children:overflow-clip border-1 bg-slate-light-1 dark:bg-slate-dark-1 border-slate-light-7 dark:border-slate-dark-4"
+					class="flex w-full flex-col items-start justify-start rounded-xl min-w-40 min-h-20 overflow-clip children:rounded-xl children:overflow-clip border-1 bg-surface-2 border-slate-7 dark:border-slate-4"
+					role="dialog"
 				>
 					<slot :open="open" />
 				</div>

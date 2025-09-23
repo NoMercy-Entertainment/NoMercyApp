@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import audioPlayer, { isMuted, volume } from '@/store/audioPlayer';
 import { user } from '@/store/user';
 import { musicSocketConnection, playerState } from '@/store/musicSocket';
@@ -21,26 +21,26 @@ function handleClick(e?: MouseEvent) {
 </script>
 
 <template>
-	<MusicButton label="Mute" :onclick="handleClick">
+	<MusicButton :onclick="handleClick" label="Mute" no-tooltip>
 		<OptimizedIcon
 			v-if="
 				playerState?.muted_state === undefined
 					? isMuted
 					: playerState.muted_state
 			"
-			icon="volumeMuted"
 			class="h-6 w-6"
+			icon="volumeMuted"
 		/>
 		<OptimizedIcon
 			v-else-if="playerState?.volume_percentage ?? volume === 0"
-			icon="volumeOne"
 			class="h-6 w-6"
+			icon="volumeOne"
 		/>
 		<OptimizedIcon
 			v-else-if="playerState?.volume_percentage ?? volume > 50"
-			icon="volumeThree"
 			class="h-6 w-6"
+			icon="volumeThree"
 		/>
-		<OptimizedIcon v-else icon="volumeTwo" class="h-6 w-6" />
+		<OptimizedIcon v-else class="h-6 w-6" icon="volumeTwo" />
 	</MusicButton>
 </template>

@@ -1,8 +1,7 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import { computed } from 'vue';
 
 import { closeFullPlayer, currentSong, musicSize } from '@/store/audioPlayer';
-import { breakTitle2 } from '@/lib/stringArray';
 
 import OptimizedIcon from '@/components/OptimizedIcon.vue';
 import DropdownMenu from '@/Layout/Desktop/components/Menus/DropdownMenu.vue';
@@ -16,22 +15,22 @@ const playlistTitle = computed(() => {
 
 <template>
 	<div
-		class="flex h-16 w-full items-center justify-between"
 		:data-size="musicSize"
+		class="flex h-16 w-full items-center justify-between"
 	>
 		<MusicButton
-			label="close"
 			:onclick="() => closeFullPlayer()"
 			class="!min-w-12"
+			label="close"
 		>
-			<OptimizedIcon icon="chevronDown" class="h-6 w-6" />
+			<OptimizedIcon class="h-6 w-6" icon="chevronDown" />
 		</MusicButton>
 
 		<div
-			class="relative flex flex-col gap-1"
 			:class="{
 				'mt-2': !isPlatform('capacitor'),
 			}"
+			class="relative flex flex-col gap-1"
 		>
 			<span
 				v-if="playlistTitle"
@@ -40,27 +39,28 @@ const playlistTitle = computed(() => {
 			<div
 				v-if="playlistTitle"
 				class="whitespace-pre-line text-pretty text-left leading-5 text-base"
-				v-html="breakTitle2(playlistTitle, 'text-xs line-clamp-1')"
-			/>
+			>
+				{{ playlistTitle }}
+			</div>
 		</div>
 
 		<DropdownMenu
-			orientation="vertical"
 			class="!min-w-12 flex items-center justify-center"
+			orientation="vertical"
 		>
 			<template #button>
-				<OptimizedIcon icon="menuDotsVertical" class="h-6 w-6" />
+				<OptimizedIcon class="h-6 w-6" icon="menuDotsVertical" />
 			</template>
 			<template #default>
 				<div class="flex flex-col gap-1 min-h-[85px]">
-					<MusicButton label="close" :onclick="() => closeFullPlayer()">
-						<OptimizedIcon icon="chevronDown" class="h-6 w-6" />
+					<MusicButton :onclick="() => closeFullPlayer()" label="close">
+						<OptimizedIcon class="h-6 w-6" icon="chevronDown" />
 					</MusicButton>
-					<MusicButton label="close" :onclick="() => closeFullPlayer()">
-						<OptimizedIcon icon="chevronDown" class="h-6 w-6" />
+					<MusicButton :onclick="() => closeFullPlayer()" label="close">
+						<OptimizedIcon class="h-6 w-6" icon="chevronDown" />
 					</MusicButton>
-					<MusicButton label="close" :onclick="() => closeFullPlayer()">
-						<OptimizedIcon icon="chevronDown" class="h-6 w-6" />
+					<MusicButton :onclick="() => closeFullPlayer()" label="close">
+						<OptimizedIcon class="h-6 w-6" icon="chevronDown" />
 					</MusicButton>
 				</div>
 			</template>

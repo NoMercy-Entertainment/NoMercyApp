@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import type { PropType } from 'vue';
 
-import { darkMode } from '@/store/colorScheme';
+import { scheme } from '@/store/colorScheme';
 import { user } from '@/store/user';
 
 import DropdownMenu from '@/Layout/Desktop/components/Menus/DropdownMenu.vue';
@@ -17,6 +17,7 @@ import { isPlatform } from '@ionic/vue';
 import { redirectUrl } from '@/store/routeState';
 import { useRoute } from 'vue-router';
 import { konamiEnabledState } from '@/store/konami.ts';
+import { logout } from '@/lib/auth/index.ts';
 
 defineProps({
 	direction: {
@@ -29,6 +30,7 @@ defineProps({
 const reload = () => window.location.reload();
 
 const route = useRoute();
+
 function handleSelectServer() {
 	redirectUrl.value = route.fullPath;
 }
@@ -46,8 +48,8 @@ function handleSelectServer() {
 					class="absolute w-11 h-11 m-0.5 rounded-full"
 				/>
 				<NoMercyAvatar
-					:user="user"
 					:size="40"
+					:user="user"
 					class="absolute inset-0 bg-black"
 				/>
 				<span
@@ -58,8 +60,8 @@ function handleSelectServer() {
 
 		<template #default="{ open }">
 			<div
-				class="flex w-full flex-col items-start justify-start p-2 text-slate-lightA-12/90 dark:text-slate-darkA-12/80"
 				:inert="!open"
+				class="flex w-full flex-col items-start justify-start p-2 "
 				style="box-shadow: 0 4px 7px 0 rgba(0, 0, 0, 0.08)"
 			>
 				<div
@@ -96,18 +98,18 @@ function handleSelectServer() {
 							to="/preferences/display"
 						/>
 						<DropdownLink
+							:click="reload"
 							icon="arrowRefreshHorizontal"
 							name="Refresh"
-							:click="reload"
 						/>
 
 						<div
-							class="flex justify-center items-center self-stretch h-10 relative py-2.5 px-1 rounded-md border border-transparent hover:border-focus/4 active:!bg-focus/11 dark:active:!bg-focus/8 active:border-focus/4 active:hover:border-focus/4 focus:bg-focus-9 hover:!bg-focus/10 disabled:!bg-focus/2 disabled:!border-focus/2 transition-colors duration-200 hover:text-auto-12"
+							class="flex justify-start items-center self-stretch h-11 relative gap-2 px-2.5 py-2 rounded-md border border-transparent hover:border-focus/4 active:!bg-focus/11 dark:active:!bg-focus/8 active:border-focus/4 active:hover:border-focus/4 focus:bg-focus-9 hover:!bg-focus/10 disabled:!bg-focus/2 disabled:!border-focus/2 transition-colors duration-200 overflow-clip"
 						>
 							<button
-								tabindex="-1"
 								class="relative flex w-full flex-grow items-center justify-center gap-2 px-2 text-lg font-medium text-left"
-								@click="darkMode = !darkMode"
+								tabindex="-1"
+								@click="scheme = scheme === 'light' ? 'dark' : 'light'"
 							>
 								<OptimizedIcon class-name="" icon="moonDiagonal" />
 								<span
@@ -120,18 +122,22 @@ function handleSelectServer() {
 								<span
 									class="inline-flex cursor-pointer items-center gap-3 pointer-events-none"
 								>
-									<Toggle id="toggleScheme" :model-value="darkMode" />
+									<Toggle
+										id="toggleScheme"
+										:model-value="scheme === 'dark'"
+										@update:model-value="value => scheme = value ? 'dark' : 'light'"
+									/>
 								</span>
 							</button>
 						</div>
 						<div
 							v-if="konamiEnabledState"
 							v-show="!isTv && !isPlatform('mobileweb')"
-							class="flex justify-center items-center self-stretch h-10 relative py-2.5 px-1 rounded-md border border-transparent hover:border-focus/4 active:!bg-focus/11 dark:active:!bg-focus/8 active:border-focus/4 active:hover:border-focus/4 focus:bg-focus-9 hover:!bg-focus/10 disabled:!bg-focus/2 disabled:!border-focus/2 transition-colors duration-200 hover:text-auto-12"
+							class="flex justify-start items-center self-stretch h-11 relative gap-2 px-2.5 py-2 rounded-md border border-transparent hover:border-focus/4 active:!bg-focus/11 dark:active:!bg-focus/8 active:border-focus/4 active:hover:border-focus/4 focus:bg-focus-9 hover:!bg-focus/10 disabled:!bg-focus/2 disabled:!border-focus/2 transition-colors duration-200 overflow-clip"
 						>
 							<button
-								tabindex="-1"
 								class="relative flex w-full flex-grow items-center justify-center gap-2 px-2 text-lg font-medium text-left"
+								tabindex="-1"
 								@click="tvModeOverride = !tvModeOverride"
 							>
 								<OptimizedIcon class-name="" icon="monitor" />
@@ -161,9 +167,9 @@ function handleSelectServer() {
 						class="flex flex-shrink-0 flex-grow-0 flex-col items-start justify-start gap-1 self-stretch border-0 pt-2"
 					>
 						<DropdownLink
+							:click="logout"
 							icon="doorOpen"
 							name="Logout"
-							:click="$keycloak?.keycloak?.logout"
 						/>
 					</div>
 				</div>

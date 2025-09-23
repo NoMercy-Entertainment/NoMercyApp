@@ -1,25 +1,21 @@
 <script lang="ts" setup>
-import { computed, onMounted, ref } from 'vue';
 import type { PropType } from 'vue';
+import { computed, onMounted, ref } from 'vue';
 
 import type { HomeItem } from '@/types/api/base/home';
 
 import i18next from '@/config/i18next';
 import { isMobile } from '@/config/global';
-import { breakLogoTitle } from '@/lib/stringArray';
 import { pickPaletteColor } from '@/lib/colorHelper';
 
 import TMDBImage from '@/components/Images/TMDBImage.vue';
 import MediaLikeButton from '@/components/Buttons/MediaLikeButton.vue';
 import OptimizedIcon from '@/components/OptimizedIcon.vue';
 import BannerButton from '@/components/Buttons/BannerButton.vue';
-import {
-	scrollContainerElement,
-	setBackground,
-	setColorPalette,
-} from '@/store/ui';
+import { scrollContainerElement, setBackground, setColorPalette } from '@/store/ui';
 import { onIonViewWillEnter, onIonViewWillLeave } from '@ionic/vue';
 import CardShadow from '@/components/Cards/CardShadow.vue';
+import { breakLogoTitle } from '@/lib/stringArray.ts';
 
 const props = defineProps({
 	data: {
@@ -45,17 +41,17 @@ const endTime = computed(() => {
 const ringPosterColor = computed(
 	() =>
 		pickPaletteColor(props.data?.color_palette?.poster)
-			?.replace('rgb(', '')
-			.replace(')', '')
+			// ?.replace('rgb(', '')
+			// .replace(')', '')
 			.replace(/,/gu, ' ') ?? 'var(--color-primary)',
 );
 
 const ringBackdropColor = computed(
 	() =>
 		pickPaletteColor(props.data?.color_palette?.backdrop)
-			?.replace('rgb(', '')
-			.replace(')', '')
-			.replace(/,/gu, ' ') ?? 'var(--color-primary)',
+			// ?.replace('rgb(', '')
+			// .replace(')', '')
+			?.replace(/,/gu, ' ') ?? 'var(--color-primary)',
 );
 
 function toggleWatched() {
@@ -90,36 +86,25 @@ function scrollToTop() {
 <template>
 	<div
 		v-if="!isMobile"
+		class="card scheme-dark relative m-4 mt-0 sm:mt-4 flex flex-shrink-0 flex-grow-0 items-end justify-start gap-4 self-stretch rounded-md bg-black/50 p-4 h-[65vh] sm:flex-col overflow-clip text-surface-12"
 		data-scroll
-		class="card scheme-dark relative m-4 mt-0 sm:mt-4 flex flex-shrink-0 flex-grow-0 items-end justify-start gap-4 self-stretch rounded-md bg-black/50 p-4 text-auto-12 h-[65vh] sm:flex-col overflow-clip"
 	>
 		<TMDBImage
-			v-if="data && !isMobile"
-			:path="data?.backdrop"
-			:title="data?.title"
+			v-if="data"
 			:color-palette="data?.color_palette?.backdrop"
-			:style="`--color-focus: ${ringBackdropColor};`"
-			:width="null"
-			priority="high"
-			loading="eager"
-			class="!absolute !inset-0 children:!w-available flex overflow-clip border-2 border-focus rounded-md"
-			class-name="relative flex !w-available min-h-full flex-shrink-0 flex-grow-0 items-end justify-start gap-4 self-stretch overflow-clip transition-opacity duration-700 bg-auto-1 h-full"
-		/>
-
-		<TMDBImage
-			v-if="data && isMobile"
-			:path="data?.poster"
+			:path="data?.backdrop"
+			:style="`--color-theme-8: ${ringBackdropColor};`"
 			:title="data?.title"
-			:color-palette="data?.color_palette?.poster"
-			:style="`--color-focus: ${ringPosterColor};`"
 			:width="null"
+			aspect="backdrop"
 			class="!absolute !inset-0 children:!w-available flex overflow-clip border-2 border-focus rounded-md"
-			class-name="relative flex !w-available min-h-full flex-shrink-0 flex-grow-0 items-end justify-start gap-4 self-stretch overflow-clip transition-opacity duration-700 bg-auto-50 h-full"
+			class-name="relative flex items-end justify-start gap-4 self-stretch overflow-clip transition-opacity duration-700 bg-surface-1"
 			loading="eager"
+			priority="high"
 		/>
 
 		<div
-			class="pointer-events-none absolute inset-0 z-0 mt-auto h-4/5 bg-gradient-to-t from-auto-1 via-auto-1/60 bottom-0"
+			class="pointer-events-none absolute inset-0 z-0 mt-auto h-4/5 bg-gradient-to-t from-surface-1 via-surface-1/60 bottom-0"
 		/>
 
 		<div class="flex w-full flex-grow flex-col items-end justify-end gap-2">
@@ -143,7 +128,7 @@ function scrollToTop() {
 								:title="data?.title"
 								:width="500"
 								class="relative mr-4 justify-end translate-y-[5%]"
-								class-name="relative h-auto w-auto self-start px-4 py-4"
+								class-name="relative self-start px-4 py-4"
 								loading="eager"
 								type="logo"
 							/>
@@ -161,14 +146,14 @@ function scrollToTop() {
 						>
 							<BannerButton
 								:href="`${data?.link}/watch`"
-								title="Play"
 								class="group/play"
+								title="Play"
 								@focus="scrollToTop"
 							>
 								<OptimizedIcon class="w-7" icon="playbackSpeed" />
 
 								<div
-									class="absolute top-3 grid h-0 w-max flex-shrink-0 flex-grow-0 origin-bottom group-hover/play:grid-cols-1 items-center justify-start gap-1 rounded-md duration-200 bg-auto-1 grid-cols-[0fr] group-hover/play:h-[32.77px] transform-all left-[-31px] group-hover/play:top-[-38px]"
+									class="absolute top-3 grid h-0 w-max flex-shrink-0 flex-grow-0 origin-bottom group-hover/play:grid-cols-1 items-center justify-start gap-1 rounded-md duration-200 bg-surface-1 grid-cols-[0fr] group-hover/play:h-[32.77px] transform-all left-[-31px] group-hover/play:top-[-38px]"
 								>
 									<div class="overflow-clip">
 										<p
@@ -187,11 +172,11 @@ function scrollToTop() {
 								@focus="scrollToTop"
 							>
 								<OptimizedIcon
-									icon="check"
-									class="w-7"
 									:stroke="
 										hasWatched ? 'var(--color-green-600) ' : 'currentColor'
 									"
+									class="w-7"
+									icon="check"
 								/>
 							</BannerButton>
 
@@ -216,24 +201,24 @@ function scrollToTop() {
 				>
 					<div v-if="data" class="z-50 flex w-full justify-evenly gap-4">
 						<RouterLink
-							:to="`${data?.link}/watch`"
 							:aria-label="$t('Play')"
-							class="flex h-10 w-1/2 items-center justify-between gap-2 whitespace-nowrap rounded-md pr-4 pl-3 text-black bg-auto-12 py-1.5"
+							:to="`${data?.link}/watch`"
+							class="flex h-10 w-1/2 items-center justify-between gap-2 whitespace-nowrap rounded-md pr-4 pl-3 text-black bg-surface-1 py-1.5"
 							@focus="scrollToTop"
 						>
-							<OptimizedIcon icon="playCircle" class-name="w-6" />
+							<OptimizedIcon class-name="w-6" icon="playCircle" />
 							<span class="w-full whitespace-nowrap text-black text-center">{{
 								$t("Play")
 							}}</span>
 						</RouterLink>
 
 						<RouterLink
-							:to="data?.link"
 							:aria-label="$t('Info')"
-							class="flex justify-center items-center relative gap-2 p-2 rounded-lg hover:bg-auto-5/6 transition-colors duration-200"
+							:to="data?.link"
+							class="flex justify-center items-center relative gap-2 p-2 rounded-lg hover:bg-surface-5/6 transition-colors duration-200"
 							@focus="scrollToTop"
 						>
-							<OptimizedIcon icon="add" class-name="w-6" />
+							<OptimizedIcon class-name="w-6" icon="add" />
 							<span class="w-full whitespace-nowrap text-center">
 								{{ $t("Info") }}
 							</span>
@@ -243,6 +228,7 @@ function scrollToTop() {
 			</div>
 		</div>
 	</div>
+
 	<div
 		v-else
 		class="flex w-full flex-shrink-0 flex-grow-0 items-start justify-start gap-2 self-stretch p-6 pt-7 pb-0"
@@ -253,20 +239,20 @@ function scrollToTop() {
 		>
 			<TMDBImage
 				v-if="data"
-				:path="data?.poster"
-				:title="data?.title"
 				:color-palette="data?.color_palette?.poster"
-				:style="`--color-focus: ${ringPosterColor};`"
+				:path="data?.poster"
+				:style="`--color-theme-8: ${ringPosterColor};`"
+				:title="data?.title"
 				:width="null"
 				class="children:!w-available flex overflow-clip border-2 border-focus rounded-lg z-0 absolute -inset-0"
-				class-name="relative flex h-auto aspect-poster !w-available min-h-full flex-shrink-0 flex-grow-0 items-end justify-start gap-4 self-stretch overflow-clip transition-opacity duration-700 bg-auto-50 max-h-available"
+				class-name="relative flex h-auto aspect-poster !w-available min-h-full flex-shrink-0 flex-grow-0 items-end justify-start gap-4 self-stretch overflow-clip transition-opacity duration-700 bg-surface-50 max-h-available"
 				loading="eager"
 			/>
 
-			<CardShadow colored class-name="top-auto bottom-0 w-full" />
+			<CardShadow class-name="top-auto bottom-0 w-full" colored />
 
 			<div
-				class="flex flex-col justify-end items-center self-stretch z-10 pt-10 bg-gradient-to-b from-[#0d0402]/[5%] to-[#0d0402]/60"
+				class="flex flex-col justify-end items-center self-stretch z-10 pt-10 bg-gradient-to-b from-surface-1/[5%] to-surface-1/60"
 			>
 				<div
 					class="relative flex flex-shrink-0 flex-grow-0 flex-col items-center justify-start gap-3 p-3"
@@ -295,11 +281,11 @@ function scrollToTop() {
 				>
 					<RouterLink
 						:to="`${data?.link}/watch`"
-						class="flex justify-center items-center flex-grow h-10 relative overflow-hidden gap-3 px-6 py-4 rounded-lg text-slate-light-12 dark:text-slate-dark-12 bg-[#fdfeff]/[0.93]"
+						class="flex justify-center items-center flex-grow h-10 relative overflow-hidden gap-3 px-6 py-4 rounded-lg bg-surface-12/11"
 					>
 						<OptimizedIcon
-							icon="play"
 							class-name="w-6"
+							icon="play"
 							style="--fill-color: black"
 						/>
 						<p
@@ -309,10 +295,10 @@ function scrollToTop() {
 						</p>
 					</RouterLink>
 					<RouterLink
-						:to="data?.link"
-						class="frosting flex justify-center items-center flex-grow h-10 relative gap-3 px-6 py-4 rounded-lg text-slate-light-1 bg-slate-light-12"
+						:to="`${data?.link}`"
+						class="frosting flex justify-center items-center flex-grow h-10 relative gap-3 px-6 py-4 rounded-lg text-slate-1 bg-surface-1/11 text-surface-12"
 					>
-						<OptimizedIcon icon="infoCircle" class-name="w-6" />
+						<OptimizedIcon class-name="w-6" icon="infoCircle" />
 						<p
 							class="flex-grow-0 flex-shrink-0 text-[15px] font-medium text-center"
 						>

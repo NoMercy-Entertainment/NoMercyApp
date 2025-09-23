@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import { onMounted, watch } from 'vue';
 import { IonContent, IonPage, onIonViewWillEnter } from '@ionic/vue';
 import { useRoute } from 'vue-router';
@@ -54,10 +54,11 @@ watch(searchType, () => {
 	<IonPage>
 		<IonContent :fullscreen="true">
 			<div
-				class="w-available relative flex flex-col items-center gap-10 m-3 overflow-clip rounded-lg transform-all duration-200 will-change-auto min-w-available" :class="{
+				:class="{
 					'h-24 min-h-24 ': searchValue?.length > 0,
 					'h-[480px] min-h-[480px] ': searchValue?.length === 0,
 				}"
+				class="w-available relative flex flex-col items-center gap-10 m-3 overflow-clip rounded-lg transform-all duration-200 will-change-auto min-w-available text-surface-12"
 			>
 				<CosmosBg2 />
 
@@ -78,11 +79,11 @@ watch(searchType, () => {
 				</div>
 
 				<div
-					class="flex justify-center items-center self-center flex-grow-0 flex-shrink-0 w-full sm:w-1/2 relative overflow-hidden gap-4 p-2 pr-0 rounded-[20px] border-2 bg-[#d7dbdf] border-[#eceef0] dark:bg-black dark:border-[#202425]"
 					:class="{
 						'mb-auto': searchValue?.length === 0,
 						'my-auto': searchValue?.length > 0,
 					}"
+					class="flex justify-center items-center self-center flex-grow-0 flex-shrink-0 w-full sm:w-1/2 relative overflow-hidden gap-4 p-2 pr-0 rounded-[20px] border-2 bg-[#d7dbdf] border-[#eceef0] dark:bg-black dark:border-[#202425]"
 				>
 					<div
 						class="flex flex-col justify-start items-start flex-grow-0 flex-shrink-0 gap-2 p-1 rounded-xl bg-[#012139]/[0.13] dark:bg-[#dfeffe]/[0.14] backdrop-blur"
@@ -91,22 +92,22 @@ watch(searchType, () => {
 							class="relative flex justify-center items-start flex-grow-0 flex-shrink-0 gap-2"
 						>
 							<div
-								class="absolute w-[117px] h-available inset-0 bg-focus z-0 rounded-lg transition-all duration-150"
 								:class="{
 									'translate-x-0': searchType === 'video',
 									'translate-x-[107%]': searchType === 'music',
 								}"
+								class="absolute w-[117px] h-available inset-0 bg-focus z-0 rounded-lg transition-all duration-150"
 							/>
 							<button
-								class="flex justify-center items-center flex-grow-0 flex-shrink-0 relative gap-2 pl-3 pr-4 py-3 rounded-lg w-[117px]"
 								:class="{
-									'text-slate-dark-12': searchType === 'video',
+									'text-slate-12': searchType === 'video',
 								}"
+								class="flex justify-center items-center flex-grow-0 flex-shrink-0 relative gap-2 pl-3 pr-4 py-3 rounded-lg w-[117px]"
 								@click="searchType = 'video'"
 							>
 								<OptimizedIcon
-									icon="film"
 									class="h-6 w-6 flex-grow-0 flex-shrink-0 transition-all duration-150"
+									icon="film"
 								/>
 								<p
 									class="hidden sm:flex flex-grow-0 flex-shrink-0 text-xl font-semibold text-left transition-all duration-150"
@@ -115,15 +116,15 @@ watch(searchType, () => {
 								</p>
 							</button>
 							<button
-								class="flex justify-center items-center flex-grow-0 flex-shrink-0 relative gap-2 pl-3 pr-4 py-3 rounded-lg w-[117px]"
 								:class="{
-									'text-slate-dark-12': searchType === 'music',
+									'text-slate-12': searchType === 'music',
 								}"
+								class="flex justify-center items-center flex-grow-0 flex-shrink-0 relative gap-2 pl-3 pr-4 py-3 rounded-lg w-[117px]"
 								@click="searchType = 'music'"
 							>
 								<OptimizedIcon
-									icon="noteDouble"
 									class="h-6 w-6 flex-grow-0 flex-shrink-0 transition-all duration-150"
+									icon="noteDouble"
 								/>
 								<p
 									class="hidden sm:flex flex-grow-0 flex-shrink-0 text-xl font-semibold text-left transition-all duration-150"
@@ -148,10 +149,10 @@ watch(searchType, () => {
 										'Track',
 									)}...`
 							"
+							autocomplete="off"
 							class="w-available flex-shrink-0 border-transparent bg-transparent px-2 py-1 text-2xl shadow-transparent flex-grow-1 focus: outline-none"
 							name="search"
 							type="search"
-							autocomplete="off"
 						>
 					</div>
 				</div>
@@ -190,7 +191,7 @@ watch(searchType, () => {
 										class="z-50 flex justify-center mt-3"
 									>
 										<button
-											class="h-12 rounded bg-focus px-4 py-2 text-white"
+											class="h-12 rounded bg-focus px-4 py-2"
 											@click="fetchNextPage()"
 										>
 											{{ $t("Load more") }}
@@ -202,7 +203,7 @@ watch(searchType, () => {
 					</template>
 				</div>
 				<!--        <div class="z-50 flex justify-center mb-4" ref="loadMore" v-if="hasMoreResults && videoSearchResult.length > 0"> -->
-				<!--          <button @click="fetchNextPage()" class="h-12 rounded bg-focus px-4 py-2 text-white"> -->
+				<!--          <button @click="fetchNextPage()" class="h-12 rounded bg-focus px-4 py-2"> -->
 				<!--            {{ $t('Load more') }} -->
 				<!--          </button> -->
 				<!--        </div> -->
