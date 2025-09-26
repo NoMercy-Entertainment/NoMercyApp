@@ -39,10 +39,10 @@ onMounted(() => {
 
 <template>
 	<DropdownMenu :translate="translate" class-name="my-1 rounded-md">
-		<template #button>
+		<template #button="{ open }">
 			<button
 				:aria-label="$t('Messages menu')"
-				class="relative my-1 flex flex-shrink-0 flex-grow-0 items-start justify-start gap-2 overflow-hidden rounded-md transition-colors duration-200 hover:bg-focus/10 focus:bg-surface-1/2"
+				class="relative my-1 flex flex-shrink-0 flex-grow-0 items-start justify-start gap-2 overflow-hidden rounded-md transition-colors duration-200 hover:bg-focus/10 focus:bg-surface-12/6"
 			>
 				<template v-if="hasUnreadMessages">
 					<div
@@ -96,7 +96,7 @@ onMounted(() => {
 
 						<template v-if="messagesState?.length > 0">
 							<template v-for="item in messagesState?.latest()" :key="item.id">
-								<NotificationItem :data="item" :open="open" />
+								<NotificationItem :data="item" :open="open" type="message" />
 							</template>
 						</template>
 						<template v-else>

@@ -9,7 +9,7 @@ import type { LibraryResponse } from '@/types/api/base/library';
 import type { InfoResponse } from '@/types/api/base/info';
 
 import { pickPaletteColor } from '@/lib/colorHelper';
-
+import { setBackground, setColorPalette, setPoster, setTitle } from '@/store/ui.ts';
 import { showBackdrops } from '@/store/preferences';
 
 import TMDBImage from '@/components/Images/TMDBImage.vue';
@@ -67,6 +67,26 @@ const color = computed(() => {
 			)
 		: '';
 });
+
+function handleClick(item: any) {
+	if (props.data?.link.includes('watch'))
+		return;
+
+	setTimeout(() => {
+		if (item?.backdrop) {
+			setBackground(item?.backdrop);
+		}
+		if (item?.poster) {
+			setPoster(item.poster);
+		}
+		if (item.title) {
+			setTitle(item.title);
+		}
+		if (item.color_palette) {
+			setColorPalette(item.color_palette.poster);
+		}
+	}, 30);
+}
 </script>
 
 <template>
@@ -75,6 +95,7 @@ const color = computed(() => {
 		v-once
 		:class="backdropStyle ? 'aspect-backdrop' : 'aspect-poster'"
 		:data-scroll="scrollLetter"
+		:onclick="() => handleClick(data)"
 		:style="color ? `
        --color-theme-8: ${color};
     ` : ''"

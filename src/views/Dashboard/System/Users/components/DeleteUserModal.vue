@@ -7,6 +7,7 @@ import { useQueryClient } from '@tanstack/vue-query';
 
 import apiClient from '@/lib/clients/apiClient';
 import { currentServer } from '@/store/currentServer';
+import router from '@/router';
 
 import Modal from '@/components/Modal.vue';
 import Button from '@/components/Button.vue';
@@ -62,8 +63,8 @@ function handleDelete() {
 			user_id: props.id,
 		})
 		.then(() => {
-			query.invalidateQueries({ queryKey: ['users'] }).then(() => {
-				history.back();
+			query.invalidateQueries({ queryKey: ['server_users'] }).then(() => {
+				router.back();
 			});
 		});
 
@@ -76,6 +77,7 @@ function handleDelete() {
 		:close="close"
 		:open="open"
 		:params="{ name }"
+		style="max-width: 36rem;"
 		title="Delete server member {{name}}"
 	>
 		<p class="my-6 text-sm text-surface-10">

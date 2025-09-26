@@ -334,6 +334,13 @@ const menuItems = computed<IMenuItem[]>(() => [
 		title: 'Show missing episodes',
 		privileged: true,
 	},
+	{
+		icon: 'edit',
+		onclick: () => {
+			window.open(`https://www.themoviedb.org/${data?.value?.media_type}/${data?.value?.id}/edit`, '_blank');
+		},
+		title: 'Edit on TMDb',
+	},
 ]);
 
 const shareData = computed<ShareOptions>(() => ({
@@ -616,24 +623,7 @@ const endTime = computed(() => {
 														)
 													"
 													class="text-surface-12/70 dark:text-surface-12/80 "
-												>
-													<MenuItem
-														:class="buttonClasses"
-														as="div"
-														class="w-60 min-w-60 !flex"
-													>
-														<a
-															:href="`https://www.themoviedb.org/${data?.media_type}/${data?.id}/edit`"
-															class="relative flex flex-1 items-center justify-start gap-2 text-base font-semibold"
-															target="_blank"
-														>
-															<OptimizedIcon icon="edit" />
-															<span class="w-full whitespace-nowrap">
-																{{ $t("Edit on TMDb") }}
-															</span>
-														</a>
-													</MenuItem>
-												</ListControlHeaderMoreMenu>
+												/>
 											</div>
 										</div>
 

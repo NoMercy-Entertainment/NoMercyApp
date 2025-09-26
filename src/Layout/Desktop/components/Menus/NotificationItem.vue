@@ -6,7 +6,8 @@ import type { Message, User } from '@/types/auth';
 import NoMercyAvatar from '@/components/Images/NoMercyAvatar.vue';
 import OptimizedIcon from '@/components/OptimizedIcon.vue';
 import KeepCounting from '@/components/KeepCounting.vue';
-import { clearNotifications, removeNotification } from '@/store/notifications';
+import { removeNotification } from '@/store/notifications';
+import { removeMessage } from '@/store/messages.ts';
 
 const props = defineProps({
 	data: {
@@ -18,30 +19,37 @@ const props = defineProps({
 		required: false,
 		default: false,
 	},
+	type: {
+		type: String as PropType<'message' | 'notification'>,
+		required: true,
+	},
 });
 
 function handleClick() {
-	clearNotifications();
+	if (props.type === 'message') {
+		removeMessage(props.data);
+	}
+	else {
+		removeNotification(props.data);
+	}
 }
 
 function handleUpdateAccept() {
-	// Trigger the service worker update
 	document.dispatchEvent(new CustomEvent('sw-update-accepted'));
-	// Remove the notification
-	removeNotification(props.data);
-}
 
-function handleUpdateDismiss() {
-	// Just remove the notification without updating
-	removeNotification(props.data);
+	if (props.type === 'message') {
+		removeMessage(props.data);
+	}
+	else {
+		removeNotification(props.data);
+	}
 }
 </script>
 
 <template>
 	<div
 		:class="{
-			'border-1 bg-surface-4/11  border-slate-7 dark:bg-surface-2/11 dark:border-slate-4':
-				!data.read,
+			'border-1 bg-surface-12/2 border-surface-12/5': !data.read,
 		}"
 		class="flex justify-start items-start relative gap-2 p-2 rounded-lg"
 	>
@@ -105,7 +113,7 @@ function handleUpdateDismiss() {
 					</button>
 					<button
 						class="px-3 py-1 text-xs bg-gray-500 hover:bg-gray-600 rounded-md transition-colors"
-						@click="handleUpdateDismiss"
+						@click="handleClick"
 					>
 						Later
 					</button>

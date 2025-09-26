@@ -16,6 +16,7 @@ import useServerClient from "@/lib/clients/useServerClient";
 import DeleteEncoderProfileModal from "./components/DeleteEncoderProfileModal.vue";
 import DashboardLayout from "@/Layout/Desktop/DashboardLayout.vue";
 import {Nullable} from "vitest";
+import router from "@/router";
 
 const route = useRoute();
 
@@ -49,7 +50,7 @@ const closeDeleteConfirm = () => {
 };
 
 const handleCancel = () => {
-  window.history.back();
+  router.back();
 };
 
 const handleSave = () => {

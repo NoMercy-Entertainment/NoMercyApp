@@ -19,6 +19,7 @@ import Select from '@/components/Forms/Select.vue';
 import { currentServer } from '@/store/currentServer';
 import { useToast } from 'primevue/usetoast';
 import { translate } from '@/lib/stringArray.ts';
+import router from '@/router';
 
 const query = useQueryClient();
 const route = useRoute();
@@ -83,7 +84,7 @@ function closeDeleteConfirm() {
 }
 
 function handleCancel() {
-	window.history.back();
+	router.back();
 }
 
 function handleSave() {

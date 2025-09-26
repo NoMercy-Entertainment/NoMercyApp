@@ -10,6 +10,7 @@ import type { PlaylistItem, SortOrder, SortType } from '@/types/musicPlayer';
 import useServerClient from '@/lib/clients/useServerClient';
 import { setTitle, sortByType } from '@/lib/stringArray';
 import { setColorPalette, setSortOrder, sortOrder, sortType } from '@/store/ui';
+import router from '@/router';
 
 import ControlHeader from '@/views/Music/List/components/ControlHeader.vue';
 import ArtistHeader from '@/views/Music/List/components/ArtistHeader.vue';
@@ -100,7 +101,7 @@ onIonViewWillEnter(() => {
 });
 
 function handleBack() {
-	window.history.back();
+	router.back();
 }
 
 const showScrollHeader = ref(false);

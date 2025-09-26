@@ -18,15 +18,19 @@ export function addNotification(message: Message) {
 export function removeNotification(message: Message) {
 	const index = notifications.value.indexOf(message);
 	if (index !== -1)
-		notifications.value.splice(index, 1);
+		notifications.value = notifications.value.toSpliced(index, 1);
 
-	apiClient().delete(`/notifications/${message.id}`).catch(console.error);
+	apiClient()
+		.delete(`/notifications/${message.id}`)
+		.catch(console.error);
 }
 
 export function clearNotifications() {
 	notifications.value = [];
 
-	apiClient().delete(`/notifications`).catch(console.error);
+	apiClient()
+		.delete(`/notifications`)
+		.catch(console.error);
 }
 
 export default notificationsState;

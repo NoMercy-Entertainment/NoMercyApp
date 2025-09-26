@@ -12,6 +12,7 @@ import Button from '@/components/Button.vue';
 import { InputText } from 'primevue';
 import { currentServer } from '@/store/currentServer';
 import serverClient from '@/lib/clients/serverClient';
+import router from '@/router';
 
 const route = useRoute();
 
@@ -53,7 +54,7 @@ function closeDeleteConfirm() {
 }
 
 function handleCancel() {
-	window.history.back();
+	router.back();
 }
 
 const title = ref<string>(settings.value?.title || '');

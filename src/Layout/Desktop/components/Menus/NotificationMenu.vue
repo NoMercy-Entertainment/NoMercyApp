@@ -42,7 +42,7 @@ onMounted(() => {
 		<template #button>
 			<button
 				:aria-label="$t('Notification menu')"
-				class="relative my-1 flex flex-shrink-0 flex-grow-0 items-start justify-start gap-2 overflow-hidden rounded-md transition-colors duration-200 hover:bg-focus/10 focus:bg-surface-1/2"
+				class="relative my-1 flex flex-shrink-0 flex-grow-0 items-start justify-start gap-2 overflow-hidden rounded-md transition-colors duration-200 hover:bg-focus/10 focus:bg-surface-12/6"
 			>
 				<template v-if="hasUnreadNotifications">
 					<div
@@ -99,7 +99,7 @@ onMounted(() => {
 								v-for="item in notificationsState?.latest()"
 								:key="item.id"
 							>
-								<NotificationItem :data="item" :open="open" />
+								<NotificationItem :data="item" :open="open" type="notification" />
 							</template>
 						</template>
 						<template v-else>

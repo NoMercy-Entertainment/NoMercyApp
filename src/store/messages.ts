@@ -16,9 +16,11 @@ export function addMessage(message: Message) {
 export function removeMessage(message: Message) {
 	const index = messages.value.indexOf(message);
 	if (index !== -1)
-		messages.value.splice(index, 1);
+		messages.value = messages.value.toSpliced(index, 1);
 
-	apiClient().delete(`/messages/${message.id}`).catch(console.error);
+	apiClient()
+		.delete(`/messages/${message.id}`)
+		.catch(console.error);
 }
 export function markMessageRead(message: Message) {
 	message.read = true;
@@ -37,12 +39,16 @@ export function markMessageUnread(message: Message) {
 export function markAllMessagesRead() {
 	messages.value.forEach(message => (message.read = true));
 
-	apiClient().patch(`/messages`, { read: true }).catch(console.error);
+	apiClient()
+		.patch(`/messages`, { read: true })
+		.catch(console.error);
 }
 export function clearMessages() {
 	messages.value = [];
 
-	apiClient().delete(`/messages`).catch(console.error);
+	apiClient()
+		.delete(`/messages`)
+		.catch(console.error);
 }
 
 export default messagesState;

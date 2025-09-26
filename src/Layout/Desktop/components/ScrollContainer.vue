@@ -158,7 +158,7 @@ function handleFocus() {
 			'group/scrollContainer-frame': frame,
 		}"
 		:data-music="musicVisibility"
-		class="flex flex-1 h-available music-showing:h-[calc(100vh-11rem)] z-0 isolate overflow-auto will-change-scroll w-full flex-col scrollbar-none scroll-container min-h-[91.2%] text-surface-12"
+		class="flex flex-1 h-available music-showing:h-[calc(100vh-11rem)] z-0 isolate overflow-auto will-change-scroll w-full flex-col scrollbar-none scroll-container text-surface-12"
 		tabindex="1"
 		@focus="handleFocus"
 		@mouseleave="mouseLeave"

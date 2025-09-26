@@ -622,8 +622,15 @@
 }
 
 .p-component {
-  max-width: 90vw;
   right: 0;
+}
+
+.p-multiselect-overlay {
+  max-width: min-content;
+}
+
+.p-toast-top-right {
+  top: 4rem !important;
 }
 
 /* Toast messages */
@@ -731,9 +738,9 @@ $toast-types: (
 }
 
 .p-toggleswitch {
-  --p-toggleswitch-width: 3.5rem;
+  //--p-toggleswitch-width: 3.5rem;
 }
 
 .p-toggleswitch.p-toggleswitch-checked .p-toggleswitch-handle  {
-  --p-toggleswitch-gap: 15px;
+  //--p-toggleswitch-gap: 15px;
 }

@@ -30,7 +30,7 @@ export const dashboardColumnGrid = ref(
 	'grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4 2xl:grid-cols-6 5xl:grid-cols-10',
 );
 
-export const buttonClasses = 'grid relative place-content-center size-10 active:outline outline-focus focus-visible:outline min-w-[2.5rem] z-0 justify-center disabled:opacity-50 disabled:text-surface-9 text-surface-12/12 disabled:hover:!bg-transparent overflow-clip pointer-events-auto border-none focus:border-none active:border-none focus-visible:sm:ring-white focus-visible:sm:ring-2 group/button gap-2 p-2.5 items-center rounded-lg sm:bg-surface-12/2 active:sm:bg-surface-12/4 focus-visible:sm:bg-surface-12/4 hover:sm:bg-surface-12/4';
+export const buttonClasses = 'grid relative place-content-center h-10 min-w-10 active:outline outline-focus focus-visible:outline z-0 justify-center disabled:opacity-50 disabled:text-surface-9 text-surface-12/12 disabled:hover:!bg-transparent overflow-clip pointer-events-auto border-none focus:border-none active:border-none focus-visible:sm:ring-white focus-visible:sm:ring-2 group/button gap-2 p-2.5 items-center rounded-lg sm:bg-surface-12/2 active:sm:bg-surface-12/4 focus-visible:sm:bg-surface-12/4 hover:sm:bg-surface-12/4';
 
 export const purple = '#94f';
 export const blue = '#39f';

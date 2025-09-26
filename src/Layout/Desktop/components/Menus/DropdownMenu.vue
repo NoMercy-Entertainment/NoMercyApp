@@ -97,8 +97,7 @@ function handleKeyDown(e: KeyboardEvent) {
 		>
 			<div class="overflow-hidden">
 				<div
-					:open="open"
-					class="flex w-full flex-col items-start justify-start rounded-xl min-w-40 min-h-20 overflow-clip children:rounded-xl children:overflow-clip border-1 bg-surface-2 border-slate-7 dark:border-slate-4"
+					class="flex w-full flex-col items-start justify-start rounded-xl min-w-40 min-h-20 overflow-clip children:rounded-xl children:overflow-clip border-1 bg-surface-2 border-surface-7"
 					role="dialog"
 				>
 					<slot :open="open" />

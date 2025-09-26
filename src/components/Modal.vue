@@ -67,7 +67,7 @@ watch(visible, (value) => {
 			'has-background': background,
 		}"
 		:header="$t(title, params)"
-		as="div"
+		as="dialog"
 		class="dialog w-available overflow-clip relative isolate"
 		modal
 	>

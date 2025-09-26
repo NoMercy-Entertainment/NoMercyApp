@@ -28,7 +28,7 @@ const props = defineProps({
 	},
 });
 
-const color = pickPaletteColor(props.data?.color_palette?.poster ?? props.data?.color_palette?.backdrop);
+const color = pickPaletteColor(props.data?.color_palette?.image);
 </script>
 
 <template>
@@ -39,7 +39,7 @@ const color = pickPaletteColor(props.data?.color_palette?.poster ?? props.data?.
 		:style="color ? `
        --color-theme-8: ${color};
     ` : ''"
-		class="frosting border-0 border-[var(--color-theme-8)] flex flex-col h-auto items-center focus-shift focus-outline transition-all duration-200 relative !rounded-lg select-none shadow-[0px_0px_0_1px_rgb(from_var(--color-theme-8,var(--color-theme-6))_r_g_b/70%)] w-full z-0 bg-surface-1/8"
+		class="group/card frosting flex flex-col h-full items-center focus-outline relative rounded-lg select-none shadow-[0px_0px_0_1px_rgb(from_var(--color-theme-8,var(--color-theme-6))_r_g_b/70%)] w-full z-0 bg-surface-50/70 flex-grow-0"
 		data-card="true"
 		@click="setData(data)"
 	>

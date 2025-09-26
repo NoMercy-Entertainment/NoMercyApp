@@ -22,14 +22,21 @@ defineProps({
 		required: false,
 		default: '',
 	},
+	title: {
+		type: String,
+		required: false,
+		default: 'More options',
+	},
 });
 </script>
 
 <template>
 	<Menu as="div" class="relative select-none z-[150]">
 		<MenuButton
-			:aria-label="$t('more')"
-			class=""
+			:aria-label="$t(title)"
+			:class="{
+				[buttonClasses]: true,
+			}"
 		>
 			<slot name="button">
 				<OptimizedIcon icon="menuDotsHorizontal" />
@@ -46,12 +53,12 @@ defineProps({
 		>
 			<MenuItems
 				:class="className"
-				class="absolute z-10 m-2 ml-8 flex w-min origin-top-right -translate-x-full flex-col gap-2 rounded-lg p-1 shadow-lg bg-surface-3 dark:bg-surface-1 border-1 border-surface-8/11"
+				class="absolute z-10 m-2 ml-8 flex w-min origin-top-right -translate-x-full flex-col gap-2 rounded-xl p-1 shadow-lg bg-surface-3 dark:bg-surface-1 border-1 border-surface-8/11"
 			>
 				<slot />
 				<template v-for="(item, index) in items" :key="index">
 					<MenuItem
-						:class="buttonClasses"
+						:class="buttonClasses.replace('sm:bg-surface-12/2', '')"
 						as="div"
 						class="w-60 min-w-60 !flex"
 						@click="item.onclick"

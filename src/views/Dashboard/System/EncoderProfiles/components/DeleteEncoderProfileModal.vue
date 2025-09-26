@@ -7,6 +7,7 @@ import { useQueryClient } from '@tanstack/vue-query';
 import serverClient from '@/lib/clients/serverClient';
 import { translate } from '@/lib/stringArray.ts';
 import type { StatusResponse } from '@/types/api/base/library';
+import router from '@/router';
 
 const props = defineProps({
 	open: {
@@ -48,7 +49,7 @@ function handleDelete() {
 
 			if (props.noRedirect)
 				return;
-			window.history.back();
+			router.back();
 		});
 
 	props.close();

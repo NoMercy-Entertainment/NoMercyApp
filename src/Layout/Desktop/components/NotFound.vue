@@ -1,4 +1,6 @@
 <script lang="ts" setup>
+import router from '@/router';
+
 defineProps({
 	title: {
 		type: String,
@@ -13,7 +15,7 @@ defineProps({
 });
 
 function handleBack() {
-	window.history.back();
+	router.back();
 }
 </script>
 

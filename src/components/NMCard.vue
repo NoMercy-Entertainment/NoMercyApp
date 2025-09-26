@@ -72,18 +72,21 @@ function onRightClick(event: Event) {
 function handleClick(item: any) {
 	if (props.data?.link.includes('watch'))
 		return;
-	if (item?.backdrop) {
-		setBackground(item?.backdrop);
-	}
-	if (item?.poster) {
-		setPoster(item.poster);
-	}
-	if (item.title) {
-		setTitle(item.title);
-	}
-	if (item.color_palette) {
-		setColorPalette(item.color_palette.poster);
-	}
+
+	setTimeout(() => {
+		if (item?.backdrop) {
+			setBackground(item?.backdrop);
+		}
+		if (item?.poster) {
+			setPoster(item.poster);
+		}
+		if (item.title) {
+			setTitle(item.title);
+		}
+		if (item.color_palette) {
+			setColorPalette(item.color_palette.poster);
+		}
+	}, 30);
 }
 </script>
 

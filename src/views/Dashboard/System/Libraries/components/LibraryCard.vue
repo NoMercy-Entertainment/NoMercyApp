@@ -29,7 +29,7 @@ defineProps({
 				class="relative flex aspect-video flex-shrink-0 flex-grow-0 flex-col items-center justify-center self-stretch overflow-clip rounded-lg bg-theme-8"
 			>
 				<div class="backdropCard-overlay" />
-				<TMDBImage v-if="data.image" :path="data.image" class="z-0" />
+				<TMDBImage v-if="data.image" :path="data.image" aspect="backdrop" class="z-0" />
 				<span v-else class="text-xl font-bold">
 					{{ data.title }}
 				</span>

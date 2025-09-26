@@ -15,7 +15,7 @@ defineProps({
 	},
 });
 
-const back = () => window.history.back();
+const back = () => router.back();
 </script>
 
 <template>

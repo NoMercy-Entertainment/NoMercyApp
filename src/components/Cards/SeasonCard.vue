@@ -1,11 +1,11 @@
 <script lang="ts" setup>
-import type { PropType } from 'vue';
+import type {PropType} from 'vue';
 
-import type { Episode } from '@/types/api/base/info';
+import type {Episode} from '@/types/api/base/info';
 
-import { scrollIntoView } from '@/lib/utils';
+import {scrollIntoView} from '@/lib/utils';
 
-import { pickPaletteColor } from '@/lib/colorHelper';
+import {pickPaletteColor} from '@/lib/colorHelper';
 import TMDBImage from '@/components/Images/TMDBImage.vue';
 import OptimizedIcon from '@/components/OptimizedIcon.vue';
 
@@ -37,7 +37,7 @@ const color = pickPaletteColor(props.data?.color_palette?.still);
        --color-theme-8: ${color};
     ` : ''"
 		:to="data?.available ? data.link : '#'"
-		class="frosting border-0 border-[var(--color-theme-8)] flex flex-col h-auto items-center group/season focus-shift focus-outline transition-all duration-200 overflow-clip relative !rounded-lg select-none shadow-[0px_0px_0_1px_rgb(from_var(--color-theme-8,var(--color-theme-6))_r_g_b/70%)] w-full z-0 bg-surface-2 text-slate-12/90"
+		class="frosting border-0 border-[var(--color-theme-8)] flex flex-col h-auto items-center group/season focus-shift focus-outline transition-all duration-200 overflow-clip relative !rounded-lg select-none shadow-[0px_0px_0_1px_rgb(from_var(--color-theme-8,var(--color-theme-6))_r_g_b/70%)] w-full z-0 bg-surface-2 text-surface-12/90"
 		data-card="true"
 	>
 		<div
