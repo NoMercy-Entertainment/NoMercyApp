@@ -1,1 +1,0 @@
-import{ac as o,ic as i,y as r}from"./index-D3KNwstc.js";function s(t=""){if(!i())throw new Error("vue-query hooks can only be used inside setup() function or functions that support injection context.");const n=r(t),e=o(n);if(!e)throw new Error("No 'queryClient' found in Vue context, use 'VueQueryPlugin' to properly initialize the library.");return e}export{s as t};
