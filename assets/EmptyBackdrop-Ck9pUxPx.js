@@ -1,1 +1,0 @@
-import{Yo as e,js as _,us as r}from"./index-zK1-WOQT.js";import{t as a}from"./_plugin-vue_export-helper-CksOYaUN.js";e();var t={},o={class:"bg"};function s(c,n){return _(),r("div",o)}var p=a(t,[["render",s],["__scopeId","data-v-386a0916"]]);export{p as t};

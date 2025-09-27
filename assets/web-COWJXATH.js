@@ -1,1 +1,0 @@
-import{ma as o,pa as t}from"./index-zK1-WOQT.js";o();var r=class extends t{async isWatching(){throw new Error("VolumeButtons is not supported on web")}async watchVolume(n,s){throw new Error("VolumeButtons is not supported on web")}async clearWatch(){throw new Error("VolumeButtons is not supported on web")}};export{r as VolumeButtonsWeb};

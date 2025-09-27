@@ -1,1 +1,0 @@
-import{Yo as t,js as s,ns as a,ss as r,us as l}from"./index-zK1-WOQT.js";import{t as n}from"./_plugin-vue_export-helper-CksOYaUN.js";t();var o={};function u(_,e){return s(),l(a,null,[e[0]||(e[0]=r("h1",null,"Auth View Desktop",-1)),e[1]||(e[1]=r("div",{class:"overflow-auto h-available"},null,-1))],64)}var m=n(o,[["render",u]]);export{m as default};

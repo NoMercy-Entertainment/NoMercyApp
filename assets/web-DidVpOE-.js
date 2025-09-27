@@ -1,1 +1,0 @@
-import{ma as t,pa as e}from"./index-zK1-WOQT.js";t();var s=class extends e{async getSafeAreaInsets(){return{insets:{top:0,left:0,right:0,bottom:0}}}async getStatusBarHeight(){return{statusBarHeight:0}}setImmersiveNavigationBar(){throw this.unimplemented("Method not supported on Web.")}};export{s as SafeAreaWeb};
