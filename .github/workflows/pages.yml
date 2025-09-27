@@ -79,22 +79,22 @@ jobs:
           jarsigner -verbose -sigalg SHA256withRSA -digestalg SHA-256 \
             -keystore keystore.jks \
             -storepass "$KEYSTORE_PASSWORD" \
-            ./android/app/build/outputs/apk/release/app-release.apk ${{ secrets.KEY_ALIAS }}
+            "${{ github.workspace }}/android/app/build/outputs/apk/release/app-release.apk" ${{ secrets.KEY_ALIAS }}
 
       - name: Verify Signed APK
         run: |
-          jarsigner -verify ./android/app/build/outputs/apk/release/app-release.apk
+          jarsigner -verify "${{ github.workspace }}/android/app/build/outputs/apk/release/app-release.apk"
 
       - name: Zipalign APK
         run: |
           sudo apt-get update && sudo apt-get install -y zipalign apksigner
-          zipalign -v 4 ./android/app/build/outputs/apk/release/app-release.apk ./android/app/build/outputs/apk/release/app-release-aligned.apk
+          zipalign -v 4 "${{ github.workspace }}/android/app/build/outputs/apk/release/app-release.apk" "${{ github.workspace }}/android/app/build/outputs/apk/release/app-release-aligned.apk"
 
       - name: Final APK signing with apksigner
         env:
           KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
         run: |
-          apksigner sign --ks keystore.jks --ks-key-alias ${{ secrets.KEY_ALIAS }} --ks-pass pass:"$KEYSTORE_PASSWORD" ./android/app/build/outputs/apk/release/app-release-aligned.apk
+          apksigner sign --ks keystore.jks --ks-key-alias ${{ secrets.KEY_ALIAS }} --ks-pass pass:"$KEYSTORE_PASSWORD" "${{ github.workspace }}/android/app/build/outputs/apk/release/app-release-aligned.apk"
 
       # Use the aligned and signed APK for release
       - name: Create Release
@@ -122,6 +122,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./android/app/build/outputs/apk/release/app-release-aligned.apk
+          asset_path: ${{ github.workspace }}/android/app/build/outputs/apk/release/app-release-aligned.apk
           asset_name: app-release-1.0.${{ github.run_number }}.apk
           asset_content_type: application/vnd.android.package-archive

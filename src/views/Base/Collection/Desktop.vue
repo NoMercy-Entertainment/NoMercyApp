@@ -112,7 +112,7 @@ const yearSpan = computed(() => `${collect(data.value?.collection).min('year')} 
 		<IonContent :fullscreen="true">
 			<NotFound v-if="isError && !data" />
 			<ScrollContainer v-else :auto-hide="true" :static="true">
-				<div class="w-available">
+				<div class="w-available text-surface-12">
 					<FloatingBackButton />
 					<div
 						v-if="data"
