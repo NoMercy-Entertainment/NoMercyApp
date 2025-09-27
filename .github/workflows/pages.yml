@@ -90,13 +90,13 @@ jobs:
           sudo apt-get update && sudo apt-get install -y zipalign apksigner
           zipalign -v 4 \
           "${{ github.workspace }}/android/app/build/outputs/apk/release/app-release-unsigned.apk" \
-          "${{ github.workspace }}/android/app/build/outputs/apk/release/app-release-aligned.apk"
+          "${{ github.workspace }}/android/./app/build/outputs/apk/release/app-release-aligned.apk"
 
       - name: Final APK signing with apksigner
         env:
           KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
         run: |
-          apksigner sign --ks keystore.jks --ks-key-alias ${{ secrets.KEY_ALIAS }} --ks-pass pass:"$KEYSTORE_PASSWORD" "${{ github.workspace }}/android/app/build/outputs/apk/release/app-release-aligned.apk"
+          apksigner sign --ks keystore.jks --ks-key-alias ${{ secrets.KEY_ALIAS }} --ks-pass pass:${{ secrets.KEYSTORE_PASSWORD }} "${{ github.workspace }}/android/app/build/outputs/apk/release/app-release-aligned.apk"
 
       # Use the aligned and signed APK for release
       - name: Create Release
