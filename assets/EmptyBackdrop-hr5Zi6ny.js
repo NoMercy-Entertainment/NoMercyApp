@@ -1,1 +1,0 @@
-import{Js as e,Ns as _,hc as r}from"./index-C2NorOFh.js";import{t as a}from"./_plugin-vue_export-helper-CEc1WwrB.js";_();var t={},s={class:"bg"};function c(o,n){return r(),e("div",s)}var p=a(t,[["render",c],["__scopeId","data-v-386a0916"]]);export{p as t};
