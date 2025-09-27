@@ -47,13 +47,13 @@ jobs:
           distribution: 'oracle'
           java-version: '21'
 
-      # Build the Ionic app
-      - name: Build Ionic App
-        run: npm run build:android
-
       # Sync the project
       - name: Sync Capacitor
         run: npx cap sync android
+
+      # Build the Ionic app
+      - name: Build Ionic App
+        run: npm run build:android
 
       # Set version information
       - name: Set Version Information
@@ -73,7 +73,7 @@ jobs:
         env:
           KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
         run: |
-          echo "${{ secrets.ANDROID_KEYSTORE }}" > release-key.jks
+          echo "${{ secrets.ANDROID_KEYSTORE_BASE64 }}" | base64 -d > release-key.jks
           jarsigner -verbose -sigalg SHA256withRSA -digestalg SHA-256 \
             -keystore release-key.jks \
             -storepass ${{ secrets.KEYSTORE_PASSWORD }} \
