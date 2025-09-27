@@ -78,7 +78,7 @@ watch(searchType, () => {
 	<IonPage>
 		<IonContent ref="content" :fullscreen="true">
 			<div
-				class="absolute inset-0 w-screen h-available flex flex-grow flex-col items-center justify-start gap-12 overflow-clip  will-change-auto"
+				class="absolute inset-0 w-screen h-available flex flex-grow flex-col items-center justify-start gap-12 text-surface-12 overflow-clip  will-change-auto"
 			>
 				<CosmosBg2 v-if="greetingValue && searchValue?.length === 0" />
 				<div

@@ -1,4 +1,3 @@
-import { watch } from 'vue';
 import { isPlatform } from '@ionic/vue';
 import type { BasicColorSchema } from '@vueuse/core';
 import { useColorMode } from '@vueuse/core';
@@ -51,9 +50,9 @@ export async function setColorScheme(value: 'system' | BasicColorSchema) {
 			await EdgeToEdge.setBackgroundColor({ color: '#000000' });
 		}
 		else {
-			await NavigationBar.setColor({ color: '#FFFFFF', darkButtons: true });
+			await NavigationBar.setColor({ color: '#FFFFFF', darkButtons: false });
 			if (isPlatform('capacitor') && !isTv.value) {
-				await StatusBar.setStyle({ style: Style.Dark });
+				await StatusBar.setStyle({ style: Style.Light });
 			}
 			await EdgeToEdge.setBackgroundColor({ color: '#ffffff' });
 		}
@@ -84,10 +83,15 @@ export const scheme = useColorMode({
 		dark: 'dark',
 	},
 });
-document.addEventListener('deviceready', () => {
-	watch(scheme, (value) => {
-		setTimeout(() => {
-			setColorScheme(value).then();
-		}, 50);
-	});
-});
+
+(async () => {
+	setTimeout(async () => {
+		const colorScheme = await checkColorScheme();
+
+		if (!colorScheme) {
+			return;
+		}
+
+		await setColorScheme(colorScheme);
+	}, 10);
+})();

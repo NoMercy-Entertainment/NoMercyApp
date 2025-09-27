@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import { IonContent, IonPage } from '@ionic/vue';
 import { musicSearchResult, musicSearchValue } from '@/store/search';
 </script>
@@ -6,12 +6,12 @@ import { musicSearchResult, musicSearchValue } from '@/store/search';
 <template>
 	<IonPage>
 		<IonContent :fullscreen="true">
-			<div class="flex w-available m-4">
+			<div class="flex w-available m-4 text-surface-12">
 				<InputText
 					v-model="musicSearchValue"
+					class="w-available"
 					type="text"
 					variant="filled"
-					class="w-available"
 				/>
 			</div>
 
