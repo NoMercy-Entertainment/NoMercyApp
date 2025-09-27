@@ -28,7 +28,7 @@ jobs:
           node-version: 20
 
       - name: Install dependencies
-        run: npm install --force && npm install @rollup/rollup-linux-x64-gnu --save-dev --force
+        run: npm install --legacy-peer-deps && npm install @rollup/rollup-linux-x64-gnu --save-dev --legacy-peer-deps
 
       - name: Build documentation
         run: npm run build
@@ -79,16 +79,18 @@ jobs:
           jarsigner -verbose -sigalg SHA256withRSA -digestalg SHA-256 \
             -keystore keystore.jks \
             -storepass "$KEYSTORE_PASSWORD" \
-            "${{ github.workspace }}/android/app/build/outputs/apk/release/app-release.apk" ${{ secrets.KEY_ALIAS }}
+            "${{ github.workspace }}/android/app/build/outputs/apk/release/app-release-unsigned.apk" ${{ secrets.KEY_ALIAS }}
 
       - name: Verify Signed APK
         run: |
-          jarsigner -verify "${{ github.workspace }}/android/app/build/outputs/apk/release/app-release.apk"
+          jarsigner -verify "${{ github.workspace }}/android/app/build/outputs/apk/release/app-release-unsigned.apk"
 
       - name: Zipalign APK
         run: |
           sudo apt-get update && sudo apt-get install -y zipalign apksigner
-          zipalign -v 4 "${{ github.workspace }}/android/app/build/outputs/apk/release/app-release.apk" "${{ github.workspace }}/android/app/build/outputs/apk/release/app-release-aligned.apk"
+          zipalign -v 4 \
+          "${{ github.workspace }}/android/app/build/outputs/apk/release/app-release-unsigned.apk" \
+          "${{ github.workspace }}/android/app/build/outputs/apk/release/app-release-aligned.apk"
 
       - name: Final APK signing with apksigner
         env:
