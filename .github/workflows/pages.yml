@@ -78,7 +78,7 @@ jobs:
         run: |
           jarsigner -verbose -sigalg SHA256withRSA -digestalg SHA-256 \
             -keystore keystore.jks \
-            -storepass ${{ secrets.KEYSTORE_PASSWORD }} \
+            -storepass "$KEYSTORE_PASSWORD" \
             ./android/app/build/outputs/apk/debug/app-debug.apk ${{ secrets.KEY_ALIAS }}
 
       - name: Verify Signed APK
