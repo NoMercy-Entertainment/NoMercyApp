@@ -67,7 +67,7 @@ jobs:
           chmod +x gradlew
           ./gradlew clean
           ./gradlew assembleDebug --stacktrace
-          chmod +w ./app/build/outputs/apk/debug/app-debug.apk
+          chmod 777 ./app/build/outputs/apk/debug/app-debug.apk
 
       - name: Decode keystore and create jks
         run: echo "${{ secrets.ANDROID_KEYSTORE_BASE64 }}" | base64 --decode > keystore.jks
