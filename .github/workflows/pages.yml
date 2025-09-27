@@ -79,17 +79,17 @@ jobs:
           jarsigner -verbose -sigalg SHA256withRSA -digestalg SHA-256 \
             -keystore keystore.jks \
             -storepass ${{ secrets.KEYSTORE_PASSWORD }} \
-            ./app/build/outputs/apk/debug/app-debug.apk ${{ secrets.KEY_ALIAS }}
+            ./android/app/build/outputs/apk/debug/app-debug.apk ${{ secrets.KEY_ALIAS }}
 
       - name: Verify Signed APK
         run: |
-          jarsigner -verify ./app/build/outputs/apk/debug/app-debug.apk
+          jarsigner -verify ./android/app/build/outputs/apk/debug/app-debug.apk
 
       # Rename the Signed APK:
       - name: Rename Signed APK
         run: |
-          mv ./app/build/outputs/apk/debug/app-debug.apk \
-          ./app/build/outputs/apk/debug/app-release.apk
+          mv ./android/app/build/outputs/apk/debug/app-debug.apk \
+          ./android/app/build/outputs/apk/debug/app-release.apk
 
       - name: Create Release
         id: create_release
@@ -116,6 +116,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./app/build/outputs/apk/debug/app-release.apk
+          asset_path: ./android/app/build/outputs/apk/debug/app-release.apk
           asset_name: app-release-1.0.${{ github.run_number }}.apk
           asset_content_type: application/vnd.android.package-archive
