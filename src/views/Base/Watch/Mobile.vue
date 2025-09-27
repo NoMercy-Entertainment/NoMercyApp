@@ -47,8 +47,6 @@ function initPlayer(value?: NMPlaylistItem[] | undefined) {
 		disableAutoPlayback: user.value.features?.nomercyConnect,
 	} satisfies PlayerConfig<PlaylistItem>;
 
-	player.value?.dispose();
-
 	// @ts-ignore
 	player.value = nmplayer('player1').setup(config);
 

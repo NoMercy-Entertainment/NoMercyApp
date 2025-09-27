@@ -1,3 +1,4 @@
+// @ts-nocheck
 import Keycloak from 'keycloak-ionic';
 import type {
 	KeycloakError,
@@ -32,7 +33,6 @@ export default {
 			app,
 			defaultEmptyVueKeycloakInstance(),
 		);
-		// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
 		getConfig(options.config!)
 			.then((config) => {
 				init(config as VueKeycloakConfig, watch, options);
@@ -159,7 +159,6 @@ function init(
 	updateWatchVariables(false); // benoit addition to at least get part of the keycloak updated on IOS
 	if (options.init !== undefined) {
 		keycloak
-		// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
 			.init(options.init)
 			.then((authenticated: boolean) => {
 				updateWatchVariables(authenticated);

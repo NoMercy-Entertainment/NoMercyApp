@@ -11,11 +11,11 @@ import router from '@/router';
 
 import SidebarButtonGroup from './SidebarButtonGroup.vue';
 import SidebarButton from './SidebarButton.vue';
-import OptimizedIcon from '@/components/OptimizedIcon.vue';
 import libraries from '@/store/Libraries';
 import { setMusicPlaylists } from '@/store/musicPlaylists';
 import { useRoute } from 'vue-router';
 import konamiEnabled from '@/store/konami';
+import MoooomIcon from '@/components/Images/icons/MoooomIcon.vue';
 
 // const {data: libraries, refetch} = useServerClient<ServerLibrary[]>({
 //   path: '/dashboard/libraries',
@@ -344,7 +344,7 @@ function libraryIconName(type: string) {
 			style="box-shadow: 0 1px 2px 0 rgba(16, 24, 40, 0.05)"
 			@click="toggleSidebar()"
 		>
-			<OptimizedIcon
+			<MoooomIcon
 				:data-sidebar="sidebar"
 				class-name="rotate-0 sidebar-closed:rotate-180"
 				icon="chevronLeft"

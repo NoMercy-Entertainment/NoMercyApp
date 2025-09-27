@@ -6,8 +6,8 @@ import type { Device } from '@/types/server';
 import { connectedMusicDevices, currentMusicDeviceId, deviceMenuOpen, musicSize } from '@/store/audioPlayer';
 import { musicSocketConnection } from '@/store/musicSocket';
 
-import OptimizedIcon from '@/components/OptimizedIcon.vue';
 import { user } from '@/store/user';
+import MoooomIcon from '@/components/Images/icons/MoooomIcon.vue';
 
 function switchDevice(device: Device) {
 	if (device.device_id === currentMusicDeviceId.value)
@@ -68,13 +68,13 @@ const currentDevice = computed(() =>
 						v-show="device.type === 'web'"
 						class="flex justify-center items-center w-10 h-10 rounded-full"
 					>
-						<OptimizedIcon class-name="w-7" icon="laptop" />
+						<MoooomIcon class-name="w-7" icon="laptop" />
 					</div>
 					<div
 						v-show="device.type === 'desktop'"
 						class="flex justify-center items-center w-10 h-10 rounded-full"
 					>
-						<OptimizedIcon class-name="w-7" icon="monitor" />
+						<MoooomIcon class-name="w-7" icon="monitor" />
 					</div>
 					<div
 						v-show="
@@ -84,13 +84,13 @@ const currentDevice = computed(() =>
 						"
 						class="flex justify-center items-center w-10 h-10 rounded-full"
 					>
-						<OptimizedIcon class-name="w-7" icon="mobilePhone" />
+						<MoooomIcon class-name="w-7" icon="mobilePhone" />
 					</div>
 					<div
 						v-show="device.type === 'tv'"
 						class="flex justify-center items-center w-10 h-10 rounded-full"
 					>
-						<OptimizedIcon class-name="w-7" icon="tv" />
+						<MoooomIcon class-name="w-7" icon="tv" />
 					</div>
 
 					<div class="flex w-full flex-col gap-1">

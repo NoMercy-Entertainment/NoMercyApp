@@ -4,7 +4,7 @@ import { user } from '@/store/user';
 import { musicSocketConnection, playerState } from '@/store/musicSocket';
 
 import MusicButton from './MusicButton.vue';
-import OptimizedIcon from '@/components/OptimizedIcon.vue';
+import MoooomIcon from '@/components/Images/icons/MoooomIcon.vue';
 
 function handleClick(e?: MouseEvent) {
 	e?.stopPropagation();
@@ -22,7 +22,7 @@ function handleClick(e?: MouseEvent) {
 
 <template>
 	<MusicButton :onclick="handleClick" label="Mute" no-tooltip>
-		<OptimizedIcon
+		<MoooomIcon
 			v-if="
 				playerState?.muted_state === undefined
 					? isMuted
@@ -31,16 +31,16 @@ function handleClick(e?: MouseEvent) {
 			class="h-6 w-6"
 			icon="volumeMuted"
 		/>
-		<OptimizedIcon
+		<MoooomIcon
 			v-else-if="playerState?.volume_percentage ?? volume === 0"
 			class="h-6 w-6"
 			icon="volumeOne"
 		/>
-		<OptimizedIcon
+		<MoooomIcon
 			v-else-if="playerState?.volume_percentage ?? volume > 50"
 			class="h-6 w-6"
 			icon="volumeThree"
 		/>
-		<OptimizedIcon v-else class="h-6 w-6" icon="volumeTwo" />
+		<MoooomIcon v-else class="h-6 w-6" icon="volumeTwo" />
 	</MusicButton>
 </template>

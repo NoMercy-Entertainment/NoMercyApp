@@ -7,9 +7,8 @@ import router from '@/router';
 import { sidebar } from '@/store/sidebar';
 
 import type { MoooomIcons } from '@Icons/icons';
-
-import OptimizedIcon from '@/components/OptimizedIcon.vue';
 import Button from 'primevue/button';
+import MoooomIcon from '@/components/Images/icons/MoooomIcon.vue';
 
 const props = defineProps({
 	name: {
@@ -81,7 +80,7 @@ function handleClick() {
 		unstyled
 		@click="handleClick"
 	>
-		<OptimizedIcon v-if="!!icon" :icon="icon!" class="" />
+		<MoooomIcon v-if="!!icon" :icon="icon!" class="" />
 		<!--        <CoverImage v-else-if="!!cover" :data="{cover} as Song" class="top-0 z-10 -mr-1 -ml-1 aspect-square h-8 w-8 overflow-clip object-cover min-w-8" /> -->
 
 		<img

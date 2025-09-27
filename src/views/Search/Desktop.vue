@@ -18,7 +18,6 @@ import { greetingValue } from '@/config/global';
 
 import ScrollContainer from '@/Layout/Desktop/components/ScrollContainer.vue';
 import SearchCard from '@/components/Cards/SearchCard.vue';
-import OptimizedIcon from '@/components/OptimizedIcon.vue';
 import CosmosBg2 from '@/components/Images/CosmosBg2.vue';
 
 const route = useRoute();
@@ -105,7 +104,7 @@ watch(searchType, () => {
 								class="flex justify-center items-center flex-grow-0 flex-shrink-0 relative gap-2 pl-3 pr-4 py-3 rounded-lg w-[117px]"
 								@click="searchType = 'video'"
 							>
-								<OptimizedIcon
+								<MoooomIcon
 									class="h-6 w-6 flex-grow-0 flex-shrink-0 transition-all duration-150"
 									icon="film"
 								/>
@@ -122,7 +121,7 @@ watch(searchType, () => {
 								class="flex justify-center items-center flex-grow-0 flex-shrink-0 relative gap-2 pl-3 pr-4 py-3 rounded-lg w-[117px]"
 								@click="searchType = 'music'"
 							>
-								<OptimizedIcon
+								<MoooomIcon
 									class="h-6 w-6 flex-grow-0 flex-shrink-0 transition-all duration-150"
 									icon="noteDouble"
 								/>

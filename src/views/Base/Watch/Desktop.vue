@@ -25,6 +25,7 @@ const player = ref<NMPlayer<PlaylistItem>>();
 function initPlayer(value?: NMPlaylistItem[] | undefined) {
 	const config: Partial<PlayerConfig<PlaylistItem>> = {
 		controls: false,
+		debug: false,
 		playlist: value?.filter(item => !!item.id) ?? [],
 		accessToken: user.value?.accessToken,
 		basePath: currentServer.value?.serverBaseUrl,
@@ -36,8 +37,6 @@ function initPlayer(value?: NMPlaylistItem[] | undefined) {
 		renderAhead: 100,
 		disableAutoPlayback: user.value.features?.nomercyConnect,
 	} satisfies PlayerConfig<PlaylistItem>;
-
-	player.value?.dispose();
 
 	// @ts-ignore
 	player.value = nmplayer('player1').setup(config);

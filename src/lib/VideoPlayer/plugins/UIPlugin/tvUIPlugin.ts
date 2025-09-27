@@ -1,14 +1,14 @@
-import { BaseUIPlugin } from './baseUIPlugin';
+import {BaseUIPlugin} from './baseUIPlugin';
 import {
-	breakLogoTitle,
-	convertToSeconds,
-	limitSentenceByCharacters,
-	lineBreakShowTitle,
+    breakLogoTitle,
+    convertToSeconds,
+    limitSentenceByCharacters,
+    lineBreakShowTitle,
 } from '@nomercy-entertainment/nomercy-video-player/src/helpers';
 
-import type { PlaylistItem } from '../../index';
-import type { Icon, TimeData } from '@nomercy-entertainment/nomercy-video-player/src/types';
-import { unique } from '@/lib/stringArray.ts';
+import type {PlaylistItem} from '../../index';
+import type {Icon, TimeData} from '@nomercy-entertainment/nomercy-video-player/src/types';
+import {unique} from '@/lib/stringArray.ts';
 
 export class TVUIPlugin extends BaseUIPlugin {
 	preScreen: HTMLDialogElement = <HTMLDialogElement>{};
@@ -194,8 +194,11 @@ export class TVUIPlugin extends BaseUIPlugin {
 			});
 		});
 
-		[this.playbackButton].forEach((button) => {
+		[this.playbackButton, document.documentElement].forEach((button) => {
 			button?.addEventListener('keydown', (e) => {
+                if (e.target === document.body) {
+                    activeButton?.focus();
+                }
 				if (e.key === 'ArrowUp') {
 					e.preventDefault();
 					if (this.nextUp?.classList?.contains('visible')) {
@@ -426,13 +429,18 @@ export class TVUIPlugin extends BaseUIPlugin {
 			.appendTo(leftSide)
 			.get();
 
-		this.createTvButton(
-			buttonContainer,
-			'play',
-			null,
-			this.player.play,
-			this.buttons.play,
-		);
+        this.createTvButton(
+            buttonContainer,
+            'play',
+            null,
+            () => {
+                this.closePreScreen();
+                this.closeEpisodeScreen();
+                this.closeLanguageScreen();
+                this.player.play().then();
+            },
+            this.buttons.play
+        );
 
 		this.createTvButton(
 			buttonContainer,
@@ -1624,7 +1632,7 @@ export class TVUIPlugin extends BaseUIPlugin {
 				fallbackText.textContent = breakLogoTitle(
 					this.player.playlistItem()?.show ?? '',
 				);
-				fallbackText.style.fontSize = `calc(110px / ${fallbackText.innerText.length} + 3ch)`;
+				fallbackText.style.fontSize = `calc((200px / ${fallbackText.innerText.length}) + 2ch)`;
 
 				fallbackText.style.display = 'flex';
 				logo.style.display = 'none';

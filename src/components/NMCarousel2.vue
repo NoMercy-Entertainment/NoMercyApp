@@ -11,8 +11,6 @@ import { scrollContainerElement } from '@/store/ui.ts';
 import { showBackdrops, useOverlayCarouselButtons } from '@/store/preferences.ts';
 import { scrollCenter } from '@/lib/utils.ts';
 
-import OptimizedIcon from '@/components/OptimizedIcon.vue';
-
 const props = defineProps({
 	title: {
 		type: String,
@@ -154,7 +152,7 @@ function scrollToCenter() {
 					tabindex="1"
 				>
 					<span class="leading-none pt-0.5">{{ more_link_text }}</span>
-					<OptimizedIcon class-name="w-6 mt-1" icon="chevronRight" />
+					<MoooomIcon class-name="w-6 mt-1" icon="chevronRight" />
 				</RouterLink>
 			</div>
 

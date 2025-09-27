@@ -6,7 +6,7 @@ import TvCard from '@/views/Base/Home/components/TvCard.vue';
 
 const props = defineProps({
 	carousel: {
-		type: Object,
+		type: Object as PropType<{ title: string; props: { items: any[] } }>,
 		required: true,
 	},
 	scrollToCenter: {
@@ -83,15 +83,15 @@ onMounted(() => {
 <template>
 	<div v-if="visible" class="flex flex-col gap-1 w-full">
 		<h3
-			v-if="carousel.props.title ?? carousel.title"
+			v-if="carousel.title"
 			class="text-lg font-bold text-slate-1 ml-2"
 		>
-			{{ carousel.props.title ?? carousel.title }}
+			{{ carousel.title }}
 		</h3>
 
 		<div
 			ref="carouselDiv"
-			:data-carousel="carousel.props.title ?? carousel.title"
+			:data-carousel="carousel.title"
 			class="flex flex-nowrap w-full p-1 snap-x snap-mandatory overflow-x-auto pointer-events-none scroll-mr-20"
 			tabindex="1"
 			@focus="focusCard"

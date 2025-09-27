@@ -5,7 +5,7 @@ import { computed } from 'vue';
 import type { GenreResponse } from '@/types/api/base/genre';
 
 import { genreColors } from '@/config/global';
-import OptimizedIcon from '@/components/OptimizedIcon.vue';
+import MoooomIcon from '@/components/Images/icons/MoooomIcon.vue';
 
 const props = defineProps({
 	data: {
@@ -66,7 +66,7 @@ const genreColor = computed(() => genreColors(props.data.title));
           background-blend-mode: normal, overlay, normal;
         "
 			>
-				<OptimizedIcon :icon="genreColor.icon" class-name="w-20" />
+				<MoooomIcon :icon="genreColor.icon" class-name="w-20" />
 			</div>
 		</div>
 		<div

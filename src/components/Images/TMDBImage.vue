@@ -242,7 +242,6 @@ function onError(e: Event) {
 			<!--      <source :srcset="`${serverImageUrl}?width=${size ? (size * 2) : null}&type=png&aspect_ratio=${aspectRatio} 1x`" -->
 			<!--              type="image/png"/> -->
 			<img
-				v-once
 				:alt="`tmdb image for ${title ?? 'image'}`"
 				:class="{
 					'aspect-poster w-available h-available': aspect === 'poster',
@@ -250,8 +249,7 @@ function onError(e: Event) {
 					'w-auto !h-inherit': aspect === null,
 					'object-fit w-auto h-available': type === 'logo',
 					'object-cover object-top': type === 'image',
-					'[filter:drop-shadow(0px_0px_6px_black)_drop-shadow(0px_0px_6px_black)_drop-shadow(0px_0px_6px_black)]':
-						shouldDarken,
+					'[filter:drop-shadow(0px_0px_6px_black)_drop-shadow(0px_0px_6px_black)_drop-shadow(0px_0px_6px_black)]': shouldDarken,
 					[`${widthClass}`]: true,
 					[`${className}`]: true,
 				}"

@@ -21,19 +21,19 @@ defineProps({
 
 <template>
 	<RouterLink
-		v-if="item.props.data"
-		:data-card="item.props.data"
+		v-if="item.data"
+		:data-card="item.data"
 		:index="index"
 		:to="
-			item.props.data.link.includes('watch')
-				? item.props.data.link
-				: `${item.props.data.link}/watch`
+			item.data.link.includes('watch')
+				? item.data.link
+				: `${item.data.link}/watch`
 		"
 		class="flex flex-col justify-end relative items-center flex-grow-0 flex-shrink-0 w-full h-auto aspect-poster overflow-hidden rounded bg-cover bg-no-repeat bg-center focus-visible:ring-2 focus-visible:ring-white snap-center pointer-events-auto mr-3 last:mr-0"
 		@focus="scrollToCenter"
 	>
 		<img
-			:src="`${currentServer?.serverBaseUrl}/images/original${item.props.data.poster}?width=300`"
+			:src="`${currentServer?.serverBaseUrl}/images/original${item.data.poster}?width=300`"
 			alt=""
 			class="w-full h-auto aspect-poster object-cover object-center absolute inset-0"
 			loading="lazy"
@@ -53,12 +53,12 @@ defineProps({
 			<p
 				class="self-stretch flex-grow-0 flex-shrink-0 w-full text-3xs font-bold text-left text-slate-11 dark:text-slate-11"
 			>
-				{{ item.props.data.title }}
+				{{ item.data.title }}
 			</p>
 			<p
 				class="self-stretch flex-grow-0 flex-shrink-0 w-full text-[8px] text-left text-[#eff7ff]/[0.62]"
 			>
-				{{ item.props.data.year }}
+				{{ item.data.year }}
 			</p>
 		</div>
 	</RouterLink>

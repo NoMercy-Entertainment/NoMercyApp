@@ -15,10 +15,10 @@ import DropdownMenu from '@/Layout/Desktop/components/Menus/DropdownMenu.vue';
 import ProfileMenuServerSection from '@/Layout/Desktop/components/Menus/ProfileMenuServerSection.vue';
 
 import NoMercyAvatar from '@/components/Images/NoMercyAvatar.vue';
-import OptimizedIcon from '@/components/OptimizedIcon.vue';
 import Toggle from '@/components/Forms/Toggle.vue';
 import DropdownLink from '@/Layout/Desktop/components/Menus/DropdownLink.vue';
 import AppLogoSquare from '@/components/Images/icons/AppLogoSquare.vue';
+import MoooomIcon from '@/components/Images/icons/MoooomIcon.vue';
 
 defineProps({
 	direction: {
@@ -112,7 +112,7 @@ function handleSelectServer() {
 								tabindex="-1"
 								@click="scheme = scheme === 'light' ? 'dark' : 'light'"
 							>
-								<OptimizedIcon class-name="" icon="moonDiagonal" />
+								<MoooomIcon class-name="" icon="moonDiagonal" />
 								<span
 									class="relative flex flex-grow items-center justify-center gap-2 pl-2"
 								>
@@ -141,7 +141,7 @@ function handleSelectServer() {
 								tabindex="-1"
 								@click="tvModeOverride = !tvModeOverride"
 							>
-								<OptimizedIcon class-name="" icon="monitor" />
+								<MoooomIcon class-name="" icon="monitor" />
 								<span
 									class="relative flex flex-grow items-center justify-center gap-2 pl-2"
 								>

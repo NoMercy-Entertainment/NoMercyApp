@@ -24,7 +24,6 @@ import ListControlHeaderMoreMenu from '@/Layout/Desktop/components/Menus/ListCon
 
 import FloatingBackButton from '@/components/Buttons/FloatingBackButton.vue';
 import TMDBImage from '@/components/Images/TMDBImage.vue';
-import OptimizedIcon from '@/components/OptimizedIcon.vue';
 import MediaLikeButton from '@/components/Buttons/MediaLikeButton.vue';
 import SeasonCarousel from '@/components/Carousel/SeasonCarousel.vue';
 import PersonCarousel from '@/components/Carousel/PersonCarousel.vue';
@@ -344,8 +343,6 @@ const menuItems = computed<IMenuItem[]>(() => [
 ]);
 
 const shareData = computed<ShareOptions>(() => ({
-	title: data.value?.title ?? '',
-	text: data.value?.overview ?? '',
 	url: `https://app.nomercy.tv${route.fullPath}`,
 }));
 
@@ -451,7 +448,7 @@ const endTime = computed(() => {
 												<span
 													class="inset-0 grid group-hover/card:grid h-full w-full place-content-center group-focus-visible/card:bg-none group-hover/card:bg-none text-5xl text-transparent transition-transform duration-200 group-focus-visible/card:transitioning group-hover/card:text-surface-12"
 												>
-													<OptimizedIcon
+													<MoooomIcon
 														class-name="w-20 text-surface-12/70 dark:text-surface-12/80"
 														icon="play"
 													/>
@@ -496,7 +493,7 @@ const endTime = computed(() => {
 													class="bg-surface-6"
 													title="Play"
 												>
-													<OptimizedIcon
+													<MoooomIcon
 														class-name="w-6 text-surface-12/70  dark:text-surface-12/80"
 														icon="play"
 													/>
@@ -533,7 +530,7 @@ const endTime = computed(() => {
 																{{ $t("Watch options") }}
 															</span>
 
-															<OptimizedIcon
+															<MoooomIcon
 																class-name="w-6"
 																icon="chevronDown"
 															/>
@@ -572,7 +569,7 @@ const endTime = computed(() => {
 														{{ $t("Not available") }}
 													</span>
 
-													<OptimizedIcon
+													<MoooomIcon
 														class-name="w-6"
 														icon="playUnavailable"
 													/>
@@ -583,7 +580,7 @@ const endTime = computed(() => {
 													title="Watch trailer"
 													@click="trailerState === true ? toggleTrailer($event) : null"
 												>
-													<OptimizedIcon
+													<MoooomIcon
 														:style="`color: ${
 															trailerState === true
 																? 'var(--color-green-8)'
@@ -599,7 +596,7 @@ const endTime = computed(() => {
 													title="Mark as watched"
 													@click="toggleWatched"
 												>
-													<OptimizedIcon
+													<MoooomIcon
 														class-name="w-6 text-surface-12/70  dark:text-surface-12/80"
 														icon="check"
 													/>

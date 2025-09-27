@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import { computed, onMounted, ref, Ref, toRaw, watch } from "vue";
 import { IonContent, IonPage } from "@ionic/vue";
 import { useQueryClient } from "@tanstack/vue-query";
@@ -195,8 +195,8 @@ const save = () => {
       <DashboardLayout
         :error="error"
         :gridStyle="2"
-        title="General"
         description=""
+        title="General"
       >
         <template v-slot:cta> </template>
 
@@ -210,10 +210,10 @@ const save = () => {
             <InputNumber
               id="internal_port"
               v-model="internal_port"
-              class="mb-4"
-              :useGrouping="false"
-              showButtons
               :min="2000"
+              :useGrouping="false"
+              class="mb-4"
+              showButtons
             />
           </div>
           <div class="flex flex-col gap-2">
@@ -221,10 +221,10 @@ const save = () => {
             <InputNumber
               id="external_port"
               v-model="external_port"
-              class="mb-4"
-              :useGrouping="false"
-              showButtons
               :min="2000"
+              :useGrouping="false"
+              class="mb-4"
+              showButtons
             />
           </div>
         </div>
@@ -252,10 +252,10 @@ const save = () => {
             <InputNumber
               id="encoder_workers"
               v-model="encoder_workers"
-              class="mb-4"
-              :useGrouping="false"
-              showButtons
               :min="0"
+              :useGrouping="false"
+              class="mb-4"
+              showButtons
             />
           </div>
           <div class="flex flex-col gap-2">
@@ -263,10 +263,10 @@ const save = () => {
             <InputNumber
               id="image_workers"
               v-model="image_workers"
-              class="mb-4"
-              :useGrouping="false"
-              showButtons
               :min="0"
+              :useGrouping="false"
+              class="mb-4"
+              showButtons
             />
           </div>
           <div class="flex flex-col gap-2">
@@ -274,10 +274,10 @@ const save = () => {
             <InputNumber
               id="queue_workers"
               v-model="queue_workers"
-              class="mb-4"
-              :useGrouping="false"
-              showButtons
               :min="0"
+              :useGrouping="false"
+              class="mb-4"
+              showButtons
             />
           </div>
         </div>
@@ -288,16 +288,16 @@ const save = () => {
               <label for="swagger">Open API / Swagger Ui</label>
               <a
                 v-if="swagger && currentServer?.serverBaseUrl"
-                target="_blank"
                 :aria-label="$t('Open API / Swagger Ui in a new tab')"
                 :href="currentServer?.serverBaseUrl"
                 class="flex gap-1 items-center underline underline-offset-4 h-4 text-sm"
+                target="_blank"
               >
                 <span>{{ $t("Open") }}</span>
-                <OptimizedIcon
-                  icon="shareSquare"
+                <MoooomIcon
                   className="size-4"
                   color="theme"
+                  icon="shareSquare"
                 />
               </a>
             </span>
@@ -310,12 +310,12 @@ const save = () => {
 
         <template v-slot:actions>
           <Button
-            type="submit"
             id="save"
             :disabled="!hasChanges"
-            color="theme"
             class="ml-auto"
+            color="theme"
             form="myForm"
+            type="submit"
             @click="save()"
           >
             {{ $t("Save") }}

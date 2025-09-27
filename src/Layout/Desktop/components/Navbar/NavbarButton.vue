@@ -4,8 +4,7 @@ import { computed } from 'vue';
 import { RouterLink } from 'vue-router';
 
 import type { MoooomIcons } from '@Icons/icons';
-
-import OptimizedIcon from '@/components/OptimizedIcon.vue';
+import MoooomIcon from '@/components/Images/icons/MoooomIcon.vue';
 
 const props = defineProps({
 	href: {
@@ -58,7 +57,7 @@ const styles = computed(() =>
 		<div
 			class="relative flex flex-shrink-0 flex-grow-0 flex-nowrap items-center justify-start gap-3 text-xs md:text-base"
 		>
-			<OptimizedIcon :icon="icon" class="!w-5 lg:!w-6" />
+			<MoooomIcon :icon="icon" class="!w-5 lg:!w-6" />
 			<p class="flex-shrink-0 flex-grow-0 text-base font-semibold">
 				{{ $t(name) }}
 			</p>

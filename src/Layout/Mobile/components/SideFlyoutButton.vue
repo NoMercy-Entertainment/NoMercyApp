@@ -2,7 +2,6 @@
 import type { PropType } from 'vue';
 
 import type { MoooomIcons } from '@Icons/icons';
-import OptimizedIcon from '@/components/OptimizedIcon.vue';
 
 defineProps({
 	title: {
@@ -49,7 +48,7 @@ defineProps({
 		@click="onclick"
 	>
 		<div class="w-1 flex-shrink-0 flex-grow-0 h-3.5" />
-		<OptimizedIcon
+		<MoooomIcon
 			:icon="icon"
 			class-name="relative h-6 w-6 flex-shrink-0 flex-grow-0"
 		/>
@@ -80,7 +79,7 @@ defineProps({
 		@click="onclick"
 	>
 		<div class="w-1 flex-shrink-0 flex-grow-0 h-3.5" />
-		<OptimizedIcon
+		<MoooomIcon
 			:icon="icon"
 			class-name="relative h-6 w-6 flex-shrink-0 flex-grow-0"
 		/>

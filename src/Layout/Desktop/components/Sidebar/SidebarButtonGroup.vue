@@ -3,8 +3,8 @@ import type { PropType } from 'vue';
 import { computed, ref } from 'vue';
 
 import type { MoooomIcons } from '@Icons/icons';
-import OptimizedIcon from '@/components/OptimizedIcon.vue';
 import sidebar from '@/store/sidebar';
+import MoooomIcon from '@/components/Images/icons/MoooomIcon.vue';
 
 defineProps({
 	title: {
@@ -42,13 +42,13 @@ const classes = computed(
 			class="relative h-10 flex-shrink-0 flex-grow-0 items-center justify-start gap-3 self-stretch overflow-hidden rounded-md px-3 py-2 transition-transform duration-200 group hover:bg-surface-2/60"
 			@click="toggle"
 		>
-			<OptimizedIcon v-if="!!icon" :icon="icon!" class="" />
+			<MoooomIcon v-if="!!icon" :icon="icon!" class="" />
 			<span
 				class="relative flex flex-shrink-0 flex-grow items-center justify-start text-sm font-semibold"
 			>
 				{{ $t(title) }}
 			</span>
-			<OptimizedIcon
+			<MoooomIcon
 				:class="`transition-transform duration-200 ${
 					open ? 'rotate-90' : 'rotate-0'
 				}`"

@@ -8,7 +8,6 @@ import { user } from '@/store/user';
 import NotificationMenu from '@/Layout/Desktop/components/Menus/NotificationMenu.vue';
 import ProfileMenu from '@/Layout/Desktop/components/Menus/ProfileMenu.vue';
 
-import OptimizedIcon from '@/components/OptimizedIcon.vue';
 import AppLogo from '@/components/Images/icons/AppLogo.vue';
 import NavbarButton from './NavbarButton.vue';
 import { hasMusicLibrary, isHomeRoute, isLibraryRoute, isMusicRoute, searchUrl } from '@/store/routeState';
@@ -16,6 +15,7 @@ import { currentServer } from '@/store/currentServer';
 import libraries from '@/store/Libraries.ts';
 
 import MessagesMenu from '@/Layout/Desktop/components/Menus/MessagesMenu.vue';
+import MoooomIcon from '@/components/Images/icons/MoooomIcon.vue';
 
 const shouldShowLibraryLinks = computed(() => !!currentServer.value && (libraries.value?.length ?? 0) > 0);
 </script>
@@ -106,7 +106,7 @@ const shouldShowLibraryLinks = computed(() => !!currentServer.value && (librarie
 						aria-label="Search"
 						class="relative my-1 flex flex-shrink-0 flex-grow-0 items-start justify-start gap-2 overflow-hidden rounded-md p-2.5 hover:bg-focus/10 focus:bg-surface-1/2"
 					>
-						<OptimizedIcon class="w-6" icon="searchMagnifyingGlass" />
+						<MoooomIcon class="w-6" icon="searchMagnifyingGlass" />
 					</RouterLink>
 				</div>
 

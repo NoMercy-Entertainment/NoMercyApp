@@ -1,26 +1,17 @@
-<script setup lang="ts">
-import { onMounted, ref, watch } from "vue";
-import { IonPage, IonContent } from "@ionic/vue";
+<script lang="ts" setup>
+import {onMounted, ref, watch} from "vue";
+import {IonContent, IonPage} from "@ionic/vue";
 
 import useMounted from "@/hooks/useMounted";
-import {
-  connection,
-  castSocketIsConnected,
-  startCastSocket,
-  stopCastSocket,
-} from "@/lib/clients/castSocket";
+import {castSocketIsConnected, connection, startCastSocket, stopCastSocket,} from "@/lib/clients/castSocket";
 import SliderBar from "@/components/MusicPlayer/components/SliderBar.vue";
-import OptimizedIcon from "@/components/OptimizedIcon.vue";
 import MusicButton from "@/components/MusicPlayer/components/MusicButton.vue";
 import PlayerIcon from "@/components/Images/icons/PlayerIcon.vue";
-import {
-  TimeData,
-  PlaylistItem,
-  Track,
-} from "@nomercy-entertainment/nomercy-video-player/src/types";
-import { pad } from "@/lib/stringArray";
-import type { MediaPlaylist } from "hls.js";
+import {PlaylistItem, TimeData, Track,} from "@nomercy-entertainment/nomercy-video-player/src/types";
+import {pad} from "@/lib/stringArray";
+import type {MediaPlaylist} from "hls.js";
 import DashboardLayout from "@/Layout/Desktop/DashboardLayout.vue";
+import MoooomIcon from "@/components/Images/icons/MoooomIcon.vue";
 
 const receivers = ref<string[]>([]);
 const currentReceiver = ref<string>("");
@@ -556,16 +547,16 @@ const setPlaylistItem = (value: number) => {
           <Select
             v-model="currentReceiver"
             :options="receivers"
-            optionLabel=""
             class="w-1/3 min-w-96"
+            optionLabel=""
           />
 
           <div class="flex gap-4 w-1/3 min-w-96 items-center">
-            <Button @click="launch" id="launch">
+            <Button id="launch" @click="launch">
               {{ $t("Launch") }}
             </Button>
             <InputText v-model="input" class="w-full" />
-            <Button @click="castPlaylist(input)" id="cast">
+            <Button id="cast" @click="castPlaylist(input)">
               {{ $t("Cast") }}
             </Button>
           </div>
@@ -591,37 +582,37 @@ const setPlaylistItem = (value: number) => {
 
             <img
               v-if="playlistItem.image"
-              :src="playlistItem.image"
               :alt="playlistItem.title"
+              :src="playlistItem.image"
               class="aspect-video w-full h-auto"
             />
           </div>
 
           <div class="flex gap-4 w-1/3 min-w-96 items-center justify-center">
-            <MusicButton label="Previous" :onclick="handlePrevious">
+            <MusicButton :onclick="handlePrevious" label="Previous">
               <PlayerIcon
+                class="absolute h-7 w-7 inset-1.5"
                 icon="nmPreviousHalftone"
-                class="absolute h-7 w-7 inset-1.5"
               />
               <PlayerIcon
+                class="absolute h-7 w-7 opacity-0 group-hover/button:opacity-100 inset-1.5"
                 icon="nmPrevious"
-                class="absolute h-7 w-7 opacity-0 group-hover/button:opacity-100 inset-1.5"
               />
             </MusicButton>
 
-            <MusicButton label="Toggle Playback" :onclick="handlePlayback">
-              <PlayerIcon icon="nmPause" v-if="isPlaying" className="h-9 w-9" />
-              <PlayerIcon icon="nmPlay" v-else className="h-9 w-9" />
+            <MusicButton :onclick="handlePlayback" label="Toggle Playback">
+              <PlayerIcon v-if="isPlaying" className="h-9 w-9" icon="nmPause" />
+              <PlayerIcon v-else className="h-9 w-9" icon="nmPlay" />
             </MusicButton>
 
-            <MusicButton label="Next" :onclick="handleNext">
+            <MusicButton :onclick="handleNext" label="Next">
               <PlayerIcon
-                icon="nmNextHalftone"
                 class="absolute h-7 w-7 inset-1.5"
+                icon="nmNextHalftone"
               />
               <PlayerIcon
-                icon="nmNext"
                 class="absolute h-7 w-7 opacity-0 group-hover/button:opacity-100 inset-1.5"
+                icon="nmNext"
               />
             </MusicButton>
           </div>
@@ -629,44 +620,44 @@ const setPlaylistItem = (value: number) => {
           <div class="flex gap-4 w-1/3 min-w-96 items-center">
             <span class="font-mono">{{ currentTimeHuman }}</span>
             <SliderBar
+              :max="duration"
+              :min="0"
               :percentage="percentage"
               :value="currentTime"
-              :min="0"
-              :max="duration"
               @input="seek(Number(($event.target as HTMLInputElement).value))"
             />
             <span class="font-mono">{{ remainingTimeHuman }}</span>
           </div>
 
           <div class="flex gap-4 w-1/3 min-w-96 items-center">
-            <MusicButton label="Mute" :onclick="toggleMute">
-              <OptimizedIcon
-                icon="volumeMuted"
+            <MusicButton :onclick="toggleMute" label="Mute">
+              <MoooomIcon
                 v-if="isMuted"
                 class="h-6 w-6"
+                icon="volumeMuted"
               />
-              <OptimizedIcon
-                icon="volumeOne"
+              <MoooomIcon
                 v-else-if="volume === 0"
                 class="h-6 w-6"
+                icon="volumeOne"
               />
-              <OptimizedIcon
-                icon="volumeThree"
+              <MoooomIcon
                 v-else-if="volume > 50"
                 class="h-6 w-6"
+                icon="volumeThree"
               />
-              <OptimizedIcon icon="volumeTwo" v-else class="h-6 w-6" />
+              <MoooomIcon v-else class="h-6 w-6" icon="volumeTwo" />
             </MusicButton>
 
             <SliderBar
+              :max="100"
+              :min="0"
               :percentage="volume"
+              :step="1"
               :value="volume"
               @input="
                 volume = Number(($event.target as HTMLInputElement).value)
               "
-              :min="0"
-              :step="1"
-              :max="100"
             />
           </div>
 
@@ -674,24 +665,24 @@ const setPlaylistItem = (value: number) => {
             class="flex flex-col gap-4 w-1/3 min-w-96 items-center justify-center"
           >
             <div class="flex gap-4 w-full items-center justify-center">
-              <FloatLabel variant="on" class="w-full">
+              <FloatLabel class="w-full" variant="on">
                 <Select
-                  v-model="currentSubtitleTrack"
-                  :options="subtitleTracks"
                   id="subtitleTracks"
+                  v-model="currentSubtitleTrack"
                   :optionLabel="(track: Track) => `${track.language ? translations[track.language as 'off'] : ''} ${track.label?.toTitleCase()} ${track.file.endsWith('ass') ? ' - Styled' : ''}`"
+                  :options="subtitleTracks"
                   class="w-full"
                   @change="setSubtitle($event.value.id)"
                 />
                 <label for="subtitleTracks">Subtitle</label>
               </FloatLabel>
 
-              <FloatLabel variant="on" class="w-full">
+              <FloatLabel class="w-full" variant="on">
                 <Select
-                  v-model="currentAudioTrack"
-                  :options="audioTracks"
                   id="audioTracks"
+                  v-model="currentAudioTrack"
                   :optionLabel="(track: Track) => `${track.label}`"
+                  :options="audioTracks"
                   class="w-full"
                   @change="setAudio($event.value.id)"
                 />
@@ -699,12 +690,12 @@ const setPlaylistItem = (value: number) => {
               </FloatLabel>
             </div>
 
-            <FloatLabel variant="on" class="w-full">
+            <FloatLabel class="w-full" variant="on">
               <Select
-                v-model="playlistItem"
                 id="playlist"
-                :options="playlist"
+                v-model="playlistItem"
                 :optionLabel="(item: PlaylistItem) => `S${pad(item.season ?? 0, 2)}E${pad(item.episode ?? 0, 2)} - ${item.title}`"
+                :options="playlist"
                 class="w-full"
                 @change="setPlaylistItem(playlist.indexOf($event.value))"
               />

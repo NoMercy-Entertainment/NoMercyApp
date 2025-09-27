@@ -1,13 +1,9 @@
-import { computed, ref, watch } from 'vue';
 import type { Ref } from 'vue';
+import { computed, ref, watch } from 'vue';
 import { HubConnectionState } from '@microsoft/signalr/src/HubConnection';
 
 import SocketClient from '@/lib/clients/socketClient/SocketClient';
-import {
-	connect,
-	onConnect,
-	onDisconnect,
-} from '@/lib/clients/socketClient/events';
+import { connect } from '@/lib/clients/socketClient/events';
 import { currentServer } from '@/store/currentServer';
 import { user } from '@/store/user';
 
@@ -21,7 +17,6 @@ function connected() {
 	document.dispatchEvent(new Event('castHub-connected'));
 
 	if (castSocket.value?.connection) {
-		onConnect(castSocket.value?.connection);
 		connect(castSocket.value?.connection);
 	}
 }
@@ -101,12 +96,10 @@ export async function startCastSocket() {
 
 		castSocket.value?.connection?.onreconnecting((error: Error | undefined) => {
 			console.log('SignalR Disconnected.', error?.message);
-			onDisconnect(castSocket.value?.connection);
 			disconnected();
 		});
 		castSocket.value?.connection?.onreconnected(() => {
 			console.log('SignalR Reconnected.');
-			onConnect(castSocket.value?.connection);
 			connected();
 		});
 	}

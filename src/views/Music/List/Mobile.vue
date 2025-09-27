@@ -16,9 +16,9 @@ import ControlHeader from '@/views/Music/List/components/ControlHeader.vue';
 import ArtistHeader from '@/views/Music/List/components/ArtistHeader.vue';
 import SortHeader from '@/views/Music/List/components/SortHeader.vue';
 import TrackRow from '@/views/Music/List/components/TrackRow.vue';
-import OptimizedIcon from '@/components/OptimizedIcon.vue';
 import NotFound from '@/Layout/Desktop/components/NotFound.vue';
 import Marquee from '@/components/Marquee.vue';
+import MoooomIcon from '@/components/Images/icons/MoooomIcon.vue';
 
 const route = useRoute();
 
@@ -190,7 +190,7 @@ watch(container, () => {
 							class="z-30 flex h-10 w-11 items-center justify-center rounded-md"
 							@click="handleBack"
 						>
-							<OptimizedIcon icon="arrowLeft" />
+							<MoooomIcon icon="arrowLeft" />
 						</button>
 
 						<div

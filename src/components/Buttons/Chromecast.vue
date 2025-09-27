@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 // import {onMounted} from "vue";
 // import {Chromecast} from "@gameleap/capacitor-chromecast";
 
@@ -27,12 +27,12 @@
         <google-cast-launcher></google-cast-launcher>
 
         <button class="flex gap-2 items-center" @click="startCasting()" :disabled="isCasting">
-          <OptimizedIcon icon="chromecast" className="m-2 h-6 w-auto"/>
+          <MoooomIcon icon="chromecast" className="m-2 h-6 w-auto"/>
           <span>Start Casting</span>
         </button>
 
         <button class="flex gap-2 items-center" @click="stopCasting()" :disabled="!isCasting">
-          <OptimizedIcon icon="stop" className="m-2 h-6 w-auto"/>
+          <MoooomIcon icon="stop" className="m-2 h-6 w-auto"/>
           <span>Stop Casting</span>
         </button>
       </div>
@@ -40,7 +40,7 @@
       <div class="flex gap-4">
 
         <button class="flex gap-2 items-center" :onclick="() => Chromecast.requestSession()">
-          <OptimizedIcon icon="chromecast" className="m-2 h-6 w-auto"/>
+          <MoooomIcon icon="chromecast" className="m-2 h-6 w-auto"/>
           <span>Start Casting</span>
         </button>
         <button class="flex gap-2 items-center" :onclick="() => Chromecast.loadMedia({
@@ -48,7 +48,7 @@
             type: 'video',
             customData: config,
         })">
-          <OptimizedIcon icon="play" className="m-2 h-6 w-auto"/>
+          <MoooomIcon icon="play" className="m-2 h-6 w-auto"/>
         </button>
       </div>
     </div>

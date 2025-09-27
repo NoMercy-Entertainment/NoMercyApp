@@ -5,6 +5,7 @@ import type { ContinueWatching, HomeItem } from '@/types/api/base/home';
 
 // import ContentRating from '@/components/Images/ContentRating.vue';
 import TMDBImage from '@/components/Images/TMDBImage.vue';
+import { breakTitle2 } from '@/lib/stringArray.ts';
 
 defineProps({
 	selected: {
@@ -51,9 +52,9 @@ defineProps({
 				<div
 					class="flex flex-col justify-start items-start w-full relative gap-0"
 				>
-					<p class="self-stretch w-full text-xl text-left mt-2">
-						{{ selected?.title }}
-					</p>
+					<div class="self-stretch w-full text-xl text-left mt-2 flex flex-col"
+						v-html="breakTitle2(selected?.title || '', 'text-lg')"
+					/>
 				</div>
 				<div class="line-clamp-4 text-sm -mt-4">
 					{{ selected?.overview }}

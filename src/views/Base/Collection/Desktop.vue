@@ -15,7 +15,6 @@ import { convertToHumanReact } from '@/lib/dateTime';
 import ScrollContainer from '@/Layout/Desktop/components/ScrollContainer.vue';
 import FloatingBackButton from '@/components/Buttons/FloatingBackButton.vue';
 import GenrePill from '@/components/Buttons/GenrePill.vue';
-import OptimizedIcon from '@/components/OptimizedIcon.vue';
 import MediaLikeButton from '@/components/Buttons/MediaLikeButton.vue';
 import { showBackdrops } from '@/store/preferences';
 import MediaCard from '@/components/NMCard.vue';
@@ -30,6 +29,7 @@ import ImageCarousel from '@/components/Carousel/ImageCarousel.vue';
 import { buttonClasses } from '@/config/global.ts';
 import ListControlHeaderMoreMenu from '@/Layout/Desktop/components/Menus/ListControlHeaderMoreMenu.vue';
 import { MenuButton } from '@headlessui/vue';
+import MoooomIcon from '@/components/Images/icons/MoooomIcon.vue';
 
 const { t } = useTranslation();
 const route = useRoute();
@@ -94,8 +94,6 @@ onUnmounted(() => {
 });
 
 const shareData = computed<ShareOptions>(() => ({
-	title: data.value?.title ?? '',
-	text: data.value?.overview ?? '',
 	url: `https://app.nomercy.tv${route.fullPath}`,
 }));
 
@@ -234,7 +232,7 @@ const yearSpan = computed(() => `${collect(data.value?.collection).min('year')} 
 											:to="`/${data?.media_type}/${data?.id}/watch`"
 											class="!bg-surface-6/11"
 										>
-											<OptimizedIcon class-name="w-6" icon="play" />
+											<MoooomIcon class-name="w-6" icon="play" />
 
 											<div
 												class="absolute top-3 grid h-0 w-max flex-shrink-0 flex-grow-0 origin-bottom group-hover/play:grid-cols-1 items-center justify-start bg-black duration-200 grid-cols-[0fr] group-hover/play:h-[32.77px] transform-all left-[-31px] group-hover/play:top-[-38px] rounded-[5.46px]"
@@ -267,7 +265,7 @@ const yearSpan = computed(() => `${collect(data.value?.collection).min('year')} 
 													:class="buttonClasses"
 													class="!bg-surface-6/11"
 												>
-													<OptimizedIcon
+													<MoooomIcon
 														class-name="w-6"
 														icon="menuDotsVertical"
 													/>

@@ -15,10 +15,10 @@ import {
 } from '@/store/imageModal';
 import { pickPaletteColor } from '@/lib/colorHelper';
 import AppLogoSquare from '@/components/Images/icons/AppLogoSquare.vue';
-import OptimizedIcon from '@/components/OptimizedIcon.vue';
 import TMDBImage from '@/components/Images/TMDBImage.vue';
 import { cardMenu, trackContextMenuItems } from '@/store/contextMenuItems';
 import serverClient from '@/lib/clients/serverClient';
+import MoooomIcon from '@/components/Images/icons/MoooomIcon.vue';
 
 const showButton = ref(false);
 const src = ref<string | null>();
@@ -308,7 +308,7 @@ function onRightClick(e: MouseEvent) {
 					tabindex="-1"
 					@click="handleClose"
 				>
-					<OptimizedIcon class="h-5 w-5" icon="cross" />
+					<MoooomIcon class="h-5 w-5" icon="cross" />
 				</button>
 
 				<ContextMenu
@@ -328,10 +328,10 @@ function onRightClick(e: MouseEvent) {
 					@contextmenu="onRightClick($event)"
 				>
 					<div
-						class="absolute left-0 z-0 p-4 bottom:2 sm:bottom-6 sm:left-8 tv:bottom-4 tv:left-6"
+						class="absolute left-0 z-0 p-4 bottom:2 sm:bottom-6 sm:left-8 tv:bottom-2 tv:left-6"
 					>
 						<div
-							class="flex h-inherit w-full select-none items-start justify-start bg-cover min-h-[20vh] max-h-[20vh] min-w-[30vw] max-w-[30vw] tv:min-h-[15vh] tv:max-h-[15vh] tv:min-w-[30vw] tv:max-w-[30vw]"
+							class="flex h-inherit w-full select-none items-start justify-start bg-cover min-h-[20vh] max-h-[20vh] min-w-[30vw] max-w-[30vw]"
 						>
 							<TMDBImage
 								v-if="logoSrc"
@@ -359,7 +359,7 @@ function onRightClick(e: MouseEvent) {
 						style="opacity: 0.3"
 						tabindex="-1"
 					>
-						<OptimizedIcon class="h-8 w-8/10" icon="arrowLeft" />
+						<MoooomIcon class="h-8 w-8/10" icon="arrowLeft" />
 					</button>
 					<button
 						aria-hidden="true"
@@ -368,7 +368,7 @@ function onRightClick(e: MouseEvent) {
 						style="opacity: 0.3"
 						tabindex="-1"
 					>
-						<OptimizedIcon class="h-8 w-8/10" icon="arrowRight" />
+						<MoooomIcon class="h-8 w-8/10" icon="arrowRight" />
 					</button>
 				</div>
 				<div

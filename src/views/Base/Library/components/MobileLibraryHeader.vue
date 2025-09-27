@@ -5,8 +5,7 @@ import { IonLabel, IonSegment, IonSegmentButton, IonToolbar } from '@ionic/vue';
 
 import router from '@/router';
 import libraries from '@/store/Libraries';
-
-import OptimizedIcon from '@/components/OptimizedIcon.vue';
+import MoooomIcon from '@/components/Images/icons/MoooomIcon.vue';
 
 const shownRoutes = ['/libraries/', '/genre'];
 const endsWithRoutes = ['/collection', '/specials', '/person'];
@@ -38,7 +37,7 @@ router.afterEach((to) => {
 					layout="icon-start"
 					@click="() => router.push(`/libraries/${library.id}`)"
 				>
-					<OptimizedIcon class="mr-2" icon="folder" />
+					<MoooomIcon class="mr-2" icon="folder" />
 					<IonLabel>{{ library.title }}</IonLabel>
 				</IonSegmentButton>
 			</template>
@@ -52,7 +51,7 @@ router.afterEach((to) => {
 				value="/collection"
 				@click="() => router.push('/collection')"
 			>
-				<OptimizedIcon class="mr-2" icon="collection1" />
+				<MoooomIcon class="mr-2" icon="collection1" />
 				<IonLabel>{{ $t("Collections") }}</IonLabel>
 			</IonSegmentButton>
 
@@ -64,7 +63,7 @@ router.afterEach((to) => {
 				value="/specials"
 				@click="() => router.push('/specials')"
 			>
-				<OptimizedIcon class="mr-2" icon="sparkles" />
+				<MoooomIcon class="mr-2" icon="sparkles" />
 				<IonLabel>{{ $t("Specials") }}</IonLabel>
 			</IonSegmentButton>
 
@@ -76,7 +75,7 @@ router.afterEach((to) => {
 				value="/genre"
 				@click="() => router.push('/genre')"
 			>
-				<OptimizedIcon class="mr-2" icon="witchHat" />
+				<MoooomIcon class="mr-2" icon="witchHat" />
 				<IonLabel>{{ $t("Genres") }}</IonLabel>
 			</IonSegmentButton>
 
@@ -88,7 +87,7 @@ router.afterEach((to) => {
 				value="/person"
 				@click="() => router.push('/person')"
 			>
-				<OptimizedIcon class="mr-2" icon="user" />
+				<MoooomIcon class="mr-2" icon="user" />
 				<IonLabel>{{ $t("People") }}</IonLabel>
 			</IonSegmentButton>
 		</IonSegment>

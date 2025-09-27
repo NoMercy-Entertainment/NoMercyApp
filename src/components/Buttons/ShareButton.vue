@@ -1,13 +1,12 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import type { PropType } from 'vue';
 import { ref } from 'vue';
 import { useRoute } from 'vue-router';
-import { Share } from '@capacitor/share';
 import type { ShareOptions } from '@capacitor/share';
-
-import OptimizedIcon from '@/components/OptimizedIcon.vue';
+import { Share } from '@capacitor/share';
 import MusicButton from '@/components/MusicPlayer/components/MusicButton.vue';
 import { useTranslation } from 'i18next-vue';
+import MoooomIcon from '@/components/Images/icons/MoooomIcon.vue';
 
 const props = defineProps({
 	shareData: {
@@ -51,8 +50,8 @@ async function share() {
 
 <template>
 	<MusicButton :onclick="share" label="Share">
-		<OptimizedIcon v-if="isCopied" icon="shareSquare" class="" />
-		<OptimizedIcon v-else icon="shareSquare" class="" />
+		<MoooomIcon v-if="isCopied" class="" icon="shareSquare" />
+		<MoooomIcon v-else class="" icon="shareSquare" />
 	</MusicButton>
 </template>
 

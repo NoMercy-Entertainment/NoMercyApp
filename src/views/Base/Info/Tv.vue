@@ -16,8 +16,8 @@ import TMDBImage from '@/components/Images/TMDBImage.vue';
 import ImageCarousel from '@/components/Carousel/ImageCarousel.vue';
 import PersonCarousel from '@/components/Carousel/PersonCarousel.vue';
 import MediaCarousel from '@/components/Carousel/MediaCarousel.vue';
-import OptimizedIcon from '@/components/OptimizedIcon.vue';
 import ContentRating from '@/components/Images/ContentRating.vue';
+import MoooomIcon from '@/components/Images/icons/MoooomIcon.vue';
 
 const route = useRoute();
 const enabled = ref(false);
@@ -443,12 +443,12 @@ router.afterEach(() => {
 							<div
 								class="flex justify-start items-center flex-grow-0 flex-shrink-0 relative overflow-hidden gap-2 p-2 rounded-[30px] bg-black/[0.48] border border-black/2"
 							>
-								<OptimizedIcon class-name="w-5" icon="check" />
+								<MoooomIcon class-name="w-5" icon="check" />
 							</div>
 							<div
 								class="flex justify-start items-center flex-grow-0 flex-shrink-0 relative overflow-hidden gap-2 p-2 rounded-[30px] bg-black/[0.48] border border-black/2"
 							>
-								<OptimizedIcon class-name="w-5" icon="heartFilled" />
+								<MoooomIcon class-name="w-5" icon="heartFilled" />
 							</div>
 						</div>
 					</div>

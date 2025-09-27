@@ -2,8 +2,6 @@
 import type { PropType } from 'vue';
 import { Listbox, ListboxButton, ListboxLabel, ListboxOption, ListboxOptions } from '@headlessui/vue';
 
-import OptimizedIcon from '@/components/OptimizedIcon.vue';
-
 defineProps({
 	id: {
 		type: String,
@@ -104,12 +102,12 @@ const modelValue = defineModel<any>({
 						}"
 						class="absolute inset-y-0 right-0 flex h-auto items-center rounded-r-md min-h-auto focus-visible:outline-transparent"
 					>
-						<OptimizedIcon
+						<MoooomIcon
 							v-if="multiple"
 							class-name="w-5 ui-open:rotate-180 transition-transform duration-200"
 							icon="arrowSelect"
 						/>
-						<OptimizedIcon
+						<MoooomIcon
 							v-else
 							class-name="w-5 ui-open:rotate-180 transition-transform duration-200"
 							icon="chevronDown"
@@ -162,7 +160,7 @@ const modelValue = defineModel<any>({
 									}"
 									class="absolute right-0 flex items-center justify-center pr-4 data-[headlessui-state='disabled']:hidden"
 								>
-									<OptimizedIcon class-name="w-5" icon="check" />
+									<MoooomIcon class-name="w-5" icon="check" />
 								</span>
 							</li>
 						</ListboxOption>

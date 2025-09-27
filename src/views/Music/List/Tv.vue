@@ -17,7 +17,6 @@ import useServerClient from '@/lib/clients/useServerClient';
 import type { DisplayList } from '@/types/api/music/musicPlayer';
 
 import CoverImage from '@/components/MusicPlayer/components/CoverImage.vue';
-import OptimizedIcon from '@/components/OptimizedIcon.vue';
 import { breakTitle2 } from '@/lib/stringArray';
 import BigPlayButton from '@/components/Buttons/BigPlayButton.vue';
 import MusicButton from '@/components/MusicPlayer/components/MusicButton.vue';
@@ -359,7 +358,7 @@ function handleClick(song: PlaylistItem) {
 														label=""
 														tabindex="0"
 													>
-														<OptimizedIcon
+														<MoooomIcon
 															class="text-white"
 															icon="menuDotsHorizontal"
 														/>

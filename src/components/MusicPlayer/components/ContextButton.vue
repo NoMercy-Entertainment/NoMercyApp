@@ -1,10 +1,10 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import type { PropType } from 'vue';
 
 import type { PlaylistItem } from '@/types/musicPlayer';
 
 import MusicButton from './MusicButton.vue';
-import OptimizedIcon from '@/components/OptimizedIcon.vue';
+import MoooomIcon from '@/components/Images/icons/MoooomIcon.vue';
 
 defineProps({
 	data: {
@@ -28,10 +28,10 @@ function handleClick(e?: MouseEvent) {
 
 <template>
 	<MusicButton
-		label=""
 		:onclick="handleClick"
 		class="-outline-offset-1 focus:outline focus:outline-1 focus:outline-white"
+		label=""
 	>
-		<OptimizedIcon icon="menuDotsHorizontal" class="h-5 w-5" />
+		<MoooomIcon class="h-5 w-5" icon="menuDotsHorizontal" />
 	</MusicButton>
 </template>

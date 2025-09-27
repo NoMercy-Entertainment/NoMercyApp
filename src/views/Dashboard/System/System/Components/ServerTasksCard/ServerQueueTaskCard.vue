@@ -3,9 +3,9 @@ import type { PropType } from 'vue';
 import { ref, watch } from 'vue';
 
 import type { QueueResponse } from '@/types/api/dashboard/server';
-import OptimizedIcon from '@/components/OptimizedIcon.vue';
 import serverClient from '@/lib/clients/serverClient';
 import { Card } from 'primevue';
+import MoooomIcon from '@/components/Images/icons/MoooomIcon.vue';
 
 const props = defineProps({
 	data: {
@@ -52,7 +52,7 @@ watch(priority, (value) => {
 					class="float-right flex items-center justify-center gap-2 overflow-hidden rounded-lg bg-transparent w-10 -mt-1.5 -mr-1.5 aspect-square"
 					@click="deleteItem"
 				>
-					<OptimizedIcon
+					<MoooomIcon
 						class="relative h-5 w-5 flex-shrink-0 flex-grow-1"
 						icon="cross"
 					/>

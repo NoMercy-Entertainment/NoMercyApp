@@ -7,7 +7,6 @@ import { audioPlayer, currentSong, isPlaying, musicSize } from '@/store/audioPla
 
 import DropdownMenu from '@/Layout/Desktop/components/Menus/DropdownMenu.vue';
 
-import OptimizedIcon from '@/components/OptimizedIcon.vue';
 import EqSpinner from '@/components/Images/EqSpinner.vue';
 import CoverImage from '@/components/MusicPlayer/components/CoverImage.vue';
 import MediaLikeButton from '@/components/Buttons/MediaLikeButton.vue';
@@ -18,6 +17,7 @@ import { onTrackRowRightClick } from '@/store/contextMenuItems';
 import PlayerIcon from '@/components/Images/icons/PlayerIcon.vue';
 import { musicSocketConnection } from '@/store/musicSocket';
 import { user } from '@/store/user';
+import MoooomIcon from '@/components/Images/icons/MoooomIcon.vue';
 
 const props = defineProps({
 	data: {
@@ -155,7 +155,7 @@ function handleClick() {
 		<DropdownMenu direction="down">
 			<template #button>
 				<BannerButton class="mx-3" title="">
-					<OptimizedIcon class-name="relative h-5 w-5" icon="menuDotsVertical" />
+					<MoooomIcon class-name="relative h-5 w-5" icon="menuDotsVertical" />
 				</BannerButton>
 			</template>
 		</DropdownMenu>

@@ -13,7 +13,7 @@ import type { DisplayList } from '@/types/api/music/musicPlayer';
 import serverClient from '@/lib/clients/serverClient';
 
 import MusicButton from '@/components/MusicPlayer/components/MusicButton.vue';
-import OptimizedIcon from '@/components/OptimizedIcon.vue';
+import MoooomIcon from '@/components/Images/icons/MoooomIcon.vue';
 
 const props = defineProps({
 	data: {
@@ -67,7 +67,7 @@ function handleLike(e?: MouseEvent) {
 
 <template>
 	<MusicButton :no-background="noBackground" :onclick="handleLike" label="Favorite">
-		<OptimizedIcon
+		<MoooomIcon
 			:class="{
 				'heart': liked,
 				'opacity-0 ': !liked,
@@ -80,7 +80,7 @@ function handleLike(e?: MouseEvent) {
         color: rgb(from var(--color-theme-8, var(--color-red-8)) r g b);
 			"
 		/>
-		<OptimizedIcon
+		<MoooomIcon
 			v-if="!liked"
 			:class="{ className }"
 			class="absolute inset-2 transition-all duration-150"

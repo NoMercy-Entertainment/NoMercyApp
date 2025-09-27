@@ -7,11 +7,12 @@ import type { StatusResponse } from '@/types/api/base/library';
 
 import serverClient from '@/lib/clients/serverClient';
 
-import OptimizedIcon from '@/components/OptimizedIcon.vue';
-import MusicButton from './MusicButton.vue';
 import audioPlayer, { currentSong } from '@/store/audioPlayer';
 import { useToast } from 'primevue/usetoast';
 import { translate } from '@/lib/stringArray.ts';
+
+import MusicButton from './MusicButton.vue';
+import MoooomIcon from '@/components/Images/icons/MoooomIcon.vue';
 
 const props = defineProps({
 	data: {
@@ -83,7 +84,7 @@ function handleClick(e?: MouseEvent) {
 	>
 		<slot />
 
-		<OptimizedIcon
+		<MoooomIcon
 			v-if="data.favorite"
 			:class="className"
 			class="h-7 w-7"

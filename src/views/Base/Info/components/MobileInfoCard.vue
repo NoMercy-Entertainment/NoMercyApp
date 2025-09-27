@@ -15,10 +15,10 @@ import useServerClient from '@/lib/clients/useServerClient';
 
 import CardShadow from '@/components/Cards/CardShadow.vue';
 import MediaLikeButton from '@/components/Buttons/MediaLikeButton.vue';
-import OptimizedIcon from '@/components/OptimizedIcon.vue';
 import TMDBImage from '@/components/Images/TMDBImage.vue';
 import { poster } from '@/store/ui';
 import ShareButton from '@/components/Buttons/ShareButton.vue';
+import MoooomIcon from '@/components/Images/icons/MoooomIcon.vue';
 
 const props = defineProps({
 	data: {
@@ -68,8 +68,6 @@ const title = computed(() => {
 });
 
 const shareData = computed<ShareOptions>(() => ({
-	title: props.data?.title ?? '',
-	text: props.data?.overview ?? '',
 	url: `https://app.nomercy.tv${route.fullPath}`,
 }));
 </script>
@@ -160,7 +158,7 @@ const shareData = computed<ShareOptions>(() => ({
 			<div
 				class="flex justify-start items-center flex-grow-0 flex-shrink-0 relative overflow-hidden gap-2 p-2 rounded-3xl bg-black/[0.48] border border-black/2 w-10 h-10"
 			>
-				<OptimizedIcon class-name="w-6" icon="check" />
+				<MoooomIcon class-name="w-6" icon="check" />
 			</div>
 			<div
 				class="flex justify-start items-center flex-grow-0 flex-shrink-0 relative overflow-hidden gap-2 rounded-3xl bg-black/[0.48] border border-black/2"

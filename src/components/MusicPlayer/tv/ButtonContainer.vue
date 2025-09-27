@@ -8,7 +8,6 @@ import { closeFullPlayer, currentSong, musicSize } from '@/store/audioPlayer';
 
 import LyricsButton from '@/components/MusicPlayer/components/LyricsButton.vue';
 import MediaLikeButton from '@/components/Buttons/MediaLikeButton.vue';
-import OptimizedIcon from '@/components/OptimizedIcon.vue';
 
 import NextButton from '../components/NextButton.vue';
 import PlaybackButton from '../components/PlaybackButton.vue';
@@ -16,6 +15,7 @@ import PreviousButton from '../components/PreviousButton.vue';
 import RepeatButton from '../components/RepeatButton.vue';
 import ShuffleButton from '../components/ShuffleButton.vue';
 import MusicButton from '../components/MusicButton.vue';
+import MoooomIcon from '@/components/Images/icons/MoooomIcon.vue';
 
 defineProps({
 	color: {
@@ -98,7 +98,7 @@ function handleQueue(e?: MouseEvent) {
 				class="h-11 w-11 children:w-7 children:h-7 children:!fill-white"
 				label="Queue"
 			>
-				<OptimizedIcon class="h-11 w-11" icon="currentPlaylist" />
+				<MoooomIcon class="h-11 w-11" icon="currentPlaylist" />
 			</MusicButton>
 
 			<MusicButton
@@ -106,9 +106,9 @@ function handleQueue(e?: MouseEvent) {
 				class="h-11 w-11 children:w-7 children:h-7 children:!fill-white"
 				label="Dark mode"
 			>
-				<OptimizedIcon v-if="isDarkMode" class="h-11 w-11" icon="moon" />
+				<MoooomIcon v-if="isDarkMode" class="h-11 w-11" icon="moon" />
 
-				<OptimizedIcon v-else class="h-11 w-11" icon="sun" />
+				<MoooomIcon v-else class="h-11 w-11" icon="sun" />
 			</MusicButton>
 		</div>
 	</div>

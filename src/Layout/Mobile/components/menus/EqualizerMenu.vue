@@ -1,13 +1,9 @@
-<script setup lang="ts">
-import {
-	closeEqualizerMenu,
-	equalizerMenuOpen,
-	setEqualizerMenuOpen,
-} from '@/store/audioPlayer';
+<script lang="ts" setup>
+import { closeEqualizerMenu, equalizerMenuOpen, setEqualizerMenuOpen } from '@/store/audioPlayer';
 
 import BottomFlyout from '@/Layout/Mobile/components/BottomFlyout.vue';
-import OptimizedIcon from '@/components/OptimizedIcon.vue';
 import EqualizerPannel from '@/components/MusicPlayer/components/EqualizerPannel.vue';
+import MoooomIcon from '@/components/Images/icons/MoooomIcon.vue';
 
 function handleClose() {
 	setEqualizerMenuOpen(false);
@@ -17,9 +13,9 @@ function handleClose() {
 <template>
 	<Teleport to="body">
 		<BottomFlyout
-			:menu-open="equalizerMenuOpen"
-			:close-menu="closeEqualizerMenu"
 			:allow-swipe-to-close="false"
+			:close-menu="closeEqualizerMenu"
+			:menu-open="equalizerMenuOpen"
 		>
 			<div
 				id="equalizer"
@@ -28,7 +24,7 @@ function handleClose() {
 				<EqualizerPannel>
 					<template #button>
 						<button @click="handleClose()">
-							<OptimizedIcon icon="cross" class="w-6 h-6" />
+							<MoooomIcon class="w-6 h-6" icon="cross" />
 						</button>
 					</template>
 				</EqualizerPannel>

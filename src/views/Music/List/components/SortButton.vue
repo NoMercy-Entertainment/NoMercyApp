@@ -2,7 +2,6 @@
 import type { PropType } from 'vue';
 import { setSortOrder, setSortType, sortOrder, sortType } from '@/store/ui';
 import { SortOrder, SortType } from '@/types/musicPlayer';
-import OptimizedIcon from '@/components/OptimizedIcon.vue';
 
 defineProps({
 	name: {
@@ -64,31 +63,31 @@ function handleKeyup(e: KeyboardEvent) {
 
 <template>
 	<button
-		no-ring
-		class="relative cursor-pointer items-center focus-visible:underline focus-visible:underline-offset-2"
 		:onclick="() => handleSortChange(sortingType)"
 		:onkeyup="handleKeyup"
+		class="relative cursor-pointer items-center focus-visible:underline focus-visible:underline-offset-2"
+		no-ring
 	>
 		<span class="">
 			{{ $t(name) }}
 		</span>
-		<OptimizedIcon
+		<MoooomIcon
 			v-if="
 				sortOrder === SortOrder.asc
 					&& sortType === sortingType
 					&& sortType !== SortType.index
 			"
-			icon="chevronUp"
 			:class="`w-6 h-6 ${iconSpacer}`"
+			icon="chevronUp"
 		/>
-		<OptimizedIcon
+		<MoooomIcon
 			v-else-if="
 				sortOrder === SortOrder.desc
 					&& sortType === sortingType
 					&& sortType !== SortType.index
 			"
-			icon="chevronDown"
 			:class="`w-6 h-6 ${iconSpacer}`"
+			icon="chevronDown"
 		/>
 	</button>
 </template>

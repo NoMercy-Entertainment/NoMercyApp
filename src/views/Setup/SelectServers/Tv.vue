@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import { onMounted, onUnmounted, ref, watch } from 'vue';
 import { RouterLink } from 'vue-router';
 import { IonContent, IonPage, onIonViewWillEnter } from '@ionic/vue';
@@ -19,7 +19,6 @@ import { setCurrentServer } from '@/store/currentServer.ts';
 
 import ServerCard from '@/views/Setup/SelectServers/components/ServerCard.vue';
 import NoMercyAvatar from '@/components/Images/NoMercyAvatar.vue';
-import OptimizedIcon from '@/components/OptimizedIcon.vue';
 import { videoSocketConnection } from '@/store/videoSocket.ts';
 import { musicSocketConnection } from '@/store/musicSocket.ts';
 import { ripperSocketConnection } from '@/lib/clients/ripperSocket.ts';
@@ -96,7 +95,7 @@ watch(serverList, (value) => {
 					>
 						<div class="flex justify-start items-center relative gap-2.5" inert>
 							<div class="size-12 my-auto">
-								<NoMercyAvatar :user="user" :size="40" />
+								<NoMercyAvatar :size="40" :user="user" />
 							</div>
 							<p
 								class="w-48 text-base font-semibold text-left "
@@ -107,13 +106,13 @@ watch(serverList, (value) => {
 
 						<button
 							v-show="!isTv"
-							tabindex="0"
 							class="flex justify-center items-center ml-auto relative gap-1.5 pl-3 pr-4 py-2.5 h-10 opacity-40 rounded-full border-[1.5px] border-[#c4c7c5]"
+							tabindex="0"
 							@click="tvModeOverride = !tvModeOverride"
 						>
-							<OptimizedIcon
-								icon="doorOut"
+							<MoooomIcon
 								class=""
+								icon="doorOut"
 							/>
 							<span
 								class="flex-grow-0 flex-shrink-0 opacity-80 text-sm font-medium text-center text-[#e3e3e3]"
@@ -123,12 +122,12 @@ watch(serverList, (value) => {
 						</button>
 
 						<RouterLink
-							to="/logout"
 							class="flex justify-center items-center relative gap-1.5 pl-3 pr-4 py-2.5 h-10 opacity-40 rounded-full border-[1.5px] border-[#c4c7c5]"
+							to="/logout"
 						>
-							<OptimizedIcon
-								icon="doorOut"
+							<MoooomIcon
 								class=""
+								icon="doorOut"
 							/>
 							<span
 								class="flex-grow-0 flex-shrink-0 opacity-80 text-sm font-medium text-center text-[#e3e3e3]"
@@ -144,8 +143,8 @@ watch(serverList, (value) => {
 					>
 						<template v-for="server in servers" :key="server.id">
 							<ServerCard
-								:server="server"
 								:onclick="() => handleSelectServer(server)"
+								:server="server"
 							/>
 						</template>
 					</div>

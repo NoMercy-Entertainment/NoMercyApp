@@ -12,9 +12,9 @@ import DashboardLayout from '@/Layout/Desktop/DashboardLayout.vue';
 import useHubListener from '@/hooks/useHubListener';
 
 import DropdownMenu from '@/Layout/Desktop/components/Menus/DropdownMenu.vue';
-import OptimizedIcon from '@/components/OptimizedIcon.vue';
 import LogModal from '@/views/Dashboard/Advanced/Logs/components/LogModal.vue';
 import LogTypeSelector from '@/views/Dashboard/Advanced/Logs/components/LogTypeSelector.vue';
+import MoooomIcon from '@/components/Images/icons/MoooomIcon.vue';
 
 const selectedTypes = ref<LogType[]>([]);
 const selectedTypeNames = ref<string[]>([]);
@@ -153,7 +153,7 @@ function handleLevel(value: string) {
 									translate="translate-x-1/4"
 								>
 									<template #button>
-										<OptimizedIcon class-name="w-6" icon="chevronDown" />
+										<MoooomIcon class-name="w-6" icon="chevronDown" />
 									</template>
 									<template #default>
 										<div
@@ -193,7 +193,7 @@ function handleLevel(value: string) {
 									class="relative flex items-center justify-center gap-2 rounded-lg transition-colors duration-200 hover:bg-surface-5/6"
 								>
 									<template #button>
-										<OptimizedIcon class-name="w-6" icon="chevronDown" />
+										<MoooomIcon class-name="w-6" icon="chevronDown" />
 									</template>
 
 									<div

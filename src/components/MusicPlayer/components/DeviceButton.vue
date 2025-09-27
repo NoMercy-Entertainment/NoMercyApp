@@ -12,7 +12,6 @@ import { deviceId } from '@/store/deviceInfo';
 import { user } from '@/store/user';
 
 import MusicButton from './MusicButton.vue';
-import OptimizedIcon from '@/components/OptimizedIcon.vue';
 
 defineProps({
 	noName: {
@@ -42,12 +41,12 @@ const currentDevice = computed(() =>
 		data-target="devices"
 		label="Playing on this device"
 	>
-		<OptimizedIcon
+		<MoooomIcon
 			v-if="deviceMenuOpen"
 			class="h-6 w-6 text-focus"
 			icon="devices"
 		/>
-		<OptimizedIcon v-else class="h-6 w-6" icon="devices" />
+		<MoooomIcon v-else class="h-6 w-6" icon="devices" />
 		<p
 			v-if="!noName"
 			:data-size="musicSize"

@@ -7,7 +7,7 @@ import type { LogType } from '@/types/server';
 import { checkboxValue, groupBy } from '@/lib/stringArray';
 
 import DropdownMenu from '@/Layout/Desktop/components/Menus/DropdownMenu.vue';
-import OptimizedIcon from '@/components/OptimizedIcon.vue';
+import MoooomIcon from '@/components/Images/icons/MoooomIcon.vue';
 
 const props = defineProps({
 	refetch: {
@@ -94,7 +94,7 @@ function toggleGroup(group: LogType) {
 		class="relative flex items-center justify-center gap-2 rounded-lg transition-colors duration-200 hover:bg-surface-5/6"
 	>
 		<template #button>
-			<OptimizedIcon class-name="w-6" icon="chevronDown" />
+			<MoooomIcon class-name="w-6" icon="chevronDown" />
 		</template>
 
 		<div class="flex flex-col gap-2 overflow-auto py-2 max-h-[60vh]">

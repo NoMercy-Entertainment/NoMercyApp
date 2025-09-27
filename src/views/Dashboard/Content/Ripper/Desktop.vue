@@ -14,7 +14,6 @@ import ScrollContainer from '@/Layout/Desktop/components/ScrollContainer.vue';
 import RipperPlayer from '@/views/Dashboard/Content/Ripper/components/RipperPlayer.vue';
 import Button from '@/components/Button.vue';
 import { ripperSocketIsConnected } from '@/lib/clients/ripperSocket';
-import OptimizedIcon from '@/components/OptimizedIcon.vue';
 
 const form = ref<HTMLFormElement>();
 const locked = ref(true);
@@ -553,7 +552,7 @@ watch(discContents, async (value) => {
                           );
                         "
 											>
-												<OptimizedIcon
+												<MoooomIcon
 													class-name="w-6 h-6 text-gray-200 dark:text-gray-300 fill-focus"
 													icon="infoCircle"
 												/>

@@ -119,7 +119,7 @@ watch(servers, (value) => {
 		<IonContent :fullscreen="true">
 			<div
 				v-if="show && deviceResponse?.user_code && !hasToken"
-				class="flex h-screen w-screen flex-nowrap items-center justify-between gap-4 overflow-hidden p-24 text-slate-12 dark:text-slate-12 bg-surface-2 dark:bg-surface-1"
+				class="flex h-screen w-screen flex-nowrap items-center justify-between gap-4 overflow-hidden p-24 text-surface-12 bg-surface-2 dark:bg-surface-1"
 			>
 				<div class="flex w-2/3 flex-col gap-4 font-semibold">
 					<h1 class="text-3xl">

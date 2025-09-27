@@ -100,45 +100,43 @@ function requestToken() {
 
 export function refreshToken() {
 	return new Promise((resolve, reject) => {
-		setTimeout(async () => {
-			const refreshToken
-				= location.search.split('refreshToken=')?.[1]?.split('&')?.[0]
-					?? localStorage.getItem('refresh_token')
-					?? undefined;
+		const refreshToken
+			= location.search.split('refreshToken=')?.[1]?.split('&')?.[0]
+				?? localStorage.getItem('refresh_token')
+				?? undefined;
 
-			if (!refreshToken) {
-				return;
-			}
+		if (!refreshToken) {
+			throw new Error('No refresh token available');
+		}
 
-			cdnClient()
-				.post<TokenResponse, RefreshTokenRequestData>(
-					`${authBaseUrl}token`,
-					{
-						grant_type: 'refresh_token',
-						client_id: clientId,
-						client_secret: clientSecret,
-						refresh_token: refreshToken,
+		cdnClient()
+			.post<TokenResponse, RefreshTokenRequestData>(
+				`${authBaseUrl}token`,
+				{
+					grant_type: 'refresh_token',
+					client_id: clientId,
+					client_secret: clientSecret,
+					refresh_token: refreshToken,
+				},
+				{
+					headers: {
+						'Accept': 'application/json',
+						'Content-Type': 'application/x-www-form-urlencoded',
 					},
-					{
-						headers: {
-							'Accept': 'application/json',
-							'Content-Type': 'application/x-www-form-urlencoded',
-						},
-					},
-				)
-				.then((response) => {
-					storeTokens(response.data);
-					return resolve(response);
-				})
-				.catch((error) => {
-					console.error(error);
-					clearTokens();
-					sessionStorage.clear();
-					localStorage.clear();
-					location.reload();
-					return reject(error);
-				});
-		}, 1500);
+				},
+			)
+			.then((response) => {
+				storeTokens(response.data);
+				return resolve(response);
+			})
+			.catch((error) => {
+				console.error(error);
+				clearTokens();
+				sessionStorage.clear();
+				localStorage.clear();
+				location.reload();
+				return reject(error);
+			});
 	});
 }
 

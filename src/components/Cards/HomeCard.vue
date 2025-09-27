@@ -8,10 +8,10 @@ import { pickPaletteColor } from '@/lib/colorHelper';
 
 import TMDBImage from '@/components/Images/TMDBImage.vue';
 import MediaLikeButton from '@/components/Buttons/MediaLikeButton.vue';
-import OptimizedIcon from '@/components/OptimizedIcon.vue';
 import BannerButton from '@/components/Buttons/BannerButton.vue';
 import type { LibraryResponse } from '@/types/api/base/library';
 import { setColorPalette } from '@/store/ui';
+import MoooomIcon from '@/components/Images/icons/MoooomIcon.vue';
 
 const props = defineProps({
 	homeItem: {
@@ -130,7 +130,7 @@ function toggleWatched() {
 								class="group/play"
 								title="Play"
 							>
-								<OptimizedIcon class="w-7" icon="playbackSpeed" />
+								<MoooomIcon class="w-7" icon="playbackSpeed" />
 								<div
 									class="absolute top-3 grid h-0 w-max flex-shrink-0 flex-grow-0 origin-bottom group-hover/play:grid-cols-1 items-center justify-start gap-1 rounded-md duration-200 bg-surface-1 grid-cols-[0fr] group-hover/play:h-[32.77px] transform-all left-[-31px] group-hover/play:top-[-38px]"
 								>
@@ -146,7 +146,7 @@ function toggleWatched() {
 							</BannerButton>
 
 							<BannerButton title="Toggle watched" @click="toggleWatched">
-								<OptimizedIcon
+								<MoooomIcon
 									:stroke="
 										hasWatched ? 'var(--color-green-600) ' : 'currentColor'
 									"
@@ -161,7 +161,7 @@ function toggleWatched() {
 								:href="`/${homeItem?.link}`"
 								title="Info"
 							>
-								<OptimizedIcon class="w-7" icon="infoCircle" />
+								<MoooomIcon class="w-7" icon="infoCircle" />
 							</BannerButton>
 						</div>
 					</div>
@@ -178,7 +178,7 @@ function toggleWatched() {
 							class="flex h-10 w-1/2 items-center justify-between gap-2 whitespace-nowrap rounded-md pr-4 pl-3 text-black bg-surface-1 py-1.5"
 							title="Play"
 						>
-							<OptimizedIcon class-name="w-6" icon="playCircle" />
+							<MoooomIcon class-name="w-6" icon="playCircle" />
 							<span class="w-full whitespace-nowrap text-center">{{
 								$t("Play")
 							}}</span>
@@ -189,7 +189,7 @@ function toggleWatched() {
 							class="flex justify-center items-center relative gap-2 p-2 rounded-lg hover:bg-surface-5/6 transition-colors duration-200"
 							title="Info"
 						>
-							<OptimizedIcon class-name="w-6" icon="add" />
+							<MoooomIcon class-name="w-6" icon="add" />
 							<span class="w-full whitespace-nowrap text-center">
 								{{ $t("Info") }}
 							</span>
@@ -498,7 +498,7 @@ function toggleWatched() {
 						:to="`/${homeItem?.link}/watch`"
 						class="flex justify-center items-center flex-grow h-10 relative overflow-hidden gap-3 px-6 py-4 rounded-lg bg-[#fdfeff]/[0.93] text-black"
 					>
-						<OptimizedIcon
+						<MoooomIcon
 							class-name="w-6"
 							icon="play"
 							style="--fill-color: black"
@@ -513,7 +513,7 @@ function toggleWatched() {
 						class="flex justify-center items-center flex-grow h-10 relative overflow-hidden gap-3 px-6 py-4 rounded-lg bg-black/50 mix-blend-screen"
 						@click="toggleWatched"
 					>
-						<OptimizedIcon class-name="w-6" icon="addCircle" />
+						<MoooomIcon class-name="w-6" icon="addCircle" />
 						<p
 							class="flex-shrink-0 flex-grow-0 text-center font-medium text-[15px]"
 						>

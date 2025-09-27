@@ -14,7 +14,6 @@ import sidebar from '@/store/sidebar';
 import { SizeState } from '@/types/musicPlayer';
 import CoverImage from '@/components/MusicPlayer/components/CoverImage.vue';
 import EqSpinner from '@/components/Images/EqSpinner.vue';
-import OptimizedIcon from '@/components/OptimizedIcon.vue';
 import TrackLinks from '@/components/MusicPlayer/components/TrackLinks.vue';
 
 defineProps({
@@ -109,7 +108,7 @@ watch(musicSize, () => {
 
 						<EqSpinner v-if="isPlaying" :playing="isPlaying" />
 
-						<OptimizedIcon
+						<MoooomIcon
 							class="block h-6 w-6 group-hover:sm:block"
 							icon="play"
 						/>

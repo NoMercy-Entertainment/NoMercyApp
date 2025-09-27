@@ -6,7 +6,6 @@ import type { DirectoryTreeItem, DirectoryTreeResponse } from '@/types/api/dashb
 
 import serverClient from '@/lib/clients/serverClient';
 import ScrollContainer from '@/Layout/Desktop/components/ScrollContainer.vue';
-import OptimizedIcon from '@/components/OptimizedIcon.vue';
 
 const props = defineProps({
 	selected: {
@@ -102,7 +101,7 @@ onMounted(() => {
 					class="bg-surface-6/4 hover:bg-surface-2 border-t-0 border-b border-solid border-[rgba(34,34,34,0.9)] contain flex items-center text-current cursor-pointer overflow-hidden py-1 px-2 align-middle h-10 min-h-10 leading-6 select-none"
 					@click="handleGoUp"
 				>
-					<OptimizedIcon class="mt-1 h-5 w-5" icon="returnPackage" />
+					<MoooomIcon class="mt-1 h-5 w-5" icon="returnPackage" />
 					<span class="mr-auto !ml-7">...</span>
 				</div>
 				<div class="relative w-full h-auto">
@@ -112,7 +111,7 @@ onMounted(() => {
 						class="even:bg-surface-4 odd:bg-surface-2 even:hover:bg-surface-5 odd:hover:bg-surface-3 border-t-0 border-b border-solid border-[rgba(34,34,34,0.9)] contain flex items-center bg-transparent text-current cursor-pointer overflow-hidden py-1 px-2 align-middle h-10 leading-6"
 						@click="() => handleClick(folder)"
 					>
-						<OptimizedIcon class="h-5 w-5" icon="folder" />
+						<MoooomIcon class="h-5 w-5" icon="folder" />
 						<span class="mr-auto !ml-7 text-sm select-none">
 							{{ folder.path.replace(/[\\\/]/u, "") }}
 						</span>

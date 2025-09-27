@@ -23,7 +23,7 @@ jobs:
         uses: actions/checkout@v5
 
       - name: Set up Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v5
         with:
           node-version: 20
 
@@ -69,25 +69,25 @@ jobs:
           ./gradlew clean
           ./gradlew assembleDebug
 
-      # - name: Sign APK
-      #   env:
-      #     KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
-      #   run: |
-      #     echo "${{ secrets.ANDROID_KEYSTORE }}" > release-key.jks
-      #     jarsigner -verbose -sigalg SHA256withRSA -digestalg SHA-256 \
-      #       -keystore release-key.jks \
-      #       -storepass $KEYSTORE_PASSWORD \
-      #       android/app/build/outputs/apk/release/app-release-unsigned.apk alias_name
+      - name: Sign APK
+        env:
+          KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
+        run: |
+          echo "${{ secrets.ANDROID_KEYSTORE }}" > release-key.jks
+          jarsigner -verbose -sigalg SHA256withRSA -digestalg SHA-256 \
+            -keystore release-key.jks \
+            -storepass $KEYSTORE_PASSWORD \
+            android/app/build/outputs/apk/debug/app-debug.apk alias_name
 
-      # - name: Verify Signed APK
-      #   run: |
-      #     jarsigner -verify android/app/build/outputs/apk/release/app-release-unsigned.apk
+      - name: Verify Signed APK
+        run: |
+          jarsigner -verify android/app/build/outputs/apk/debug/app-debug.apk
 
-      # # Rename the Signed APK:
-      # - name: Rename Signed APK
-      #   run: |
-      #     mv android/app/build/outputs/apk/release/app-release-unsigned.apk \
-      #     android/app/build/outputs/apk/release/app-release.apk
+      # Rename the Signed APK:
+      - name: Rename Signed APK
+        run: |
+          mv android/app/build/outputs/apk/debug/app-debug.apk \
+          android/app/build/outputs/apk/release/app-release.apk
       
       # Create a GitHub release
       - name: Create Release
@@ -115,6 +115,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: android/app/build/outputs/apk/debug/app-debug.apk
+          asset_path: android/app/build/outputs/apk/release/app-release.apk
           asset_name: app-release-1.0.${{ github.run_number }}.apk
           asset_content_type: application/vnd.android.package-archive

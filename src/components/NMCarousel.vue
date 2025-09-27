@@ -9,11 +9,11 @@ import type {Component} from "@/types/config";
 import {isMobile} from "@/config/global";
 import {mappedEntries} from "@/lib/stringArray";
 import {Breakpoints, breakpoints, swiperConfig} from "@/lib/swiper-config";
-
-import OptimizedIcon from "@/components/OptimizedIcon.vue";
 import {scrollCenter} from "@/lib/utils";
 import {scrollContainerElement} from "@/store/ui";
 import {showBackdrops} from "@/store/preferences.ts";
+
+import MoooomIcon from "@/components/Images/icons/MoooomIcon.vue";
 
 const props = defineProps({
   title: {
@@ -238,7 +238,7 @@ const scrollToCenter = () => {
             class="text-base flex items-center ml-auto sm:ml-4 mr-2 sm:mr-auto"
         >
           <span class="leading-none pt-0.5">{{ more_link_text }}</span>
-          <OptimizedIcon className="w-6 mt-1" icon="chevronRight"/>
+          <MoooomIcon className="w-6 mt-1" icon="chevronRight"/>
         </RouterLink>
 
         <div
@@ -255,7 +255,7 @@ const scrollToCenter = () => {
               class="hidden sm:flex justify-center items-center p-1 rounded-lg bg-surface-5 active:scale-95 hover:bg-surface-6 transition-transform duration-200"
               tabindex="-1"
           >
-            <OptimizedIcon class="w-6" icon="chevronLeft"/>
+            <MoooomIcon class="w-6" icon="chevronLeft"/>
           </button>
 
           <button
@@ -268,7 +268,7 @@ const scrollToCenter = () => {
               class="hidden sm:flex justify-center items-center p-1 rounded-lg bg-surface-5 active:scale-95 hover:bg-surface-6 transition-transform duration-200"
               tabindex="-1"
           >
-            <OptimizedIcon
+            <MoooomIcon
                 v-if="hasScroll && !isLastSlide"
                 :class="{
                 'opacity-0': !nextButtonEnabled && isLastSlide,
@@ -276,7 +276,7 @@ const scrollToCenter = () => {
                 class="w-6"
                 icon="chevronRight"
             />
-            <OptimizedIcon
+            <MoooomIcon
                 v-if="hasScroll && isLastSlide"
                 :class="{
                 'opacity-0': !isLastSlide,

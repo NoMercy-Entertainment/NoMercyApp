@@ -3,8 +3,7 @@ import { watch } from 'vue';
 import { useToggle } from '@vueuse/core';
 
 import { setShowBackdrops, showBackdrops } from '@/store/preferences';
-
-import OptimizedIcon from '@/components/OptimizedIcon.vue';
+import MoooomIcon from '@/components/Images/icons/MoooomIcon.vue';
 
 const [value] = useToggle(showBackdrops.value);
 
@@ -32,7 +31,7 @@ watch(value, (newVal) => {
 				@click="() => (value = false)"
 			>
 				<span class="flex h-5 w-5 items-center">
-					<OptimizedIcon class="h-5 w-5" icon="portrait" />
+					<MoooomIcon class="h-5 w-5" icon="portrait" />
 				</span>
 				<span>Poster</span>
 			</button>
@@ -41,7 +40,7 @@ watch(value, (newVal) => {
 				@click="() => (value = true)"
 			>
 				<span class="flex h-5 w-5 items-center">
-					<OptimizedIcon class="h-5 w-5" icon="landscape" />
+					<MoooomIcon class="h-5 w-5" icon="landscape" />
 				</span>
 				<span>Backdrop</span>
 			</button>

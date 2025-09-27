@@ -4,10 +4,10 @@ import VueMarkdown from 'vue-markdown-render';
 
 import type { Message, User } from '@/types/auth';
 import NoMercyAvatar from '@/components/Images/NoMercyAvatar.vue';
-import OptimizedIcon from '@/components/OptimizedIcon.vue';
 import KeepCounting from '@/components/KeepCounting.vue';
 import { removeNotification } from '@/store/notifications';
 import { removeMessage } from '@/store/messages.ts';
+import MoooomIcon from '@/components/Images/icons/MoooomIcon.vue';
 
 const props = defineProps({
 	data: {
@@ -58,27 +58,27 @@ function handleUpdateAccept() {
 			:user="data.from as User"
 			class="w-10 min-w-10"
 		/>
-		<OptimizedIcon
+		<MoooomIcon
 			v-else-if="data.type === 'update'"
 			class-name="w-10 p-2.5 text-focus"
 			icon="download"
 		/>
-		<OptimizedIcon
+		<MoooomIcon
 			v-else-if="data.type === 'notice' && data.from === 'System'"
 			class-name="w-10 p-2.5"
 			icon="wrench"
 		/>
-		<OptimizedIcon
+		<MoooomIcon
 			v-else-if="data.type === 'notice'"
 			class-name="w-10 p-2.5"
 			icon="infoCircle"
 		/>
-		<OptimizedIcon
+		<MoooomIcon
 			v-else-if="data.type === 'event'"
 			class-name="w-10 p-2.5"
 			icon="wrench"
 		/>
-		<OptimizedIcon
+		<MoooomIcon
 			v-else-if="data.type === 'message'"
 			class-name="w-10 p-2.5"
 			icon="emailReceived"
@@ -123,7 +123,7 @@ function handleUpdateAccept() {
 
 		<!-- Regular close button for non-update notifications -->
 		<button v-if="data.type !== 'update'" @click="handleClick">
-			<OptimizedIcon class-name="w-5" icon="cross" />
+			<MoooomIcon class-name="w-5" icon="cross" />
 		</button>
 	</div>
 </template>

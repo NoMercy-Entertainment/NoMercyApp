@@ -23,12 +23,12 @@ import LyricsOverlay from '@/Layout/Desktop/components/Overlays/LyricsOverlay.vu
 import MusicButton from '@/components/MusicPlayer/components/MusicButton.vue';
 import ProgressBarContainer from '@/components/MusicPlayer/components/ProgressBarContainer.vue';
 import CoverImage from '@/components/MusicPlayer/components/CoverImage.vue';
-import OptimizedIcon from '@/components/OptimizedIcon.vue';
 import ChristmasSnow from '@/components/Seasonal/Christmas/ChristmasSnow.vue';
 
 import TopRow from '../mobile/TopRow.vue';
 import TrackRow from '../mobile/TrackRow.vue';
 import ButtonContainer from '../mobile/ButtonContainer.vue';
+import MoooomIcon from '@/components/Images/icons/MoooomIcon.vue';
 
 const lyricsSize = ref<'small' | 'full'>('small');
 const content = ref<VueDivElement>();
@@ -202,12 +202,12 @@ async function onWillDismiss() {
 				>
 					<span>{{ $t("Lyrics") }}</span>
 					<MusicButton :onclick="handleExpand" class="ml-auto" label="expand">
-						<OptimizedIcon
+						<MoooomIcon
 							v-if="lyricsSize === 'full'"
 							class="h-5 w-5"
 							icon="arrowExitFullscreen"
 						/>
-						<OptimizedIcon v-else class="h-5 w-5" icon="arrowEnterFullscreen" />
+						<MoooomIcon v-else class="h-5 w-5" icon="arrowEnterFullscreen" />
 					</MusicButton>
 				</div>
 				<div

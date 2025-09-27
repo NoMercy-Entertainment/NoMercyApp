@@ -23,6 +23,7 @@ import CoverImage from '@/components/MusicPlayer/components/CoverImage.vue';
 import ButtonContainer from './ButtonContainer.vue';
 import { currentServer } from '@/store/currentServer';
 import { pickPaletteColor } from '@/lib/colorHelper';
+import router from '@/router';
 
 defineProps({
 	data: {
@@ -113,7 +114,7 @@ function backButton() {
 		setMusicSize(SizeState.compact);
 	}
 	else {
-		window.history.back();
+		router.back();
 	}
 }
 

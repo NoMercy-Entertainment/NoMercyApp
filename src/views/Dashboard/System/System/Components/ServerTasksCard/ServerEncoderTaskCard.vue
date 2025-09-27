@@ -6,9 +6,9 @@ import type { ServerEncoderProgress } from '@/types/api/dashboard/server';
 
 import serverClient from '@/lib/clients/serverClient';
 import { currentServer } from '@/store/currentServer';
-import OptimizedIcon from '@/components/OptimizedIcon.vue';
 import { user } from '@/store/user';
 import { Card } from 'primevue';
+import MoooomIcon from '@/components/Images/icons/MoooomIcon.vue';
 
 const props = defineProps({
 	data: {
@@ -127,12 +127,12 @@ function toggleRunning() {
 						<div
 							class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-[10px]"
 						>
-							<OptimizedIcon
+							<MoooomIcon
 								v-if="status === 'running'"
 								class="w-10"
 								icon="pause"
 							/>
-							<OptimizedIcon v-else class="w-10" icon="play" />
+							<MoooomIcon v-else class="w-10" icon="play" />
 
 						<!--                        <span class="group-hover/progress:hidden text-right font-bold monospace"> -->
 						<!--                            {{ Math.floor(data?.progress ?? 0) }}% -->
@@ -142,11 +142,11 @@ function toggleRunning() {
 					<div
 						class="absolute z-10 flex items-end justify-start left-[3%] bottom-[3%] gap-[2%]"
 					>
-						<OptimizedIcon v-if="data?.has_gpu" class-name="w-[15%]" icon="gpu" />
-						<OptimizedIcon v-else class-name="w-[15%]" icon="cpu" />
+						<MoooomIcon v-if="data?.has_gpu" class-name="w-[15%]" icon="gpu" />
+						<MoooomIcon v-else class-name="w-[15%]" icon="cpu" />
 
-						<OptimizedIcon v-if="data?.is_hdr" class-name="w-[15%]" icon="hdr" />
-						<OptimizedIcon v-else class-name="w-[15%]" icon="hdrOff" />
+						<MoooomIcon v-if="data?.is_hdr" class-name="w-[15%]" icon="hdr" />
+						<MoooomIcon v-else class-name="w-[15%]" icon="hdrOff" />
 					</div>
 
 					<div
@@ -163,7 +163,7 @@ function toggleRunning() {
 				<div class="grid grid-cols-4 gap-2 flex-1">
 					<div class="flex flex-col text-surface-12 col-span-4">
 						<span class="flex flex-nowrap gap-2 flex-shrink-0 flex-grow-0 self-stretch text-sm">
-							<OptimizedIcon
+							<MoooomIcon
 								class-name="relative w-4"
 								icon="stickyNote"
 							/>
@@ -172,7 +172,7 @@ function toggleRunning() {
 							</span>
 						</span>
 						<span v-if="data?.message === 'Encoding video'" class="flex flex-nowrap gap-2 flex-shrink-0 flex-grow-0 self-stretch text-sm">
-							<OptimizedIcon
+							<MoooomIcon
 								class-name="relative w-4"
 								icon="dashboard"
 							/>
@@ -181,7 +181,7 @@ function toggleRunning() {
 							</span>
 						</span>
 						<span v-if="data?.message === 'Encoding video'" class="flex flex-nowrap gap-2 flex-shrink-0 flex-grow-0 self-stretch text-sm">
-							<OptimizedIcon
+							<MoooomIcon
 								class-name="relative w-4"
 								icon="hourglass"
 							/>
@@ -218,7 +218,7 @@ function toggleRunning() {
 								v-if="data?.video_streams && data?.message === 'Encoding video'"
 								class="flex flex-nowrap gap-2 flex-shrink-0 flex-grow-0 self-stretch text-sm"
 							>
-								<OptimizedIcon class-name="w-4" icon="film" />
+								<MoooomIcon class-name="w-4" icon="film" />
 								<span class="w-full text-xs text-surface-10 line-clamp-1">
 									{{ data?.video_streams.length }}
 								</span>
@@ -228,7 +228,7 @@ function toggleRunning() {
 								:title="data?.audio_streams?.join?.(', ') ?? ''"
 								class="flex flex-nowrap gap-1 flex-shrink-0 flex-grow-0 self-stretch text-sm"
 							>
-								<OptimizedIcon class-name="w-4" icon="audioFile" />
+								<MoooomIcon class-name="w-4" icon="audioFile" />
 								<span class="w-full text-xs text-surface-10 line-clamp-1">
 									{{ data?.audio_streams.length }}
 								</span>
@@ -238,7 +238,7 @@ function toggleRunning() {
 								:title="data?.subtitle_streams?.join?.(', ') ?? ''"
 								class="flex flex-nowrap gap-1 flex-shrink-0 flex-grow-0 self-stretch text-sm"
 							>
-								<OptimizedIcon class-name="w-4" icon="chatBubble" />
+								<MoooomIcon class-name="w-4" icon="chatBubble" />
 								<span class="w-full text-xs text-surface-10 line-clamp-1">
 									{{ data?.subtitle_streams.length }}
 								</span>

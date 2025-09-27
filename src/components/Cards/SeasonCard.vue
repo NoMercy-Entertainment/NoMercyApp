@@ -1,13 +1,12 @@
 <script lang="ts" setup>
-import type {PropType} from 'vue';
+import type { PropType } from 'vue';
 
-import type {Episode} from '@/types/api/base/info';
+import type { Episode } from '@/types/api/base/info';
 
-import {scrollIntoView} from '@/lib/utils';
+import { scrollIntoView } from '@/lib/utils';
 
-import {pickPaletteColor} from '@/lib/colorHelper';
+import { pickPaletteColor } from '@/lib/colorHelper';
 import TMDBImage from '@/components/Images/TMDBImage.vue';
-import OptimizedIcon from '@/components/OptimizedIcon.vue';
 
 const props = defineProps({
 	data: {
@@ -61,7 +60,7 @@ const color = pickPaletteColor(props.data?.color_palette?.still);
 				class="absolute inset-0 z-30 grid w-full place-items-center group-focus-visible/season:bg-black opacity-0 group-focus-visible/season:opacity-100 transitioning group-hover/season:opacity-100 [background:radial-gradient(75%_50%_at_50%_50%,_rgba(0,_0,_0,_0.40)_0%,_rgba(0,_0,_0,_0.00)_100%),_rgba(0,_0,_0,_0.09)]"
 			>
 				<div class="transitioning hover:scale-110 text-white/12" style="--stroke-width: 1">
-					<OptimizedIcon class-name="w-20" icon="playCircle" stroke="1" />
+					<MoooomIcon class-name="w-20" icon="playCircle" stroke="1" />
 				</div>
 			</div>
 			<div
@@ -135,7 +134,7 @@ const color = pickPaletteColor(props.data?.color_palette?.still);
 				class="absolute inset-0 z-30 grid w-full place-items-center group-focus-visible/season:bg-black opacity-0 group-focus-visible/season:opacity-100 transitioning group-hover/season:opacity-100 [background:radial-gradient(75%_50%_at_50%_50%,_rgba(0,_0,_0,_0.40)_0%,_rgba(0,_0,_0,_0.00)_100%),_rgba(0,_0,_0,_0.09)]"
 			>
 				<div class="transitioning hover:scale-110" style="--stroke-width: 1">
-					<OptimizedIcon class-name="w-20" icon="playCircle" stroke="1" />
+					<MoooomIcon class-name="w-20" icon="playCircle" stroke="1" />
 				</div>
 			</div>
 			<div

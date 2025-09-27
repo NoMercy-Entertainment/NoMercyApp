@@ -17,7 +17,6 @@ import audioPlayer, {
 } from '@/store/audioPlayer';
 import { isSongRoute } from '@/store/routeState';
 
-import OptimizedIcon from '@/components/OptimizedIcon.vue';
 import BannerButton from '@/components/Buttons/BannerButton.vue';
 import MediaLikeButton from '@/components/Buttons/MediaLikeButton.vue';
 import { musicSocketConnection } from '@/store/musicSocket';
@@ -199,12 +198,12 @@ const light = computed(() => tooLight(pickPaletteColor(colorPalette.value), 150)
 				:onclick="handleClick"
 				:title="isPlaying && currentPlaylist === playlistName ? $t('Pause') : $t('Play')"
 			>
-				<OptimizedIcon
+				<MoooomIcon
 					v-if="isPlaying && currentPlaylist === playlistName"
 					class-name="relative h-6 w-6"
 					icon="pause"
 				/>
-				<OptimizedIcon
+				<MoooomIcon
 					v-else
 					class-name="relative h-6 w-6"
 					icon="play"
@@ -236,7 +235,7 @@ const light = computed(() => tooLight(pickPaletteColor(colorPalette.value), 150)
 			<!--				<MoooomIcon icon="searchMagnifyingGlass" className="relative h-5 w-5"/> -->
 			<!--			</BannerButton> -->
 			<BannerButton :title="$t('More')">
-				<OptimizedIcon
+				<MoooomIcon
 					class-name="relative h-5 w-5"
 					icon="menuDotsHorizontal"
 				/>

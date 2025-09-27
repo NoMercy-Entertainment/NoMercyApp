@@ -15,7 +15,6 @@ import { hideNavBar, showNavBar } from '@/store/ui';
 import useServerClient from '@/lib/clients/useServerClient';
 // import { VideoNoMercyConnectPlugin } from '@/lib/VideoPlayer/plugins/videoNoMercyConnectPlugin.ts';
 import KeyHandlerPlugin from '@/lib/VideoPlayer/plugins/keyHandlerPlugin.ts';
-import { lockPortrait } from '@/lib/utils.ts';
 
 const { data } = useServerClient<NMPlaylistItem[]>({
 	// enabled: !user.value.features?.nomercyConnect,
@@ -29,7 +28,7 @@ function initPlayer(value?: NMPlaylistItem[] | undefined) {
 		controls: false,
 		preload: 'auto',
 		debug: false,
-		autoPlay: true,
+		autoPlay: false,
 		playlist: value?.filter(item => !!item.id) ?? [],
 
 		controlsTimeout: 3000,
@@ -46,8 +45,6 @@ function initPlayer(value?: NMPlaylistItem[] | undefined) {
 		renderAhead: 10,
 		// disableAutoPlayback: user.value.features?.nomercyConnect,
 	};
-
-	player.value?.dispose();
 
 	// @ts-ignore
 	player.value = nmplayer('player1').setup(config);
@@ -97,8 +94,6 @@ function initPlayer(value?: NMPlaylistItem[] | undefined) {
 	});
 
 	player.value?.on('dispose', () => {
-		lockPortrait();
-		showNavBar();
 		if (history.state.back) {
 			router.back();
 		}
@@ -119,15 +114,6 @@ function initPlayer(value?: NMPlaylistItem[] | undefined) {
 		setDisableScreensaver(false);
 	});
 
-	player.value?.on('ready', () => {
-		hideNavBar();
-		audioPlayer.stop();
-	});
-
-	player.value?.on('item', () => {
-		player.value?.play();
-	});
-
 	App.addListener('backButton', () => {
 		player.value?.emit('back-button');
 		player.value?.emit('back-button-hyjack');
@@ -141,6 +127,7 @@ watch(data, (value) => {
 });
 
 onIonViewDidEnter(() => {
+	hideNavBar();
 	audioPlayer.stop();
 	if (user.value.features?.nomercyConnect) {
 		initPlayer();
@@ -151,6 +138,7 @@ onIonViewDidEnter(() => {
 });
 
 onIonViewDidLeave(() => {
+	showNavBar();
 	player.value?.dispose();
 	setDisableScreensaver(false);
 });

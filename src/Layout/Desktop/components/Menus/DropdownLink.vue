@@ -1,9 +1,8 @@
 <script lang="ts" setup>
 import { RouterLink } from 'vue-router';
-
-import OptimizedIcon from '@/components/OptimizedIcon.vue';
 import type { PropType } from 'vue';
 import type { MoooomIcons } from '@Icons/icons';
+import MoooomIcon from '@/components/Images/icons/MoooomIcon.vue';
 
 defineProps({
 	to: {
@@ -43,7 +42,7 @@ const classes
 		<span
 			class="relative flex w-full flex-grow items-center justify-center gap-2 px-2 text-lg font-medium text-left"
 		>
-			<OptimizedIcon :class-name="className" :icon="icon" />
+			<MoooomIcon :class-name="className" :icon="icon" />
 			<span
 				class="relative flex flex-grow items-center justify-center gap-2 pl-2"
 			>
@@ -64,7 +63,7 @@ const classes
 		<span
 			class="relative flex w-full flex-grow items-center justify-center gap-2 px-2 text-lg font-medium text-left"
 		>
-			<OptimizedIcon :class-name="className" :icon="icon" />
+			<MoooomIcon :class-name="className" :icon="icon" />
 			<span
 				class="relative flex flex-grow items-center justify-center gap-2 pl-2"
 			>

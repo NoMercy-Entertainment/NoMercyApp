@@ -3,7 +3,6 @@ import type { PropType } from 'vue';
 import { computed } from 'vue';
 
 import { genreColors } from '@/config/global';
-import OptimizedIcon from '@/components/OptimizedIcon.vue';
 import type { LibraryResponse } from '@/types/api/base/library';
 import type { ContextMenuItem } from '@/store/contextMenuItems';
 
@@ -73,7 +72,7 @@ const genreColor = computed(() => genreColors(props.data.title));
           background-blend-mode: normal, overlay, normal;
         "
 			>
-				<OptimizedIcon :icon="genreColor.icon" class-name="w-20" />
+				<MoooomIcon :icon="genreColor.icon" class-name="w-20" />
 			</div>
 		</div>
 		<div

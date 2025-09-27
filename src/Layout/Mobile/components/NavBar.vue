@@ -10,7 +10,6 @@ import { searchUrl } from '@/store/routeState';
 
 import MobileLibraryHeader from '@/views/Base/Library/components/MobileLibraryHeader.vue';
 import AppLogo from '@/components/Images/icons/AppLogo.vue';
-import OptimizedIcon from '@/components/OptimizedIcon.vue';
 
 const isFetching = useIsFetching();
 </script>
@@ -26,14 +25,14 @@ const isFetching = useIsFetching();
 					class=" flex justify-center items-center flex-grow-0 flex-shrink-0 h-14 w-14 relative overflow-hidden gap-2 p-2.5 rounded-lg bg-transparent children:absolute children:transition-opacity children:duration-100 children:inset-4"
 					@click="toggleSidebar"
 				>
-					<OptimizedIcon
+					<MoooomIcon
 						:class="{
 							'opacity-0': sidebar === 'closed' || sidebar === 'hidden',
 							'opacity-100': sidebar === 'open',
 						}"
 						icon="cross"
 					/>
-					<OptimizedIcon
+					<MoooomIcon
 						:class="{
 							'opacity-100': sidebar === 'closed' || sidebar === 'hidden',
 							'opacity-0': sidebar === 'open',
@@ -52,7 +51,7 @@ const isFetching = useIsFetching();
 					class="flex justify-center items-center flex-grow-0 flex-shrink-0 h-14 w-14 relative overflow-hidden gap-2 p-2.5 rounded-lg bg-transparent"
 					@click="closeSidebar"
 				>
-					<OptimizedIcon
+					<MoooomIcon
 						class=""
 						icon="searchMagnifyingGlass"
 					/>

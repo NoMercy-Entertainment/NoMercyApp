@@ -5,17 +5,16 @@ import { useRoute } from 'vue-router';
 import type { PlaylistItem } from '@/types/musicPlayer';
 
 import { audioPlayer, currentSong, isPlaying, musicSize, setCurrentPlaylist } from '@/store/audioPlayer';
+import { isMusicSearchRoute } from '@/store/routeState';
+import { onTrackRowRightClick } from '@/store/contextMenuItems';
 
 import DropdownMenu from '@/Layout/Desktop/components/Menus/DropdownMenu.vue';
-
-import OptimizedIcon from '@/components/OptimizedIcon.vue';
 import EqSpinner from '@/components/Images/EqSpinner.vue';
 import CoverImage from '@/components/MusicPlayer/components/CoverImage.vue';
 import MediaLikeButton from '@/components/Buttons/MediaLikeButton.vue';
 import BannerButton from '@/components/Buttons/BannerButton.vue';
+import MoooomIcon from '@/components/Images/icons/MoooomIcon.vue';
 import TrackLinks from '@/views/Music/List/components/TrackLinks.vue';
-import { isMusicSearchRoute } from '@/store/routeState';
-import { onTrackRowRightClick } from '@/store/contextMenuItems';
 
 const props = defineProps({
 	data: {
@@ -87,12 +86,12 @@ function handleClick() {
 					class="hidden group-focus-visible/track:sm:!hidden group-hover/track:sm:!hidden"
 					color="var(--color-theme-8)"
 				/>
-				<OptimizedIcon
+				<MoooomIcon
 					v-if="currentSong?.id === data.id && isPlaying"
 					class="hidden h-6 w-6 group-focus-visible/track:sm:block group-hover/track:sm:block"
 					icon="pause"
 				/>
-				<OptimizedIcon
+				<MoooomIcon
 					v-else
 					class="hidden h-6 w-6 group-focus-visible/track:sm:block group-hover/track:sm:block"
 					icon="play"
@@ -175,7 +174,7 @@ function handleClick() {
 		<DropdownMenu direction="down">
 			<template #button>
 				<BannerButton class="mx-3" title="">
-					<OptimizedIcon class-name="relative h-5 w-5" icon="menuDotsVertical" />
+					<MoooomIcon class-name="relative h-5 w-5" icon="menuDotsVertical" />
 				</BannerButton>
 			</template>
 			Hellooo

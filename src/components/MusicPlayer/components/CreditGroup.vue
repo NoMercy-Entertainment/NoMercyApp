@@ -5,8 +5,6 @@ import { IonItem, IonList } from '@ionic/vue';
 import type { KnownFor } from '@/types/api/base/person';
 import type { Crew } from '@/types/api/shared';
 
-import OptimizedIcon from '@/components/OptimizedIcon.vue';
-
 defineProps({
 	items: {
 		type: Array as PropType<Array<KnownFor | Crew> | undefined>,
@@ -94,7 +92,7 @@ defineProps({
 						:to="item.link"
 						class="relative flex items-center justify-center gap-2 rounded-lg p-2 aspect-square transition-colors duration-200 group/play hover:bg-surface-5/6"
 					>
-						<OptimizedIcon class-name="h-5 w-5" icon="play" />
+						<MoooomIcon class-name="h-5 w-5" icon="play" />
 					</RouterLink>
 				</div>
 			</IonItem>

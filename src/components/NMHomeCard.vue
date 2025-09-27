@@ -10,12 +10,12 @@ import { pickPaletteColor } from '@/lib/colorHelper';
 
 import TMDBImage from '@/components/Images/TMDBImage.vue';
 import MediaLikeButton from '@/components/Buttons/MediaLikeButton.vue';
-import OptimizedIcon from '@/components/OptimizedIcon.vue';
 import BannerButton from '@/components/Buttons/BannerButton.vue';
 import { scrollContainerElement, setBackground, setColorPalette } from '@/store/ui';
 import { onIonViewWillEnter, onIonViewWillLeave } from '@ionic/vue';
 import CardShadow from '@/components/Cards/CardShadow.vue';
 import { breakLogoTitle } from '@/lib/stringArray.ts';
+import MoooomIcon from '@/components/Images/icons/MoooomIcon.vue';
 
 const props = defineProps({
 	data: {
@@ -150,7 +150,7 @@ function scrollToTop() {
 								title="Play"
 								@focus="scrollToTop"
 							>
-								<OptimizedIcon class="w-7" icon="playbackSpeed" />
+								<MoooomIcon class="w-7" icon="playbackSpeed" />
 
 								<div
 									class="absolute top-3 grid h-0 w-max flex-shrink-0 flex-grow-0 origin-bottom group-hover/play:grid-cols-1 items-center justify-start gap-1 rounded-md duration-200 bg-surface-1 grid-cols-[0fr] group-hover/play:h-[32.77px] transform-all left-[-31px] group-hover/play:top-[-38px]"
@@ -171,7 +171,7 @@ function scrollToTop() {
 								title="Toggle seen"
 								@focus="scrollToTop"
 							>
-								<OptimizedIcon
+								<MoooomIcon
 									:stroke="
 										hasWatched ? 'var(--color-green-600) ' : 'currentColor'
 									"
@@ -187,7 +187,7 @@ function scrollToTop() {
 								title="Info"
 								@focus="scrollToTop"
 							>
-								<OptimizedIcon class="w-7" icon="infoCircle" />
+								<MoooomIcon class="w-7" icon="infoCircle" />
 							</BannerButton>
 						</div>
 					</div>
@@ -206,7 +206,7 @@ function scrollToTop() {
 							class="flex h-10 w-1/2 items-center justify-between gap-2 whitespace-nowrap rounded-md pr-4 pl-3 text-black bg-surface-1 py-1.5"
 							@focus="scrollToTop"
 						>
-							<OptimizedIcon class-name="w-6" icon="playCircle" />
+							<MoooomIcon class-name="w-6" icon="playCircle" />
 							<span class="w-full whitespace-nowrap text-black text-center">{{
 								$t("Play")
 							}}</span>
@@ -218,7 +218,7 @@ function scrollToTop() {
 							class="flex justify-center items-center relative gap-2 p-2 rounded-lg hover:bg-surface-5/6 transition-colors duration-200"
 							@focus="scrollToTop"
 						>
-							<OptimizedIcon class-name="w-6" icon="add" />
+							<MoooomIcon class-name="w-6" icon="add" />
 							<span class="w-full whitespace-nowrap text-center">
 								{{ $t("Info") }}
 							</span>
@@ -283,7 +283,7 @@ function scrollToTop() {
 						:to="`${data?.link}/watch`"
 						class="flex justify-center items-center flex-grow h-10 relative overflow-hidden gap-3 px-6 py-4 rounded-lg bg-surface-12/11"
 					>
-						<OptimizedIcon
+						<MoooomIcon
 							class-name="w-6"
 							icon="play"
 							style="--fill-color: black"
@@ -298,7 +298,7 @@ function scrollToTop() {
 						:to="`${data?.link}`"
 						class="frosting flex justify-center items-center flex-grow h-10 relative gap-3 px-6 py-4 rounded-lg text-slate-1 bg-surface-1/11 text-surface-12"
 					>
-						<OptimizedIcon class-name="w-6" icon="infoCircle" />
+						<MoooomIcon class-name="w-6" icon="infoCircle" />
 						<p
 							class="flex-grow-0 flex-shrink-0 text-[15px] font-medium text-center"
 						>

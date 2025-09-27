@@ -6,8 +6,8 @@ import type { Episode, FileItem } from '@/types/api/dashboard/newContent';
 import { tmdbImageBaseUrl } from '@/config/config';
 
 import Checkbox from '@/components/Forms/Checkbox.vue';
-import OptimizedIcon from '@/components/OptimizedIcon.vue';
 import { humanFileSize, pad } from '@/lib/stringArray.ts';
+import MoooomIcon from '@/components/Images/icons/MoooomIcon.vue';
 
 const props = defineProps({
 	manage: {
@@ -101,7 +101,7 @@ watch(props, (value) => {
 					v-if="data.path"
 					class="relative flex items-center justify-start self-stretch gap-0.5"
 				>
-					<OptimizedIcon class-name="w-3.5" icon="folder" />
+					<MoooomIcon class-name="w-3.5" icon="folder" />
 					<p class="w-full flex-grow text-xs leading-none">
 						{{ data.path }}
 					</p>
@@ -110,7 +110,7 @@ watch(props, (value) => {
 					v-if="data?.match?.id"
 					class="relative flex items-center justify-start self-stretch gap-0.5"
 				>
-					<OptimizedIcon class-name="w-3.5" icon="infoCircle" />
+					<MoooomIcon class-name="w-3.5" icon="infoCircle" />
 					<p class="w-full flex-grow text-xs leading-none">
 						{{ data?.match?.id }}
 					</p>
@@ -119,7 +119,7 @@ watch(props, (value) => {
 					v-if="data.size"
 					class="relative flex items-center justify-start self-stretch gap-0.5"
 				>
-					<OptimizedIcon class-name="w-3.5" icon="server" />
+					<MoooomIcon class-name="w-3.5" icon="server" />
 					<p class="w-full flex-grow text-xs leading-none">
 						{{ humanFileSize(data.size) }}
 					</p>
@@ -128,7 +128,7 @@ watch(props, (value) => {
 					v-if="data.tracks"
 					class="relative flex items-center justify-start self-stretch gap-0.5"
 				>
-					<OptimizedIcon class-name="w-3.5" icon="audioFile" />
+					<MoooomIcon class-name="w-3.5" icon="audioFile" />
 					<p class="w-full flex-grow text-xs leading-none">
 						{{ data.tracks }}
 					</p>
@@ -137,7 +137,7 @@ watch(props, (value) => {
 					v-if="data.streams.video?.length > 0"
 					class="relative flex items-center justify-start self-stretch gap-0.5"
 				>
-					<OptimizedIcon class-name="w-3.5" icon="film" />
+					<MoooomIcon class-name="w-3.5" icon="film" />
 					<p class="w-full flex-grow text-xs leading-none">
 						<template v-for="(video, index) in data.streams.video">
 							{{ video.width }}x{{
@@ -150,7 +150,7 @@ watch(props, (value) => {
 					v-if="data.streams.audio?.length > 0"
 					class="relative flex items-center justify-start self-stretch gap-0.5"
 				>
-					<OptimizedIcon class-name="w-3.5" icon="audioFile" />
+					<MoooomIcon class-name="w-3.5" icon="audioFile" />
 					<p class="w-full flex-grow text-xs leading-none">
 						<template v-for="(audio, index) in data.streams.audio">
 							{{
@@ -163,7 +163,7 @@ watch(props, (value) => {
 					v-if="data.streams.subtitle?.length > 0"
 					class="relative flex items-center justify-start self-stretch gap-0.5"
 				>
-					<OptimizedIcon class-name="w-3.5" icon="chatBubble" />
+					<MoooomIcon class-name="w-3.5" icon="chatBubble" />
 					<p class="w-full flex-grow text-xs leading-none">
 						<template v-for="(subtitle, index) in data.streams.subtitle">
 							{{

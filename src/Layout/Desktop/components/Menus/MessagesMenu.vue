@@ -5,7 +5,7 @@ import messagesState, { markAllMessagesRead } from '@/store/messages';
 
 import DropdownMenu from '@/Layout/Desktop/components/Menus/DropdownMenu.vue';
 import NotificationItem from '@/Layout/Desktop/components/Menus/NotificationItem.vue';
-import OptimizedIcon from '@/components/OptimizedIcon.vue';
+import MoooomIcon from '@/components/Images/icons/MoooomIcon.vue';
 
 const hasRang = ref(false);
 const ringing = ref(false);
@@ -53,12 +53,12 @@ onMounted(() => {
 						<div
 							class="absolute top-3 right-3 h-2 w-2 rounded-full bg-red-dark-7"
 						/>
-						<OptimizedIcon icon="chatAlert" />
+						<MoooomIcon icon="chatAlert" />
 					</div>
 				</template>
 				<template v-else>
 					<div class="relative h-full w-full p-2.5">
-						<OptimizedIcon icon="chatBubble" />
+						<MoooomIcon icon="chatBubble" />
 					</div>
 				</template>
 			</button>

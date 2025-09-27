@@ -13,7 +13,6 @@ import { setBackground, setColorPalette, setSortOrder, sortOrder, sortType } fro
 import ScrollContainer from '@/Layout/Desktop/components/ScrollContainer.vue';
 
 import BannerButton from '@/components/Buttons/BannerButton.vue';
-import OptimizedIcon from '@/components/OptimizedIcon.vue';
 import Home from './components/Home.vue';
 import Albums from './components/Albums.vue';
 import Playlists from './components/Playlists.vue';
@@ -141,7 +140,7 @@ function setDisplayType(type: 'list' | 'card') {
 									title="List"
 									@click="setDisplayType('list')"
 								>
-									<OptimizedIcon
+									<MoooomIcon
 										class-name="relative h-5 w-5"
 										icon="bulletList"
 									/>
@@ -151,7 +150,7 @@ function setDisplayType(type: 'list' | 'card') {
 									title="Grid"
 									@click="setDisplayType('card')"
 								>
-									<OptimizedIcon
+									<MoooomIcon
 										class-name="relative h-5 w-5"
 										icon="collection"
 									/>

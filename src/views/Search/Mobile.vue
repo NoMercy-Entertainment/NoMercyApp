@@ -16,7 +16,6 @@ import {
 import { greetingValue } from '@/config/global';
 import { showScreensaver } from '@/store/imageModal';
 
-import OptimizedIcon from '@/components/OptimizedIcon.vue';
 import CosmosBg2 from '@/components/Images/CosmosBg2.vue';
 import SearchCard from '@/components/Cards/SearchCard.vue';
 
@@ -161,7 +160,7 @@ watch(searchType, () => {
 								class="text-surface-1 dark:text-surface-12 flex justify-center items-center flex-grow-0 flex-shrink-0 relative gap-2 p-1 rounded-lg w-9 h-9"
 								@click="searchType = 'video'"
 							>
-								<OptimizedIcon
+								<MoooomIcon
 									class="h-6 w-6 flex-grow-0 flex-shrink-0 transition-all duration-150"
 									icon="film"
 								/>
@@ -170,7 +169,7 @@ watch(searchType, () => {
 								class="text-surface-1 dark:text-surface-12 flex justify-center items-center flex-grow-0 flex-shrink-0 relative gap-2 p-1 rounded-lg w-9 h-9"
 								@click="searchType = 'music'"
 							>
-								<OptimizedIcon
+								<MoooomIcon
 									class="h-6 w-6 flex-grow-0 flex-shrink-0 transition-all duration-150"
 									icon="noteDouble"
 								/>

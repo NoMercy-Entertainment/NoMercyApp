@@ -1,5 +1,4 @@
 import { SliderBar } from '@/lib/sliderBar';
-import type { LogoResponse } from '@/types/server';
 import { alphaNumericRange } from '@/lib/stringArray';
 
 HTMLElement.prototype.sliderBar = function (
@@ -90,6 +89,21 @@ HTMLElement.prototype.isVisible = function (parent?: HTMLElement): boolean {
 	);
 };
 
+declare global {
+	interface Document {
+		// eslint-disable-next-line ts/method-signature-style
+		querySelectorAllArray<K extends keyof HTMLElementTagNameMap>(selector: K): HTMLElementTagNameMap[K][];
+	}
+	interface Element {
+		// eslint-disable-next-line ts/method-signature-style
+		querySelectorAllArray<K extends keyof HTMLElementTagNameMap>(selector: K): HTMLElementTagNameMap[K][];
+	}
+	interface HTMLElement {
+		// eslint-disable-next-line ts/method-signature-style
+		querySelectorAllArray<K extends keyof HTMLElementTagNameMap>(selector: K): HTMLElementTagNameMap[K][];
+	}
+}
+
 Document.prototype.querySelectorAllArray = function <
 	K extends keyof HTMLElementTagNameMap,
 >(selector: K): HTMLElementTagNameMap[K][] {
@@ -158,27 +172,8 @@ export function scrollToDiv(i: string) {
 export function keyHandler(e: KeyboardEvent) {
 	if (
 		e.key
-		&& alphaNumericRange('#', 'Z').some(x => x === e.key.toUpperCase())
+		&& alphaNumericRange('#', 'Z').includes(e.key.toUpperCase())
 	) {
 		scrollToDiv(e.key?.toUpperCase());
 	}
 }
-
-export function openImageModal(data: LogoResponse | null = null, aspectRatio: string = '16:9') {
-	if (data) {
-		data.aspectRatio = data.aspectRatio ?? aspectRatio;
-	}
-
-	// window.Alpine.store('config').imageModalData = data;
-	// window.Alpine.store('config').imageModalOpen = true;
-}
-
-// HTMLElement.prototype.openImageModal = function (data: LogoResponse | null = null, aspectRatio: string = '16:9') {
-//     if (data) {
-//         data.aspectRatio = data.aspectRatio ?? aspectRatio;
-//     }
-// window.Alpine.store('config').screensaverDisabled = true;
-
-// window.Alpine.store('config').imageModalData = data;
-// window.Alpine.store('config').imageModalOpen = true;
-// };

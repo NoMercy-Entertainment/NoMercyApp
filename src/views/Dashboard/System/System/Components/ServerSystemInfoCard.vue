@@ -9,10 +9,10 @@ import serverClient from '@/lib/clients/serverClient';
 import { currentServer } from '@/store/currentServer';
 import { useVideoSocket } from '@/store/videoSocket';
 
-import OptimizedIcon from '@/components/OptimizedIcon.vue';
 import KeepCounting from '@/components/KeepCounting.vue';
 
 import ServerSystemCard from './ServerSystemCard.vue';
+import MoooomIcon from '@/components/Images/icons/MoooomIcon.vue';
 
 const isPaused = ref(false);
 const isOnline = ref(true);
@@ -89,7 +89,7 @@ function toggleServerState() {
 			<button
 				class="relative h-7 flex flex-shrink-0 flex-grow-0 items-center justify-center gap-2 overflow-hidden border border-solid border-surface-12/11 rounded-lg pl-1 pr-2 py-1 text-surface-12/11"
 			>
-				<OptimizedIcon class="w-4" icon="pause" />
+				<MoooomIcon class="w-4" icon="pause" />
 				<p class="flex-shrink-0 flex-grow-0 text-sm">
 					{{ $t("Pause") }}
 				</p>
@@ -97,7 +97,7 @@ function toggleServerState() {
 			<button
 				class="relative h-7 flex flex-shrink-0 flex-grow-0 items-center justify-center gap-2 overflow-hidden border border-solid border-surface-12/11 rounded-lg pl-1 pr-2 py-1 text-surface-12/11"
 			>
-				<OptimizedIcon class="w-4" icon="shutdown" />
+				<MoooomIcon class="w-4" icon="shutdown" />
 				<p class="flex-shrink-0 flex-grow-0 text-sm">
 					{{ $t("Shutdown") }}
 				</p>

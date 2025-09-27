@@ -1,10 +1,9 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import type { PropType } from 'vue';
 
 import { parseYear } from '@/lib/dateTime';
 
 import AppLogoSquare from '@/components/Images/icons/AppLogoSquare.vue';
-import OptimizedIcon from '@/components/OptimizedIcon.vue';
 
 defineProps({
 	item: {
@@ -32,8 +31,8 @@ defineProps({
 	>
 		<img
 			v-if="item?.backdrop_path"
-			:src="`https://image.tmdb.org/t/p/original${item?.backdrop_path}`"
 			:alt="item?.title"
+			:src="`https://image.tmdb.org/t/p/original${item?.backdrop_path}`"
 			class="absolute inset-0 h-full w-full object-cover"
 		>
 
@@ -46,11 +45,11 @@ defineProps({
 		>
 			<img
 				v-if="item?.poster_path || item?.profile_path"
+				:alt="item?.title"
 				:src="
 					`https://image.tmdb.org/t/p/original${
 						item?.poster_path ?? item?.profile_path}`
 				"
-				:alt="item?.title"
 				class="absolute inset-0 h-auto w-full object-cover"
 			>
 			<AppLogoSquare
@@ -73,20 +72,20 @@ defineProps({
 				<p
 					class="flex flex-shrink-0 flex-grow-0 items-center gap-2 text-right text-base"
 				>
-					<OptimizedIcon
+					<MoooomIcon
 						v-if="item?.media_type === 'tv'"
+						class-name="h-5 w-5 sm:h-4 sm:w-4"
 						icon="monitor"
-						class-name="h-5 w-5 sm:h-4 sm:w-4"
 					/>
-					<OptimizedIcon
+					<MoooomIcon
 						v-else-if="item?.media_type === 'movie'"
+						class-name="h-5 w-5 sm:h-4 sm:w-4"
 						icon="film"
-						class-name="h-5 w-5 sm:h-4 sm:w-4"
 					/>
-					<OptimizedIcon
+					<MoooomIcon
 						v-else-if="item?.media_type === 'person'"
-						icon="user"
 						class-name="h-5 w-5 sm:h-4 sm:w-4"
+						icon="user"
 					/>
 					<span
 						v-if="item?.release_date || item?.first_air_date"

@@ -14,7 +14,6 @@ import { user } from '@/store/user';
 import i18next from '@/config/i18next.ts';
 
 import EqSpinner from '@/components/Images/EqSpinner.vue';
-import OptimizedIcon from '@/components/OptimizedIcon.vue';
 import CoverImage from '@/components/MusicPlayer/components/CoverImage.vue';
 import TrackLinks from '@/views/Music/List/components/TrackLinks.vue';
 import MediaLikeButton from '@/components/Buttons/MediaLikeButton.vue';
@@ -200,7 +199,7 @@ const date = computed(() => {
 			<DropdownMenu v-if="isMobile" direction="down">
 				<template #button>
 					<BannerButton class="" title="">
-						<OptimizedIcon
+						<MoooomIcon
 							class-name="relative h-5 w-5"
 							icon="menuDotsVertical"
 						/>

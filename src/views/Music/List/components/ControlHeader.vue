@@ -7,7 +7,6 @@ import type { DisplayList } from '@/types/api/music/musicPlayer';
 import audioPlayer from '@/store/audioPlayer';
 
 import BigPlayButton from '@/components/Buttons/BigPlayButton.vue';
-import OptimizedIcon from '@/components/OptimizedIcon.vue';
 import MusicButton from '@/components/MusicPlayer/components/MusicButton.vue';
 import MediaLikeButton from '@/components/Buttons/MediaLikeButton.vue';
 import { isTrackRoute } from '@/store/routeState';
@@ -15,6 +14,7 @@ import { isPlatform } from '@ionic/vue';
 import ShareButton from '@/components/Buttons/ShareButton.vue';
 import type { ShareOptions } from '@capacitor/share';
 import { useRoute } from 'vue-router';
+import MoooomIcon from '@/components/Images/icons/MoooomIcon.vue';
 
 const props = defineProps({
 	data: {
@@ -68,7 +68,7 @@ const shareData = computed<ShareOptions>(() => ({
 			<div
 				class="absolute top-2 right-2 bottom-2 flex items-center justify-center"
 			>
-				<OptimizedIcon class="!w-7" icon="searchMagnifyingGlass" />
+				<MoooomIcon class="!w-7" icon="searchMagnifyingGlass" />
 			</div>
 		</div>
 
@@ -91,7 +91,7 @@ const shareData = computed<ShareOptions>(() => ({
 			class=""
 			label="Add"
 		>
-			<OptimizedIcon class="!w-7" icon="add" />
+			<MoooomIcon class="!w-7" icon="add" />
 		</MusicButton>
 		<!--        <ListControlHeaderMoreMenuButton v-if="!isTrackRoute" :items="[]"/> -->
 	</div>

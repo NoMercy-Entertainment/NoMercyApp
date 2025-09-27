@@ -3,8 +3,8 @@ import type { PropType } from 'vue';
 import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/vue';
 
 import type { MoooomIcons } from '@Icons/icons';
-import OptimizedIcon from '@/components/OptimizedIcon.vue';
 import { buttonClasses } from '@/config/global.ts';
+import MoooomIcon from '@/components/Images/icons/MoooomIcon.vue';
 
 interface IMenuItem {
 	icon: keyof typeof MoooomIcons;
@@ -39,7 +39,7 @@ defineProps({
 			}"
 		>
 			<slot name="button">
-				<OptimizedIcon icon="menuDotsHorizontal" />
+				<MoooomIcon icon="menuDotsHorizontal" />
 			</slot>
 		</MenuButton>
 
@@ -66,7 +66,7 @@ defineProps({
 						<span
 							class="relative flex flex-1 items-center justify-start gap-2 text-base font-semibold"
 						>
-							<OptimizedIcon :icon="item.icon" :title="item.title" />
+							<MoooomIcon :icon="item.icon" :title="item.title" />
 							<span class="flex flex-1 w-full whitespace-nowrap">
 								{{ $t(item.title) }}
 							</span>

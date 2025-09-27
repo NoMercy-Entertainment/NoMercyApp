@@ -5,7 +5,7 @@ import { Card } from 'primevue';
 import type { Server } from '@/types/auth';
 
 import DeviceIcon from '@/components/Images/icons/DeviceIcon.vue';
-import OptimizedIcon from '@/components/OptimizedIcon.vue';
+import MoooomIcon from '@/components/Images/icons/MoooomIcon.vue';
 
 defineProps({
 	server: {
@@ -45,7 +45,7 @@ defineProps({
 								{{ server.internal_ip }}
 							</p>
 						</div>
-						<OptimizedIcon class-name="w-5" icon="menuDotsVertical" />
+						<MoooomIcon class-name="w-5" icon="menuDotsVertical" />
 					</div>
 				</div>
 			</div>

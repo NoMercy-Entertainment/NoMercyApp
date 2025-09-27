@@ -10,9 +10,8 @@ import type { Breakpoints } from '@/lib/swiper-config';
 import { breakpoints, swiperConfig } from '@/lib/swiper-config';
 
 import { showBackdrops } from '@/store/preferences';
-
-import OptimizedIcon from '@/components/OptimizedIcon.vue';
 import { isMobile } from '@/config/global';
+import MoooomIcon from '@/components/Images/icons/MoooomIcon.vue';
 
 const props = defineProps({
 	title: {
@@ -160,7 +159,7 @@ function focusMain() {
 						:onclick="prev"
 						tabindex="-1"
 					>
-						<OptimizedIcon class="w-6" icon="chevronLeft" />
+						<MoooomIcon class="w-6" icon="chevronLeft" />
 					</button>
 
 					<button v-if="hasScroll" :aria-label="isLastSlide ? $t('Start slide') : $t('Next slide')"
@@ -168,10 +167,10 @@ function focusMain() {
 						:onclick="isLastSlide ? reset : next"
 						tabindex="-1"
 					>
-						<OptimizedIcon v-if="hasScroll && !isLastSlide"
+						<MoooomIcon v-if="hasScroll && !isLastSlide"
 							:class="`w-6 ${!nextButtonEnabled && isLastSlide ? 'opacity-0' : ''}`" icon="chevronRight"
 						/>
-						<OptimizedIcon v-if="hasScroll && isLastSlide" :class="`w-6 ${isLastSlide ? '' : 'opacity-0'}`"
+						<MoooomIcon v-if="hasScroll && isLastSlide" :class="`w-6 ${isLastSlide ? '' : 'opacity-0'}`"
 							icon="chevronLeftDouble"
 						/>
 					</button>

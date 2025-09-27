@@ -4,8 +4,7 @@ import { computed } from 'vue';
 import { twMerge } from 'tailwind-merge';
 
 import type { MoooomIcons } from '@Icons/icons';
-
-import OptimizedIcon from '@/components/OptimizedIcon.vue';
+import MoooomIcon from '@/components/Images/icons/MoooomIcon.vue';
 
 const props = defineProps({
 	id: {
@@ -139,7 +138,7 @@ const classes = computed(() => {
 		:style="style"
 		@click="onClick"
 	>
-		<OptimizedIcon v-if="startIcon" :icon="startIcon" class="w-5" />
+		<MoooomIcon v-if="startIcon" :icon="startIcon" class="w-5" />
 
 		<span class="whitespace-nowrap leading-[100%] empty:hidden">
 			<template v-if="$slots">
@@ -150,7 +149,7 @@ const classes = computed(() => {
 			<span v-else-if="title">{{ title }}</span>
 		</span>
 
-		<OptimizedIcon v-if="endIcon" :icon="endIcon" class="-mr-1 w-5" />
+		<MoooomIcon v-if="endIcon" :icon="endIcon" class="-mr-1 w-5" />
 	</label>
 	<a
 		v-else-if="component === 'link'"
@@ -162,7 +161,7 @@ const classes = computed(() => {
 		:style="style"
 		@click="onClick"
 	>
-		<OptimizedIcon v-if="startIcon" :icon="startIcon" class="w-5" />
+		<MoooomIcon v-if="startIcon" :icon="startIcon" class="w-5" />
 
 		<span class="whitespace-nowrap leading-[100%] empty:hidden">
 			<template v-if="$slots">
@@ -173,7 +172,7 @@ const classes = computed(() => {
 			<span v-else-if="title">{{ title }}</span>
 		</span>
 
-		<OptimizedIcon v-if="endIcon" :icon="endIcon" class="-mr-1 w-5" />
+		<MoooomIcon v-if="endIcon" :icon="endIcon" class="-mr-1 w-5" />
 	</a>
 	<button
 		v-else
@@ -202,13 +201,13 @@ const classes = computed(() => {
 		type="button"
 		@click="onClick"
 	>
-		<OptimizedIcon v-if="startIcon" :icon="startIcon" class="w-5" />
+		<MoooomIcon v-if="startIcon" :icon="startIcon" class="w-5" />
 
 		<span class="whitespace-nowrap leading-[100%] empty:hidden">
 			<slot v-if="$slots" />
 			<span v-else-if="title">{{ title }}</span>
 		</span>
 
-		<OptimizedIcon v-if="endIcon" :icon="endIcon" class="-mr-1 w-5" />
+		<MoooomIcon v-if="endIcon" :icon="endIcon" class="-mr-1 w-5" />
 	</button>
 </template>

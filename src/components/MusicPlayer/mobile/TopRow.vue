@@ -3,10 +3,10 @@ import { computed } from 'vue';
 
 import { closeFullPlayer, currentSong, musicSize } from '@/store/audioPlayer';
 
-import OptimizedIcon from '@/components/OptimizedIcon.vue';
 import DropdownMenu from '@/Layout/Desktop/components/Menus/DropdownMenu.vue';
 import MusicButton from '@/components/MusicPlayer/components/MusicButton.vue';
 import { isPlatform } from '@ionic/vue';
+import MoooomIcon from '@/components/Images/icons/MoooomIcon.vue';
 
 const playlistTitle = computed(() => {
 	return currentSong.value?.album_track?.[0]?.name;
@@ -23,7 +23,7 @@ const playlistTitle = computed(() => {
 			class="!min-w-12"
 			label="close"
 		>
-			<OptimizedIcon class="h-6 w-6" icon="chevronDown" />
+			<MoooomIcon class="h-6 w-6" icon="chevronDown" />
 		</MusicButton>
 
 		<div
@@ -49,18 +49,18 @@ const playlistTitle = computed(() => {
 			orientation="vertical"
 		>
 			<template #button>
-				<OptimizedIcon class="h-6 w-6" icon="menuDotsVertical" />
+				<MoooomIcon class="h-6 w-6" icon="menuDotsVertical" />
 			</template>
 			<template #default>
 				<div class="flex flex-col gap-1 min-h-[85px]">
 					<MusicButton :onclick="() => closeFullPlayer()" label="close">
-						<OptimizedIcon class="h-6 w-6" icon="chevronDown" />
+						<MoooomIcon class="h-6 w-6" icon="chevronDown" />
 					</MusicButton>
 					<MusicButton :onclick="() => closeFullPlayer()" label="close">
-						<OptimizedIcon class="h-6 w-6" icon="chevronDown" />
+						<MoooomIcon class="h-6 w-6" icon="chevronDown" />
 					</MusicButton>
 					<MusicButton :onclick="() => closeFullPlayer()" label="close">
-						<OptimizedIcon class="h-6 w-6" icon="chevronDown" />
+						<MoooomIcon class="h-6 w-6" icon="chevronDown" />
 					</MusicButton>
 				</div>
 			</template>
