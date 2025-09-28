@@ -79,7 +79,7 @@ import AppLogoSquare from '@/components/Images/icons/AppLogoSquare.vue';
 
 <style scoped>
 ion-tab-bar {
-	@apply flex justify-center items-center self-stretch h-14;
+	@apply flex justify-center items-center self-stretch h-14 pb-0;
 }
 
 ion-tab-button {

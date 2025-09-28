@@ -1,0 +1,44 @@
+diff --git a/node_modules/@capacitor/core/dist/index.cjs.js b/node_modules/@capacitor/core/dist/index.cjs.js
+index d40a9c3..78b4a90 100644
+--- a/node_modules/@capacitor/core/dist/index.cjs.js
++++ b/node_modules/@capacitor/core/dist/index.cjs.js
+@@ -109,7 +109,7 @@ const createCapacitor = (win) => {
+                 return (_b = impl[prop]) === null || _b === void 0 ? void 0 : _b.bind(impl);
+             }
+             else {
+-                throw new CapacitorException(`"${pluginName}" plugin is not implemented on ${platform}`, exports.ExceptionCode.Unimplemented);
++                // throw new CapacitorException(`"${pluginName}" plugin is not implemented on ${platform}`, exports.ExceptionCode.Unimplemented);
+             }
+         };
+         const createPluginMethodWrapper = (prop) => {
+@@ -123,7 +123,7 @@ const createCapacitor = (win) => {
+                         return p;
+                     }
+                     else {
+-                        throw new CapacitorException(`"${pluginName}.${prop}()" is not implemented on ${platform}`, exports.ExceptionCode.Unimplemented);
++                        // throw new CapacitorException(`"${pluginName}.${prop}()" is not implemented on ${platform}`, exports.ExceptionCode.Unimplemented);
+                     }
+                 });
+                 if (prop === 'addListener') {
+diff --git a/node_modules/@capacitor/core/dist/index.js b/node_modules/@capacitor/core/dist/index.js
+index 248dfa1..b787eb1 100644
+--- a/node_modules/@capacitor/core/dist/index.js
++++ b/node_modules/@capacitor/core/dist/index.js
+@@ -105,7 +105,7 @@ const createCapacitor = (win) => {
+                 return (_b = impl[prop]) === null || _b === void 0 ? void 0 : _b.bind(impl);
+             }
+             else {
+-                throw new CapacitorException(`"${pluginName}" plugin is not implemented on ${platform}`, ExceptionCode.Unimplemented);
++                // throw new CapacitorException(`"${pluginName}" plugin is not implemented on ${platform}`, ExceptionCode.Unimplemented);
+             }
+         };
+         const createPluginMethodWrapper = (prop) => {
+@@ -119,7 +119,7 @@ const createCapacitor = (win) => {
+                         return p;
+                     }
+                     else {
+-                        throw new CapacitorException(`"${pluginName}.${prop}()" is not implemented on ${platform}`, ExceptionCode.Unimplemented);
++                        // throw new CapacitorException(`"${pluginName}.${prop}()" is not implemented on ${platform}`, ExceptionCode.Unimplemented);
+                     }
+                 });
+                 if (prop === 'addListener') {

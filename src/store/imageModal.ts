@@ -3,6 +3,9 @@ import { computed, ref, watch } from 'vue';
 import type { LogoResponse } from '@/types/server';
 import { isPlatform } from '@ionic/vue';
 import { isTv } from '@/config/global.ts';
+import { NavigationBar } from '@hugotomazi/capacitor-navigation-bar';
+import { EdgeToEdge } from '@capawesome/capacitor-android-edge-to-edge-support';
+import { StatusBar } from '@capacitor/status-bar';
 
 const sim = ref<boolean>(false);
 export const showImageModal = computed(() => sim.value);
@@ -66,15 +69,21 @@ watch([sim, sss], async ([sim, sss]) => {
 	if ((sim || sss) && !dss.value) {
 		document.querySelector<HTMLDialogElement>('#imageModal')?.showModal();
 		if (isPlatform('capacitor') && !isTv.value) {
-			const StatusBar = await import('@capacitor/status-bar').then(m => m.StatusBar);
-			StatusBar.setOverlaysWebView({ overlay: true }).then();
+			await Promise.all([
+				EdgeToEdge.disable(),
+				NavigationBar.hide(),
+				StatusBar.hide(),
+			]);
 		}
 	}
 	else {
 		document.querySelector<HTMLDialogElement>('#imageModal')?.close();
 		if (isPlatform('capacitor') && !isTv.value) {
-			const StatusBar = await import('@capacitor/status-bar').then(m => m.StatusBar);
-			StatusBar.setOverlaysWebView({ overlay: false }).then();
+			await Promise.all([
+				EdgeToEdge.enable(),
+				NavigationBar.show(),
+				StatusBar.show(),
+			]);
 		}
 	}
 });

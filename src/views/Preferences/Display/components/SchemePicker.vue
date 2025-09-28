@@ -39,19 +39,14 @@ function changeTheme(value: ColorScheme) {
 				</button>
 				<button id="auto" :class="scheme === 'system'
 						? 'outline-focus'
-						: 'outline-transparent'" class="relative flex h-8 w-8 flex-shrink-0 flex-grow-0 items-center justify-center rounded-full outline outline-2"
+						: 'outline-transparent'" class="relative flex h-8 w-8 flex-shrink-0 flex-grow-0 items-center justify-center rounded-full outline outline-2 overflow-clip"
 					title="System default"
 					@click="changeTheme('system')"
 				>
-					<!--        square div NO SVG with a diagonal separation white and black  -->
-					<div class="absolute inset-0 rounded-full"
-						style="background: linear-gradient(
-                -45deg,
-                var(--surface-1),
-                var(--surface-1) 50%,
-                var(--surface-12) 50%,
-                var(--surface-12)
-              );"
+					<div class="absolute inset-0 rounded-full opacity-80 border-2"
+						style="
+              background: linear-gradient(-45deg, var(--color-slate-5), var(--color-slate-5) 50%, var(--color-slate-12) 50%, var(--color-slate-12));
+            "
 					/>
 				</button>
 				<button

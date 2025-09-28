@@ -8,6 +8,7 @@ import { NavigationBar } from '@hugotomazi/capacitor-navigation-bar';
 import { tooDark, tooLight } from '@/lib/colorHelper.ts';
 import { focusColor } from '@/store/ui';
 import { scheme } from '@/store/colorScheme.ts';
+import { StatusBar, Style } from '@capacitor/status-bar';
 
 export const topNavColor = computed(() => {
 	return rgbaToHex({
@@ -78,11 +79,8 @@ export async function applyNativeColor() {
 		color = defaultColor;
 	}
 
-	const { StatusBar, Style } = await import('@capacitor/status-bar')
-		.then(m => ({ StatusBar: m.StatusBar, Style: m.Style }));
-
-	// window.StatusBar = StatusBar;
-	// window.NavigationBar = NavigationBar;
+	window.StatusBar = StatusBar;
+	window.NavigationBar = NavigationBar;
 
 	if (scheme.value === 'dark' || (scheme.value === 'system' && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
 		await StatusBar.setStyle({ style: Style.Dark });

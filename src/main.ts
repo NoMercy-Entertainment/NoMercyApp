@@ -46,6 +46,16 @@ import { parseToken } from './lib/auth/helpers';
 import { useOnline } from '@vueuse/core';
 import { pwaMessages } from './i18n/pwa';
 import { redirectUrl } from '@/store/routeState';
+import { StatusBar } from '@awesome-cordova-plugins/status-bar';
+import { NavigationBar } from '@hugotomazi/capacitor-navigation-bar';
+import { EdgeToEdge } from '@capawesome/capacitor-android-edge-to-edge-support';
+
+// @ts-ignore
+window.StatusBar = StatusBar;
+// @ts-ignore
+window.NavigationBar = NavigationBar;
+// @ts-ignore
+window.EdgeToEdge = EdgeToEdge;
 
 let redirectUri = `nomercy://home`;
 if (location.href.includes('logout')) {
@@ -133,6 +143,10 @@ async function initializeMobileApp() {
 			import('@/lib/auth/mobile-keycloak').then(m => m.default),
 			import('@/config/config').then(m => m.keycloakConfig),
 		]);
+
+		StatusBar.show();
+		await NavigationBar.show();
+		await EdgeToEdge.disable();
 
 		// @ts-ignore
 		app.use(MobileKeycloak, {

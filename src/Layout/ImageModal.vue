@@ -19,9 +19,6 @@ import TMDBImage from '@/components/Images/TMDBImage.vue';
 import { cardMenu, trackContextMenuItems } from '@/store/contextMenuItems';
 import serverClient from '@/lib/clients/serverClient';
 import MoooomIcon from '@/components/Images/icons/MoooomIcon.vue';
-import { EdgeToEdge } from '@capawesome/capacitor-android-edge-to-edge-support';
-import { NavigationBar } from '@hugotomazi/capacitor-navigation-bar';
-import { isPlatform } from '@ionic/vue';
 
 const showButton = ref(false);
 const src = ref<string | null>();
@@ -42,27 +39,13 @@ const delay = computed(() => {
 	return showScreensaver.value ? 2400 : 400;
 });
 
-const { StatusBar } = await import('@capacitor/status-bar')
-	.then(m => ({ StatusBar: m.StatusBar }));
-
 watch(imageModalData, async (data) => {
 	if (overlayRef?.value?.style) {
 		overlayRef.value.style.opacity = '1';
 	}
 
 	if (!data) {
-		if (isPlatform('capacitor')) {
-			await NavigationBar.show();
-			await EdgeToEdge.enable();
-			await StatusBar.show();
-		}
 		return;
-	}
-
-	if (isPlatform('capacitor')) {
-		await NavigationBar.hide();
-		await EdgeToEdge.enable();
-		await StatusBar.hide();
 	}
 
 	if (src.value === null && data.src) {
@@ -297,16 +280,16 @@ function onRightClick(e: MouseEvent) {
 			id="imageModal"
 			ref="imageModal"
 			:style="logoColor ? `--color-theme-8: ${logoColor};` : ''"
-			class="fixed inset-0 w-screen h-screen z-[999999999] bg-surface-4 dark:bg-surface-9 m-0 max-w-screen max-h-screen overflow-clip"
+			class="fixed inset-0 w-screen h-screen z-[999999999] bg-surface-4 dark:bg-surface-9 m-0 max-w-screen max-h-screen overflow-clip transform-gpu"
 		>
 			<div
 				v-if="(showImageModal || showScreensaver) && !disableScreensaver"
 				ref="overlayRef"
 				:style="`--delay: ${showScreensaver ? '2400ms' : '400ms'}`"
-				class="pointer-events-none fixed inset-0 bg-black w-available h-available z-999 transitioning-slower"
+				class="pointer-events-none fixed inset-0 bg-black w-available h-available z-999 transitioning-slower transform-gpu"
 			/>
 			<div
-				class="absolute inset-0 z-0 h-screen w-screen items-center border-solid border-black bg-black p-8 text-center left-50 border-1 transitioning-slower"
+				class="absolute inset-0 z-0 h-screen w-screen items-center border-solid border-black bg-black p-8 text-center left-50 border-1 transitioning-slower transform-gpu"
 				@click="handleClick"
 			>
 				<img
@@ -317,7 +300,7 @@ function onRightClick(e: MouseEvent) {
 				>
 				<div
 					:style="`background-image: url(${src});`"
-					class="absolute z-0 bg-center opacity-75 -inset-[50vh] w-[200vw] h-[400vh] bg-blur"
+					class="absolute z-0 bg-center opacity-75 -inset-[50vh] w-[200vw] h-[400vh] bg-blur transform-gpu"
 				/>
 
 				<button
@@ -337,20 +320,20 @@ function onRightClick(e: MouseEvent) {
 				/>
 				<div
 					:style="`background-image: url(${src}); aspect-ratio: ${imageModalData?.aspectRatio}`"
-					class="absolute inset-2 tv:inset-2 z-0 m-auto h-auto overflow-clip rounded-xl bg-cover bg-center bg-no-repeat opacity-90 shadow-img max-w-[82vw] max-h-[83vh] bg-image-blur md:inset-16"
+					class="absolute inset-2 tv:inset-2 z-0 m-auto h-auto overflow-clip rounded-xl bg-cover bg-center bg-no-repeat opacity-90 shadow-img max-w-[82vw] max-h-[83vh] bg-image-blur md:inset-16 transform-gpu"
 					@contextmenu="onRightClick($event)"
 				/>
 
 				<div
 					:style="`background-image: url(${src}); aspect-ratio: ${imageModalData?.aspectRatio}; box-shadow: 0 0 800px 80px rgba(0,0,0,.2) inset;`"
-					class="absolute inset-2 tv:inset-20 z-0 m-auto h-auto overflow-clip rounded-xl bg-cover bg-center bg-no-repeat shadow-img max-w-[82vw] max-h-[83vh] md:inset-24 pointer-events-none"
+					class="absolute inset-2 tv:inset-20 z-0 m-auto h-auto overflow-clip rounded-xl bg-cover bg-center bg-no-repeat shadow-img max-w-[82vw] max-h-[83vh] md:inset-24 pointer-events-none transform-gpu"
 					@contextmenu="onRightClick($event)"
 				>
 					<div
-						class="absolute left-0 z-0 p-4 bottom:2 sm:bottom-6 sm:left-8 tv:bottom-2 tv:left-6"
+						class="absolute left-0 z-0 bottom-0 sm:p-4 sm:bottom-6 sm:left-8 tv:bottom-2 tv:left-6 transform-gpu"
 					>
 						<div
-							class="flex h-inherit w-full select-none items-start justify-start bg-cover min-h-[20vh] max-h-[20vh] min-w-[30vw] max-w-[30vw]"
+							class="flex h-inherit w-full select-none items-start justify-start bg-cover min-h-20 max-h-20 sm:min-h-[20vh] sm:max-h-[20vh] min-w-[30vw] max-w-[30vw] transform-gpu"
 						>
 							<TMDBImage
 								v-if="logoSrc"
@@ -359,7 +342,7 @@ function onRightClick(e: MouseEvent) {
 								:path="logoSrc"
 								:shadow="logoColor"
 								:size="500"
-								class="object-contain h-available object-[0_0%] !duration-700 children:!duration-700"
+								class="object-contain h-available object-[0_0%] !duration-700 children:!duration-700 transform-gpu"
 								class-name="relative self-start px-4 py-4 !items-start"
 								type="logo"
 							/>
