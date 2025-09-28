@@ -1,1 +1,0 @@
-import{$s as t,Ms as s,_s as a,ks as r,ws as l}from"./index-H5TKJIZK.js";import{t as n}from"./_plugin-vue_export-helper-Qq1ciMp2.js";a();var o={};function u(_,e){return t(),s(l,null,[e[0]||(e[0]=r("h1",null,"Auth View Desktop",-1)),e[1]||(e[1]=r("div",{class:"overflow-auto h-available"},null,-1))],64)}var m=n(o,[["render",u]]);export{m as default};
