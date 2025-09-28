@@ -3,12 +3,7 @@ import { onMounted, onUnmounted } from 'vue';
 import router from '@/router';
 import { useIsFetching } from '@tanstack/vue-query';
 
-import {
-	IonPage,
-	IonProgressBar,
-	IonRouterOutlet,
-	IonTabs,
-} from '@ionic/vue';
+import { IonPage, IonProgressBar, IonRouterOutlet, IonTabs } from '@ionic/vue';
 
 import { lockPortrait, unlockOrientation } from '@/lib/utils';
 import { closeMenu } from '@/store/profileMenu';
@@ -66,8 +61,9 @@ onUnmounted(() => {
 			<MiniPlayer
 				:key="!fullPlayerModalOpen ? 'mini-player-open' : 'mini-player-closed'"
 			/>
-
-			<ImageModal />
+			<Suspense>
+				<ImageModal />
+			</Suspense>
 		</IonTabs>
 	</IonPage>
 </template>

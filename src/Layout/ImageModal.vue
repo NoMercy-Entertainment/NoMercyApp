@@ -21,6 +21,7 @@ import serverClient from '@/lib/clients/serverClient';
 import MoooomIcon from '@/components/Images/icons/MoooomIcon.vue';
 import { EdgeToEdge } from '@capawesome/capacitor-android-edge-to-edge-support';
 import { NavigationBar } from '@hugotomazi/capacitor-navigation-bar';
+import { isPlatform } from '@ionic/vue';
 
 const showButton = ref(false);
 const src = ref<string | null>();
@@ -41,8 +42,8 @@ const delay = computed(() => {
 	return showScreensaver.value ? 2400 : 400;
 });
 
-const { StatusBar, Style } = await import('@capacitor/status-bar')
-	.then(m => ({ StatusBar: m.StatusBar, Style: m.Style }));
+const { StatusBar } = await import('@capacitor/status-bar')
+	.then(m => ({ StatusBar: m.StatusBar }));
 
 watch(imageModalData, async (data) => {
 	if (overlayRef?.value?.style) {
@@ -50,15 +51,19 @@ watch(imageModalData, async (data) => {
 	}
 
 	if (!data) {
-		await NavigationBar.show();
-		await EdgeToEdge.enable();
-		await StatusBar.show();
+		if (isPlatform('capacitor')) {
+			await NavigationBar.show();
+			await EdgeToEdge.enable();
+			await StatusBar.show();
+		}
 		return;
 	}
 
-	await NavigationBar.hide();
-	await EdgeToEdge.disable();
-	await StatusBar.hide();
+	if (isPlatform('capacitor')) {
+		await NavigationBar.hide();
+		await EdgeToEdge.enable();
+		await StatusBar.hide();
+	}
 
 	if (src.value === null && data.src) {
 		src.value = `${imageBaseUrl.value}${data.src}?width=3840`;

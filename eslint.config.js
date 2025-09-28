@@ -13,6 +13,7 @@ export default antfu({
 			'vue/no-reserved-component-names': 'off',
 			'vue-a11y/tabindex-no-positive': 'off',
 			'vue-a11y/no-static-element-interactions': 'off',
+			'vue-a11y/click-events-have-key-events': 'off',
 		},
 	},
 	typescript: {

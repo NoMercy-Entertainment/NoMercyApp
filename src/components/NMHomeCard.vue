@@ -104,7 +104,7 @@ function scrollToTop() {
 		/>
 
 		<div
-			class="pointer-events-none absolute inset-0 z-0 mt-auto h-4/5 bg-gradient-to-t from-surface-1 via-surface-1/60 bottom-0"
+			class="pointer-events-none absolute inset-0 z-0 mt-auto h-4/5 bg-gradient-to-t from-black via-black/60 bottom-0"
 		/>
 
 		<div class="flex w-full flex-grow flex-col items-end justify-end gap-2">
@@ -252,7 +252,7 @@ function scrollToTop() {
 			<CardShadow class-name="top-auto bottom-0 w-full" colored />
 
 			<div
-				class="flex flex-col justify-end items-center self-stretch z-10 pt-10 bg-gradient-to-b from-surface-1/[5%] to-surface-1/60"
+				class="flex flex-col justify-end items-center self-stretch z-10 pt-10 bg-gradient-to-b from-black/[5%] to-black/60"
 			>
 				<div
 					class="relative flex flex-shrink-0 flex-grow-0 flex-col items-center justify-start gap-3 p-3"

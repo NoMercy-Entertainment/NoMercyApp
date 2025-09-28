@@ -1,11 +1,10 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import { IonPage, IonRouterOutlet, IonTabs } from '@ionic/vue';
 
 import { currentSong } from '@/store/audioPlayer';
 
 import ImageModal from '@/Layout/ImageModal.vue';
 // import Screensaver from '@/Layout/Screensaver.vue';
-
 import Navbar from './components/NavBar.vue';
 import FullTvPlayer from '@/components/MusicPlayer/tv/FullTvPlayer.vue';
 </script>
@@ -17,7 +16,9 @@ import FullTvPlayer from '@/components/MusicPlayer/tv/FullTvPlayer.vue';
 			<IonRouterOutlet />
 		</IonTabs>
 
-		<ImageModal />
+		<Suspense>
+			<ImageModal />
+		</Suspense>
 		<FullTvPlayer v-if="currentSong" />
 	</IonPage>
 </template>

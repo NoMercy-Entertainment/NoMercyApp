@@ -112,7 +112,9 @@ function focusMain() {
 			</div>
 
 			<MusicPlayerDesktop />
-			<ImageModal />
+			<Suspense>
+				<ImageModal />
+			</Suspense>
 			<ConfirmDialog />
 			<ContextMenu ref="contextMenu" :model="contextMenuItems" />
 		</div>
