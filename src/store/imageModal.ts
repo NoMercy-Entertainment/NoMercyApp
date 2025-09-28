@@ -67,23 +67,24 @@ export function setTemp(temp: any) {
 export const imageModal = ref<VNodeRef>();
 watch([sim, sss], async ([sim, sss]) => {
 	if ((sim || sss) && !dss.value) {
-		document.querySelector<HTMLDialogElement>('#imageModal')?.showModal();
 		if (isPlatform('capacitor') && !isTv.value) {
 			await Promise.all([
-				EdgeToEdge.disable(),
 				NavigationBar.hide(),
+				EdgeToEdge.disable(),
 				StatusBar.hide(),
 			]);
 		}
+		document.querySelector<HTMLDialogElement>('#imageModal')?.showModal();
+		(document.activeElement as HTMLElement).blur();
 	}
 	else {
-		document.querySelector<HTMLDialogElement>('#imageModal')?.close();
 		if (isPlatform('capacitor') && !isTv.value) {
 			await Promise.all([
-				EdgeToEdge.enable(),
-				NavigationBar.show(),
 				StatusBar.show(),
+				NavigationBar.show(),
+				EdgeToEdge.enable(),
 			]);
 		}
+		document.querySelector<HTMLDialogElement>('#imageModal')?.close();
 	}
 });
