@@ -1,1 +1,0 @@
-import{Xa as i,Ya as s}from"./index-CANHr9D7.js";s();var a;(function(t){t.Dark="DARK",t.Light="LIGHT",t.Default="DEFAULT"})(a||(a={}));var r;(function(t){t.None="NONE",t.Slide="SLIDE",t.Fade="FADE"})(r||(r={}));const o=r,u=a;var e=i("StatusBar");export{r as Animation,e as StatusBar,o as StatusBarAnimation,u as StatusBarStyle,a as Style};
