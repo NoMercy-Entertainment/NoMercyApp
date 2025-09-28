@@ -16,6 +16,7 @@ import { setBackground, setColorPalette, setPoster, setTitle } from '@/store/ui'
 import Carousel from '@/components/Carousel/Carousel.vue';
 import MediaCard from '@/components/Cards/MediaCard.vue';
 import { showBackdrops } from '@/store/preferences';
+import MoooomIcon from '@/components/Images/icons/MoooomIcon.vue';
 
 const props = defineProps({
 	data: {

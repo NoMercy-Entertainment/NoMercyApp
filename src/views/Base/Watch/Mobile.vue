@@ -3,7 +3,7 @@ import { ref, watch } from 'vue';
 import { IonContent, IonPage, isPlatform, onIonViewDidEnter, onIonViewDidLeave } from '@ionic/vue';
 import { App } from '@capacitor/app';
 
-import { disableImmersiveMode, enableImmersiveMode, lockLandscape, lockPortrait } from '@/lib/utils';
+import { disableImmersiveMode, enableImmersiveMode, lockLandscape, lockPortrait, unlockOrientation } from '@/lib/utils';
 import { isNative } from '@/config/global';
 import { currentServer } from '@/store/currentServer';
 import { user } from '@/store/user';
@@ -100,14 +100,14 @@ function initPlayer(value?: NMPlaylistItem[] | undefined) {
 		}
 	});
 
-	player.value?.on('dispose', () => {
-		lockPortrait();
-		disableImmersiveMode();
+	player.value?.on('dispose', async () => {
+		await lockPortrait();
+		await disableImmersiveMode();
 		if (history.state.back) {
 			router.back();
 		}
 		else {
-			router.replace('/');
+			await router.replace('/');
 		}
 	});
 
@@ -123,9 +123,10 @@ function initPlayer(value?: NMPlaylistItem[] | undefined) {
 		setDisableScreensaver(false);
 	});
 
-	player.value?.on('ready', () => {
-		lockLandscape();
-		enableImmersiveMode();
+	player.value?.on('ready', async () => {
+		await lockLandscape();
+		await unlockOrientation();
+		await enableImmersiveMode();
 		audioPlayer.stop();
 	});
 

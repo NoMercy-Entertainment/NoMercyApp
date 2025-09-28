@@ -7,6 +7,7 @@ import { scrollIntoView } from '@/lib/utils';
 
 import { pickPaletteColor } from '@/lib/colorHelper';
 import TMDBImage from '@/components/Images/TMDBImage.vue';
+import MoooomIcon from '@/components/Images/icons/MoooomIcon.vue';
 
 const props = defineProps({
 	data: {

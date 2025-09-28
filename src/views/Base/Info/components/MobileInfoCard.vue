@@ -163,7 +163,7 @@ const shareData = computed<ShareOptions>(() => ({
 			<div
 				class="flex justify-start items-center flex-grow-0 flex-shrink-0 relative overflow-hidden gap-2 rounded-3xl bg-black/[0.48] border border-black/2"
 			>
-				<MediaLikeButton :data="data" class="!p-0" />
+				<MediaLikeButton v-if="data" :data="data" class="!p-0" />
 			</div>
 			<div
 				class="flex justify-start items-center flex-grow-0 flex-shrink-0 relative overflow-hidden gap-2 rounded-3xl bg-black/[0.48] border border-black/2"
