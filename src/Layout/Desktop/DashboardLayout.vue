@@ -238,7 +238,7 @@ watch(dataUpdatedAt, (value) => {
 			<ScrollContainer
 				v-else
 				:static="true"
-				class="z-0 w-full flex-1 overflow-y-auto overflow-x-hidden pt-2 pb-8 sm:p-4"
+				class="z-0 w-full flex-1 overflow-y-auto overflow-x-hidden pt-2 sm:p-4"
 				frame
 			>
 				<div

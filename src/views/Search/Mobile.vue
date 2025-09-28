@@ -18,6 +18,7 @@ import { showScreensaver } from '@/store/imageModal';
 
 import CosmosBg2 from '@/components/Images/CosmosBg2.vue';
 import SearchCard from '@/components/Cards/SearchCard.vue';
+import MoooomIcon from '@/components/Images/icons/MoooomIcon.vue';
 
 const route = useRoute();
 const content = ref<VueDivElement>();
@@ -157,7 +158,7 @@ watch(searchType, () => {
 								class="absolute w-9 h-available inset-0 bg-focus z-0 rounded-lg transition-all duration-150"
 							/>
 							<button
-								class="text-surface-1 dark:text-surface-12 flex justify-center items-center flex-grow-0 flex-shrink-0 relative gap-2 p-1 rounded-lg w-9 h-9"
+								class="text-surface-12 flex justify-center items-center flex-grow-0 flex-shrink-0 relative gap-2 p-1 rounded-lg w-9 h-9"
 								@click="searchType = 'video'"
 							>
 								<MoooomIcon
@@ -166,7 +167,7 @@ watch(searchType, () => {
 								/>
 							</button>
 							<button
-								class="text-surface-1 dark:text-surface-12 flex justify-center items-center flex-grow-0 flex-shrink-0 relative gap-2 p-1 rounded-lg w-9 h-9"
+								class="text-surface-12 flex justify-center items-center flex-grow-0 flex-shrink-0 relative gap-2 p-1 rounded-lg w-9 h-9"
 								@click="searchType = 'music'"
 							>
 								<MoooomIcon

@@ -14,10 +14,9 @@ import AppLogoSquare from '@/components/Images/icons/AppLogoSquare.vue';
 	<IonTabBar
 		slot="bottom"
 		:class="{
-			'bg-sand-light-1 dark:bg-surface-2 hide-bg': menuOpen,
-			'bg-sand-light-1 dark:bg-surface-2': !menuOpen,
+			'hide-bg': menuOpen,
 		}"
-		class="w-available overflow-clip"
+		class="w-available overflow-clip text-scheme-12 bg-surface-1 dark:bg-surface-2"
 		mode="md"
 		selected-tab="home"
 	>
@@ -97,11 +96,11 @@ ion-tab-button ion-avatar x {
 }
 
 ion-tab-button ion-icon {
-	@apply text-white w-7 h-7 min-w-7 min-h-7 relative flex -mb-1.5 p-[0.625rem_0.725rem_0.625rem];
+	@apply text-surface-12 w-7 h-7 min-w-7 min-h-7 relative flex -mb-1.5 p-[0.625rem_0.725rem_0.625rem];
 }
 
 ion-tab-button ion-label {
-	@apply overflow-visible mb-1.5 -mt-1 text-2xs text-center;
+	@apply overflow-visible mb-1.5 -mt-1 text-2xs text-center text-surface-12;
 }
 
 .tab-selected ion-icon {

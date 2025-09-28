@@ -78,9 +78,9 @@ export async function removeColorScheme() {
 export const scheme = useColorMode({
 	attribute: 'class',
 	modes: {
-		light: 'light',
-		system: 'system',
-		dark: 'dark',
+		light: 'scheme-light',
+		system: 'scheme-system',
+		dark: 'scheme-dark',
 	},
 });
 
