@@ -21,6 +21,7 @@ import DropdownMenu from '@/Layout/Desktop/components/Menus/DropdownMenu.vue';
 import BannerButton from '@/components/Buttons/BannerButton.vue';
 import PlayerIcon from '@/components/Images/icons/PlayerIcon.vue';
 import Marquee from '@/components/Marquee.vue';
+import MoooomIcon from '@/components/Images/icons/MoooomIcon.vue';
 
 const props = defineProps({
 	data: {
@@ -155,7 +156,7 @@ const date = computed(() => {
 		</span>
 
 		<template v-for="item in data.album_track" :key="item.id">
-			<span
+			<button
 				:class="{
 					'opacity-0': !isAlbumRoute,
 					'opacity-100': isAlbumRoute,
@@ -174,7 +175,7 @@ const date = computed(() => {
 						<Marquee :text="item.name" />
 					</span>
 				</RouterLink>
-			</span>
+			</button>
 		</template>
 		<span class="hidden sm:flex invisible max-h-12 md:visible">
 			{{ date }}

@@ -16,7 +16,9 @@ import { currentServer } from '@/store/currentServer';
 import { isPlatform } from '@ionic/vue';
 import { isTv } from '@/config/global.ts';
 
-const { idle, reset } = useIdle((screensaverDelay.value ?? 0) * 60 * 1000);
+const { idle, reset } = useIdle((screensaverDelay.value ?? 0) * 60 * 1000, {
+	events: ['mousemove', 'mousedown', 'keydown', 'touchstart', 'wheel'],
+});
 
 const index = ref(-1);
 const images = ref<LogoResponse[] | null>(null);

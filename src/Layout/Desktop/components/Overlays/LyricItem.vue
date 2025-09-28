@@ -1,7 +1,8 @@
 <script lang="ts" setup>
-import type { PropType } from 'vue';
+import type {PropType} from 'vue';
 
-import type { Lyric } from '@/types/musicPlayer';
+import type {Lyric} from '@/types/musicPlayer';
+import MoooomIcon from "@/components/Images/icons/MoooomIcon.vue";
 
 defineProps({
 	lyric: {

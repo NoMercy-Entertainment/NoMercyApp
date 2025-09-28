@@ -2,6 +2,7 @@
 import type { PropType } from 'vue';
 import { setSortOrder, setSortType, sortOrder, sortType } from '@/store/ui';
 import { SortOrder, SortType } from '@/types/musicPlayer';
+import MoooomIcon from '@/components/Images/icons/MoooomIcon.vue';
 
 defineProps({
 	name: {
@@ -68,6 +69,7 @@ function handleKeyup(e: KeyboardEvent) {
 		class="relative cursor-pointer items-center focus-visible:underline focus-visible:underline-offset-2"
 		no-ring
 	>
+		TrackRow
 		<span class="">
 			{{ $t(name) }}
 		</span>

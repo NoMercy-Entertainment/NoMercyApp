@@ -1,6 +1,8 @@
 <script lang="ts" setup>
-import MusicButton from './MusicButton.vue';
 import { queueMenuOpen, toggleQueueMenuOpen } from '@/store/audioPlayer';
+
+import MusicButton from './MusicButton.vue';
+import MoooomIcon from '@/components/Images/icons/MoooomIcon.vue';
 
 function handleClick(e?: MouseEvent) {
 	e?.stopPropagation();

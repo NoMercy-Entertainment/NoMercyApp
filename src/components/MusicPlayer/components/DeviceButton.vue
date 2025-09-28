@@ -12,6 +12,7 @@ import { deviceId } from '@/store/deviceInfo';
 import { user } from '@/store/user';
 
 import MusicButton from './MusicButton.vue';
+import MoooomIcon from '@/components/Images/icons/MoooomIcon.vue';
 
 defineProps({
 	noName: {

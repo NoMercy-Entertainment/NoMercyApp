@@ -1,16 +1,13 @@
 import { computed, ref, watch } from 'vue';
 import type { PaletteColors } from '@/lib/colorHelper';
-import { pickPaletteColor, tooDark, tooLight } from '@/lib/colorHelper';
+import { pickPaletteColor } from '@/lib/colorHelper';
 import { isPlatform, useKeyboard } from '@ionic/vue';
 import { SortOrder, SortType } from '@/types/musicPlayer';
 import { useAutoThemeColors } from '@/store/preferences';
 import { isXmasTime } from '@/lib/dateTime';
 import { Keyboard } from '@capacitor/keyboard';
-import { rgbaToHex } from '@uiw/color-convert';
-import { rgbToHex } from '@/types/config.ts';
-import { disableImmersiveMode } from '@/lib/utils.ts';
-import { EdgeToEdge } from '@capawesome/capacitor-android-edge-to-edge-support';
 import { isTv } from '@/config/global.ts';
+import { applyNativeColor } from '@/store/colorTheme.ts';
 
 export const scrollContainerElement = ref<HTMLDivElement>();
 export const setupComplete = ref(false);
@@ -36,13 +33,13 @@ export function setBackground(value?: string | null) {
 	b.value = value;
 }
 
-const fc = ref('var(--color-theme-7)');
+const fc = ref('var(--color-theme-8)');
 export const focusColor = computed(() => fc.value);
 
 const c = ref<PaletteColors | null>();
 export const colorPalette = computed(() => c.value);
 
-export function setColorPalette(value?: PaletteColors | null) {
+export async function setColorPalette(value?: PaletteColors | null) {
 	c.value = value;
 
 	if (!useAutoThemeColors.value) {
@@ -55,27 +52,7 @@ export function setColorPalette(value?: PaletteColors | null) {
 		document.documentElement.style.setProperty('--color-theme-8', fc.value);
 	}
 
-	if (isPlatform('capacitor')) {
-		let color = rgbaToHex({
-			r: Number.parseInt(fc.value.split(' ')[0], 10) * 0.35,
-			g: Number.parseInt(fc.value.split(' ')[1], 10) * 0.35,
-			b: Number.parseInt(fc.value.split(' ')[2], 10) * 0.35,
-			a: 1,
-		});
-
-		const style = window.getComputedStyle(document.body);
-		const defaultColor = style.getPropertyValue('--color-theme-7');
-
-		if (tooDark(color, 10)) {
-			color = rgbToHex(defaultColor, 1);
-		}
-		if (tooLight(color, 160)) {
-			color = rgbToHex(defaultColor, 1);
-		}
-
-		disableImmersiveMode().then();
-		EdgeToEdge.setBackgroundColor({ color }).then();
-	}
+	await applyNativeColor();
 }
 
 const l = ref<string | null>();

@@ -1,4 +1,4 @@
-import { camelize, getCurrentInstance, ref, toHandlerKey } from 'vue';
+import { ref } from 'vue';
 import type { ClassValue } from 'clsx';
 import { clsx } from 'clsx';
 import { twMerge } from 'tailwind-merge';
@@ -7,30 +7,10 @@ import type { InfoResponse } from '@/types/api/base/info';
 import { isTv } from '@/config/global';
 import { isPlatform } from '@ionic/vue';
 import { AndroidFullScreen, AndroidSystemUiFlags } from '@awesome-cordova-plugins/android-full-screen';
-import { StatusBar } from '@capacitor/status-bar';
 import { EdgeToEdge } from '@capawesome/capacitor-android-edge-to-edge-support';
 
 export function cn(...inputs: ClassValue[]) {
 	return twMerge(clsx(inputs));
-}
-
-export function useEmitAsProps<Name extends string>(
-	emit: (name: Name, ...args: any[]) => void,
-) {
-	const vm = getCurrentInstance();
-
-	const events = vm?.type.emits as Name[];
-	const result: Record<string, any> = {};
-	if (!events?.length) {
-		console.warn(
-			`No emitted event found. Please check component: ${vm?.type.__name}`,
-		);
-	}
-
-	events?.forEach((ev) => {
-		result[toHandlerKey(camelize(ev))] = (...arg: any) => emit(ev, ...arg);
-	});
-	return result;
 }
 
 export function episodeCounter(data: InfoResponse) {
@@ -76,42 +56,6 @@ export function scrollIntoView(parent?: HTMLElement) {
 
 	requestAnimationFrame(scrollStep);
 }
-
-//
-// export const scrollCenter = (el: HTMLElement, container: HTMLElement, options?: {
-// 	duration?: number;
-// 	margin?: number;
-// }
-// ) => {
-// 	if (!el || !container) return;
-// 	console.log('scroll Center', el, container);
-//
-// 	const scrollDuration = options?.duration || 60;
-// 	let margin = options?.margin;
-// 	if (container.offsetHeight < window.innerHeight * 0.6) {
-// 		margin = 0.65;
-// 	} else {
-// 		margin = 1.65;
-// 	}
-//
-// 	const elementTop = (el.getBoundingClientRect().top) + (el.getBoundingClientRect().height / 2) - (container.getBoundingClientRect().height / margin);
-//
-// 	const startingY = container.scrollTop;
-// 	const startTime = performance.now();
-//
-// 	function scrollStep(timestamp: number) {
-// 		const currentTime = timestamp - startTime;
-// 		const progress = Math.min(currentTime / scrollDuration, 1);
-//
-// 		container.scrollTo(0, Math.floor(startingY + (elementTop * progress)));
-//
-// 		if (currentTime < scrollDuration) {
-// 			requestAnimationFrame(scrollStep);
-// 		}
-// 	}
-//
-// 	requestAnimationFrame(scrollStep);
-// };
 
 export function scrollCenter(el: HTMLElement, container: HTMLElement, options?: {
 	duration?: number;
@@ -246,9 +190,9 @@ export async function lockPortrait() {
 	if (isPlatform('capacitor') && !isTv.value) {
 		const { ScreenOrientation } = await import('@capacitor/screen-orientation');
 		try {
-			ScreenOrientation.lock({
+			await ScreenOrientation.lock({
 				orientation: 'portrait',
-			}).then();
+			});
 		}
 		catch (e) {
 			//
@@ -260,11 +204,11 @@ export async function lockLandscape() {
 	if (isPlatform('capacitor') && !isTv.value) {
 		const { ScreenOrientation } = await import('@capacitor/screen-orientation');
 		try {
-			ScreenOrientation.lock({
+			await ScreenOrientation.lock({
 				orientation: 'landscape',
-			}).then();
+			});
 		}
-		catch (e) {
+		catch {
 			//
 		}
 	}
@@ -274,7 +218,7 @@ export async function unlockOrientation() {
 	if (isPlatform('capacitor')) {
 		const { ScreenOrientation } = await import('@capacitor/screen-orientation');
 		try {
-			ScreenOrientation.unlock().then();
+			await ScreenOrientation.unlock();
 		}
 		catch {
 			//
@@ -296,6 +240,7 @@ const isLeanModeEnabled = ref(false);
 export async function enableImmersiveMode() {
 	if (isPlatform('capacitor') && !isTv.value && !isLeanModeEnabled.value) {
 		isLeanModeEnabled.value = true;
+
 		window.addEventListener('touchstart', listener);
 		listener();
 
@@ -306,6 +251,7 @@ export async function enableImmersiveMode() {
 			| AndroidSystemUiFlags.LayoutStable
 			| AndroidSystemUiFlags.Fullscreen,
 		);
+
 		await EdgeToEdge.disable();
 	}
 }
@@ -317,8 +263,8 @@ export async function disableImmersiveMode() {
 		window.removeEventListener('touchstart', listener);
 		clearInterval(timeout.value);
 
-		StatusBar.show().then();
-		AndroidFullScreen.showSystemUI().then();
+		await AndroidFullScreen.showSystemUI();
+
 		await EdgeToEdge.enable();
 	}
 }

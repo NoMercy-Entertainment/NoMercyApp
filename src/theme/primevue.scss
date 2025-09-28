@@ -286,7 +286,7 @@
   --p-text-color: var(--p-surface-950);
 
   --p-form-field-color: var(--p-text-color);
-  --p-form-field-background: rgb(from var(--p-surface-0) r g b / 6%);
+  --p-form-field-background: rgb(from var(--p-surface-950) r g b / 6%);
   --p-form-field-disabled-background: rgb(from var(--p-surface-700) r g b / 6%);
   --p-form-field-filled-background: rgb(from var(--p-surface-800) r g b / 6%);
   --p-form-field-filled-hover-background: rgb(from var(--p-surface-800) r g b / 6%);
@@ -371,7 +371,7 @@
     --p-text-color: var(--p-surface-950);
 
     --p-form-field-color: var(--p-text-color);
-    --p-form-field-background: rgb(from var(--p-surface-0) r g b / 6%);
+    --p-form-field-background: rgb(from var(--p-surface-950) r g b / 6%);
     --p-form-field-disabled-background: rgb(from var(--p-surface-700) r g b / 6%);
     --p-form-field-filled-background: rgb(from var(--p-surface-800) r g b / 6%);
     --p-form-field-filled-hover-background: rgb(from var(--p-surface-800) r g b / 6%);
@@ -491,8 +491,8 @@
   );
   --p-toggleswitch-handle-checked-background: var(--p-surface-0);
   --p-toggleswitch-checked-background: linear-gradient(0deg,
-    rgb(from var(--color-theme-9) r g b / 0.43),
-    rgb(from var(--color-theme-9) r g b / 0.74)
+    rgb(from var(--color-theme-8) r g b / 0.43),
+    rgb(from var(--color-theme-8) r g b / 0.74)
   );
 
   --p-tooltip-background: var(--p-surface-600);
@@ -580,8 +580,8 @@
       );
       --p-toggleswitch-handle-checked-background: var(--p-surface-0);
       --p-toggleswitch-checked-background: linear-gradient(0deg,
-              rgb(from var(--color-theme-9) r g b / 0.43),
-              rgb(from var(--color-theme-9) r g b / 0.74)
+              rgb(from var(--color-theme-8) r g b / 0.43),
+              rgb(from var(--color-theme-8) r g b / 0.74)
       );
 
       --p-tooltip-background: var(--p-surface-600);

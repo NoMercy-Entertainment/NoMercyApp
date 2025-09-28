@@ -13,6 +13,7 @@ import useServerClient from "@/lib/clients/useServerClient";
 import Toggle from "@/components/Forms/Toggle.vue";
 import {currentServer, setCurrentServer} from "@/store/currentServer";
 import servers, {setServers} from "@/store/servers";
+import MoooomIcon from "@/components/Images/icons/MoooomIcon.vue";
 
 const {
   data: configuration,

@@ -1,15 +1,22 @@
+import { watch } from 'vue';
 import { isPlatform } from '@ionic/vue';
 import type { BasicColorSchema } from '@vueuse/core';
 import { useColorMode } from '@vueuse/core';
 import { Preferences } from '@capacitor/preferences';
 import { SafeArea } from 'capacitor-plugin-safe-area';
-import { NavigationBar } from '@hugotomazi/capacitor-navigation-bar';
-
+import { EdgeToEdge } from '@capawesome/capacitor-android-edge-to-edge-support';
 import type { ColorScheme } from '@/types/config';
 
-import { isTv } from '@/config/global';
-import { StatusBar, Style } from '@capacitor/status-bar';
-import { EdgeToEdge } from '@capawesome/capacitor-android-edge-to-edge-support';
+import { colorTheme, setColorTheme } from '@/store/colorTheme.ts';
+
+export const scheme = useColorMode({
+	attribute: 'class',
+	modes: {
+		light: 'scheme-light light',
+		system: 'scheme-system system',
+		dark: 'scheme-dark dark',
+	},
+});
 
 export async function setColorScheme(value: 'system' | BasicColorSchema) {
 	const el = document.body.parentElement!;
@@ -29,10 +36,6 @@ export async function setColorScheme(value: 'system' | BasicColorSchema) {
 	}
 
 	if (isPlatform('capacitor') && isPlatform('android')) {
-		NavigationBar.setTransparency({
-			isTransparent: false,
-		}).then();
-
 		const safeAreaData = await SafeArea.getSafeAreaInsets();
 		const { insets } = safeAreaData;
 		for (const [key, value] of Object.entries(insets)) {
@@ -42,22 +45,7 @@ export async function setColorScheme(value: 'system' | BasicColorSchema) {
 			);
 		}
 
-		if (value === 'dark' || (value === 'system' && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-			await NavigationBar.setColor({ color: '#000000', darkButtons: true });
-			if (isPlatform('capacitor') && !isTv.value) {
-				await StatusBar.setStyle({ style: Style.Dark });
-			}
-			await EdgeToEdge.setBackgroundColor({ color: '#000000' });
-		}
-		else {
-			await NavigationBar.setColor({ color: '#ffffff', darkButtons: false });
-			if (isPlatform('capacitor') && !isTv.value) {
-				await StatusBar.setStyle({ style: Style.Light });
-			}
-			await EdgeToEdge.setBackgroundColor({ color: '#ffffff' });
-		}
-
-		await EdgeToEdge.enable();
+		await setColorTheme(colorTheme.value);
 	}
 
 	await Preferences.set({
@@ -75,16 +63,14 @@ export async function removeColorScheme() {
 	await Preferences.remove({ key: 'colorScheme' });
 }
 
-export const scheme = useColorMode({
-	attribute: 'class',
-	modes: {
-		light: 'scheme-light light',
-		system: 'scheme-system system',
-		dark: 'scheme-dark dark',
-	},
+watch(scheme, async (newValue) => {
+	await setColorScheme(newValue);
 });
 
 (async () => {
+	if (isPlatform('capacitor') && isPlatform('android')) {
+		await EdgeToEdge.enable();
+	}
 	setTimeout(async () => {
 		const colorScheme = await checkColorScheme();
 

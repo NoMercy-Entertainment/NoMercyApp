@@ -1,4 +1,6 @@
 <script lang="ts" setup>
+import MoooomIcon from '@/components/Images/icons/MoooomIcon.vue';
+
 defineProps({
 	size: {
 		type: Number,

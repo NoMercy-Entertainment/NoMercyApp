@@ -22,6 +22,7 @@ import NoMercyAvatar from '@/components/Images/NoMercyAvatar.vue';
 import { videoSocketConnection } from '@/store/videoSocket.ts';
 import { musicSocketConnection } from '@/store/musicSocket.ts';
 import { ripperSocketConnection } from '@/lib/clients/ripperSocket.ts';
+import MoooomIcon from '@/components/Images/icons/MoooomIcon.vue';
 
 const query = useQueryClient();
 

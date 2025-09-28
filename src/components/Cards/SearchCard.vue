@@ -4,6 +4,7 @@ import type { PropType } from 'vue';
 import { parseYear } from '@/lib/dateTime';
 
 import AppLogoSquare from '@/components/Images/icons/AppLogoSquare.vue';
+import MoooomIcon from '@/components/Images/icons/MoooomIcon.vue';
 
 defineProps({
 	item: {

@@ -42,6 +42,7 @@ import MissingEpisodes from '@/views/Base/Info/components/MissingEpisodes.vue';
 import { useToast } from 'primevue/usetoast';
 import sidebar from '@/store/sidebar.ts';
 import { convertToHumanReact } from '@/lib/dateTime.ts';
+import MoooomIcon from '@/components/Images/icons/MoooomIcon.vue';
 
 const route = useRoute();
 

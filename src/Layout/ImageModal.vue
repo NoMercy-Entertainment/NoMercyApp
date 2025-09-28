@@ -19,6 +19,8 @@ import TMDBImage from '@/components/Images/TMDBImage.vue';
 import { cardMenu, trackContextMenuItems } from '@/store/contextMenuItems';
 import serverClient from '@/lib/clients/serverClient';
 import MoooomIcon from '@/components/Images/icons/MoooomIcon.vue';
+import { EdgeToEdge } from '@capawesome/capacitor-android-edge-to-edge-support';
+import { NavigationBar } from '@hugotomazi/capacitor-navigation-bar';
 
 const showButton = ref(false);
 const src = ref<string | null>();
@@ -39,17 +41,29 @@ const delay = computed(() => {
 	return showScreensaver.value ? 2400 : 400;
 });
 
-watch(imageModalData, (data) => {
+const { StatusBar, Style } = await import('@capacitor/status-bar')
+	.then(m => ({ StatusBar: m.StatusBar, Style: m.Style }));
+
+watch(imageModalData, async (data) => {
 	if (overlayRef?.value?.style) {
 		overlayRef.value.style.opacity = '1';
 	}
 
-	if (!data)
+	if (!data) {
+		await NavigationBar.show();
+		await EdgeToEdge.enable();
+		await StatusBar.show();
 		return;
+	}
+
+	await NavigationBar.hide();
+	await EdgeToEdge.disable();
+	await StatusBar.hide();
 
 	if (src.value === null && data.src) {
 		src.value = `${imageBaseUrl.value}${data.src}?width=3840`;
 		logoColor.value = pickPaletteColor(data.color_palette?.image);
+		// await applyNativeColor(logoColor.value);
 
 		timeout2.value = setTimeout(() => {
 			handleLoaded();
@@ -279,7 +293,6 @@ function onRightClick(e: MouseEvent) {
 			ref="imageModal"
 			:style="logoColor ? `--color-theme-8: ${logoColor};` : ''"
 			class="fixed inset-0 w-screen h-screen z-[999999999] bg-surface-4 dark:bg-surface-9 m-0 max-w-screen max-h-screen overflow-clip"
-			@click="handleClick"
 		>
 			<div
 				v-if="(showImageModal || showScreensaver) && !disableScreensaver"
@@ -289,6 +302,7 @@ function onRightClick(e: MouseEvent) {
 			/>
 			<div
 				class="absolute inset-0 z-0 h-screen w-screen items-center border-solid border-black bg-black p-8 text-center left-50 border-1 transitioning-slower"
+				@click="handleClick"
 			>
 				<img
 					:src="src ?? ''"

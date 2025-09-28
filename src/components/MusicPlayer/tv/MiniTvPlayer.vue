@@ -3,18 +3,14 @@ import type { PropType } from 'vue';
 import { watch } from 'vue';
 
 import type { PlaylistItem } from '@/types/musicPlayer';
-
-import {
-	isPlaying,
-	musicSize,
-	musicVisibility,
-	setMusicSize,
-} from '@/store/audioPlayer';
-import sidebar from '@/store/sidebar';
 import { SizeState } from '@/types/musicPlayer';
+
+import { isPlaying, musicSize, musicVisibility, setMusicSize } from '@/store/audioPlayer';
+import sidebar from '@/store/sidebar';
 import CoverImage from '@/components/MusicPlayer/components/CoverImage.vue';
 import EqSpinner from '@/components/Images/EqSpinner.vue';
 import TrackLinks from '@/components/MusicPlayer/components/TrackLinks.vue';
+import MoooomIcon from '@/components/Images/icons/MoooomIcon.vue';
 
 defineProps({
 	currentSong: {

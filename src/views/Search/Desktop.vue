@@ -19,6 +19,7 @@ import { greetingValue } from '@/config/global';
 import ScrollContainer from '@/Layout/Desktop/components/ScrollContainer.vue';
 import SearchCard from '@/components/Cards/SearchCard.vue';
 import CosmosBg2 from '@/components/Images/CosmosBg2.vue';
+import MoooomIcon from '@/components/Images/icons/MoooomIcon.vue';
 
 const route = useRoute();
 

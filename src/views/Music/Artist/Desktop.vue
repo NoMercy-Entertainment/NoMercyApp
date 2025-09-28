@@ -21,6 +21,7 @@ import Tabs from './components/Tabs.vue';
 import Tab from './components/Tab.vue';
 import Header from './components/Header.vue';
 import NotFound from '@/Layout/Desktop/components/NotFound.vue';
+import MoooomIcon from '@/components/Images/icons/MoooomIcon.vue';
 
 const route = useRoute();
 

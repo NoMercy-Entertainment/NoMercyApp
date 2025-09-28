@@ -14,6 +14,7 @@ import ScrollContainer from '@/Layout/Desktop/components/ScrollContainer.vue';
 import RipperPlayer from '@/views/Dashboard/Content/Ripper/components/RipperPlayer.vue';
 import Button from '@/components/Button.vue';
 import { ripperSocketIsConnected } from '@/lib/clients/ripperSocket';
+import MoooomIcon from '@/components/Images/icons/MoooomIcon.vue';
 
 const form = ref<HTMLFormElement>();
 const locked = ref(true);

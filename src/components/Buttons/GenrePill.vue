@@ -5,6 +5,7 @@ import type { Genre } from '@/types/api/base/genre';
 import type { CollectionGenre } from '@/types/api/base/collection';
 
 import { genreColors } from '@/config/global';
+import MoooomIcon from '@/components/Images/icons/MoooomIcon.vue';
 
 defineProps({
 	genre: {

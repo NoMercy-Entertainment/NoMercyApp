@@ -10,6 +10,7 @@ import { searchUrl } from '@/store/routeState';
 
 import MobileLibraryHeader from '@/views/Base/Library/components/MobileLibraryHeader.vue';
 import AppLogo from '@/components/Images/icons/AppLogo.vue';
+import MoooomIcon from '@/components/Images/icons/MoooomIcon.vue';
 
 const isFetching = useIsFetching();
 </script>

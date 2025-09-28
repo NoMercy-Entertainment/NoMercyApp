@@ -12,6 +12,7 @@ export default antfu({
 			'vue/no-deprecated-slot-attribute': 'off',
 			'vue/no-reserved-component-names': 'off',
 			'vue-a11y/tabindex-no-positive': 'off',
+			'vue-a11y/no-static-element-interactions': 'off',
 		},
 	},
 	typescript: {

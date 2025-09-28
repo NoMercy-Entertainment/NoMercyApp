@@ -2,6 +2,7 @@
 import type { PropType } from 'vue';
 
 import type { MoooomIcons } from '@Icons/icons';
+import MoooomIcon from '@/components/Images/icons/MoooomIcon.vue';
 
 defineProps({
 	title: {

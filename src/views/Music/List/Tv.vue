@@ -1,17 +1,7 @@
 <script lang="ts" setup>
 import { computed, onMounted, ref, watch } from 'vue';
 import { useRoute } from 'vue-router';
-import {
-	IonCol,
-	IonContent,
-	IonGrid,
-	IonItem,
-	IonLabel,
-	IonList,
-	IonPage,
-	IonRow,
-	onIonViewDidEnter,
-} from '@ionic/vue';
+import { IonCol, IonContent, IonGrid, IonItem, IonLabel, IonList, IonPage, IonRow, onIonViewDidEnter } from '@ionic/vue';
 import useServerClient from '@/lib/clients/useServerClient';
 
 import type { DisplayList } from '@/types/api/music/musicPlayer';
@@ -38,6 +28,7 @@ import Marquee from '@/components/Marquee.vue';
 import { user } from '@/store/user';
 import { musicSocketConnection } from '@/store/musicSocket';
 import { deviceId } from '@/store/deviceInfo';
+import MoooomIcon from '@/components/Images/icons/MoooomIcon.vue';
 
 const route = useRoute();
 

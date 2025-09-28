@@ -1,17 +1,7 @@
 <script lang="ts" setup>
 import { onMounted, ref, watch } from 'vue';
 import { useRoute } from 'vue-router';
-import {
-	IonCol,
-	IonContent,
-	IonGrid,
-	IonItem,
-	IonLabel,
-	IonList,
-	IonPage,
-	IonRow,
-	onIonViewDidEnter,
-} from '@ionic/vue';
+import { IonCol, IonContent, IonGrid, IonItem, IonLabel, IonList, IonPage, IonRow, onIonViewDidEnter } from '@ionic/vue';
 import useServerClient from '@/lib/clients/useServerClient';
 
 import type { DisplayList } from '@/types/api/music/musicPlayer';
@@ -21,19 +11,14 @@ import { breakTitle2 } from '@/lib/stringArray';
 import BigPlayButton from '@/components/Buttons/BigPlayButton.vue';
 import MusicButton from '@/components/MusicPlayer/components/MusicButton.vue';
 import TrackLinks from '@/components/MusicPlayer/components/TrackLinks.vue';
-import {
-	audioPlayer,
-	currentSong,
-	isPlaying,
-	openFullPlayer,
-	setCurrentPlaylist,
-} from '@/store/audioPlayer';
+import { audioPlayer, currentSong, isPlaying, openFullPlayer, setCurrentPlaylist } from '@/store/audioPlayer';
 import type { PlaylistItem } from '@/types/musicPlayer';
 import { focusColor, setColorPalette } from '@/store/ui';
 import { currentServer } from '@/store/currentServer';
 import EqSpinner from '@/components/Images/EqSpinner.vue';
 import MediaLikeButton from '@/components/Buttons/MediaLikeButton.vue';
 import Marquee from '@/components/Marquee.vue';
+import MoooomIcon from '@/components/Images/icons/MoooomIcon.vue';
 
 const route = useRoute();
 
