@@ -50,7 +50,7 @@ export async function setColorScheme(value: 'system' | BasicColorSchema) {
 			await EdgeToEdge.setBackgroundColor({ color: '#000000' });
 		}
 		else {
-			await NavigationBar.setColor({ color: '#FFFFFF', darkButtons: false });
+			await NavigationBar.setColor({ color: '#ffffff', darkButtons: false });
 			if (isPlatform('capacitor') && !isTv.value) {
 				await StatusBar.setStyle({ style: Style.Light });
 			}
@@ -78,9 +78,9 @@ export async function removeColorScheme() {
 export const scheme = useColorMode({
 	attribute: 'class',
 	modes: {
-		light: 'scheme-light',
-		system: 'scheme-system',
-		dark: 'scheme-dark',
+		light: 'scheme-light light',
+		system: 'scheme-system system',
+		dark: 'scheme-dark dark',
 	},
 });
 

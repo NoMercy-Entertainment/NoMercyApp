@@ -3,7 +3,6 @@
 // import {Chromecast} from "@gameleap/capacitor-chromecast";
 
 // import {useChromecast} from "@/hooks/useChromeCast";
-// import OptimizedIcon from "@/components/OptimizedIcon.vue";
 
 // const { currentDevice, isCasting, config, startCasting, stopCasting } = useChromecast();
 

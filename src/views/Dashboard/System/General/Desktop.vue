@@ -1,20 +1,18 @@
 <script lang="ts" setup>
-import { computed, onMounted, ref, Ref, toRaw, watch } from "vue";
-import { IonContent, IonPage } from "@ionic/vue";
-import { useQueryClient } from "@tanstack/vue-query";
-import { useDebounce } from "@vueuse/core";
-import { InputNumber, InputText } from "primevue";
+import {computed, onMounted, ref, toRaw, watch} from "vue";
+import {IonContent, IonPage} from "@ionic/vue";
+import {useQueryClient} from "@tanstack/vue-query";
+import {InputNumber, InputText} from "primevue";
 
-import type { ConfigurationResponse } from "@/types/api/dashboard/server";
+import type {ConfigurationResponse} from "@/types/api/dashboard/server";
 
 import serverClient from "@/lib/clients/serverClient";
 
 import DashboardLayout from "@/Layout/Desktop/DashboardLayout.vue";
 import useServerClient from "@/lib/clients/useServerClient";
 import Toggle from "@/components/Forms/Toggle.vue";
-import { currentServer, setCurrentServer } from "@/store/currentServer";
-import OptimizedIcon from "@/components/OptimizedIcon.vue";
-import servers, { setServers } from "@/store/servers";
+import {currentServer, setCurrentServer} from "@/store/currentServer";
+import servers, {setServers} from "@/store/servers";
 
 const {
   data: configuration,
