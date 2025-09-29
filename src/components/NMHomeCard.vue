@@ -11,10 +11,10 @@ import { pickPaletteColor } from '@/lib/colorHelper';
 import TMDBImage from '@/components/Images/TMDBImage.vue';
 import MediaLikeButton from '@/components/Buttons/MediaLikeButton.vue';
 import BannerButton from '@/components/Buttons/BannerButton.vue';
-import { scrollContainerElement, setBackground, setColorPalette } from '@/store/ui';
+import { scrollContainerElement, setBackground, setColorPalette, title } from '@/store/ui';
 import { onIonViewWillEnter, onIonViewWillLeave } from '@ionic/vue';
 import CardShadow from '@/components/Cards/CardShadow.vue';
-import { breakLogoTitle } from '@/lib/stringArray.ts';
+import { breakLogoTitle, breakTitle2 } from '@/lib/stringArray.ts';
 import MoooomIcon from '@/components/Images/icons/MoooomIcon.vue';
 
 const props = defineProps({
@@ -137,9 +137,10 @@ function scrollToTop() {
 						<p
 							v-else
 							class="h-screen max-h-40 w-px flex-grow content-end text-5xl font-bold"
-						>
-							{{ data?.title }}
-						</p>
+							v-html="
+								breakTitle2(data?.title || title || '', 'text-3xl line-clamp-2')
+							"
+						/>
 
 						<div
 							class="flex flex-shrink-0 flex-grow-0 items-start justify-start gap-4"
@@ -180,7 +181,7 @@ function scrollToTop() {
 								/>
 							</BannerButton>
 
-							<MediaLikeButton v-if="data" :data="data" @focus="scrollToTop" />
+							<MediaLikeButton v-if="data" :data="data" type="video" @focus="scrollToTop" />
 
 							<BannerButton
 								:href="data?.link"

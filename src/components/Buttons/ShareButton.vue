@@ -49,7 +49,7 @@ async function share() {
 </script>
 
 <template>
-	<MusicButton :onclick="share" label="Share">
+	<MusicButton :onclick="share" label="Share" type="video">
 		<MoooomIcon v-if="isCopied" class="" icon="shareSquare" />
 		<MoooomIcon v-else class="" icon="shareSquare" />
 	</MusicButton>

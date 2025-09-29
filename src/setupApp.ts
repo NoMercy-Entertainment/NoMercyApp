@@ -1,7 +1,6 @@
 import type { AppContext } from 'vue';
 import { App } from '@capacitor/app';
 import { IonicVue, isPlatform, useBackButton } from '@ionic/vue';
-import { Form } from '@primevue/forms';
 import Aura from '@primevue/themes/aura';
 import { VueQueryPlugin } from '@tanstack/vue-query';
 import MasonryWall from '@yeger/vue-masonry-wall';
@@ -14,13 +13,8 @@ import '@/store/screensaver';
 
 import {
 	Card,
-	Checkbox,
 	ConfirmationService,
-	ContextMenu,
 	Dialog,
-	FloatLabel,
-	IftaLabel,
-	Image,
 	InputNumber,
 	InputText,
 	MultiSelect,
@@ -37,8 +31,15 @@ import { Swiper, SwiperSlide } from 'swiper/vue';
 // @ts-ignore
 import KonamiCode from 'vue3-konami-code';
 
-import Button from '@/components/Button.vue';
+import { suffix } from '@/config/config.ts';
+import i18next from '@/config/i18next';
+import { queryClient } from '@/config/tanstack-query';
+import konamiEnabled from '@/store/konami';
+import { redirectUrl } from '@/store/routeState';
+import router from './router';
+import { isMobile } from '@/config/global.ts';
 
+import Button from '@/components/Button.vue';
 import Modal from '@/components/Modal.vue';
 import NMCard from '@/components/NMCard.vue';
 import NMCarousel from '@/components/NMCarousel.vue';
@@ -56,13 +57,6 @@ import NMMusicHomeCard from '@/components/NMMusicHomeCard.vue';
 import NMServerComponent from '@/components/NMServerComponent.vue';
 import NMTopResultCard from '@/components/NMTopResultCard.vue';
 import NMTrackRow from '@/components/NMTrackRow.vue';
-import { suffix } from '@/config/config.ts';
-import i18next from '@/config/i18next';
-import { queryClient } from '@/config/tanstack-query';
-import konamiEnabled from '@/store/konami';
-import { redirectUrl } from '@/store/routeState';
-import router from './router';
-import { isMobile } from '@/config/global.ts';
 import NMMusicCard from '@/components/NMMusicCard.vue';
 
 export async function setupApp(app: AppContext['app']) {
@@ -149,15 +143,9 @@ export async function setupApp(app: AppContext['app']) {
 	app.component('SwiperContainer', Swiper);
 	app.component('SwiperSlide', SwiperSlide);
 
-	app.directive('ripple', Ripple);
-	app.directive('tooltip', Tooltip);
 	app.component('Button', Button);
 	app.component('Card', Card);
-	app.component('Checkbox', Checkbox);
-	app.component('ContextMenu', ContextMenu);
 	app.component('Dialog', Dialog);
-	app.component('FloatLabel', FloatLabel);
-	app.component('IftaLabel', IftaLabel);
 	app.component('InputNumber', InputNumber);
 	app.component('InputText', InputText);
 	app.component('MultiSelect', MultiSelect);
@@ -165,8 +153,9 @@ export async function setupApp(app: AppContext['app']) {
 	app.component('Select', Select);
 	app.component('Toast', Toast);
 	app.component('Textarea', Textarea);
-	app.component('Image', Image);
-	app.component('Form', Form);
+
+	app.directive('ripple', Ripple);
+	app.directive('tooltip', Tooltip);
 
 	app.use(ConfirmationService);
 	app.use(ToastService);

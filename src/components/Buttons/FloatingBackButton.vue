@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import router from '@/router';
+import MoooomIcon from '@/components/Images/icons/MoooomIcon.vue';
 
 defineProps({
 	position: {

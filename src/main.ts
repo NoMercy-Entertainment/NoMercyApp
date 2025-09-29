@@ -46,7 +46,7 @@ import { parseToken } from './lib/auth/helpers';
 import { useOnline } from '@vueuse/core';
 import { pwaMessages } from './i18n/pwa';
 import { redirectUrl } from '@/store/routeState';
-import { StatusBar } from '@awesome-cordova-plugins/status-bar';
+import { StatusBar } from '@capacitor/status-bar';
 import { NavigationBar } from '@hugotomazi/capacitor-navigation-bar';
 import { EdgeToEdge } from '@capawesome/capacitor-android-edge-to-edge-support';
 
@@ -144,9 +144,10 @@ async function initializeMobileApp() {
 			import('@/config/config').then(m => m.keycloakConfig),
 		]);
 
-		StatusBar.show();
+		await StatusBar.show();
 		await NavigationBar.show();
-		await EdgeToEdge.disable();
+		await EdgeToEdge.enable();
+		await EdgeToEdge.setBackgroundColor({ color: '#000000' });
 
 		// @ts-ignore
 		app.use(MobileKeycloak, {

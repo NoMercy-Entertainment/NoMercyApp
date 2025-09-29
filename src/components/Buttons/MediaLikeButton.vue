@@ -14,6 +14,7 @@ import serverClient from '@/lib/clients/serverClient';
 
 import MusicButton from '@/components/MusicPlayer/components/MusicButton.vue';
 import MoooomIcon from '@/components/Images/icons/MoooomIcon.vue';
+import BannerButton from '@/components/Buttons/BannerButton.vue';
 
 const props = defineProps({
 	data: {
@@ -45,6 +46,11 @@ const props = defineProps({
 		required: false,
 		default: false,
 	},
+	type: {
+		type: String as PropType<'video' | 'music'>,
+		required: false,
+		default: 'music',
+	},
 });
 
 const liked = ref(props.data?.favorite);
@@ -66,14 +72,18 @@ function handleLike(e?: MouseEvent) {
 </script>
 
 <template>
-	<MusicButton :no-background="noBackground" :onclick="handleLike" label="Favorite">
+	<MusicButton v-if="type === 'music'"
+		:no-background="noBackground"
+		:onclick="handleLike"
+		label="Favorite"
+	>
 		<MoooomIcon
 			:class="{
 				'heart': liked,
 				'opacity-0 ': !liked,
 				className,
 			}"
-			class="ease-in-out transition-all duration-150"
+			class="absolute inset-2 transition-all duration-150"
 			icon="heart"
 			style="
         --fill-color: rgb(from var(--color-theme-8, var(--color-red-8)) r g b);
@@ -87,6 +97,32 @@ function handleLike(e?: MouseEvent) {
 			icon="heart"
 		/>
 	</MusicButton>
+	<BannerButton v-else
+		:no-background="noBackground"
+		:title="liked ? 'Remove from liked' : 'Add to liked'"
+		label="Favorite"
+		@click="handleLike"
+	>
+		<MoooomIcon
+			:class="{
+				'heart': liked,
+				'opacity-0 ': !liked,
+				className,
+			}"
+			class="absolute top-1.5 left-1.5 transition-all duration-150 w-7"
+			icon="heart"
+			style="
+        --fill-color: rgb(from var(--color-theme-8, var(--color-red-8)) r g b);
+        color: rgb(from var(--color-theme-8, var(--color-red-8)) r g b);
+			"
+		/>
+		<MoooomIcon
+			v-if="!liked"
+			:class="{ className }"
+			class="absolute top-1.5 left-1.5 transition-all duration-150 w-7"
+			icon="heart"
+		/>
+	</BannerButton>
 </template>
 
 <style lang="scss" scoped>

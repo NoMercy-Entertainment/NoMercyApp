@@ -25,7 +25,7 @@ function getServerPermissions(): Promise<void> {
 				setCurrentServer({
 					...currentServer.value!,
 					is_owner: data.owner,
-					is_manager: data.manage,
+					is_manager: data.manager,
 				});
 
 				done.value = true;

@@ -167,7 +167,7 @@ async function onWillDismiss() {
 					:initial-slide="currentFullPlaylistItem"
 					:loop="true"
 					:slides-per-view="1"
-					class="w-available swiper isolate z-0"
+					class="w-available swiper isolate z-0 mb-4"
 					@touch-end="handleSwiperChange"
 				>
 					<template v-for="(item, index) in fullPlaylist ?? []" :key="item.id">

@@ -33,6 +33,8 @@ const { t } = useTranslation();
 <template>
 	<Button
 		v-tooltip.top="{
+			showDelay: 1500,
+			hideDelay: 300,
 			value: $t(label),
 			disabled: noTooltip,
 		}"

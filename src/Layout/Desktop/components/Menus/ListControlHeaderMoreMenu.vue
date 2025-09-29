@@ -1,18 +1,23 @@
 <script lang="ts" setup>
 import type { PropType } from 'vue';
+import { computed } from 'vue';
 import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/vue';
 
 import type { MoooomIcons } from '@Icons/icons';
 import { buttonClasses } from '@/config/global.ts';
 import MoooomIcon from '@/components/Images/icons/MoooomIcon.vue';
+import { twMerge } from 'tailwind-merge';
+import { currentServer } from '@/store/currentServer.ts';
+import Button from 'primevue/button';
 
 interface IMenuItem {
 	icon: keyof typeof MoooomIcons;
 	onclick: () => void;
 	title: string;
+	privileged?: boolean;
 }
 
-defineProps({
+const props = defineProps({
 	items: {
 		type: Array as PropType<IMenuItem[]>,
 		required: true,
@@ -27,21 +32,51 @@ defineProps({
 		required: false,
 		default: 'More options',
 	},
+	showDelay: {
+		type: Number,
+		required: false,
+		default: 750,
+	},
+	hideDelay: {
+		type: Number,
+		required: false,
+		default: 300,
+	},
+	noTip: {
+		type: Boolean,
+		required: false,
+		default: false,
+	},
+});
+
+const filteredItems = computed(() => {
+	return props.items.filter(
+		item =>	!item.privileged || (item.privileged
+			&& (currentServer.value?.is_owner || currentServer.value?.is_manager)),
+	);
 });
 </script>
 
 <template>
 	<Menu as="div" class="relative select-none z-[150]">
-		<MenuButton
-			:aria-label="$t(title)"
-			:class="{
-				[buttonClasses]: true,
+		<Button
+			v-tooltip.top="{
+				showDelay,
+				hideDelay,
+				value: noTip ? null : $t(title),
 			}"
+			:aria-label="$t(title)"
+			:as="MenuButton"
+			:class="{
+				[twMerge(buttonClasses, 'flex flex-nowrap w-fit min-w-fit')]: true,
+			}"
+			:unstyled="true"
+			class="data-[headlessui-state='open']:bg-surface-12/6 sm:data-[headlessui-state='open']:bg-surface-12/6"
 		>
 			<slot name="button">
 				<MoooomIcon icon="menuDotsHorizontal" />
 			</slot>
-		</MenuButton>
+		</Button>
 
 		<transition
 			enter-active-class="transition duration-100 ease-out"
@@ -52,15 +87,15 @@ defineProps({
 			leave-to-class="scale-95 transform opacity-0"
 		>
 			<MenuItems
-				:class="className"
-				class="absolute z-10 m-2 ml-8 flex w-min origin-top-right -translate-x-full flex-col gap-2 rounded-xl p-1 shadow-lg bg-surface-3 dark:bg-surface-1 border-1 border-surface-8/11"
+				:class="twMerge(className, 'absolute z-10 m-2 ml-8 flex origin-top-right -translate-x-full flex-col gap-2 rounded-xl p-1 shadow-lg bg-surface-3 dark:bg-surface-1 border-1 border-surface-8/11 w-max min-w-min')"
 			>
 				<slot />
-				<template v-for="(item, index) in items" :key="index">
+
+				<template v-for="(item, index) in filteredItems" :key="index">
 					<MenuItem
 						:class="buttonClasses.replace('sm:bg-surface-12/2', '')"
 						as="div"
-						class="w-60 min-w-60 !flex"
+						class="w-available min-w-60 !flex"
 						@click="item.onclick"
 					>
 						<span

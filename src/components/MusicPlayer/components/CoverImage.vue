@@ -11,6 +11,7 @@ import type { PlaylistItem } from '@/types/musicPlayer';
 import { currentServer } from '@/store/currentServer';
 
 import AppLogoSquare from '@/components/Images/icons/AppLogoSquare.vue';
+import { twMerge } from 'tailwind-merge';
 
 const props = defineProps({
 	data: {
@@ -192,12 +193,11 @@ function onClick() {
 		</picture>
 		<AppLogoSquare
 			v-else
-			class="z-0 overflow-clip bg-black p-[15%] h-available w-available"
+			:class="twMerge('z-0 overflow-clip bg-black p-[15%] h-full w-full', className)"
 		/>
 	</div>
 	<AppLogoSquare
 		v-else
-		:class="className"
-		class="z-0 overflow-clip bg-black p-[15%] h-available w-available aspect-square relative z-0 overflow-clip"
+		:class="twMerge('z-0 overflow-clip bg-black h-full w-full aspect-square relative p-4', className)"
 	/>
 </template>

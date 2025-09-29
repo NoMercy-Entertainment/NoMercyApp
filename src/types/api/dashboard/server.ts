@@ -99,7 +99,7 @@ export interface RunnersResponse {
 
 export interface PermissionsResponse {
 	email: string;
-	manage: boolean;
+	manager: boolean;
 	owner: boolean;
 	name: string;
 	allowed: boolean;

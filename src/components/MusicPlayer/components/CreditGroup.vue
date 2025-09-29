@@ -4,6 +4,7 @@ import { IonItem, IonList } from '@ionic/vue';
 
 import type { KnownFor } from '@/types/api/base/person';
 import type { Crew } from '@/types/api/shared';
+import MoooomIcon from '@/components/Images/icons/MoooomIcon.vue';
 
 defineProps({
 	items: {

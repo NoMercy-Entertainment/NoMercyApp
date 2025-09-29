@@ -3,7 +3,7 @@ import { computed, onMounted, onUnmounted, ref, watch } from 'vue';
 import { useRoute } from 'vue-router';
 import { useTranslation } from 'i18next-vue';
 import { IonContent, IonPage } from '@ionic/vue';
-import { MenuButton, MenuItem } from '@headlessui/vue';
+import { MenuItem } from '@headlessui/vue';
 import type { ShareOptions } from '@capacitor/share';
 
 import type { InfoResponse } from '@/types/api/base/info';
@@ -18,7 +18,6 @@ import { pickPaletteColor } from '@/lib/colorHelper';
 import serverClient from '@/lib/clients/serverClient';
 import { background, setBackground, setColorPalette, setLogo } from '@/store/ui';
 import { currentSong } from '@/store/audioPlayer';
-import { currentServer } from '@/store/currentServer';
 
 import ListControlHeaderMoreMenu from '@/Layout/Desktop/components/Menus/ListControlHeaderMoreMenu.vue';
 
@@ -43,6 +42,7 @@ import { useToast } from 'primevue/usetoast';
 import sidebar from '@/store/sidebar.ts';
 import { convertToHumanReact } from '@/lib/dateTime.ts';
 import MoooomIcon from '@/components/Images/icons/MoooomIcon.vue';
+import { twMerge } from 'tailwind-merge';
 
 const route = useRoute();
 
@@ -358,6 +358,16 @@ const endTime = computed(() => {
 			minute: '2-digit',
 		});
 });
+
+const endString = computed(() => {
+	if (!data?.value?.duration)
+		return t('Play');
+
+	if (endTime.value)
+		return t('Ends at {{time}}', { time: endTime.value });
+
+	return t('Play');
+});
 </script>
 
 <template>
@@ -421,7 +431,7 @@ const endTime = computed(() => {
 												' 4xl:-mt-2 5xl:-mt-60 6xl:-mt-28 mb-60 6xl:mb-28': sidebar !== 'open',
 												'hover:!scale-100 hover:-translate-y-1': hasItem,
 											}"
-											:to="`/${data?.media_type}/${data?.id}/watch`"
+											:to="`/${data?.link}/watch`"
 											class="relative h-available m-auto mx-auto flex-1 flex max-w-[75%] scale-95 cursor-default group/card z-0 transitioning rounded-2xl aspect-poster overflow-clip select-none cover !shadow-none max-h-available"
 											data-nav="true"
 											data-nav-r="play"
@@ -491,60 +501,42 @@ const endTime = computed(() => {
 												<BannerButton
 													v-if="hasItem"
 													:href="`${data?.link}/watch`"
+													:show-delay="0"
+													:title="endString"
 													class="bg-surface-6"
-													title="Play"
 												>
 													<MoooomIcon
 														class-name="w-6 text-surface-12/70  dark:text-surface-12/80"
 														icon="play"
 													/>
-													<div
-														class="absolute top-3 left-1/2 -translate-x-1/2 grid h-0 flex-shrink-0 flex-grow-0 origin-bottom group-hover/play:grid-cols-1 items-center justify-start duration-200 grid-cols-[0fr] group-hover/play:h-[32.77px] transform-all group-hover/play:top-[-38px] rounded-[5.46px] bg-[#3a3f42] group-hover/play:border border-[#e2f0fd]/[0.08]"
-														style="
-                              box-shadow: 0 8px 12px -4px rgba(0, 0, 0, 0.08);
-                            "
-													>
-														<div class="overflow-hidden">
-															<p
-																class="flex-shrink-0 flex-grow-0 py-0 text-center text-xs font-bold px-2.5"
-															>
-																{{ $t("Ends at") }} {{ endTime }}
-															</p>
-														</div>
-													</div>
 												</BannerButton>
 
 												<ListControlHeaderMoreMenu
 													v-else-if="data && data.watch_providers && data.watch_providers.length > 0"
 													:items="[]"
 													class="text-surface-12/70 dark:text-surface-12/80"
-													class-name="max-h-80 overflow-y-auto overflow-x-hidden  !ml-0 !-translate-x-1/3"
+													class-name="max-h-80 overflow-y-auto overflow-x-hidden !ml-0 !-translate-x-1/3"
 												>
 													<template #button>
-														<MenuButton
-															:class="buttonClasses"
-															class="bg-surface-6"
+														<span
+															class="whitespace-nowrap text-base font-semibold"
 														>
-															<span
-																class="whitespace-nowrap text-base font-semibold"
-															>
-																{{ $t("Watch options") }}
-															</span>
+															{{ $t("Watch options") }}
+														</span>
 
-															<MoooomIcon
-																class-name="w-6"
-																icon="chevronDown"
-															/>
-														</MenuButton>
+														<MoooomIcon
+															class-name="w-6"
+															icon="chevronDown"
+														/>
 													</template>
 													<template
 														v-for="provider in data.watch_providers.toSorted((a, b) => b.display_priority - a.display_priority)"
 														:key="provider.id"
 													>
 														<MenuItem
+															:class="twMerge(buttonClasses, 'w-fit min-w-60 !flex h-12 pl-1.5 sm:bg-surface-transparent')"
 															:href="provider.link"
 															as="a"
-															class="grid grid-cols-5 min-w-60 justify-center items-center self-stretch relative p-2 gap-3 rounded-sm border border-transparent hover:border-focus/4 active:bg-focus/9 active:border-focus/4 active:hover:border-focus/4 focus:bg-surface-1/2 hover:bg-focus/10 disabled:!bg-focus/2 disabled:!border-focus/2 transition-colors duration-200"
 															target="_blank"
 														>
 															<img v-if="provider?.logo"
@@ -559,22 +551,21 @@ const endTime = computed(() => {
 													</template>
 												</ListControlHeaderMoreMenu>
 
-												<div
+												<BannerButton
 													v-else
-													:class="buttonClasses"
-													class="!flex !w-fit min-w-fit flex !flex-nowrap"
+													no-tip
+													title="Not available"
 												>
 													<span
-														class="whitespace-nowrap text-base font-semibold"
+														class="whitespace-nowrap text-base font-semibold ml-1"
 													>
 														{{ $t("Not available") }}
 													</span>
-
 													<MoooomIcon
 														class-name="w-6"
 														icon="playUnavailable"
 													/>
-												</div>
+												</BannerButton>
 
 												<BannerButton
 													class="bg-surface-6"
@@ -608,18 +599,10 @@ const endTime = computed(() => {
 													class="!p-0"
 												/>
 
-												<MediaLikeButton v-if="data" :data="data" />
+												<MediaLikeButton v-if="data" :data="data" type="video" />
 
 												<ListControlHeaderMoreMenu
-													:items="
-														menuItems.filter(
-															(item) =>
-																!item.privileged
-																|| (item.privileged
-																	&& (currentServer?.is_owner
-																		|| currentServer?.is_manager)),
-														)
-													"
+													:items="menuItems"
 													class="text-surface-12/70 dark:text-surface-12/80 "
 												/>
 											</div>

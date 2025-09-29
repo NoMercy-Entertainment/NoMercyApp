@@ -1,7 +1,7 @@
 .transitioning {
 	--delay1: 0.26s;
 	--delay2: 0.24s;
-	transition-property: color, background-color, opacity !important;
+	transition-property: color, background-color, opacity, transform !important;
 	transition-duration: var(--delay1), var(--delay2), var(--delay1) !important;
 	transition-timing-function: ease-out, ease-out, ease-out !important;
 	transition-delay: 0s, 0s, 0s;
@@ -9,7 +9,7 @@
 
 .transitioning-slow {
 	--delay: 1.5s;
-    transition-property: color, background-color, opacity  !important;
+    transition-property: color, background-color, opacity, transform  !important;
 	transition-duration: var(--delay), var(--delay), var(--delay) !important;
 	transition-timing-function: ease-out, ease-out, ease-out !important;
 	transition-delay: 0s, 0s, 0s;
@@ -17,7 +17,7 @@
 
 .transitioning-slower {
 	--delay: 2.4s;
-    transition-property: color, background-color, opacity !important;
+    transition-property: color, background-color, opacity, transform !important;
 	transition-duration: var(--delay), var(--delay), var(--delay) !important;
 	transition-timing-function: ease, ease, ease !important;
 	transition-delay: 0s, 0s, 0s;

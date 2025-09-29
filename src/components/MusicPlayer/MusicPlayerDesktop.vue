@@ -140,14 +140,14 @@ const rightSize = computed(() => {
 				:style="{
 					width: `${leftSize}%`,
 				}"
-				class="flex flex-grow items-center justify-start transition-width duration-200 gap-2"
+				class="flex flex-grow items-center justify-start transition-width duration-200 gap-2 overflow-clip h-16"
 				data-target="track"
 			>
 				<CoverImage
 					v-if="currentSong"
 					:data="currentSong"
 					:size="100"
-					class-name="relative aspect-square h-auto w-16 cursor-pointer overflow-hidden rounded-md text-focus min-w-[3rem]"
+					class-name="w-14 h-14 max-h-14 !max-w-14 overflow-clip"
 				/>
 
 				<div

@@ -39,7 +39,7 @@ onMounted(() => {
 
 <template>
 	<DropdownMenu :translate="translate" class-name="my-1 rounded-md">
-		<template #button="{ open }">
+		<template #button>
 			<button
 				:aria-label="$t('Messages menu')"
 				class="relative my-1 flex flex-shrink-0 flex-grow-0 items-start justify-start gap-2 overflow-hidden rounded-md transition-colors duration-200 hover:bg-focus/10 focus:bg-surface-12/6"

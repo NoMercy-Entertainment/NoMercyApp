@@ -248,7 +248,10 @@ const yearSpan = computed(() => `${collect(data.value?.collection).min('year')} 
 											</div>
 										</RouterLink>
 										<MediaLikeButton
-											v-if="data" :data="data" class="!bg-surface-6/11"
+											v-if="data"
+											:data="data"
+											class="!bg-surface-6/11"
+											type="video"
 										/>
 
 										<ShareButton

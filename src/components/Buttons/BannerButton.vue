@@ -2,6 +2,7 @@
 import type { PropType } from 'vue';
 import Button from 'primevue/button';
 import { buttonClasses } from '@/config/global.ts';
+import { twMerge } from 'tailwind-merge';
 
 defineProps({
 	title: {
@@ -21,6 +22,21 @@ defineProps({
 		type: Function as PropType<(e: Event) => void>,
 		required: false,
 	},
+	showDelay: {
+		type: Number,
+		required: false,
+		default: 750,
+	},
+	hideDelay: {
+		type: Number,
+		required: false,
+		default: 300,
+	},
+	noTip: {
+		type: Boolean,
+		required: false,
+		default: false,
+	},
 });
 </script>
 
@@ -28,13 +44,15 @@ defineProps({
 	<Button
 		v-if="href"
 		v-tooltip.top="{
-			value: $t(title),
+			showDelay,
+			hideDelay,
+			value: noTip ? null : $t(title),
 		}"
 		:aria-label="$t(title)"
 		:class="{
 			'text-focus': isActive,
 			'text-surface-12/12': !isActive,
-			[buttonClasses]: true,
+			[twMerge(buttonClasses, 'flex flex-nowrap w-max min-w-10')]: true,
 		}"
 		:to="href"
 		:unstyled="true"
@@ -47,13 +65,15 @@ defineProps({
 	<Button
 		v-else
 		v-tooltip.top="{
-			value: $t(title),
+			showDelay,
+			hideDelay,
+			value: noTip ? null : $t(title),
 		}"
 		:aria-label="$t(title)"
 		:class="{
 			'text-focus': isActive,
 			'text-surface-12/12': !isActive,
-			[buttonClasses]: true,
+			[twMerge(buttonClasses, 'flex flex-nowrap w-max min-w-10')]: true,
 		}"
 		:unstyled="true"
 		label="Save"

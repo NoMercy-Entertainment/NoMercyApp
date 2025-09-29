@@ -69,7 +69,6 @@ function handleKeyup(e: KeyboardEvent) {
 		class="relative cursor-pointer items-center focus-visible:underline focus-visible:underline-offset-2"
 		no-ring
 	>
-		TrackRow
 		<span class="">
 			{{ $t(name) }}
 		</span>
