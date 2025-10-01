@@ -16,8 +16,7 @@ function handleToast(data: ToastMessageOptions) {
 }
 
 onMounted(async () => {
-	document.addEventListener('toast', (event: CustomEvent<ToastMessageOptions>) => {
-		console.log('Toast event received:', event.detail);
+	document.addEventListener('toast', (event) => {
 		handleToast(event.detail);
 	});
 });

@@ -6,6 +6,7 @@
 import type { VueKeycloakInstance } from '@dsb-norge/vue-keycloak-js/dist/types';
 import type { SliderBar } from '@/lib/sliderBar';
 import type { SwiperRef } from 'swiper/swiper-react';
+import type { ToastMessageOptions } from 'primevue';
 
 declare module '*.svg' {
 	const src: string;
@@ -214,4 +215,10 @@ interface LoadRequest {
 	media: MediaInfo;
 	autoplay: boolean;
 	currentTime: number;
+}
+
+declare global {
+	interface DocumentEventMap {
+		toast: CustomEvent<ToastMessageOptions>;
+	}
 }

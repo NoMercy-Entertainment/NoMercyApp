@@ -2,7 +2,7 @@
 import { computed, ref, watch } from 'vue';
 import { IonContent, IonModal } from '@ionic/vue';
 import type { Swiper } from 'swiper';
-import { Swiper as SwiperComponent } from 'swiper/vue';
+import { Swiper as SwiperComponent, SwiperSlide } from 'swiper/vue';
 
 import {
 	audioPlayer,
@@ -171,7 +171,7 @@ async function onWillDismiss() {
 					@touch-end="handleSwiperChange"
 				>
 					<template v-for="(item, index) in fullPlaylist ?? []" :key="item.id">
-						<swiper-slide :data-id="item.id" :data-index="index" class="h-full">
+						<SwiperSlide :data-id="item.id" :data-index="index" class="h-full">
 							<div
 								class="frosting w-available max-w-2xl h-auto aspect-square shadow mx-6 relative items-center flex"
 							>
@@ -184,7 +184,7 @@ async function onWillDismiss() {
 									class-name="pointer-events-none relative aspect-square h-auto overflow-clip rounded-md w-inherit shadow"
 								/>
 							</div>
-						</swiper-slide>
+						</SwiperSlide>
 					</template>
 				</SwiperComponent>
 
@@ -195,7 +195,7 @@ async function onWillDismiss() {
 			</div>
 
 			<div
-				class="frosting relative mx-3 mb-4 -mt-10 mb-10 rounded-2xl pt-10 w-available bg-focus/60 shadow text-surface-12"
+				class="frosting relative mx-3 mb-0 -mt-8 rounded-2xl pt-10 w-available bg-focus/60 shadow text-surface-12"
 			>
 				<div
 					class="absolute top-0 z-10 flex w-full items-center rounded-t-2xl pr-2 pl-4 font-semibold"
@@ -216,7 +216,7 @@ async function onWillDismiss() {
 
 				<div
 					ref="lyricsContainer"
-					class="relative w-full mb-0 flex-col overflow-auto scroll-smooth rounded-b-2xl p-4 transition-transform duration-150 h-[25rem] mb-[4.5rem]"
+					class="relative w-full mb-0 flex-col overflow-auto scroll-smooth rounded-b-2xl p-4 transition-transform duration-150 h-[25rem]"
 				>
 					<LyricsOverlay class="sm:hidden" />
 				</div>

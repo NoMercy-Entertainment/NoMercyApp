@@ -6,7 +6,7 @@ import { useLocalStorage } from '@vueuse/core';
 import { defaultSubtitleStyles, edgeStyles, fontFamilies } from '@/lib/VideoPlayer/plugins/UIPlugin/buttons';
 import type { SubtitleStyle } from '@nomercy-entertainment/nomercy-video-player/src/types';
 
-import { getEdgeStyle, parseColorToHex } from '@/types/config';
+import { getEdgeStyle, parseColorToHex } from '@/lib/colorHelper';
 
 import ColorPicker from './components/ColorPicker.vue';
 import SliderBar from './components/SliderBar.vue';

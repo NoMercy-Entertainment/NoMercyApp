@@ -32,15 +32,20 @@ function handleClick(e?: MouseEvent) {
 			icon="volumeMuted"
 		/>
 		<MoooomIcon
-			v-else-if="playerState?.volume_percentage ?? volume === 0"
+			v-else-if="volume === 0"
 			class="h-6 w-6"
-			icon="volumeOne"
+			icon="volumeZero"
 		/>
 		<MoooomIcon
-			v-else-if="playerState?.volume_percentage ?? volume > 50"
+			v-else-if="volume > 30 && volume <= 70"
+			class="h-6 w-6"
+			icon="volumeTwo"
+		/>
+		<MoooomIcon
+			v-else-if="volume > 70"
 			class="h-6 w-6"
 			icon="volumeThree"
 		/>
-		<MoooomIcon v-else class="h-6 w-6" icon="volumeTwo" />
+		<MoooomIcon v-else class="h-6 w-6" icon="volumeOne" />
 	</MusicButton>
 </template>

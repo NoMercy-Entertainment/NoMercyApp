@@ -27,7 +27,6 @@ import {
 	Tooltip,
 } from 'primevue';
 import PrimeVue from 'primevue/config';
-import { Swiper, SwiperSlide } from 'swiper/vue';
 // @ts-ignore
 import KonamiCode from 'vue3-konami-code';
 
@@ -139,9 +138,6 @@ export async function setupApp(app: AppContext['app']) {
 	app.component('NMTrackRow', NMTrackRow);
 	app.component('NMSeasonCard', NMSeasonCard);
 	app.component('NMSeasonTitle', NMSeasonTitle);
-
-	app.component('SwiperContainer', Swiper);
-	app.component('SwiperSlide', SwiperSlide);
 
 	app.component('Button', Button);
 	app.component('Card', Card);
