@@ -10,15 +10,6 @@ export const suffix
 		? '-dev'
 		: '';
 
-export const ignoredRedirectQueries = [
-	'letter',
-	'page',
-	'season',
-	'sort',
-	'type',
-	'episode',
-];
-
 export const authBaseUrl = `https://auth${suffix}.nomercy.tv/realms/NoMercyTV/protocol/openid-connect/`;
 
 export const keycloakConfig: KeycloakConfig = {

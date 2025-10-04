@@ -5,6 +5,7 @@ import { computed } from 'vue';
 import { genreColors } from '@/config/global';
 import type { LibraryResponse } from '@/types/api/base/library';
 import type { ContextMenuItem } from '@/store/contextMenuItems';
+import MoooomIcon from '@/components/Images/icons/MoooomIcon.vue';
 
 const props = defineProps({
 	data: {
