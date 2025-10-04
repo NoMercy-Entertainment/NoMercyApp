@@ -1,1 +1,0 @@
-import{Bs as t,Ls as r,js as a,oc as l,ws as s}from"./index-DO6J_9Tp.js";import{t as o}from"./_plugin-vue_export-helper-CEc1WwrB.js";s();var n={};function u(_,e){return l(),t(a,null,[e[0]||(e[0]=r("h1",null,"Auth View Desktop",-1)),e[1]||(e[1]=r("div",{class:"overflow-auto h-available"},null,-1))],64)}var m=o(n,[["render",u]]);export{m as default};

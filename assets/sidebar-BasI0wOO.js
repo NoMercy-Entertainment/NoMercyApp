@@ -1,1 +1,0 @@
-import{Is as s,Tc as n,ws as i}from"./index-DO6J_9Tp.js";i();var e=n("hidden");const o=s(()=>e.value);function u(a){e.value=a}function r(){e.value=e.value==="open"?"closed":"open"}function t(){e.value="hidden"}function l(){e.value="open"}function c(){e.value="closed"}var v=o;export{o as a,u as i,t as n,v as o,l as r,r as s,c as t};
