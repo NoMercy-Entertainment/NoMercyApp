@@ -119,10 +119,7 @@ export const routes: Array<RouteRecordRaw> = [
 					const firstLibrary = libraries.value.at(0);
 					if (firstLibrary && !isMobile.value && !isTv.value) {
 						next({
-							name: 'Library',
-							params: {
-								id: firstLibrary.link.replace('/', ''),
-							},
+							path: firstLibrary.link,
 						});
 					}
 					else {

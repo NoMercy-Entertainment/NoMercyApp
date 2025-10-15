@@ -134,7 +134,7 @@ function libraryIconName(type: string) {
 						:key="library.id"
 					>
 						<SidebarButton
-							:href="`/libraries${library.link}`"
+							:href="library.link"
 							:icon="libraryIconName(library.type)"
 							:name="library.title"
 							:show="isLibraryRoute"

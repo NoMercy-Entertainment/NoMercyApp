@@ -8,7 +8,11 @@ export const serverLibraries = ref<boolean>(false);
 const servers = ref<Server[]>([]);
 
 export function setServers(newServers: Server[]): void {
-	servers.value = newServers;
+	servers.value = newServers.map(s => ({
+		...s,
+		serverApiUrl: s.serverApiUrl.replace(/\/$/, ''),
+		serverBaseUrl: s.serverBaseUrl.replace(/\/$/, ''),
+	}));
 }
 
 export function getServers(): Server[] {
