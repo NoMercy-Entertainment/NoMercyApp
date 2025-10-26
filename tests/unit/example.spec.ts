@@ -1,10 +1,12 @@
-import { mount } from '@vue/test-utils'
-import Tab1Page from '@/views/Tab1Page.vue'
-import { describe, expect, test } from 'vitest'
+import { describe, expect, it } from 'vitest'
+import { cn } from '@/lib/utils'
 
-describe('Tab1Page.vue', () => {
-  test('renders tab 1 Tab1Page', () => {
-    const wrapper = mount(Tab1Page)
-    expect(wrapper.text()).toMatch('Tab 1 page')
+describe('utils.cn', () => {
+  it('merges tailwind classes with precedence', () => {
+    const result = cn('p-2', 'p-4', ['text-red-500', { hidden: false }])
+    expect(result).toContain('p-4')
+    expect(result).not.toContain('p-2')
+    expect(result).toContain('text-red-500')
+    expect(result).not.toContain('hidden')
   })
 })

@@ -95,7 +95,7 @@ const props = defineProps({
 		</div>
 
 		<div
-			class="grid w-full items-stretch gap-1 rounded-b-md p-2 transitioning text-left"
+			class="grid w-full items-stretch gap-1 rounded-b-md p-2 transitioning text-left text-surface-12"
 		>
 			<p
 				:title="`${data?.episode_number ? `S${data?.season_number}E${data?.episode_number} - ` : ''}${data?.title}`"
@@ -173,7 +173,7 @@ const props = defineProps({
 		</div>
 
 		<div
-			class="grid w-full items-stretch gap-1 rounded-b-md p-2 transitioning text-left"
+			class="grid w-full items-stretch gap-1 rounded-b-md p-2 transitioning text-left text-surface-12"
 		>
 			<p
 				:title="`${data?.episode_number ? `S${data?.season_number}E${data?.episode_number} - ` : ''}${data?.title}`"
@@ -293,7 +293,7 @@ const props = defineProps({
 		</div>
 
 		<div
-			class="grid w-full items-stretch gap-1 rounded-b-md p-2 transitioning text-left"
+			class="grid w-full items-stretch gap-1 rounded-b-md p-2 transitioning text-left text-surface-12"
 		>
 			<p
 				class="z-10 w-auto flex-shrink-0 flex-grow-0 self-stretch text-2xs sm:text-sm font-bold !leading-5 h-11 line-clamp-2 sm:line-clamp-1"

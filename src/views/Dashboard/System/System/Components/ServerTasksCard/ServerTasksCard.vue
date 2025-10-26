@@ -28,13 +28,13 @@ onMounted(() => {
 function handleProgress(data: ServerEncoderProgress) {
 	if (data.status === 'running' || data.status === 'paused') {
 		encoderData.value = sortBy(
-			[...encoderData.value.filter(item => item?.id !== data?.id), data],
+			[...encoderData.value.filter(item => item.id !== data.id), data],
 			'id',
 		);
 	}
 	else {
 		encoderData.value = sortBy(
-			[...encoderData.value.filter(item => item?.id !== data?.id)],
+			[...encoderData.value.filter(item => item.id !== data.id)],
 			'id',
 		);
 		refetch();
@@ -45,7 +45,7 @@ const filteredQueueData = computed(() => {
 	const filtered
 		= queueData.value?.filter(
 			item =>
-				!encoderData.value.find(encoder => encoder.id === item.payload_id),
+				!encoderData.value.find(encoder => encoder.title === item.title),
 		) ?? [];
 
 	if (displayAll.value) {

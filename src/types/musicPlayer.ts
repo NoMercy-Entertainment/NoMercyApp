@@ -2,6 +2,7 @@ import type { ColorPalettes } from '@/types/api/shared';
 import type { Artist } from '@/types/api/music/artist';
 import type { Album } from '@/types/api/music/album';
 import type { DisplayList } from '@/types/api/music/musicPlayer';
+// @ts-ignore
 import type { RepeatState } from '@nomercy-entertainment/nomercy-music-player/src/types';
 
 export enum VisibilityState {
