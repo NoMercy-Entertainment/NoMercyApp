@@ -29,7 +29,7 @@ const props = defineProps({
 		required: false,
 		default: false,
 	},
-	contextMenuItems: {
+	context_menu_items: {
 		type: Array as PropType<ContextMenuItem[]>,
 		required: false,
 		default: () => [],
@@ -62,8 +62,8 @@ const focusColor = computed(() => {
 });
 
 function onRightClick(event: Event) {
-	if (props.contextMenuItems) {
-		setContextMenu(makeContextMenu(props.contextMenuItems));
+	if (props.context_menu_items) {
+		setContextMenu(makeContextMenu(props.context_menu_items));
 		setContextMenuContext(props.data);
 		contextMenu.value.show(event);
 	}

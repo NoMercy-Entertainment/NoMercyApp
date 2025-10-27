@@ -267,7 +267,7 @@ function onError(e: Event) {
 						? `drop-shadow(0px 0px 6px rgb(from ${shadow} r g b)) drop-shadow(0px 0px 6px rgb(from ${shadow} r g b))`
 						: ''}
             object-fit: scale-down;
-            object-position: bottom;
+            object-position: center;
         `"
 				:width="size"
 				class="pointer-events-auto bg-bottom transition-all duration-500 max-h-available max-w-available"
