@@ -1,13 +1,13 @@
-import { toRaw } from 'vue';
+import {toRaw} from 'vue';
 
 import Plugin from '@nomercy-entertainment/nomercy-video-player/src/plugin';
-import type { NMPlayer } from '@nomercy-entertainment/nomercy-video-player/src/types';
+import type {NMPlayer} from '@nomercy-entertainment/nomercy-video-player/src/types';
 
-import { groupBy } from '@/lib/stringArray';
-import type { NMPlaylistItem } from '@/lib/VideoPlayer';
-import type { Icon } from '@nomercy-entertainment/nomercy-video-player/src/types.ts';
-import { buttons } from '@/lib/VideoPlayer/plugins/UIPlugin/buttons.ts';
-import { useLocalStorage } from '@vueuse/core';
+import {groupBy} from '@/lib/stringArray';
+import type {NMPlaylistItem} from '@/lib/VideoPlayer';
+import type {Icon} from '@nomercy-entertainment/nomercy-video-player/src/types.ts';
+import {buttons} from '@/lib/VideoPlayer/plugins/UIPlugin/buttons.ts';
+import {useLocalStorage} from '@vueuse/core';
 
 export interface AutoSkipPluginArgs {
 	playlist: NMPlaylistItem[];
@@ -29,7 +29,6 @@ export class AutoSkipPlugin extends Plugin {
 		'^Opening Theme$',
 		'^Opening Song$',
 		'^Epilogue$',
-		'^Prologue$',
 	])
 		.value
 		.map(pattern => new RegExp(pattern, 'iu'));
@@ -55,6 +54,8 @@ export class AutoSkipPlugin extends Plugin {
 	buttons: Icon = <Icon>{};
 
 	autoSkip: boolean = false;
+	lastChapter: string = '';
+	skipButtonElement: HTMLElement | null = null;
 
 	initialize(player: NMPlayer<AutoSkipPluginArgs>) {
 		this.player = player;
@@ -73,7 +74,7 @@ export class AutoSkipPlugin extends Plugin {
 			this.autoSkip = this.player.options.autoSkip;
 		}
 		else {
-			this.autoSkip = localStorage.getItem('nmplayer-auto-skip') === 'true' || this.player.isTv();
+			this.autoSkip = localStorage.getItem('nmplayer-auto-skip') == 'true' || this.player.isTv();
 		}
 
 		this.buttons = buttons();
@@ -90,8 +91,6 @@ export class AutoSkipPlugin extends Plugin {
 			return;
 		this.player.off('time', this.checkChapters.bind(this));
 	}
-
-	lastChapter: string = '';
 
 	getChapterType(title: string): 'intro' | 'next' | null {
 		if (this.introPatterns.some(re => re.test(title)))
@@ -199,8 +198,6 @@ export class AutoSkipPlugin extends Plugin {
 			chapter => chapter.startTime >= currentEndTime,
 		));
 	}
-
-	skipButtonElement: HTMLElement | null = null;
 
 	showSkipButton(): void {
 		if (this.skipButtonElement) {

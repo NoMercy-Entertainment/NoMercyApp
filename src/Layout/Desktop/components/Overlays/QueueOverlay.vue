@@ -80,7 +80,7 @@ function handleClick(song: PlaylistItem) {
 				</p>
 				<RouterLink
 					v-if="currentPlaylist"
-					:to="`/music/${currentPlaylist}`"
+					:to="currentPlaylist"
 					class="text-sm font-semibold flex gap-1 items-center hover:underline underline-offset-2"
 				>
 					<span>{{ $t("View Playlist") }}</span>

@@ -1,15 +1,7 @@
 import type { HubConnection } from '@microsoft/signalr';
-import {
-	HttpTransportType,
-	HubConnectionBuilder,
-	LogLevel,
-} from '@microsoft/signalr';
+import { HttpTransportType, HubConnectionBuilder, LogLevel } from '@microsoft/signalr';
 
-import {
-	connect,
-	onConnect,
-	onDisconnect,
-} from '@/lib/clients/socketClient/events';
+import { connect, onConnect, onDisconnect } from '@/lib/clients/socketClient/events';
 import type { ClientInfo } from '@/lib/clients/socketClient/device';
 import { clientInfo } from '@/store/deviceInfo';
 
@@ -95,12 +87,13 @@ export class SocketClient {
 	};
 
 	private connectionBuilder() {
-		const urlString = this.urlBuilder();
+		const searchParams = this.urlBuilder();
+
+		const url = new URL(`${this.baseUrl}/${this.endpoint}`);
+		url.search = searchParams.toString();
 
 		return new HubConnectionBuilder()
-			.withUrl(`${this.baseUrl}/${this.endpoint}`, {
-				accessTokenFactory: () => this.accessToken + urlString,
-				// skipNegotiation: true,
+			.withUrl(url.toString(), {
 				transport: HttpTransportType.WebSockets,
 			})
 			.withKeepAliveInterval(this.keepAliveInterval * 1000)
@@ -111,7 +104,8 @@ export class SocketClient {
 	}
 
 	private urlBuilder() {
-		const urlParams = new URLSearchParams({
+		return new URLSearchParams({
+			access_token: this.accessToken,
 			client_id: this.clientInfo.id,
 			client_name: this.clientInfo.name,
 			client_type: this.clientInfo.type ?? 'web',
@@ -121,8 +115,6 @@ export class SocketClient {
 			client_device: this.clientInfo.device,
 			client_volume: this.clientInfo.volume_percent.toString(),
 		});
-
-		return `&${urlParams.toString()}`;
 	}
 }
 

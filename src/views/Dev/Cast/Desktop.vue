@@ -543,7 +543,7 @@ const setPlaylistItem = (value: number) => {
   <ion-page>
     <ion-content :fullscreen="true">
       <DashboardLayout :gridStyle="3" title="ChromeCast">
-        <div class="flex flex-col gap-4 items-center justify-center p-4">
+        <div class="flex flex-col gap-4 items-center justify-center p-4 col-span-2">
           <Select
             v-model="currentReceiver"
             :options="receivers"
