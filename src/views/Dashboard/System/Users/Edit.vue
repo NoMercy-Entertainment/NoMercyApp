@@ -106,8 +106,8 @@ function handleSave() {
 			});
 
 			toast.add({
-				severity: data.status === 'ok' ? 'success' : 'error',
-				summary: translate(data.status === 'ok' ? 'Success' : 'Error'),
+				severity: data.status.toLowerCase(),
+				summary: translate(data.status),
 				detail: translate(data.message, ...data.args),
 				life: 5000,
 			});
