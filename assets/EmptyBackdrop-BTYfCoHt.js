@@ -1,0 +1,1 @@
+import{Cs as e,ac as _,zs as r}from"./index-DItWPWN3.js";import{t as a}from"./_plugin-vue_export-helper-CEc1WwrB.js";e();var t={},s={class:"bg"};function c(o,n){return _(),r("div",s)}var p=a(t,[["render",c],["__scopeId","data-v-386a0916"]]);export{p as t};
