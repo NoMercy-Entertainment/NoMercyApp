@@ -19,7 +19,7 @@ function getServerPermissions(): Promise<void> {
 			return;
 		}
 
-		serverClient()
+		serverClient(5)
 			.get<PermissionsResponse>('permissions')
 			.then(({ data }) => {
 				setCurrentServer({
@@ -31,9 +31,12 @@ function getServerPermissions(): Promise<void> {
 				done.value = true;
 				resolve();
 			})
-			.catch(() => {
+			.catch(async () => {
 				done.value = true;
-				router.replace({ name: 'Server offline' }).then(() => resolve());
+				await router
+					.replace({ name: 'Server offline' })
+					.then(() => resolve());
+				resolve();
 			});
 	});
 }

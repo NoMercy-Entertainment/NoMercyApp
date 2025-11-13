@@ -52,7 +52,7 @@ export default <T>({
 				user.value?.accessToken || localStorage.getItem('access_token')
 			}`,
 		},
-		timeout,
+		timeout: timeout ? timeout * 1000 : undefined,
 		baseURL: baseUrl,
 	});
 

@@ -173,8 +173,9 @@ const rightSize = computed(() => {
 				<MediaLikeButton
 					:key="currentSong.id"
 					:data="currentSong"
-					class="hidden sm:flex"
+					class="hidden sm:flex mr-1"
 					color="var(--color-theme-8)"
+					type="music"
 				/>
 			</div>
 			<div

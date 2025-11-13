@@ -79,24 +79,16 @@ function handleLike(e?: MouseEvent) {
 	>
 		<MoooomIcon
 			:class="{
-				'heart': liked,
-				'opacity-0 ': !liked,
+				'heart text-focus ![color:var(--fill-color)]': liked,
+				' ': !liked,
 				className,
 			}"
-			class="absolute inset-2 transition-all duration-150"
-			icon="heart"
-			style="
-        --fill-color: rgb(from var(--color-theme-8, var(--color-red-8)) r g b);
-        color: rgb(from var(--color-theme-8, var(--color-red-8)) r g b);
-			"
-		/>
-		<MoooomIcon
-			v-if="!liked"
-			:class="{ className }"
+			:style="liked ? '--fill-color: rgb(from var(--color-theme-8, var(--color-red-8)) r g b)' : '--fill-color: transparent;'"
 			class="absolute inset-2 transition-all duration-150"
 			icon="heart"
 		/>
 	</MusicButton>
+
 	<BannerButton v-else
 		:no-background="noBackground"
 		:title="liked ? 'Remove from liked' : 'Add to liked'"
@@ -105,20 +97,11 @@ function handleLike(e?: MouseEvent) {
 	>
 		<MoooomIcon
 			:class="{
-				'heart': liked,
-				'opacity-0 ': !liked,
+				'heart ![color:var(--fill-color)]': liked,
+				' ': !liked,
 				className,
 			}"
-			class="absolute top-1.5 left-1.5 transition-all duration-150 w-7"
-			icon="heart"
-			style="
-        --fill-color: rgb(from var(--color-theme-8, var(--color-red-8)) r g b);
-        color: rgb(from var(--color-theme-8, var(--color-red-8)) r g b);
-			"
-		/>
-		<MoooomIcon
-			v-if="!liked"
-			:class="{ className }"
+			:style="liked ? '--fill-color: rgb(from var(--color-theme-8, var(--color-red-8)) r g b)' : '--fill-color: transparent;'"
 			class="absolute top-1.5 left-1.5 transition-all duration-150 w-7"
 			icon="heart"
 		/>

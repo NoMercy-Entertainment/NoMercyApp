@@ -42,7 +42,13 @@ watch(libraries, (value) => {
 	setLibraries(value);
 
 	if (value.length > 0) {
-		router.push(redirectUrl.value);
+		console.log('server replied, redirecting');
+		if (['/setup/server-offline'].includes(redirectUrl.value)) {
+			router.replace({ name: 'Home' });
+		}
+		else {
+			router.replace(redirectUrl.value);
+		}
 	}
 });
 
@@ -56,7 +62,13 @@ onMounted(() => {
 	if (!libraries.value)
 		return;
 	if (libraries.value.length > 0) {
-		router.push(redirectUrl.value);
+		console.log('server replied, redirecting');
+		if (['/setup/server-offline'].includes(redirectUrl.value)) {
+			router.replace({ name: 'Home' });
+		}
+		else {
+			router.replace(redirectUrl.value);
+		}
 	}
 });
 </script>

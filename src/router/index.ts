@@ -33,7 +33,8 @@ router.beforeResolve(async (to, from, next) => {
 		return next();
 	}
 
-	await handlePromises(promises, next);
+	await handlePromises(promises, next)
+		.catch(() => next({ name: 'Server offline' }));
 });
 
 beforeEach(router);

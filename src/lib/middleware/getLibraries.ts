@@ -1,3 +1,4 @@
+import { ref } from 'vue';
 import serverClient from '../clients/serverClient';
 import { currentServer } from '@/store/currentServer';
 import libraries, { setLibraries } from '@/store/Libraries';
@@ -8,8 +9,15 @@ import router from '@/router';
 import { redirectUrl } from '@/store/routeState';
 import { serverLibraries } from '@/store/servers.ts';
 
+const done = ref(false);
+
 function getLibraries(): Promise<void> {
 	return new Promise((resolve, reject) => {
+		if (done.value) {
+			resolve();
+			return;
+		}
+
 		if (libraries.value.length > 0 || !!serverLibraries.value) {
 			resolve();
 			return;
@@ -20,17 +28,22 @@ function getLibraries(): Promise<void> {
 			return;
 		}
 
-		serverClient()
+		serverClient(5)
 			.get<{ data: LibrariesResponse[] }>('libraries')
 			.then(({ data }) => {
 				setLibraries(data.data);
 				setupComplete.value = true;
 				serverLibraries.value = true;
 				resolve();
-				router.push(redirectUrl.value).then();
+				done.value = true;
+				router.replace(redirectUrl.value).then();
 			})
-			.catch(() => {
-				router.replace({ name: 'Server offline' }).then(() => resolve());
+			.catch(async () => {
+				done.value = true;
+				await router
+					.replace({ name: 'Server offline' })
+					.then(() => resolve());
+				resolve();
 			});
 	});
 }

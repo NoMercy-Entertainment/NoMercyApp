@@ -1,10 +1,9 @@
-<script setup lang="ts">
-import { computed, ref } from 'vue';
+<script lang="ts" setup>
 import type { PropType } from 'vue';
+import { computed } from 'vue';
 import { twMerge } from 'tailwind-merge';
 import type { MoooomIcons } from '@Icons/icons';
 
-// Import sprite as fallback
 import icons from '/resources/mooooom-icons.svg';
 
 const props = defineProps({
@@ -19,10 +18,6 @@ const props = defineProps({
 	},
 });
 
-// State for optimized loading
-const iconContent = ref<string>('');
-const useSprite = ref(true);
-
 const classes = computed(() =>
 	twMerge(
 		'w-6 h-auto aspect-square flex-shrink-0 flex pointer-events-none',
@@ -32,11 +27,7 @@ const classes = computed(() =>
 </script>
 
 <template>
-	<!-- Optimized individual SVG for extracted icons -->
-	<div v-if="!useSprite && iconContent" :class="classes" v-html="iconContent" />
-
-	<!-- Fallback to sprite for non-extracted icons -->
-	<svg v-else :class="classes">
+	<svg :class="classes">
 		<use :xlink:href="`${icons}#${icon}`" />
 	</svg>
 </template>
