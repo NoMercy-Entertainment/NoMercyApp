@@ -2,6 +2,7 @@ import { ref } from 'vue';
 import serverClient from '../clients/serverClient';
 
 import type { ServerInfo } from '@/types/api/dashboard/server.ts';
+import type { StatusResponse } from '@/types/api/base/library';
 
 import router from '@/router';
 import { currentServer } from '@/store/currentServer';
@@ -28,12 +29,12 @@ function getServerSetup(): Promise<void> {
 		}
 
 		serverClient(5)
-			.get<ServerInfo>('dashboard/server/info')
+			.get<StatusResponse<ServerInfo>>('dashboard/server/info')
 			.then(({ data }) => {
-				serverSetupComplete.value = data.setup_complete;
+				serverSetupComplete.value = data.data?.setup_complete ?? false;
 				serverInfoRequested.value = true;
 
-				if (!data.setup_complete) {
+				if (!data.data?.setup_complete) {
 					console.log('Server setup not complete, redirecting to post-installation page');
 					redirectUrl.value = '/setup/post-install';
 
