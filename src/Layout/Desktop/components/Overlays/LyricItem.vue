@@ -1,8 +1,8 @@
 <script lang="ts" setup>
-import type {PropType} from 'vue';
+import type { PropType } from 'vue';
 
-import type {Lyric} from '@/types/musicPlayer';
-import MoooomIcon from "@/components/Images/icons/MoooomIcon.vue";
+import type { Lyric } from '@/types/musicPlayer';
+import MoooomIcon from '@/components/Images/icons/MoooomIcon.vue';
 
 defineProps({
 	lyric: {
@@ -29,7 +29,11 @@ defineProps({
 	>
 		<span
 			v-if="lyric?.text !== ''"
-			class="whitespace-pre-line tv:text-4xl font-bold transition-all duration-200 ease-in-out text-md tv:leading-[48px] text-pretty text-inherit w-available"
+			:class="{
+				'text-right font-semibold': lyric?.rtl,
+				'font-bold': !lyric?.rtl,
+			}"
+			class="whitespace-pre-line tv:text-4xl transition-all duration-200 ease-in-out text-md tv:leading-[48px] text-pretty text-inherit w-available"
 		>
 			{{ lyric?.text }}
 		</span>

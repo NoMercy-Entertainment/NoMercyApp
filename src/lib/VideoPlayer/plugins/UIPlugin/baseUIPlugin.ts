@@ -1,11 +1,11 @@
-import { WebVTTParser } from 'webvtt-parser';
+import {WebVTTParser} from 'webvtt-parser';
 
 import Plugin from '@nomercy-entertainment/nomercy-video-player/src/plugin';
-import type { Icon, NMPlayer, PreviewTime, VolumeState } from '@nomercy-entertainment/nomercy-video-player/src/types';
-import { breakEpisodeTitle, breakLogoTitle, humanTime } from '@nomercy-entertainment/nomercy-video-player/src/helpers';
-import { buttons } from './buttons';
+import type {Icon, NMPlayer, PreviewTime, VolumeState} from '@nomercy-entertainment/nomercy-video-player/src/types';
+import {breakEpisodeTitle, breakLogoTitle, humanTime} from '@nomercy-entertainment/nomercy-video-player/src/helpers';
+import {buttons} from './buttons';
 
-import type { NMPlaylistItem } from '@/lib/VideoPlayer';
+import type {NMPlaylistItem} from '@/lib/VideoPlayer';
 
 export interface BaseUIPluginArgs {
 	basePath: string;
@@ -50,7 +50,7 @@ export class BaseUIPlugin extends Plugin {
 	image = '';
 	controlsVisible: boolean = false;
 	currentScrubTime = 0;
-	imageBaseUrl = '';
+	imageBasePath = '';
 	isScrubbing = false;
 	menuOpen = false;
 	mainMenuOpen = false;
@@ -134,8 +134,8 @@ export class BaseUIPlugin extends Plugin {
 		this.player = player;
 		this.overlay = player.overlay;
 		this.buttons = buttons();
-		this.imageBaseUrl = player.options.basePath
-			? ''
+		this.imageBasePath = player.options.imageBasePath
+			? player.options.imageBasePath
 			: 'https://image.tmdb.org/t/p/w185';
 		// Initialize the plugin with the player
 

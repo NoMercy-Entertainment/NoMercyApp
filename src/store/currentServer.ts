@@ -28,8 +28,8 @@ watch(isOnline, (value) => {
 			// @ts-ignore
 			cs.value = {
 				...cs.value,
-				serverBaseUrl: url,
-				serverApiUrl: `${url}/api/v1`,
+				serverBaseUrl: url.replace(/\/$/, ''),
+				serverApiUrl: `${url.replace(/\/$/, '')}/api/v1`,
 			};
 		});
 	}

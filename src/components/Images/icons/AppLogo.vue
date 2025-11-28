@@ -4,7 +4,6 @@
 <template>
 	<svg
 		class=""
-		fill="none"
 		style="max-width: 100%; height: 100%"
 		viewBox="0 0 180 40"
 		xmlns="http://www.w3.org/2000/svg"
@@ -13,7 +12,7 @@
 			<g id="icon-padded/Cleaned">
 				<g id="Dark">
 					<g id="Union">
-						<mask id="path-1-inside-1_914_61757" fill="#DDD">
+						<mask id="path-1-inside-1_914_61757">
 							<path
 								clip-rule="evenodd"
 								d="M19.377 32.271c-1.495 1.01-2.243 1.516-2.864 1.481a1.846 1.846 0 01-1.368-.726c-.376-.495-.376-1.398-.376-3.202V10.176c0-1.804 0-2.707.376-3.202a1.846 1.846 0 011.368-.726c.621-.035 1.369.47 2.864 1.48l14.54 9.824c1.212.82 1.819 1.23 2.031 1.745.185.45.185.956 0 1.406-.212.515-.819.925-2.032 1.745l-14.54 9.823zm23.392-25.81c.68 0 1.231.552 1.231 1.231v24.616c0 .68-.551 1.23-1.23 1.23h-2.924a1.23 1.23 0 01-1.23-1.23V7.692c0-.68.55-1.23 1.23-1.23h2.923z"
@@ -36,7 +35,7 @@
 				</g>
 				<g id="Light">
 					<g id="Union_2">
-						<mask id="path-3-inside-2_914_61757" fill="#DDD">
+						<mask id="path-3-inside-2_914_61757">
 							<path
 								clip-rule="evenodd"
 								d="M6.88 33.439c-1.226.828-2.88-.05-2.88-1.53V8.091c0-1.48 1.654-2.358 2.88-1.53l17.625 11.91a1.846 1.846 0 010 3.059L6.88 33.439zM32 6.462c.68 0 1.23.55 1.23 1.23v24.616c0 .68-.55 1.23-1.23 1.23h-2.923a1.23 1.23 0 01-1.23-1.23V7.692c0-.68.55-1.23 1.23-1.23H32z"
@@ -59,7 +58,7 @@
 				</g>
 				<g id="Shine">
 					<g id="Shine_2">
-						<mask id="path-5-inside-3_914_61757" fill="#DDD">
+						<mask id="path-5-inside-3_914_61757">
 							<path
 								clip-rule="evenodd"
 								d="M19.377 32.271c-1.495 1.01-2.243 1.516-2.864 1.481a1.846 1.846 0 01-1.368-.726c-.376-.495-.376-1.398-.376-3.202V10.176c0-1.804 0-2.707.376-3.202a1.846 1.846 0 011.368-.726c.621-.035 1.369.47 2.864 1.48l14.54 9.824c1.212.82 1.819 1.23 2.031 1.745.185.45.185.956 0 1.406-.212.515-.819.925-2.032 1.745l-14.54 9.823zm23.392-25.81c.68 0 1.231.552 1.231 1.231v24.616c0 .68-.551 1.23-1.23 1.23h-2.924a1.23 1.23 0 01-1.23-1.23V7.692c0-.68.55-1.23 1.23-1.23h2.923z"
@@ -103,7 +102,7 @@
 				y1="4.223"
 				y2="25.247"
 			>
-				<stop stop-color="#fff" />
+				<stop offset="1" stop-color="#fff" />
 				<stop offset="1" stop-color="#fff" stop-opacity="0" />
 			</linearGradient>
 			<linearGradient
@@ -114,7 +113,7 @@
 				y1="4.218"
 				y2="25.245"
 			>
-				<stop stop-color="#fff" />
+				<stop offset="1" stop-color="#fff" />
 				<stop offset="1" stop-color="#fff" stop-opacity="0" />
 			</linearGradient>
 			<linearGradient
@@ -125,7 +124,7 @@
 				y1="6.246"
 				y2="33.754"
 			>
-				<stop stop-color="#fff" stop-opacity="0.4" />
+				<stop offset="1" stop-color="#fff" stop-opacity="0.4" />
 				<stop offset="0.5" stop-color="#fff" stop-opacity="0.1" />
 				<stop offset="1" stop-color="#fff" stop-opacity="0" />
 			</linearGradient>
@@ -137,7 +136,7 @@
 				y1="4.223"
 				y2="16.967"
 			>
-				<stop stop-color="#fff" />
+				<stop offset="1" stop-color="#fff" />
 				<stop offset="1" stop-color="#fff" stop-opacity="0" />
 			</linearGradient>
 		</defs>

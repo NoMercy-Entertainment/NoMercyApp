@@ -82,15 +82,6 @@ watch([idle, images], async ([idleValue]) => {
 			StatusBar.setOverlaysWebView({ overlay: true }).then();
 		}
 	}
-	else if (idleValue) {
-		setShowScreensaver(false);
-		setImageModalData(null);
-		document.querySelector<HTMLDialogElement>('#imageModal')?.close();
-		if (isPlatform('capacitor') && !isTv.value) {
-			const StatusBar = await import('@capacitor/status-bar').then(m => m.StatusBar);
-			StatusBar.setOverlaysWebView({ overlay: false }).then();
-		}
-	}
 	else {
 		setShowScreensaver(false);
 		setImageModalData(null);

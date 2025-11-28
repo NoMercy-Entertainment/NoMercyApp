@@ -10,6 +10,7 @@ import { isMobile } from '@/config/global.ts';
 import { scrollContainerElement } from '@/store/ui.ts';
 import { showBackdrops, useOverlayCarouselButtons } from '@/store/preferences.ts';
 import { scrollCenter } from '@/lib/utils.ts';
+import MoooomIcon from '@/components/Images/icons/MoooomIcon.vue';
 
 const props = defineProps({
 	title: {

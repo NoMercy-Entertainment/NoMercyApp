@@ -495,7 +495,7 @@ function toggleWatched() {
 					class="flex flex-shrink-0 flex-grow-0 items-start justify-start gap-6 self-stretch p-6"
 				>
 					<RouterLink
-						:to="`/${homeItem?.link}/watch`"
+						:to="`${homeItem?.link}/watch`"
 						class="flex justify-center items-center flex-grow h-10 relative overflow-hidden gap-3 px-6 py-4 rounded-lg bg-[#fdfeff]/[0.93] text-black"
 					>
 						<MoooomIcon

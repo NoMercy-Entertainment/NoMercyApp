@@ -1,6 +1,6 @@
 import apiClient from '../clients/apiClient';
 
-import servers, { setServers } from '@/store/servers';
+import { servers, setServers } from '@/store/servers';
 import { setUser, user } from '@/store/user';
 import { setCurrentServer } from '@/store/currentServer';
 
@@ -41,7 +41,8 @@ function getLocations(): Promise<void> {
 				done.value = true;
 
 				if (servers.value.length === 0) {
-					await router.replace({ name: 'No Servers' });
+					await router.replace({ name: 'No Servers' })
+						.then(() => resolve());
 				}
 				else if (servers.value.length === 1) {
 					setCurrentServer(servers.value[0]);

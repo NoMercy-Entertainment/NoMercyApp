@@ -159,7 +159,7 @@ const modelValue = defineModel<any>({
 										'text-surface-50': active,
 										'text-focus': !active,
 									}"
-									class="absolute right-0 flex items-center justify-center pr-4 data-[headlessui-state='disabled']:hidden"
+									class="absolute right-0 flex items-center justify-center pr-2 data-[headlessui-state='disabled']:hidden"
 								>
 									<MoooomIcon class-name="w-5" icon="check" />
 								</span>

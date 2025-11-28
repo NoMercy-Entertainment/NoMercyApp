@@ -34,7 +34,6 @@ import { suffix } from '@/config/config.ts';
 import i18next from '@/config/i18next';
 import { queryClient } from '@/config/tanstack-query';
 import konamiEnabled from '@/store/konami';
-import { redirectUrl } from '@/store/routeState';
 import router from './router';
 import { isMobile } from '@/config/global.ts';
 
@@ -57,6 +56,8 @@ import NMServerComponent from '@/components/NMServerComponent.vue';
 import NMTopResultCard from '@/components/NMTopResultCard.vue';
 import NMTrackRow from '@/components/NMTrackRow.vue';
 import NMMusicCard from '@/components/NMMusicCard.vue';
+import { Swiper } from 'swiper';
+import { SwiperSlide } from 'swiper/vue';
 
 export async function setupApp(app: AppContext['app']) {
 	if ('serviceWorker' in navigator && !import.meta.env.DEV) {
@@ -149,6 +150,8 @@ export async function setupApp(app: AppContext['app']) {
 	app.component('Select', Select);
 	app.component('Toast', Toast);
 	app.component('Textarea', Textarea);
+	app.component('Swiper', Swiper);
+	app.component('SwiperSlide', SwiperSlide);
 
 	app.directive('ripple', Ripple);
 	app.directive('tooltip', Tooltip);
@@ -165,18 +168,6 @@ export async function setupApp(app: AppContext['app']) {
 
 	router.isReady().then(() => {
 		app.mount('#app');
-
-		setTimeout(() => {
-			if (location.search.includes('redirectUrl')) {
-				redirectUrl.value = location.search
-					.split('redirectUrl=')[1]
-					.split('&')[0];
-			}
-
-			if (redirectUrl.value !== '/home') {
-				router.push(redirectUrl.value).then();
-			}
-		}, 1000);
 	});
 
 	useBackButton(9999, () => {

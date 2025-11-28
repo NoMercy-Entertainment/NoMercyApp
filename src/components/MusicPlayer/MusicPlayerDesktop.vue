@@ -121,6 +121,11 @@ const rightSize = computed(() => {
 	}
 	return 100 / 3;
 });
+
+const albumLink = computed(() => {
+	const albumId = currentSong.value?.album_track.at(0)?.id;
+	return `/music/album/${albumId}`;
+});
 </script>
 
 <template>
@@ -143,12 +148,14 @@ const rightSize = computed(() => {
 				class="flex flex-grow items-center justify-start transition-width duration-200 gap-2 overflow-clip h-16"
 				data-target="track"
 			>
-				<CoverImage
-					v-if="currentSong"
-					:data="currentSong"
-					:size="100"
-					class-name="w-14 h-14 max-h-14 !max-w-14 overflow-clip"
-				/>
+				<RouterLink :to="albumLink">
+					<CoverImage
+						v-if="currentSong"
+						:data="currentSong"
+						:size="100"
+						class-name="w-14 h-14 max-h-14 !max-w-14 overflow-clip cursor-pointer"
+					/>
+				</RouterLink>
 
 				<div
 					v-if="currentSong"

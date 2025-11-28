@@ -60,14 +60,13 @@
   html {
     scroll-behavior: smooth;
     -webkit-overflow-scrolling: touch;
-    --ion-font-family: 'Inter', sans-serif !important;
+    --ion-font-family: "Inter", 'Noto Sans JP', 'Rubik', sans-serif !important;
     /* reset safe-area-top when not needed */
     --safe-area-inset-top: 0px;
   }
 
   body {
     height: -webkit-fill-available;
-    font-family: 'Inter', sans-serif;
     background-color: var(--color-background);
     color: var(--color-text);
 

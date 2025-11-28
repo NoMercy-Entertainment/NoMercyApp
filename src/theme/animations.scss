@@ -153,8 +153,8 @@ html.nprogress-busy #gradientBorder {
 }
 
 .bg-blur {
-	-moz-filter: blur(80px) brightness(1.5) saturate(2);
-	-webkit-filter: blur(80px) brightness(1.5) saturate(2);
+	-moz-filter: blur(80px) brightness(0.8) saturate(2);
+	-webkit-filter: blur(80px) brightness(0.8) saturate(2);
 	filter: blur(80px) brightness(0.8) saturate(2);
 	transform: scale(-1);
 	background-size: cover !important;

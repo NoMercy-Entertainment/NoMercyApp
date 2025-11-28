@@ -101,7 +101,7 @@ function image() {
 
 	if (props.data?.cover?.startsWith('/')) {
 		source.value = encodeURI(
-			`${currentServer.value?.serverBaseUrl}${props.data?.cover}`,
+			`${currentServer.value?.serverBaseUrl.replace(/\/$/, '')}${props.data?.cover}`,
 		);
 		return;
 	}

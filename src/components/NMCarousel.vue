@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import {computed, onBeforeMount, onMounted, PropType, ref} from "vue";
+import {computed, onBeforeMount, PropType, ref} from "vue";
 import {Swiper} from "swiper";
 import {Swiper as SwiperComponent, SwiperSlide} from "swiper/vue";
 import {register} from "swiper/element/bundle";
@@ -64,7 +64,6 @@ const props = defineProps({
   },
 });
 
-const show = ref(false);
 const backButtonEnabled = ref(false);
 const nextButtonEnabled = ref(true);
 const isLastSlide = ref(false);
@@ -139,12 +138,6 @@ onBeforeMount(() => {
   bp.value = newBp;
 });
 
-onMounted(() => {
-  setTimeout(() => {
-    show.value = true;
-  }, 150 * props.index);
-});
-
 const focusNext = () => {
   document
       .querySelector<HTMLButtonElement>(`#carousel_${props.next_id} button`)
@@ -190,7 +183,7 @@ const scrollToCenter = () => {
 
 <template>
   <div
-      v-if="items?.length && show"
+      v-if="items?.length"
       :id="`carousel_${id}`"
       :data-next-id="`carousel_${next_id}`"
       :data-previous-id="`carousel_${previous_id}`"
@@ -300,13 +293,13 @@ const scrollToCenter = () => {
             @slideChange="onSlideChange"
         >
           <template v-for="item in items" :key="item?.id">
-            <swiper-slide v-if="item?.id" class="flex">
+            <SwiperSlide v-if="item?.id" class="flex">
               <component
                   :is="item.component"
                   :key="item.id"
                   v-bind="item.props"
               />
-            </swiper-slide>
+            </SwiperSlide>
           </template>
         </SwiperComponent>
       </div>

@@ -431,7 +431,7 @@ const endString = computed(() => {
 												' 4xl:-mt-2 5xl:-mt-60 6xl:-mt-28 mb-60 6xl:mb-28': sidebar !== 'open',
 												'hover:!scale-100 hover:-translate-y-1': hasItem,
 											}"
-											:to="`/${data?.link}/watch`"
+											:to="`${data?.link}/watch`"
 											class="relative h-available m-auto mx-auto flex-1 flex max-w-[75%] scale-95 cursor-default group/card z-0 transitioning rounded-2xl aspect-poster overflow-clip select-none cover !shadow-none max-h-available"
 											data-nav="true"
 											data-nav-r="play"

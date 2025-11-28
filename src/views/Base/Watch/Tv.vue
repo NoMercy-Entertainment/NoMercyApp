@@ -36,7 +36,8 @@ function initPlayer(value?: NMPlaylistItem[] | undefined) {
 		playbackRates: [0.25, 0.5, 0.75, 1, 1.25, 1.5, 1.75, 2],
 		accessToken:
         user.value?.accessToken || localStorage.getItem('access_token') || '',
-		basePath: currentServer.value?.serverBaseUrl,
+		basePath: currentServer.value?.serverBaseUrl?.replace(/\/$/, ''),
+		imageBasePath: 'https://app.nomercy.tv/tmdb-images',
 		forceTvMode:
         (isPlatform('android') || isPlatform('ios')) && !isPlatform('mobile'),
 		disableTouchControls: false,

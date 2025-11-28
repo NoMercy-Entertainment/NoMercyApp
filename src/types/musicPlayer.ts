@@ -95,6 +95,7 @@ export interface PlaylistItem extends BasePlaylistItem {
 
 export interface Lyric {
 	text: string;
+	rtl: boolean;
 	time: Time;
 }
 

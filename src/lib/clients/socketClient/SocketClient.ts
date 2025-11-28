@@ -18,7 +18,7 @@ export class SocketClient {
 		accessToken: string,
 		endpoint: string = 'socket',
 	) {
-		this.baseUrl = baseUrl;
+		this.baseUrl = baseUrl?.replace(/\/$/, '');
 		this.accessToken = accessToken;
 		this.endpoint = endpoint;
 

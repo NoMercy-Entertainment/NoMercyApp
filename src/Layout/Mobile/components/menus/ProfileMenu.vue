@@ -14,6 +14,7 @@ import { logout } from '@/lib/auth/index';
 import { closeMenu, menuOpen } from '@/store/profileMenu';
 import { Browser } from '@capacitor/browser';
 import { phonePortrait } from 'ionicons/icons';
+import servers from '@/store/servers.ts';
 
 const reload = () => window.location.reload();
 
@@ -37,7 +38,7 @@ async function handleOpenApp() {
 				<ProfileMenuServerSection />
 			</IonItem>
 
-			<IonItem lines="inset">
+			<IonItem v-if="servers.length > 0" lines="inset">
 				<RouterLink
 					class="flex justify-center items-center self-stretch w-full h-full flex-grow-0 flex-shrink-0 relative pl-1 py-2.5 rounded-md bg-transparent border border-transparent"
 					to="/setup/select-servers"
@@ -59,7 +60,7 @@ async function handleOpenApp() {
 				</RouterLink>
 			</IonItem>
 
-			<IonItem lines="none">
+			<IonItem v-if="servers.length > 0" lines="none">
 				<RouterLink
 					class="flex justify-center items-center self-stretch w-full h-full flex-grow-0 flex-shrink-0 relative pl-1 py-2.5 rounded-md bg-transparent border border-transparent"
 					to="/preferences/display"
@@ -81,7 +82,7 @@ async function handleOpenApp() {
 				</RouterLink>
 			</IonItem>
 
-			<IonItem lines="none">
+			<IonItem v-if="servers.length > 0" lines="none">
 				<RouterLink
 					class="flex justify-center items-center self-stretch w-full h-full flex-grow-0 flex-shrink-0 relative pl-1 py-2.5 rounded-md bg-transparent border border-transparent"
 					to="/dashboard/system"

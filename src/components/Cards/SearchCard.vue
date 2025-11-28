@@ -27,7 +27,7 @@ defineProps({
 
 <template>
 	<RouterLink
-		:to="`/${item.media_type}/${item.id}`"
+		:to="`${item.media_type}/${item.id}`"
 		class="relative flex w-full gap-4 overflow-hidden rounded-lg bg-zinc-100 dark:bg-zinc-900 p-2"
 	>
 		<img

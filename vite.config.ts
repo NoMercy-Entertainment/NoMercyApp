@@ -25,6 +25,7 @@ export default defineConfig(({ command }) => {
 					compilerOptions: {
 						isCustomElement: tag =>
 							[
+								'swiper-slide',
 								// 'google-cast-launcher',
 							].includes(tag),
 					},

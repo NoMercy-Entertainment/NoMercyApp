@@ -49,15 +49,16 @@ function getServerSetup(): Promise<void> {
 				done.value = true;
 				resolve();
 			})
-			.catch(async () => {
+			.catch(async (error) => {
 				serverSetupComplete.value = true;
+
+				done.value = true;
 
 				await router
 					.replace({ name: 'Server offline' })
-					.then(() => resolve());
+					.then(() => reject(error));
 
-				done.value = true;
-				resolve();
+				reject(error);
 			});
 	});
 }

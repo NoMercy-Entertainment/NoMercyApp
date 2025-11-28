@@ -127,7 +127,7 @@ export default {
 			},
 			fontFamily: {
 				// sans: ['Figtree', ...defaultTheme.fontFamily.sans],
-				sans: ['Inter', ...defaultTheme.fontFamily.sans],
+				sans: ['Inter', 'Noto Sans JP', 'Rubik', ...defaultTheme.fontFamily.sans],
 			},
 			fontWeight: {
 				'theme-thin': '100',

@@ -229,7 +229,7 @@ const yearSpan = computed(() => `${collect(data.value?.collection).min('year')} 
 									>
 										<RouterLink
 											:class="buttonClasses"
-											:to="`/${data?.media_type}/${data?.id}/watch`"
+											:to="`${data?.media_type}/${data?.id}/watch`"
 											class="!bg-surface-6/11"
 										>
 											<MoooomIcon class-name="w-6" icon="play" />

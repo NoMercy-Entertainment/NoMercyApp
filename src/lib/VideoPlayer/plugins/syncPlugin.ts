@@ -1,10 +1,8 @@
-import type { RouteLocationNormalizedLoaded } from 'vue-router';
-import { useRoute } from 'vue-router';
 import Plugin from '@nomercy-entertainment/nomercy-video-player/src/plugin';
-import type { NMPlayer } from '@nomercy-entertainment/nomercy-video-player/src/types';
+import type {NMPlayer} from '@nomercy-entertainment/nomercy-video-player/src/types';
 
-import { useVideoSocket } from '@/store/videoSocket';
-import type { NMPlaylistItem } from '@/lib/VideoPlayer';
+import {useVideoSocket} from '@/store/videoSocket';
+import type {NMPlaylistItem} from '@/lib/VideoPlayer';
 
 export interface SyncPluginArgs {
 	playlist: NMPlaylistItem[];
@@ -12,7 +10,6 @@ export interface SyncPluginArgs {
 
 export class SyncPlugin extends Plugin {
 	player: NMPlayer<SyncPluginArgs> = <NMPlayer<SyncPluginArgs>>{};
-	route: RouteLocationNormalizedLoaded<string | symbol> = <RouteLocationNormalizedLoaded<string | symbol>>{};
 
 	async initialize(player: NMPlayer<SyncPluginArgs>) {
 		this.player = player;
@@ -24,9 +21,7 @@ export class SyncPlugin extends Plugin {
 		this.player.on('back', this.ended.bind(this));
 		this.player.on('ended', this.ended.bind(this));
 		this.player.on('finished', this.ended.bind(this));
-
-		this.route = useRoute();
-	}
+    }
 
 	dispose() {
 		this.player.off('lastTimeTrigger', this.lastTimeTrigger.bind(this));
@@ -59,10 +54,8 @@ export class SyncPlugin extends Plugin {
 	episodeData() {
 		const current = this.player.playlistItem();
 
-		let path = this.route?.path;
-		if (!path) {
-			path = window.location.hash.replace('#', '');
-		}
+		let path = window.location.hash.replace('#', '');
+
 		if (!path) {
 			path = location.pathname;
 		}

@@ -1,5 +1,4 @@
-import type { CreditsClass, Crew } from '@/types/server';
-import type { ColorPalettes, Translations } from '../shared';
+import type { ColorPalettes, Crew, Translations } from '../shared';
 
 export interface PeopleResponse {
 	adult: boolean;

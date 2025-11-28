@@ -7,7 +7,6 @@ import { isPlatform } from '@ionic/vue';
 import type { DisplayList } from '@/types/api/music/musicPlayer';
 
 import { convertToHumanReact, convertToSeconds } from '@/lib/dateTime';
-import { isArtistRoute } from '@/store/routeState';
 import { breakTitle } from '@/lib/stringArray';
 import audioPlayer from '@/store/audioPlayer';
 
@@ -185,7 +184,7 @@ const light = computed(() => tooLight(pickPaletteColor(colorPalette.value), 150)
 			class="relative hidden flex-1 flex-shrink-0 flex-col items-start justify-start gap-1 flex-grow-1 sm:flex"
 		>
 			<p class="text-left font-semibold uppercase">
-				{{ data?.type?.replace(/s$/u, "") }}
+				{{ data?.type?.replace(/s$/u, '') }}
 			</p>
 			<div
 				class="w-full text-5xl font-semibold line-clamp-2 leading-[130%] whitespace-pre"
@@ -196,11 +195,11 @@ const light = computed(() => tooLight(pickPaletteColor(colorPalette.value), 150)
 
 			<div class="relative flex items-center justify-start gap-2">
 				<div
-					v-if="isArtistRoute"
+					v-if="data?.artists?.length"
 					class="flex items-center gap-4 text-sm font-medium"
 				>
 					<div
-						v-if="data?.artists?.length === 1 && data?.artists?.[0].cover"
+						v-if="data?.artists?.[0].cover"
 						class="relative aspect-square h-12 w-12 overflow-clip rounded-full min-w-12"
 					>
 						<CoverImage
@@ -219,14 +218,14 @@ const light = computed(() => tooLight(pickPaletteColor(colorPalette.value), 150)
 					</RouterLink>
 				</div>
 				<p
-					v-if="data?.tracks && isArtistRoute"
+					v-if="data?.tracks"
 					class="text-left text-sm font-medium"
 				>
 					•
 				</p>
 				<p class="text-left text-sm font-medium">
 					{{ data?.tracks?.length }}
-					{{ data?.tracks?.length === 1 ? t("song") : t("songs") }}
+					{{ data?.tracks?.length === 1 ? t('song') : t('songs') }}
 				</p>
 				<p v-if="duration" class="text-left text-sm font-medium">
 					•

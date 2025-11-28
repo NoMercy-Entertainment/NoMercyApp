@@ -79,7 +79,7 @@ const error = ref(false);
 const opacity = ref(0);
 
 const baseImageUrl = computed(() => {
-	return `${currentServer.value?.serverBaseUrl}${props.data?.cover}`;
+	return `${currentServer.value?.serverBaseUrl.replace(/\/$/, '')}${props.data?.cover}`;
 });
 
 function remove(e: ErrorEvent) {
@@ -103,10 +103,10 @@ const style = computed(() => {
 		'--c-4': 'rgb(var(--color-theme-8) / 1%)',
 
 		'backgroundImage':
-      props.disableGradient || !useAutoThemeColors
-      	? props.disableGradient
-      		? ''
-      		: `
+        props.disableGradient || !useAutoThemeColors
+        	? props.disableGradient
+        		? ''
+        		: `
                     radial-gradient(
                         farthest-corner at top left,
                                 var(--color-theme-9),
@@ -128,7 +128,7 @@ const style = computed(() => {
                         hsl(0 0% 100% / 4%) 300px
                     )
                 `
-      	: `
+        	: `
 				radial-gradient(
 					farthest-corner at top left,
 							${hexLighter(props.colorPalette?.lightVibrant, 30) ?? 'var(--c-1)'},

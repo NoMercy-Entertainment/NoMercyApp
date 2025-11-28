@@ -379,7 +379,6 @@ function onRightClick(e: MouseEvent) {
 					<AppLogoSquare class="" />
 				</div>
 			</div>
-			<ContextMenu ref="cardMenu" :model="trackContextMenuItems as MenuItem[]" append-to="#imageModal" />
 		</dialog>
 	</Portal>
 </template>

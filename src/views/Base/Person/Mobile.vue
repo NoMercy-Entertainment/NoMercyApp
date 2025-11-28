@@ -2,7 +2,7 @@
 import { computed, ref, watch } from 'vue';
 import { IonContent, IonPage, IonSkeletonText, onIonViewWillEnter, onIonViewWillLeave } from '@ionic/vue';
 import { useRoute } from 'vue-router';
-import { Swiper as SwiperComponent } from 'swiper/vue';
+import { Swiper as SwiperComponent, SwiperSlide } from 'swiper/vue';
 
 import type { PersonResponseItem } from '@/types/api/base/person';
 
@@ -135,7 +135,7 @@ watch(data, (value) => {
 							v-for="(item, index) in data?.images?.profiles ?? []"
 							:key="item.id"
 						>
-							<swiper-slide
+							<SwiperSlide
 								:data-id="item.src"
 								:data-index="index"
 								class="h-full"
@@ -158,7 +158,7 @@ watch(data, (value) => {
 										type="image"
 									/>
 								</div>
-							</swiper-slide>
+							</SwiperSlide>
 						</template>
 					</SwiperComponent>
 				</div>
@@ -188,7 +188,7 @@ watch(data, (value) => {
 				</div>
 
 				<div
-					class="flex bg-surface-3 dark:bg-surface-1 flex-col justify-start items-start self-stretch gap-3 pb-5 will-change-auto w-inherit px-6"
+					class="flex bg-surface-3 dark:bg-surface-1 flex-col justify-start items-start self-stretch gap-3 pb-5 will-change-auto w-inherit px-6 mt-12"
 				>
 					<p
 						v-if="data?.name"

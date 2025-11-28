@@ -1060,7 +1060,7 @@ export class TVUIPlugin extends BaseUIPlugin {
 		else {
 			image.src
 				= item.image && item.image !== ''
-					? `${this.imageBaseUrl}${item.image}`
+					? `${this.imageBasePath}${item.image}`
 					: '';
 		}
 
@@ -1645,7 +1645,7 @@ export class TVUIPlugin extends BaseUIPlugin {
 					logo.src = image;
 				}
 				else {
-					logo.src = image && image !== '' ? `${this.imageBaseUrl}${image}` : '';
+					logo.src = image && image !== '' ? `${this.imageBasePath}${image}` : '';
 				}
 			}
 

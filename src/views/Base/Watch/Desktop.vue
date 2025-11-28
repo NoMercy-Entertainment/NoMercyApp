@@ -28,7 +28,8 @@ function initPlayer(value?: NMPlaylistItem[] | undefined) {
 		debug: false,
 		playlist: value?.filter(item => !!item.id) ?? [],
 		accessToken: user.value?.accessToken,
-		basePath: currentServer.value?.serverBaseUrl,
+		basePath: currentServer.value?.serverBaseUrl?.replace(/\/$/, ''),
+		imageBasePath: 'https://app.nomercy.tv/tmdb-images',
 		forceTvMode:
       (isPlatform('android') || isPlatform('ios')) && !isPlatform('mobile'),
 		disableTouchControls: false,
