@@ -1,18 +1,18 @@
 import {
-    convertToSeconds,
-    humanTime,
-    limitSentenceByCharacters,
-    lineBreakShowTitle,
-    unique,
+	convertToSeconds,
+	humanTime,
+	limitSentenceByCharacters,
+	lineBreakShowTitle,
+	unique,
 } from '@nomercy-entertainment/nomercy-video-player/src/helpers';
 
 import {BaseUIPlugin} from './baseUIPlugin';
 
 import type {
-    Chapter,
-    PlaylistItem,
-    Position,
-    SubtitleStyle,
+	Chapter,
+	PlaylistItem,
+	Position,
+	SubtitleStyle,
 } from '@nomercy-entertainment/nomercy-video-player/src/types';
 import type {SubtitleSettingAction} from './buttons';
 import {defaultSubtitleStyles, edgeStyles, fontFamilies, subtitleSettingActions} from './buttons';
@@ -2786,9 +2786,7 @@ export class DesktopUIPlugin extends BaseUIPlugin {
 		image.setAttribute('loading', 'lazy');
 		image.src
 			= item.image && item.image !== ''
-				? `${this.imageBasePath.includes('https') ? '' : this.imageBasePath}${
-					item.image
-				}`
+				? `${item.image.includes('https') ? '' : this.imageBasePath}${item.image}`
 				: '';
 
 		const progressContainer = this.player

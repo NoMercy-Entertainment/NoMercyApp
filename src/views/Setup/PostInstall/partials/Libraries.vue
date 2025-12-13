@@ -85,7 +85,7 @@ useSortable(el, list, {
 				<IonSpinner class="ion-padding" name="crescent" />
 			</div>
 		</template>
-		<div v-else ref="el" class="flex h-auto w-full flex-col overflow-y-auto text-start gap-1">
+		<div ref="el" class="flex h-auto w-full flex-col overflow-y-auto text-start gap-1">
 			<template v-for="(item, index) in list" :key="item.id">
 				<LibraryItem v-model="list[index]" />
 			</template>
