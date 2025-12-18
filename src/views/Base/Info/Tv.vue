@@ -407,7 +407,7 @@ router.afterEach(() => {
 							<RouterLink
 								:class="{ 'opacity-70': !hasItem?.available }"
 								:disabled="!hasItem?.available"
-								:to="`${data?.media_type}/${data?.id}/watch`"
+								:to="`${data?.link}/watch`"
 								class="flex justify-start items-center flex-grow h-10 relative overflow-hidden gap-2 px-2 py-4 rounded-[30px] bg-white/80"
 							>
 								<p

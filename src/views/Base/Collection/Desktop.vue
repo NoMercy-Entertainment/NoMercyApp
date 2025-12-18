@@ -1,34 +1,34 @@
 <script lang="ts" setup>
-import { computed, onMounted, onUnmounted, ref, watch } from 'vue';
-import { useRoute } from 'vue-router';
-import { IonContent, IonPage } from '@ionic/vue';
-import { collect } from 'collect.js';
+import {computed, onMounted, onUnmounted, ref, watch} from 'vue';
+import {useRoute} from 'vue-router';
+import {IonContent, IonPage} from '@ionic/vue';
+import {collect} from 'collect.js';
 
-import type { CollectionResponse } from '@/types/api/base/collection';
+import type {CollectionResponse} from '@/types/api/base/collection';
 
 import i18next from '@/config/i18next';
 import useServerClient from '@/lib/clients/useServerClient';
-import { setBackground, setColorPalette } from '@/store/ui';
-import { setTitle, sortByPosterAlphabetized, unique } from '@/lib/stringArray';
-import { convertToHumanReact } from '@/lib/dateTime';
+import {setBackground, setColorPalette} from '@/store/ui';
+import {setTitle, sortByPosterAlphabetized, unique} from '@/lib/stringArray';
+import {convertToHumanReact} from '@/lib/dateTime';
 
 import ScrollContainer from '@/Layout/Desktop/components/ScrollContainer.vue';
 import FloatingBackButton from '@/components/Buttons/FloatingBackButton.vue';
 import GenrePill from '@/components/Buttons/GenrePill.vue';
 import MediaLikeButton from '@/components/Buttons/MediaLikeButton.vue';
-import { showBackdrops } from '@/store/preferences';
+import {showBackdrops} from '@/store/preferences';
 import MediaCard from '@/components/NMCard.vue';
 import ContentRating from '@/components/Images/ContentRating.vue';
-import { useTranslation } from 'i18next-vue';
+import {useTranslation} from 'i18next-vue';
 import InfoHeaderItem from '@/views/Base/Info/components/InfoHeaderItem.vue';
 import NotFound from '@/Layout/Desktop/components/NotFound.vue';
 import ShareButton from '@/components/Buttons/ShareButton.vue';
-import type { ShareOptions } from '@capacitor/share';
+import type {ShareOptions} from '@capacitor/share';
 import PersonCarousel from '@/components/Carousel/PersonCarousel.vue';
 import ImageCarousel from '@/components/Carousel/ImageCarousel.vue';
-import { buttonClasses } from '@/config/global.ts';
+import {buttonClasses} from '@/config/global.ts';
 import ListControlHeaderMoreMenu from '@/Layout/Desktop/components/Menus/ListControlHeaderMoreMenu.vue';
-import { MenuButton } from '@headlessui/vue';
+import {MenuButton} from '@headlessui/vue';
 import MoooomIcon from '@/components/Images/icons/MoooomIcon.vue';
 
 const { t } = useTranslation();
@@ -229,7 +229,7 @@ const yearSpan = computed(() => `${collect(data.value?.collection).min('year')} 
 									>
 										<RouterLink
 											:class="buttonClasses"
-											:to="`${data?.media_type}/${data?.id}/watch`"
+											:to="`${data?.link}/watch`"
 											class="!bg-surface-6/11"
 										>
 											<MoooomIcon class-name="w-6" icon="play" />
