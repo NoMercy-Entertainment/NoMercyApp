@@ -25,7 +25,7 @@ const props = defineProps({
 		required: false,
 		default: false,
 	},
-	contextMenuItems: {
+	context_menu_items: {
 		type: Array as PropType<ContextMenuItem[]>,
 		required: false,
 		default: () => [],

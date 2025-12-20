@@ -223,7 +223,7 @@ function onError(e: Event) {
 			'aspect-backdrop': aspect === 'backdrop',
 		}"
 		:style="style"
-		class="transform-gpu pointer-events-none bottom-0 mx-auto flex select-none place-self-start max-w-available max-h-available w-available h-available"
+		class="transform-gpu pointer-events-none bottom-0 mx-auto flex select-none place-self-start max-w-available w-available h-available"
 	>
 		<div
 			v-if="opacity === 0 && type === 'image'"
@@ -232,7 +232,7 @@ function onError(e: Event) {
 		<picture
 			v-if="!error && path && !path?.includes?.('undefined')"
 			:style="`opacity: ${opacity}; float: ${type === 'logo' ? 'right' : ''}`"
-			class="pointer-events-none absolute inset-0 h-inherit flex select-none flex-col items-end justify-end tv:justify-start self-end transition-all duration-500 max-w-available max-h-available"
+			class="pointer-events-none absolute inset-0 h-inherit flex select-none flex-col items-end justify-end tv:justify-start self-end transition-all duration-500 max-w-available"
 		>
 			<source :srcset="`${serverImageUrl} 1x`">
 			<!--      <source -->
@@ -270,7 +270,7 @@ function onError(e: Event) {
             object-position: center;
         `"
 				:width="size"
-				class="pointer-events-auto bg-bottom transition-all duration-500 max-h-available max-w-available"
+				class="pointer-events-auto bg-bottom transition-all duration-500 max-w-available"
 				crossorigin="anonymous"
 			>
 		</picture>

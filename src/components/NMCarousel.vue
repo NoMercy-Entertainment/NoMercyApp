@@ -179,6 +179,7 @@ const scrollToCenter = () => {
     margin: 2,
   });
 };
+
 </script>
 
 <template>
@@ -191,7 +192,7 @@ const scrollToCenter = () => {
   >
     <div class="flex w-available flex-1 flex-col gap-2">
       <div
-          class="relative ml-2 flex flex-shrink-0 flex-grow-0 items-center self-stretch tv:hidden"
+          class="relative ml-2 flex flex-shrink-0 flex-grow-0 items-center self-stretch"
       >
         <h3
             v-if="title"
@@ -204,7 +205,7 @@ const scrollToCenter = () => {
 
         <button
             v-if="next_id"
-            class="skip-navigation hidden sm:flex sm:absolute opacity-0 focus-visible:opacity-100"
+            class="skip-navigation hidden sm:flex sm:absolute opacity-0 focus-visible:opacity-100 tv:hidden"
             @click="focusNext"
             @focus="scrollToCenter"
         >
