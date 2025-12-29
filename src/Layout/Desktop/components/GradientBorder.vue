@@ -17,7 +17,7 @@ const isMutating = useIsMutating();
 			'sm:mr-[1.35rem]': !indexer,
 			'busy sm:border-4 gradient-border border-transparent':
 				isFetching > 0 || isMutating > 0 || searchResultLoading,
-			'sm:border-4 border-surface-4':
+			'sm:border-4 border-surface-4 gradient-border':
 				isFetching === 0 && isMutating === 0 && !searchResultLoading,
 		}"
 		class="relative flex flex-1 overflow-clip text-start outline-none transition-all duration-200 h-available w-available scrollbar-none sm:rounded-3xl"
