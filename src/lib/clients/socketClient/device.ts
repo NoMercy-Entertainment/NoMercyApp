@@ -1,7 +1,7 @@
 import { UAParser } from 'ua-parser-js';
 
 import { Device } from '@capacitor/device';
-import { isTv } from '@/config/global';
+
 import { isPlatform } from '@ionic/vue';
 import { useLocalStorage } from '@vueuse/core';
 import { deviceId } from '@/store/deviceInfo';
@@ -31,9 +31,6 @@ export async function makeDeviceInfo(): Promise<ClientInfo> {
 			deviceType = info.platform;
 			if (isPlatform('tablet')) {
 				deviceType = 'tablet';
-			}
-			if (isTv.value) {
-				deviceType = 'tv';
 			}
 			break;
 		case 'ios':

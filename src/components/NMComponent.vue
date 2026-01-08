@@ -6,7 +6,9 @@ import { IonSpinner } from '@ionic/vue';
 import { useOnline } from '@vueuse/core';
 
 import { getMutating, getMutation, getQuery, queryKey as qk } from '@/lib/routerHelper';
-import router from '@/router';
+
+// Routes that should trigger pageLoad mutations
+const MUTABLE_ROUTES = new Set(['Home', 'Libraries', 'Music Start']);
 
 const props = defineProps({
 	path: {
@@ -47,7 +49,9 @@ function mutatePageLoad() {
 	}
 
 	const mutations = homeData.value.filter(item => item?.update?.when === 'pageLoad') ?? [];
-	mutate(mutations);
+	if (mutations.length > 0) {
+		mutate(mutations);
+	}
 }
 
 function mutateOnline() {
@@ -56,25 +60,32 @@ function mutateOnline() {
 	}
 
 	const mutations = homeData.value.filter(item => item?.update?.when === 'online') ?? [];
-	mutate(mutations);
+	if (mutations.length > 0) {
+		mutate(mutations);
+	}
 }
 
-function mutateId(event: CustomEvent<{ id: string }>) {
+function mutateId(event: Event) {
+	const customEvent = event as CustomEvent<{ id: string }>;
 	if (!homeData.value || !onlineStatus.value) {
 		return;
 	}
 
-	const mutations = homeData.value.filter(item => item?.id === event.detail.id) ?? [];
-	mutate(mutations);
+	const mutations = homeData.value.filter(item => item?.id === customEvent.detail.id) ?? [];
+	if (mutations.length > 0) {
+		mutate(mutations);
+	}
+}
+
+function shouldMutate(): boolean {
+	return MUTABLE_ROUTES.has(route.name as string);
 }
 
 onMounted(() => {
 	document.addEventListener('mutateId', mutateId);
-	if (!homeData.value || (route.name !== 'Home' && route.name !== 'Libraries' && route.name !== 'Music Start')) {
-		return;
-	}
 
-	if (onlineStatus.value) {
+	// Initial mutation on mount if applicable
+	if (homeData.value && onlineStatus.value && shouldMutate()) {
 		mutatePageLoad();
 	}
 });
@@ -83,32 +94,31 @@ onUnmounted(() => {
 	document.removeEventListener('mutateId', mutateId);
 });
 
+// Trigger mutations when coming back online
 watch(onlineStatus, (value) => {
-	if (!value)
-		return;
-	mutateOnline();
+	if (value) {
+		mutateOnline();
+	}
 });
 
+// Dispatch indexer event when data loads (deferred to avoid blocking render)
 watch(homeData, (value) => {
-	if (!value)
-		return;
-	setTimeout(() => {
-		document.dispatchEvent(new Event('indexer'));
-	}, 1000);
+	if (value) {
+		requestIdleCallback(() => {
+			document.dispatchEvent(new Event('indexer'));
+		});
+	}
 });
 
-onMounted(() => {
-	watch(route, (value, oldValue) => {
-		console.log('onIonViewWillEnter triggered', value.name);
-		if (!homeData.value || value.name !== router.currentRoute.value.name || (value.name !== 'Home' && value.name !== 'Libraries' && value.name !== 'Music Start')) {
-			return;
-		}
-
-		if (onlineStatus.value) {
+// Trigger mutations on route changes for applicable routes
+watch(
+	() => route.name,
+	(newName) => {
+		if (homeData.value && onlineStatus.value && MUTABLE_ROUTES.has(newName as string)) {
 			mutatePageLoad();
 		}
-	});
-});
+	},
+);
 </script>
 
 <template>

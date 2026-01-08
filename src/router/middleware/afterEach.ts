@@ -1,5 +1,6 @@
 import type { Router } from 'vue-router';
 import { isPlatform } from '@ionic/vue';
+import { prefetchForRoute } from '@/services/PrefetchService';
 
 function afterEach(router: Router) {
 	return router.afterEach((to) => {
@@ -15,6 +16,9 @@ function afterEach(router: Router) {
 					.remove('ion-page-invisible');
 			}, 500);
 		}
+
+		// Prefetch data for likely next routes
+		prefetchForRoute(to);
 	});
 }
 

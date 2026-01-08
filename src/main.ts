@@ -1,14 +1,5 @@
 import { createApp, watch } from 'vue';
 import { isPlatform } from '@ionic/vue';
-import { App } from '@capacitor/app';
-
-import { isTv } from '@/config/global';
-import '@/store/deviceInfo';
-import { lockPortrait } from '@/lib/utils';
-import { setUser, setUserFromKeycloak, setUserFromWebKeycloak, user } from '@/store/user';
-import { preloadService } from '@/services/PreloadService';
-import * as Sentry from '@sentry/vue';
-import router from '@/router';
 
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/vue/css/core.css';
@@ -42,36 +33,24 @@ import 'swiper/css';
 import 'swiper/element/css/keyboard';
 
 import AppComponent from './App.vue';
-import { parseToken } from './lib/auth/helpers';
 import { useOnline } from '@vueuse/core';
 import { pwaMessages } from './i18n/pwa';
-import { redirectUrl } from '@/store/routeState';
-import { StatusBar } from '@capacitor/status-bar';
-import { NavigationBar } from '@hugotomazi/capacitor-navigation-bar';
-import { EdgeToEdge } from '@capawesome/capacitor-android-edge-to-edge-support';
 
-// @ts-ignore
-window.StatusBar = StatusBar;
-// @ts-ignore
-window.NavigationBar = NavigationBar;
-// @ts-ignore
-window.EdgeToEdge = EdgeToEdge;
-
-let redirectUri = `nomercy://home`;
-if (location.href.includes('logout')) {
-	redirectUri = `nomercy:///logout`;
-}
-
-if (location.href.includes('redirectUri')) {
-	redirectUri = location.href.split('redirectUri=')[1].split('&')[0];
-}
-
-App.addListener('appUrlOpen', async (data) => {
-	redirectUri = data.url;
-	router.isReady().then(async () => {
-		await router.replace(data.url.replace('nomercy://', ''));
-	});
-}).then();
+// Lazy imports - these will be loaded when needed
+const lazyImports = {
+	App: () => import('@capacitor/app'),
+	StatusBar: () => import('@capacitor/status-bar'),
+	NavigationBar: () => import('@hugotomazi/capacitor-navigation-bar'),
+	EdgeToEdge: () => import('@capawesome/capacitor-android-edge-to-edge-support'),
+	router: () => import('@/router'),
+	deviceInfo: () => import('@/store/deviceInfo'),
+	utils: () => import('@/lib/utils'),
+	user: () => import('@/store/user'),
+	routeState: () => import('@/store/routeState'),
+	preloadService: () => import('@/services/PreloadService'),
+	authHelpers: () => import('./lib/auth/helpers'),
+	Sentry: () => import('@sentry/vue'),
+};
 
 function getCurrentLanguage(): string {
 	return (
@@ -80,21 +59,16 @@ function getCurrentLanguage(): string {
 }
 
 const lang = getCurrentLanguage();
-const messages
-	= pwaMessages[lang as keyof typeof pwaMessages] || pwaMessages.en;
+const messages = pwaMessages[lang as keyof typeof pwaMessages] || pwaMessages.en;
 
 const app = createApp(AppComponent);
-
-const refreshToken = location.search.includes('refreshToken')
-	? location.search.split('refreshToken=')[1].split('&')[0]
-	: localStorage.getItem('refresh_token') || undefined;
-
-redirectUrl.value = window.location.pathname;
-
 const onlineStatus = useOnline();
 
-// Initialize preloading service early
-preloadService.init(); // Re-enabled after fixing TS config
+// Initialize device info store early (but lazily)
+lazyImports.deviceInfo().then();
+
+// Initialize preloading service (non-blocking)
+lazyImports.preloadService().then(({ preloadService }) => preloadService.init());
 
 async function setupApplication() {
 	const { setupApp } = await import('./setupApp');
@@ -106,6 +80,11 @@ async function initializeOfflineApp() {
 		const accessToken = localStorage.getItem('access_token');
 
 		if (accessToken) {
+			const [{ parseToken }, { setUser, user }] = await Promise.all([
+				lazyImports.authHelpers(),
+				lazyImports.user(),
+			]);
+
 			const tokenParsed = parseToken(accessToken);
 
 			setUser({
@@ -135,19 +114,39 @@ async function initializeOfflineApp() {
 async function initializeMobileApp() {
 	if (
 		isPlatform('capacitor')
-		&& !isTv.value
 		&& !localStorage.getItem('access_token')
 	) {
-		await lockPortrait();
-		const [MobileKeycloak, configModule] = await Promise.all([
+		// Load all capacitor plugins in parallel
+		const [
+			{ lockPortrait },
+			{ setUserFromKeycloak },
+			{ StatusBar },
+			{ NavigationBar },
+			{ EdgeToEdge },
+			MobileKeycloak,
+			configModule,
+		] = await Promise.all([
+			lazyImports.utils(),
+			lazyImports.user(),
+			lazyImports.StatusBar(),
+			lazyImports.NavigationBar(),
+			lazyImports.EdgeToEdge(),
 			import('@/lib/auth/mobile-keycloak').then(m => m.default),
 			import('@/config/config').then(m => m.keycloakConfig),
 		]);
 
-		await StatusBar.show();
-		await NavigationBar.show();
-		await EdgeToEdge.enable();
-		await EdgeToEdge.setBackgroundColor({ color: '#000000' });
+		// Expose to window for debugging (non-blocking)
+		Object.assign(window, { StatusBar, NavigationBar, EdgeToEdge });
+
+		await lockPortrait();
+
+		// Run status bar setup in parallel
+		await Promise.all([
+			StatusBar.show(),
+			NavigationBar.show(),
+			EdgeToEdge.enable(),
+			EdgeToEdge.setBackgroundColor({ color: '#000000' }),
+		]);
 
 		// @ts-ignore
 		app.use(MobileKeycloak, {
@@ -158,7 +157,7 @@ async function initializeMobileApp() {
 				enableLogging: true,
 				adapter: 'capacitor-native',
 				responseMode: 'query',
-				redirectUri: `nomercy://home`,
+				redirectUri: 'nomercy://home',
 			},
 			config: configModule,
 			onReady: async (data: any) => {
@@ -171,9 +170,10 @@ async function initializeMobileApp() {
 
 async function initializeWebApp() {
 	if (!isPlatform('capacitor') && !location.search.includes('refreshToken')) {
-		const [keycloak, configModule] = await Promise.all([
-			import('@josempgon/vue-keycloak').then(m => m),
+		const [keycloak, configModule, { setUserFromWebKeycloak }] = await Promise.all([
+			import('@josempgon/vue-keycloak'),
 			import('@/config/config'),
+			lazyImports.user(),
 		]);
 
 		app.use(keycloak.vueKeycloak, {
@@ -197,65 +197,34 @@ async function initializeWebApp() {
 	}
 }
 
-async function initializeCastApp() {
-	if (!isPlatform('capacitor') && location.search.includes('refreshToken')) {
-		const [TvKeycloak, configModule] = await Promise.all([
-			import('@/lib/auth/tv-keycloak').then(m => m.default),
-			import('@/config/config'),
-		]);
-
-		app.use(TvKeycloak, {
-			initOptions: {
-				refreshToken,
-				onLoad: 'check-sso',
-				checkLoginIframe: false,
-				enableLogging: true,
-				pkceMethod: 'S256',
-				silentCheckSsoFallback: true,
-				redirectUri: `${window.location.href || '#/'}${
-					window.location.hash.includes('?') ? '' : '?'
-				}`,
-			},
-			config: configModule.keycloakConfig,
-		});
-
-		location.href = 'nomercy://home';
-		await setupApplication();
-	}
-}
-
-async function initializeTvApp() {
-	const [TvKeycloak, configModule] = await Promise.all([
-		import('@/lib/auth/tv-keycloak').then(m => m.default),
-		import('@/config/config'),
+// Setup deep linking listener (non-blocking)
+async function setupDeepLinking() {
+	const [{ App }, router] = await Promise.all([
+		lazyImports.App(),
+		lazyImports.router(),
 	]);
-	app.use(TvKeycloak, {
-		initOptions: {
-			refreshToken: localStorage.getItem('refresh_token') || undefined,
-			onLoad: 'login-required',
-			checkLoginIframe: false,
-			enableLogging: true,
-			adapter: 'cordova-native',
-			responseMode: 'query',
-			redirectUri,
-			pkceMethod: 'S256',
-			silentCheckSsoFallback: true,
-		},
-		config: configModule.keycloakConfig,
-	});
 
-	await setupApplication();
+	const { redirectUrl } = await lazyImports.routeState();
+	redirectUrl.value = window.location.pathname;
+
+	App.addListener('appUrlOpen', async (data) => {
+		router.default.isReady().then(async () => {
+			await router.default.replace(data.url.replace('nomercy://', ''));
+		});
+	});
 }
 
 // Main initialization logic
 async function initialize() {
 	try {
+		// Start deep linking setup in background
+		setupDeepLinking();
+
 		if (!onlineStatus.value) {
 			await initializeOfflineApp();
 		}
 		else if (
 			isPlatform('capacitor')
-			&& !isTv.value
 			&& !localStorage.getItem('access_token')
 		) {
 			await initializeMobileApp();
@@ -266,32 +235,25 @@ async function initialize() {
 		) {
 			await initializeWebApp();
 		}
-		else if (
-			!isPlatform('capacitor')
-			&& location.search.includes('refreshToken')
-		) {
-			await initializeCastApp();
-		}
-		else {
-			await initializeTvApp();
-		}
 	}
 	catch (error) {
 		console.error('Failed to initialize app:', error);
-
 		location.reload();
 	}
 }
 
 // Start the application
-initialize().then();
+initialize();
 
-// Initialize Sentry in production
+// Initialize Sentry in production (deferred, non-blocking)
 if (import.meta.env.PROD && import.meta.env.VITE_SENTRY_DSN) {
-	Sentry.init({
-		app,
-		dsn: import.meta.env.VITE_SENTRY_DSN,
-		sendDefaultPii: false,
-		tracesSampleRate: 0.1,
+	requestIdleCallback(async () => {
+		const Sentry = await lazyImports.Sentry();
+		Sentry.init({
+			app,
+			dsn: import.meta.env.VITE_SENTRY_DSN,
+			sendDefaultPii: false,
+			tracesSampleRate: 0.1,
+		});
 	});
 }

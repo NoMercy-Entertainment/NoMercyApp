@@ -1,6 +1,6 @@
-import { useKeycloak } from '@/lib/auth/tv-keycloak';
 import { refreshToken } from '@/lib/auth/index';
 import { setUser, user } from '@/store/user';
+import { useKeycloak } from '@josempgon/vue-keycloak';
 
 export function storeUserDetails(): Promise<void> {
 	return new Promise((resolve, reject) => {
@@ -13,22 +13,20 @@ export function storeUserDetails(): Promise<void> {
 			const { isAuthenticated } = useKeycloak();
 
 			if (isAuthenticated.value) {
-				const { keycloak, roles, token, refreshToken } = useKeycloak();
+				const { keycloak, roles, token } = useKeycloak();
 
 				setUser({
 					...user.value,
 					accessToken: token.value,
-					refreshToken: refreshToken.value,
 				});
 
-				if (keycloak.idTokenParsed) {
+				if (keycloak.value?.idTokenParsed) {
 					setUser({
 						...user.value,
-						id: keycloak.idTokenParsed.sub as string,
-						name:
-              keycloak.idTokenParsed.display_name
-              ?? keycloak.idTokenParsed?.name,
-						email: keycloak.idTokenParsed?.email,
+						id: keycloak.value?.idTokenParsed.sub as string,
+						name: keycloak.value?.idTokenParsed.display_name
+							?? keycloak.value?.idTokenParsed?.name,
+						email: keycloak.value?.idTokenParsed?.email,
 						moderator: roles.value.includes('nova'),
 					});
 				}

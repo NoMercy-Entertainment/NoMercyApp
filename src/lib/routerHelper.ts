@@ -74,24 +74,19 @@ watch(onlineStatus, async (value) => {
 	}
 });
 
-watch(currentServer, async (value) => {
+watch(currentServer, async (value, oldValue) => {
 	if (!value) {
 		clearLibraries();
+		return;
 	}
-	queryClient.getQueriesData({ type: 'all' }).forEach((query) => {
-		queryClient.invalidateQueries({
-			queryKey: query,
-		});
-		queryClient.removeQueries({
-			queryKey: query,
-		});
+
+	// Only clear cache if actually switching to a different server
+	if (oldValue?.id && value.id !== oldValue.id) {
+		// Invalidate queries (marks stale) rather than removing them entirely
+		// This allows cached data to be shown while fresh data loads
+		await queryClient.invalidateQueries();
 		queryClient.getMutationCache().clear();
-		queryClient.clear();
-	});
-	await queryClient.invalidateQueries();
-	queryClient.removeQueries();
-	queryClient.getMutationCache().clear();
-	queryClient.clear();
+	}
 });
 
 export function getQuery<T>({ queryKey: key, path }: { queryKey?: string[]; path?: string } = {

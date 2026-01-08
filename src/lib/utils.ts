@@ -4,7 +4,7 @@ import { clsx } from 'clsx';
 import { twMerge } from 'tailwind-merge';
 
 import type { InfoResponse } from '@/types/api/base/info';
-import { isTv } from '@/config/global';
+
 import { isPlatform } from '@ionic/vue';
 import { AndroidFullScreen, AndroidSystemUiFlags } from '@awesome-cordova-plugins/android-full-screen';
 import { EdgeToEdge } from '@capawesome/capacitor-android-edge-to-edge-support';
@@ -187,7 +187,7 @@ export function stopAndPrevent(e: Event) {
 }
 
 export async function lockPortrait() {
-	if (isPlatform('capacitor') && !isTv.value) {
+	if (isPlatform('capacitor')) {
 		const { ScreenOrientation } = await import('@capacitor/screen-orientation');
 		try {
 			await ScreenOrientation.lock({
@@ -201,7 +201,7 @@ export async function lockPortrait() {
 }
 
 export async function lockLandscape() {
-	if (isPlatform('capacitor') && !isTv.value) {
+	if (isPlatform('capacitor')) {
 		const { ScreenOrientation } = await import('@capacitor/screen-orientation');
 		try {
 			await ScreenOrientation.lock({
@@ -238,7 +238,7 @@ const timeout = ref<NodeJS.Timeout>();
 const isLeanModeEnabled = ref(false);
 
 export async function enableImmersiveMode() {
-	if (isPlatform('capacitor') && !isTv.value && !isLeanModeEnabled.value) {
+	if (isPlatform('capacitor') && !isLeanModeEnabled.value) {
 		isLeanModeEnabled.value = true;
 
 		window.addEventListener('touchstart', listener);
@@ -257,7 +257,7 @@ export async function enableImmersiveMode() {
 }
 
 export async function disableImmersiveMode() {
-	if (isPlatform('capacitor') && !isTv.value && isLeanModeEnabled.value) {
+	if (isPlatform('capacitor') && isLeanModeEnabled.value) {
 		isLeanModeEnabled.value = false;
 
 		window.removeEventListener('touchstart', listener);

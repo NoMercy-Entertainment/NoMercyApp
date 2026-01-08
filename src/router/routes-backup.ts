@@ -1,9 +1,8 @@
 import type { NavigationGuardNext, RouteLocationNormalizedGeneric, RouteRecordRaw } from 'vue-router';
 import { computed } from 'vue';
-import { isMobile, isTv, tvModeOverride } from '@/config/global';
+import { isMobile } from '@/config/global';
 
 import MobileBaseLayout from '@/Layout/Mobile/BaseLayout.vue';
-import TvBaseLayout from '@/Layout/Tv/BaseLayout.vue';
 import DesktopBaseLayout from '@/Layout/Desktop/BaseLayout.vue';
 
 import BaseCollection from '@/views/Base/Collection';
@@ -64,8 +63,7 @@ import NotFound from '@/views/NotFound';
 import libraries from '@/store/Libraries';
 
 const baseLayout = computed(() => {
-	if (isTv.value || tvModeOverride.value) {
-		return TvBaseLayout;
+	if (false) {
 	}
 	else if (isMobile.value) {
 		return MobileBaseLayout;
@@ -107,7 +105,7 @@ export const routes: Array<RouteRecordRaw> = [
 				component: BaseLibraries,
 				beforeEnter: (_: RouteLocationNormalizedGeneric, __: RouteLocationNormalizedGeneric, next: NavigationGuardNext) => {
 					const firstLibrary = libraries.value.at(0);
-					if (firstLibrary && !isMobile.value && !isTv.value) {
+					if (firstLibrary && !isMobile.value ) {
 						next({
 							name: 'Library',
 							params: {

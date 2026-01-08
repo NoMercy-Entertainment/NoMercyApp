@@ -6,7 +6,7 @@ import { SortOrder, SortType } from '@/types/musicPlayer';
 import { useAutoThemeColors } from '@/store/preferences';
 import { isXmasTime } from '@/lib/dateTime';
 import { Keyboard } from '@capacitor/keyboard';
-import { isTv } from '@/config/global.ts';
+
 import { applyNativeColor } from '@/store/colorTheme.ts';
 
 export const scrollContainerElement = ref<HTMLDivElement>();
@@ -69,7 +69,7 @@ interface StatusBarPlugin {
 }
 
 export const statusbar = computed(() => {
-	if (isPlatform('capacitor') && !isTv.value) {
+	if (isPlatform('capacitor')) {
 		return import('@capacitor/status-bar').then(({ StatusBar }) => {
 			return StatusBar;
 		});

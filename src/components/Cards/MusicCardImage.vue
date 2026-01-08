@@ -18,7 +18,7 @@ defineProps({
 </script>
 
 <template>
-	<template v-if="data?.type === 'albums' || data?.type === 'release_groups'">
+	<template v-if="data?.type === 'album' || data?.type === 'release_group'">
 		<div
 			class="frosting relative z-0 flex aspect-square h-auto w-full flex-col items-start justify-start self-stretch overflow-clip group-hover/musicCard:rounded-md rounded-lg bg-cover bg-center bg-no-repeat transition-all duration-200 bg-surface-9/11"
 		>
@@ -38,7 +38,7 @@ defineProps({
 		</div>
 	</template>
 
-	<template v-else-if="data?.type === 'artists'">
+	<template v-else-if="data?.type === 'artist'">
 		<div
 			class="relative flex aspect-square h-auto w-full items-center justify-end gap-2 self-stretch overflow-clip rounded-2xl group-hover/musicCard:p-1 p-1.5 transition-all duration-200 bg-surface-10/7"
 		>
@@ -54,7 +54,7 @@ defineProps({
 		</div>
 	</template>
 
-	<template v-else-if="data?.type === 'playlists'">
+	<template v-else-if="data?.type === 'playlist'">
 		<div
 			class="frosting absolute -top-1 group-hover/musicCard:-top-3 left-1/2 flex aspect-square h-auto -translate-x-1/2 flex-col items-start justify-start rounded-lg opacity-60 transition-all delay-150 duration-200 w-[75%] bg-focus/10"
 		>

@@ -5,7 +5,7 @@ import { IonHeader, IonProgressBar, IonToolbar, isPlatform } from '@ionic/vue';
 import { useIsFetching } from '@tanstack/vue-query';
 
 import { closeSidebar, sidebar, toggleSidebar } from '@/store/sidebar';
-import { isTv } from '@/config/global';
+
 import { searchUrl } from '@/store/routeState';
 
 import MobileLibraryHeader from '@/views/Base/Library/components/MobileLibraryHeader.vue';
@@ -17,7 +17,7 @@ const isFetching = useIsFetching();
 
 <template>
 	<IonHeader class="pt-safe transition-all duration-200">
-		<IonToolbar v-if="!isPlatform('capacitor') && !isTv" class="toolbar">
+		<IonToolbar v-if="!isPlatform('capacitor')" class="toolbar">
 			<div
 				class="pt-safe flex justify-between items-center self-stretch flex-grow-0 flex-shrink-0 h-[50px] overflow-hidden px-1 py-1.5"
 			>

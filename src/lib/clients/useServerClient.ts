@@ -1,5 +1,5 @@
 import type { ComputedRef, Ref, UnwrapRef } from 'vue';
-import { ref, toRaw } from 'vue';
+import { toRaw } from 'vue';
 import type { QueryKey, UseQueryReturnType } from '@tanstack/vue-query';
 import { useQuery } from '@tanstack/vue-query';
 
@@ -17,7 +17,6 @@ export interface ServerClientProps {
 	keepForever?: boolean;
 	enabled?: Ref<boolean> | ComputedRef<boolean> | boolean;
 	refetchInterval?: number;
-	delay?: number;
 	queryKey?: QueryKey | unknown[];
 	type?: 'get' | 'post' | 'put' | 'patch' | 'delete' | 'head';
 	suspense?: Ref<UnwrapRef<boolean>>;
@@ -41,120 +40,59 @@ function getDataValues(options?: ServerClientProps) {
 
 function useServerClient<T>(options?: ServerClientProps): Return<T> {
 	const route = useRoute();
-
-	const type = ref<'get' | 'post' | 'put' | 'patch' | 'delete' | 'head'>(
-		options?.type ?? 'get',
-	);
+	const type = options?.type ?? 'get';
 
 	const useQueryC = useQuery({
 		...options,
 		queryKey: queryKey(options),
-		enabled: !!currentServer.value?.id && options?.enabled,
+		enabled: !!currentServer.value?.id && (options?.enabled ?? true),
 		retry: 0,
 		refetchOnMount: true,
 		refetchOnWindowFocus: false,
 		staleTime: options?.keepForever ? Infinity : 1000 * 60 * 5,
-		queryFn: ({ signal }) => {
-			return new Promise<T>((resolve, reject) => {
-				setTimeout(() => {
-					if (!currentServer.value?.serverApiUrl)
-						return reject();
+		queryFn: async ({ signal }): Promise<T> => {
+			if (!currentServer.value?.serverApiUrl) {
+				throw new Error('No server URL');
+			}
 
-					let promise;
+			const path = options?.path ?? route.fullPath;
+			if (path.includes('undefined')) {
+				throw new Error('Invalid path');
+			}
 
-					if ((options?.path ?? route.fullPath).includes('undefined'))
-						return Promise.reject();
+			const dataValues = getDataValues(options);
+			const client = serverClient<T>();
 
-					if (type.value === 'get') {
-						promise = serverClient<T>()
-							.get<T>(options?.path ?? route.fullPath, {
-								params: {
-									letter: route.query?.letter,
-									...getDataValues(options),
-								},
-								signal,
-							})
-							.then((response) => {
-								// @ts-ignore
-								return response.data?.data ?? response.data;
-							});
-					}
-					else if (type.value === 'post') {
-						promise = serverClient<T>()
-							.post<T>(
-								options?.path ?? route.fullPath,
-								{
-									letter: route.query?.letter ?? undefined,
-									...getDataValues(options),
-								},
-								{
-									signal,
-								},
-							)
-							.then(({ data }) => {
-								// @ts-ignore
-								return data?.data ?? data;
-							});
-					}
-					else if (type.value === 'put') {
-						promise = serverClient<T>()
-							.put<T>(
-								options?.path ?? route.fullPath,
-								{
-									letter: route.query?.letter ?? undefined,
-									...getDataValues(options),
-								},
-								{
-									signal,
-								},
-							)
-							.then(({ data }) => {
-								// @ts-ignore
-								return data?.data ?? data;
-							});
-					}
-					else if (type.value === 'patch') {
-						promise = serverClient<T>()
-							.patch<T>(
-								options?.path ?? route.fullPath,
-								{
-									letter: route.query?.letter ?? undefined,
-									...getDataValues(options),
-								},
-								{
-									signal,
-								},
-							)
-							.then(({ data }) => {
-								// @ts-ignore
-								return data?.data ?? data;
-							});
-					}
-					else if (type.value === 'delete') {
-						promise = serverClient<T>()
-							.delete<T>(
-								options?.path ?? route.fullPath,
-								{
-									letter: route.query?.letter ?? undefined,
-									...getDataValues(options),
-								},
-								{
-									signal,
-								},
-							)
-							.then(({ data }) => {
-								// @ts-ignore
-								return data?.data ?? data;
-							});
-					}
+			let response;
 
-					// promise!.then(async (value) => {
-					// 	await set(queryKey(options) as IDBKeyRange | IDBValidKey, value);
-					// });
+			switch (type) {
+				case 'get':
+					response = await client.get<T>(path, {
+						params: { letter: route.query?.letter, ...dataValues },
+						signal,
+					});
+					break;
+				case 'post':
+					response = await client.post<T>(path, { letter: route.query?.letter ?? undefined, ...dataValues }, { signal });
+					break;
+				case 'put':
+					response = await client.put<T>(path, { letter: route.query?.letter ?? undefined, ...dataValues }, { signal });
+					break;
+				case 'patch':
+					response = await client.patch<T>(path, { letter: route.query?.letter ?? undefined, ...dataValues }, { signal });
+					break;
+				case 'delete':
+					response = await client.delete<T>(path, { letter: route.query?.letter ?? undefined, ...dataValues }, { signal });
+					break;
+				default:
+					response = await client.get<T>(path, {
+						params: { letter: route.query?.letter, ...dataValues },
+						signal,
+					});
+			}
 
-					return resolve(promise as Promise<T>);
-				}, options?.delay ?? 0);
-			});
+			// @ts-ignore
+			return response.data?.data ?? response.data;
 		},
 	}) as UseQueryReturnType<T, AxiosError<ErrorResponse>>;
 

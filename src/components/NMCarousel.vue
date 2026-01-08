@@ -2,7 +2,6 @@
 import {computed, onBeforeMount, PropType, ref} from "vue";
 import {Swiper} from "swiper";
 import {Swiper as SwiperComponent, SwiperSlide} from "swiper/vue";
-import {register} from "swiper/element/bundle";
 
 import type {Component} from "@/types/config";
 
@@ -57,7 +56,7 @@ const props = defineProps({
   },
   previous_id: {
     type: String,
-    required: true,
+    required: false,
   },
   next_id: {
     required: true,
@@ -92,12 +91,8 @@ const onSlideChange = (swiper: Swiper) => {
 };
 
 const afterInit = (swiper: Swiper) => {
-  setTimeout(() => {
-    swiper.el?.classList.remove("opacity-0");
-  }, 10 * props.index);
+  swiper.el?.classList.remove("opacity-0");
 };
-
-register();
 
 const reset = () => {
   swiper.value?.$el?.swiper.slideTo(0, 300);
@@ -286,7 +281,6 @@ const scrollToCenter = () => {
             ref="swiper"
             :breakpoints="bp"
             :slidesOffsetBefore="offsetBefore"
-            class="opacity-0"
             data-spatial-container="row"
             v-bind="swiperConfig(backdropCards) as any"
             @afterInit="afterInit"

@@ -1,10 +1,9 @@
 import type { NavigationGuardNext, RouteLocationNormalizedGeneric, RouteRecordRaw } from 'vue-router';
-import { isMobile, isTv, tvModeOverride } from '@/config/global';
+import { isMobile } from '@/config/global';
 import libraries from '@/store/Libraries';
 
 // Lazy load layouts to reduce initial bundle size
 const MobileBaseLayout = import('@/Layout/Mobile/BaseLayout.vue');
-const TvBaseLayout = import('@/Layout/Tv/BaseLayout.vue');
 const DesktopBaseLayout = import('@/Layout/Desktop/BaseLayout.vue');
 
 // Lazy load base views
@@ -70,10 +69,7 @@ const SetupPostInstall = () => import('@/views/Setup/PostInstall');
 const NotFound = () => import('@/views/NotFound');
 
 function getBaseLayout() {
-	if (isTv.value || tvModeOverride.value) {
-		return TvBaseLayout;
-	}
-	else if (isMobile.value) {
+	if (isMobile.value) {
 		return MobileBaseLayout;
 	}
 	else {
@@ -117,7 +113,7 @@ export const routes: Array<RouteRecordRaw> = [
 					next: NavigationGuardNext,
 				) => {
 					const firstLibrary = libraries.value.at(0);
-					if (firstLibrary && !isMobile.value && !isTv.value) {
+					if (firstLibrary && !isMobile.value ) {
 						next({
 							path: firstLibrary.link,
 						});

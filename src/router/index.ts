@@ -1,14 +1,14 @@
 import { createRouter, createWebHistory } from '@ionic/vue-router';
 import { isPlatform } from '@ionic/vue';
 
-import { isTv } from '@/config/global';
-import { useKeycloak } from '@/lib/auth/tv-keycloak';
+
 import { user } from '@/store/user';
 import { routes } from '@/router/routes';
 import beforeEach from '@/router/middleware/beforeEach';
 import afterEach from '@/router/middleware/afterEach';
 import promises from '@/router/middleware/beforeResolve';
 import { handlePromises } from '@/router/middleware/handlePromises';
+import { useKeycloak } from '@josempgon/vue-keycloak';
 
 const router = createRouter({
 	history: isPlatform('capacitor')
@@ -24,7 +24,7 @@ router.beforeResolve(async (to, from, next) => {
 		&& !user.value.accessToken
 	) {
 		const { isAuthenticated } = useKeycloak();
-		if (!isAuthenticated.value && isTv.value) {
+		if (!isAuthenticated.value) {
 			return next({ name: 'Auth' });
 		}
 	}

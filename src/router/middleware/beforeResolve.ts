@@ -6,16 +6,26 @@ import initializeMusicSocket from '@/lib/middleware/initializeMusicSocket';
 import getServerPermissions from '@/lib/middleware/getServerPermissions';
 import getServerSetup from '@/lib/middleware/getServerSetup';
 import { storeUserDetails } from '@/lib/middleware/storeUserDetails';
+import type { MiddlewareConfig } from './handlePromises';
 
-const promises: Array<() => Promise<void>> = [
-	storeUserDetails,
-	getLocations,
-	getServerPermissions,
-	getServerSetup,
-	getLibraries,
-	initializeVideoSocket,
-	initializeMusicSocket,
-	initializeAudioPlayer,
-];
+const middlewareConfig: MiddlewareConfig = {
+	// Must run first to establish user context
+	sequential: [
+		storeUserDetails,
+		getLocations,
+	],
+	// Can run in parallel after user/server context is established
+	parallel: [
+		getServerPermissions,
+		getServerSetup,
+		getLibraries,
+	],
+	// Non-critical, can be deferred until after render
+	deferred: [
+		initializeAudioPlayer,
+		initializeVideoSocket,
+		initializeMusicSocket,
+	],
+};
 
-export default promises;
+export default middlewareConfig;

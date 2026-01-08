@@ -41,7 +41,7 @@ export default defineConfig(({ command }) => {
 					cleanupOutdatedCaches: true,
 					clientsClaim: true,
 					sourcemap: false,
-					skipWaiting: true,
+					skipWaiting: false, // Don't auto-skip - let user control when to update
 					mode: env.NODE_ENV === 'production' ? 'production' : 'development',
 					dontCacheBustURLsMatching: /\.\w{8}\./,
 					navigateFallback: 'index.html',

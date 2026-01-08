@@ -5,15 +5,8 @@ import type { MoooomIcons } from '@Icons/icons';
 import type { NameVal } from '@/types/api/dashboard/server';
 import { Device } from '@capacitor/device';
 
-export const isTv = useMediaQuery('(width: 960px) and (height: 540px)');
-export const tvModeOverride = useLocalStorage('tvModeOverride', false);
-// export const isMobile = useMediaQuery('(max-width: 800px) and (orientation: portrait), (max-height: 800px) and (orientation: landscape)');
-// export const isMobile = ref(
-// 	(isPlatform('mobile') || isPlatform('mobileweb')) && !isPlatform('ipad'),
-// );
-
 export const isMobile = useMediaQuery(
-	'(max-width: 800px) and (orientation: portrait), (max-height: 800px) and (orientation: landscape)',
+	'(max-width: 600px) and (orientation: portrait), (max-height: 600px) and (orientation: landscape)',
 );
 
 const nativeOverride = useLocalStorage('nativeOverride', false);
@@ -275,8 +268,6 @@ console.raw = (...arg: any[]) => {
 (async () => {
 	const deviceInfo = await Device.getId().then(device => device.identifier);
 	console.raw({
-		isTv: isTv.value,
-		tvModeOverride: tvModeOverride.value,
 		isMobile: isMobile.value,
 		isNativeMobile: isPlatform('mobile'),
 		isWebMobile: isPlatform('mobileweb'),
@@ -288,6 +279,3 @@ console.raw = (...arg: any[]) => {
 	});
 })();
 
-watch([isTv, tvModeOverride], () => {
-	location.reload();
-});

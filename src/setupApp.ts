@@ -58,30 +58,27 @@ import NMTrackRow from '@/components/NMTrackRow.vue';
 import NMMusicCard from '@/components/NMMusicCard.vue';
 import { Swiper } from 'swiper';
 import { SwiperSlide } from 'swiper/vue';
+import { register as registerSwiperElements } from 'swiper/element/bundle';
+
+// Register Swiper custom elements globally (once)
+registerSwiperElements();
 
 export async function setupApp(app: AppContext['app']) {
-	if ('serviceWorker' in navigator && !import.meta.env.DEV) {
-		// Log service worker status for debugging
-		navigator.serviceWorker.getRegistrations().then((registrations) => {
-			console.log('All SW registrations:', registrations);
-			registrations.forEach((reg, index) => {
-				console.log(`Registration ${index}:`, {
-					scope: reg.scope,
-					installing: reg.installing?.scriptURL,
-					waiting: reg.waiting?.scriptURL,
-					active: reg.active?.scriptURL,
-				});
-			});
-		});
-	}
+	// Defer service worker setup - don't block app initialization
 	if ('serviceWorker' in navigator && !import.meta.env.DEV && suffix !== '-dev') {
-		await navigator.serviceWorker.ready;
-
-		// Set up service worker update detection
-		const { setupServiceWorkerUpdates } = await import(
-			'@/lib/serviceWorkerUpdates',
-		);
-		setupServiceWorkerUpdates();
+		// Non-blocking: set up SW update detection after app renders
+		queueMicrotask(async () => {
+			try {
+				await navigator.serviceWorker.ready;
+				const { setupServiceWorkerUpdates } = await import(
+					'@/lib/serviceWorkerUpdates',
+				);
+				setupServiceWorkerUpdates();
+			}
+			catch (error) {
+				console.warn('Service worker setup failed:', error);
+			}
+		});
 	}
 
 	app.use(router);
@@ -158,13 +155,6 @@ export async function setupApp(app: AppContext['app']) {
 
 	app.use(ConfirmationService);
 	app.use(ToastService);
-
-	if (!sessionStorage.getItem('load') && isPlatform('capacitor')) {
-		setTimeout(() => {
-			sessionStorage.setItem('load', 'true');
-			location.reload();
-		}, 500);
-	}
 
 	router.isReady().then(() => {
 		app.mount('#app');

@@ -32,22 +32,22 @@ const { t } = useTranslation();
 const footText = computed(() => {
 	let text = '';
 
-	if (props.data.type === 'playlists') {
+	if (props.data.type === 'playlist') {
 		text += t('Playlist');
 	}
-	else if (props.data.type === 'favorites') {
+	else if (props.data.type === 'favorite') {
 		text += t('Playlist');
 	}
-	else if (props.data.type === 'albums') {
+	else if (props.data.type === 'album') {
 		text += t('Album');
 	}
-	else if (props.data.type === 'artists') {
+	else if (props.data.type === 'artist') {
 		text += t('Artist');
 	}
-	else if (props.data.type === 'release_groups') {
+	else if (props.data.type === 'release_group') {
 		text += t('Release');
 	}
-	else if (props.data.type === 'genres') {
+	else if (props.data.type === 'genre') {
 		text += t('Genre');
 	}
 

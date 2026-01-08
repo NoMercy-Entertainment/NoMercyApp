@@ -6,7 +6,7 @@ import { isPlatform } from '@ionic/vue';
 import { scheme } from '@/store/colorScheme';
 import { user } from '@/store/user';
 
-import { isTv, tvModeOverride } from '@/config/global';
+
 import { redirectUrl } from '@/store/routeState';
 import { konamiEnabledState } from '@/store/konami.ts';
 import { logout } from '@/lib/auth/index.ts';
@@ -128,35 +128,6 @@ function handleSelectServer() {
 										:model-value="scheme === 'dark'"
 										@update:model-value="value => scheme = value ? 'dark' : 'light'"
 									/>
-								</span>
-							</button>
-						</div>
-						<div
-							v-if="konamiEnabledState"
-							v-show="!isTv && !isPlatform('mobileweb')"
-							class="flex justify-start items-center self-stretch h-11 relative gap-2 px-2.5 py-2 rounded-md border border-transparent hover:border-focus/4 active:!bg-focus/11 dark:active:!bg-focus/8 active:border-focus/4 active:hover:border-focus/4 focus:bg-focus-9 hover:!bg-focus/10 disabled:!bg-focus/2 disabled:!border-focus/2 transition-colors duration-200 overflow-clip"
-						>
-							<button
-								class="relative flex w-full flex-grow items-center justify-center gap-2 px-2 text-lg font-medium text-left"
-								tabindex="-1"
-								@click="tvModeOverride = !tvModeOverride"
-							>
-								<MoooomIcon class-name="" icon="monitor" />
-								<span
-									class="relative flex flex-grow items-center justify-center gap-2 pl-2"
-								>
-									<span class="w-full flex-grow text-lg font-medium">
-										{{
-											tvModeOverride
-												? $t("Disable TV mode")
-												: $t("Enable TV mode")
-										}}
-									</span>
-								</span>
-								<span
-									class="inline-flex cursor-pointer items-center gap-3 pointer-events-none"
-								>
-									<Toggle id="toggleTvUI" :model-value="tvModeOverride" />
 								</span>
 							</button>
 						</div>

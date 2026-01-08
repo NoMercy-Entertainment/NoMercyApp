@@ -26,6 +26,9 @@ function createUpdateNotification(): Message {
 	};
 }
 
+let waitingServiceWorker: ServiceWorker | null = null;
+let refreshing = false;
+
 export function setupServiceWorkerUpdates() {
 	if (!('serviceWorker' in navigator)) {
 		console.log('Service worker not supported');
@@ -36,8 +39,10 @@ export function setupServiceWorkerUpdates() {
 
 	// Listen for controller changes (indicates new SW took over)
 	navigator.serviceWorker.addEventListener('controllerchange', () => {
-		console.log('Controller changed - new service worker active');
-		// Don't show notification here as it might be the first install
+		if (!refreshing) {
+			refreshing = true;
+			window.location.reload();
+		}
 	});
 
 	// Check for updates immediately and set up listeners
@@ -53,7 +58,7 @@ export function setupServiceWorkerUpdates() {
 
 			// Check if there's already an update waiting
 			if (registration.waiting) {
-				console.log('Update already waiting, showing notification');
+				waitingServiceWorker = registration.waiting;
 				showUpdateNotification();
 			}
 
@@ -78,8 +83,12 @@ export function setupServiceWorkerUpdates() {
 
 	// Listen for user accepting the update
 	document.addEventListener('sw-update-accepted', () => {
-		console.log('User accepted update, reloading...');
-		window.location.reload();
+		if (waitingServiceWorker) {
+			waitingServiceWorker.postMessage({ type: 'SKIP_WAITING' });
+		}
+		else {
+			window.location.reload();
+		}
 	});
 
 	// Check for updates periodically
@@ -116,6 +125,7 @@ function setupUpdateListeners(registration: ServiceWorkerRegistration) {
 				if (navigator.serviceWorker.controller) {
 					// New version is available (update scenario)
 					console.log('New version installed, showing notification');
+					waitingServiceWorker = newWorker;
 					showUpdateNotification();
 				}
 				else {

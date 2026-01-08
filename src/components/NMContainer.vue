@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import type { PropType } from 'vue';
 
 import type { Component } from '@/lib/routerHelper';

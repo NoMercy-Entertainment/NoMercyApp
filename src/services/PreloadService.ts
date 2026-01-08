@@ -5,10 +5,8 @@ class PreloadService {
 	private criticalComponentLoaders = [
 		() => import('@/Layout/Desktop/BaseLayout.vue'),
 		() => import('@/Layout/Mobile/BaseLayout.vue'),
-		() => import('@/Layout/Tv/BaseLayout.vue'),
 		() => import('@/views/Base/Home/Desktop.vue'),
 		() => import('@/views/Base/Home/Mobile.vue'),
-		() => import('@/views/Base/Home/Tv.vue'),
 	];
 
 	/**

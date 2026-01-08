@@ -13,6 +13,10 @@ const props = defineProps({
 		required: false,
 		default: '',
 	},
+	properties: {
+		type: Object as PropType<{ [key: string]: any } | undefined | null>,
+		required: false,
+	},
 	data: {
 		type: Object as PropType<HomeDataItem> | undefined | null,
 		required: false,
@@ -25,6 +29,8 @@ const ringColor = ref(
 		// .replace(')', '')
 		.replace(/,/gu, ' ') ?? 'var(--color-primary)',
 );
+
+const span = props.properties?.span ?? -1;
 </script>
 
 <template>
@@ -32,6 +38,7 @@ const ringColor = ref(
 		v-if="data && data?.type !== 'playlists'"
 		:style="`
             --color-theme-8: ${ringColor};
+            grid-column: span ${span};
           `"
 		:to="data?.link"
 		class="card relative flex flex-grow items-center justify-start gap-4 overflow-clip w-inherit rounded-2xl p-1.5 group/musicCard bg-gradient-to-b from-[#021c37]/[0.08] to-[#05294d]/[0.03] dark:from-[#e2f0fd]/[0.08] dark:to-[#d5feff]/[0.03]"

@@ -1,11 +1,10 @@
 <script lang="ts" setup>
 import type { PropType } from 'vue';
-import { computed, onMounted, ref, watch } from 'vue';
+import { computed, ref, watch } from 'vue';
 
 import type { PaletteColors } from '@/types/api/shared';
 
 import { isDarkMode } from '@/config/global';
-import { getImageBrightness } from '@/lib/colorHelper';
 import { currentServer } from '@/store/currentServer';
 import { useAutoThemeColors } from '@/store/preferences';
 import AppLogoSquare from '@/components/Images/icons/AppLogoSquare.vue';
@@ -56,11 +55,6 @@ const props = defineProps({
 		required: false,
 		default: 'low',
 	},
-	shadow: {
-		type: String,
-		required: false,
-		default: 'var(--color-theme-8)',
-	},
 	onload: {
 		type: Function as PropType<
 			(data: Event & { target: HTMLImageElement }) => void
@@ -71,9 +65,6 @@ const props = defineProps({
 
 const opacity = ref(0);
 const error = ref(false);
-const shouldLighten = ref(false);
-const shouldDarken = ref(false);
-const brightness = ref(0);
 
 const serverImageUrl = computed(() => {
 	if (!props.path || !currentServer.value)
@@ -170,34 +161,10 @@ const height = computed(() => {
 	return props.size * aspectRatio.value;
 });
 
-onMounted(() => {
-	if (props?.type !== 'logo' || serverImageUrl.value?.includes('undefined'))
-		return;
-
-	getImageBrightness(
-		`${serverImageUrl.value}`,
-		({ nonTransparentBrightness }) => {
-			brightness.value = nonTransparentBrightness;
-			shouldLighten.value = nonTransparentBrightness < 20;
-			shouldDarken.value = nonTransparentBrightness > 80;
-		},
-	);
-});
-
 watch(serverImageUrl, (value) => {
-	if (!value)
-		return;
-
-	if (props?.type === 'logo' || serverImageUrl.value?.includes('undefined'))
-		return;
-
-	getImageBrightness(`${value}`, ({ nonTransparentBrightness }) => {
-		brightness.value = nonTransparentBrightness;
-		shouldLighten.value = nonTransparentBrightness < 20;
-		shouldDarken.value = nonTransparentBrightness > 80;
-	});
-
-	error.value = false;
+	if (value) {
+		error.value = false;
+	}
 });
 
 function onLoaded(e: Event) {
@@ -249,7 +216,6 @@ function onError(e: Event) {
 					'w-auto !h-inherit': aspect === null,
 					'object-fit w-auto h-available': type === 'logo',
 					'object-cover object-top': type === 'image',
-					'[filter:drop-shadow(0px_0px_6px_black)_drop-shadow(0px_0px_6px_black)_drop-shadow(0px_0px_6px_black)]': shouldDarken,
 					[`${widthClass}`]: true,
 					[`${className}`]: true,
 				}"
@@ -261,14 +227,9 @@ function onError(e: Event) {
 				:onloadstart="onLoadStart"
 				:src="tmdbImageUrl"
 				:style="`
-              float: ${type === 'logo' ? 'right' : ''};
-              filter: ${
-					shouldLighten || shouldDarken
-						? `drop-shadow(0px 0px 6px rgb(from ${shadow} r g b)) drop-shadow(0px 0px 6px rgb(from ${shadow} r g b))`
-						: ''}
-            object-fit: scale-down;
-            object-position: center;
-        `"
+					float: ${type === 'logo' ? 'right' : ''};
+					object-position: center;
+				`"
 				:width="size"
 				class="pointer-events-auto bg-bottom transition-all duration-500 max-w-available"
 				crossorigin="anonymous"

@@ -2,7 +2,7 @@ import type { VNodeRef } from 'vue';
 import { computed, ref, watch } from 'vue';
 import type { LogoResponse } from '@/types/server';
 import { isPlatform } from '@ionic/vue';
-import { isTv } from '@/config/global.ts';
+
 import { NavigationBar } from '@hugotomazi/capacitor-navigation-bar';
 import { EdgeToEdge } from '@capawesome/capacitor-android-edge-to-edge-support';
 import { StatusBar } from '@capacitor/status-bar';
@@ -67,7 +67,7 @@ export function setTemp(temp: any) {
 export const imageModal = ref<VNodeRef>();
 watch([sim, sss], async ([sim, sss]) => {
 	if ((sim || sss) && !dss.value) {
-		if (isPlatform('capacitor') && !isTv.value) {
+		if (isPlatform('capacitor')) {
 			await Promise.all([
 				NavigationBar.hide(),
 				EdgeToEdge.disable(),
@@ -78,7 +78,7 @@ watch([sim, sss], async ([sim, sss]) => {
 		(document.activeElement as HTMLElement).blur();
 	}
 	else {
-		if (isPlatform('capacitor') && !isTv.value) {
+		if (isPlatform('capacitor')) {
 			await Promise.all([
 				StatusBar.show(),
 				NavigationBar.show(),
