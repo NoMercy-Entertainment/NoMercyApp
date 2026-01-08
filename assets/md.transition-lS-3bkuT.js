@@ -1,0 +1,1 @@
+import"./index5-B30D6T27.js";import"./client-rtF7IPPI.js";import"./ionic-global--aoJHCDL.js";import"./helpers-CXS86XKs.js";import"./index6-CZ6rqL_0.js";import"./index2-op38TIl9.js";import{n as s,t as i}from"./md.transition-BqH5iNQr.js";i();export{s as mdTransitionAnimation};

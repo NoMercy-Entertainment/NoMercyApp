@@ -1,0 +1,1 @@
+import{rr as e}from"./index-04Sh3wNb.js";var o,i=e({"node_modules/@nomercy-entertainment/nomercy-music-player/node_modules/@ionic/core/components/dir.js":()=>{o=r=>r&&r.dir!==""?r.dir.toLowerCase()==="rtl":document?.dir.toLowerCase()==="rtl"}});export{o as n,i as t};

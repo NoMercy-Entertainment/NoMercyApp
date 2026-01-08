@@ -1,0 +1,2 @@
+const __vite__mapDeps=(i,m=__vite__mapDeps,d=(m.f||(m.f=["assets/web-BV_3fXkP.js","assets/dist-CVoPesok.js","assets/index-04Sh3wNb.js","assets/index-B6ihSDsN.css"])))=>i.map(i=>d[i]);
+import{Bt as a,Vt as i}from"./index-04Sh3wNb.js";import{n as t,r as e}from"./dist-CVoPesok.js";var r;(function(o){o.SHOW="onShow",o.HIDE="onHide",o.COLOR_CHANGE="onColorChange"})(r||(r={}));t();i();var s=e("NavigationBar",{web:()=>a(()=>import("./web-BV_3fXkP.js"),__vite__mapDeps([0,1,2,3])).then(o=>new o.NavigationBarWeb)});export{r as n,s as t};
