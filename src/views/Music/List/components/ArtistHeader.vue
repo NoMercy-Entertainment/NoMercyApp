@@ -14,6 +14,7 @@ import FavoriteImage from '@/components/Images/FavoriteImage.vue';
 import CoverImage from '@/components/MusicPlayer/components/CoverImage.vue';
 import { pickPaletteColor, tooLight } from '@/lib/colorHelper.ts';
 import { colorPalette } from '@/store/ui.ts';
+import ClickUploadModal from '@/components/ClickUploadModal.vue';
 
 const props = defineProps({
 	data: {
@@ -152,20 +153,25 @@ const light = computed(() => tooLight(pickPaletteColor(colorPalette.value), 150)
 			}"
 			class="frosting relative mx-auto flex aspect-square w-80 max-w-[90%] flex-col items-center justify-center rounded-xl bg-gradient-to-br min-w-64 bg-theme-6 from-theme-5 via-theme-6 to-theme-9 shadow"
 		>
-			<CoverImage
-				v-if="data?.cover"
-				id="image"
-				:data="data"
-				:size="250"
-				class-name="aspect-square rounded-xl w-full"
-				loading="eager"
-			/>
-			<FavoriteImage
-				v-else-if="data?.id"
-				:id="data.id"
-				:type="data.type"
-				class="aspect-square rounded-xl w-full"
-			/>
+			<ClickUploadModal v-if="data" :data="data" :url="`${data.link}/cover`">
+				<template #default="{ data: data2, ref: imgRef }">
+					<CoverImage
+						v-if="data?.cover"
+						id="image"
+						:data="data2"
+						:img-ref="imgRef"
+						:size="250"
+						class-name="aspect-square rounded-xl w-full"
+						loading="eager"
+					/>
+					<FavoriteImage
+						v-else-if="data?.id"
+						:id="data.id"
+						:type="data.type"
+						class="aspect-square rounded-xl w-full"
+					/>
+				</template>
+			</ClickUploadModal>
 		</div>
 
 		<div

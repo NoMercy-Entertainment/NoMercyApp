@@ -1,7 +1,6 @@
 import { createRouter, createWebHistory } from '@ionic/vue-router';
 import { isPlatform } from '@ionic/vue';
 
-
 import { user } from '@/store/user';
 import { routes } from '@/router/routes';
 import beforeEach from '@/router/middleware/beforeEach';
@@ -11,9 +10,7 @@ import { handlePromises } from '@/router/middleware/handlePromises';
 import { useKeycloak } from '@josempgon/vue-keycloak';
 
 const router = createRouter({
-	history: isPlatform('capacitor')
-		? createWebHistory(import.meta.env.BASE_URL)
-		: createWebHistory(import.meta.env.BASE_URL),
+	history: createWebHistory(import.meta.env.BASE_URL),
 	routes,
 });
 
