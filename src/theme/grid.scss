@@ -1,7 +1,7 @@
 .album-grid {
 	grid-template-columns: [index] minmax(60px, 1fr) [first] 4fr [var2] minmax(100px, 1fr);
 	@media (min-width: 640px) {
-		grid-template-columns: [index] 42px [first] 2fr [var1] 2fr [var2] 1fr [last] minmax(170px, auto);
+		grid-template-columns: [index] 42px [first] 3fr [var1] 3fr [var2] 2fr [last] minmax(170px, auto);
 	}
 }
 

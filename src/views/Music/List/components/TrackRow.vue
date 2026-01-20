@@ -2,7 +2,6 @@
 import type { PropType } from 'vue';
 import { computed } from 'vue';
 import { useRoute } from 'vue-router';
-import { useTranslation } from 'i18next-vue';
 
 import type { PlaylistItem } from '@/types/musicPlayer';
 
@@ -39,9 +38,8 @@ const props = defineProps({
 });
 
 const route = useRoute();
-const { t } = useTranslation();
 
-const isAlbumRoute = computed(() => route.path.startsWith('/music/album'));
+const isAlbumRoute = computed(() => route.path.startsWith('/music/album') || route.path.startsWith('/music/tracks'));
 const isArtistRoute = computed(() => route.path.startsWith('/music/artist'));
 
 function handleClick() {
@@ -156,26 +154,28 @@ const date = computed(() => {
 		</span>
 
 		<template v-for="item in data.album_track" :key="item.id">
-			<button
-				:class="{
-					'opacity-0': !isAlbumRoute,
-					'opacity-100': isAlbumRoute,
-				}"
-				class="hidden items-center overflow-clip pr-2 line-clamp-2 h-inherit w-inherit sm:flex"
-				@click="(e) => e.stopPropagation()"
-			>
-				<RouterLink
-					:to="item?.link"
-					class="flex items-center gap-1 whitespace-nowrap font-semibold line-clamp-1 hover:underline focus:underline dark:font-medium pointer-events-auto"
-					data-target="album"
-					no-ring
-					tabindex="0"
+			<Marquee>
+				<button
+					:class="{
+						'opacity-0': !isAlbumRoute,
+						'opacity-100': isAlbumRoute,
+					}"
+					class="hidden items-center overflow-clip pr-2 line-clamp-2 h-inherit w-inherit sm:flex"
+					@click="(e) => e.stopPropagation()"
 				>
-					<span class="flex whitespace-nowrap">
-						<Marquee :text="item.name" />
-					</span>
-				</RouterLink>
-			</button>
+					<RouterLink
+						:to="item?.link"
+						class="flex items-center gap-1 whitespace-nowrap font-semibold line-clamp-1 hover:underline focus:underline dark:font-medium pointer-events-auto"
+						data-target="album"
+						no-ring
+						tabindex="0"
+					>
+						<span class="flex whitespace-nowrap">
+							{{ item.name }}
+						</span>
+					</RouterLink>
+				</button>
+			</Marquee>
 		</template>
 		<span class="hidden sm:flex invisible max-h-12 md:visible">
 			{{ date }}
