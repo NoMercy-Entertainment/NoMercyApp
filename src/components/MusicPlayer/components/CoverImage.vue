@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import type { PropType } from 'vue';
+import type { PropType, VNodeRef } from 'vue';
 import { onMounted, ref, watch } from 'vue';
 
 import type { HomeDataItem } from '@/types/api/music';
@@ -70,6 +70,11 @@ const props = defineProps({
 		required: false,
 		default: 500,
 	},
+	imageRef: {
+		type: Object as PropType<VNodeRef | undefined>,
+		required: false,
+		default: null,
+	},
 });
 
 const source = ref<string | null>(null);
@@ -82,8 +87,13 @@ function image() {
 
 	const suffix = location.hostname.includes('dev') ? '-dev' : '';
 
+	if (props.data?.cover?.startsWith('blob:')) {
+		source.value = props.data?.cover;
+		return;
+	}
+
 	if (
-		props.data?.cover?.includes('https://')
+		props.data?.cover?.startsWith('https://')
 		&& props.data?.cover?.includes('fanart.tv')
 	) {
 		source.value = props.data?.cover
@@ -94,7 +104,8 @@ function image() {
 			);
 		return;
 	}
-	if (props.data?.cover?.includes('https://')) {
+
+	if (props.data?.cover?.startsWith('https://')) {
 		source.value = props.data?.cover;
 		return;
 	}
@@ -119,12 +130,19 @@ watch(props, () => {
 
 const error = ref(false);
 function onError(e: Event) {
-	(e.target as HTMLImageElement).onerror = null;
-	error.value = true;
+	// (e.target as HTMLImageElement).onerror = null;
+	// error.value = true;
 }
 
 function onClick() {
 	// console.log('click');
+}
+
+function makeQuery(format: string, size: number) {
+	if (props.data?.cover?.startsWith('blob:'))
+		return '';
+
+	return `?width=${size}&type=${format} 1x`;
 }
 </script>
 
@@ -163,21 +181,22 @@ function onClick() {
 			class="aspect-square !absolute inset-0 overflow-clip z-10 h-available w-available object-cover"
 		>
 			<source
-				:srcset="`${source}?width=${size ?? 500}&type=avif 1x`"
+				:srcset="`${source}${makeQuery('avif', size ?? 500)}`"
 				type="image/avif"
 			>
 			<source
-				:srcset="`${source}?width=${size ?? 500}&type=webp 1x`"
+				:srcset="`${source}${makeQuery('webp', size ?? 500)}`"
 				crossorigin="anonymous"
 				type="image/webp"
 			>
 			<source
-				:srcset="`${source}?width=${size ?? 500}&type=jpg 1x`"
+				:srcset="`${source}${makeQuery('jpeg', size ?? 500)}`"
 				crossorigin="anonymous"
 				type="image/jpeg"
 			>
 			<img
 				:id="id"
+				:ref="imageRef"
 				:alt="`cover image for ${data.name ?? 'image'}`"
 				:data-id="data?.id"
 				:loading="loading"

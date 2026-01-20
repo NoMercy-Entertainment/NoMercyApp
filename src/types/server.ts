@@ -8,6 +8,10 @@ import type {
 	LibraryUser,
 } from '@/types/api/base/library';
 import type { ColorPalettes } from '@/types/api/shared';
+import type { PlaylistItem } from '@/types/musicPlayer.ts';
+import type { Artist, ArtistResponse, Featured } from '@/types/api/music/artist';
+import type { Album, AlbumResponse } from '@/types/api/music/album';
+import type { DisplayList, MusicCardPageResponseData } from '@/types/api/music/musicPlayer';
 
 export interface ErrorResponse {
 	type: string;
@@ -133,3 +137,5 @@ export interface LogEntry {
 	thread_id: number;
 	time: Date;
 }
+
+export type MusicImageTypes = PlaylistItem | Artist | Album | DisplayList | MusicCardPageResponseData | AlbumResponse | ArtistResponse | Featured;

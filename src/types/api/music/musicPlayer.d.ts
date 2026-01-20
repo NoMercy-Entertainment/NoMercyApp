@@ -18,7 +18,6 @@ export interface MusicCardPageResponseData {
 	blurHash: null | string;
 	libraryId: string;
 	artists: Artist[];
-	type: string;
 	titleSort: string;
 	origin: string;
 	link: string;
@@ -84,26 +83,26 @@ export interface MusicCardPageResponse {
 	type: string;
 	data: MusicCardPageResponseData[];
 }
-
-export interface MusicCardPageResponseData {
-	id: string;
-	name: string;
-	title: string;
-	description: null;
-	folder: string;
-	cover: null | string;
-	logo?: null | string;
-	country: null | string;
-	year: number | null;
-	tracks: number;
-	track: PlaylistItem[];
-	color_palette: ColorPalettes | null;
-	blurHash: null | string;
-	libraryId: string;
-	artists: Artist[];
-	type: string;
-	titleSort: string;
-	origin: string;
-	link: string;
-	type: string;
-}
+//
+// export interface MusicCardPageResponseData {
+// 	id: string;
+// 	name: string;
+// 	title: string;
+// 	description: null;
+// 	folder: string;
+// 	cover: null | string;
+// 	logo?: null | string;
+// 	country: null | string;
+// 	year: number | null;
+// 	tracks: number;
+// 	track: PlaylistItem[];
+// 	color_palette: ColorPalettes | null;
+// 	blurHash: null | string;
+// 	libraryId: string;
+// 	artists: Artist[];
+// 	type: string;
+// 	titleSort: string;
+// 	origin: string;
+// 	link: string;
+// 	type: string;
+// }

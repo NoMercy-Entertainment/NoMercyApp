@@ -4,10 +4,10 @@ import { onMounted, onUnmounted } from 'vue';
 
 import type { ArtistResponse } from '@/types/api/music/artist';
 
-import { limitSentenceByCharacters } from '@/lib/stringArray';
-
 import CoverImage from '@/components/MusicPlayer/components/CoverImage.vue';
 import { setBackground, setColorPalette } from '@/store/ui';
+import ClickUploadModal from '@/components/ClickUploadModal.vue';
+import { limitSentenceByCharacters } from '@/lib/stringArray.ts';
 
 const props = defineProps({
 	data: {
@@ -34,11 +34,16 @@ onUnmounted(() => {
 			v-if="data.cover"
 			class="flex flex-col items-start justify-start self-stretch overflow-clip rounded-lg"
 		>
-			<CoverImage
-				:data="data"
-				:size="500"
-				class="aspect-square h-auto w-full"
-			/>
+			<ClickUploadModal :data="data" :url="`${data.link}/cover`">
+				<template #default="{ data: data2, ref: ref }">
+					<CoverImage
+						:data="data2"
+						:img-ref="ref"
+						:size="500"
+						class="aspect-square h-auto w-full"
+					/>
+				</template>
+			</ClickUploadModal>
 		</div>
 		<div
 			class="w-full whitespace-pre-line font-semibold leading-normal"

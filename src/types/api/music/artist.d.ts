@@ -8,7 +8,7 @@ export interface ArtistResponse {
 	name: string;
 	description: null | string;
 	disambiguation: null | string;
-	cover: null | string | undefined;
+	cover: string | null;
 	folder: null | string;
 	color_palette: ColorPalettes | null;
 	blurHash: string | null;
@@ -67,6 +67,6 @@ export interface Image {
 export interface Featured {
 	id: string;
 	name: string;
-	cover: string;
+	cover: string | null;
 	color_palette: ColorPalettes;
 }

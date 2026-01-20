@@ -91,6 +91,7 @@ export interface PlaylistItem extends BasePlaylistItem {
 	track_user: any[];
 	favorite: boolean;
 	date: string;
+	cover: string | null;
 }
 
 export interface Lyric {
