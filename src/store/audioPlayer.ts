@@ -9,6 +9,7 @@ import type {
 } from '@capacitor-community/volume-buttons';
 import { VolumeButtons } from '@capacitor-community/volume-buttons';
 import MusicPlayer from '@nomercy-entertainment/nomercy-music-player';
+
 import type {
 	EQBand,
 	EQSliderValues,

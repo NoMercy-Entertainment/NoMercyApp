@@ -26,7 +26,7 @@ const route = useRoute();
 
 const { data: playlists } = useServerClient<Playlist[]>({
 	path: '/music/playlists',
-	queryKey: ['playlists'],
+	queryKey: ['music', 'playlists'],
 });
 
 watch(playlists, (value) => {

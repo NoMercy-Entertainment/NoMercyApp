@@ -146,7 +146,7 @@ const classes = computed(() => {
 					<slot />
 				</p>
 			</template>
-			<span v-else-if="title">{{ title }}</span>
+			<span v-else-if="title">{{ $t(title) }}</span>
 		</span>
 
 		<MoooomIcon v-if="endIcon" :icon="endIcon" class="-mr-1 w-5" />
@@ -169,7 +169,7 @@ const classes = computed(() => {
 					<slot />
 				</p>
 			</template>
-			<span v-else-if="title">{{ title }}</span>
+			<span v-else-if="title">{{ $t(title) }}</span>
 		</span>
 
 		<MoooomIcon v-if="endIcon" :icon="endIcon" class="-mr-1 w-5" />
@@ -205,7 +205,7 @@ const classes = computed(() => {
 
 		<span class="whitespace-nowrap leading-[100%] empty:hidden">
 			<slot v-if="$slots" />
-			<span v-else-if="title">{{ title }}</span>
+			<span v-else-if="title">{{ $t(title) }}</span>
 		</span>
 
 		<MoooomIcon v-if="endIcon" :icon="endIcon" class="-mr-1 w-5" />

@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { computed } from 'vue';
+import { computed, ref } from 'vue';
 import { IonPage, IonRouterOutlet, IonTabs } from '@ionic/vue';
 import { useRoute } from 'vue-router';
 
@@ -27,6 +27,9 @@ import MusicPlayerDesktop from '@/components/MusicPlayer/MusicPlayerDesktop.vue'
 import EqualizerOverlay from '@/Layout/Desktop/components/Overlays/EqualizerOverlay.vue';
 import ChristmasSnow from '@/components/Seasonal/Christmas/ChristmasSnow.vue';
 import Shadow from '@/Layout/Desktop/components/Shadow.vue';
+import { useEventListener } from '@vueuse/core';
+import type { PlaylistItem } from '@/types/musicPlayer.ts';
+import CreatePlaylistModal from '@/Layout/Desktop/components/Menus/CreatePlaylistModal.vue';
 
 const route = useRoute();
 
@@ -39,6 +42,32 @@ const backgroundUrl = computed(() => {
 function focusMain() {
 	document.querySelector<HTMLButtonElement>('main a, main button')?.focus();
 }
+
+interface ModalEvent {
+	detail: {
+		modalName: string;
+		modalProps: unknown;
+	};
+}
+
+const playlistModalData = ref<PlaylistItem | null>(null);
+
+function handleModalTrigger(modalName: string, modalProps: unknown) {
+	if (modalName === 'createPlaylist') {
+		const playlist = modalProps as unknown as PlaylistItem;
+		console.log(playlist);
+		playlistModalData.value = playlist;
+	}
+}
+
+function onClose() {
+	playlistModalData.value = null;
+}
+
+useEventListener(document, 'showModal', (evt) => {
+	const event = evt as unknown as ModalEvent;
+	handleModalTrigger(event.detail.modalName, event.detail.modalProps);
+});
 </script>
 
 <template>
@@ -118,7 +147,10 @@ function focusMain() {
 			<ConfirmDialog />
 			<ContextMenu ref="contextMenu" :model="contextMenuItems" />
 		</div>
+
 		<ContextMenu ref="cardMenu" :model="trackContextMenuItems as MenuItem[]" />
+
+		<CreatePlaylistModal v-if="playlistModalData" :data="playlistModalData" :on-close="onClose" />
 	</IonPage>
 </template>
 

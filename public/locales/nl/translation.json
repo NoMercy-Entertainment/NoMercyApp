@@ -155,7 +155,7 @@
   "Plugins": "Plugins",
   "Scheduled tasks": "Geplande taken",
   "Save": "Opslaan",
-  "Cancel": "Anuleren",
+  "Cancel": "Annuleren",
   "Rescan": "Opnieuw scannen",
   "Delete": "Verwijder",
   "Delete all": "Alles verwijderen",
@@ -358,5 +358,15 @@
   "Good Day": "Goede dag",
   "Goodbye": "Tot ziens",
   "What would you like to see?": "Wat wilt u zien?",
-  "What would you like to listen to?": "Wat wilt u luisteren?"
+  "What would you like to listen to?": "Wat wilt u luisteren?",
+  "Drag and drop files to here to upload.": "Sleep bestanden hier naar toe om te uploaden.",
+  "Remove Image": "Verwijder afbeelding",
+  "Add an optional description": "Voeg een optionele beschrijving toe",
+  "Add to new Playlist": "Voeg aan nieuwe afspeellijst toe",
+  "New Playlist": "Nieuwe afspeellijst",
+  "Go to album": "Ga naar album",
+  "Go to artist": "Ga naar artiest",
+  "Copy page link": "Kopieer pagina link",
+  "Copy track link": "Kopieer nummer link",
+  "No playlists": "Geen afspeellijsten"
 }

@@ -59,6 +59,10 @@
 
   --p-navigation-item-icon-focus-color: var(--p-text-color);
 
+  --p-contextmenu-item-icon-color: var(--p-text-color);
+  --p-contextmenu-item-icon-active-color: var(--p-text-color);
+  --p-contextmenu-item-icon-focus-color: var(--p-text-color);
+
   --p-surface-0: theme('colors.surface.1');
   --p-surface-50: theme('colors.surface.2');
   --p-surface-100: theme('colors.surface.3');
@@ -146,6 +150,10 @@
 
     --p-navigation-item-icon-focus-color: var(--p-text-color);
 
+    --p-contextmenu-item-icon-color: var(--p-text-color);
+    --p-contextmenu-item-icon-active-color: var(--p-text-color);
+    --p-contextmenu-item-icon-focus-color: var(--p-text-color);
+
     --p-surface-0: theme('colors.surface.1');
     --p-surface-50: theme('colors.surface.2');
     --p-surface-100: theme('colors.surface.3');
@@ -223,6 +231,10 @@
   --p-tooltip-arrow-color: var(--p-surface-100);
 
   --p-navigation-item-icon-focus-color: var(--p-text-color);
+
+  --p-contextmenu-item-icon-color: var(--p-text-color);
+  --p-contextmenu-item-icon-active-color: var(--p-text-color);
+  --p-contextmenu-item-icon-focus-color: var(--p-text-color);
 
   --p-surface-0: theme('colors.surface.12');
   --p-surface-50: theme('colors.surface.11');
@@ -313,6 +325,10 @@
       --p-tooltip-arrow-color: var(--p-surface-100);
 
       --p-navigation-item-icon-focus-color: var(--p-text-color);
+
+    --p-contextmenu-item-icon-color: var(--p-text-color);
+    --p-contextmenu-item-icon-active-color: var(--p-text-color);
+    --p-contextmenu-item-icon-focus-color: var(--p-text-color);
 
         --p-surface-0 : theme('colors.surface.12');
         --p-surface-50: theme('colors.surface.11');

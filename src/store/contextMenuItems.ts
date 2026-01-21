@@ -12,6 +12,10 @@ import { t } from 'i18next';
 import { musicPlaylist } from '@/store/musicPlaylists';
 import { currentServer } from '@/store/currentServer';
 import { testUserToken } from '@/store/user';
+import { queryClient } from '@/config/tanstack-query.ts';
+import type { StatusResponse } from '@/types/api/base/library';
+import audioPlayer from '@/store/audioPlayer.ts';
+import { Share } from '@capacitor/share';
 
 export interface ContextMenuItem {
 	label?: string;
@@ -120,7 +124,13 @@ export function onTrackRowRightClick(event: Event, data: PlaylistItem) {
 				label: t('New Playlist'),
 				icon: 'mooooom-add',
 				command: () => {
-					alert(selectedTrackRow.value?.id);
+					const evt = new CustomEvent('showModal', {
+						detail: {
+							modalName: 'createPlaylist',
+							modalProps: selectedTrackRow.value,
+						},
+					});
+					document.dispatchEvent(evt);
 				},
 			},
 		],
@@ -128,8 +138,7 @@ export function onTrackRowRightClick(event: Event, data: PlaylistItem) {
 
 	if (musicPlaylist.value.length === 0) {
 		addToPlaylistItem.items!.push({
-			label: t('No playlist available'),
-			icon: 'mooooom-pause',
+			label: t('No playlists'),
 		});
 	}
 
@@ -138,7 +147,20 @@ export function onTrackRowRightClick(event: Event, data: PlaylistItem) {
 			label: playlist.name,
 			icon: 'mooooom-disk',
 			command: () => {
-				alert(selectedTrackRow.value?.id);
+				serverClient()
+					.patch(`/music-player/playlist/${playlist.id}/add`, {
+						id: selectedTrackRow.value?.id,
+					})
+					.then(() => {
+						queryClient
+							.invalidateQueries({ queryKey: ['music', 'tracks'] })
+							.then(() => {
+								console.log('refetching tracks');
+							});
+					})
+					.catch((err) => {
+						console.error(err);
+					});
 			},
 		});
 	}
@@ -149,15 +171,31 @@ export function onTrackRowRightClick(event: Event, data: PlaylistItem) {
 		{
 			label: t('Save to your liked songs'),
 			icon: 'mooooom-heart',
-			command: () => {
-				alert(selectedTrackRow.value?.id);
+			command: async () => {
+				await serverClient()
+					.post<StatusResponse<string>>(`${selectedTrackRow.value?.link}/like`, {
+						value: !selectedTrackRow.value?.liked.value,
+					})
+					.then(({ data }) => {
+						if (selectedTrackRow.value) {
+							selectedTrackRow.value.value = data.args?.[0] === 'liked' || data.args?.[1] === 'liked';
+						}
+					});
 			},
 		},
 		{
 			label: t('Add to queue'),
 			icon: 'mooooom-playlist1Add',
 			command: () => {
-				alert(selectedTrackRow.value?.id);
+				if (selectedTrackRow.value) {
+					if (audioPlayer.currentSong === null) {
+						console.log('playing track');
+						audioPlayer.playTrack(selectedTrackRow.value);
+						return;
+					}
+					console.log('adding track to queue');
+					audioPlayer.addToQueue(selectedTrackRow.value);
+				}
 			},
 		},
 		{
@@ -173,9 +211,9 @@ export function onTrackRowRightClick(event: Event, data: PlaylistItem) {
 		menuItems.push({
 			label: t('Go to album'),
 			icon: 'mooooom-disk',
-			command: () => {
+			command: async () => {
 				if (selectedTrackRow.value?.album_track?.[0]?.link) {
-					router.push(selectedTrackRow.value?.album_track?.[0]?.link);
+					await router.push(selectedTrackRow.value?.album_track?.[0]?.link);
 				}
 			},
 		});
@@ -192,7 +230,7 @@ export function onTrackRowRightClick(event: Event, data: PlaylistItem) {
 				return {
 					label: artist.name,
 					icon: 'mooooom-disk',
-					command: () => router.push(artist.link),
+					command: async () => await router.push(artist.link),
 				};
 			}),
 		});
@@ -206,9 +244,9 @@ export function onTrackRowRightClick(event: Event, data: PlaylistItem) {
 		menuItems.push({
 			label: t('Go to artist'),
 			icon: 'mooooom-user',
-			command: () => {
+			command: async () => {
 				if (selectedTrackRow.value?.artist_track?.[0]?.link) {
-					router.push(selectedTrackRow.value?.artist_track?.[0]?.link);
+					await router.push(selectedTrackRow.value?.artist_track?.[0]?.link);
 				}
 			},
 		});
@@ -225,7 +263,7 @@ export function onTrackRowRightClick(event: Event, data: PlaylistItem) {
 				return {
 					label: artist.name,
 					icon: 'mooooom-user',
-					command: () => router.push(artist.link),
+					command: async () => await router.push(artist.link),
 				};
 			}),
 		});
@@ -242,7 +280,7 @@ export function onTrackRowRightClick(event: Event, data: PlaylistItem) {
 				{
 					label: t('Copy page link'),
 					icon: 'mooooom-fileCopy',
-					command: () => copyToClipboard(window.location.href),
+					command: async () => await copyToClipboard(window.location.href),
 				},
 				{
 					label: t('Copy track link'),
@@ -250,9 +288,19 @@ export function onTrackRowRightClick(event: Event, data: PlaylistItem) {
 					command: () =>
 						selectedTrackRow.value
 							? copyToClipboard(
-									`${currentServer.value?.serverBaseUrl}/${selectedTrackRow.value?.folder_id}${selectedTrackRow.value?.folder}${selectedTrackRow.value?.filename}?token=${testUserToken.value}`,
+									`${currentServer.value?.serverBaseUrl}${selectedTrackRow.value?.link}?token=${testUserToken.value}`,
 								)
 							: {},
+				},
+				{
+					label: t('Share page'),
+					icon: 'mooooom-fileCopy',
+					command: async () => {
+						const shareData = {
+							url: window.location.href,
+						};
+						await Share.share(shareData);
+					},
 				},
 			],
 		},

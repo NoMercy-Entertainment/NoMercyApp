@@ -151,12 +151,12 @@ const light = computed(() => tooLight(pickPaletteColor(colorPalette.value), 150)
 				'-mt-4': isPlatform('capacitor'),
 				'': !isPlatform('capacitor'),
 			}"
-			class="frosting relative mx-auto flex aspect-square w-80 max-w-[90%] flex-col items-center justify-center rounded-xl bg-gradient-to-br min-w-64 bg-theme-6 from-theme-5 via-theme-6 to-theme-9 shadow"
+			class="frosting relative mx-auto group/cover flex aspect-square w-80 overflow-clip max-w-[90%] flex-col items-center justify-center rounded-xl bg-gradient-to-br min-w-64 bg-theme-6 from-theme-5 via-theme-6 to-theme-9 shadow"
 		>
 			<ClickUploadModal v-if="data" :data="data" :url="`${data.link}/cover`">
 				<template #default="{ data: data2, ref: imgRef }">
 					<CoverImage
-						v-if="data?.cover"
+						v-if="data2?.cover"
 						id="image"
 						:data="data2"
 						:img-ref="imgRef"
@@ -165,9 +165,9 @@ const light = computed(() => tooLight(pickPaletteColor(colorPalette.value), 150)
 						loading="eager"
 					/>
 					<FavoriteImage
-						v-else-if="data?.id"
-						:id="data.id"
-						:type="data.type"
+						v-else-if="data2?.id"
+						:id="data2.id"
+						:type="data2.type"
 						class="aspect-square rounded-xl w-full"
 					/>
 				</template>

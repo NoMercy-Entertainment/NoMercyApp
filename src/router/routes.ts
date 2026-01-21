@@ -113,7 +113,7 @@ export const routes: Array<RouteRecordRaw> = [
 					next: NavigationGuardNext,
 				) => {
 					const firstLibrary = libraries.value.at(0);
-					if (firstLibrary && !isMobile.value ) {
+					if (firstLibrary && !isMobile.value) {
 						next({
 							path: firstLibrary.link,
 						});

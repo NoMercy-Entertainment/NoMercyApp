@@ -22,9 +22,9 @@ const route = useRoute();
 
 async function handleOpenApp() {
 	if (isPlatform('android')) {
-		Browser.open({ url: `nomercy://${route.path}` }).then(() => {
+		Browser.open({ url: `tv.nomercy.app://${route.path}` }).then(() => {
 			setTimeout(async () => {
-				await Browser.open({ url: `nomercy://${route.path}` });
+				await Browser.open({ url: `tv.nomercy.app://${route.path}` });
 			}, 1000);
 		});
 	}

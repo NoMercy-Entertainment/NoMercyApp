@@ -5,7 +5,7 @@ import cdnClient from '../clients/cdnClient';
 
 import { keycloak, setUser, user } from '@/store/user';
 import { isPlatform } from '@ionic/vue';
-import { authBaseUrl, suffix } from '@/config/config';
+import { authBaseUrl } from '@/config/config';
 
 const originalLocation = window.location.href.startsWith('file://')
 	? 'http://localhost:5173'
@@ -56,10 +56,7 @@ export function getUrlParams() {
 
 async function redirectToOAuth(prompt = false) {
 	await generatePKCE().then((pkce) => {
-		let redirect = `${originalLocation}/#/oauth/callback`;
-		if (isPlatform('capacitor')) {
-			redirect = 'nomercy:///logout';
-		}
+		const redirect = `${originalLocation}/#/oauth/callback`;
 
 		const queryParams = new URLSearchParams({
 			client_id: clientId,
@@ -229,26 +226,11 @@ async function checkAuth(): Promise<boolean | void> {
 }
 
 export function logout() {
-	let redirect = `${originalLocation}/#/oauth/callback`;
-	if (isPlatform('capacitor')) {
-		// redirect = 'nomercy:///logout';
-		redirect = `https://app${suffix}.nomercy.tv/logout`;
-	}
-
-	keycloak.value.logout();
-	return;
-
-	const queryParams = new URLSearchParams({
-		post_logout_redirect_uri: redirect,
-		id_token_hint: keycloak.value.idToken,
-		prompt: 'false',
-	}).toString();
+	keycloak.value?.logout();
 
 	clearTokens();
 	sessionStorage.clear();
 	localStorage.clear();
-
-	window.location.href = `${authBaseUrl}logout?${queryParams}`;
 }
 
 export function isAuthenticated() {
