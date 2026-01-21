@@ -1,2 +1,0 @@
-const __vite__mapDeps=(i,m=__vite__mapDeps,d=(m.f||(m.f=["assets/web-DGTVTDCm.js","assets/dist-DT2yuChF.js","assets/index-C8wrpkyN.js","assets/index-BuQJHs7e.css"])))=>i.map(i=>d[i]);
-import{Ct as i,wt as r}from"./index-C8wrpkyN.js";import{n as t,r as _}from"./dist-DT2yuChF.js";t();r();var s=_("Device",{web:()=>i(()=>import("./web-DGTVTDCm.js"),__vite__mapDeps([0,1,2,3])).then(e=>new e.DeviceWeb)});export{s as t};
