@@ -1,1 +1,0 @@
-import{Ht as e,Tn as _,in as r}from"./index-04Sh3wNb.js";import{t}from"./_plugin-vue_export-helper-B_iOTHZb.js";e();var a={},n={class:"bg"};function o(c,s){return _(),r("div",n)}var p=t(a,[["render",o],["__scopeId","data-v-386a0916"]]);export{p as t};
