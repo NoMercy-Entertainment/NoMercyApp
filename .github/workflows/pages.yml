@@ -40,90 +40,90 @@ jobs:
           publish_dir: ./docs
           cname: app.nomercy.tv
           
-      - name: Install Java
-        uses: actions/setup-java@v5
-        with:
-          distribution: 'oracle'
-          java-version: '21'
+      # - name: Install Java
+      #   uses: actions/setup-java@v5
+      #   with:
+      #     distribution: 'oracle'
+      #     java-version: '21'
 
-      # Sync the project
-      - name: Sync Capacitor
-        run: npx cap sync android
+      # # Sync the project
+      # - name: Sync Capacitor
+      #   run: npx cap sync android
 
-      # Build the Ionic app
-      - name: Build Ionic App
-        run: npm run build:android
+      # # Build the Ionic app
+      # - name: Build Ionic App
+      #   run: npm run build:android
 
-      # Set version information
-      - name: Set Version Information
-        run: |
-          echo "VERSION_CODE=$((GITHUB_RUN_NUMBER))" >> $GITHUB_ENV
-          echo "VERSION_NAME=1.0.${GITHUB_RUN_NUMBER}" >> $GITHUB_ENV
+      # # Set version information
+      # - name: Set Version Information
+      #   run: |
+      #     echo "VERSION_CODE=$((GITHUB_RUN_NUMBER))" >> $GITHUB_ENV
+      #     echo "VERSION_NAME=1.0.${GITHUB_RUN_NUMBER}" >> $GITHUB_ENV
 
 
-      # Build the Android release APK
-      - name: Build Android Release APK
-        run: |
-          cd ./android
-          chmod +x gradlew
-          ./gradlew clean
-          ./gradlew assembleRelease --stacktrace
+      # # Build the Android release APK
+      # - name: Build Android Release APK
+      #   run: |
+      #     cd ./android
+      #     chmod +x gradlew
+      #     ./gradlew clean
+      #     ./gradlew assembleRelease --stacktrace
 
-      - name: Decode keystore and create jks
-        run: echo "${{ secrets.ANDROID_KEYSTORE_BASE64 }}" | base64 --decode > keystore.jks
+      # - name: Decode keystore and create jks
+      #   run: echo "${{ secrets.ANDROID_KEYSTORE_BASE64 }}" | base64 --decode > keystore.jks
 
-      - name: Sign APK with jarsigner
-        env:
-          KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
-        run: |
-          jarsigner -verbose -sigalg SHA256withRSA -digestalg SHA-256 \
-            -keystore keystore.jks \
-            -storepass "$KEYSTORE_PASSWORD" \
-            "${{ github.workspace }}/android/app/build/outputs/apk/release/app-release-unsigned.apk" ${{ secrets.KEY_ALIAS }}
+      # - name: Sign APK with jarsigner
+      #   env:
+      #     KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
+      #   run: |
+      #     jarsigner -verbose -sigalg SHA256withRSA -digestalg SHA-256 \
+      #       -keystore keystore.jks \
+      #       -storepass "$KEYSTORE_PASSWORD" \
+      #       "${{ github.workspace }}/android/app/build/outputs/apk/release/app-release-unsigned.apk" ${{ secrets.KEY_ALIAS }}
 
-      - name: Verify Signed APK
-        run: |
-          jarsigner -verify "${{ github.workspace }}/android/app/build/outputs/apk/release/app-release-unsigned.apk"
+      # - name: Verify Signed APK
+      #   run: |
+      #     jarsigner -verify "${{ github.workspace }}/android/app/build/outputs/apk/release/app-release-unsigned.apk"
 
-      - name: Zipalign APK
-        run: |
-          sudo apt-get update && sudo apt-get install -y zipalign apksigner
-          zipalign -v 4 \
-          "${{ github.workspace }}/android/app/build/outputs/apk/release/app-release-unsigned.apk" \
-          "${{ github.workspace }}/android/./app/build/outputs/apk/release/app-release-aligned.apk"
+      # - name: Zipalign APK
+      #   run: |
+      #     sudo apt-get update && sudo apt-get install -y zipalign apksigner
+      #     zipalign -v 4 \
+      #     "${{ github.workspace }}/android/app/build/outputs/apk/release/app-release-unsigned.apk" \
+      #     "${{ github.workspace }}/android/./app/build/outputs/apk/release/app-release-aligned.apk"
 
-      - name: Final APK signing with apksigner
-        env:
-          KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
-        run: |
-          apksigner sign --ks keystore.jks --ks-key-alias ${{ secrets.KEY_ALIAS }} --ks-pass pass:${{ secrets.KEYSTORE_PASSWORD }} "${{ github.workspace }}/android/app/build/outputs/apk/release/app-release-aligned.apk"
+      # - name: Final APK signing with apksigner
+      #   env:
+      #     KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
+      #   run: |
+      #     apksigner sign --ks keystore.jks --ks-key-alias ${{ secrets.KEY_ALIAS }} --ks-pass pass:${{ secrets.KEYSTORE_PASSWORD }} "${{ github.workspace }}/android/app/build/outputs/apk/release/app-release-aligned.apk"
 
-      # Use the aligned and signed APK for release
-      - name: Create Release
-        id: create_release
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          tag_name: v${{ github.run_number }}
-          release_name: Ionic Android APK Release
-          body: |
-            New APK release is ready for download.
-            Version: 1.0.${{ github.run_number }}
-          draft: false
-          prerelease: false
+      # # Use the aligned and signed APK for release
+      # - name: Create Release
+      #   id: create_release
+      #   uses: actions/create-release@v1
+      #   env:
+      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      #   with:
+      #     tag_name: v${{ github.run_number }}
+      #     release_name: Ionic Android APK Release
+      #     body: |
+      #       New APK release is ready for download.
+      #       Version: 1.0.${{ github.run_number }}
+      #     draft: false
+      #     prerelease: false
 
-      - name: Get Short SHA
-        id: get_short_sha
-        run: echo "::set-output name=short_sha::${GITHUB_SHA::7}"
+      # - name: Get Short SHA
+      #   id: get_short_sha
+      #   run: echo "::set-output name=short_sha::${GITHUB_SHA::7}"
 
-      # Upload the APK to the release
-      - name: Upload APK to Release
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ${{ github.workspace }}/android/app/build/outputs/apk/release/app-release-aligned.apk
-          asset_name: app-release-1.0.${{ github.run_number }}.apk
-          asset_content_type: application/vnd.android.package-archive
+      # # Upload the APK to the release
+      # - name: Upload APK to Release
+      #   uses: actions/upload-release-asset@v1
+      #   env:
+      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      #   with:
+      #     upload_url: ${{ steps.create_release.outputs.upload_url }}
+      #     asset_path: ${{ github.workspace }}/android/app/build/outputs/apk/release/app-release-aligned.apk
+      #     asset_name: app-release-1.0.${{ github.run_number }}.apk
+      #     asset_content_type: application/vnd.android.package-archive
