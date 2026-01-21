@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import type { PropType } from 'vue';
+import { computed } from 'vue';
 // import { useRoute } from 'vue-router';
 import type { PlaylistItem } from '@/types/musicPlayer';
 
@@ -12,12 +13,12 @@ import CoverImage from '@/components/MusicPlayer/components/CoverImage.vue';
 import MediaLikeButton from '@/components/Buttons/MediaLikeButton.vue';
 import BannerButton from '@/components/Buttons/BannerButton.vue';
 import TrackLinks from '@/views/Music/List/components/TrackLinks.vue';
-import { isAlbumRoute } from '@/store/routeState';
 import { onTrackRowRightClick } from '@/store/contextMenuItems';
 import PlayerIcon from '@/components/Images/icons/PlayerIcon.vue';
 import { musicSocketConnection } from '@/store/musicSocket';
 import { user } from '@/store/user';
 import MoooomIcon from '@/components/Images/icons/MoooomIcon.vue';
+import { useRoute } from 'vue-router';
 
 const props = defineProps({
 	data: {
@@ -33,6 +34,10 @@ const props = defineProps({
 		required: true,
 	},
 });
+
+const route = useRoute();
+const isAlbumRoute = computed(() => route.path.startsWith('/music/album'));
+const isFavoritesRoute = computed(() => route.path.startsWith('/music/playlists'));
 
 function handleClick() {
 	if (!user.value.features?.nomercyConnect) {
@@ -58,7 +63,7 @@ function handleClick() {
 		data-target="track"
 		tabindex="0"
 		@click="handleClick()"
-		@contextmenu="onTrackRowRightClick($event, data)"
+		@contextmenu="onTrackRowRightClick($event, $route, data)"
 	>
 		<span class="flex w-10 justify-center text-center min-w-10">
 			<span
@@ -103,6 +108,7 @@ function handleClick() {
 					{{ data.name }}
 				</span>
 				<span
+					v-if="isFavoritesRoute"
 					:data-size="musicSize"
 					class="inline-flex h-5 w-fit gap-1 overflow-hidden whitespace-nowrap text-surface-9 line-clamp-1 text-2xs hover:animate-pause"
 				>

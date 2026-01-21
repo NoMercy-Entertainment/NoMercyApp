@@ -21,7 +21,7 @@ function beforeEach(router: Router) {
 			// 		}
 			// 	}
 
-			console.log(to.path);
+			// console.log(to.path);
 
 			const query = { ...to.query };
 			let hasRemovableQuery = false;

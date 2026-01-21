@@ -30,7 +30,7 @@ const { data: playlists, refetch: refetchPlaylists } = useServerClient<
 
 const { refetch: refetchScreensaver } = useServerClient<LogoResponse[]>({
 	enabled: !!libraries.value,
-	path: '/screensaver',
+	path: 'setup/screensaver',
 });
 
 watch(libraries, (value) => {

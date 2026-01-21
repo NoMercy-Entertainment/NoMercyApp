@@ -336,7 +336,7 @@
   "Manage your encoder profiles and their settings here.": "Beheer hier uw encoder profielen en hun instellingen.",
   "Are you sure you want to delete this encoder profile?": "Weet u zeker dat u dit encoder profiel wilt verwijderen?",
   "Devices": "Apparaten",
-  "Device avtivity: {{name}}": "Apparaat activiteit: {{name}}",
+  "Device activity: {{name}}": "Apparaat activiteit: {{name}}",
   "Activity": "Activiteit",
   "Specials": "Specials",
   "Special: {{title}}": "Special: {{title}}",
@@ -363,10 +363,11 @@
   "Remove Image": "Verwijder afbeelding",
   "Add an optional description": "Voeg een optionele beschrijving toe",
   "Add to new Playlist": "Voeg aan nieuwe afspeellijst toe",
-  "New Playlist": "Nieuwe afspeellijst",
+  "New playlist": "Nieuwe afspeellijst",
   "Go to album": "Ga naar album",
   "Go to artist": "Ga naar artiest",
   "Copy page link": "Kopieer pagina link",
   "Copy track link": "Kopieer nummer link",
-  "No playlists": "Geen afspeellijsten"
+  "No playlists": "Geen afspeellijsten",
+  "Change cover": "Wijzig cover"
 }

@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import type { PropType } from 'vue';
+import { computed } from 'vue';
 import { useRoute } from 'vue-router';
 
 import type { PlaylistItem } from '@/types/musicPlayer';
@@ -31,10 +32,11 @@ const props = defineProps({
 	},
 });
 
-const router = useRoute();
+const route = useRoute();
+const isFavoritesRoute = computed(() => route.path.startsWith('/music/playlists'));
 
 function setCurrentList() {
-	setCurrentPlaylist(router.fullPath);
+	setCurrentPlaylist(route.fullPath);
 }
 
 function handleClick() {
@@ -53,7 +55,7 @@ function handleClick() {
 		data-target="track"
 		tabindex="0"
 		@click="handleClick()"
-		@contextmenu="onTrackRowRightClick($event, data)"
+		@contextmenu="onTrackRowRightClick($event, $route, data)"
 	>
 		<span
 			class="flex w-10 h-10 justify-center text-center min-w-10 relative z-0"
@@ -122,7 +124,7 @@ function handleClick() {
 					@click="(e) => e.stopPropagation()"
 				>
 					<TrackLinks
-						v-if="data"
+						v-if="data && isFavoritesRoute"
 						:id="data.id"
 						:data="data.artist_track"
 						:onclick="(e: MouseEvent) => e.stopPropagation()"

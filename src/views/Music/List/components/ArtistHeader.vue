@@ -224,16 +224,16 @@ const light = computed(() => tooLight(pickPaletteColor(colorPalette.value), 150)
 					</RouterLink>
 				</div>
 				<p
-					v-if="data?.tracks"
+					v-if="data?.tracks && data?.artists?.length"
 					class="text-left text-sm font-medium"
 				>
 					•
 				</p>
 				<p class="text-left text-sm font-medium">
 					{{ data?.tracks?.length }}
-					{{ data?.tracks?.length === 1 ? t('song') : t('songs') }}
+					{{ data?.tracks?.length === 1 ? t('track') : t('tracks') }}
 				</p>
-				<p v-if="duration" class="text-left text-sm font-medium">
+				<p v-if="(duration?.length ?? 0) > 0" class="text-left text-sm font-medium">
 					•
 				</p>
 				<p class="text-left text-sm font-medium">

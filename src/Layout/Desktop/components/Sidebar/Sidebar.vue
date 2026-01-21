@@ -25,8 +25,8 @@ import MoooomIcon from '@/components/Images/icons/MoooomIcon.vue';
 const route = useRoute();
 
 const { data: playlists } = useServerClient<Playlist[]>({
-	path: '/music/playlists',
-	queryKey: ['music', 'playlists'],
+	path: '/setup/music-playlists',
+	queryKey: ['music-playlists'],
 });
 
 watch(playlists, (value) => {

@@ -11,6 +11,7 @@ const fileUpload = ref();
 const image = ref<HTMLImageElement>();
 const src = ref<string | ArrayBuffer | null | undefined>(null);
 const fileData = ref<any>(null);
+const disabled = ref(true);
 
 function onFileSelect(event: FileUploadSelectEvent) {
 	const file = event.files[0];
@@ -24,6 +25,16 @@ function onFileSelect(event: FileUploadSelectEvent) {
 	reader.readAsDataURL(file);
 
 	fileData.value = file;
+
+	disabled.value = false;
+}
+
+function onUpload() {
+	disabled.value = true;
+}
+
+function onRemove() {
+	disabled.value = true;
 }
 
 function onRemoveTemplatingFile() {
@@ -34,30 +45,41 @@ function onRemoveTemplatingFile() {
 </script>
 
 <template>
-	<FileUpload
-		id="imageDrop"
-		ref="fileUpload"
-		class="p-button-outlined"
-		mode="basic"
-		@select="onFileSelect"
-	>
-		<template v-if="!src" #chooseicon>
-			<div class="min-w-64 aspect-square flex items-center justify-center flex-col">
-				<p class="mt-6 mb-0">
-					{{ $t('Drag and drop files to here to upload.') }}
-				</p>
-			</div>
-		</template>
-		<template v-else #chooseicon>
-			<slot :ref="image" :data="{
-				cover: fileData?.objectURL,
-			} as MusicImageTypes"
-			/>
-		</template>
-	</FileUpload>
-	<Button id="clear" :disabled="!src" color="red" end-icon="trash" title="Remove Image" variant="outlined" @click="onRemoveTemplatingFile">
-		{{ $t("Remove Image") }}
-	</Button>
+	<div class="relative">
+		<FileUpload
+			id="imageDrop"
+			ref="fileUpload"
+			class="p-button-outlined relative"
+			mode="basic"
+			@remove="onRemove"
+			@select="onFileSelect"
+			@upload="onUpload"
+		>
+			<template v-if="!src" #chooseicon>
+				<div class="min-w-64 aspect-square flex items-center justify-center flex-col">
+					<p class="mt-6 mb-0">
+						{{ $t('Drag and drop files to here to upload.') }}
+					</p>
+				</div>
+			</template>
+			<template v-else #chooseicon>
+				<slot :ref="image" :data="{
+					cover: fileData?.objectURL,
+				} as MusicImageTypes"
+				/>
+			</template>
+		</FileUpload>
+		<Button
+			v-if="!disabled"
+			id="clear"
+			class="absolute bottom-4 right-5 z-50"
+			color="red"
+			end-icon="trash"
+			title="Remove Image"
+			variant="default"
+			@click="onRemoveTemplatingFile"
+		/>
+	</div>
 </template>
 
 <style>

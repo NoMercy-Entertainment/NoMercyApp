@@ -1,9 +1,10 @@
 import { ref } from 'vue';
-import serverClient from '../clients/serverClient';
-import { currentServer, setCurrentServer } from '@/store/currentServer';
 
-import router from '@/router';
 import type { PermissionsResponse } from '@/types/api/dashboard/server';
+
+import { currentServer, setCurrentServer } from '@/store/currentServer';
+import router from '@/router';
+import serverClient from '@/lib/clients/serverClient.ts';
 
 const done = ref(false);
 
@@ -20,7 +21,7 @@ function getServerPermissions(): Promise<void> {
 		}
 
 		serverClient(5)
-			.get<PermissionsResponse>('permissions')
+			.get<PermissionsResponse>('setup/permissions')
 			.then(({ data }) => {
 				setCurrentServer({
 					...currentServer.value!,

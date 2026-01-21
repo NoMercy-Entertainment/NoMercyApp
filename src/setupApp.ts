@@ -1,6 +1,6 @@
 import type { AppContext } from 'vue';
 import { App } from '@capacitor/app';
-import { IonicVue, isPlatform, useBackButton } from '@ionic/vue';
+import { IonicVue, useBackButton } from '@ionic/vue';
 import Aura from '@primevue/themes/aura';
 import { VueQueryPlugin } from '@tanstack/vue-query';
 import MasonryWall from '@yeger/vue-masonry-wall';

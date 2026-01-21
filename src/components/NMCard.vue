@@ -49,16 +49,12 @@ const image = computed(() => {
 });
 
 const focusColor = computed(() => {
-	return '';
 	return props.data?.color_palette?.[
 		backdropStyle.value ? 'backdrop' : 'poster'
 	]
 		? pickPaletteColor(
 				props.data?.color_palette?.[backdropStyle.value ? 'backdrop' : 'poster'],
 			)
-	// .replace(/,/gu, ' ')
-	// .replace(')', '')
-	// .replace('rgb(', '')
 		: '';
 });
 

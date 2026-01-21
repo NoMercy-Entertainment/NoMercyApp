@@ -3,10 +3,10 @@ import { isPlatform } from '@ionic/vue';
 
 import { user } from '@/store/user';
 import { routes } from '@/router/routes';
-import beforeEach from '@/router/middleware/beforeEach';
-import afterEach from '@/router/middleware/afterEach';
-import promises from '@/router/middleware/beforeResolve';
-import { handlePromises } from '@/router/middleware/handlePromises';
+import beforeEach from '@/router/beforeEach';
+import afterEach from '@/router/afterEach';
+import promises from '@/router/beforeResolve';
+import { handlePromises } from '@/router/handlePromises';
 import { useKeycloak } from '@josempgon/vue-keycloak';
 
 const router = createRouter({

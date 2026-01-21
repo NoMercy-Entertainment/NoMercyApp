@@ -123,7 +123,7 @@ const classes = computed(() => {
 				? 'text-white'
 				: props.color
 			: '',
-		props.disabled ? 'grayscale cursor-not-allowed' : '',
+		props.disabled ? 'grayscale !cursor-not-allowed' : '',
 	);
 });
 </script>
@@ -135,6 +135,7 @@ const classes = computed(() => {
 		:class="classes"
 		:data-variant="variant"
 		:for="htmlFor"
+		:inert="disabled"
 		:style="style"
 		@click="onClick"
 	>
@@ -149,7 +150,7 @@ const classes = computed(() => {
 			<span v-else-if="title">{{ $t(title) }}</span>
 		</span>
 
-		<MoooomIcon v-if="endIcon" :icon="endIcon" class="-mr-1 w-5" />
+		<MoooomIcon v-if="endIcon" :icon="endIcon" class="w-5" />
 	</label>
 	<a
 		v-else-if="component === 'link'"
@@ -158,6 +159,7 @@ const classes = computed(() => {
 		:data-variant="variant"
 		:for="htmlFor"
 		:href="href"
+		:inert="disabled"
 		:style="style"
 		@click="onClick"
 	>
@@ -172,7 +174,7 @@ const classes = computed(() => {
 			<span v-else-if="title">{{ $t(title) }}</span>
 		</span>
 
-		<MoooomIcon v-if="endIcon" :icon="endIcon" class="-mr-1 w-5" />
+		<MoooomIcon v-if="endIcon" :icon="endIcon" class="w-5" />
 	</a>
 	<button
 		v-else
@@ -180,13 +182,14 @@ const classes = computed(() => {
 		:class="classes"
 		:data-variant="variant"
 		:disabled="disabled"
+		:inert="disabled"
 		:style="
 			color === 'theme'
 				? {
 					'--color-1': `var(--color-theme-1)`,
 					'--color-2': `var(--color-theme-2)`,
 					'--color-3': `var(--color-theme-3)`,
-					'--color-4': `var(--color-theme-8)`,
+					'--color-4': `var(--color-theme-4)`,
 					'--color-5': `var(--color-theme-5)`,
 					'--color-6': `var(--color-theme-6)`,
 					'--color-7': `var(--color-theme-7)`,
@@ -208,6 +211,6 @@ const classes = computed(() => {
 			<span v-else-if="title">{{ $t(title) }}</span>
 		</span>
 
-		<MoooomIcon v-if="endIcon" :icon="endIcon" class="-mr-1 w-5" />
+		<MoooomIcon v-if="endIcon" :icon="endIcon" class="w-5" />
 	</button>
 </template>

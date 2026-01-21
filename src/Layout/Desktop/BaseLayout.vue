@@ -117,7 +117,7 @@ useEventListener(document, 'showModal', (evt) => {
 							>
 								<slot v-if="$slots.default" />
 								<IonTabs v-else>
-									<IonRouterOutlet :key="route.name" :animated="false" />
+									<IonRouterOutlet :key="route.fullPath" :animated="false" />
 								</IonTabs>
 							</main>
 						</div>

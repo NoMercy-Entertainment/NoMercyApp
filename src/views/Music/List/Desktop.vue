@@ -1,7 +1,7 @@
 <script lang="ts" setup>
-import { ref, watch } from 'vue';
+import { onMounted, onUnmounted, ref, watch } from 'vue';
 import { useRoute } from 'vue-router';
-import { IonContent, IonPage, onIonViewWillEnter, onIonViewWillLeave } from '@ionic/vue';
+import { IonContent, IonPage } from '@ionic/vue';
 
 import type { DisplayList } from '@/types/api/music/musicPlayer';
 import type { PlaylistItem, SortOrder, SortType } from '@/types/musicPlayer';
@@ -23,6 +23,9 @@ const route = useRoute();
 
 const { data, isError } = useServerClient<DisplayList>({
 	path: route.fullPath,
+	data: {
+		version: 'lolomo',
+	},
 });
 
 const main = ref<HTMLDivElement | null>(null);
@@ -78,7 +81,7 @@ function sort(songs: PlaylistItem[], sortType: SortType, sortOrder: SortOrder, v
 	}
 }
 
-onIonViewWillEnter(() => {
+onMounted(() => {
 	if (data?.value?.tracks) {
 		sort(
 			data?.value?.tracks ?? [],
@@ -93,7 +96,7 @@ onIonViewWillEnter(() => {
 	}
 });
 
-onIonViewWillLeave(() => {
+onUnmounted(() => {
 	if (document.getElementById('navbar')) {
 		document.getElementById('navbar')!.style.display = 'flex';
 	}

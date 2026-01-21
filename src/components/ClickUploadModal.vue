@@ -124,7 +124,6 @@ watch(coverUrl, (newUrl) => {
 			<Button
 				id="upload"
 				color="white"
-				start-icon="arrowCounterClockwise"
 				variant="text"
 				@click="handleReset"
 			>
@@ -135,7 +134,6 @@ watch(coverUrl, (newUrl) => {
 				id="upload"
 				:disabled="disabled"
 				color="theme"
-				start-icon="cloudUpload"
 				@click="upload"
 			>
 				{{ $t("Save") }}

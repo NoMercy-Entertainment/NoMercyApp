@@ -38,9 +38,10 @@ const props = defineProps({
 });
 
 const route = useRoute();
-
-const isAlbumRoute = computed(() => route.path.startsWith('/music/album') || route.path.startsWith('/music/tracks'));
+const isAlbumRoute = computed(() => route.path.startsWith('/music/album'));
 const isArtistRoute = computed(() => route.path.startsWith('/music/artist'));
+const isPlaylistsRoute = computed(() => route.path.startsWith('/music/playlists'));
+const isFavoritesRoute = computed(() => route.path.startsWith('/music/tracks'));
 
 function handleClick() {
 	if (!user.value.features?.nomercyConnect) {
@@ -72,15 +73,15 @@ const date = computed(() => {
 <template>
 	<button
 		:class="{
-			'album-grid': isAlbumRoute,
-			'artist-grid': !isAlbumRoute,
+			'album-grid': isAlbumRoute || isPlaylistsRoute || isFavoritesRoute,
+			'artist-grid': isArtistRoute,
 		}"
 		:data-track-id="data?.id"
 		:onclick="handleClick"
 		class="grid justify-start children:pointer-events-none items-center self-stretch pr-3 sm:px-3 rounded-lg sm:hover:bg-surface-6/8 group/track text-sm font-medium py-2 z-10"
 		data-target="track"
 		tabindex="0"
-		@contextmenu="onTrackRowRightClick($event, data)"
+		@contextmenu="onTrackRowRightClick($event, $route, data)"
 	>
 		<span class="flex justify-center text-center">
 			<span
@@ -133,7 +134,7 @@ const date = computed(() => {
 				>
 					<Marquee>
 						<TrackLinks
-							v-if="data && !isArtistRoute"
+							v-if="data && isAlbumRoute || isPlaylistsRoute || isFavoritesRoute"
 							:id="data.id"
 							:data="data.artist_track"
 							:onclick="(e: MouseEvent) => e.stopPropagation()"
@@ -141,7 +142,7 @@ const date = computed(() => {
 							type="artists"
 						/>
 						<TrackLinks
-							v-if="data && !isAlbumRoute"
+							v-if="data && isArtistRoute"
 							:id="data.id"
 							:data="data.album_track"
 							:onclick="(e: MouseEvent) => e.stopPropagation()"
@@ -154,13 +155,13 @@ const date = computed(() => {
 		</span>
 
 		<template v-for="item in data.album_track" :key="item.id">
-			<Marquee>
+			<Marquee class="!hidden sm:!flex">
 				<button
 					:class="{
-						'opacity-0': !isAlbumRoute,
-						'opacity-100': isAlbumRoute,
+						'opacity-0': isAlbumRoute,
+						'opacity-100': isArtistRoute,
 					}"
-					class="hidden items-center overflow-clip pr-2 line-clamp-2 h-inherit w-inherit sm:flex"
+					class="items-center overflow-clip pr-2 line-clamp-2 h-inherit w-inherit flex"
 					@click="(e) => e.stopPropagation()"
 				>
 					<RouterLink

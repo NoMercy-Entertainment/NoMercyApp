@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import { computed } from 'vue';
 import { useRoute } from 'vue-router';
 import { IonContent, IonPage } from '@ionic/vue';
@@ -37,10 +37,10 @@ const name = computed(() => {
 	<IonPage>
 		<IonContent :fullscreen="true">
 			<DashboardLayout
-				:params="{ name }"
-				title="Device avtivity: {{name}}"
 				:error="devicesError || activityError"
 				:grid-style="2"
+				:params="{ name }"
+				title="Device activity: {{name}}"
 			>
 				<template #cta />
 				<ActivityCard
@@ -48,8 +48,8 @@ const name = computed(() => {
 						(sa) => sa.device_id === route?.params.id,
 					) ?? []"
 					:key="activity?.id"
-					:devices="devices ?? []"
 					:activity="activity"
+					:devices="devices ?? []"
 					class="col-span-2 gap-3 w-full"
 				/>
 			</DashboardLayout>

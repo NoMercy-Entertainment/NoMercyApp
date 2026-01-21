@@ -97,7 +97,10 @@ export function getQuery<T>({ queryKey: key, path }: { queryKey?: string[]; path
 		queryKey: key ?? queryKey(path),
 		queryFn: async () => {
 			return serverClient()
-				.get<{ data: Component<T>[] }>(path ?? router.currentRoute.value.path)
+				.get<{ data: Component<T>[] }>(path ?? router.currentRoute.value.path, {
+					params: {
+					},
+				})
 				.then(({ data }) => {
 					return data.data;
 				});

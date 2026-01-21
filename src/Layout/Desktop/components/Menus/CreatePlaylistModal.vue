@@ -20,18 +20,11 @@ const props = defineProps({
 	},
 	onClose: {
 		type: Function as PropType<() => void>,
-		required: false,
+		required: true,
 	},
 });
 
 const toast = useToast();
-
-const open = ref(true);
-
-function close() {
-	open.value = false;
-	props.onClose?.();
-}
 
 const disabled = ref(true);
 const name = ref('');
@@ -51,7 +44,7 @@ function submit() {
 			tracks: [props.data.id],
 		})
 		.then(({ data }) => {
-			queryClient.invalidateQueries({ queryKey: ['music', 'playlists'] });
+			queryClient.invalidateQueries({ queryKey: ['music-playlists'] });
 
 			toast.add({
 				severity: 'info',
@@ -60,7 +53,7 @@ function submit() {
 				life: 3000,
 			});
 
-			close();
+			props.onClose();
 		})
 		.catch((error) => {
 			toast.add({
@@ -78,7 +71,7 @@ watch(name, (value) => {
 </script>
 
 <template>
-	<Modal :close="close" :open="open" max-width="max-w-3xl" title="Add to new Playlist">
+	<Modal :close="props.onClose" :open="true" max-width="max-w-3xl" title="Add to new Playlist">
 		<div class="flex gap-4 mt-4">
 			<div class="flex flex-col gap-4">
 				<ImageDrop v-if="data" @on-image="onImage">
@@ -126,7 +119,7 @@ watch(name, (value) => {
 				id="upload"
 				color="white"
 				variant="text"
-				@click="close"
+				@click="props.onClose"
 			>
 				{{ $t("Cancel") }}
 			</Button>

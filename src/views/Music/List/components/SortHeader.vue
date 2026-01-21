@@ -1,9 +1,16 @@
 <script lang="ts" setup>
 import { SortType } from '@/types/musicPlayer';
+import { computed } from 'vue';
+import { isPlatform } from '@ionic/vue';
 
 import SortButton from './SortButton.vue';
-import { isAlbumRoute } from '@/store/routeState';
-import { isPlatform } from '@ionic/vue';
+import { useRoute } from 'vue-router';
+
+const route = useRoute();
+const isAlbumRoute = computed(() => route.path.startsWith('/music/album'));
+const isArtistRoute = computed(() => route.path.startsWith('/music/artist'));
+const isPlaylistsRoute = computed(() => route.path.startsWith('/music/playlists'));
+const isFavoritesRoute = computed(() => route.path.startsWith('/music/tracks'));
 </script>
 
 <template>
@@ -21,10 +28,10 @@ import { isPlatform } from '@ionic/vue';
 		/>
 		<span
 			:class="{
-				'album-grid': isAlbumRoute,
-				'artist-grid': !isAlbumRoute,
+				'album-grid': isAlbumRoute || isPlaylistsRoute || isFavoritesRoute,
+				'artist-grid': isArtistRoute,
 			}"
-			class="grid justify-start items-center self-stretch pr-3 sm:px-3 rounded-lg group/track text-sm font-medium py-2 z-0 group/track gap-2"
+			class="grid justify-start items-center self-stretch pr-3 sm:px-3 rounded-lg group/track text-sm font-medium py-2 z-0 group/track"
 		>
 			<SortButton
 				id="sortIndex"
@@ -46,8 +53,7 @@ import { isPlatform } from '@ionic/vue';
 			<SortButton
 				:aria-label="$t('Sort by album')"
 				:class="{
-					'opacity-0': !isAlbumRoute,
-					'opacity-100': isAlbumRoute,
+					'opacity-0': isAlbumRoute,
 				}"
 				:sorting-type="SortType.album"
 				class="!hidden sm:!flex"

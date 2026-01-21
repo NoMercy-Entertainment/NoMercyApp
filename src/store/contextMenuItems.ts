@@ -7,7 +7,6 @@ import type { AxiosResponse } from 'axios';
 import type { PlaylistItem } from '@/types/musicPlayer';
 import router from '@/router';
 import { copyToClipboard } from '@/lib/stringArray';
-import { isAlbumRoute, isArtistRoute } from '@/store/routeState';
 import { t } from 'i18next';
 import { musicPlaylist } from '@/store/musicPlaylists';
 import { currentServer } from '@/store/currentServer';
@@ -16,6 +15,7 @@ import { queryClient } from '@/config/tanstack-query.ts';
 import type { StatusResponse } from '@/types/api/base/library';
 import audioPlayer from '@/store/audioPlayer.ts';
 import { Share } from '@capacitor/share';
+import type { RouteLocationNormalizedLoadedGeneric } from 'vue-router';
 
 export interface ContextMenuItem {
 	label?: string;
@@ -111,8 +111,12 @@ export const cardMenu = ref();
 
 export const selectedTrackRow = ref<PlaylistItem>();
 
-export function onTrackRowRightClick(event: Event, data: PlaylistItem) {
+export function onTrackRowRightClick(event: Event, route: RouteLocationNormalizedLoadedGeneric, data: PlaylistItem) {
 	selectedTrackRow.value = data;
+
+	const isAlbumRoute = route.path.startsWith('/music/album');
+	const isArtistRoute = route.path.startsWith('/music/artist');
+	const isPlaylistsRoute = route.path.startsWith('/music/playlists');
 
 	const menuItems: ContextMenuItem[] = [];
 
@@ -121,7 +125,7 @@ export function onTrackRowRightClick(event: Event, data: PlaylistItem) {
 		icon: 'mooooom-add',
 		items: [
 			{
-				label: t('New Playlist'),
+				label: t('New playlist'),
 				icon: 'mooooom-add',
 				command: () => {
 					const evt = new CustomEvent('showModal', {
@@ -143,12 +147,18 @@ export function onTrackRowRightClick(event: Event, data: PlaylistItem) {
 	}
 
 	for (const playlist of musicPlaylist.value) {
+		if (route.path === `/music/playlists/${playlist.id}`)
+			continue;
+
 		addToPlaylistItem.items!.push({
 			label: playlist.name,
-			icon: 'mooooom-disk',
+			icon: 'mooooom-playlist1Add',
+			args: {
+				disabled: route.path === `/music/playlists/${playlist.id}`,
+			},
 			command: () => {
 				serverClient()
-					.patch(`/music-player/playlist/${playlist.id}/add`, {
+					.post(`/music/playlists/${playlist.id}/tracks`, {
 						id: selectedTrackRow.value?.id,
 					})
 					.then(() => {
@@ -166,6 +176,27 @@ export function onTrackRowRightClick(event: Event, data: PlaylistItem) {
 	}
 
 	menuItems.push(addToPlaylistItem);
+
+	if (isPlaylistsRoute) {
+		menuItems.push({
+			label: t('Remove from playlist'),
+			icon: 'mooooom-remove',
+			command: () => {
+				serverClient()
+					.delete(`/music/playlists/${route.params.id}/tracks/${selectedTrackRow.value?.id}`)
+					.then(() => {
+						queryClient
+							.invalidateQueries({ queryKey: ['music', 'tracks'] })
+							.then(() => {
+								console.log('refetching tracks');
+							});
+					})
+					.catch((err) => {
+						console.error(err);
+					});
+			},
+		});
+	}
 
 	menuItems.push(
 		{
@@ -185,7 +216,7 @@ export function onTrackRowRightClick(event: Event, data: PlaylistItem) {
 		},
 		{
 			label: t('Add to queue'),
-			icon: 'mooooom-playlist1Add',
+			icon: 'mooooom-currentPlaylist',
 			command: () => {
 				if (selectedTrackRow.value) {
 					if (audioPlayer.currentSong === null) {
@@ -204,7 +235,7 @@ export function onTrackRowRightClick(event: Event, data: PlaylistItem) {
 	);
 
 	if (
-		!isAlbumRoute.value
+		!isAlbumRoute
 		&& selectedTrackRow.value?.album_track
 		&& selectedTrackRow.value?.album_track?.length < 2
 	) {
@@ -219,7 +250,7 @@ export function onTrackRowRightClick(event: Event, data: PlaylistItem) {
 		});
 	}
 	else if (
-		!isAlbumRoute.value
+		!isAlbumRoute
 		&& selectedTrackRow.value?.album_track
 		&& selectedTrackRow.value?.album_track?.length > 1
 	) {
@@ -237,7 +268,7 @@ export function onTrackRowRightClick(event: Event, data: PlaylistItem) {
 	}
 
 	if (
-		!isArtistRoute.value
+		!isArtistRoute
 		&& selectedTrackRow.value?.artist_track
 		&& selectedTrackRow.value?.artist_track?.length < 2
 	) {
@@ -252,7 +283,7 @@ export function onTrackRowRightClick(event: Event, data: PlaylistItem) {
 		});
 	}
 	else if (
-		!isArtistRoute.value
+		!isArtistRoute
 		&& selectedTrackRow.value?.artist_track
 		&& selectedTrackRow.value?.artist_track?.length > 1
 	) {
@@ -287,9 +318,7 @@ export function onTrackRowRightClick(event: Event, data: PlaylistItem) {
 					icon: 'mooooom-fileCopy',
 					command: () =>
 						selectedTrackRow.value
-							? copyToClipboard(
-									`${currentServer.value?.serverBaseUrl}${selectedTrackRow.value?.link}?token=${testUserToken.value}`,
-								)
+							? copyToClipboard(`${currentServer.value?.serverBaseUrl}${selectedTrackRow.value?.link}?token=${testUserToken.value}`)
 							: {},
 				},
 				{

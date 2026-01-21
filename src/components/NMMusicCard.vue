@@ -32,32 +32,35 @@ const { t } = useTranslation();
 const footText = computed(() => {
 	let text = '';
 
-	if (props.data.type === 'playlist') {
-		text += t('Playlist');
-	}
-	else if (props.data.type === 'favorite') {
-		text += t('Playlist');
-	}
-	else if (props.data.type === 'album') {
-		text += t('Album');
-	}
-	else if (props.data.type === 'artist') {
-		text += t('Artist');
-	}
-	else if (props.data.type === 'release_group') {
-		text += t('Release');
-	}
-	else if (props.data.type === 'genre') {
-		text += t('Genre');
-	}
+	// if (props.data.type === 'playlist') {
+	// 	text += t('Playlist');
+	// }
+	// else if (props.data.type === 'favorite') {
+	// 	text += t('Playlist');
+	// }
+	// else if (props.data.type === 'album') {
+	// 	text += t('Album');
+	// }
+	// else if (props.data.type === 'artist') {
+	// 	text += t('Artist');
+	// }
+	// else if (props.data.type === 'release_group') {
+	// 	text += t('Release');
+	// }
+	// else if (props.data.type === 'genre') {
+	// 	text += t('Genre');
+	// }
 
-	if (props.data?.tracks) {
-		text += ` • ${props.data?.tracks} ${
-			(props.data?.tracks ?? 0) > 1 ? t('tracks') : t('track')
+	// text += ' • ';
+
+	if (props.data?.tracks != null) {
+		text += `${props.data?.tracks} ${
+			(props.data?.tracks ?? 0) === 1 ? t('track') : t('tracks')
 		}`;
 	}
-	else {
-		text += ` • ${props.data?.year}`;
+
+	if (props.data?.year != null) {
+		text += `${props.data?.year}`;
 	}
 
 	return text;

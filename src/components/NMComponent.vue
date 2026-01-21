@@ -7,9 +7,6 @@ import { useOnline } from '@vueuse/core';
 
 import { getMutating, getMutation, getQuery, queryKey as qk } from '@/lib/routerHelper';
 
-// Routes that should trigger pageLoad mutations
-const MUTABLE_ROUTES = new Set(['Home', 'Libraries', 'Music Start']);
-
 const props = defineProps({
 	path: {
 		type: String,
@@ -28,6 +25,9 @@ const props = defineProps({
 		}),
 	},
 });
+
+// Routes that should trigger pageLoad mutations
+const MUTABLE_ROUTES = new Set(['Home', 'Libraries', 'Music Start']);
 
 const queryKey = props.options.queryKey ?? qk();
 

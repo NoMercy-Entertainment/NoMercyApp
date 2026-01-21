@@ -59,6 +59,9 @@ async function setupApplication() {
 }
 
 async function initializeWebApp() {
+	const { redirectUrl } = await lazyImports.routeState();
+	redirectUrl.value = window.location.pathname;
+
 	if (!isPlatform('capacitor') && !location.search.includes('refreshToken')) {
 		const [keycloak, configModule, { setUserFromWebKeycloak }] = await Promise.all([
 			import('@josempgon/vue-keycloak'),

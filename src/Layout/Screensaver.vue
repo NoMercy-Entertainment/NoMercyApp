@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import { onMounted, onUnmounted, ref, watch } from 'vue';
 import { useIdle } from '@vueuse/core';
 
@@ -20,7 +20,7 @@ const index = ref(-1);
 const interval = ref<NodeJS.Timeout | null>(null);
 
 const { data: images } = useServerClient<LogoResponse[]>({
-	path: '/screensaver',
+	path: 'setup/screensaver',
 });
 
 onMounted(() => {

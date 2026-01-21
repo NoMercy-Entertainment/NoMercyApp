@@ -1,5 +1,4 @@
 import { ref } from 'vue';
-import serverClient from '../clients/serverClient';
 import { currentServer } from '@/store/currentServer';
 import libraries, { setLibraries } from '@/store/Libraries';
 
@@ -8,6 +7,7 @@ import { setupComplete } from '@/store/ui';
 import router from '@/router';
 import { redirectUrl } from '@/store/routeState';
 import { serverLibraries } from '@/store/servers.ts';
+import serverClient from '@/lib/clients/serverClient.ts';
 
 const done = ref(false);
 
@@ -29,7 +29,7 @@ function getLibraries(): Promise<void> {
 		}
 
 		serverClient(5)
-			.get<{ data: LibrariesResponse[] }>('libraries')
+			.get<{ data: LibrariesResponse[] }>('setup/libraries')
 			.then(({ data }) => {
 				setLibraries(data.data);
 				setupComplete.value = true;

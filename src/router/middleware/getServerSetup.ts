@@ -1,5 +1,4 @@
 import { ref } from 'vue';
-import serverClient from '../clients/serverClient';
 
 import type { ServerInfo } from '@/types/api/dashboard/server.ts';
 import type { StatusResponse } from '@/types/api/base/library';
@@ -8,6 +7,7 @@ import router from '@/router';
 import { currentServer } from '@/store/currentServer';
 import { serverInfoRequested, serverSetupComplete } from '@/store/servers.ts';
 import { redirectUrl } from '@/store/routeState.ts';
+import serverClient from '@/lib/clients/serverClient.ts';
 
 const done = ref(false);
 
@@ -29,7 +29,7 @@ function getServerSetup(): Promise<void> {
 		}
 
 		serverClient(5)
-			.get<StatusResponse<ServerInfo>>('dashboard/server/info')
+			.get<StatusResponse<ServerInfo>>('setup/server-info')
 			.then(({ data }) => {
 				serverSetupComplete.value = data.data?.setup_complete ?? false;
 				serverInfoRequested.value = true;

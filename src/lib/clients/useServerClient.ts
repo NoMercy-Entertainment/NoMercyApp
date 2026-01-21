@@ -42,6 +42,18 @@ function useServerClient<T>(options?: ServerClientProps): Return<T> {
 	const route = useRoute();
 	const type = options?.type ?? 'get';
 
+	if (!currentServer.value?.serverApiUrl) {
+		throw new Error('No server URL');
+	}
+
+	const path = options?.path ?? route.fullPath;
+	if (path.includes('undefined')) {
+		throw new Error('Invalid path');
+	}
+
+	const dataValues = getDataValues(options);
+	const client = serverClient<T>();
+
 	const useQueryC = useQuery({
 		...options,
 		queryKey: queryKey(options),
@@ -51,24 +63,15 @@ function useServerClient<T>(options?: ServerClientProps): Return<T> {
 		refetchOnWindowFocus: false,
 		staleTime: options?.keepForever ? Infinity : 1000 * 60 * 5,
 		queryFn: async ({ signal }): Promise<T> => {
-			if (!currentServer.value?.serverApiUrl) {
-				throw new Error('No server URL');
-			}
-
-			const path = options?.path ?? route.fullPath;
-			if (path.includes('undefined')) {
-				throw new Error('Invalid path');
-			}
-
-			const dataValues = getDataValues(options);
-			const client = serverClient<T>();
-
 			let response;
 
 			switch (type) {
 				case 'get':
 					response = await client.get<T>(path, {
-						params: { letter: route.query?.letter, ...dataValues },
+						params: {
+							letter: route.query?.letter,
+							...dataValues,
+						},
 						signal,
 					});
 					break;
@@ -86,7 +89,10 @@ function useServerClient<T>(options?: ServerClientProps): Return<T> {
 					break;
 				default:
 					response = await client.get<T>(path, {
-						params: { letter: route.query?.letter, ...dataValues },
+						params: {
+							letter: route.query?.letter,
+							...dataValues,
+						},
 						signal,
 					});
 			}

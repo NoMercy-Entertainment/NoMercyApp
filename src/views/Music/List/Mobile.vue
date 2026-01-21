@@ -24,6 +24,9 @@ const route = useRoute();
 
 const { data, isError } = useServerClient<DisplayList>({
 	path: route.fullPath,
+	data: {
+		version: 'lolomo',
+	},
 });
 
 const main = ref<HTMLDivElement | null>(null);

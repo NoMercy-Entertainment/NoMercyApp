@@ -1,14 +1,15 @@
-import apiClient from '../clients/apiClient';
+import { ref } from 'vue';
+
+import type { AppConfig } from '@/types/config';
 
 import { servers, setServers } from '@/store/servers';
 import { setUser, user } from '@/store/user';
 import { setCurrentServer } from '@/store/currentServer';
-
-import { ref } from 'vue';
-import router from '@/router';
-import type { AppConfig } from '@/types/config';
 import { setMessages } from '@/store/messages';
 import { setNotifications } from '@/store/notifications';
+
+import router from '@/router';
+import apiClient from '@/lib/clients/apiClient';
 
 const done = ref(false);
 
