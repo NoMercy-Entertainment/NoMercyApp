@@ -1,0 +1,1 @@
+import{Un as e}from"./index-C8wrpkyN.js";var n,o,i=e({"node_modules/@nomercy-entertainment/nomercy-music-player/node_modules/@ionic/core/components/index5.js":()=>{n=typeof window<"u"?window:void 0,o=typeof document<"u"?document:void 0}});export{i as n,n as r,o as t};

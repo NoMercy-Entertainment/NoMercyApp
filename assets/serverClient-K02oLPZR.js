@@ -1,0 +1,1 @@
+import{t}from"./client-BmAhQ-69.js";import{t as r}from"./currentServer-B_KQACAB.js";var o=e=>{if(!r.value?.serverApiUrl)throw new Error("Server not selected");return t({baseUrl:r.value.serverApiUrl,timeout:e})};export{o as t};
