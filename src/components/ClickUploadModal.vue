@@ -15,7 +15,7 @@ import { setColorPalette } from '@/store/ui.ts';
 
 const props = defineProps({
 	data: {
-		type: Object as PropType<T>,
+		type: Object as PropType<MusicImageTypes>,
 		required: true,
 	},
 	url: {
@@ -84,6 +84,7 @@ function beforeSend(e: FileUploadBeforeSendEvent) {
 function handleReset() {
 	coverUrl.value = props.data.cover;
 	fileUpload.value.clear();
+	close();
 }
 
 watch(coverUrl, (newUrl) => {
@@ -97,9 +98,12 @@ watch(coverUrl, (newUrl) => {
 <template>
 	<button id="uploadDialogTrigger" ref="trigger" class="contents" @click="setOpen">
 		<slot :ref="image" :data="data2" />
+		<div class="opacity-0 duration-150 transition-all group-hover/cover:opacity-100 group-hover/cover:bg-black/40 inset-0 absolute grid items-center text-lg font-semibold">
+			{{ $t("Change cover") }}
+		</div>
 	</button>
 
-	<Modal :close="close" :open="open" max-width="max-w-2xl" title="Upload Image">
+	<Modal :close="close" :open="open" max-width="max-w-2xl" title="Upload image">
 		<FileUpload
 			ref="fileUpload"
 			:cancel-label="$t('Cancel')"
@@ -107,6 +111,7 @@ watch(coverUrl, (newUrl) => {
 			:max-file-size="2 * 1024 * 1024"
 			:url="uploadUrl"
 			accept="image/*"
+			class="p-button-outlined"
 			mode="basic"
 			name="image"
 			with-credentials
@@ -133,7 +138,7 @@ watch(coverUrl, (newUrl) => {
 				start-icon="cloudUpload"
 				@click="upload"
 			>
-				{{ $t("Upload image") }}
+				{{ $t("Save") }}
 			</Button>
 		</template>
 	</Modal>
