@@ -38,7 +38,7 @@ const currentDevice = computed(() =>
 		v-if="user.features?.nomercyConnect"
 		:data-current_device="currentMusicDeviceId"
 		:onclick="handleClick"
-		class="flex gap-2 items-center flex-nowrap"
+		class="!flex gap-2 items-center flex-nowrap"
 		data-target="devices"
 		label="Playing on this device"
 	>
@@ -51,10 +51,10 @@ const currentDevice = computed(() =>
 		<p
 			v-if="!noName"
 			:data-size="musicSize"
-			class="text-surface-900 flex sm:hidden compact:hidden pointer-events-none !text-sm min-w-full whitespace-nowrap pl-2 max-w-72"
+			class="text-surface-50 flex sm:hidden compact:hidden pointer-events-none !text-sm whitespace-nowrap pl-2 max-w-72 wrap-anywhere overflow-ellipsis"
 		>
 			{{
-				currentMusicDeviceId === deviceId
+				currentDevice?.device_id === deviceId
 					? $t("This device")
 					: currentDevice?.custom_name ?? currentDevice?.name
 			}}

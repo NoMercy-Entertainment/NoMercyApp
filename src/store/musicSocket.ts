@@ -105,95 +105,96 @@ export function handleMusicBroadcastStatus(data: any) {
 export function handleMusicPlayerState(data: StateEvents) {
 	if (!data)
 		return;
+
 	for (const e of data.events) {
 		if (e.type !== 'PlayerStateChanged')
 			continue;
+
 		const state = e.event.state;
+		if (!state)
+			continue;
 
-		console.log(state);
-
-		if (!state?.item) {
+		// Handle stop case
+		if (!state.item) {
 			audioPlayer.stop();
-			setTimeout(() => {
-				audioPlayer.stop();
-			}, 1000);
-			return;
+			currentMusicDeviceId.value = null;
+			continue; // Not return - process other events
 		}
 
-		const offset = (Date.now() - state.timestamp) / 1000 / 2;
-		const seekValue = state.progress_ms >= 1
-			? (state.progress_ms + offset) / 1000
-			: state.progress_ms / 1000;
-		// const seekValue = state.progress_ms / 1000;
+		// Calculate seek position (all in milliseconds, then convert)
+		const latencyCompensationMs = (Date.now() - state.timestamp) / 2;
+		const adjustedProgressMs = state.progress_ms + latencyCompensationMs;
+		const seekValueSeconds = adjustedProgressMs / 1000;
 
+		// Update state refs
 		currentMusicDeviceId.value = state.device_id;
-
 		setCurrentPlaylist(state.current_list);
 
-		if (state.device_id === deviceId.value && !state.muted_state) {
+		// Determine if this device is active
+		const isActiveDevice = state.device_id === deviceId.value;
+
+		// Mute/unmute based on active device
+		if (isActiveDevice && !state.muted_state) {
 			audioPlayer.unmute();
 		}
 		else {
 			audioPlayer.mute();
 		}
 
+		// Apply settings (don't mutate state)
+		const clampedVolume = Math.max(0, Math.min(100, state.volume_percentage));
+		audioPlayer.setVolume(clampedVolume);
+		volume.value = clampedVolume;
+
 		audioPlayer.repeat(state.repeat_state);
 		audioPlayer.shuffle(state.shuffle_state);
-
-		if (state.volume_percentage < 0)
-			state.volume_percentage = 0;
-		if (state.volume_percentage > 100)
-			state.volume_percentage = 100;
-
-		audioPlayer.setVolume(state.volume_percentage);
-		volume.value = state.volume_percentage;
 		audioPlayer.setQueue(state.playlist);
 
-		if (currentSong.value?.id !== state.item?.id) {
+		// Track change handling
+		const isTrackChange = currentSong.value?.id !== state.item.id;
+
+		if (isTrackChange) {
 			audioPlayer.setCurrentSong(state.item);
-			audioPlayer.play().then();
 
-			audioPlayer.once('seeked', () => {
-				if (state.device_id && state.is_playing) {
+			// Handle load error
+			audioPlayer.once('error', () => {
+				console.error('Failed to load track:', state.item.name);
+				// Maybe skip to next or show error UI
+			});
+
+			audioPlayer.once('canplay', () => {
+				audioPlayer.seek(seekValueSeconds);
+				if (state.is_playing) {
 					audioPlayer.play().then();
 				}
 				else {
 					audioPlayer.pause();
 				}
 			});
-
-			audioPlayer.once('duration', () => {
-				if (state.device_id && state.is_playing) {
-					audioPlayer.play().then();
-				}
-				else {
-					audioPlayer.pause();
-				}
-				audioPlayer.seek(seekValue);
-			});
 		}
 		else {
-			currentSong.value = state.item;
-		}
+			// Same track - sync position if drifted
+			currentSong.value = state.item; // Update metadata (favorite, etc.)
 
-		if (state.device_id === deviceId.value) {
-			(!currentTime.value || Math.abs(currentTime.value - seekValue) > 0.75)
-			&& audioPlayer.seek(seekValue);
-		}
-		else {
-			audioPlayer.seek(seekValue);
-		}
+			const drift = Math.abs((currentTime.value || 0) - seekValueSeconds);
+			const shouldSeek = isActiveDevice ? drift > 0.75 : drift > 2.0;
 
-		if (state.device_id && state.is_playing && currentSong.value) {
-			audioPlayer.play().then();
-		}
-		else {
-			audioPlayer.pause();
+			if (shouldSeek) {
+				audioPlayer.seek(seekValueSeconds);
+			}
+
+			// Sync play/pause state
+			if (state.is_playing) {
+				audioPlayer.play().then();
+			}
+			else {
+				audioPlayer.pause();
+			}
 		}
 	}
 }
 
 function handleMusicConnectedDevicesState(devices: Device[]) {
 	// console.log(devices);
-	connectedMusicDevices.value = devices;
+	connectedMusicDevices.value = devices.toSorted((a, b) => a?.device_id.localeCompare(b?.device_id));
 }

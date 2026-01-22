@@ -4,6 +4,7 @@ import { computed } from 'vue';
 import type { Device } from '@/types/server';
 
 import { connectedMusicDevices, currentMusicDeviceId, deviceMenuOpen, musicSize } from '@/store/audioPlayer';
+import { deviceId } from '@/store/deviceInfo';
 import { musicSocketConnection } from '@/store/musicSocket';
 
 import { user } from '@/store/user';
@@ -45,17 +46,15 @@ const currentDevice = computed(() =>
 			class="flex h-full w-full flex-col justify-center gap-2 overflow-auto tv:overflow-clip p-2 scrollbar-none"
 		>
 			<template
-				v-for="device in connectedMusicDevices.toSorted((a, b) =>
-					(a?.custom_name ?? a?.name).localeCompare(b?.custom_name ?? b?.name),
-				)"
-				:key="device?.id"
+				v-for="device in connectedMusicDevices"
+				:key="device?.device_id"
 			>
 				<button
 					:class="{
-						'bg-[#2f2f2f]': currentMusicDeviceId === device?.device_id,
+						'bg-[#2f2f2f]': currentDevice?.device_id === device?.device_id,
 					}"
 					:style="
-						currentMusicDeviceId === device?.device_id
+						currentDevice?.device_id === device?.device_id
 							&& `color: hsl(from var(--color-theme-8) h s calc(l + 25))`
 					"
 					class="flex w-full items-center justify-between gap-2 px-2 py-1 rounded-md focus-visible:bg-[#3f3f3f] transition-all duration-200 text-left"
