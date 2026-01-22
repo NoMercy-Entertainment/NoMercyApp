@@ -11,10 +11,9 @@ import {
 	showImageModal,
 	showScreensaver,
 } from '@/store/imageModal';
-import serverClient from '@/lib/clients/serverClient';
 import { currentServer } from '@/store/currentServer';
 import { isPlatform } from '@ionic/vue';
-
+import { queryClient } from '@/config/tanstack-query.ts';
 
 const { idle, reset } = useIdle((screensaverDelay.value ?? 0) * 60 * 1000, {
 	events: ['mousemove', 'mousedown', 'keydown', 'touchstart', 'wheel'],
@@ -23,20 +22,12 @@ const { idle, reset } = useIdle((screensaverDelay.value ?? 0) * 60 * 1000, {
 const index = ref(-1);
 const images = ref<LogoResponse[] | null>(null);
 
-watch(
-	currentServer,
-	(value, prevValue) => {
-		if (!value || value.id === prevValue?.id)
-			return;
+watch(currentServer, async (value, prevValue) => {
+	if (!value || value.id === prevValue?.id)
+		return;
 
-		serverClient()
-			.get<{ data: LogoResponse[] }>('/screensaver')
-			.then(({ data }) => {
-				images.value = data.data;
-			});
-	},
-	{ immediate: true },
-);
+	await queryClient.invalidateQueries({ queryKey: ['setup', 'screensaver'] });
+});
 
 setInterval(() => {
 	if (!images.value)
