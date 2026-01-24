@@ -86,7 +86,7 @@ function scrollToTop() {
 <template>
 	<div
 		v-if="!isMobile"
-		class="card scheme-dark relative m-4 mt-0 sm:mt-4 flex flex-shrink-0 flex-grow-0 items-end justify-start gap-4 self-stretch rounded-md bg-black/50 p-4 h-[65vh] sm:flex-col overflow-clip text-surface-12"
+		class="card scheme-dark relative m-4 mt-0 sm:mt-4 flex flex-shrink-0 flex-grow-0 items-end justify-start gap-4 self-stretch rounded-md bg-black/50 p-4 sm:mb-0 h-[65vh] sm:flex-col overflow-clip text-surface-12"
 		data-scroll
 	>
 		<TMDBImage

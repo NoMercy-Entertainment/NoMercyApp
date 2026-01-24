@@ -182,6 +182,9 @@ const scrollToCenter = () => {
   <div
       v-if="items?.length"
       :id="`carousel_${id}`"
+      :class="{
+        'sm:mt-0': !previous_id,
+      }"
       :data-next-id="`carousel_${next_id}`"
       :data-previous-id="`carousel_${previous_id}`"
       class="mt-2 sm:mt-6 mb-2 flex w-auto flex-shrink-0 flex-grow-0 flex-col items-start justify-start gap-2 self-stretch text-left"
