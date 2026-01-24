@@ -1,1 +1,0 @@
-import{Lt as n,Tt as i,kn as s}from"./index-BVMfOxho.js";i();var e=s("hidden");const o=n(()=>e.value);function t(a){e.value=a}function u(){e.value=e.value==="open"?"closed":"open"}function r(){e.value="hidden"}function l(){e.value="open"}function c(){e.value="closed"}var v=o;export{o as a,t as i,r as n,v as o,l as r,u as s,c as t};

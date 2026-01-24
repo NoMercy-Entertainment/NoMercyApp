@@ -1,1 +1,0 @@
-import"./dist-vlkWK_nZ.js";import"./esm-DY8g5_-d.js";import"./core-DZundPdS.js";import"./esm-Bc84JaZh.js";import"./esm-BRDlnhr9.js";import{a as p,c as r,i as m,l as c,n,o as I,r as d,s as f,t as v}from"./deviceInfo-DuLvxTKJ.js";export{v as appInfo,n as appState,d as batteryInfo,m as clientInfo,p as deviceId,I as deviceInfo,f as deviceName,r as setDeviceId,c as setDeviceName};
