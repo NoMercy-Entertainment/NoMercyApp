@@ -11,7 +11,7 @@ export interface Playlist {
 	userId: string;
 	name: string;
 	description: string;
-	cover: null;
+	cover?: string;
 	color_palette: PaletteColors;
 	blurHash: null;
 	created_at: string;

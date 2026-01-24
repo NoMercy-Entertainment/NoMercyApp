@@ -15,8 +15,8 @@ import { stopPropagation } from '@/lib/utils';
 
 import { MoooomIcons } from '@Icons/icons';
 import ScrollContainer from '@/Layout/Desktop/components/ScrollContainer.vue';
-import CoverImage from '@/components/Images/CoverImage.vue';
 import MoooomIcon from '@/components/Images/icons/MoooomIcon.vue';
+import CoverImage from '@/components/MusicPlayer/components/CoverImage.vue';
 
 function handleClick(song: PlaylistItem) {
 	if (!queue.value)

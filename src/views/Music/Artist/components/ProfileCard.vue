@@ -31,7 +31,6 @@ onUnmounted(() => {
 <template>
 	<div class="flex w-full flex-col items-start justify-start gap-4">
 		<div
-			v-if="data.cover"
 			class="flex flex-col items-start justify-start self-stretch overflow-clip rounded-lg relative group/cover"
 		>
 			<ClickUploadModal :data="data" :url="`${data.link}/cover`">

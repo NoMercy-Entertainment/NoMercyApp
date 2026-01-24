@@ -203,15 +203,8 @@ function libraryIconName(type: string) {
 					<SidebarButtonGroup
 						v-if="playlists?.length ?? 0 > 0"
 						:show="isMusicRoute"
-						icon="playlist1Add"
 						title="Playlists"
 					>
-						<SidebarButton
-							v-if="playlists?.length ?? 0 > 0"
-							href="/music/playlists"
-							name="Show all"
-						/>
-
 						<template v-for="playlist in playlists ?? []" :key="playlist.id">
 							<SidebarButton
 								:cover="playlist.cover"

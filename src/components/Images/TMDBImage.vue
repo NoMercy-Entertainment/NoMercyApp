@@ -199,7 +199,7 @@ function onError(e: Event) {
 		<picture
 			v-if="!error && path && !path?.includes?.('undefined')"
 			:style="`opacity: ${opacity}; float: ${type === 'logo' ? 'right' : ''}`"
-			class="pointer-events-none absolute inset-0 h-inherit flex select-none flex-col items-end justify-end tv:justify-start self-end transition-all duration-500 max-w-available"
+			class="pointer-events-none absolute inset-0 h-full flex select-none flex-col items-end justify-end tv:justify-start self-end transition-all duration-500"
 		>
 			<source :srcset="`${serverImageUrl} 1x`">
 			<!--      <source -->
@@ -211,8 +211,8 @@ function onError(e: Event) {
 			<img
 				:alt="`tmdb image for ${title ?? 'image'}`"
 				:class="{
-					'aspect-poster w-available h-available': aspect === 'poster',
-					'aspect-backdrop w-available h-available': aspect === 'backdrop',
+					'aspect-poster w-available min-w-available h-available': aspect === 'poster',
+					'aspect-backdrop w-auto h-available': aspect === 'backdrop',
 					'w-auto !h-inherit': aspect === null,
 					'object-fit w-auto h-available': type === 'logo',
 					'object-cover object-top': type === 'image',
@@ -231,7 +231,7 @@ function onError(e: Event) {
 					object-position: center;
 				`"
 				:width="size"
-				class="pointer-events-auto bg-bottom transition-all duration-500 max-w-available"
+				class="pointer-events-auto bg-bottom transition-all duration-500"
 				crossorigin="anonymous"
 			>
 		</picture>

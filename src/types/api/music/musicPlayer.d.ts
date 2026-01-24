@@ -74,7 +74,7 @@ export interface DisplayList {
 	media_type: string;
 	year: number | null;
 	artist: Artist;
-	type: 'track' | 'album' | 'artist';
+	type: 'track' | 'album' | 'artist' | 'playlist';
 	favorite: boolean;
 	link: string;
 }

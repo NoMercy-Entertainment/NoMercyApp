@@ -92,6 +92,11 @@ function image() {
 		return;
 	}
 
+	if (props.data?.cover?.startsWith('data:')) {
+		source.value = props.data?.cover;
+		return;
+	}
+
 	if (
 		props.data?.cover?.startsWith('https://')
 		&& props.data?.cover?.includes('fanart.tv')
@@ -140,6 +145,8 @@ function onClick() {
 
 function makeQuery(format: string, size: number) {
 	if (props.data?.cover?.startsWith('blob:'))
+		return '';
+	if (props.data?.cover?.startsWith('data:'))
 		return '';
 
 	return `?width=${size}&type=${format} 1x`;

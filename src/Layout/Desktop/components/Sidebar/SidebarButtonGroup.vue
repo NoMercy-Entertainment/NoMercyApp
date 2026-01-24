@@ -59,10 +59,10 @@ const classes = computed(
 		<div
 			:class="open || sidebar !== 'open' ? 'grid-rows-1' : 'grid-rows-0'"
 			:inert="!open"
-			class="grid h-auto w-full grid-rows-1 transition-transform duration-200"
+			class="grid h-auto w-full grid-rows-1 transition-all duration-200"
 		>
 			<div
-				class="flex flex-col gap-1 overflow-hidden transition-transform duration-200 p-0.5"
+				class="flex flex-col gap-1 overflow-hidden px-0.5 mt-0.5"
 			>
 				<slot />
 			</div>

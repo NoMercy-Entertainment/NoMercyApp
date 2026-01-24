@@ -96,6 +96,7 @@ function scrollToTop() {
 			:style="`--color-theme-8: ${ringBackdropColor};`"
 			:title="data?.title"
 			:width="null"
+			aspect="backdrop"
 			class="!absolute !inset-0 children:!w-available flex overflow-clip border-2 border-focus rounded-md"
 			class-name="relative flex w-available items-end justify-start gap-4 self-stretch overflow-clip transition-opacity duration-700 bg-surface-1"
 			loading="eager"

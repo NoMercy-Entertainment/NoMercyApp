@@ -11,6 +11,7 @@ const isAlbumRoute = computed(() => route.path.startsWith('/music/album'));
 const isArtistRoute = computed(() => route.path.startsWith('/music/artist'));
 const isPlaylistsRoute = computed(() => route.path.startsWith('/music/playlists'));
 const isFavoritesRoute = computed(() => route.path.startsWith('/music/tracks'));
+const isGenresRoute = computed(() => route.path.startsWith('/music/genres'));
 </script>
 
 <template>
@@ -28,7 +29,7 @@ const isFavoritesRoute = computed(() => route.path.startsWith('/music/tracks'));
 		/>
 		<span
 			:class="{
-				'album-grid': isAlbumRoute || isPlaylistsRoute || isFavoritesRoute,
+				'album-grid': isAlbumRoute || isPlaylistsRoute || isFavoritesRoute || isGenresRoute,
 				'artist-grid': isArtistRoute,
 			}"
 			class="grid justify-start items-center self-stretch pr-3 sm:px-3 rounded-lg group/track text-sm font-medium py-2 z-0 group/track"

@@ -241,6 +241,10 @@ export const routes: Array<RouteRecordRaw> = [
 			},
 			{
 				path: 'genres',
+				redirect: '/music/genres/letter/_',
+			},
+			{
+				path: 'genres/letter/:letter',
 				name: 'Music Genres',
 				component: MusicCards,
 				props: {
@@ -250,7 +254,7 @@ export const routes: Array<RouteRecordRaw> = [
 			{
 				path: 'genres/:id',
 				name: 'Music Genre',
-				component: MusicCards,
+				component: MusicList,
 			},
 			{
 				path: 'playlists',

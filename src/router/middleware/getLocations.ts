@@ -22,8 +22,11 @@ function getLocations(): Promise<void> {
 		apiClient()
 			.get<AppConfig>('/app_config')
 			.then(async ({ data }) => {
-				if (!data?.data)
+				if (!data?.data) {
+					await router.replace({ name: 'Select Server' });
 					reject('No data returned from API');
+					return;
+				}
 
 				setServers(data.data.servers);
 

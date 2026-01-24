@@ -13,10 +13,10 @@ defineProps({
 <template>
 	<div
 		class="relative flex aspect-square h-auto w-full flex-col items-center justify-center overflow-clip rounded-xl bg-gradient-to-br shadow-lg from-theme-6 to-theme-9"
-		style="padding: 15%"
+		style="padding: 10%"
 	>
 		<MoooomIcon
-			class-name="h-60 w-60"
+			class-name="size-64"
 			icon="heart"
 			style="--fill-color: white"
 		/>

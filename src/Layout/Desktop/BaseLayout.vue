@@ -30,8 +30,14 @@ import Shadow from '@/Layout/Desktop/components/Shadow.vue';
 import { useEventListener } from '@vueuse/core';
 import type { PlaylistItem } from '@/types/musicPlayer.ts';
 import CreatePlaylistModal from '@/Layout/Desktop/components/Menus/CreatePlaylistModal.vue';
+import serverClient from '@/lib/clients/serverClient.ts';
+import { queryClient } from '@/config/tanstack-query.ts';
+import { useToast } from 'primevue/usetoast';
+import type { ModalData } from '@/types';
+import type { DisplayList } from '@/types/api/music/musicPlayer';
 
 const route = useRoute();
+const toast = useToast();
 
 const backgroundUrl = computed(() => {
 	if (!background.value)
@@ -50,13 +56,11 @@ interface ModalEvent {
 	};
 }
 
-const playlistModalData = ref<PlaylistItem | null>(null);
+const playlistModalData = ref<ModalData<PlaylistItem | DisplayList> | null>(null);
 
 function handleModalTrigger(modalName: string, modalProps: unknown) {
 	if (modalName === 'createPlaylist') {
-		const playlist = modalProps as unknown as PlaylistItem;
-		console.log(playlist);
-		playlistModalData.value = playlist;
+		playlistModalData.value = modalProps as unknown as ModalData<PlaylistItem | DisplayList>;
 	}
 }
 
@@ -64,9 +68,37 @@ function onClose() {
 	playlistModalData.value = null;
 }
 
+function onDelete() {
+	if (!playlistModalData.value)
+		return;
+
+	serverClient()
+		.delete(`music/playlists/${playlistModalData.value?.modalProps?.id}`)
+		.then(({ data }) => {
+			queryClient.invalidateQueries({ queryKey: ['music-playlists'] });
+
+			toast.add({
+				severity: 'info',
+				summary: 'Success',
+				detail: 'Playlist Deleted',
+				life: 3000,
+			});
+
+			onClose();
+		})
+		.catch((error) => {
+			toast.add({
+				severity: 'error',
+				summary: 'Failed to create playlist',
+				detail: error.message,
+				life: 3000,
+			});
+		});
+}
+
 useEventListener(document, 'showModal', (evt) => {
 	const event = evt as unknown as ModalEvent;
-	handleModalTrigger(event.detail.modalName, event.detail.modalProps);
+	handleModalTrigger(event.detail.modalName, event.detail);
 });
 </script>
 
@@ -84,7 +116,7 @@ useEventListener(document, 'showModal', (evt) => {
 				class="relative z-0 flex h-px flex-1 flex-grow items-start justify-start self-stretch overflow-clip w-available h-available scrollbar-none group"
 			>
 				<ChristmasSnow />
-				<Sidebar />
+				<Sidebar v-if="!!currentServer" />
 
 				<GradientBorder :hide-border="false">
 					<div
@@ -150,7 +182,12 @@ useEventListener(document, 'showModal', (evt) => {
 
 		<ContextMenu ref="cardMenu" :model="trackContextMenuItems as MenuItem[]" />
 
-		<CreatePlaylistModal v-if="playlistModalData" :data="playlistModalData" :on-close="onClose" />
+		<CreatePlaylistModal
+			v-if="playlistModalData"
+			:data="playlistModalData"
+			:on-close="onClose"
+			:on-delete="onDelete"
+		/>
 	</IonPage>
 </template>
 

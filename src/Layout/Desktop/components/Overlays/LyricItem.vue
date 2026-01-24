@@ -33,7 +33,7 @@ defineProps({
 				'text-right font-semibold': lyric?.rtl,
 				'font-bold': !lyric?.rtl,
 			}"
-			class="whitespace-pre-line tv:text-4xl transition-all duration-200 ease-in-out text-md tv:leading-[48px] text-pretty text-inherit w-available"
+			class="whitespace-pre-line tv:text-4xl transition-all duration-200 ease-in-out text-3xl tv:leading-[48px] text-pretty text-inherit w-available"
 		>
 			{{ lyric?.text }}
 		</span>

@@ -8,12 +8,13 @@ import { alphaNumericRange } from '@/lib/stringArray';
 import router from '@/router';
 import indexer, { setIndexerOpen } from '@/store/indexer';
 
-const openPaths = ['Libraries', 'Library', 'Collections', 'Albums', 'Artists'];
+const openPaths = ['Libraries', 'Library', 'Collections', 'Albums', 'Artists', 'Music Genres'];
 
 const queryPaths = [
 	new RegExp('music/albums'),
 	new RegExp('music/artists'),
 	new RegExp('libraries/[a-zA-Z0-9]+/letter/[a-zA-Z0-9_]'),
+	new RegExp('music/genres/letter/[a-zA-Z0-9_]'),
 ];
 
 function indexerState(route: string) {

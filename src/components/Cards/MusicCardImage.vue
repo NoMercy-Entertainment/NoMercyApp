@@ -54,33 +54,10 @@ defineProps({
 		</div>
 	</template>
 
-	<template v-else-if="data?.type === 'playlist'">
-		<div
-			class="frosting absolute -top-1 group-hover/musicCard:-top-3 left-1/2 flex aspect-square h-auto -translate-x-1/2 flex-col items-start justify-start rounded-lg opacity-60 transition-all delay-150 duration-200 w-[75%] bg-focus/10"
-		>
-			<div class="flex h-full items-start justify-start self-stretch">
-				<div class="relative flex items-center justify-start self-stretch">
-					<div class="" />
-					<div class="" />
-				</div>
-			</div>
-		</div>
-
-		<div
-			class="absolute left-1/2 flex aspect-square h-auto -translate-x-1/2 flex-col items-start justify-start rounded-xl opacity-80 transition-all delay-75 duration-200 w-[85%] -top-0.5 group-hover/musicCard:-top-1.5 bg-focus/10"
-		>
-			<div class="flex h-full items-start justify-start self-stretch">
-				<div class="relative flex items-center justify-start self-stretch">
-					<div class="" />
-					<div class="" />
-				</div>
-			</div>
-		</div>
-
+	<template v-else-if="data?.type === 'playlist' || data?.type === 'genre'">
 		<div
 			class="relative flex aspect-square h-auto w-full flex-shrink-0 flex-grow-0 flex-col items-start justify-start self-stretch overflow-clip rounded-2xl bg-cover bg-center bg-no-repeat bg-surface-7"
 		>
-			<div class="backdropCard-overlay !rounded-2xl" />
 			<FavoriteImage v-if="data?.id === 'favorite'" class="" />
 			<CoverImage
 				v-else

@@ -27,7 +27,7 @@ const props = defineProps({
 	},
 });
 
-defineEmits(['filter-change']);
+defineEmits(['filterChange']);
 
 const route = useRoute();
 
@@ -57,7 +57,7 @@ const shareData = computed<ShareOptions>(() => ({
 			<input
 				id="search"
 				:value="filter"
-				class="bg-transparent border-surface-12/5 border-2 rounded-md focus-visible:!border-surface-12/9 focus-visible:text-current placeholder-current p-2"
+				class="bg-transparent border-surface-12/5 border-2 rounded-md focus-visible:!border-surface-12/9 focus-visible:text-white placeholder-current p-2"
 				name="search"
 				placeholder="Filter…"
 				type="text"

@@ -9,6 +9,7 @@ import { sidebar } from '@/store/sidebar';
 import type { MoooomIcons } from '@Icons/icons';
 import Button from 'primevue/button';
 import MoooomIcon from '@/components/Images/icons/MoooomIcon.vue';
+import CoverImage from '@/components/MusicPlayer/components/CoverImage.vue';
 
 const props = defineProps({
 	name: {
@@ -81,13 +82,17 @@ function handleClick() {
 		@click="handleClick"
 	>
 		<MoooomIcon v-if="!!icon" :icon="icon!" class="" />
-		<!--        <CoverImage v-else-if="!!cover" :data="{cover} as Song" class="top-0 z-10 -mr-1 -ml-1 aspect-square h-8 w-8 overflow-clip object-cover min-w-8" /> -->
+		<CoverImage
+			v-else-if="!!cover"
+			:data="{ cover }"
+			class="top-0 z-10 -mr-1 -ml-1 aspect-square h-8 w-8 overflow-clip object-cover min-w-8 !rounded-md"
+		/>
 
 		<img
 			v-else-if="image"
 			:src="image"
 			alt=""
-			class="top-0 z-10 -mr-1 -ml-1 aspect-square h-8 w-8 overflow-clip object-cover min-w-8"
+			class="top-0 z-10 -mr-1 -ml-1 aspect-square h-8 w-8 overflow-clip object-cover min-w-8 !rounded-md"
 			crossorigin="anonymous"
 		>
 

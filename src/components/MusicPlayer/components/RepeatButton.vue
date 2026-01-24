@@ -48,12 +48,12 @@ function handleClick(e?: MouseEvent) {
 		<PlayerIcon
 			v-else-if="isRepeating === 'one'"
 			class="h-6 w-6 text-focus"
-			icon="nmRepeat"
+			icon="nmRepeatoneHalftone"
 		/>
 		<PlayerIcon
 			v-else-if="isRepeating === 'all'"
 			class="h-6 w-6 text-focus"
-			icon="nmRepeatdoublearrowHalftone"
+			icon="nmRepeat"
 		/>
 	</MusicButton>
 </template>

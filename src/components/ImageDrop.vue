@@ -1,9 +1,20 @@
 <script generic="T extends MusicImageTypes" lang="ts"  setup>
-import { ref } from 'vue';
+import type { PropType } from 'vue';
+import { computed, onBeforeMount, ref } from 'vue';
 import type { FileUploadSelectEvent } from 'primevue/fileupload';
 import FileUpload from 'primevue/fileupload';
 import type { MusicImageTypes } from '@/types/server.ts';
 import Button from '@/components/Button.vue';
+import type { PlaylistItem } from '@/types/musicPlayer.ts';
+import { currentServer } from '@/store/currentServer.ts';
+import type { DisplayList } from '@/types/api/music/musicPlayer';
+
+const props = defineProps({
+	data: {
+		type: Object as PropType<PlaylistItem | DisplayList>,
+		required: true,
+	},
+});
 
 const emit = defineEmits(['onImage']);
 
@@ -42,6 +53,28 @@ function onRemoveTemplatingFile() {
 	fileData.value = null;
 	src.value = null;
 }
+
+onBeforeMount(async () => {
+	if (props.data?.cover == null)
+		return;
+
+	const reader = new FileReader();
+
+	reader.onload = async (e) => {
+		src.value = e.target?.result;
+		fileData.value = e.target?.result;
+		emit('onImage', e.target?.result as string);
+
+		disabled.value = false;
+	};
+
+	const blob = await fetch(`${currentServer.value?.serverBaseUrl.replace(/\/$/, '')}${props.data?.cover}`)
+		.then(r => r.blob());
+
+	reader.readAsDataURL(blob);
+});
+
+const url = computed(() => fileData.value?.objectURL?.split('?')?.at(0) ?? fileData.value?.split('?')?.at(0) ?? '');
 </script>
 
 <template>
@@ -55,16 +88,16 @@ function onRemoveTemplatingFile() {
 			@select="onFileSelect"
 			@upload="onUpload"
 		>
-			<template v-if="!src" #chooseicon>
-				<div class="min-w-64 aspect-square flex items-center justify-center flex-col">
-					<p class="mt-6 mb-0">
+			<template v-if="!url" #chooseicon>
+				<div class="min-w-[286px] aspect-square flex items-center justify-center flex-col">
+					<span>
 						{{ $t('Drag and drop files to here to upload.') }}
-					</p>
+					</span>
 				</div>
 			</template>
 			<template v-else #chooseicon>
 				<slot :ref="image" :data="{
-					cover: fileData?.objectURL,
+					cover: url,
 				} as MusicImageTypes"
 				/>
 			</template>
@@ -72,8 +105,8 @@ function onRemoveTemplatingFile() {
 		<Button
 			v-if="!disabled"
 			id="clear"
-			class="absolute bottom-4 right-5 z-50"
-			color="red"
+			class="absolute top-2 right-2 z-50 !px-2"
+			color="slate"
 			end-icon="trash"
 			title="Remove Image"
 			variant="default"
@@ -99,5 +132,7 @@ function onRemoveTemplatingFile() {
 	background: transparent;
 	--p-button-outlined-primary-border-color: var(--color-theme-8);
 	--p-button-outlined-primary-color: var(--color-theme-8);
+	--p-button-padding-y: 0;
+	--p-button-padding-x: 0;
 }
 </style>

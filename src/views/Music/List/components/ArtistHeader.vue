@@ -14,7 +14,7 @@ import FavoriteImage from '@/components/Images/FavoriteImage.vue';
 import CoverImage from '@/components/MusicPlayer/components/CoverImage.vue';
 import { pickPaletteColor, tooLight } from '@/lib/colorHelper.ts';
 import { colorPalette } from '@/store/ui.ts';
-import ClickUploadModal from '@/components/ClickUploadModal.vue';
+import type { ModalData } from '@/types';
 
 const props = defineProps({
 	data: {
@@ -51,52 +51,6 @@ onMounted(() => {
 	duration.value = calculateDuration(props.data);
 });
 
-watch(canvas, (value) => {
-	if (!value)
-		return;
-	const context = value.getContext('2d', {
-		willReadFrequently: true,
-		desynchronized: true,
-	});
-
-	const draw = () => {
-		const sourceCanvas = audioPlayer._audioElement1?.motion?.canvas;
-		if (sourceCanvas && audioColor.value) {
-			if (audioPlayer._audioElement1.isPlaying()) {
-				audioPlayer._audioElement1?.motion!.registerGradient('theme', {
-					bgColor: 'transparent',
-					dir: 'h',
-					colorStops: [getComputedStyle(audioColor.value).backgroundColor],
-				});
-
-				audioPlayer._audioElement1!.motion!.gradient = 'theme';
-
-				value.width = sourceCanvas.width;
-				value.height = sourceCanvas.height;
-				context!.clearRect(0, 0, value.width, value.height);
-				context!.drawImage(sourceCanvas, 0, 0, value.width, value.height);
-			}
-			else if (audioPlayer._audioElement2.isPlaying()) {
-				audioPlayer._audioElement2?.motion!.registerGradient('theme', {
-					bgColor: 'transparent',
-					dir: 'h',
-					colorStops: [getComputedStyle(audioColor.value).backgroundColor],
-				});
-
-				audioPlayer._audioElement2!.motion!.gradient = 'theme';
-
-				value.width = sourceCanvas.width;
-				value.height = sourceCanvas.height;
-				context!.clearRect(0, 0, value.width, value.height);
-				context!.drawImage(sourceCanvas, 0, 0, value.width, value.height);
-			}
-		}
-		requestAnimationFrame(draw);
-	};
-
-	draw();
-});
-
 watch(audioColor, (value) => {
 	if (
 		!value
@@ -123,6 +77,20 @@ watch(audioColor, (value) => {
 });
 
 const light = computed(() => tooLight(pickPaletteColor(colorPalette.value), 150));
+
+function openEdit() {
+	const evt = new CustomEvent('showModal', {
+		detail: {
+			modalName: 'createPlaylist',
+			modalTitle: 'Edit {{name}} playlist',
+			modalTitleArgs: {
+				name: props.data?.name,
+			},
+			modalProps: props.data,
+		} satisfies ModalData<DisplayList | undefined>,
+	});
+	document.dispatchEvent(evt);
+}
 </script>
 
 <template>
@@ -145,33 +113,38 @@ const light = computed(() => tooLight(pickPaletteColor(colorPalette.value), 150)
 		<div
 			class="absolute top-0 left-0 h-full w-full overflow-clip"
 		/>
-		<canvas id="audio-visualizer" ref="canvas" class="absolute top-0 left-96 my-12 ml-6 mr-6 mt-full h-available w-available overflow-clip pointer-events-none" />
+
 		<div
 			:class="{
 				'-mt-4': isPlatform('capacitor'),
 				'': !isPlatform('capacitor'),
 			}"
-			class="frosting relative mx-auto group/cover flex aspect-square w-80 overflow-clip max-w-[90%] flex-col items-center justify-center rounded-xl bg-gradient-to-br min-w-64 bg-theme-6 from-theme-5 via-theme-6 to-theme-9 shadow"
+			class="frosting relative mx-auto group/cover flex aspect-square w-80 overflow-clip max-w-[90%] flex-col items-center justify-center rounded-xl bg-gradient-to-br min-w-64 bg-theme-6 from-theme-5 via-theme-6 to-theme-9 shadow cursor-pointer"
+			@click="openEdit"
 		>
-			<ClickUploadModal v-if="data" :data="data" :url="`${data.link}/cover`">
-				<template #default="{ data: data2, ref: imgRef }">
-					<CoverImage
-						v-if="data2?.cover"
-						id="image"
-						:data="data2"
-						:img-ref="imgRef"
-						:size="250"
-						class-name="aspect-square rounded-xl w-full"
-						loading="eager"
-					/>
-					<FavoriteImage
-						v-else-if="data2?.id"
-						:id="data2.id"
-						:type="data2.type"
-						class="aspect-square rounded-xl w-full"
-					/>
-				</template>
-			</ClickUploadModal>
+			<!--			<ClickUploadModal v-if="data" :data="data" :url="`${data.link}/cover`"> -->
+			<!--				<template #default="{ data: data2, ref: imgRef }"> -->
+			<CoverImage
+				v-if="data?.cover"
+				id="image"
+				:data="data"
+				:size="250"
+				class-name="aspect-square rounded-xl w-full"
+				loading="eager"
+			/>
+			<FavoriteImage
+				v-else-if="data?.id"
+				:id="data.id"
+				:type="data.type"
+				class="aspect-square rounded-xl w-full"
+			/>
+			<div v-if="data?.type !== 'track'" class="absolute grid inset-0 items-center bg-black/40 w-full flex items-center justify-center flex-col opacity-0 group-hover/cover:opacity-100 transition-all duration-100">
+				<span class="p-4 font-semibold text-theme-8 text-lg">
+					{{ $t('Change cover') }}
+				</span>
+			</div>
+			<!--				</template> -->
+			<!--			</ClickUploadModal> -->
 		</div>
 
 		<div
@@ -187,17 +160,22 @@ const light = computed(() => tooLight(pickPaletteColor(colorPalette.value), 150)
 		</div>
 
 		<div
-			class="relative hidden flex-1 flex-shrink-0 flex-col items-start justify-start gap-1 flex-grow-1 sm:flex"
+			class="relative hidden flex-1 flex-shrink-0 flex-col items-start justify-start gap-1 flex-grow-1 sm:flex cursor-pointer"
 		>
 			<p class="text-left font-semibold uppercase">
 				{{ data?.type?.replace(/s$/u, '') }}
 			</p>
 			<div
 				class="w-full text-5xl font-semibold line-clamp-2 leading-[130%] whitespace-pre"
+				@click="openEdit"
 				v-html="
 					breakTitle(data?.name ?? 'Songs you like', 'text-2xl line-clamp-1')
 				"
 			/>
+
+			<div class="relative flex items-center justify-start gap-2 text-sm">
+				{{ data?.description }}
+			</div>
 
 			<div class="relative flex items-center justify-start gap-2">
 				<div
@@ -233,7 +211,7 @@ const light = computed(() => tooLight(pickPaletteColor(colorPalette.value), 150)
 					{{ data?.tracks?.length }}
 					{{ data?.tracks?.length === 1 ? t('track') : t('tracks') }}
 				</p>
-				<p v-if="(duration?.length ?? 0) > 0" class="text-left text-sm font-medium">
+				<p v-if="(duration?.length ?? 0) > 0 && data?.tracks?.length" class="text-left text-sm font-medium">
 					•
 				</p>
 				<p class="text-left text-sm font-medium">

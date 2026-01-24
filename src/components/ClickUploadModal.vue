@@ -99,7 +99,7 @@ watch(coverUrl, (newUrl) => {
 	<button id="uploadDialogTrigger" ref="trigger" class="contents" @click="setOpen">
 		<slot :ref="image" :data="data2" />
 		<div class="opacity-0 duration-150 transition-all group-hover/cover:opacity-100 group-hover/cover:bg-black/40 inset-0 absolute grid items-center text-lg font-semibold">
-			{{ $t("Change cover") }}
+			{{ $t('Drag and drop files to here to upload.') }}
 		</div>
 	</button>
 

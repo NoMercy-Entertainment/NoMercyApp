@@ -16,6 +16,7 @@ import type { StatusResponse } from '@/types/api/base/library';
 import audioPlayer from '@/store/audioPlayer.ts';
 import { Share } from '@capacitor/share';
 import type { RouteLocationNormalizedLoadedGeneric } from 'vue-router';
+import type { ModalData } from '@/types';
 
 export interface ContextMenuItem {
 	label?: string;
@@ -131,8 +132,9 @@ export function onTrackRowRightClick(event: Event, route: RouteLocationNormalize
 					const evt = new CustomEvent('showModal', {
 						detail: {
 							modalName: 'createPlaylist',
+							modalTitle: 'Add to new playlist',
 							modalProps: selectedTrackRow.value,
-						},
+						} satisfies ModalData<PlaylistItem | undefined>,
 					});
 					document.dispatchEvent(evt);
 				},

@@ -141,7 +141,7 @@ export function generateRandomString(length: number): string {
 export function groupBy<T>(array: T[], key: string): T[][] {
 	const list: any = {};
 
-	array.map((element: any) => {
+	array.forEach((element: any) => {
 		list[element[key]] = array.filter((el: any) => el[key] === element[key]);
 	});
 
@@ -286,6 +286,42 @@ export function sortBy<T>(arr: T[], key: string, direction = 'asc',	subKey?: str
 	});
 }
 
+export function sortBy2<T>(
+	arr: T[],
+	key: string,
+	key2: string,
+	direction: 'asc' | 'desc' = 'asc',
+	subKey?: string,
+) {
+	return [...(arr ?? [])].sort((a: any, b: any) => {
+		const getVal = (obj: any, k: string) =>
+			subKey ? obj[k]?.[subKey] ?? '0' : obj[k] ?? '0';
+
+		let x1 = getVal(a, key);
+		let y1 = getVal(b, key);
+
+		if (direction === 'desc') {
+			[x1, y1] = [y1, x1];
+		}
+
+		// Primary sort
+		if (x1 < y1)
+			return -1;
+		if (x1 > y1)
+			return 1;
+
+		// Secondary sort
+		let x2 = getVal(a, key2);
+		let y2 = getVal(b, key2);
+
+		if (direction === 'desc') {
+			[x2, y2] = [y2, x2];
+		}
+
+		return x2 < y2 ? -1 : x2 > y2 ? 1 : 0;
+	});
+}
+
 /**
  * SortCallback.
  * Sort Array of objects by a priority list.
@@ -361,7 +397,7 @@ export function sortByType<T>(itemList: T[], sortType: SortType, sortOrder: Sort
 		return sortBy(itemList, 'duration', sortOrder || SortOrder.desc);
 	}
 
-	return sortBy<T>(itemList, 'disc', sortOrder || SortOrder.desc);
+	return sortBy2<T>(itemList, 'disc', 'track', sortOrder || SortOrder.desc);
 }
 
 export function ucfirst(str: string): string {

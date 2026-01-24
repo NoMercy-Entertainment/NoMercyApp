@@ -164,7 +164,7 @@ function handleClick(item: any) {
 						:class="{
 							'opacity-0 group-hover/card:opacity-100': image,
 						}"
-						class="absolute inset-0 z-0 transition-all duration-200 bg-surface-1/80"
+						class="absolute -inset-1 z-0 transition-all duration-200 bg-surface-1/80 blur-sm"
 					/>
 					<div class="z-10 w-available text-xl font-bold line-clamp-2 leading-[1.2] text-surface-12 dark:text-slate-1 empty:hidden dark:font-medium font-semibold whitespace-pre-line text-xs">
 						{{ data.title }}

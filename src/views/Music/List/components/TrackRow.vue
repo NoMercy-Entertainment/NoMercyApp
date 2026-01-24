@@ -42,6 +42,35 @@ const isAlbumRoute = computed(() => route.path.startsWith('/music/album'));
 const isArtistRoute = computed(() => route.path.startsWith('/music/artist'));
 const isPlaylistsRoute = computed(() => route.path.startsWith('/music/playlists'));
 const isFavoritesRoute = computed(() => route.path.startsWith('/music/tracks'));
+const isGenresRoute = computed(() => route.path.startsWith('/music/genres'));
+
+const routeType = computed(() => {
+	if (isAlbumRoute.value)
+		return 'album';
+	if (isArtistRoute.value)
+		return 'artist';
+	if (isPlaylistsRoute.value)
+		return 'playlist';
+	if (isFavoritesRoute.value)
+		return 'favorite';
+	if (isGenresRoute.value)
+		return 'genre';
+	return 'unknown';
+});
+
+const typeId = computed(() => {
+	if (isAlbumRoute.value)
+		return props.data?.album_track.at(0)?.id;
+	if (isArtistRoute.value)
+		return props.data?.artist_track.at(0)?.id;
+	if (isPlaylistsRoute.value)
+		return route.params.id;
+	if (isFavoritesRoute.value)
+		return route.params.id;
+	if (isGenresRoute.value)
+		return route.params.id;
+	return 'unknown';
+});
 
 function handleClick() {
 	if (!user.value.features?.nomercyConnect) {
@@ -50,10 +79,8 @@ function handleClick() {
 	}
 	musicSocketConnection.value?.invoke(
 		'StartPlaybackCommand',
-		isAlbumRoute.value ? 'album' : 'artist',
-		isAlbumRoute.value
-			? props.data?.album_track.at(0)?.id
-			: props.data?.artist_track.at(0)?.id,
+		routeType.value,
+		typeId.value,
 		props.data.id,
 	);
 }
@@ -73,7 +100,7 @@ const date = computed(() => {
 <template>
 	<button
 		:class="{
-			'album-grid': isAlbumRoute || isPlaylistsRoute || isFavoritesRoute,
+			'album-grid': isAlbumRoute || isPlaylistsRoute || isFavoritesRoute || isGenresRoute,
 			'artist-grid': isArtistRoute,
 		}"
 		:data-track-id="data?.id"
@@ -134,7 +161,7 @@ const date = computed(() => {
 				>
 					<Marquee>
 						<TrackLinks
-							v-if="data && isAlbumRoute || isPlaylistsRoute || isFavoritesRoute"
+							v-if="data && isAlbumRoute || isPlaylistsRoute || isFavoritesRoute || isGenresRoute"
 							:id="data.id"
 							:data="data.artist_track"
 							:onclick="(e: MouseEvent) => e.stopPropagation()"
