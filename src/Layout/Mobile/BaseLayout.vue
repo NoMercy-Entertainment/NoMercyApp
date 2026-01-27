@@ -21,6 +21,8 @@ import ProfileMenu from './components/menus/ProfileMenu.vue';
 import BottomBar from './components/BottomBar.vue';
 import MobileLibraryHeader from '@/views/Base/Library/components/MobileLibraryHeader.vue';
 
+import { OpenInAppBanner, WelcomeAppModal } from '@/components/AndroidApp';
+
 const isFetching = useIsFetching();
 
 onMounted(() => {
@@ -64,6 +66,9 @@ onUnmounted(() => {
 			<Suspense>
 				<ImageModal />
 			</Suspense>
+
+			<OpenInAppBanner />
+			<WelcomeAppModal />
 		</IonTabs>
 	</IonPage>
 </template>

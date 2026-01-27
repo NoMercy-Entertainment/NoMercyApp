@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { RouterLink, useRoute } from 'vue-router';
-import { IonIcon, IonItem, IonList, IonRippleEffect, isPlatform } from '@ionic/vue';
+import { IonIcon, IonItem, IonList, IonRippleEffect } from '@ionic/vue';
 import { arrowRefreshVertical, doorOpen, gridMasonry, monitor, moonDiagonal, serverSwitch } from '@Icons/index';
 
 import { scheme } from '@/store/colorScheme';
@@ -12,7 +12,7 @@ import Toggle from '@/components/Forms/Toggle.vue';
 
 import { logout } from '@/lib/auth/index';
 import { closeMenu, menuOpen } from '@/store/profileMenu';
-import { Browser } from '@capacitor/browser';
+import { launchAndroidApp, shouldShowAndroidPrompts } from '@/store/androidAppPrompt';
 import { phonePortrait } from 'ionicons/icons';
 import servers from '@/store/servers.ts';
 
@@ -20,14 +20,8 @@ const reload = () => window.location.reload();
 
 const route = useRoute();
 
-async function handleOpenApp() {
-	if (isPlatform('android')) {
-		Browser.open({ url: `tv.nomercy.app://${route.path}` }).then(() => {
-			setTimeout(async () => {
-				await Browser.open({ url: `tv.nomercy.app://${route.path}` });
-			}, 1000);
-		});
-	}
+function handleOpenApp() {
+	launchAndroidApp(route.path);
 }
 </script>
 
@@ -128,7 +122,7 @@ async function handleOpenApp() {
 			</IonItem>
 
 			<IonItem
-				v-if="!isPlatform('capacitor') && isPlatform('android')"
+				v-if="shouldShowAndroidPrompts"
 				lines="none"
 			>
 				<button

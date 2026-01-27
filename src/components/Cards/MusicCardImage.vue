@@ -1,13 +1,15 @@
 <script lang="ts" setup>
 import type { PropType } from 'vue';
+import { computed } from 'vue';
 
 import type { HomeDataItem } from '@/types/api/music';
 import type { MusicCardPageResponseData } from '@/types/api/music/musicPlayer';
 import type { Album } from '@/types/api/music/album';
 import FavoriteImage from '@/components/Images/FavoriteImage.vue';
 import CoverImage from '@/components/MusicPlayer/components/CoverImage.vue';
+import { pickPaletteColor } from '@/lib/colorHelper.ts';
 
-defineProps({
+const props = defineProps({
 	data: {
 		type: Object as
 		| PropType<HomeDataItem | MusicCardPageResponseData | Album>
@@ -15,6 +17,8 @@ defineProps({
 		required: true,
 	},
 });
+
+const color = computed(() => pickPaletteColor(props.data?.color_palette?.cover));
 </script>
 
 <template>
@@ -55,6 +59,31 @@ defineProps({
 	</template>
 
 	<template v-else-if="data?.type === 'playlist' || data?.type === 'genre'">
+		<div v-if="data?.tracks !== null"
+			:style="{ '--color-theme-8': color }"
+			class="frosting absolute -top-1 group-hover/musicCard:-top-3 left-1/2 flex aspect-square h-auto -translate-x-1/2 flex-col items-start justify-start rounded-lg opacity-60 transition-all delay-150 duration-200 w-[75%] bg-focus/10"
+		>
+			<div class="flex h-full items-start justify-start self-stretch">
+				<div class="relative flex items-center justify-start self-stretch">
+					<div class="" />
+					<div class="" />
+				</div>
+			</div>
+		</div>
+
+		<div
+			v-if="data?.tracks !== null"
+			:style="{ '--color-theme-8': color }"
+			class="absolute left-1/2 flex aspect-square h-auto -translate-x-1/2 flex-col items-start justify-start rounded-xl opacity-80 transition-all delay-75 duration-200 w-[85%] -top-0.5 group-hover/musicCard:-top-1.5 bg-focus/10"
+		>
+			<div class="flex h-full items-start justify-start self-stretch">
+				<div class="relative flex items-center justify-start self-stretch">
+					<div class="" />
+					<div class="" />
+				</div>
+			</div>
+		</div>
+
 		<div
 			class="relative flex aspect-square h-auto w-full flex-shrink-0 flex-grow-0 flex-col items-start justify-start self-stretch overflow-clip rounded-2xl bg-cover bg-center bg-no-repeat bg-surface-7"
 		>

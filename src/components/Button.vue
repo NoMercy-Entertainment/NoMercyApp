@@ -1,10 +1,15 @@
 <script lang="ts" setup>
 import type { PropType } from 'vue';
-import { computed } from 'vue';
-import { twMerge } from 'tailwind-merge';
+import { computed, useAttrs } from 'vue';
+import { cva } from 'class-variance-authority';
+import type { VariantProps } from 'class-variance-authority';
 
 import type { MoooomIcons } from '@Icons/icons';
 import MoooomIcon from '@/components/Images/icons/MoooomIcon.vue';
+
+defineOptions({
+	inheritAttrs: false,
+});
 
 const props = defineProps({
 	id: {
@@ -12,19 +17,13 @@ const props = defineProps({
 		required: true,
 	},
 	variant: {
-		type: String as PropType<
-			| 'primary'
-			| 'contained'
-			| 'text'
-			| 'outlined'
-			| 'default'
-			| 'hover'
-			| 'active'
-			| 'focussed'
-			| 'disabled'
-			| 'auto'
-		>,
+		type: String as PropType<ButtonVariants['variant']>,
 		default: 'default',
+		required: false,
+	},
+	size: {
+		type: String as PropType<ButtonVariants['size']>,
+		default: 'md',
 		required: false,
 	},
 	onClick: {
@@ -32,11 +31,6 @@ const props = defineProps({
 		required: false,
 	},
 	title: {
-		type: String,
-		default: '',
-		required: false,
-	},
-	className: {
 		type: String,
 		default: '',
 		required: false,
@@ -76,55 +70,112 @@ const props = defineProps({
 	},
 });
 
+const buttonVariants = cva(
+	// Base classes
+	'flex justify-center items-center px-4 py-2 gap-2 rounded-lg text-sm select-none w-auto font-semibold leading-[100%]',
+	{
+		variants: {
+			variant: {
+				default: `
+					!bg-gradient-to-b dark:!bg-gradient-to-b
+					from-[var(--color-6)] to-[var(--color-7)]
+					hover:from-[var(--color-5)] hover:to-[var(--color-6)]
+					active:from-[var(--color-7)] active:to-[var(--color-8)]
+					button-filled text-[var(--color-1)]
+					shadow-lg
+					shadow-[0_1px_0_0_rgba(255,255,255,0.20)_inset,0_-1px_0_0_rgba(from_var(--surface-2)_r_g_b/60%)_inset,0_6px_10px_-4px_rgba(from_var(--surface-2)_r_g_b/70%)]
+					dark:shadow-none active:!shadow-none active:!dark:shadow-none
+				`,
+				contained: `
+					!bg-gradient-to-b dark:!bg-gradient-to-b
+					from-[var(--color-6)] to-[var(--color-7)]
+					hover:from-[var(--color-5)] hover:to-[var(--color-6)]
+					active:from-[var(--color-7)] active:to-[var(--color-8)]
+					button-filled text-[var(--color-1)]
+					shadow-lg
+					shadow-[0_1px_0_0_rgba(255,255,255,0.20)_inset,0_-1px_0_0_rgba(from_var(--surface-2)_r_g_b/60%)_inset,0_6px_10px_-4px_rgba(from_var(--surface-2)_r_g_b/70%)]
+					dark:shadow-none active:!shadow-none active:!dark:shadow-none
+				`,
+				text: `
+					outline-transparent hover:outline-[rgb(from_var(--color-5)_r_g_b/80%)]
+					hover:outline-1 hover:outline text-[rgb(from_var(--background-contrast-12)_r_g_b/80%)]
+				`,
+				outlined: `
+					text-[var(--color-7)] border-[var(--color-5)] border-2
+					focus-visible:border-[var(--color-6)] hover:border-[var(--color-7)]
+					hover:bg-[rgba(var(--color-7),.1)]
+					shadow-[0_1px_0_0_rgba(255,255,255,0.20)_inset,0_-1px_0_0_rgba(from_var(--surface-2)_r_g_b/60%)_inset,0_6px_10px_-4px_rgba(from_var(--surface-2)_r_g_b/70%)]
+					dark:shadow-none active:!shadow-none active:!dark:shadow-none
+				`,
+				primary: `
+					!bg-gradient-to-b dark:!bg-gradient-to-b
+					from-[var(--color-6)] to-[var(--color-7)]
+					hover:from-[var(--color-5)] hover:to-[var(--color-6)]
+					active:from-[var(--color-7)] active:to-[var(--color-8)]
+					button-filled text-[var(--color-1)]
+					shadow-lg
+					shadow-[0_1px_0_0_rgba(255,255,255,0.20)_inset,0_-1px_0_0_rgba(from_var(--surface-2)_r_g_b/60%)_inset,0_6px_10px_-4px_rgba(from_var(--surface-2)_r_g_b/70%)]
+					dark:shadow-none active:!shadow-none active:!dark:shadow-none
+				`,
+			},
+			size: {
+				sm: 'h-8 text-xs px-3',
+				md: 'h-9 text-sm px-4',
+				lg: 'h-12 text-base px-6',
+			},
+			disabled: {
+				true: 'grayscale !cursor-not-allowed',
+				false: '',
+			},
+		},
+		defaultVariants: {
+			variant: 'default',
+			size: 'md',
+			disabled: false,
+		},
+	},
+);
+
+type ButtonVariants = VariantProps<typeof buttonVariants>;
+
+const attrs = useAttrs();
+
 const style = computed(() => {
+	const base = `var(--color-${props.color}-8)`;
 	return {
-		'--color-1': `var(--color-${props.color}-1)`,
-		'--color-2': `var(--color-${props.color}-2)`,
-		'--color-3': `var(--color-${props.color}-3)`,
-		'--color-4': `var(--color-${props.color}-4)`,
-		'--color-5': `var(--color-${props.color}-5)`,
-		'--color-6': `var(--color-${props.color}-6)`,
-		'--color-7': `var(--color-${props.color}-7)`,
-		'--color-8': `var(--color-${props.color}-8)`,
-		'--color-9': `var(--color-${props.color}-9)`,
-		'--color-10': `var(--color-${props.color}-10)`,
-		'--color-11': `var(--color-${props.color}-11)`,
-		'--color-12': `var(--color-${props.color}-12)`,
+		'--color-1': `hsl(from ${base} h s 97%)`,
+		'--color-2': `hsl(from ${base} h s 93%)`,
+		'--color-3': `hsl(from ${base} h s 88%)`,
+		'--color-4': `hsl(from ${base} h s 80%)`,
+		'--color-5': `hsl(from ${base} h s 70%)`,
+		'--color-6': `hsl(from ${base} h s 60%)`,
+		'--color-7': `hsl(from ${base} h s 50%)`,
+		'--color-8': base,
+		'--color-9': `hsl(from ${base} h s 35%)`,
+		'--color-10': `hsl(from ${base} h s 25%)`,
+		'--color-11': `hsl(from ${base} h s 15%)`,
+		'--color-12': `hsl(from ${base} h s 5%)`,
+		...(attrs.style as object || {}),
 	};
 });
 
-const classes = computed(() => {
-	return twMerge(
-		props.className,
-		'flex justify-center items-center px-4 py-2 gap-2 rounded-lg text-sm',
-		'select-none w-auto font-semibold leading-[100%]',
-		props.className?.includes('h-') ? '' : 'h-9',
-		props.variant === 'default' || props.variant === 'contained'
-			? `!bg-gradient-to-b dark:!bg-gradient-to-t
-        from-[var(--color-6)] to-[var(--color-4)]
-        hover:from-[var(--color-7)] hover:to-[var(--color-9)]
-        active:from-[var(--color-7)] active:to-[var(--color-9)]
-			  button-filled text-[var(--color-12)] hover:text-[var(--color-1)] dark:hover:text-[var(--color-12)] shadow-lg`
-			: '',
-		props.variant === 'text'
-			? 'outline-transparent hover:outline-[rgb(from_var(--color-5)_r_g_b/80%)] hover:outline-1 hover:outline text-[rgb(from_var(--background-contrast-12)_r_g_b/80%)]'
-			: `
-				 shadow-[0_1px_0_0_rgba(255,255,255,0.20)_inset,0_-1px_0_0_rgba(from_var(--surface-2)_r_g_b/60%)_inset,0_6px_10px_-4px_rgba(from_var(--surface-2)_r_g_b/70%)]
-				 dark:shadow-none
+const passedClass = computed(() => (attrs.class as string) || '');
 
-				 active:!shadow-none
-				 active:!dark:shadow-none
-			 `,
-		props.variant === 'outlined'
-			? 'text-[var(--color-7)] border-[var(--color-5)] border-2 focus-visible:border-[var(--color-6)] hover:border-[var(--color-7)] hover:bg-[rgba(var(--color-7),.1)]'
-			: '',
-		props.color && props.variant !== 'default' && props.variant !== 'contained'
-			? props.color === 'theme'
-				? 'text-white'
-				: props.color
-			: '',
-		props.disabled ? 'grayscale !cursor-not-allowed' : '',
-	);
+const classes = computed(() => {
+	// Check if passedClass has height class
+	const hasHeightClass = /\bh-\d+\b/.test(passedClass.value);
+
+	return buttonVariants({
+		variant: props.variant,
+		size: hasHeightClass ? undefined : props.size,
+		disabled: props.disabled,
+		className: passedClass.value,
+	});
+});
+
+const filteredAttrs = computed(() => {
+	const { class: _, style: __, ...rest } = attrs;
+	return rest;
 });
 </script>
 
@@ -137,6 +188,7 @@ const classes = computed(() => {
 		:for="htmlFor"
 		:inert="disabled"
 		:style="style"
+		v-bind="filteredAttrs"
 		@click="onClick"
 	>
 		<MoooomIcon v-if="startIcon" :icon="startIcon" class="w-5" />
@@ -161,6 +213,7 @@ const classes = computed(() => {
 		:href="href"
 		:inert="disabled"
 		:style="style"
+		v-bind="filteredAttrs"
 		@click="onClick"
 	>
 		<MoooomIcon v-if="startIcon" :icon="startIcon" class="w-5" />
@@ -183,24 +236,8 @@ const classes = computed(() => {
 		:data-variant="variant"
 		:disabled="disabled"
 		:inert="disabled"
-		:style="
-			color === 'theme'
-				? {
-					'--color-1': `var(--color-theme-1)`,
-					'--color-2': `var(--color-theme-2)`,
-					'--color-3': `var(--color-theme-3)`,
-					'--color-4': `var(--color-theme-4)`,
-					'--color-5': `var(--color-theme-5)`,
-					'--color-6': `var(--color-theme-6)`,
-					'--color-7': `var(--color-theme-7)`,
-					'--color-8': `var(--color-theme-8)`,
-					'--color-9': `var(--color-theme-9)`,
-					'--color-10': `var(--color-theme-10)`,
-					'--color-11': `var(--color-theme-11)`,
-					'--color-12': `var(--color-theme-12)`,
-				}
-				: style
-		"
+		:style="style"
+		v-bind="filteredAttrs"
 		type="button"
 		@click="onClick"
 	>

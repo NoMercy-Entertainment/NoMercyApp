@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { computed, ref } from 'vue';
+import { computed, ref, useId } from 'vue';
 import { IonPage, IonRouterOutlet, IonTabs } from '@ionic/vue';
 import { useRoute } from 'vue-router';
 
@@ -38,6 +38,7 @@ import type { DisplayList } from '@/types/api/music/musicPlayer';
 
 const route = useRoute();
 const toast = useToast();
+const key = useId();
 
 const backgroundUrl = computed(() => {
 	if (!background.value)
@@ -184,6 +185,7 @@ useEventListener(document, 'showModal', (evt) => {
 
 		<CreatePlaylistModal
 			v-if="playlistModalData"
+			:key="key"
 			:data="playlistModalData"
 			:on-close="onClose"
 			:on-delete="onDelete"

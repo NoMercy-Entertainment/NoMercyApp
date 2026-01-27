@@ -82,7 +82,7 @@ function openEdit() {
 	const evt = new CustomEvent('showModal', {
 		detail: {
 			modalName: 'createPlaylist',
-			modalTitle: 'Edit {{name}} playlist',
+			modalTitle: 'Edit {{name}}',
 			modalTitleArgs: {
 				name: props.data?.name,
 			},
@@ -138,7 +138,7 @@ function openEdit() {
 				:type="data.type"
 				class="aspect-square rounded-xl w-full"
 			/>
-			<div v-if="data?.type !== 'track'" class="absolute grid inset-0 items-center bg-black/40 w-full flex items-center justify-center flex-col opacity-0 group-hover/cover:opacity-100 transition-all duration-100">
+			<div v-if="data?.type !== 'track'" class="absolute grid inset-0 bg-black/40 w-full items-center justify-center flex-col opacity-0 group-hover/cover:opacity-100 transition-all duration-100">
 				<span class="p-4 font-semibold text-theme-8 text-lg">
 					{{ $t('Change cover') }}
 				</span>

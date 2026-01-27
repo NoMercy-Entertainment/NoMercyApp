@@ -6,8 +6,8 @@ import type { ArtistResponse } from '@/types/api/music/artist';
 
 import CoverImage from '@/components/MusicPlayer/components/CoverImage.vue';
 import { setBackground, setColorPalette } from '@/store/ui';
-import ClickUploadModal from '@/components/ClickUploadModal.vue';
 import { limitSentenceByCharacters } from '@/lib/stringArray.ts';
+import type { ModalData } from '@/types';
 
 const props = defineProps({
 	data: {
@@ -26,23 +26,38 @@ onUnmounted(() => {
 	setColorPalette(null);
 	setBackground(null);
 });
+
+function openEdit() {
+	const evt = new CustomEvent('showModal', {
+		detail: {
+			modalName: 'createPlaylist',
+			modalTitle: 'Edit {{name}}',
+			modalTitleArgs: {
+				name: props.data?.name,
+			},
+			modalProps: props.data,
+		} satisfies ModalData<ArtistResponse | undefined>,
+	});
+	document.dispatchEvent(evt);
+}
 </script>
 
 <template>
 	<div class="flex w-full flex-col items-start justify-start gap-4">
 		<div
 			class="flex flex-col items-start justify-start self-stretch overflow-clip rounded-lg relative group/cover"
+			@click="openEdit"
 		>
-			<ClickUploadModal :data="data" :url="`${data.link}/cover`">
-				<template #default="{ data: data2, ref: ref }">
-					<CoverImage
-						:data="data2"
-						:img-ref="ref"
-						:size="500"
-						class="aspect-square h-auto w-full"
-					/>
-				</template>
-			</ClickUploadModal>
+			<CoverImage
+				:data="data"
+				:size="500"
+				class="aspect-square h-auto w-full"
+			/>
+			<div v-if="data?.type !== 'track'" class="absolute grid inset-0 bg-black/40 w-full items-center justify-center flex-col opacity-0 group-hover/cover:opacity-100 transition-all duration-100">
+				<span class="p-4 font-semibold text-theme-8 text-lg">
+					{{ $t('Change cover') }}
+				</span>
+			</div>
 		</div>
 		<div
 			class="w-full whitespace-pre-line font-semibold leading-normal"

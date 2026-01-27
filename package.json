@@ -95,6 +95,7 @@
 		"axios": "1.11.0",
 		"capacitor-plugin-safe-area": "4.0.0",
 		"chart.js": "4.5.0",
+		"class-variance-authority": "^0.7.1",
 		"clsx": "2.1.1",
 		"collect": "0.3.5",
 		"collect.js": "4.36.1",

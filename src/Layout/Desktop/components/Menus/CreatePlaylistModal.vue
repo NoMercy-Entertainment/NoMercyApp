@@ -31,7 +31,7 @@ const props = defineProps({
 
 const toast = useToast();
 
-const disabled = ref(true);
+const disabled = ref(props.data?.modalProps?.name?.trim() === '');
 const name = ref(props.data?.modalProps?.name ?? '');
 const description = ref(props.data?.modalProps?.description ?? '');
 const cover = ref<string | null>(props.data?.modalProps?.cover ?? null);
@@ -41,33 +41,63 @@ function onImage(data: string) {
 }
 
 function submit() {
-	serverClient()
-		.post(`music/playlists`, {
-			name: name.value,
-			description: description.value,
-			cover: cover.value,
-			tracks: [props.data?.modalProps.id],
-		})
-		.then(({ data }) => {
-			queryClient.invalidateQueries({ queryKey: ['music-playlists'] });
+	if (props.data?.modalProps?.name == null) {
+		serverClient()
+			.post(`music/playlists`, {
+				name: name.value,
+				description: description.value,
+				cover: cover.value,
+				tracks: [props.data?.modalProps.id],
+			})
+			.then(({ data }) => {
+				queryClient.invalidateQueries({ queryKey: ['music-playlists'] });
 
-			toast.add({
-				severity: 'info',
-				summary: 'Success',
-				detail: 'Image Uploaded',
-				life: 3000,
-			});
+				toast.add({
+					severity: 'info',
+					summary: 'Success',
+					detail: 'Image Uploaded',
+					life: 3000,
+				});
 
-			props.onClose();
-		})
-		.catch((error) => {
-			toast.add({
-				severity: 'error',
-				summary: 'Failed to create playlist',
-				detail: error.message,
-				life: 3000,
+				props.onClose();
+			})
+			.catch((error) => {
+				toast.add({
+					severity: 'error',
+					summary: 'Failed to create playlist',
+					detail: error.message,
+					life: 3000,
+				});
 			});
-		});
+	}
+	else {
+		serverClient()
+			.patch(props.data?.modalProps.link, {
+				name: name.value,
+				description: description.value,
+				cover: cover.value,
+			})
+			.then(({ data }) => {
+				queryClient.invalidateQueries({ queryKey: ['music-playlists'] });
+
+				toast.add({
+					severity: 'info',
+					summary: 'Success',
+					detail: 'Playlist Updated',
+					life: 3000,
+				});
+
+				props.onClose();
+			})
+			.catch((error) => {
+				toast.add({
+					severity: 'error',
+					summary: 'Failed to update playlist',
+					detail: error.message,
+					life: 3000,
+				});
+			});
+	}
 }
 
 watch(name, (value) => {
@@ -116,7 +146,7 @@ watch(name, (value) => {
 						id="description"
 						v-model="description"
 						:placeholder="$t('Add an optional description')"
-						class="w-full"
+						class="w-full scrollbar-thin"
 						name=""
 						no-ring
 						rows="6"
