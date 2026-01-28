@@ -1,0 +1,1 @@
+import{t}from"./client-CxRn8_4O.js";import{t as r}from"./currentServer-DzE7mepP.js";var o=e=>{if(!r.value?.serverApiUrl)throw new Error("Server not selected");return t({baseUrl:r.value.serverApiUrl,timeout:e})};export{o as t};
