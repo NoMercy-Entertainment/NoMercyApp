@@ -133,7 +133,7 @@ watch(name, (value) => {
 					<InputText
 						id="title"
 						v-model="name"
-						class="w-full"
+						class="w-full mt-0.5"
 						name=""
 						no-ring
 						required

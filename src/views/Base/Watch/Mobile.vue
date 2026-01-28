@@ -14,11 +14,10 @@ import { AutoSkipPlugin, DesktopUIPlugin, nmplayer, OctopusPlugin, SyncPlugin } 
 
 import audioPlayer from '@/store/audioPlayer';
 import router from '@/router';
-import { VideoNoMercyConnectPlugin } from '@/lib/VideoPlayer/plugins/videoNoMercyConnectPlugin.ts';
 import useServerClient from '@/lib/clients/useServerClient.ts';
 
 const { data } = useServerClient<NMPlaylistItem[]>({
-	enabled: !user.value.features?.nomercyConnect,
+	// enabled: !user.value.features?.nomercyConnect,
 });
 
 const player = ref<NMPlayer<NMPlaylistItem>>();
@@ -60,11 +59,11 @@ function initPlayer(value?: NMPlaylistItem[] | undefined) {
 		}
 	});
 
-	if (user.value.features?.nomercyConnect) {
-		const videoNoMercyConnectPlugin = new VideoNoMercyConnectPlugin();
-		player.value?.registerPlugin('videoNoMercyConnect', videoNoMercyConnectPlugin);
-		player.value?.usePlugin('videoNoMercyConnect');
-	}
+	// if (user.value.features?.nomercyConnect) {
+	// 	const videoNoMercyConnectPlugin = new VideoNoMercyConnectPlugin();
+	// 	player.value?.registerPlugin('videoNoMercyConnect', videoNoMercyConnectPlugin);
+	// 	player.value?.usePlugin('videoNoMercyConnect');
+	// }
 
 	const desktopUIPlugin = new DesktopUIPlugin();
 	player.value?.registerPlugin('desktopUI', desktopUIPlugin);
@@ -74,11 +73,11 @@ function initPlayer(value?: NMPlaylistItem[] | undefined) {
 	player.value?.registerPlugin('autoSkip', autoSkipPlugin);
 	player.value?.usePlugin('autoSkip');
 
-	if (!user.value.features?.nomercyConnect) {
-		const syncPlugin = new SyncPlugin();
-		player.value?.registerPlugin('sync', syncPlugin);
-		player.value?.usePlugin('sync');
-	}
+	// if (!user.value.features?.nomercyConnect) {
+	const syncPlugin = new SyncPlugin();
+	player.value?.registerPlugin('sync', syncPlugin);
+	player.value?.usePlugin('sync');
+	// }
 
 	const octopusPlugin = new OctopusPlugin();
 	player.value?.registerPlugin('octopus', octopusPlugin);

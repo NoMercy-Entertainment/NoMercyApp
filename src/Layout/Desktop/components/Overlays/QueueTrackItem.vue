@@ -11,7 +11,7 @@ defineProps<{
 
 <template>
 	<component
-		:is="onClick ? 'button' : 'div'"
+		is="div"
 		:class="onClick ? 'cursor-pointer hover:bg-surface-10/50' : ''"
 		class="flex h-auto w-full items-center justify-start gap-2 rounded-lg p-2"
 		@click="onClick"

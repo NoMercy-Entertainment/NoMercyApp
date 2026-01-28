@@ -67,7 +67,7 @@ function handleClick(song: PlaylistItem) {
 		<article
 			v-if="currentSong"
 			id="queue_container"
-			class="flex w-full flex-col px-4 pt-4 pr-0 h-available overflow-clip"
+			class="flex w-full flex-col px-4 h-available overflow-clip pb-4"
 		>
 			<!-- Now Playing Header -->
 			<header class="flex w-full items-center justify-between p-2 pr-6">
@@ -96,7 +96,7 @@ function handleClick(song: PlaylistItem) {
 
 			<!-- Queue List -->
 			<section
-				class="flex w-full flex-col items-start justify-start gap-4 pb-4 relative overflow-hidden h-available"
+				class="flex w-full flex-col items-start justify-start gap-4 relative overflow-hidden h-available"
 			>
 				<ScrollContainer :auto-hide="true" :static="false">
 					<QueueTrackItem

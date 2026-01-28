@@ -1,19 +1,12 @@
 <script lang="ts" setup>
-import { computed, ref, useId } from 'vue';
-import { IonPage, IonRouterOutlet, IonTabs } from '@ionic/vue';
+import { computed } from 'vue';
 import { useRoute } from 'vue-router';
-
-import ContextMenu from 'primevue/contextmenu';
-import ConfirmDialog from 'primevue/confirmdialog';
-
-import type { MenuItem } from 'primevue/menuitem';
+import { IonPage, IonRouterOutlet, IonTabs } from '@ionic/vue';
 
 import { background } from '@/store/ui';
 import { currentServer } from '@/store/currentServer';
-import { cardMenu, contextMenu, contextMenuItems, trackContextMenuItems } from '@/store/contextMenuItems';
 
 import Indexer from '@/Layout/Indexer.vue';
-import ImageModal from '@/Layout/ImageModal.vue';
 // import Screensaver from '@/Layout/Screensaver.vue';
 import Navbar from './components/Navbar/Navbar.vue';
 import Sidebar from './components/Sidebar/Sidebar.vue';
@@ -27,18 +20,8 @@ import MusicPlayerDesktop from '@/components/MusicPlayer/MusicPlayerDesktop.vue'
 import EqualizerOverlay from '@/Layout/Desktop/components/Overlays/EqualizerOverlay.vue';
 import ChristmasSnow from '@/components/Seasonal/Christmas/ChristmasSnow.vue';
 import Shadow from '@/Layout/Desktop/components/Shadow.vue';
-import { useEventListener } from '@vueuse/core';
-import type { PlaylistItem } from '@/types/musicPlayer.ts';
-import CreatePlaylistModal from '@/Layout/Desktop/components/Menus/CreatePlaylistModal.vue';
-import serverClient from '@/lib/clients/serverClient.ts';
-import { queryClient } from '@/config/tanstack-query.ts';
-import { useToast } from 'primevue/usetoast';
-import type { ModalData } from '@/types';
-import type { DisplayList } from '@/types/api/music/musicPlayer';
 
 const route = useRoute();
-const toast = useToast();
-const key = useId();
 
 const backgroundUrl = computed(() => {
 	if (!background.value)
@@ -49,58 +32,6 @@ const backgroundUrl = computed(() => {
 function focusMain() {
 	document.querySelector<HTMLButtonElement>('main a, main button')?.focus();
 }
-
-interface ModalEvent {
-	detail: {
-		modalName: string;
-		modalProps: unknown;
-	};
-}
-
-const playlistModalData = ref<ModalData<PlaylistItem | DisplayList> | null>(null);
-
-function handleModalTrigger(modalName: string, modalProps: unknown) {
-	if (modalName === 'createPlaylist') {
-		playlistModalData.value = modalProps as unknown as ModalData<PlaylistItem | DisplayList>;
-	}
-}
-
-function onClose() {
-	playlistModalData.value = null;
-}
-
-function onDelete() {
-	if (!playlistModalData.value)
-		return;
-
-	serverClient()
-		.delete(`music/playlists/${playlistModalData.value?.modalProps?.id}`)
-		.then(({ data }) => {
-			queryClient.invalidateQueries({ queryKey: ['music-playlists'] });
-
-			toast.add({
-				severity: 'info',
-				summary: 'Success',
-				detail: 'Playlist Deleted',
-				life: 3000,
-			});
-
-			onClose();
-		})
-		.catch((error) => {
-			toast.add({
-				severity: 'error',
-				summary: 'Failed to create playlist',
-				detail: error.message,
-				life: 3000,
-			});
-		});
-}
-
-useEventListener(document, 'showModal', (evt) => {
-	const event = evt as unknown as ModalEvent;
-	handleModalTrigger(event.detail.modalName, event.detail);
-});
 </script>
 
 <template>
@@ -152,22 +83,7 @@ useEventListener(document, 'showModal', (evt) => {
 			</div>
 
 			<MusicPlayerDesktop />
-			<Suspense>
-				<ImageModal />
-			</Suspense>
-			<ConfirmDialog />
-			<ContextMenu ref="contextMenu" :model="contextMenuItems" />
 		</div>
-
-		<ContextMenu ref="cardMenu" :model="trackContextMenuItems as MenuItem[]" />
-
-		<CreatePlaylistModal
-			v-if="playlistModalData"
-			:key="key"
-			:data="playlistModalData"
-			:on-close="onClose"
-			:on-delete="onDelete"
-		/>
 	</IonPage>
 </template>
 
