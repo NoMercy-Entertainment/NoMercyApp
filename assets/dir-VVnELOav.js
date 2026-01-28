@@ -1,1 +1,0 @@
-import{Un as r}from"./index-cywnPOBC.js";var o,i=r({"node_modules/@nomercy-entertainment/nomercy-music-player/node_modules/@ionic/core/components/dir.js":()=>{o=e=>e&&e.dir!==""?e.dir.toLowerCase()==="rtl":document?.dir.toLowerCase()==="rtl"}});export{o as n,i as t};

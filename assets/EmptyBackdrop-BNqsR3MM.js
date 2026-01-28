@@ -1,1 +1,0 @@
-import{Tt as e,Vt as _,cn as r}from"./index-cywnPOBC.js";import{t}from"./_plugin-vue_export-helper-pDp7unP0.js";e();var a={},c={class:"bg"};function n(o,s){return r(),_("div",c)}var p=t(a,[["render",n],["__scopeId","data-v-386a0916"]]);export{p as t};

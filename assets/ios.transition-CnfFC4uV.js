@@ -1,1 +1,0 @@
-import"./index5-DWzlHdCO.js";import"./client-D7oxUmH6.js";import"./ionic-global-DCe2g38l.js";import"./helpers-BGGXVDsd.js";import"./index6-vUi4VFUZ.js";import"./index2-DsYXeg3E.js";import{n as a,r as _,t as i}from"./ios.transition-DeZfFnMt.js";i();export{a as iosTransitionAnimation,_ as shadow};

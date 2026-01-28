@@ -1,0 +1,1 @@
+import"./client-Lt1iJPRU.js";import"./ionic-global-BrT5QOOk.js";import{a as s,i as a,n as _,o as B,r as e,t as i}from"./hardware-back-button-DUNt_0t6.js";a();export{i as MENU_BACK_BUTTON_PRIORITY,_ as OVERLAY_BACK_BUTTON_PRIORITY,e as blockHardwareBackButton,s as shouldUseCloseWatcher,B as startHardwareBackButton};
