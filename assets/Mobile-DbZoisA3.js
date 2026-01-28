@@ -1,1 +1,0 @@
-import{Gt as e,Sn as t,Tt as n,cn as r,i as o,qt as _,u,zn as a,zt as l}from"./index-CymNhKD_.js";import{t as s}from"./ExploreContainer-IeLpgXEi.js";n();var i=_({__name:"Mobile",setup(p){return(f,c)=>(r(),l(a(u),null,{default:t(()=>[e(a(o),{fullscreen:!0},{default:t(()=>[e(s,{name:"Dashboard General Mobile page"})]),_:1})]),_:1}))}}),b=i;export{b as default};

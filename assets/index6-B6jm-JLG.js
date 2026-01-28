@@ -1,1 +1,0 @@
-import{Gn as o}from"./index-CymNhKD_.js";var e,i,t,s=o(()=>{e=(r,...n)=>console.warn(`[Ionic Warning]: ${r}`,...n),i=(r,...n)=>console.error(`[Ionic Error]: ${r}`,...n),t=(r,...n)=>console.error(`<${r.tagName.toLowerCase()}> must be used inside ${n.join(" or ")}.`)});export{t as i,i as n,e as r,s as t};
