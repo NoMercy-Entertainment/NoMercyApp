@@ -8,7 +8,7 @@ import type {
 	VolumeButtonsResult,
 } from '@capacitor-community/volume-buttons';
 import { VolumeButtons } from '@capacitor-community/volume-buttons';
-import MusicPlayer from '@nomercy-entertainment/nomercy-music-player';
+import { PlayerCore as MusicPlayer } from '@nomercy-entertainment/nomercy-music-player';
 
 import type {
 	EQBand,

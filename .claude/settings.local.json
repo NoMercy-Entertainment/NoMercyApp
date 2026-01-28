@@ -1,12 +1,13 @@
 {
-  "permissions": {
-    "allow": [
-      "Bash(npx vue-tsc:*)",
-      "Bash(npm run build:*)",
-      "Bash(node analyze-divs.js:*)",
-      "Bash(node analyze-divs-fixed.js:*)",
-      "Bash(node:*)",
-      "Bash(python:*)"
-    ]
-  }
+	"permissions": {
+		"allow": [
+			"Bash(npx vue-tsc:*)",
+			"Bash(npm run build:*)",
+			"Bash(node analyze-divs.js:*)",
+			"Bash(node analyze-divs-fixed.js:*)",
+			"Bash(node:*)",
+			"Bash(python:*)",
+			"Bash(node_modules/.bin/vue-tsc:*)"
+		]
+	}
 }
