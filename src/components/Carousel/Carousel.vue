@@ -122,7 +122,6 @@ const customSwiperConfig = computed(() => {
 		...swiperConfig(backdropCards.value),
 		breakpoints: newBp,
 		lazy: true,
-		observer: true,
 		slidesOffsetBefore: beforeOffset.value,
 	};
 });
@@ -135,6 +134,7 @@ function focusMain() {
 <template>
 	<div
 		class="mb-1 flex w-auto flex-shrink-0 flex-grow-0 flex-col items-start justify-start gap-2 self-stretch text-left relative"
+		style="content-visibility: auto; contain-intrinsic-size: auto 280px;"
 	>
 		<div class="flex w-available flex-1 flex-col gap-2">
 			<div class="relative ml-3 w-full flex flex-shrink-0 flex-grow-1 items-center self-stretch">

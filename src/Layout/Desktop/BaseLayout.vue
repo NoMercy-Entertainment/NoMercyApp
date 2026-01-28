@@ -120,42 +120,20 @@ useEventListener(document, 'showModal', (evt) => {
 				<Sidebar v-if="!!currentServer" />
 
 				<GradientBorder :hide-border="false">
-					<div
+					<main
 						id="mainContent"
-						:style="`
-                  background-image: ${
-							backgroundUrl && !backgroundUrl.includes('null')
-								? `url(${backgroundUrl})`
-								: ''
-						};
-               `"
-						class="flex w-px flex-1 flex-col relative overflow-clip justify-start items-start w-available h-available sm:rounded-2xl border-surface-2 !bg-cover children:scrollbar-none z-0 bg-center"
+						:style="backgroundUrl && !backgroundUrl.includes('null') ? `background-image: url(${backgroundUrl})` : ''"
+						class="flex w-px flex-1 flex-col relative overflow-clip justify-start items-start w-available h-available sm:rounded-2xl border-surface-2 !bg-cover children:scrollbar-none z-0 bg-center sm:border-3 before:content-[''] before:pointer-events-none before:absolute before:inset-0 before:w-full before:h-full before:bg-surface-12/9 dark:before:bg-surface-1/9"
 						style="box-shadow: 0 1px 3px 0 rgba(16,24,40,0.1), 0 1px 2px 0 rgba(16,24,40,0.06);"
 					>
-						<div
-							id="overlay"
-							class="pointer-events-none absolute inset-0 dark:flex w-full h-full bg-surface-12/9 dark:bg-surface-1/9"
-						/>
-						<div
-							class="flex flex-col relative overflow-clip justify-start items-start w-available h-available sm:rounded-2xl flex-1 border-surface-2 !bg-cover children:scrollbar-none sm:border-3"
-						>
-							<Shadow />
-							<main
-								id="main"
-								class="flex h-auto flex-1 flex-grow flex-col items-start justify-start self-stretch bg-cover bg-center bg-no-repeat min-h-available w-available scrollbar-none sm:child:border-2 sm:rounded-2xl"
-								style="
-                  box-shadow: 0 1px 3px 0 rgba(16, 24, 40, 0.1),
-                    0 1px 2px 0 rgba(16, 24, 40, 0.06);
-                "
-							>
-								<slot v-if="$slots.default" />
-								<IonTabs v-else>
-									<IonRouterOutlet :key="route.fullPath" :animated="false" />
-								</IonTabs>
-							</main>
-						</div>
-						<div id="slide-container" class="contents" />
-					</div>
+						<Shadow />
+						<slot v-if="$slots.default" />
+						<IonTabs v-else>
+							<IonRouterOutlet :key="route.fullPath" :animated="false" />
+						</IonTabs>
+					</main>
+
+					<div id="slide-container" class="contents" />
 
 					<LyricsOverlay
 						class="hidden sm:block bg-focus [transform:translateZ(0)]"

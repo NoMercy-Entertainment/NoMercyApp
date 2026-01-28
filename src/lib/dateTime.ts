@@ -194,6 +194,10 @@ export function sleep(ms: number) {
 	}
 }
 
+export function sleepAsync(ms: number) {
+	return new Promise(resolve => setTimeout(resolve, ms));
+}
+
 export function calculateDuration<T>(value?: T) {
 	if (!value)
 		return;

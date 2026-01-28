@@ -1,7 +1,8 @@
 <script lang="ts" setup>
-import { onMounted, onUnmounted, ref, watch } from 'vue';
+import { computed, onMounted, onUnmounted, ref, watch } from 'vue';
 import { useRoute } from 'vue-router';
 import { IonContent, IonPage } from '@ionic/vue';
+import { useVirtualizer } from '@tanstack/vue-virtual';
 
 import type { DisplayList } from '@/types/api/music/musicPlayer';
 import type { PlaylistItem, SortOrder, SortType } from '@/types/musicPlayer';
@@ -9,7 +10,7 @@ import type { PlaylistItem, SortOrder, SortType } from '@/types/musicPlayer';
 import { isNative } from '@/config/global';
 import useServerClient from '@/lib/clients/useServerClient';
 import { setTitle, sortByType } from '@/lib/stringArray';
-import { setBackground, setColorPalette, setSortOrder, sortOrder, sortType } from '@/store/ui';
+import { scrollContainerElement, setBackground, setColorPalette, setSortOrder, sortOrder, sortType } from '@/store/ui';
 import { currentSong } from '@/store/audioPlayer';
 
 import ControlHeader from '@/views/Music/List/components/ControlHeader.vue';
@@ -25,10 +26,16 @@ const { data, isError } = useServerClient<DisplayList>({
 	path: route.fullPath,
 });
 
-const main = ref<HTMLDivElement | null>(null);
-
-const displayList = ref<PlaylistItem[]>();
+const displayList = ref<PlaylistItem[]>([]);
 const filter = ref('');
+
+// Virtual scrolling setup
+const virtualizer = computed(() => useVirtualizer({
+	count: displayList.value?.length ?? 0,
+	getScrollElement: () => scrollContainerElement.value ?? null,
+	estimateSize: () => 64,
+	overscan: 10,
+}));
 
 watch(data, (value) => {
 	if (!value)
@@ -104,22 +111,23 @@ onUnmounted(() => {
 const sortHeader = ref<VueDivElement>();
 
 function onScroll() {
-	// Skip if the browser supports native sticky top.
-	if (window.CSS.supports('container-type', 'scroll-state'))
+	const sortHeaderTop = 67;
+	const headerElement = sortHeader.value?.$el;
+	const childElement = headerElement?.firstChild as HTMLElement;
+
+	if (!headerElement || !childElement)
 		return;
 
-	const sortHeaderTop = 67;
+	const top = Math.ceil(headerElement.getBoundingClientRect()?.top ?? 500);
 
-	if (
-		Math.ceil(sortHeader.value?.$el?.getBoundingClientRect()?.top ?? 500)
-		<= sortHeaderTop
-	) {
-		sortHeader.value?.$el?.classList.add('!bg-focus');
-		sortHeader.value?.$el?.firstChild?.classList.add('!bg-black/50');
+	if (top <= sortHeaderTop) {
+		// Apply theme color background to the child span
+		childElement.style.background = 'var(--color-theme-8)';
+		headerElement.style.color = 'white';
 	}
 	else {
-		sortHeader.value?.$el?.classList.remove('!bg-focus');
-		sortHeader.value?.$el?.firstChild?.classList.remove('!bg-black/50');
+		childElement.style.background = '';
+		headerElement.style.color = '';
 	}
 }
 </script>
@@ -165,16 +173,35 @@ function onScroll() {
 							class="flex flex-1 flex-shrink-0 flex-col items-start justify-start self-stretch bg-surface-3 flex-grow-1 gap-0.5 sm:p-4"
 						>
 							<SortHeader :key="data?.id" ref="sortHeader" />
-							<template
-								v-for="(item, index) in displayList"
-								:key="item.id + item?.favorite"
+
+							<!-- Virtual list container -->
+							<div
+								:style="{
+									height: `${virtualizer.value.getTotalSize()}px`,
+									width: '100%',
+									position: 'relative',
+								}"
 							>
-								<TrackRow
-									:data="item"
-									:display-list="displayList"
-									:index="index"
-								/>
-							</template>
+								<!-- Only render visible items -->
+								<div
+									v-for="virtualRow in virtualizer.value.getVirtualItems()"
+									:key="displayList[virtualRow.index]?.id + displayList[virtualRow.index]?.favorite"
+									:style="{
+										position: 'absolute',
+										top: 0,
+										left: 0,
+										width: '100%',
+										height: `${virtualRow.size}px`,
+										transform: `translateY(${virtualRow.start}px)`,
+									}"
+								>
+									<TrackRow
+										:data="displayList[virtualRow.index]"
+										:display-list="displayList"
+										:index="virtualRow.index"
+									/>
+								</div>
+							</div>
 						</div>
 					</div>
 				</div>

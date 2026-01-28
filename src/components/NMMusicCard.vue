@@ -20,7 +20,7 @@ const props = defineProps({
 		required: false,
 		default: '',
 	},
-	context_menu_items: {
+	contextMenuItems: {
 		type: Array as PropType<ContextMenuItem[]>,
 		required: false,
 		default: () => [],
@@ -72,7 +72,7 @@ const ringColor = ref(pickPaletteColor(props.data.color_palette?.cover));
 <template>
 	<RouterLink
 		v-if="data?.link"
-		:style="ringColor ? `--ring-color: ${ringColor}` : ''"
+		:style="ringColor ? `--ring-color: ${ringColor}; contain: layout style paint; will-change: transform;` : 'contain: layout style paint; will-change: transform;'"
 		:to="data.link"
 		class="relative flex flex-grow flex-col items-center justify-end transition-transform duration-100 group/musicCard active:scale-[98%] w-full text-surface-12"
 	>

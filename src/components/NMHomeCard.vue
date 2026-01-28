@@ -9,13 +9,11 @@ import { isMobile } from '@/config/global';
 import { pickPaletteColor } from '@/lib/colorHelper';
 
 import TMDBImage from '@/components/Images/TMDBImage.vue';
-import MediaLikeButton from '@/components/Buttons/MediaLikeButton.vue';
-import BannerButton from '@/components/Buttons/BannerButton.vue';
+import HomeCardActions from '@/components/Cards/HomeCardActions.vue';
 import { scrollContainerElement, setBackground, setColorPalette, title } from '@/store/ui';
 import { onIonViewWillEnter, onIonViewWillLeave } from '@ionic/vue';
 import CardShadow from '@/components/Cards/CardShadow.vue';
 import { breakLogoTitle, breakTitle2 } from '@/lib/stringArray.ts';
-import MoooomIcon from '@/components/Images/icons/MoooomIcon.vue';
 
 const props = defineProps({
 	data: {
@@ -41,21 +39,17 @@ const endTime = computed(() => {
 const ringPosterColor = computed(
 	() =>
 		pickPaletteColor(props.data?.color_palette?.poster)
-			// ?.replace('rgb(', '')
-			// .replace(')', '')
 			.replace(/,/gu, ' ') ?? 'var(--color-primary)',
 );
 
 const ringBackdropColor = computed(
 	() =>
 		pickPaletteColor(props.data?.color_palette?.backdrop)
-			// ?.replace('rgb(', '')
-			// .replace(')', '')
 			?.replace(/,/gu, ' ') ?? 'var(--color-primary)',
 );
 
 function toggleWatched() {
-	// if (!props.data) return;
+	// Toggle watched logic
 }
 
 onMounted(() => {
@@ -84,10 +78,12 @@ function scrollToTop() {
 </script>
 
 <template>
-	<div
+	<!-- Desktop Version -->
+	<article
 		v-if="!isMobile"
-		class="card scheme-dark relative m-4 mt-0 sm:mt-4 flex flex-shrink-0 flex-grow-0 items-end justify-start gap-4 self-stretch rounded-md bg-black/50 p-4 sm:mb-0 h-[65vh] sm:flex-col overflow-clip text-surface-12"
+		class="card scheme-dark relative m-4 pb-0 mb-0 flex flex-col justify-end gap-4 rounded-md bg-black/50 p-4 min-h-[65vh] overflow-clip text-surface-12 before:content-[''] before:pointer-events-none before:absolute before:inset-0 before:z-0 before:mt-auto before:h-4/5 before:bg-gradient-to-t before:from-black before:via-black/60 before:bottom-0"
 		data-scroll
+		style="contain: layout style paint; will-change: transform;"
 	>
 		<TMDBImage
 			v-if="data"
@@ -103,139 +99,54 @@ function scrollToTop() {
 			priority="high"
 		/>
 
-		<div
-			class="pointer-events-none absolute inset-0 z-0 mt-auto h-4/5 bg-gradient-to-t from-black via-black/60 bottom-0"
-		/>
-
-		<div class="flex w-full flex-grow flex-col items-end justify-end gap-2">
+		<header class="z-10 flex flex-col gap-4 p-4">
 			<div
-				class="flex flex-shrink-0 flex-grow-0 items-start justify-start self-stretch rounded-2xl p-6"
-			>
-				<div
-					class="relative flex-grow flex-col items-start justify-start gap-4"
-				>
-					<div
-						class="relative flex flex-shrink-0 flex-grow-0 items-end justify-between gap-4 self-stretch w-available"
-					>
-						<div
-							v-if="data?.logo"
-							class="flex h-screen max-h-40 max-w-md flex-grow"
-						>
-							<TMDBImage
-								v-if="data"
-								:color-palette="data?.color_palette?.backdrop"
-								:path="data?.logo"
-								:title="data?.title"
-								:width="500"
-								class="relative mr-4 justify-end translate-y-[5%]"
-								class-name="relative self-start px-4 py-4"
-								loading="eager"
-								type="logo"
-							/>
-						</div>
+				class="pointer-events-none absolute inset-0 z-0 mt-auto h-4/5 bg-gradient-to-t from-black via-black/60 bottom-0"
+			/>
 
-						<p
-							v-else
-							class="h-screen max-h-40 w-px flex-grow content-end text-5xl font-bold"
-							v-html="
-								breakTitle2(data?.title || title || '', 'text-3xl line-clamp-2')
-							"
-						/>
+			<div class="flex items-end justify-between gap-4 w-full">
+				<TMDBImage
+					v-if="data?.logo"
+					:color-palette="data?.color_palette?.backdrop"
+					:path="data?.logo"
+					:title="data?.title"
+					:width="500"
+					class="h-screen max-h-40 max-w-md ml-0 mr-4 translate-y-[5%]"
+					class-name="px-4 py-4"
+					loading="eager"
+					type="logo"
+				/>
 
-						<div
-							class="flex flex-shrink-0 flex-grow-0 items-start justify-start gap-4"
-						>
-							<BannerButton
-								:href="`${data?.link}/watch`"
-								class="group/play"
-								title="Play"
-								@focus="scrollToTop"
-							>
-								<MoooomIcon class="w-7" icon="playbackSpeed" />
+				<p
+					v-else
+					class="h-screen max-h-40 flex-grow content-end text-5xl font-bold z-10"
+					v-html="breakTitle2(data?.title || title || '', 'text-3xl line-clamp-2')"
+				/>
 
-								<div
-									class="absolute top-3 grid h-0 w-max flex-shrink-0 flex-grow-0 origin-bottom group-hover/play:grid-cols-1 items-center justify-start gap-1 rounded-md duration-200 bg-surface-1 grid-cols-[0fr] group-hover/play:h-[32.77px] transform-all left-[-31px] group-hover/play:top-[-38px]"
-								>
-									<div class="overflow-clip">
-										<p
-											v-if="endTime"
-											class="flex-shrink-0 flex-grow-0 text-xs font-bold px-2.5 py-0.5"
-										>
-											{{ $t("Ends at") }}
-										</p>
-									</div>
-								</div>
-							</BannerButton>
-
-							<BannerButton
-								:onclick="toggleWatched"
-								title="Toggle seen"
-								@focus="scrollToTop"
-							>
-								<MoooomIcon
-									:stroke="
-										hasWatched ? 'var(--color-green-600) ' : 'currentColor'
-									"
-									class="w-7"
-									icon="check"
-								/>
-							</BannerButton>
-
-							<MediaLikeButton v-if="data" :data="data" type="video" @focus="scrollToTop" />
-
-							<BannerButton
-								:href="data?.link"
-								title="Info"
-								@focus="scrollToTop"
-							>
-								<MoooomIcon class="w-7" icon="infoCircle" />
-							</BannerButton>
-						</div>
-					</div>
-
-					<p class="max-w-4xl text-lg font-medium line-clamp-4 leading-8 mt-4">
-						{{ data?.overview }}
-					</p>
-				</div>
-				<div
-					class="relative flex-grow flex-col items-start justify-start gap-4 sm:hidden"
-				>
-					<div v-if="data" class="z-50 flex w-full justify-evenly gap-4">
-						<RouterLink
-							:aria-label="$t('Play')"
-							:to="`${data?.link}/watch`"
-							class="flex h-10 w-1/2 items-center justify-between gap-2 whitespace-nowrap rounded-md pr-4 pl-3 text-black bg-surface-1 py-1.5"
-							@focus="scrollToTop"
-						>
-							<MoooomIcon class-name="w-6" icon="playCircle" />
-							<span class="w-full whitespace-nowrap text-black text-center">{{
-								$t("Play")
-							}}</span>
-						</RouterLink>
-
-						<RouterLink
-							:aria-label="$t('Info')"
-							:to="data?.link"
-							class="flex justify-center items-center relative gap-2 p-2 rounded-lg hover:bg-surface-5/6 transition-colors duration-200"
-							@focus="scrollToTop"
-						>
-							<MoooomIcon class-name="w-6" icon="add" />
-							<span class="w-full whitespace-nowrap text-center">
-								{{ $t("Info") }}
-							</span>
-						</RouterLink>
-					</div>
-				</div>
+				<HomeCardActions
+					:data="data"
+					:end-time="endTime"
+					:has-watched="hasWatched"
+					:link="data?.link ?? ''"
+					:on-focus="scrollToTop"
+					:on-toggle-watched="toggleWatched"
+				/>
 			</div>
-		</div>
-	</div>
 
-	<div
+			<p class="max-w-4xl text-lg font-medium line-clamp-4 leading-8 mt-4 z-10">
+				{{ data?.overview }}
+			</p>
+		</header>
+	</article>
+
+	<!-- Mobile Version -->
+	<article
 		v-else
-		class="flex w-full flex-shrink-0 flex-grow-0 items-start justify-start gap-2 self-stretch p-6 pt-7 pb-0"
+		class="flex w-full p-6 pt-7 pb-0"
+		style="contain: layout style paint;"
 	>
 		<div
-			class="frosting relative flex h-auto w-full flex-grow flex-col items-center justify-end overflow-hidden rounded-lg bg-cover bg-center bg-no-repeat aspect-poster bg-focus max-h-[75vh]"
+			class="frosting relative flex h-auto w-full flex-col justify-end overflow-hidden rounded-lg bg-cover bg-center aspect-poster bg-focus max-h-[75vh] before:content-[''] before:absolute before:inset-0 before:z-[1] before:pt-10 before:bg-gradient-to-b before:from-black/[5%] before:to-black/60"
 			style="box-shadow: 0 8px 24px 0 rgba(0, 0, 0, 0.08)"
 		>
 			<TMDBImage
@@ -245,69 +156,38 @@ function scrollToTop() {
 				:style="`--color-theme-8: ${ringPosterColor};`"
 				:title="data?.title"
 				:width="null"
-				class="children:!w-available flex overflow-clip border-2 border-focus rounded-lg z-0 absolute -inset-0"
-				class-name="relative flex h-auto aspect-poster !w-available min-h-full flex-shrink-0 flex-grow-0 items-end justify-start gap-4 self-stretch overflow-clip transition-opacity duration-700 bg-surface-50 max-h-available"
+				class="children:!w-available flex overflow-clip border-2 border-focus rounded-lg z-0 absolute inset-0"
+				class-name="relative flex h-auto aspect-poster !w-available min-h-full items-end justify-start gap-4 overflow-clip transition-opacity duration-700 bg-surface-50 max-h-available"
 				loading="eager"
 			/>
 
 			<CardShadow class-name="top-auto bottom-0 w-full" colored />
 
-			<div
-				class="flex flex-col justify-end items-center self-stretch z-10 pt-10 bg-gradient-to-b from-black/[5%] to-black/60"
+			<header
+				class="relative z-10 flex flex-col items-center gap-3 p-3"
+				style="filter: drop-shadow(0px 1px 4px rgba(0, 0, 0, 0.08))"
 			>
-				<div
-					class="relative flex flex-shrink-0 flex-grow-0 flex-col items-center justify-start gap-3 p-3"
-					style="filter: drop-shadow(0px 1px 4px rgba(0, 0, 0, 0.08))"
-				>
-					<p
-						class="w-full flex-shrink-0 flex-grow-0 text-center text-3xl font-bold"
-					>
-						{{ breakLogoTitle(data?.title ?? "") }}
-					</p>
+				<h1 class="w-full text-center text-3xl font-bold">
+					{{ breakLogoTitle(data?.title ?? "") }}
+				</h1>
 
-					<div
-						class="flex flex-shrink-0 flex-grow-0 flex-wrap justify-center gap-1 text-center text-sm"
+				<div class="flex flex-wrap justify-center gap-1 text-center text-sm">
+					<p
+						v-for="(tag, index) in data?.tags?.slice(0, 4) ?? []"
+						:key="tag"
+						class="whitespace-nowrap"
 					>
-						<p
-							v-for="(tag, index) in data?.tags?.slice(0, 4) ?? []"
-							:key="tag"
-							class="block whitespace-nowrap"
-						>
-							{{ tag.toTitleCase() }}{{ index < 3 ? ", " : "" }}
-						</p>
-					</div>
+						{{ tag.toTitleCase() }}{{ index < 3 ? ", " : "" }}
+					</p>
 				</div>
-				<div
-					class="flex flex-shrink-0 flex-grow-0 items-start justify-start gap-6 self-stretch p-6"
-				>
-					<RouterLink
-						:to="`${data?.link}/watch`"
-						class="flex justify-center items-center flex-grow h-10 relative overflow-hidden gap-3 px-6 py-4 rounded-lg bg-surface-12/11"
-					>
-						<MoooomIcon
-							class-name="w-6"
-							icon="play"
-							style="--fill-color: black"
-						/>
-						<p
-							class="flex-grow-0 flex-shrink-0 text-[15px] text-black font-medium text-center"
-						>
-							{{ $t("Play") }}
-						</p>
-					</RouterLink>
-					<RouterLink
-						:to="`${data?.link}`"
-						class="frosting flex justify-center items-center flex-grow h-10 relative gap-3 px-6 py-4 rounded-lg text-slate-1 bg-surface-1/11 text-surface-12"
-					>
-						<MoooomIcon class-name="w-6" icon="infoCircle" />
-						<p
-							class="flex-grow-0 flex-shrink-0 text-[15px] font-medium text-center"
-						>
-							{{ $t("Info") }}
-						</p>
-					</RouterLink>
-				</div>
-			</div>
+			</header>
+
+			<HomeCardActions
+				:data="data"
+				:link="data?.link ?? ''"
+				:is-mobile="true"
+				class="relative z-10 p-6"
+			/>
 		</div>
-	</div>
+	</article>
 </template>

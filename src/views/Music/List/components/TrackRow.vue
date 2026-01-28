@@ -105,7 +105,7 @@ const date = computed(() => {
 		}"
 		:data-track-id="data?.id"
 		:onclick="handleClick"
-		class="grid justify-start children:pointer-events-none items-center self-stretch pr-3 sm:px-3 rounded-lg sm:hover:bg-surface-6/8 group/track text-sm font-medium py-2 z-10"
+		class="grid justify-start w-full children:pointer-events-none items-center self-stretch pr-3 sm:px-3 rounded-lg sm:hover:bg-surface-6/8 group/track text-sm font-medium py-2 z-10"
 		data-target="track"
 		tabindex="0"
 		@contextmenu="onTrackRowRightClick($event, $route, data)"

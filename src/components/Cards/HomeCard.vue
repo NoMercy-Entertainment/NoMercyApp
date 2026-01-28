@@ -7,11 +7,10 @@ import { isMobile } from '@/config/global';
 import { pickPaletteColor } from '@/lib/colorHelper';
 
 import TMDBImage from '@/components/Images/TMDBImage.vue';
-import MediaLikeButton from '@/components/Buttons/MediaLikeButton.vue';
-import BannerButton from '@/components/Buttons/BannerButton.vue';
+import HomeCardActions from '@/components/Cards/HomeCardActions.vue';
 import type { LibraryResponse } from '@/types/api/base/library';
 import { setColorPalette } from '@/store/ui';
-import MoooomIcon from '@/components/Images/icons/MoooomIcon.vue';
+import { breakLogoTitle } from '@/lib/stringArray.ts';
 
 const props = defineProps({
 	homeItem: {
@@ -51,179 +50,85 @@ function toggleWatched() {
 </script>
 
 <template>
-	<div
+	<!-- Desktop Version -->
+	<article
 		v-if="!isMobile"
 		v-once
-		class="scheme-dark relative m-4 mt-0 sm:mt-4 flex flex-shrink-0 flex-grow-0 items-end justify-start gap-4 self-stretch overflow-clip rounded-2xl bg-black/50 p-4 h-[65vh] sm:flex-col"
+		class="scheme-dark relative m-4 mt-0 sm:mt-4 flex flex-col justify-end gap-4 rounded-2xl bg-black/50 p-4 h-[65vh] overflow-clip before:content-[''] before:pointer-events-none before:absolute before:inset-0 before:z-0 before:mt-auto before:h-4/5 before:bg-gradient-to-t before:from-surface-1 before:via-surface-1/60"
 		data-scroll
 	>
 		<TMDBImage
-			v-if="homeItem && !isMobile"
+			v-if="homeItem"
 			:color-palette="homeItem?.color_palette?.backdrop"
 			:path="homeItem?.backdrop"
-			:style="ringBackdropColor ? `
-       --color-theme-8: ${ringBackdropColor};
-    ` : ''"
+			:style="ringBackdropColor ? `--color-theme-8: ${ringBackdropColor};` : ''"
 			:title="homeItem?.title"
 			:width="null"
-			class="!absolute !inset-0 children:!w-available hidden sm:flex overflow-clip border-2 border-focus rounded-2xl"
-			class-name="relative flex !w-available min-h-full flex-shrink-0 flex-grow-0 items-end justify-start gap-4 self-stretch overflow-clip transition-opacity duration-700 bg-surface-1 h-full"
+			class="!absolute !inset-0 children:!w-available overflow-clip border-2 border-focus rounded-2xl"
+			class-name="relative flex !w-available min-h-full items-end justify-start gap-4 self-stretch overflow-clip transition-opacity duration-700 bg-surface-1 h-full"
 			loading="eager"
 			priority="high"
 		/>
 
-		<TMDBImage
-			v-if="homeItem && isMobile"
-			:color-palette="homeItem?.color_palette?.poster"
-			:path="homeItem?.poster"
-			:style="ringPosterColor ? `
-       --color-theme-8: ${ringPosterColor};
-    ` : ''"
-			:title="homeItem?.title"
-			:width="null"
-			class="!absolute !inset-0 children:!w-available flex sm:hidden overflow-clip border-2 border-focus rounded-2xl"
-			class-name="relative flex !w-available min-h-full flex-shrink-0 flex-grow-0 items-end justify-start gap-4 self-stretch overflow-clip transition-opacity duration-700 bg-surface-50 h-full"
-			loading="eager"
-		/>
+		<header class="relative z-10 flex flex-col gap-4 p-4 rounded-3xl">
+			<div class="flex items-end justify-between gap-4 w-full">
+				<TMDBImage
+					v-if="homeItem?.logo"
+					:path="homeItem?.logo"
+					:title="homeItem?.title"
+					:width="500"
+					class="h-screen max-h-40 max-w-md mr-4 translate-y-[5%]"
+					class-name="h-auto w-auto self-start px-4 py-4"
+					loading="eager"
+					type="logo"
+				/>
 
-		<div
-			class="pointer-events-none absolute inset-0 z-0 mt-auto h-4/5 bg-gradient-to-t from-surface-1 via-surface-1/60"
-		/>
-
-		<div class="flex w-full flex-grow flex-col items-end justify-end gap-2">
-			<div
-				class="flex flex-shrink-0 flex-grow-0 items-start justify-start self-stretch rounded-3xl p-4"
-			>
-				<div
-					class="relative hidden flex-grow flex-col items-start justify-start gap-4 sm:flex"
+				<p
+					v-else
+					class="h-screen max-h-40 flex-grow content-end text-5xl font-bold mb-4"
 				>
-					<div
-						class="relative flex flex-shrink-0 flex-grow-0 items-end justify-between gap-4 self-stretch w-available"
-					>
-						<div
-							v-if="homeItem?.logo"
-							class="flex h-screen max-h-40 max-w-md flex-grow"
-						>
-							<TMDBImage
-								v-if="homeItem"
-								:path="homeItem?.logo"
-								:title="homeItem?.title"
-								:width="500"
-								class="relative mr-4 justify-end translate-y-[5%]"
-								class-name="relative h-auto w-auto self-start px-4 py-4 !items-start"
-								loading="eager"
-								type="logo"
-							/>
-						</div>
-						<p
-							v-else
-							class="h-screen max-h-40 w-px flex-grow content-end text-5xl font-bold mb-4"
-						>
-							{{ homeItem?.title }}
-						</p>
+					{{ homeItem?.title }}
+				</p>
 
-						<div
-							class="flex flex-shrink-0 flex-grow-0 items-start justify-start gap-4"
-						>
-							<BannerButton
-								:href="`/${homeItem?.link}/watch`"
-								class="group/play"
-								title="Play"
-							>
-								<MoooomIcon class="w-7" icon="playbackSpeed" />
-								<div
-									class="absolute top-3 grid h-0 w-max flex-shrink-0 flex-grow-0 origin-bottom group-hover/play:grid-cols-1 items-center justify-start gap-1 rounded-md duration-200 bg-surface-1 grid-cols-[0fr] group-hover/play:h-[32.77px] transform-all left-[-31px] group-hover/play:top-[-38px]"
-								>
-									<div class="overflow-clip">
-										<p
-											v-if="endTime"
-											class="flex-shrink-0 flex-grow-0 text-xs font-bold px-2.5 py-0.5"
-										>
-											{{ $t("Ends at") }}
-										</p>
-									</div>
-								</div>
-							</BannerButton>
-
-							<BannerButton title="Toggle watched" @click="toggleWatched">
-								<MoooomIcon
-									:stroke="
-										hasWatched ? 'var(--color-green-600) ' : 'currentColor'
-									"
-									class="w-7"
-									icon="check"
-								/>
-							</BannerButton>
-
-							<MediaLikeButton v-if="homeItem" :data="homeItem" />
-
-							<BannerButton
-								:href="`/${homeItem?.link}`"
-								title="Info"
-							>
-								<MoooomIcon class="w-7" icon="infoCircle" />
-							</BannerButton>
-						</div>
-					</div>
-					<p class="max-w-4xl text-lg font-medium line-clamp-4">
-						{{ homeItem?.overview }}
-					</p>
-				</div>
-				<div
-					class="relative flex-grow flex-col items-start justify-start gap-4 sm:hidden"
-				>
-					<div v-if="homeItem" class="z-50 flex w-full justify-evenly gap-4">
-						<BannerButton
-							:href="`/${homeItem?.link}/watch`"
-							class="flex h-10 w-1/2 items-center justify-between gap-2 whitespace-nowrap rounded-md pr-4 pl-3 text-black bg-surface-1 py-1.5"
-							title="Play"
-						>
-							<MoooomIcon class-name="w-6" icon="playCircle" />
-							<span class="w-full whitespace-nowrap text-center">{{
-								$t("Play")
-							}}</span>
-						</BannerButton>
-
-						<BannerButton
-							:href="`/${homeItem?.link}`"
-							class="flex justify-center items-center relative gap-2 p-2 rounded-lg hover:bg-surface-5/6 transition-colors duration-200"
-							title="Info"
-						>
-							<MoooomIcon class-name="w-6" icon="add" />
-							<span class="w-full whitespace-nowrap text-center">
-								{{ $t("Info") }}
-							</span>
-						</BannerButton>
-					</div>
-				</div>
+				<HomeCardActions
+					:data="homeItem"
+					:end-time="endTime"
+					:has-watched="hasWatched"
+					:link="homeItem?.link ?? ''"
+					:on-toggle-watched="toggleWatched"
+				/>
 			</div>
-		</div>
-	</div>
-	<div
+
+			<p class="max-w-4xl text-lg font-medium line-clamp-4">
+				{{ homeItem?.overview }}
+			</p>
+		</header>
+	</article>
+
+	<!-- Mobile Version -->
+	<article
 		v-else
-		class="flex h-auto w-full flex-shrink-0 flex-grow-0 items-start justify-start gap-2 self-stretch overflow-hidden p-6 pb-0 aspect-poster -mb-6"
+		class="flex w-full p-6 pb-0 -mb-6"
 	>
 		<div
-			class="relative flex h-auto w-full flex-grow flex-col items-center justify-end overflow-hidden rounded-lg bg-cover bg-center bg-no-repeat aspect-poster bg-focus"
+			class="relative flex h-auto w-full flex-col justify-end overflow-hidden rounded-lg bg-cover bg-center aspect-poster bg-focus before:content-[''] before:absolute before:inset-0 before:z-[1] before:pt-10 before:bg-gradient-to-b before:from-[#0d0402]/0 before:to-[#0d0402]/60"
 			style="box-shadow: 0 8px 24px 0 rgba(0, 0, 0, 0.08)"
 		>
 			<TMDBImage
 				v-if="homeItem"
 				:color-palette="homeItem?.color_palette?.poster"
 				:path="homeItem?.poster"
-				:style="
-					ringPosterColor
-						? `--color-theme-8: ${ringPosterColor};`
-						: ''"
+				:style="ringPosterColor ? `--color-theme-8: ${ringPosterColor};` : ''"
 				:title="homeItem?.title"
 				:width="null"
-				class="children:!w-available flex sm:hidden overflow-clip border-2 border-focus rounded-lg z-0 absolute -inset-0"
-				class-name="relative flex h-auto aspect-poster !w-available min-h-full flex-shrink-0 flex-grow-0 items-end justify-start gap-4 self-stretch overflow-clip transition-opacity duration-700 bg-surface-50"
+				class="children:!w-available flex overflow-clip border-2 border-focus rounded-lg z-0 absolute inset-0"
+				class-name="relative flex h-auto aspect-poster !w-available min-h-full items-end justify-start gap-4 overflow-clip transition-opacity duration-700 bg-surface-50"
 				loading="eager"
 			/>
 
+			<!-- SVG Shadow Effect -->
 			<svg
-				class="absolute inset-0 top-auto bottom-0 z-0 h-2/5 w-full flex-shrink-0 flex-grow-0 blur-xl"
+				class="absolute inset-0 top-auto bottom-0 z-0 h-2/5 w-full blur-xl"
 				fill="none"
 				preserveAspectRatio="none"
 				viewBox="0 0 343 178"
@@ -466,62 +371,32 @@ function toggleWatched() {
 					</filter>
 				</defs>
 			</svg>
-			<div
-				class="flex flex-col justify-end items-center self-stretch flex-grow-0 flex-shrink-0 pt-10 bg-gradient-to-b from-[#0d0402]/0 to-[#0d0402]/60"
-			>
-				<div
-					class="relative flex flex-shrink-0 flex-grow-0 flex-col items-center justify-start gap-3 p-3"
-					style="filter: drop-shadow(0px 1px 4px rgba(0, 0, 0, 0.08))"
-				>
-					<p
-						class="w-full flex-shrink-0 flex-grow-0 text-center text-3xl font-bold"
-					>
-						{{ breakLogoTitle(homeItem?.title ?? "") }}
-					</p>
 
-					<div
-						class="flex flex-shrink-0 flex-grow-0 flex-wrap justify-center gap-1 text-center text-sm"
+			<header
+				class="relative z-10 flex flex-col items-center gap-3 p-3"
+				style="filter: drop-shadow(0px 1px 4px rgba(0, 0, 0, 0.08))"
+			>
+				<h1 class="w-full text-center text-3xl font-bold">
+					{{ breakLogoTitle(homeItem?.title ?? "") }}
+				</h1>
+
+				<div class="flex flex-wrap justify-center gap-1 text-center text-sm">
+					<p
+						v-for="(tag, index) in homeItem?.tags?.slice(0, 4) ?? []"
+						:key="tag"
+						class="whitespace-nowrap"
 					>
-						<p
-							v-for="(tag, index) in homeItem?.tags?.slice(0, 4) ?? []"
-							:key="tag"
-							class="block whitespace-nowrap"
-						>
-							{{ tag.toTitleCase() }}{{ index < 3 ? ", " : "" }}
-						</p>
-					</div>
+						{{ tag.toTitleCase() }}{{ index < 3 ? ", " : "" }}
+					</p>
 				</div>
-				<div
-					class="flex flex-shrink-0 flex-grow-0 items-start justify-start gap-6 self-stretch p-6"
-				>
-					<RouterLink
-						:to="`${homeItem?.link}/watch`"
-						class="flex justify-center items-center flex-grow h-10 relative overflow-hidden gap-3 px-6 py-4 rounded-lg bg-[#fdfeff]/[0.93] text-black"
-					>
-						<MoooomIcon
-							class-name="w-6"
-							icon="play"
-							style="--fill-color: black"
-						/>
-						<p
-							class="flex-grow-0 flex-shrink-0 text-[15px] font-medium text-center text-[var(--surface-2)]"
-						>
-							{{ $t("Play") }}
-						</p>
-					</RouterLink>
-					<button
-						class="flex justify-center items-center flex-grow h-10 relative overflow-hidden gap-3 px-6 py-4 rounded-lg bg-black/50 mix-blend-screen"
-						@click="toggleWatched"
-					>
-						<MoooomIcon class-name="w-6" icon="addCircle" />
-						<p
-							class="flex-shrink-0 flex-grow-0 text-center font-medium text-[15px]"
-						>
-							{{ $t("My List") }}
-						</p>
-					</button>
-				</div>
-			</div>
+			</header>
+
+			<HomeCardActions
+				:data="homeItem"
+				:link="homeItem?.link ?? ''"
+				:is-mobile="true"
+				class="relative z-10 p-6"
+			/>
 		</div>
-	</div>
+	</article>
 </template>

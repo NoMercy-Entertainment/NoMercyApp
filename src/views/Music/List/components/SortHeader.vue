@@ -88,12 +88,14 @@ const isGenresRoute = computed(() => route.path.startsWith('/music/genres'));
 	> *:first-child {
 		@container scroll-state(stuck: top) {
 			background: var(--color-theme-8);
+			color: white;
 		}
 	}
 }
 .scheme-dark .sticky > *:first-child {
 	@container scroll-state(stuck: top) {
 		background: hsl(from var(--color-theme-8) h s 23%);
+		color: white;
 	}
 }
 </style>

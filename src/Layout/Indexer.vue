@@ -6,7 +6,7 @@ import { isMobile, isNative } from '@/config/global';
 import { keyHandler, scrollToDiv } from '@/lib/scrollHandlers';
 import { alphaNumericRange } from '@/lib/stringArray';
 import router from '@/router';
-import indexer, { setIndexerOpen } from '@/store/indexer';
+import indexer, { availableLetters, setIndexerOpen } from '@/store/indexer';
 
 const openPaths = ['Libraries', 'Library', 'Collections', 'Albums', 'Artists', 'Music Genres'];
 
@@ -37,19 +37,26 @@ function updateScrollableTargets() {
 			)
 			?.querySelectorAll<HTMLDivElement>('[data-indexer]')
 			.forEach((el) => {
+				const letter = el.dataset.indexer ?? '';
 				let target;
-				if (el.dataset.indexer === '#') {
+
+				if (letter === '#') {
 					target = document.querySelector?.(
 						'ion-tabs ion-router-outlet div.ion-page:not(.ion-page-hidden) [data-scroll]',
 					);
 				}
 				else {
 					target = document.querySelector?.(
-						`ion-tabs ion-router-outlet div.ion-page:not(.ion-page-hidden) [data-scroll='scroll_${el.dataset.indexer}']`,
+						`ion-tabs ion-router-outlet div.ion-page:not(.ion-page-hidden) [data-scroll='scroll_${letter}']`,
 					);
 				}
 
-				if (!!target || isQueryPath(router.currentRoute.value.path)) {
+				// Enable/disable based on either DOM element presence OR available letters in virtual list
+				const hasTarget = !!target;
+				const isQueryPath_ = isQueryPath(router.currentRoute.value.path);
+				const isAvailableInVirtual = availableLetters.value.has(letter);
+
+				if (hasTarget || isQueryPath_ || isAvailableInVirtual) {
 					el.classList.remove('opacity-20', '!cursor-not-allowed');
 				}
 				else {
@@ -57,6 +64,14 @@ function updateScrollableTargets() {
 				}
 			});
 	}, 500);
+}
+
+function handleLetterClick(letter: string) {
+	// First try DOM-based scroll (for non-virtualized lists)
+	scrollToDiv(letter);
+
+	// Also dispatch event for virtual lists
+	document.dispatchEvent(new CustomEvent('scrollToLetter', { detail: { letter } }));
 }
 
 function disableScrollableTargets() {
@@ -137,7 +152,7 @@ onUnmounted(() => {
 				:data-indexer="letter"
 				class="pointer-events-auto relative flex p-1.5 size-6 sm:size-8 aspect-square rounded-lg overflow-clip cursor-pointer flex-col items-center justify-center hover:bg-surface-5/11"
 				tabindex="-1"
-				@click="scrollToDiv(letter)"
+				@click="handleLetterClick(letter)"
 			>
 				<p
 					class="flex-shrink-0 flex-grow-0 text-center text-xs sm:text-base font-semibold leading-none"

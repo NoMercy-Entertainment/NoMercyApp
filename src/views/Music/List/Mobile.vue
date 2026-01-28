@@ -1,7 +1,8 @@
 <script lang="ts" setup>
-import { onMounted, ref, watch } from 'vue';
+import { computed, onMounted, ref, watch } from 'vue';
 import { useRoute } from 'vue-router';
 import { IonContent, IonPage, isPlatform, onIonViewWillEnter } from '@ionic/vue';
+import { useVirtualizer } from '@tanstack/vue-virtual';
 
 import type { DisplayList } from '@/types/api/music/musicPlayer';
 
@@ -28,7 +29,7 @@ const { data, isError } = useServerClient<DisplayList>({
 
 const main = ref<HTMLDivElement | null>(null);
 
-const displayList = ref<PlaylistItem[]>();
+const displayList = ref<PlaylistItem[]>([]);
 const filter = ref('');
 
 watch(data, (value) => {
@@ -109,48 +110,47 @@ const showScrollHeaderText = ref(false);
 const sortHeader = ref<VueDivElement>();
 const container = ref<VueDivElement>();
 
-function onScroll() {
-	// if(window.CSS.supports('container-type', 'scroll-state')) return;
+// Virtual scrolling setup
+const virtualizer = computed(() => useVirtualizer({
+	count: displayList.value?.length ?? 0,
+	getScrollElement: () => container.value?.$el as HTMLElement ?? null,
+	estimateSize: () => 56, // Estimated height of each TrackRow
+	overscan: 10, // Render 10 extra items above/below viewport
+}));
 
+function onScroll() {
 	const headerScrollTop = 170;
 	const headerScrollTextTop = 160;
 	const sortHeaderTop = isPlatform('capacitor') ? 88 : 64;
 
-	const top = sortHeader.value?.$el?.getBoundingClientRect().top;
-	if (!top) {
-		requestAnimationFrame(onScroll);
+	const headerElement = sortHeader.value?.$el;
+	const childElement = headerElement?.firstChild as HTMLElement;
+
+	if (!headerElement || !childElement)
 		return;
-	}
+
+	const top = headerElement.getBoundingClientRect().top;
 
 	showScrollHeader.value = top <= headerScrollTop;
 	showScrollHeaderText.value = top <= headerScrollTextTop;
 
-	if (window.CSS.supports('container-type', 'scroll-state')) {
-		requestAnimationFrame(onScroll);
-		return;
-	}
-
-	if (top === sortHeaderTop) {
-		sortHeader.value?.$el?.classList.add('!bg-focus');
-		sortHeader.value?.$el?.firstChild?.classList.add(
-			'!bg-surface-10/11',
-			'dark:!bg-[rgb(var(--background-auto)/79%)]',
-		);
+	if (top <= sortHeaderTop) {
+		// Apply theme color background to the child span
+		const isDark = document.documentElement.classList.contains('scheme-dark');
+		if (isDark) {
+			// For dark mode, use a darker version of the theme color
+			childElement.style.background = 'hsl(from var(--color-theme-8) h s 23%)';
+		}
+		else {
+			childElement.style.background = 'var(--color-theme-8)';
+			headerElement.style.color = 'white';
+		}
 	}
 	else {
-		sortHeader.value?.$el?.classList.remove('!bg-focus');
-		sortHeader.value?.$el?.firstChild?.classList.remove(
-			'!bg-surface-10/11',
-			'dark:!bg-[rgb(var(--background-auto)/79%)]',
-		);
+		childElement.style.background = '';
+		headerElement.style.color = '';
 	}
-
-	requestAnimationFrame(onScroll);
 }
-
-watch(container, () => {
-	requestAnimationFrame(onScroll);
-});
 </script>
 
 <template>
@@ -217,16 +217,34 @@ watch(container, () => {
 					>
 						<SortHeader :key="data?.id" ref="sortHeader" />
 
-						<template
-							v-for="(item, index) in displayList"
-							:key="item.id + item?.favorite"
+						<!-- Virtual list container -->
+						<div
+							:style="{
+								height: `${virtualizer.value.getTotalSize()}px`,
+								width: '100%',
+								position: 'relative',
+							}"
 						>
-							<TrackRow
-								:data="item"
-								:display-list="displayList"
-								:index="index"
-							/>
-						</template>
+							<!-- Only render visible items -->
+							<div
+								v-for="virtualRow in virtualizer.value.getVirtualItems()"
+								:key="displayList[virtualRow.index]?.id + displayList[virtualRow.index]?.favorite"
+								:style="{
+									position: 'absolute',
+									top: 0,
+									left: 0,
+									width: '100%',
+									height: `${virtualRow.size}px`,
+									transform: `translateY(${virtualRow.start}px)`,
+								}"
+							>
+								<TrackRow
+									:data="displayList[virtualRow.index]"
+									:display-list="displayList"
+									:index="virtualRow.index"
+								/>
+							</div>
+						</div>
 					</div>
 				</div>
 			</div>

@@ -16,6 +16,7 @@ import { setMusicPlaylists } from '@/store/musicPlaylists';
 import { useRoute } from 'vue-router';
 import konamiEnabled from '@/store/konami';
 import MoooomIcon from '@/components/Images/icons/MoooomIcon.vue';
+import { sidebarContainerElement } from '@/store/ui';
 
 // const {data: libraries, refetch} = useServerClient<ServerLibrary[]>({
 //   path: '/dashboard/libraries',
@@ -92,6 +93,7 @@ router.afterEach(() => {
 
 onMounted(() => {
 	handleSidebar();
+	const _ = sidebarContainerElement?.value;
 });
 
 function libraryIconName(type: string) {
@@ -108,6 +110,7 @@ function libraryIconName(type: string) {
 <template>
 	<aside
 		id="sidebar"
+		ref="sidebarContainerElement"
 		:data-sidebar="sidebar"
 		class="absolute top-0 bottom-0 left-0 flex sidebar-open:w-64 sidebar-closed:-translate-x-full sidebar-hidden:-translate-x-full items-start justify-start self-stretch overflow-x-visible transition-[transform,width] duration-200 sidebar h-available z-1099 group/aside sidebar-hidden:sm:w-0 sidebar-closed:sm:w-16 sidebar-closed:sm:translate-x-0 sidebar-hidden:sm:translate-x-0 sm:!relative max-h-available overflow-clip children:opacity-100 sidebar-hidden:children:opacity-0"
 	>

@@ -17,7 +17,7 @@ onMounted(() => {
 <template>
 	<IonPage>
 		<IonContent :fullscreen="true">
-			<ScrollContainer :auto-hide="true" :static="true">
+			<ScrollContainer :auto-hide="true" :static="true" class="pb-2">
 				<NMComponent />
 			</ScrollContainer>
 		</IonContent>

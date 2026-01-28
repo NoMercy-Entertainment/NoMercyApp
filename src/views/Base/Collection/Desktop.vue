@@ -105,6 +105,31 @@ const duration = computed(() => {
 });
 
 const yearSpan = computed(() => `${collect(data.value?.collection).min('year')} - ${collect(data.value?.collection).max('year')}`);
+
+// Info items configuration
+const infoItems = computed(() => [
+	{
+		show: !!data.value?.content_ratings,
+		label: 'Content rating',
+		component: 'ContentRating',
+		data: data.value?.content_ratings,
+	},
+	{
+		show: true,
+		label: 'Availability',
+		value: `${data.value?.have_items} / ${data.value?.number_of_items}`,
+	},
+	{
+		show: true,
+		label: 'Timespan',
+		value: yearSpan.value,
+	},
+	{
+		show: !!data.value?.total_duration,
+		label: 'Total duration',
+		value: duration.value,
+	},
+]);
 </script>
 
 <template>
@@ -112,189 +137,127 @@ const yearSpan = computed(() => `${collect(data.value?.collection).min('year')} 
 		<IonContent :fullscreen="true">
 			<NotFound v-if="isError && !data" />
 			<ScrollContainer v-else :auto-hide="true" :static="true">
-				<div class="w-available text-surface-12">
+				<article class="w-available text-surface-12">
 					<FloatingBackButton />
-					<div
+					<section
 						v-if="data"
 						class="w-available overflow-x-clip relative mt-12 flex flex-grow flex-col items-start justify-start gap-4 self-stretch py-5"
 					>
-						<p
-							class="ml-4 w-full flex-shrink-0 flex-grow-0 self-stretch text-5xl font-bold px-4"
-						>
+						<!-- Title and Overview -->
+						<h1 class="ml-4 w-full self-stretch text-5xl font-bold px-4">
 							{{ data?.title?.replace(/(: | en de )/, "\n") }}
-						</p>
-						<p
-							class="ml-4 w-full flex-shrink-0 flex-grow-0 self-stretch text-lg px-4"
-						>
+						</h1>
+						<p class="ml-4 w-full self-stretch text-lg px-4">
 							{{ data?.overview }}
 						</p>
-						<div
-							class="flex flex-shrink-0 flex-grow-0 flex-col items-start justify-start gap-4 self-stretch px-4"
+
+						<!-- Info Section -->
+						<section
+							class="flex flex-col items-start justify-start gap-4 self-stretch px-4 before:content-[''] before:self-stretch before:h-px before:bg-[#e2f0fd]/4 after:content-[''] after:self-stretch after:h-px after:bg-[#e2f0fd]/4"
 						>
-							<div
-								class="relative flex flex-shrink-0 flex-grow-0 flex-col items-start justify-start gap-4 self-stretch"
-							>
-								<div class="self-stretch h-px bg-[#e2f0fd]/4" />
+							<div class="flex items-start justify-start gap-8 self-stretch pl-4">
+								<!-- Info Items -->
 								<div
-									class="flex flex-shrink-0 flex-grow-0 items-start justify-start gap-8 self-stretch pl-4"
+									v-for="(item, index) in infoItems.filter(i => i.show)"
+									:key="index"
+									:class="item.label === 'Genre' ? 'flex-grow text-left' : 'flex-shrink-0'"
+									class="relative flex flex-col items-start justify-center gap-1"
 								>
-									<div
-										class="relative flex flex-shrink-0 flex-grow-0 flex-col items-start justify-center gap-1"
-									>
-										<p
-											class="flex-shrink-0 flex-grow-0 text-xs font-bold uppercase text-surface-11"
-										>
-											{{ $t("Content rating") }}
-										</p>
+									<p class="text-xs font-bold uppercase text-surface-11">
+										{{ $t(item.label) }}
+									</p>
 
-										<ContentRating
-											v-if="data?.content_ratings"
-											:ratings="data?.content_ratings"
-											:size="6"
-											class="h-full min-!h-[1rem] object-scale-down rounded-lg overflow-clip"
+									<ContentRating
+										v-if="item.component === 'ContentRating'"
+										:ratings="item.data"
+										:size="6"
+										class="h-full min-!h-[1rem] object-scale-down rounded-lg overflow-clip"
+									/>
+
+									<InfoHeaderItem v-else class="!bg-surface-6/11">
+										<p class="text-sm font-bold -ml-0.5">
+											{{ item.value }}
+										</p>
+									</InfoHeaderItem>
+								</div>
+
+								<!-- Genres -->
+								<div class="relative flex flex-grow flex-col items-start justify-center text-left gap-1">
+									<p class="text-xs font-bold uppercase text-surface-11">
+										{{ $t("Genre") }}
+									</p>
+									<div
+										:class="data?.genres?.length > 5 ? 'children:grayscale' : ''"
+										class="flex flex-wrap self-stretch overflow-clip font-medium gap-0.5"
+									>
+										<GenrePill
+											v-for="genre in data?.genres"
+											:key="genre.id"
+											:genre="genre"
 										/>
-									</div>
-									<div
-										class="relative flex flex-shrink-0 flex-grow-0 flex-col items-start justify-center gap-1"
-									>
-										<p
-											class="flex-shrink-0 flex-grow-0 text-xs font-bold uppercase text-surface-11"
-										>
-											{{ $t("Availability") }}
-										</p>
-
-										<InfoHeaderItem class="!bg-surface-6/11">
-											<p
-												class="flex-shrink-0 flex-grow-0 text-sm font-bold -ml-0.5"
-											>
-												{{ data?.have_items }} / {{ data?.number_of_items }}
-											</p>
-										</InfoHeaderItem>
-									</div>
-									<div
-										class="relative flex flex-shrink-0 flex-grow-0 flex-col items-start justify-center gap-1"
-									>
-										<p
-											class="flex-shrink-0 flex-grow-0 text-xs font-bold uppercase text-surface-11"
-										>
-											{{ $t("Timespan") }}
-										</p>
-										<InfoHeaderItem class="!bg-surface-6/11">
-											<p
-												class="flex-shrink-0 flex-grow-0 text-sm font-bold -ml-0.5"
-											>
-												{{ yearSpan }}
-											</p>
-										</InfoHeaderItem>
-									</div>
-									<div
-										class="relative flex flex-shrink-0 flex-grow-0 flex-col items-start justify-center gap-1"
-									>
-										<p
-											class="flex-shrink-0 flex-grow-0 text-xs font-bold uppercase text-surface-11"
-										>
-											{{ $t("Total duration") }}
-										</p>
-										<InfoHeaderItem v-if="data?.total_duration" class="!bg-surface-6/11">
-											<p
-												class="flex-shrink-0 flex-grow-0 text-sm font-bold -ml-0.5"
-											>
-												{{ duration }}
-											</p>
-										</InfoHeaderItem>
-									</div>
-									<div
-										class="relative flex flex-grow flex-col items-start justify-center text-left gap-1"
-									>
-										<p
-											class="flex-shrink-0 flex-grow-0 text-xs font-bold uppercase text-surface-11"
-										>
-											{{ $t("Genre") }}
-										</p>
-										<div
-											:class="
-												data?.genres?.length > 5 ? 'children:grayscale' : ''
-											"
-											class="flex flex-shrink-0 flex-grow-0 flex-wrap self-stretch overflow-clip font-medium gap-0.5"
-										>
-											<template v-for="genre in data?.genres" :key="genre.id">
-												<GenrePill :genre="genre" />
-											</template>
-										</div>
-									</div>
-
-									<div
-										v-if="data"
-										class="relative ml-auto flex h-16 flex-shrink-0 flex-grow-0 items-center justify-center gap-4"
-									>
-										<RouterLink
-											:class="buttonClasses"
-											:to="`${data?.link}/watch`"
-											class="!bg-surface-6/11"
-										>
-											<MoooomIcon class-name="w-6" icon="play" />
-
-											<div
-												class="absolute top-3 grid h-0 w-max flex-shrink-0 flex-grow-0 origin-bottom group-hover/play:grid-cols-1 items-center justify-start bg-black duration-200 grid-cols-[0fr] group-hover/play:h-[32.77px] transform-all left-[-31px] group-hover/play:top-[-38px] rounded-[5.46px]"
-											>
-												<div class="overflow-hidden">
-													<p
-														class="flex-shrink-0 flex-grow-0 py-0 text-xs font-bold px-2.5"
-													>
-														{{ $t("Ends at") }}
-														{{ endTime }}
-													</p>
-												</div>
-											</div>
-										</RouterLink>
-										<MediaLikeButton
-											v-if="data"
-											:data="data"
-											class="!bg-surface-6/11"
-											type="video"
-										/>
-
-										<ShareButton
-											:share-data="shareData"
-											class="!bg-surface-6/11 !p-0"
-										/>
-										<ListControlHeaderMoreMenu
-											:items="[]"
-											class="text-surface-12/70 dark:text-surface-12/80"
-											class-name="max-h-80 overflow-y-auto overflow-x-hidden  !ml-0 !-translate-x-1/3"
-										>
-											<template #button>
-												<MenuButton
-													:class="buttonClasses"
-													class="!bg-surface-6/11"
-												>
-													<MoooomIcon
-														class-name="w-6"
-														icon="menuDotsVertical"
-													/>
-												</MenuButton>
-											</template>
-										</ListControlHeaderMoreMenu>
 									</div>
 								</div>
-								<div class="self-stretch h-px bg-[#e2f0fd]/4" />
-							</div>
-						</div>
 
-						<div
-							:class="
-								showBackdrops ? 'media-backdrop-grid' : 'media-poster-grid'
-							"
-							class="flex-shrink-0 flex-grow-0 items-start justify-start gap-4 self-stretch px-4"
+								<!-- Action Buttons -->
+								<nav
+									v-if="data"
+									class="relative ml-auto flex h-16 items-center justify-center gap-4"
+								>
+									<RouterLink
+										:class="buttonClasses"
+										:to="`${data?.link}/watch`"
+										class="!bg-surface-6/11 group/play relative"
+									>
+										<MoooomIcon class-name="w-6" icon="play" />
+
+										<div
+											class="absolute top-3 grid h-0 w-max origin-bottom group-hover/play:grid-cols-1 items-center justify-start bg-black duration-200 grid-cols-[0fr] group-hover/play:h-[32.77px] transform-all left-[-31px] group-hover/play:top-[-38px] rounded-[5.46px] overflow-hidden"
+										>
+											<p class="py-0 text-xs font-bold px-2.5">
+												{{ $t("Ends at") }} {{ endTime }}
+											</p>
+										</div>
+									</RouterLink>
+									<MediaLikeButton
+										v-if="data"
+										:data="data"
+										class="!bg-surface-6/11"
+										type="video"
+									/>
+
+									<ShareButton :share-data="shareData" class="!bg-surface-6/11 !p-0" />
+									<ListControlHeaderMoreMenu
+										:items="[]"
+										class="text-surface-12/70 dark:text-surface-12/80"
+										class-name="max-h-80 overflow-y-auto overflow-x-hidden !ml-0 !-translate-x-1/3"
+									>
+										<template #button>
+											<MenuButton
+												:class="buttonClasses"
+												class="!bg-surface-6/11"
+											>
+												<MoooomIcon class-name="w-6" icon="menuDotsVertical" />
+											</MenuButton>
+										</template>
+									</ListControlHeaderMoreMenu>
+								</nav>
+							</div>
+						</section>
+
+						<!-- Media Grid -->
+						<section
+							:class="showBackdrops ? 'media-backdrop-grid' : 'media-poster-grid'"
+							class="items-start justify-start gap-4 self-stretch px-4"
 						>
-							<template
+							<MediaCard
 								v-for="movie in data?.collection ?? []"
 								:key="movie?.id"
-							>
-								<MediaCard :data="movie" class="" />
-							</template>
-						</div>
+								:data="movie"
+								class=""
+							/>
+						</section>
 
+						<!-- Carousels -->
 						<PersonCarousel
 							v-if="data?.cast && data?.cast?.length > 0"
 							id="cast"
@@ -337,8 +300,8 @@ const yearSpan = computed(() => `${collect(data.value?.collection).min('year')} 
 							title="Backdrop"
 							type="backdrop"
 						/>
-					</div>
-				</div>
+					</section>
+				</article>
 			</ScrollContainer>
 		</IonContent>
 	</IonPage>

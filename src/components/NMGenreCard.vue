@@ -17,7 +17,7 @@ const props = defineProps({
 		required: false,
 		default: 0,
 	},
-	context_menu_items: {
+	contextMenuItems: {
 		type: Array as PropType<ContextMenuItem[]>,
 		required: false,
 		default: () => [],
@@ -43,6 +43,7 @@ const genreColor = computed(() => genreColors(props.data.title));
 		:class="`flex flex-col relative justify-start items-center w-full h-auto aspect-poster flex-grow flex-shrink-0 overflow-hidden rounded-lg border-1-light transition-all duration-200 select-none group/card ${genreColor.bg} bg-theme-6 hover:bg-theme-8 dark:bg-theme-5 dark:hover:bg-theme-7 hover:shadow-[0px_0px_0_3px_var(--color-theme-9)]`"
 		:data-scroll="scrollLetter"
 		:to="data.link"
+		style="will-change: transform;"
 	>
 		<div class="backdropCard-overlay" />
 		<div

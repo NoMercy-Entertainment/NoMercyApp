@@ -29,7 +29,7 @@ const props = defineProps({
 		required: false,
 		default: false,
 	},
-	context_menu_items: {
+	contextMenuItems: {
 		type: Array as PropType<ContextMenuItem[]>,
 		required: false,
 		default: () => [],
@@ -59,8 +59,8 @@ const focusColor = computed(() => {
 });
 
 function onRightClick(event: Event) {
-	if (props.context_menu_items) {
-		setContextMenu(makeContextMenu(props.context_menu_items));
+	if (props.contextMenuItems) {
+		setContextMenu(makeContextMenu(props.contextMenuItems));
 		setContextMenuContext(props.data);
 		contextMenu.value.show(event);
 	}
@@ -100,7 +100,9 @@ function handleClick(item: any) {
 		:onclick="() => handleClick(data)"
 		:style="focusColor ? `
        --color-theme-8: ${data.deathday ? '#fff' : focusColor};
-    ` : ''"
+       contain: layout style paint;
+       will-change: transform;
+    ` : 'contain: layout style paint; will-change: transform;'"
 		:to="data.link"
 		class="group/card frosting flex flex-col h-full items-center focus-outline relative rounded-lg select-none shadow-[0px_0px_0_1px_rgb(from_var(--color-theme-8,var(--color-theme-6))_r_g_b/70%)] w-full z-0 bg-surface-50/70 flex-grow-0"
 		no-ring

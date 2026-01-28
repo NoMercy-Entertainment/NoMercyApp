@@ -10,6 +10,7 @@ import { Keyboard } from '@capacitor/keyboard';
 import { applyNativeColor } from '@/store/colorTheme.ts';
 
 export const scrollContainerElement = ref<HTMLDivElement>();
+export const sidebarContainerElement = ref<HTMLElement>();
 export const setupComplete = ref(false);
 
 const p = ref<string | null>();

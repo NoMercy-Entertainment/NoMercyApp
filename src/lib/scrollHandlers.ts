@@ -174,6 +174,9 @@ export function keyHandler(e: KeyboardEvent) {
 		e.key
 		&& alphaNumericRange('#', 'Z').includes(e.key.toUpperCase())
 	) {
-		scrollToDiv(e.key?.toUpperCase());
+		const letter = e.key?.toUpperCase();
+		scrollToDiv(letter);
+		// Also dispatch for virtual lists
+		document.dispatchEvent(new CustomEvent('scrollToLetter', { detail: { letter } }));
 	}
 }

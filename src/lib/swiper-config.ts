@@ -90,6 +90,11 @@ export function swiperConfig(isBackdrop: boolean) {
 		slidesOffsetAfter: 48,
 		spaceBetween: 12,
 		keyboard: false,
+		watchSlidesProgress: false,
+		watchOverflow: false,
+		preventInteractionOnTransition: true,
+		observer: false,
+		observeParents: false,
 		mouseWheelOptions: {
 			enabled: true,
 			forceToAxis: true,
