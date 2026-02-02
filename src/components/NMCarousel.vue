@@ -1,16 +1,16 @@
 <script lang="ts" setup>
-import {computed, onBeforeMount, PropType, ref} from "vue";
-import {Swiper} from "swiper";
-import {Swiper as SwiperComponent, SwiperSlide} from "swiper/vue";
+import { computed, onBeforeMount, PropType, ref } from "vue";
+import { Swiper } from "swiper";
+import { Swiper as SwiperComponent, SwiperSlide } from "swiper/vue";
 
-import type {Component} from "@/types/config";
+import type { Component } from "@/types/config";
 
-import {isMobile} from "@/config/global";
-import {mappedEntries} from "@/lib/stringArray";
-import {Breakpoints, breakpoints, swiperConfig} from "@/lib/swiper-config";
-import {scrollCenter} from "@/lib/utils";
-import {scrollContainerElement} from "@/store/ui";
-import {showBackdrops} from "@/store/preferences.ts";
+import { isMobile } from "@/config/global";
+import { mappedEntries } from "@/lib/stringArray";
+import { Breakpoints, breakpoints, swiperConfig } from "@/lib/swiper-config";
+import { scrollCenter } from "@/lib/utils";
+import { scrollContainerElement } from "@/store/ui";
+import { showBackdrops } from "@/store/preferences.ts";
 
 import MoooomIcon from "@/components/Images/icons/MoooomIcon.vue";
 
@@ -189,7 +189,7 @@ const scrollToCenter = () => {
       :data-previous-id="`carousel_${previous_id}`"
       class="mt-2 sm:mt-6 mb-2 flex w-auto flex-shrink-0 flex-grow-0 flex-col items-start justify-start gap-2 self-stretch text-left"
   >
-    <div class="flex w-available flex-1 flex-col gap-2">
+    <div class="flex w-available flex-1 flex-col gap-2 pb-1">
       <div
           class="relative ml-2 flex flex-shrink-0 flex-grow-0 items-center self-stretch"
       >

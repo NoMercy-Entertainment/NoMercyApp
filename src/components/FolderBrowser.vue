@@ -6,6 +6,7 @@ import type { DirectoryTreeItem, DirectoryTreeResponse } from '@/types/api/dashb
 
 import serverClient from '@/lib/clients/serverClient';
 import ScrollContainer from '@/Layout/Desktop/components/ScrollContainer.vue';
+import MoooomIcon from '@/components/Images/icons/MoooomIcon.vue';
 
 const props = defineProps({
 	selected: {
