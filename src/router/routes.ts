@@ -99,7 +99,7 @@ export const routes: Array<RouteRecordRaw> = [
 				path: 'search',
 				name: 'Search',
 				component: Search,
-				props: {
+				meta: {
 					type: 'all',
 				},
 			},
@@ -213,7 +213,7 @@ export const routes: Array<RouteRecordRaw> = [
 				path: 'artists/:letter',
 				name: 'Artists',
 				component: MusicCards,
-				props: {
+				meta: {
 					type: 'artists',
 				},
 			},
@@ -221,6 +221,9 @@ export const routes: Array<RouteRecordRaw> = [
 				path: 'artist/:id',
 				name: 'Artist',
 				component: MusicArtist,
+				meta: {
+					type: 'artists',
+				},
 			},
 			{
 				path: 'albums',
@@ -230,7 +233,7 @@ export const routes: Array<RouteRecordRaw> = [
 				path: 'albums/:letter',
 				name: 'Albums',
 				component: MusicCards,
-				props: {
+				meta: {
 					type: 'albums',
 				},
 			},
@@ -238,6 +241,9 @@ export const routes: Array<RouteRecordRaw> = [
 				path: 'album/:id',
 				name: 'Album',
 				component: MusicList,
+				meta: {
+					type: 'albums',
+				},
 			},
 			{
 				path: 'genres',
@@ -247,7 +253,7 @@ export const routes: Array<RouteRecordRaw> = [
 				path: 'genres/letter/:letter',
 				name: 'Music Genres',
 				component: MusicCards,
-				props: {
+				meta: {
 					type: 'genres',
 				},
 			},
@@ -255,12 +261,15 @@ export const routes: Array<RouteRecordRaw> = [
 				path: 'genres/:id',
 				name: 'Music Genre',
 				component: MusicList,
+				meta: {
+					type: 'genres',
+				},
 			},
 			{
 				path: 'playlists',
 				name: 'Music Playlists',
 				component: MusicCards,
-				props: {
+				meta: {
 					type: 'playlists',
 				},
 			},
@@ -268,7 +277,7 @@ export const routes: Array<RouteRecordRaw> = [
 				path: 'playlists/:id',
 				name: 'Music Playlist',
 				component: MusicList,
-				props: {
+				meta: {
 					type: 'playlists',
 				},
 			},
@@ -276,7 +285,7 @@ export const routes: Array<RouteRecordRaw> = [
 				path: 'tracks',
 				name: 'Tracks',
 				component: MusicList,
-				props: {
+				meta: {
 					type: 'tracks',
 				},
 			},
@@ -502,7 +511,7 @@ export const routes: Array<RouteRecordRaw> = [
 	{
 		path: '/:catchAll(.*)*',
 		component: NotFound,
-		props: {
+		meta: {
 			message: 'Page not found',
 			status: 404,
 		},

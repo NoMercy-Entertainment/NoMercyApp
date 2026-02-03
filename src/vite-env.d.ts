@@ -222,3 +222,9 @@ declare global {
 		toast: CustomEvent<ToastMessageOptions>;
 	}
 }
+
+declare module 'vue-router' {
+	interface RouteMeta {
+		type?: string;
+	}
+}

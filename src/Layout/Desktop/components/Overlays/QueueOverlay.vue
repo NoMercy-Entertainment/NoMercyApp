@@ -16,6 +16,9 @@ import { MoooomIcons } from '@Icons/icons';
 import ScrollContainer from '@/Layout/Desktop/components/ScrollContainer.vue';
 import MoooomIcon from '@/components/Images/icons/MoooomIcon.vue';
 import QueueTrackItem from './QueueTrackItem.vue';
+import { useRoute } from 'vue-router';
+
+const route = useRoute();
 
 function handleClick(song: PlaylistItem) {
 	if (!queue.value)
@@ -44,10 +47,11 @@ function handleClick(song: PlaylistItem) {
 
 	musicSocketConnection.value?.invoke(
 		'StartPlaybackCommand',
-		song.type.replace(/s$/u, ''),
+		(route.meta.type as string)?.replace(/s$/u, ''),
+		route.params.id as string,
 		song.id,
-		queue.value?.at(0)?.id,
 	);
+
 	if (currentPlaylist.value === playlistName) {
 		audioPlayer.togglePlayback();
 		return;
@@ -103,8 +107,8 @@ function handleClick(song: PlaylistItem) {
 						v-for="song in queue"
 						v-show="song.id !== currentSong?.id"
 						:key="song?.id"
-						:song="song"
 						:on-click="() => handleClick(song)"
+						:song="song"
 					/>
 				</ScrollContainer>
 			</section>

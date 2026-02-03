@@ -1,9 +1,17 @@
-import type { HubConnection } from '@microsoft/signalr';
+import type { HubConnection, IRetryPolicy, RetryContext } from '@microsoft/signalr';
 import { HttpTransportType, HubConnectionBuilder, LogLevel } from '@microsoft/signalr';
 
 import { connect, onConnect, onDisconnect } from '@/lib/clients/socketClient/events';
 import type { ClientInfo } from '@/lib/clients/socketClient/device';
 import { clientInfo } from '@/store/deviceInfo';
+
+class InfiniteRetryPolicy implements IRetryPolicy {
+	nextRetryDelayInMilliseconds(retryContext: RetryContext): number | null {
+		// Escalate: 0s, 1s, 2s, 5s, then cap at 10s
+		const delays = [0, 1000, 2000, 5000];
+		return delays[retryContext.previousRetryCount] ?? 10_000;
+	}
+}
 
 export class SocketClient {
 	public connection: HubConnection | null = null;
@@ -12,6 +20,7 @@ export class SocketClient {
 	private clientInfo: ClientInfo = clientInfo.value!;
 	private keepAliveInterval: number = 5;
 	private endpoint: string;
+	private disposed: boolean = false;
 
 	constructor(
 		baseUrl: string,
@@ -26,6 +35,8 @@ export class SocketClient {
 	}
 
 	dispose = async () => {
+		this.disposed = true;
+
 		if (!this.connection)
 			return;
 
@@ -56,33 +67,46 @@ export class SocketClient {
 		if (!this.connection)
 			return;
 
-		try {
-			this.connection.onreconnecting((error: Error | undefined) => {
-				console.log('SignalR Disconnected.', error?.message);
-				onDisconnect(this.connection!, this.endpoint);
-			});
-			this.connection.onreconnected(() => {
-				console.log('SignalR Reconnected.');
+		this.disposed = false;
+
+		this.connection.onreconnecting((error: Error | undefined) => {
+			console.log('SignalR Disconnected.', error?.message);
+			onDisconnect(this.connection!, this.endpoint);
+		});
+		this.connection.onreconnected(() => {
+			console.log('SignalR Reconnected.');
+			onConnect(this.connection!, this.endpoint);
+		});
+		this.connection.onclose(async (error) => {
+			console.log('SignalR Closed.', error);
+			onDisconnect(this.connection!, this.endpoint);
+
+			if (!this.connection || this.disposed)
+				return;
+
+			await this.startWithRetry();
+		});
+
+		await this.startWithRetry();
+	};
+
+	private startWithRetry = async () => {
+		const delays = [0, 1000, 2000, 5000];
+
+		while (!this.disposed) {
+			try {
+				await this.connection!.start();
 				onConnect(this.connection!, this.endpoint);
-			});
-			this.connection.onclose(async (error) => {
-				console.log('SignalR Closed.', error);
-				onDisconnect(this.connection!, this.endpoint);
+				connect(this.connection!);
+				return;
+			}
+			catch (err) {
+				if (this.disposed) return;
 
-				if (!this.connection || !error)
-					return;
-
-				await this.connection.start();
-				onConnect(this.connection, this.endpoint);
-				connect(this.connection);
-			});
-
-			await this.connection.start();
-			onConnect(this.connection, this.endpoint);
-			connect(this.connection);
-		}
-		catch (err) {
-			console.error(err);
+				const delay = delays.shift() ?? 10_000;
+				console.warn(`SignalR ${this.endpoint} connect failed, retrying in ${delay}ms...`, err);
+				await new Promise(resolve => setTimeout(resolve, delay));
+			}
 		}
 	};
 
@@ -97,7 +121,7 @@ export class SocketClient {
 				transport: HttpTransportType.WebSockets,
 			})
 			.withKeepAliveInterval(this.keepAliveInterval * 1000)
-			.withAutomaticReconnect()
+			.withAutomaticReconnect(new InfiniteRetryPolicy())
 			.withStatefulReconnect()
 			.configureLogging(LogLevel.Critical)
 			.build();

@@ -10,8 +10,7 @@ defineProps<{
 </script>
 
 <template>
-	<component
-		is="div"
+	<div
 		:class="onClick ? 'cursor-pointer hover:bg-surface-10/50' : ''"
 		class="flex h-auto w-full items-center justify-start gap-2 rounded-lg p-2"
 		@click="onClick"
@@ -49,5 +48,5 @@ defineProps<{
 				</div>
 			</div>
 		</div>
-	</component>
+	</div>
 </template>
