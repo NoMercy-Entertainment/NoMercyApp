@@ -1,6 +1,7 @@
 /// <reference types="vitest" />
 import path from 'node:path';
 import fs from 'node:fs';
+import { execSync } from 'node:child_process';
 
 import { defineConfig } from 'vite';
 import { VitePWA } from 'vite-plugin-pwa';
@@ -12,14 +13,27 @@ import vue from '@vitejs/plugin-vue';
 import { pwaConfig } from './pwaConfig';
 import { cspConfig } from './cspConfig';
 
+function getGitCommitHash(): string {
+	try {
+		return execSync('git rev-parse --short HEAD').toString().trim();
+	} catch {
+		return 'unknown';
+	}
+}
+
 // @ts-ignore
 export default defineConfig(({ command }) => {
+	const commitHash = getGitCommitHash();
+	const buildTime = new Date().toISOString();
+
 	return {
 		define: {
 			__BUILD_TIMESTAMP__: JSON.stringify(Date.now()),
 			__BUILD_VERSION__: JSON.stringify(
 				process.env.npm_package_version || '1.0.0',
 			),
+			__APP_VERSION__: JSON.stringify(commitHash),
+			__BUILD_TIME__: JSON.stringify(buildTime),
 		},
 		plugins: [
 			vue({

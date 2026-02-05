@@ -285,5 +285,39 @@
   - Automatic vendor prefixing and syntax lowering handled by lightningcss
   - Faster dev server rebuilds without CSS sourcemap generation
 
+### Phase 6.3: Configure Optimal Caching Headers (public/_headers)
+- Status: DONE (already implemented in prior session)
+- Date: 2026-02-05
+- File: public/_headers
+- Already had comprehensive caching headers matching/exceeding PRD requirements:
+  - `/` and `/index.html`: no-cache, no-store, must-revalidate
+  - `/sw.js` and `/registerSW.js`: no-cache, no-store, must-revalidate
+  - `/assets/*`, `/js/*`, `/css/*`, `/img/*`, `/fonts/*`: immutable, 1 year
+  - `/manifest.webmanifest`: max-age=0, must-revalidate
+  - Font file extensions (`.woff2`, `.woff`, `.ttf`): immutable, 1 year
+- Added `/version.json` no-cache header for Phase 8 version checking system
+
+### Phase 8.1: Implement Version-Based Cache Busting
+- Status: DONE
+- Date: 2026-02-05
+- Changes made:
+  1. Updated vite.config.ts:
+     - Added `execSync` import from `node:child_process`
+     - Added `getGitCommitHash()` helper that reads `git rev-parse --short HEAD`
+     - Added `__APP_VERSION__` define (git commit short hash)
+     - Added `__BUILD_TIME__` define (ISO timestamp at build time)
+     - Kept existing `__BUILD_TIMESTAMP__` and `__BUILD_VERSION__` for backward compatibility
+  2. Created src/lib/version.ts:
+     - Declares global `__APP_VERSION__` and `__BUILD_TIME__` types
+     - Exports `APP_VERSION` and `BUILD_TIME` constants
+     - Exports `isOutdated(serverVersion)` comparison utility
+  3. Updated public/_headers:
+     - Added `/version.json` with `no-cache, no-store, must-revalidate`
+- Benefits:
+  - Each build is tagged with its git commit hash
+  - Runtime code can compare local version against server version
+  - version.json endpoint will never be cached by CDN/browser
+  - Foundation for Phase 8.2+ version checking and auto-update system
+
 ## Next Tasks (from PRD)
-- Phase 6.3: Configure Optimal Caching Headers (public/_headers)
+- Phase 8.2: Server Version Check on App Load (src/lib/versionCheck.ts)
