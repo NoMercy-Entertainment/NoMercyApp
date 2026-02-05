@@ -5,9 +5,11 @@ export const queryClient = new QueryClient({
 		queries: {
 			refetchOnWindowFocus: false,
 			refetchOnMount: false,
-			retry: false,
+			retry: 1,
+			retryDelay: (attemptIndex) => Math.min(1000 * 2 ** attemptIndex, 30000),
 			experimental_prefetchInRender: true,
-			staleTime: 1000 * 60 * 60,
+			staleTime: 1000 * 60 * 5,
+			gcTime: 1000 * 60 * 30,
 		},
 	},
 });

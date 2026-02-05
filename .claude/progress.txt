@@ -138,5 +138,21 @@
   - `<picture>` element with `<source type="image/webp">` provides automatic format fallback
   - Color palette gradient placeholders preserved as-is (PRD 3.1)
 
+### Phase 4.1: Optimize TanStack Query Configuration
+- Status: DONE
+- Date: 2026-02-05
+- File: src/config/tanstack-query.ts
+- Changes made:
+  1. Changed `retry: false` → `retry: 1` (one retry attempt for resilience)
+  2. Added `retryDelay` with exponential backoff: `Math.min(1000 * 2 ** attemptIndex, 30000)`
+  3. Changed `staleTime` from 1 hour (`1000 * 60 * 60`) to 5 minutes (`1000 * 60 * 5`)
+  4. Added `gcTime: 1000 * 60 * 30` (garbage collect unused cache after 30 minutes)
+  5. Preserved `experimental_prefetchInRender: true` (existing optimization)
+- Benefits:
+  - Failed requests get one retry with backoff instead of immediately failing
+  - Stale data refetched sooner (5min vs 1hr) for fresher content
+  - Unused query cache garbage-collected after 30min to reduce memory usage
+
 ## Next Tasks (from PRD)
-- Phase 4: Data Fetching Optimization (TanStack Query config, structuredClone, request deduplication)
+- Phase 4.2: Replace structuredClone with Targeted Updates (src/lib/routerHelper.ts)
+- Phase 4.3: Implement Request Deduplication (src/lib/clients/serverClient.ts)
