@@ -186,5 +186,21 @@
   - TanStack Query already handles deduplication for useServerClient hook; this covers direct serverClient usage
   - Zero overhead when no duplicate requests occur (just a Map lookup)
 
+### Phase 5.1: Optimize ScrollContainer
+- Status: DONE
+- Date: 2026-02-05
+- File: src/Layout/Desktop/components/ScrollContainer.vue
+- Changes made:
+  1. Replaced `router.afterEach(enable)` with section-aware navigation handler
+  2. Tracks the current top-level route section (first path segment)
+  3. When navigating within the same section: only scrolls to top (cheap operation)
+  4. When navigating to a different section: calls full `enable()` to reinitialize scrollbar
+- Benefits:
+  - Eliminates unnecessary teardown/re-initialization of scrollbar listeners on every navigation
+  - Same-section navigations (e.g. /movies/123 → /movies/456) just scroll to top
+  - Cross-section navigations (e.g. /movies → /music) still get full scrollbar reset
+  - Reduces ResizeObserver churn and event listener rebinding overhead
+
 ## Next Tasks (from PRD)
-- Phase 5.1: Optimize ScrollContainer (src/Layout/Desktop/components/ScrollContainer.vue)
+- Phase 5.2: Implement Virtual Scrolling for Long Lists (src/lib/swiper-config.ts)
+- Phase 5.3: Optimize Reactive Dependencies (src/store/ui.ts)

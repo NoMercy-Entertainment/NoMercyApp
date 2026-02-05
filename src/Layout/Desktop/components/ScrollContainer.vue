@@ -234,7 +234,16 @@ onUnmounted(() => {
 	disable();
 });
 
-router.afterEach(enable);
+let currentSection = '';
+router.afterEach((to) => {
+	const newSection = to.path.split('/')[1] ?? '';
+	if (newSection === currentSection) {
+		scrollContainerElement.value?.scrollTo(0, 0);
+		return;
+	}
+	currentSection = newSection;
+	enable();
+});
 
 function mouseEnter() {
 	show.value = true;
