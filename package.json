@@ -33,6 +33,7 @@
 		"preview:build": "vite build && vite preview --host --port=5502 ./",
 		"test:e2e": "cypress run",
 		"test:unit": "vitest",
+		"type-check": "vue-tsc --noEmit",
 		"lint": "eslint .",
 		"lint:fix": "eslint --fix ./src",
 		"analyze": "vite build --mode production && npx vite-bundle-analyzer docs",
