@@ -120,5 +120,23 @@
   - Swiper code only loads when a carousel or swiper-using component is rendered
   - Removed unnecessary keyboard CSS import
 
+### Phase 3.2: Responsive Image Loading (TMDBImage.vue)
+- Status: DONE
+- Date: 2026-02-05
+- Changes made:
+  1. Added device pixel ratio detection (reads window.devicePixelRatio once at module level)
+  2. Created `optimizedSize` computed that uses 2x multiplier only for high-DPI displays (>1.5 DPR),
+     1x multiplier for standard displays (previously always used 2x)
+  3. Added `&format=webp` to server image URL to request WebP format from the image proxy
+  4. Updated `<source>` element with `type="image/webp"` for proper format negotiation
+  5. Cleaned up commented-out source elements
+  6. Preserved color palette gradient placeholder (Phase 3.1 - already correct, no changes needed)
+  7. TMDB fallback URL kept as-is for browsers that don't support WebP
+- Benefits:
+  - 1x displays no longer download 2x resolution images (saves ~75% bandwidth for those users)
+  - WebP format delivers ~25-35% smaller images vs JPEG/PNG
+  - `<picture>` element with `<source type="image/webp">` provides automatic format fallback
+  - Color palette gradient placeholders preserved as-is (PRD 3.1)
+
 ## Next Tasks (from PRD)
-- Phase 3: Image Optimization (responsive loading, WebP format)
+- Phase 4: Data Fetching Optimization (TanStack Query config, structuredClone, request deduplication)
