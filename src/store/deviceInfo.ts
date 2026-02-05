@@ -26,18 +26,22 @@ const as = ref<AppState>();
 export const appState = computed(() => as.value);
 
 export const deviceName = useLocalStorage('deviceName', ci.value?.name);
-export function setDeviceName(value: string) {
+export function setDeviceName(value: string): void {
 	deviceName.value = value;
-	Preferences.set({ key: 'deviceName', value }).then();
+	Preferences.set({ key: 'deviceName', value }).catch((err) => {
+		console.error('Failed to persist deviceName:', err);
+	});
 }
 
 export const deviceId = useLocalStorage('deviceId', '');
-export function setDeviceId(value: string) {
+export function setDeviceId(value: string): void {
 	deviceId.value = value;
-	Preferences.set({ key: 'deviceId', value }).then();
+	Preferences.set({ key: 'deviceId', value }).catch((err) => {
+		console.error('Failed to persist deviceId:', err);
+	});
 }
 
-async function getDeviceName() {
+async function getDeviceName(): Promise<void> {
 	const name = await Preferences.get({ key: 'deviceName' });
 
 	const deviceName = name.value
@@ -47,29 +51,34 @@ async function getDeviceName() {
 	setDeviceName(deviceName);
 }
 
-async function getDeviceId() {
-	const deviceId = await Device.getId().then(device => device.identifier);
-	setDeviceId(deviceId);
+async function getDeviceId(): Promise<void> {
+	const device = await Device.getId();
+	setDeviceId(device.identifier);
 }
 
 (async () => {
-	di.value = await Device.getInfo();
-	ci.value = await makeDeviceInfo();
+	try {
+		di.value = await Device.getInfo();
+		ci.value = await makeDeviceInfo();
 
-	await getDeviceId();
-	await getDeviceName();
+		await getDeviceId();
+		await getDeviceName();
 
-	if (isPlatform('capacitor') && isPlatform('android')) {
-		ai.value = await android.getInfo();
-		bi.value = await Device.getBatteryInfo();
+		if (isPlatform('capacitor') && isPlatform('android')) {
+			ai.value = await android.getInfo();
+			bi.value = await Device.getBatteryInfo();
+		}
+		await android.addListener('appStateChange', (data) => {
+			as.value = data;
+		});
+
+		console.log({
+			appInfo: toRaw(appInfo.value),
+			deviceInfo: toRaw(deviceInfo.value),
+			batteryInfo: toRaw(batteryInfo.value),
+		});
 	}
-	await android.addListener('appStateChange', (data) => {
-		as.value = data;
-	});
-
-	console.log({
-		appInfo: toRaw(appInfo.value),
-		deviceInfo: toRaw(deviceInfo.value),
-		batteryInfo: toRaw(batteryInfo.value),
-	});
+	catch (err) {
+		console.error('Failed to initialize device info:', err);
+	}
 })();

@@ -152,9 +152,13 @@ if (isPlatform('capacitor')) {
 		else {
 			document.documentElement.style.setProperty('--keyboard-height', '0px');
 		}
-	}).then();
+	}).catch((err) => {
+		console.error('Failed to add keyboardWillShow listener:', err);
+	});
 	Keyboard.addListener('keyboardWillHide', () => {
 		document.documentElement.classList.remove('keyboard-open');
 		document.documentElement.style.setProperty('--keyboard-height', '0px');
-	}).then();
+	}).catch((err) => {
+		console.error('Failed to add keyboardWillHide listener:', err);
+	});
 }

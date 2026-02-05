@@ -69,8 +69,13 @@ watch([idle, images], async ([idleValue]) => {
 		setShowScreensaver(true);
 		document.querySelector<HTMLDialogElement>('#imageModal')?.showModal();
 		if (isPlatform('capacitor')) {
-			const StatusBar = await import('@capacitor/status-bar').then(m => m.StatusBar);
-			StatusBar.setOverlaysWebView({ overlay: true }).then();
+			try {
+				const { StatusBar } = await import('@capacitor/status-bar');
+				await StatusBar.setOverlaysWebView({ overlay: true });
+			}
+			catch (err) {
+				console.error('Failed to set StatusBar overlay:', err);
+			}
 		}
 	}
 	else {
@@ -78,8 +83,13 @@ watch([idle, images], async ([idleValue]) => {
 		setImageModalData(null);
 		document.querySelector<HTMLDialogElement>('#imageModal')?.close();
 		if (isPlatform('capacitor')) {
-			const StatusBar = await import('@capacitor/status-bar').then(m => m.StatusBar);
-			StatusBar.setOverlaysWebView({ overlay: false }).then();
+			try {
+				const { StatusBar } = await import('@capacitor/status-bar');
+				await StatusBar.setOverlaysWebView({ overlay: false });
+			}
+			catch (err) {
+				console.error('Failed to reset StatusBar overlay:', err);
+			}
 		}
 	}
 });

@@ -492,9 +492,52 @@
   - setSortType/setSortOrder now properly typed instead of using `any`
   - File naming follows camelCase convention for store files
 
+### Phase 7.2: Add Error Handling to Async Store Functions
+- Status: DONE
+- Date: 2026-02-05
+- Changes made:
+  1. Updated src/store/preferences.ts:
+     - Created shared `persistPreference()` helper with `.catch()` error logging
+     - Replaced all 12 instances of `.then()` on `Preferences.set()` with `persistPreference()` calls
+     - Wrapped all 6 IIFE initializers in try/catch blocks
+     - Replaced `.then()` chain on `Preferences.get()` for display_language with async/await + try/catch
+     - Added return types to all exported setter functions
+  2. Updated src/store/currentServer.ts:
+     - Added `.catch()` to `pingServer()` call in the `isOnline` watcher
+     - Rewrote `pingServer()` from broken `new Promise(async ...)` anti-pattern to proper async/await
+       with sequential try/catch blocks (try internal URL first, fall back to external, throw if both fail)
+  3. Updated src/store/search.ts:
+     - Converted all 3 fetch chains (music search, video search, fetchNextPage) from `.then()` chains
+       to async/await with try/catch/finally
+     - `searchResultLoading` now properly resets in `finally` blocks (was missing on errors before)
+     - Added return type to `fetchNextPage()`
+  4. Updated src/store/screensaver.ts:
+     - Wrapped StatusBar dynamic imports and calls in try/catch blocks
+     - Replaced `.then(m => m.StatusBar)` + `.then()` pattern with destructured await
+  5. Updated src/store/ui.ts:
+     - Replaced `.then()` on both `Keyboard.addListener()` calls with `.catch()` error handlers
+  6. Updated src/store/musicSocket.ts:
+     - Added `.catch()` to `invoke('Devices')` call
+     - Replaced 2 `audioPlayer.play().then()` calls with `.catch()` error handlers
+  7. Updated src/store/audioPlayer.ts:
+     - Replaced `audioPlayer.play().then()` in play action with `.catch()` handler
+     - Added `.catch()` to `VolumeButtons.watchVolume()` and `VolumeButtons.isWatching()`
+  8. Updated src/store/deviceInfo.ts:
+     - Replaced `.then()` on both `Preferences.set()` calls with `.catch()` handlers
+     - Wrapped entire IIFE initializer in try/catch
+     - Replaced `.then(device => device.identifier)` chain with proper await + destructure
+     - Added return types to functions
+  9. Updated src/store/contextMenuItems.ts:
+     - Added `.catch()` to the `cmd()` promise chain in `makeContextMenu()`
+- Benefits:
+  - No more unhandled promise rejections across all store files
+  - Errors are logged with context-specific messages for easier debugging
+  - `searchResultLoading` state now properly resets on fetch errors
+  - Fixed `pingServer()` anti-pattern that could leave promises hanging
+  - All async flows have proper error boundaries
+
 ## Next Tasks (from PRD)
-- Phase 7.2: Add Error Handling to Async Store Functions (next)
-- Phase 7.3: Standardize Component Script Structure
+- Phase 7.3: Standardize Component Script Structure (next)
 - Phase 7.4: Remove `any` Types
 - Phase 7.5: Standardize File Naming (Libraries.ts done in 7.1)
 - Phase 7.6: Add Missing Emits Definitions

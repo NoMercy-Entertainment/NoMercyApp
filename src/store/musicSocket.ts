@@ -47,7 +47,9 @@ watch(si, (value) => {
 	);
 	value?.connection?.on('ChangeDevice', handleMusicBroadcastStatus);
 
-	value?.connection?.invoke('Devices').then(handleMusicConnectedDevicesState);
+	value?.connection?.invoke('Devices').then(handleMusicConnectedDevicesState).catch((err) => {
+		console.error('Failed to invoke Devices:', err);
+	});
 
 	window.addEventListener(
 		'beforeunload',
@@ -165,7 +167,9 @@ export function handleMusicPlayerState(data: StateEvents) {
 			audioPlayer.once('canplay', () => {
 				audioPlayer.seek(seekValueSeconds);
 				if (state.is_playing) {
-					audioPlayer.play().then();
+					audioPlayer.play().catch((err: unknown) => {
+						console.error('Failed to play after canplay:', err);
+					});
 				}
 				else {
 					audioPlayer.pause();
@@ -185,7 +189,9 @@ export function handleMusicPlayerState(data: StateEvents) {
 
 			// Sync play/pause state
 			if (state.is_playing) {
-				audioPlayer.play().then();
+				audioPlayer.play().catch((err: unknown) => {
+					console.error('Failed to sync play state:', err);
+				});
 			}
 			else {
 				audioPlayer.pause();

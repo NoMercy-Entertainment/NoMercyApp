@@ -20,7 +20,7 @@ export const musicSearchResult = computed(() => musicResult.value);
 
 const debouncedMusicSearchValue = refDebounced(musicSearchValue, 700);
 
-watch(debouncedMusicSearchValue, (value) => {
+watch(debouncedMusicSearchValue, async (value) => {
 	if (value === '') {
 		musicResult.value = [];
 		return;
@@ -29,18 +29,23 @@ watch(debouncedMusicSearchValue, (value) => {
 	searchResultLoading.value = true;
 	const url = `${currentServer.value?.serverBaseUrl}/api/v1/music/search?query=${value}`;
 
-	fetch(url, {
-		method: 'GET',
-		headers: {
-			'Content-Type': 'application/json',
-			'Authorization': `Bearer ${user.value?.accessToken}`,
-		},
-	})
-		.then(response => response.json())
-		.then((data) => {
-			musicResult.value = data.data;
-			searchResultLoading.value = false;
+	try {
+		const response = await fetch(url, {
+			method: 'GET',
+			headers: {
+				'Content-Type': 'application/json',
+				'Authorization': `Bearer ${user.value?.accessToken}`,
+			},
 		});
+		const data = await response.json();
+		musicResult.value = data.data;
+	}
+	catch (err) {
+		console.error('Music search failed:', err);
+	}
+	finally {
+		searchResultLoading.value = false;
+	}
 });
 
 export const videoSearchValue = ref('');
@@ -51,7 +56,7 @@ export const videoSearchResult = computed(() => videoResult.value);
 const debouncedVideoSearchValue = refDebounced(videoSearchValue, 700);
 const page = ref(1);
 
-watch(debouncedVideoSearchValue, (value) => {
+watch(debouncedVideoSearchValue, async (value) => {
 	if (value === '') {
 		videoResult.value = [];
 		return;
@@ -60,32 +65,41 @@ watch(debouncedVideoSearchValue, (value) => {
 	hasMoreResults.value = false;
 	searchResultLoading.value = true;
 
-	page.value = 1; // Reset page number on new search
+	page.value = 1;
 	const url = `https://api.themoviedb.org/3/search/multi?api_key=${tmdbApiKey}&language=${i18next.language}&query=${value}&page=${page.value}&include_adult=false`;
-	fetch(url)
-		.then(response => response.json())
-		.then((data) => {
-			videoResult.value = data.results;
-			hasMoreResults.value = data.total_pages > 1;
-			searchResultLoading.value = false;
-		});
+
+	try {
+		const response = await fetch(url);
+		const data = await response.json();
+		videoResult.value = data.results;
+		hasMoreResults.value = data.total_pages > 1;
+	}
+	catch (err) {
+		console.error('Video search failed:', err);
+	}
+	finally {
+		searchResultLoading.value = false;
+	}
 });
 
-export function fetchNextPage() {
+export async function fetchNextPage(): Promise<void> {
 	page.value += 1;
 	const url = `https://api.themoviedb.org/3/search/multi?api_key=${tmdbApiKey}&language=${i18next.language}&query=${debouncedVideoSearchValue.value}&page=${page.value}&include_adult=false`;
 
-	fetch(url)
-		.then(response => response.json())
-		.then((data) => {
-			videoResult.value = [...videoResult.value, ...data.results];
-			if (data.results.length === 0) {
-				hasMoreResults.value = false;
-			}
-			else {
-				hasMoreResults.value = data.total_pages > page.value;
-			}
-		});
+	try {
+		const response = await fetch(url);
+		const data = await response.json();
+		videoResult.value = [...videoResult.value, ...data.results];
+		if (data.results.length === 0) {
+			hasMoreResults.value = false;
+		}
+		else {
+			hasMoreResults.value = data.total_pages > page.value;
+		}
+	}
+	catch (err) {
+		console.error('Fetch next page failed:', err);
+	}
 }
 
 const loadMore = ref(null);

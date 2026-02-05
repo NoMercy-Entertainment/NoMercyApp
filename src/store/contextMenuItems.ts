@@ -78,6 +78,8 @@ export function makeContextMenu(items: ContextMenuItem[]): (MenuItem & { icon?: 
 				if (item.args?.replaceKey) {
 					document.dispatchEvent(new CustomEvent('mutateId', { detail: { id: item.args?.replaceKey } }));
 				}
+			}).catch((err: unknown) => {
+				console.error('Context menu command failed:', err);
 			}),
 		};
 	});

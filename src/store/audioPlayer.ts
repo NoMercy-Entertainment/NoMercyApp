@@ -80,7 +80,9 @@ export const audioPlayer = new MusicPlayer<PlaylistItem>({
 	actions: {
 		play: () => {
 			if (!user.value.features?.nomercyConnect) {
-				audioPlayer.play().then();
+				audioPlayer.play().catch((err) => {
+					console.error('Failed to play:', err);
+				});
 				return;
 			}
 			if (!currentMusicDeviceId.value) {
@@ -524,8 +526,12 @@ if (isPlatform('capacitor')) {
 	options.disableSystemVolumeHandler = false;
 	options.suppressVolumeIndicator = false;
 
-	VolumeButtons.watchVolume(options, callback).then();
+	VolumeButtons.watchVolume(options, callback).catch((err) => {
+		console.error('Failed to watch volume buttons:', err);
+	});
 	VolumeButtons.isWatching().then((result) => {
 		console.log(result);
+	}).catch((err) => {
+		console.error('Failed to check volume watching state:', err);
 	});
 }
