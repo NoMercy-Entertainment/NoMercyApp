@@ -1,0 +1,19 @@
+# NoMercy.App Performance Optimization Progress
+
+## Completed Tasks
+
+### Phase 1.1: Configure Manual Chunks (vite.config.ts)
+- Status: DONE (prior to this session)
+- Changed manualChunks from object syntax to function syntax for rolldown-vite compatibility
+
+### Phase 1.2: Fix Layout Imports (src/router/routes.ts)
+- Status: DONE
+- Date: 2026-02-05
+- Changed layout imports from immediate execution to lazy-loaded functions:
+  - `const MobileBaseLayout = import(...)` → `const MobileBaseLayout = () => import(...)`
+  - `const DesktopBaseLayout = import(...)` → `const DesktopBaseLayout = () => import(...)`
+- This prevents both layouts from loading at module initialization; only the needed layout loads when used
+
+## Next Tasks (from PRD)
+- Phase 1.3: Remove Swiper Duplication (src/setupApp.ts)
+- Phase 1.4: Add Preconnect Hints (index.html)
