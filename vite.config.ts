@@ -109,10 +109,11 @@ export default defineConfig(({ command }) => {
 			outDir: 'docs',
 			sourcemap: false,
 			assetsDir: 'assets',
-			chunkSizeWarningLimit: 500,
+			chunkSizeWarningLimit: 250,
 			emptyOutDir: true,
 			minify: 'esbuild',
 			cssMinify: 'esbuild',
+			cssCodeSplit: true,
 			rollupOptions: {
 				external: (id) => {
 					if (
@@ -122,6 +123,38 @@ export default defineConfig(({ command }) => {
 						return false;
 					}
 					return false;
+				},
+				output: {
+					manualChunks(id: string) {
+						if (id.includes('node_modules')) {
+							if (id.includes('vue-router') || id.includes('/vue/')) {
+								return 'vue-core';
+							}
+							if (id.includes('@ionic/vue') || id.includes('@ionic/vue-router') || id.includes('@ionic/core')) {
+								return 'ionic';
+							}
+							if (id.includes('primevue') || id.includes('@primevue/themes') || id.includes('@primeuix/styled')) {
+								return 'primevue';
+							}
+							if (id.includes('/swiper/')) {
+								return 'swiper';
+							}
+							if (id.includes('@tanstack/vue-query')) {
+								return 'query';
+							}
+							if (id.includes('i18next')) {
+								return 'i18n';
+							}
+							if (id.includes('@microsoft/signalr')) {
+								return 'signalr';
+							}
+							if (id.includes('/axios/') || id.includes('/clsx/') || id.includes('tailwind-merge') || id.includes('class-variance-authority')) {
+								return 'utils';
+							}
+						}
+					},
+					chunkFileNames: 'assets/[name]-[hash].js',
+					assetFileNames: 'assets/[name]-[hash].[ext]',
 				},
 			},
 		},
