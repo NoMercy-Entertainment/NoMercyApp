@@ -319,5 +319,37 @@
   - version.json endpoint will never be cached by CDN/browser
   - Foundation for Phase 8.2+ version checking and auto-update system
 
+### Phase 8.2: Server Version Check on App Load
+- Status: DONE
+- Date: 2026-02-05
+- Changes made:
+  1. Created src/lib/versionCheck.ts:
+     - `checkForUpdates()`: fetches `/version.json` (cache-busted) and compares with `APP_VERSION`
+     - `startVersionChecks()`: runs initial check, sets 5-minute interval, checks on tab visibility change
+     - `stopVersionChecks()`: cleans up interval and auto-update timeout
+     - `forceUpdate()`: triggers SW skip-waiting and reloads for critical updates
+     - `showUpdateAvailable()`: adds localized update notification + auto-update after 30 minutes
+  2. Created scripts/generate-version.js:
+     - ESM script that generates `docs/version.json` with git commit hash, build time, and optional forceUpdate flag
+     - Reads `FORCE_UPDATE` env var for critical deployments
+  3. Updated package.json:
+     - Changed `build` script to `vite build && node scripts/generate-version.js`
+     - version.json is now generated after every production build
+  4. Updated src/setupApp.ts:
+     - Added version check initialization in production (non-dev) builds
+     - Version checks start via lazy import in a queueMicrotask (non-blocking)
+     - Runs independently of service worker setup (works even without SW)
+- Benefits:
+  - App detects new deployments every 5 minutes and on tab focus
+  - Users see localized update notification with "Update Now" / "Later" options
+  - Auto-update triggers after 30 minutes if user ignores notification
+  - Force update capability for critical fixes (set FORCE_UPDATE=true at build time)
+  - version.json is cache-busted (no-store header already configured in Phase 6.3)
+
 ## Next Tasks (from PRD)
-- Phase 8.2: Server Version Check on App Load (src/lib/versionCheck.ts)
+- Phase 8.3: Generate version.json on Build (DONE as part of 8.2)
+- Phase 8.4: Handle Keycloak Redirect (src/lib/auth/updateState.ts)
+- Phase 8.5: Improve Update Notification UX (auto-update timeout - DONE as part of 8.2)
+- Phase 8.6: Cloudflare Headers for Cache Control (DONE in Phase 6.3)
+- Phase 8.7: Update PWA Config for Reliable Updates
+- Phase 8.8: Recovery for Users with Faulty Cache

@@ -28,7 +28,7 @@
 		"dev:emu": "ionic capacitor run android -l --external --host 192.168.2.201 --port 5502",
 		"build:android": "ionic capacitor build android",
 		"build:ios": "ionic capacitor build ios",
-		"build": "vite build",
+		"build": "vite build && node scripts/generate-version.js",
 		"preview": "vite preview --host --port=5502 ./",
 		"preview:build": "vite build && vite preview --host --port=5502 ./",
 		"test:e2e": "cypress run",

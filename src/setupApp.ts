@@ -40,19 +40,30 @@ import Button from '@/components/Button.vue';
 import Modal from '@/components/Modal.vue';
 
 export async function setupApp(app: AppContext['app']) {
-	// Defer service worker setup - don't block app initialization
-	if ('serviceWorker' in navigator && !import.meta.env.DEV && suffix !== '-dev') {
-		// Non-blocking: set up SW update detection after app renders
+	// Defer service worker setup and version checks - don't block app initialization
+	if (!import.meta.env.DEV) {
 		queueMicrotask(async () => {
+			// Start periodic version checks against /version.json
 			try {
-				await navigator.serviceWorker.ready;
-				const { setupServiceWorkerUpdates } = await import(
-					'@/lib/serviceWorkerUpdates',
-				);
-				setupServiceWorkerUpdates();
+				const { startVersionChecks } = await import('@/lib/versionCheck');
+				startVersionChecks();
 			}
 			catch (error) {
-				console.warn('Service worker setup failed:', error);
+				console.warn('Version check setup failed:', error);
+			}
+
+			// Set up SW update detection after app renders
+			if ('serviceWorker' in navigator && suffix !== '-dev') {
+				try {
+					await navigator.serviceWorker.ready;
+					const { setupServiceWorkerUpdates } = await import(
+						'@/lib/serviceWorkerUpdates',
+					);
+					setupServiceWorkerUpdates();
+				}
+				catch (error) {
+					console.warn('Service worker setup failed:', error);
+				}
 			}
 		});
 	}
