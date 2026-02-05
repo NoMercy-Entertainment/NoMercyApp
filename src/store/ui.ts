@@ -1,4 +1,4 @@
-import { computed, ref, watch } from 'vue';
+import { computed, ref, shallowRef, watch } from 'vue';
 import type { PaletteColors } from '@/lib/colorHelper';
 import { pickPaletteColor } from '@/lib/colorHelper';
 import { isPlatform, useKeyboard } from '@ionic/vue';
@@ -9,8 +9,8 @@ import { Keyboard } from '@capacitor/keyboard';
 
 import { applyNativeColor } from '@/store/colorTheme.ts';
 
-export const scrollContainerElement = ref<HTMLDivElement>();
-export const sidebarContainerElement = ref<HTMLElement>();
+export const scrollContainerElement = shallowRef<HTMLDivElement>();
+export const sidebarContainerElement = shallowRef<HTMLElement>();
 export const setupComplete = ref(false);
 
 const p = ref<string | null>();
@@ -37,7 +37,7 @@ export function setBackground(value?: string | null) {
 const fc = ref('var(--color-theme-8)');
 export const focusColor = computed(() => fc.value);
 
-const c = ref<PaletteColors | null>();
+const c = shallowRef<PaletteColors | null>(null);
 export const colorPalette = computed(() => c.value);
 
 export async function setColorPalette(value?: PaletteColors | null) {

@@ -229,5 +229,23 @@
   - Reduces DOM node count for carousels with many items
   - Improves scroll performance and reduces memory usage for long carousels
 
+### Phase 5.3: Optimize Reactive Dependencies (src/store/ui.ts)
+- Status: DONE
+- Date: 2026-02-05
+- File: src/store/ui.ts
+- Changes made:
+  1. Imported `shallowRef` from 'vue'
+  2. Converted `colorPalette` internal ref (`c`) from `ref` to `shallowRef`:
+     - `PaletteColors` is an object that is always replaced entirely, never mutated
+     - `shallowRef` skips deep reactivity tracking for the object's properties
+     - Initialized with explicit `null` instead of implicit `undefined`
+  3. Converted DOM element refs to `shallowRef`:
+     - `scrollContainerElement`: holds HTMLDivElement, doesn't need deep reactivity
+     - `sidebarContainerElement`: holds HTMLElement, doesn't need deep reactivity
+- Benefits:
+  - Avoids unnecessary deep reactivity proxy creation for PaletteColors objects
+  - DOM elements are large objects; shallowRef prevents Vue from traversing their properties
+  - Reduces reactivity overhead on every colorPalette update
+
 ## Next Tasks (from PRD)
-- Phase 5.3: Optimize Reactive Dependencies (src/store/ui.ts)
+- Phase 6.1: Enable Compression (vite.config.ts)
