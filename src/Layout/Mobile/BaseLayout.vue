@@ -13,8 +13,7 @@ import ImageModal from '@/Layout/ImageModal.vue';
 // import Screensaver from '@/Layout/Screensaver.vue';
 import DeviceOverlay from '@/Layout/Desktop/components/Overlays/DeviceOverlay.vue';
 
-import FullPlayer from '@/components/MusicPlayer/mobile/FullPlayer.vue';
-import MiniPlayer from '@/components/MusicPlayer/mobile/MiniPlayer.vue';
+import { AsyncMusicPlayerFull, AsyncMusicPlayerMini } from '@/components/async';
 import ChristmasSnow from '@/components/Seasonal/Christmas/ChristmasSnow.vue';
 
 import ProfileMenu from './components/menus/ProfileMenu.vue';
@@ -56,11 +55,11 @@ onUnmounted(() => {
 
 			<BottomBar />
 
-			<FullPlayer
+			<AsyncMusicPlayerFull
 				v-if="currentSong?.id"
 				:key="fullPlayerModalOpen ? 'full-player-open' : 'full-player-closed'"
 			/>
-			<MiniPlayer
+			<AsyncMusicPlayerMini
 				:key="!fullPlayerModalOpen ? 'mini-player-open' : 'mini-player-closed'"
 			/>
 			<Suspense>

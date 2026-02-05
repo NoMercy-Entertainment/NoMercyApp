@@ -16,7 +16,7 @@ import LyricsOverlay from './components/Overlays/LyricsOverlay.vue';
 import DeviceOverlay from './components/Overlays/DeviceOverlay.vue';
 import RipperOverlay from './components/Overlays/RipperOverlay.vue';
 
-import MusicPlayerDesktop from '@/components/MusicPlayer/MusicPlayerDesktop.vue';
+import { AsyncMusicPlayerDesktop } from '@/components/async';
 import EqualizerOverlay from '@/Layout/Desktop/components/Overlays/EqualizerOverlay.vue';
 import ChristmasSnow from '@/components/Seasonal/Christmas/ChristmasSnow.vue';
 import Shadow from '@/Layout/Desktop/components/Shadow.vue';
@@ -82,7 +82,7 @@ function focusMain() {
 				</div>
 			</div>
 
-			<MusicPlayerDesktop />
+			<AsyncMusicPlayerDesktop />
 		</div>
 	</IonPage>
 </template>

@@ -79,5 +79,25 @@
   - Prevents CLS (Cumulative Layout Shift) while async components load
   - Smooth loading experience with animated placeholders
 
+### Phase 2.2: Use defineAsyncComponent for Heavy Components
+- Status: DONE
+- Date: 2026-02-05
+- Changes made:
+  1. Created src/components/Loading/MusicPlayerSkeleton.vue:
+     - Skeleton placeholder matching the desktop music player layout
+     - Shows animated pulse placeholders for cover, controls, and volume
+  2. Created src/components/async.ts:
+     - AsyncMusicPlayerDesktop: lazy-loaded with MusicPlayerSkeleton
+     - AsyncMusicPlayerFull: lazy-loaded mobile full player
+     - AsyncMusicPlayerMini: lazy-loaded mobile mini player
+  3. Updated src/Layout/Desktop/BaseLayout.vue:
+     - Changed MusicPlayerDesktop import to AsyncMusicPlayerDesktop
+  4. Updated src/Layout/Mobile/BaseLayout.vue:
+     - Changed FullPlayer and MiniPlayer imports to async versions
+- Notes:
+  - VideoPlayer: Already an external library (@nomercy-entertainment/nomercy-video-player), not a Vue component
+  - Dashboard: Already uses defineAsyncComponent with route-based lazy loading
+  - Focus was on MusicPlayer components which were eagerly loaded in layouts
+
 ## Next Tasks (from PRD)
-- Phase 2.2: Use defineAsyncComponent for Heavy Components (VideoPlayer, MusicPlayer, Dashboard)
+- Phase 2.3: Implement Component-Level Code Splitting (Swiper imports locally in components)
