@@ -15,6 +15,7 @@ import {
 	videoSearchResult,
 } from '@/store/search';
 import { greetingValue } from '@/config/global';
+import { nmComponentMap } from '@/components/nmComponentMap';
 
 import ScrollContainer from '@/Layout/Desktop/components/ScrollContainer.vue';
 import SearchCard from '@/components/Cards/SearchCard.vue';
@@ -213,7 +214,7 @@ watch(searchType, () => {
 				class="flex w-full flex-col p-1 h-available sm:p-4 sm:pt-0 overflow-auto"
 			>
 				<component
-					:is="render.component"
+					:is="nmComponentMap[render.component]"
 					v-for="(render, index) in musicSearchResult ?? []"
 					:key="render.id"
 					:index="index"

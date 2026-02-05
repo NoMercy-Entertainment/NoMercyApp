@@ -15,6 +15,7 @@ import {
 } from '@/store/search';
 import { greetingValue } from '@/config/global';
 import { showScreensaver } from '@/store/imageModal';
+import { nmComponentMap } from '@/components/nmComponentMap';
 
 import CosmosBg2 from '@/components/Images/CosmosBg2.vue';
 import SearchCard from '@/components/Cards/SearchCard.vue';
@@ -131,7 +132,7 @@ watch(searchType, () => {
 						class="flex w-full flex-col h-available p-4 sm:pt-0 overflow-auto"
 					>
 						<component
-							:is="render.component"
+							:is="nmComponentMap[render.component]"
 							v-for="(render, index) in musicSearchResult ?? []"
 							:key="render.id"
 							:index="index"
