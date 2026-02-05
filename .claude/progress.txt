@@ -153,6 +153,20 @@
   - Stale data refetched sooner (5min vs 1hr) for fresher content
   - Unused query cache garbage-collected after 30min to reduce memory usage
 
+### Phase 4.2: Replace structuredClone with Targeted Updates
+- Status: DONE
+- Date: 2026-02-05
+- File: src/lib/routerHelper.ts
+- Changes made:
+  1. Replaced `structuredClone(toRaw(d))` on every item with targeted shallow copies:
+     - Build a Set of `replace_id` values from the mutations
+     - Only shallow-clone (`{ ...d }`) items whose `id` is in the mutation set
+     - Unchanged items keep their original reference (no copy at all)
+  2. Removed unused `toRaw` import from vue
+- Benefits:
+  - Eliminates expensive deep cloning of potentially large data arrays
+  - Only items about to be replaced get a shallow copy (which is immediately overwritten anyway)
+  - Reduces GC pressure and improves mutation performance
+
 ## Next Tasks (from PRD)
-- Phase 4.2: Replace structuredClone with Targeted Updates (src/lib/routerHelper.ts)
 - Phase 4.3: Implement Request Deduplication (src/lib/clients/serverClient.ts)

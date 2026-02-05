@@ -3,7 +3,7 @@ import { useIsMutating, useMutation, useQuery } from '@tanstack/vue-query';
 import serverClient from '@/lib/clients/serverClient';
 import router from '@/router';
 import type { Ref } from 'vue';
-import { toRaw, watch } from 'vue';
+import { watch } from 'vue';
 import { useOnline } from '@vueuse/core';
 import { queryClient } from '@/config/tanstack-query';
 import { currentServer } from '@/store/currentServer';
@@ -120,11 +120,14 @@ export function getMutation<T>({
 	return useMutation({
 		mutationKey: key ?? queryKey(path),
 		mutationFn: async (mutations: Component<T>[]) => {
-			const data = [
-				...(homeData.value?.map((d) => {
-					return structuredClone(toRaw(d));
-				}) ?? []),
-			];
+			const mutationIds = new Set(mutations.map(m => m.update?.body?.replace_id));
+
+			const data = homeData.value?.map((d) => {
+				if (mutationIds.has(d.id)) {
+					return { ...d };
+				}
+				return d;
+			}) ?? [];
 
 			for (const item of mutations) {
 				await serverClient()
