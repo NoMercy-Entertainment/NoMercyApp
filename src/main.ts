@@ -1,5 +1,10 @@
+import { setupChunkErrorRecovery } from '@/lib/chunkErrorRecovery';
+import { runCacheMigration } from '@/lib/cacheMigration';
 import { createApp, watch } from 'vue';
 import { isPlatform } from '@ionic/vue';
+
+// Set up chunk error recovery immediately (before any dynamic imports can fail)
+setupChunkErrorRecovery();
 
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/vue/css/core.css';
@@ -91,8 +96,10 @@ async function initializeWebApp() {
 	}
 }
 
-// Start the application
-initializeWebApp().then();
+// Run one-time cache migration for existing users, then start the application
+runCacheMigration().then(() => {
+	initializeWebApp();
+});
 
 // Initialize Sentry in production (deferred, non-blocking)
 if (import.meta.env.PROD && import.meta.env.VITE_SENTRY_DSN) {

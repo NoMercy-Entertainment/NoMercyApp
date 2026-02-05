@@ -390,10 +390,36 @@
   - Outdated caches are automatically cleaned up when a new SW activates
   - Foundation for reliable cache recovery in Phase 8.8
 
+### Phase 8.8: Recovery for Users with Faulty Cache
+- Status: DONE
+- Date: 2026-02-05
+- Changes made:
+  1. Created src/lib/chunkErrorRecovery.ts:
+     - Listens for `error` and `unhandledrejection` events that indicate chunk loading failures
+     - Detects "Loading chunk", "Failed to fetch dynamically imported module", and "Importing a module script failed"
+     - On first chunk error: clears all caches, unregisters all service workers, and reloads
+     - `hasRecovered` flag prevents infinite reload loops
+  2. Created src/lib/cacheMigration.ts:
+     - One-time migration for existing users with stale caches
+     - Checks localStorage for migration version key (`nomercy_cache_migration`)
+     - If migration version doesn't match `v2`: clears all caches, unregisters SWs, reloads
+     - Sets migration key after completion to prevent re-running
+     - Gracefully handles errors (sets key even on failure to avoid retry loops)
+  3. Updated src/main.ts:
+     - `setupChunkErrorRecovery()` called immediately at module level (before any dynamic imports)
+     - `runCacheMigration()` gates app initialization: only calls `initializeWebApp()` after migration completes
+     - If migration triggers a reload, app init is skipped (page will reload)
+- Benefits:
+  - Users with stale/broken caches get automatic recovery without manual intervention
+  - Chunk loading failures (from mismatched hashes after deploy) auto-recover
+  - Existing users get a one-time full cache clear on first visit after this deploy
+  - No infinite reload loops (recovery flags prevent re-triggering)
+
 ## Next Tasks (from PRD)
 - Phase 8.3: Generate version.json on Build (DONE as part of 8.2)
 - Phase 8.4: Handle Keycloak Redirect (DONE)
 - Phase 8.5: Improve Update Notification UX (auto-update timeout - DONE as part of 8.2)
 - Phase 8.6: Cloudflare Headers for Cache Control (DONE in Phase 6.3)
 - Phase 8.7: Update PWA Config for Reliable Updates (DONE)
-- Phase 8.8: Recovery for Users with Faulty Cache
+- Phase 8.8: Recovery for Users with Faulty Cache (DONE)
+- Phase 8.9: Offline Availability
