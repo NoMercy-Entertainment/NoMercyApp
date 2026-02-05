@@ -114,7 +114,7 @@ export default defineConfig(({ command }) => {
 			chunkSizeWarningLimit: 250,
 			emptyOutDir: true,
 			minify: 'esbuild',
-			cssMinify: 'esbuild',
+			cssMinify: 'lightningcss',
 			cssCodeSplit: true,
 			rollupOptions: {
 				external: (id) => {
@@ -196,6 +196,7 @@ export default defineConfig(({ command }) => {
 			},
 		},
 		css: {
+			devSourcemap: false,
 			preprocessorOptions: {
 				scss: {
 					api: 'modern-compiler',

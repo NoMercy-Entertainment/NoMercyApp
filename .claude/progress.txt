@@ -264,6 +264,26 @@
   - Brotli typically achieves 15-25% better compression than gzip for text assets
   - Reduces server CPU usage since compression happens at build time, not per-request
 
+### Phase 6.2: Optimize CSS Delivery (vite.config.ts)
+- Status: DONE
+- Date: 2026-02-05
+- File: vite.config.ts
+- Changes made:
+  1. Changed `cssMinify: 'esbuild'` to `cssMinify: 'lightningcss'`:
+     - lightningcss produces smaller CSS output than esbuild's CSS minifier
+     - lightningcss handles vendor prefix insertion, CSS nesting lowering, and syntax lowering
+     - Already the default in rolldown-vite 7.3.1 but was overridden to esbuild
+     - lightningcss was already installed in node_modules
+  2. Added `devSourcemap: false` to the `css` config:
+     - Disables CSS source maps in development for faster rebuilds
+     - Reduces memory usage during development
+  3. Already present (no changes needed):
+     - `cssCodeSplit: true` (CSS split per component/route)
+     - `scss.api: 'modern-compiler'` (uses modern Dart Sass API)
+- Benefits:
+  - Smaller CSS output from lightningcss vs esbuild minification
+  - Automatic vendor prefixing and syntax lowering handled by lightningcss
+  - Faster dev server rebuilds without CSS sourcemap generation
+
 ## Next Tasks (from PRD)
-- Phase 6.2: Optimize CSS Delivery (vite.config.ts)
 - Phase 6.3: Configure Optimal Caching Headers (public/_headers)
