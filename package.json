@@ -162,6 +162,7 @@
 		"terser": "5.44.0",
 		"typescript": "5.9.2",
 		"vite": "npm:rolldown-vite@latest",
+		"vite-plugin-compression": "^0.5.1",
 		"vite-plugin-csp": "1.1.2",
 		"vite-plugin-minify": "2.1.0",
 		"vite-plugin-pwa": "1.0.3",

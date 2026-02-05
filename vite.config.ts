@@ -6,6 +6,7 @@ import { defineConfig } from 'vite';
 import { VitePWA } from 'vite-plugin-pwa';
 import { ViteCspPlugin } from 'vite-plugin-csp';
 import { ViteMinifyPlugin } from 'vite-plugin-minify';
+import compression from 'vite-plugin-compression';
 import vue from '@vitejs/plugin-vue';
 
 import { pwaConfig } from './pwaConfig';
@@ -52,7 +53,8 @@ export default defineConfig(({ command }) => {
 				// processFn: 'Nginx',
 			}),
 			ViteMinifyPlugin(),
-			// gzipPlugin(),
+			compression({ algorithm: 'gzip', ext: '.gz' }),
+			compression({ algorithm: 'brotliCompress', ext: '.br' }),
 		],
 		server: {
 			port: 5502,
