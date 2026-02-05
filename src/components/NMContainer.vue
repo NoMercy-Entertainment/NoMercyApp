@@ -2,6 +2,7 @@
 import type { PropType } from 'vue';
 
 import type { Component } from '@/lib/routerHelper';
+import { nmComponentMap } from '@/components/nmComponentMap';
 
 defineProps({
 	items: {
@@ -14,7 +15,7 @@ defineProps({
 <template>
 	<div class="flex flex-col sm:flex-row gap-4 mx-2 my-4 sm:m-4 w-available empty:hidden">
 		<component
-			:is="render.component"
+			:is="nmComponentMap[render.component]"
 			v-for="(render, index) in items ?? []"
 			:key="render.id"
 			:index="index"

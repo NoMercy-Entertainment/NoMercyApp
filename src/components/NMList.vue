@@ -3,6 +3,7 @@ import type { PropType } from 'vue';
 
 import type { Component } from '@/lib/routerHelper';
 import type { PlaylistItem } from '@/types/musicPlayer';
+import { nmComponentMap } from '@/components/nmComponentMap';
 
 defineProps({
 	items: {
@@ -33,7 +34,7 @@ defineProps({
 
 		<div class="relative isolate w-full flex flex-col whitespace-pre gap-2 items-start justify-start p-1">
 			<component
-				:is="render.component"
+				:is="nmComponentMap[render.component]"
 				v-for="(render, index) in items ?? []"
 				:key="render.id"
 				:index="index"

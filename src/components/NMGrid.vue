@@ -7,6 +7,7 @@ import type { Component } from '@/lib/routerHelper';
 import { showBackdrops } from '@/store/preferences';
 import { currentSong } from '@/store/audioPlayer';
 import router from '@/router';
+import { nmComponentMap } from '@/components/nmComponentMap';
 
 const props = defineProps({
 	items: {
@@ -49,7 +50,7 @@ const useBackdropStyle = computed(() => {
 			}`"
 		>
 			<component
-				:is="render.component"
+				:is="nmComponentMap[render.component]"
 				v-for="(render, index) in items ?? []"
 				:key="render.id"
 				:index="index"

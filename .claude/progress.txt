@@ -45,24 +45,24 @@
 - Status: DONE
 - Date: 2026-02-05
 - Changes made:
-  1. Updated src/components/NMComponent.vue:
-     - Added defineAsyncComponent import from 'vue'
-     - Created componentMap with lazy-loaded async components for all 15 NM components:
-       NMCarousel, NMCarousel2, NMCard, NMContainer, NMGenreCard, NMGrid, NMHomeCard,
-       NMList, NMSeasonCard, NMSeasonTitle, NMMusicCard, NMMusicHomeCard, NMServerComponent,
-       NMTopResultCard, NMTrackRow
-     - Updated template to use componentMap[render?.component] instead of render?.component
+  1. Created src/components/nmComponentMap.ts:
+     - Single shared export with all 15 NM components as defineAsyncComponent lazy imports
+     - Used by all components that render dynamic NM components
   2. Updated src/setupApp.ts:
-     - Removed all NM component imports (NMCard, NMCarousel, NMCarousel2, NMContainer,
-       NMGenreCard, NMGrid, HomeCard, NMList, NMSeasonCard, NMSeasonTitle, NMMusicHomeCard,
-       NMServerComponent, NMTopResultCard, NMTrackRow, NMMusicCard)
-     - Removed all NM component global registrations (lines 102-117)
-     - Removed unused supportsCarousel variable
-     - Removed unused isMobile import
+     - Removed all NM component imports and global registrations
+     - Removed unused supportsCarousel variable and isMobile import
+  3. Updated components to use shared nmComponentMap:
+     - src/components/NMComponent.vue
+     - src/components/NMCarousel.vue
+     - src/components/NMCarousel2.vue
+     - src/components/NMContainer.vue
+     - src/components/NMList.vue
+     - src/components/NMGrid.vue
 - Benefits:
+  - Single source of truth for NM component map (DRY principle)
   - NM components now load only when API requests them
   - Reduces initial bundle size (components split into separate chunks)
-  - Each NM component becomes its own lazy-loaded chunk
+  - Easy to add new NM components - just update nmComponentMap.ts
 
 ## Next Tasks (from PRD)
 - Phase 2.2: Use defineAsyncComponent for Heavy Components (VideoPlayer, MusicPlayer, Dashboard)
