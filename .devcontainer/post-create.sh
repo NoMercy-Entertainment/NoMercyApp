@@ -76,19 +76,13 @@ done
 echo ""
 echo "[3/5] Importing Claude configuration..."
 if [ -d "/tmp/.claude-host" ]; then
-    # Copy auth and settings files from Windows host mount
+    # Copy only essential auth/settings files (skip projects dir - Windows mount permissions)
     mkdir -p "${HOME}/.claude"
     for file in credentials.json settings.json settings.local.json .credentials; do
         if [ -f "/tmp/.claude-host/$file" ]; then
-            cp "/tmp/.claude-host/$file" "${HOME}/.claude/"
-            echo "✓ Copied $file from host"
+            cp "/tmp/.claude-host/$file" "${HOME}/.claude/" && echo "✓ Copied $file from host"
         fi
     done
-    # Copy projects directory if it exists
-    if [ -d "/tmp/.claude-host/projects" ]; then
-        cp -r "/tmp/.claude-host/projects" "${HOME}/.claude/"
-        echo "✓ Copied projects directory from host"
-    fi
 else
     echo "⚠ No Claude host mount found at /tmp/.claude-host"
 fi
