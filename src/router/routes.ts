@@ -70,11 +70,9 @@ const NotFound = () => import('@/views/NotFound');
 
 function getBaseLayout() {
 	if (isMobile.value) {
-		return MobileBaseLayout;
+		return MobileBaseLayout();
 	}
-	else {
-		return DesktopBaseLayout;
-	}
+	return DesktopBaseLayout();
 }
 
 export const routes: Array<RouteRecordRaw> = [
