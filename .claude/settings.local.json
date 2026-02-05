@@ -43,5 +43,6 @@
       "Bash(wc:*)",
       "WebFetch(domain:192-168-2-201.fcbb730a-a562-2ca5-d054-5d6acf2a1aaa.nomercy.tv)"
     ]
-  }
+  },
+  "prefersReducedMotion": true
 }
