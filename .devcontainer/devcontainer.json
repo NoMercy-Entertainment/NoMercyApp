@@ -28,6 +28,11 @@
 			"source": "nomercy-app-claude-data",
 			"target": "/home/vscode/.claude",
 			"type": "volume"
+		},
+		{
+			"source": "C:/Users/patri/.claude",
+			"target": "/tmp/.claude-host",
+			"type": "bind"
 		}
 	],
 
