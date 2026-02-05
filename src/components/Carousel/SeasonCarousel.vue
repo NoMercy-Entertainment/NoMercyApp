@@ -80,6 +80,7 @@ watch(currentSeason, reset);
 
 		<SwiperSlide
 			v-if="currentSeason.episodes?.length === 0"
+			:virtual-index="0"
 			class="flex sm:p-1 sm:pl-0"
 		>
 			<SeasonCard
@@ -103,9 +104,10 @@ watch(currentSeason, reset);
 		</SwiperSlide>
 
 		<SwiperSlide
-			v-for="item in currentSeason.episodes"
+			v-for="(item, itemIndex) in currentSeason.episodes"
 			v-else
 			:key="item.id"
+			:virtual-index="itemIndex"
 			class="flex sm:p-1 sm:pl-0"
 		>
 			<SeasonCard

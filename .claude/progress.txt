@@ -201,6 +201,33 @@
   - Cross-section navigations (e.g. /movies → /music) still get full scrollbar reset
   - Reduces ResizeObserver churn and event listener rebinding overhead
 
+### Phase 5.2: Implement Virtual Scrolling for Long Lists
+- Status: DONE
+- Date: 2026-02-05
+- Changes made:
+  1. Updated src/lib/swiper-config.ts:
+     - Changed `virtual: false` to `virtual: { enabled: true, addSlidesAfter: 2, addSlidesBefore: 2 }`
+  2. Updated src/components/Carousel/Carousel.vue:
+     - Imported `Virtual` from 'swiper/modules'
+     - Added `:modules="[Virtual]"` to SwiperComponent
+  3. Updated src/components/NMCarousel.vue:
+     - Imported `Virtual` from 'swiper/modules'
+     - Added `:modules="[Virtual]"` to SwiperComponent
+     - Added `:virtual-index="itemIndex"` to SwiperSlide
+  4. Added/fixed `virtual-index` on SwiperSlide in all child carousel components:
+     - src/components/Carousel/MediaCarousel.vue (added virtual-index)
+     - src/components/Carousel/PersonCarousel.vue (added virtual-index)
+     - src/components/Carousel/ImageCarousel.vue (added virtual-index)
+     - src/components/Carousel/SeasonCarousel.vue (added virtual-index)
+     - src/components/Carousel/MusicCarousel.vue (fixed: was using carousel index, now uses item index)
+     - src/components/Carousel/MusicGenreCarousel.vue (fixed: was using carousel index, now uses item index)
+- Notes:
+  - Person/Mobile.vue and MusicPlayer/FullPlayer.vue don't use swiperConfig, so are unaffected
+  - NMCarousel2.vue uses native CSS scroll (no Swiper), so is unaffected
+- Benefits:
+  - Swiper only renders visible slides + 2 buffer slides on each side
+  - Reduces DOM node count for carousels with many items
+  - Improves scroll performance and reduces memory usage for long carousels
+
 ## Next Tasks (from PRD)
-- Phase 5.2: Implement Virtual Scrolling for Long Lists (src/lib/swiper-config.ts)
 - Phase 5.3: Optimize Reactive Dependencies (src/store/ui.ts)

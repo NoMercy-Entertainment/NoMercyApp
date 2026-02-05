@@ -50,9 +50,9 @@ function handleClick(item: HomeDataItem) {
 		</template>
 
 		<SwiperSlide
-			v-for="item in data.items"
+			v-for="(item, itemIndex) in data.items"
 			:key="item?.id"
-			:virtual-index="index"
+			:virtual-index="itemIndex"
 			class="flex py-1"
 		>
 			<NMMusicCard

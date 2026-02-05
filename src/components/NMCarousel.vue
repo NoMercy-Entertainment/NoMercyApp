@@ -2,6 +2,7 @@
 import { computed, onBeforeMount, PropType, ref } from "vue";
 import { Swiper } from "swiper";
 import { Swiper as SwiperComponent, SwiperSlide } from "swiper/vue";
+import { Virtual } from 'swiper/modules';
 import 'swiper/css';
 
 import type { Component } from "@/types/config";
@@ -286,6 +287,7 @@ const scrollToCenter = () => {
         <SwiperComponent
             ref="swiper"
             :breakpoints="bp"
+            :modules="[Virtual]"
             :slidesOffsetBefore="offsetBefore"
             data-spatial-container="row"
             v-bind="swiperConfig(backdropCards) as any"
@@ -293,8 +295,8 @@ const scrollToCenter = () => {
             @progress="onProgress"
             @slideChange="onSlideChange"
         >
-          <template v-for="item in items" :key="item?.id">
-            <SwiperSlide v-if="item?.id" class="flex">
+          <template v-for="(item, itemIndex) in items" :key="item?.id">
+            <SwiperSlide v-if="item?.id" :virtual-index="itemIndex" class="flex">
               <component
                   :is="nmComponentMap[item.component]"
                   :key="item.id"

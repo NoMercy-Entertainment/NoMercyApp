@@ -134,7 +134,7 @@ function onRightClick(event: MouseEvent, item: any) {
 		</template>
 
 		<template v-for="(item, itemIndex) in data" :key="item?.id">
-			<SwiperSlide v-if="item?.id" class="flex">
+			<SwiperSlide v-if="item?.id" :virtual-index="itemIndex" class="flex">
 				<MediaCard
 					:id="`item-${title}-${item.id}`"
 					:data="item"

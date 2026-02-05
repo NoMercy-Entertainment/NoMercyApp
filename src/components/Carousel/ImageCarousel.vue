@@ -205,7 +205,7 @@ function onEnd() {}
 		:type="type"
 		:disable-auto-aspect="type === 'poster'"
 	>
-		<SwiperSlide v-for="item in data" :key="item.id" class="flex">
+		<SwiperSlide v-for="(item, itemIndex) in data" :key="item.id" :virtual-index="itemIndex" class="flex">
 			<ImageCard :data="item" :aspect="type" :set-data="setData" />
 		</SwiperSlide>
 	</Carousel>

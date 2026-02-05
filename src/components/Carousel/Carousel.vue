@@ -3,6 +3,7 @@ import type { PropType } from 'vue';
 import { computed, ref } from 'vue';
 import type { Swiper } from 'swiper';
 import { Swiper as SwiperComponent } from 'swiper/vue';
+import { Virtual } from 'swiper/modules';
 import 'swiper/css';
 
 import { mappedEntries } from '@/lib/stringArray';
@@ -176,6 +177,7 @@ function focusMain() {
 			</div>
 			<div class="gap-3 py-1 pr-0 w-available swiper">
 				<SwiperComponent ref="swiper" :class="`swiper-${title?.replace(/[\s&#]/gu, '-')} opacity-0 transform-gpu`"
+					:modules="[Virtual]"
 					data-spatial-container="row"
 					v-bind="customSwiperConfig as any" @progress="onProgress" @after-init="afterInit"
 					@slide-change="onSlideChange"

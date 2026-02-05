@@ -83,7 +83,11 @@ export function swiperConfig(isBackdrop: boolean) {
 			enabled: false,
 		},
 		breakpointsBase: 'window',
-		virtual: false,
+		virtual: {
+			enabled: true,
+			addSlidesAfter: 2,
+			addSlidesBefore: 2,
+		},
 		updateOnWindowResize: true,
 		speed: 100,
 		spaceBefore: 10,
