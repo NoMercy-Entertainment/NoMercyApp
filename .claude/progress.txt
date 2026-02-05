@@ -415,6 +415,33 @@
   - Existing users get a one-time full cache clear on first visit after this deploy
   - No infinite reload loops (recovery flags prevent re-triggering)
 
+### Phase 8.9: Offline Availability
+- Status: DONE
+- Date: 2026-02-05
+- Changes made:
+  1. Created src/components/OfflineBanner.vue:
+     - Uses `useOnline()` from `@vueuse/core` (already installed v13.9.0)
+     - Shows a fixed amber banner at the top of the screen when offline
+     - Includes wifi-off SVG icon and localized message via `$t()`
+     - Animated slide-in/slide-out transition (translateY + opacity)
+     - z-index 9999 to appear above all other content
+  2. Updated src/Layout/Desktop/BaseLayout.vue:
+     - Imported and added `<OfflineBanner />` inside IonPage, above the skip-navigation button
+  3. Updated src/Layout/Mobile/BaseLayout.vue:
+     - Imported and added `<OfflineBanner />` inside IonPage, above IonTabs
+- PWA caching strategies already configured (no changes needed):
+  - Fonts: CacheFirst with 1-year expiration
+  - Images: CacheFirst with 30-day expiration
+  - API: StaleWhileRevalidate with 5-minute expiration
+  - CDN assets: CacheFirst with 30-day expiration
+  - Main app: NetworkFirst with 1-day expiration
+  - Precaching: App shell (index.html, main JS/CSS) via generateSW
+- Benefits:
+  - Users see clear visual indicator when network connection is lost
+  - Banner disappears automatically when connection is restored
+  - Cached content remains accessible while offline (via existing PWA caching)
+  - No additional dependencies required (@vueuse/core already in project)
+
 ## Next Tasks (from PRD)
 - Phase 8.3: Generate version.json on Build (DONE as part of 8.2)
 - Phase 8.4: Handle Keycloak Redirect (DONE)
@@ -422,4 +449,5 @@
 - Phase 8.6: Cloudflare Headers for Cache Control (DONE in Phase 6.3)
 - Phase 8.7: Update PWA Config for Reliable Updates (DONE)
 - Phase 8.8: Recovery for Users with Faulty Cache (DONE)
-- Phase 8.9: Offline Availability
+- Phase 8.9: Offline Availability (DONE)
+- Phase 7: Code Structure & Consistency (next)

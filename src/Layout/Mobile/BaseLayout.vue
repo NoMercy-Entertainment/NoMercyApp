@@ -21,6 +21,7 @@ import BottomBar from './components/BottomBar.vue';
 import MobileLibraryHeader from '@/views/Base/Library/components/MobileLibraryHeader.vue';
 
 import { OpenInAppBanner, WelcomeAppModal } from '@/components/AndroidApp';
+import OfflineBanner from '@/components/OfflineBanner.vue';
 
 const isFetching = useIsFetching();
 
@@ -38,6 +39,7 @@ onUnmounted(() => {
 
 <template>
 	<IonPage id="main-content">
+		<OfflineBanner />
 		<IonTabs>
 			<IonProgressBar
 				v-if="isFetching > 0"

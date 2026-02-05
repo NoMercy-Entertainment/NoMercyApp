@@ -20,6 +20,7 @@ import { AsyncMusicPlayerDesktop } from '@/components/async';
 import EqualizerOverlay from '@/Layout/Desktop/components/Overlays/EqualizerOverlay.vue';
 import ChristmasSnow from '@/components/Seasonal/Christmas/ChristmasSnow.vue';
 import Shadow from '@/Layout/Desktop/components/Shadow.vue';
+import OfflineBanner from '@/components/OfflineBanner.vue';
 
 const route = useRoute();
 
@@ -36,6 +37,7 @@ function focusMain() {
 
 <template>
 	<IonPage>
+		<OfflineBanner />
 		<button
 			:onclick="focusMain"
 			class="skip-navigation absolute z-999 top-[-50px] left-2 bg-surface-1 p-2 rounded-md text-slate-11"
