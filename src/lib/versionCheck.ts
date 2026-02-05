@@ -1,6 +1,7 @@
 import { APP_VERSION } from './version';
 import { addNotification } from '@/store/notifications';
 import { pwaMessages } from '@/i18n/pwa';
+import { setUpdatePending } from '@/lib/auth/updateState';
 import type { Message } from '@/types/auth';
 
 const VERSION_CHECK_INTERVAL = 5 * 60 * 1000;
@@ -83,6 +84,8 @@ export async function checkForUpdates(): Promise<boolean> {
 		const serverVersion: VersionInfo = await response.json();
 
 		if (serverVersion.version !== APP_VERSION) {
+			setUpdatePending(serverVersion.version);
+
 			if (serverVersion.forceUpdate) {
 				forceUpdate();
 				return true;

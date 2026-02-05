@@ -83,6 +83,10 @@ async function initializeWebApp() {
 		watch(kc.decodedToken, async () => {
 			setUserFromWebKeycloak(kc);
 			await setupApplication();
+
+			// After Keycloak redirect completes, apply any pending update
+			const { checkAndApplyPendingUpdate } = await import('@/lib/auth/updateState');
+			checkAndApplyPendingUpdate();
 		});
 	}
 }

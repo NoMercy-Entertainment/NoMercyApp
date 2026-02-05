@@ -346,9 +346,32 @@
   - Force update capability for critical fixes (set FORCE_UPDATE=true at build time)
   - version.json is cache-busted (no-store header already configured in Phase 6.3)
 
+### Phase 8.4: Handle Keycloak Redirect
+- Status: DONE
+- Date: 2026-02-05
+- Changes made:
+  1. Created src/lib/auth/updateState.ts:
+     - `setUpdatePending(version)`: stores pending update version in sessionStorage
+     - `getUpdatePending()`: retrieves pending update state
+     - `clearUpdatePending()`: clears pending update state
+     - `checkAndApplyPendingUpdate()`: checks for pending update after redirect, activates waiting SW or reloads
+  2. Updated src/lib/versionCheck.ts:
+     - Imported `setUpdatePending` from `@/lib/auth/updateState`
+     - Added `setUpdatePending(serverVersion.version)` call when a version mismatch is detected
+     - This persists the pending update state in sessionStorage before any Keycloak redirect
+  3. Updated src/main.ts:
+     - After Keycloak callback completes (in `watch(kc.decodedToken)` handler):
+     - Lazy-imports and calls `checkAndApplyPendingUpdate()` after `setupApplication()`
+     - If a pending update was stored before redirect, it's applied automatically
+- Benefits:
+  - Update state survives Keycloak redirects (sessionStorage persists across same-origin navigations)
+  - User returns from Keycloak login to the latest version automatically
+  - No stale content after authentication flow completes
+  - Uses lazy import so the module only loads when needed
+
 ## Next Tasks (from PRD)
 - Phase 8.3: Generate version.json on Build (DONE as part of 8.2)
-- Phase 8.4: Handle Keycloak Redirect (src/lib/auth/updateState.ts)
+- Phase 8.4: Handle Keycloak Redirect (DONE)
 - Phase 8.5: Improve Update Notification UX (auto-update timeout - DONE as part of 8.2)
 - Phase 8.6: Cloudflare Headers for Cache Control (DONE in Phase 6.3)
 - Phase 8.7: Update PWA Config for Reliable Updates
