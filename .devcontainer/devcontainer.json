@@ -20,13 +20,13 @@
 			"type": "bind"
 		},
 		{
-			"source": "C:/Users/patri/.claude",
-			"target": "/home/vscode/.claude",
-			"type": "bind"
-		},
-		{
 			"source": "nomercy-app-node-modules",
 			"target": "/workspaces/NoMercy.App/node_modules",
+			"type": "volume"
+		},
+		{
+			"source": "nomercy-app-claude-data",
+			"target": "/home/vscode/.claude",
 			"type": "volume"
 		}
 	],
@@ -59,7 +59,7 @@
 		}
 	},
 
-	"postCreateCommand": "sudo chown -R vscode:vscode /workspaces/NoMercy.App/node_modules 2>/dev/null || true && bash .devcontainer/post-create.sh",
+	"postCreateCommand": "sudo chown -R vscode:vscode /workspaces/NoMercy.App/node_modules /home/vscode/.claude 2>/dev/null || true && bash .devcontainer/post-create.sh",
 	"postStartCommand": "bash .devcontainer/post-start.sh",
 
 	"remoteUser": "vscode"
