@@ -8,7 +8,7 @@ import type { Playlist } from '@/types/api/music/playlists';
 import type { LogoResponse } from '@/types/server';
 
 import useServerClient from '@/lib/clients/useServerClient';
-import { setLibraries } from '@/store/Libraries';
+import { setLibraries } from '@/store/libraries';
 import { setMusicPlaylists } from '@/store/musicPlaylists';
 
 import EmptyBackdrop from '@/components/Images/EmptyBackdrop.vue';

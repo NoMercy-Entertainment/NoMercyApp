@@ -13,54 +13,54 @@ export const scrollContainerElement = shallowRef<HTMLDivElement>();
 export const sidebarContainerElement = shallowRef<HTMLElement>();
 export const setupComplete = ref(false);
 
-const p = ref<string | null>();
-export const poster = computed(() => p.value);
+const posterData = ref<string | null>(null);
+export const poster = computed(() => posterData.value);
 
 export function setPoster(value?: string | null) {
-	p.value = value;
+	posterData.value = value ?? null;
 }
 
-const t = ref<string | null>();
-export const title = computed(() => t.value);
+const titleData = ref<string | null>(null);
+export const title = computed(() => titleData.value);
 
 export function setTitle(value?: string | null) {
-	p.value = value;
+	titleData.value = value ?? null;
 }
 
-const b = ref<string | null>();
-export const background = computed(() => b.value);
+const backgroundData = ref<string | null>(null);
+export const background = computed(() => backgroundData.value);
 
 export function setBackground(value?: string | null) {
-	b.value = value;
+	backgroundData.value = value ?? null;
 }
 
-const fc = ref('var(--color-theme-8)');
-export const focusColor = computed(() => fc.value);
+const focusColorData = ref('var(--color-theme-8)');
+export const focusColor = computed(() => focusColorData.value);
 
-const c = shallowRef<PaletteColors | null>(null);
-export const colorPalette = computed(() => c.value);
+const colorPaletteData = shallowRef<PaletteColors | null>(null);
+export const colorPalette = computed(() => colorPaletteData.value);
 
 export async function setColorPalette(value?: PaletteColors | null) {
-	c.value = value;
+	colorPaletteData.value = value ?? null;
 
 	if (!useAutoThemeColors.value) {
-		fc.value = '';
+		focusColorData.value = '';
 		document.documentElement.style.removeProperty('--color-theme-8');
 	}
 	else {
-		fc.value = pickPaletteColor(value, 20, 160);
+		focusColorData.value = pickPaletteColor(value, 20, 160);
 
-		document.documentElement.style.setProperty('--color-theme-8', fc.value);
+		document.documentElement.style.setProperty('--color-theme-8', focusColorData.value);
 	}
 
 	await applyNativeColor();
 }
 
-const l = ref<string | null>();
-export const logo = computed(() => l.value);
+const logoData = ref<string | null>(null);
+export const logo = computed(() => logoData.value);
 
 export function setLogo(value?: string | null) {
-	l.value = value;
+	logoData.value = value ?? null;
 }
 
 interface StatusBarPlugin {
@@ -91,37 +91,37 @@ export async function setStatusBarColor(color: string) {
 	((await statusbar.value) as StatusBarPlugin)?.setBackgroundColor({ color });
 }
 
-const st = ref<SortType>(SortType.index);
-export const sortType = computed(() => st.value);
+const sortTypeData = ref<SortType>(SortType.index);
+export const sortType = computed(() => sortTypeData.value);
 
-export function setSortType(value: any) {
-	st.value = value;
+export function setSortType(value: SortType) {
+	sortTypeData.value = value;
 }
 
-const so = ref<SortOrder>(SortOrder.asc);
-export const sortOrder = computed(() => so.value);
+const sortOrderData = ref<SortOrder>(SortOrder.asc);
+export const sortOrder = computed(() => sortOrderData.value);
 
-export function setSortOrder(value: any) {
-	so.value = value;
+export function setSortOrder(value: SortOrder) {
+	sortOrderData.value = value;
 }
 
-const nav = ref(true);
-export const navBarVisible = computed(() => nav.value);
+const navBarVisibleData = ref(true);
+export const navBarVisible = computed(() => navBarVisibleData.value);
 
 export function setNavBarVisible(value: boolean) {
-	nav.value = value;
+	navBarVisibleData.value = value;
 }
 
 export function toggleNavBarVisible() {
-	nav.value = !nav.value;
+	navBarVisibleData.value = !navBarVisibleData.value;
 }
 
 export function showNavBar() {
-	nav.value = true;
+	navBarVisibleData.value = true;
 }
 
 export function hideNavBar() {
-	nav.value = false;
+	navBarVisibleData.value = false;
 }
 
 (async () => {

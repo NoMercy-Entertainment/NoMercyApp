@@ -1,6 +1,6 @@
 import type { NavigationGuardNext, RouteLocationNormalizedGeneric, RouteRecordRaw } from 'vue-router';
 import { isMobile } from '@/config/global';
-import libraries from '@/store/Libraries';
+import libraries from '@/store/libraries';
 
 // Lazy load layouts - wrapped in functions so they only load when needed
 const MobileBaseLayout = () => import('@/Layout/Mobile/BaseLayout.vue');

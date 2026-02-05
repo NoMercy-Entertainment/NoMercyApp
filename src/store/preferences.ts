@@ -92,22 +92,22 @@ export function setUsePercentageColors(value: boolean) {
 	}).then();
 }
 
-const ssd = useLocalStorage<number>('screensaverDelay', 5);
-export const screensaverDelay = computed(() => ssd.value);
+const screensaverDelayData = useLocalStorage<number>('screensaverDelay', 5);
+export const screensaverDelay = computed(() => screensaverDelayData.value);
 (async () => {
 	const { value } = await Preferences.get({ key: 'screensaverDelay' });
 	if (value === null) {
-		ssd.value = 5;
+		screensaverDelayData.value = 5;
 		Preferences.set({
 			key: 'screensaverDelay',
 			value: '5',
 		}).then();
 		return;
 	}
-	ssd.value = Number.parseInt(value ?? '5');
+	screensaverDelayData.value = Number.parseInt(value ?? '5');
 })();
 export function setScreensaverDelay(delay: number) {
-	ssd.value = delay;
+	screensaverDelayData.value = delay;
 	Preferences.set({
 		key: 'screensaverDelay',
 		value: delay.toString(),

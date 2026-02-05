@@ -442,12 +442,62 @@
   - Cached content remains accessible while offline (via existing PWA caching)
   - No additional dependencies required (@vueuse/core already in project)
 
+### Phase 7.1: Fix Store Variable Naming
+- Status: DONE
+- Date: 2026-02-05
+- Changes made:
+  1. Updated src/store/ui.ts:
+     - Renamed abbreviated internal refs to descriptive names:
+       - `p` → `posterData`
+       - `t` → `titleData`
+       - `b` → `backgroundData`
+       - `fc` → `focusColorData`
+       - `c` → `colorPaletteData`
+       - `l` → `logoData`
+       - `st` → `sortTypeData`
+       - `so` → `sortOrderData`
+       - `nav` → `navBarVisibleData`
+     - Fixed bug: `setTitle()` was setting `p.value` (poster) instead of `t.value` (title)
+     - Fixed `any` types: `setSortType(value: any)` → `setSortType(value: SortType)`,
+       `setSortOrder(value: any)` → `setSortOrder(value: SortOrder)`
+     - Initialized refs with explicit `null` instead of implicit `undefined`
+  2. Updated src/store/preferences.ts:
+     - Renamed `ssd` → `screensaverDelayData`
+  3. Updated src/store/videoPlayer.ts:
+     - Renamed `vs` → `playerStateData`
+  4. Renamed src/store/Libraries.ts → src/store/libraries.ts:
+     - Used `git mv` for proper rename tracking
+     - Updated all 14 import references across the codebase:
+       - src/router/routes.ts
+       - src/router/routes-backup.ts
+       - src/Layout/Mobile/components/SideFlyout.vue
+       - src/views/Setup/ServerOffline/Mobile.vue
+       - src/views/Setup/ServerOffline/Desktop.vue
+       - src/lib/routerHelper.ts
+       - src/router/middleware/getLibraries.ts
+       - src/Layout/Desktop/components/Navbar/Navbar.vue
+       - src/views/Setup/SelectServers/Mobile.vue
+       - src/views/Setup/SelectServers/Desktop.vue
+       - src/Layout/Desktop/components/Sidebar/Sidebar.vue
+       - src/store/routeState.ts
+       - src/views/Setup/PostInstall/Desktop.vue
+       - src/views/Base/Library/components/MobileLibraryHeader.vue
+- Notes:
+  - Exported names remain unchanged (no consumer-facing API changes)
+  - colorTheme.ts: already uses descriptive names (`theme`), no changes needed
+  - All pre-existing type errors unrelated to this change
+- Benefits:
+  - All store variables now use clear, descriptive names (no abbreviations)
+  - Fixed silent bug where setTitle() was modifying poster instead of title
+  - setSortType/setSortOrder now properly typed instead of using `any`
+  - File naming follows camelCase convention for store files
+
 ## Next Tasks (from PRD)
-- Phase 8.3: Generate version.json on Build (DONE as part of 8.2)
-- Phase 8.4: Handle Keycloak Redirect (DONE)
-- Phase 8.5: Improve Update Notification UX (auto-update timeout - DONE as part of 8.2)
-- Phase 8.6: Cloudflare Headers for Cache Control (DONE in Phase 6.3)
-- Phase 8.7: Update PWA Config for Reliable Updates (DONE)
-- Phase 8.8: Recovery for Users with Faulty Cache (DONE)
-- Phase 8.9: Offline Availability (DONE)
-- Phase 7: Code Structure & Consistency (next)
+- Phase 7.2: Add Error Handling to Async Store Functions (next)
+- Phase 7.3: Standardize Component Script Structure
+- Phase 7.4: Remove `any` Types
+- Phase 7.5: Standardize File Naming (Libraries.ts done in 7.1)
+- Phase 7.6: Add Missing Emits Definitions
+- Phase 7.7: Reorganize Lib Utility Files
+- Phase 7.8: Reorganize Type Definitions
+- Phase 7.9: Audit and Fix User Action Feedback

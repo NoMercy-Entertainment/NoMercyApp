@@ -15,7 +15,7 @@ import {
 
 import { closeSidebar, sidebar } from '@/store/sidebar';
 import { currentServer } from '@/store/currentServer';
-import libraries from '@/store/Libraries.ts';
+import libraries from '@/store/libraries';
 
 import ProfileMenuServerSection from '@/Layout/Desktop/components/Menus/ProfileMenuServerSection.vue';
 import SideFlyoutButton from '@/Layout/Mobile/components/SideFlyoutButton.vue';

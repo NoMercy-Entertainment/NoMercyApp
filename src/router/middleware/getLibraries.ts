@@ -1,6 +1,6 @@
 import { ref } from 'vue';
 import { currentServer } from '@/store/currentServer';
-import libraries, { setLibraries } from '@/store/Libraries';
+import libraries, { setLibraries } from '@/store/libraries';
 
 import type { LibrariesResponse } from '@/types/api/base/library';
 import { setupComplete } from '@/store/ui';

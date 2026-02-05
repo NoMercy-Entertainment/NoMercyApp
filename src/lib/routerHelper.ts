@@ -7,7 +7,7 @@ import { watch } from 'vue';
 import { useOnline } from '@vueuse/core';
 import { queryClient } from '@/config/tanstack-query';
 import { currentServer } from '@/store/currentServer';
-import { clearLibraries } from '@/store/Libraries';
+import { clearLibraries } from '@/store/libraries';
 
 export interface Component<T> {
 	id: string;

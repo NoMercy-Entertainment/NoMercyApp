@@ -11,7 +11,7 @@ import router from '@/router';
 
 import SidebarButtonGroup from './SidebarButtonGroup.vue';
 import SidebarButton from './SidebarButton.vue';
-import libraries from '@/store/Libraries';
+import libraries from '@/store/libraries';
 import { setMusicPlaylists } from '@/store/musicPlaylists';
 import { useRoute } from 'vue-router';
 import konamiEnabled from '@/store/konami';
