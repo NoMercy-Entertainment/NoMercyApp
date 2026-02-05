@@ -119,6 +119,10 @@ const workbox = {
 		/\.(?:js|css|html|ico|png|svg|jpg|jpeg|gif|webp|woff|woff2|ttf|eot|json|xml|txt)$/i, // Asset extensions
 		/^\/icons\/optimized\/.*\.svg$/i, // Icon optimization service URLs
 		/^\/icons\/general\/.*\.svg$/i, // Icon fallback URLs
+		/^\/version\.json$/, // Version check endpoint - must never be cached
+	],
+	globIgnores: [
+		'**/version.json',
 	],
 	maximumFileSizeToCacheInBytes: 25 * 1024 * 1024 * 1024, // 25GB per item
 	runtimeCaching: [
