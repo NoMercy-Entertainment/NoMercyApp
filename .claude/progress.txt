@@ -14,6 +14,18 @@
   - `const DesktopBaseLayout = import(...)` → `const DesktopBaseLayout = () => import(...)`
 - This prevents both layouts from loading at module initialization; only the needed layout loads when used
 
+### Phase 1.3: Remove Swiper Duplication
+- Status: DONE
+- Date: 2026-02-05
+- Changes made:
+  1. Removed web component bundle import and registration from src/setupApp.ts:
+     - Removed `import { register as registerSwiperElements } from 'swiper/element/bundle';`
+     - Removed `registerSwiperElements();` call
+  2. Removed duplicate web component registration from src/components/Carousel/Carousel.vue:
+     - Removed `import { register } from 'swiper/element/bundle';`
+     - Removed `register();` call
+- The app now only uses Vue Swiper components (Swiper, SwiperSlide from 'swiper/vue')
+- This eliminates ~100KB of duplicate Swiper code (web component bundle)
+
 ## Next Tasks (from PRD)
-- Phase 1.3: Remove Swiper Duplication (src/setupApp.ts)
 - Phase 1.4: Add Preconnect Hints (index.html)

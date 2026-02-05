@@ -3,7 +3,6 @@ import type { PropType } from 'vue';
 import { computed, ref } from 'vue';
 import type { Swiper } from 'swiper';
 import { Swiper as SwiperComponent } from 'swiper/vue';
-import { register } from 'swiper/element/bundle';
 
 import { mappedEntries } from '@/lib/stringArray';
 import type { Breakpoints } from '@/lib/swiper-config';
@@ -82,8 +81,6 @@ function afterInit(swiper: Swiper) {
 		swiper.el?.classList.remove('opacity-0');
 	}, 150 * props.index);
 }
-
-register();
 
 function reset() {
 	swiper.value?.$el?.swiper?.slideTo(0, 300);

@@ -58,10 +58,6 @@ import NMTrackRow from '@/components/NMTrackRow.vue';
 import NMMusicCard from '@/components/NMMusicCard.vue';
 import { Swiper } from 'swiper';
 import { SwiperSlide } from 'swiper/vue';
-import { register as registerSwiperElements } from 'swiper/element/bundle';
-
-// Register Swiper custom elements globally (once)
-registerSwiperElements();
 
 export async function setupApp(app: AppContext['app']) {
 	// Defer service worker setup - don't block app initialization
