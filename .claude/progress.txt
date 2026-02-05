@@ -99,5 +99,26 @@
   - Dashboard: Already uses defineAsyncComponent with route-based lazy loading
   - Focus was on MusicPlayer components which were eagerly loaded in layouts
 
+### Phase 2.3: Implement Component-Level Code Splitting (Swiper local imports)
+- Status: DONE
+- Date: 2026-02-05
+- Changes made:
+  1. Removed global Swiper registration from src/setupApp.ts:
+     - Removed `import { Swiper } from 'swiper'` and `import { SwiperSlide } from 'swiper/vue'`
+     - Removed `app.component('Swiper', Swiper)` and `app.component('SwiperSlide', SwiperSlide)`
+  2. Moved Swiper CSS from global to local imports:
+     - Removed `import 'swiper/css'` and `import 'swiper/element/css/keyboard'` from src/main.ts
+     - Added `import 'swiper/css'` locally in 4 components that use Swiper:
+       - src/components/Carousel/Carousel.vue
+       - src/components/NMCarousel.vue
+       - src/components/MusicPlayer/mobile/FullPlayer.vue
+       - src/views/Base/Person/Mobile.vue
+  3. Removed unused `swiper/element/css/keyboard` import (keyboard: false in swiper config)
+- All components already had local Swiper JS imports; only global registration and CSS were remaining
+- Benefits:
+  - Swiper JS and CSS are fully code-split from the main bundle
+  - Swiper code only loads when a carousel or swiper-using component is rendered
+  - Removed unnecessary keyboard CSS import
+
 ## Next Tasks (from PRD)
-- Phase 2.3: Implement Component-Level Code Splitting (Swiper imports locally in components)
+- Phase 3: Image Optimization (responsive loading, WebP format)

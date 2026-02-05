@@ -3,6 +3,7 @@ import type { PropType } from 'vue';
 import { computed, ref } from 'vue';
 import type { Swiper } from 'swiper';
 import { Swiper as SwiperComponent } from 'swiper/vue';
+import 'swiper/css';
 
 import { mappedEntries } from '@/lib/stringArray';
 import type { Breakpoints } from '@/lib/swiper-config';

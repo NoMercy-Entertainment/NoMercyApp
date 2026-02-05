@@ -2,6 +2,7 @@
 import { computed, onBeforeMount, PropType, ref } from "vue";
 import { Swiper } from "swiper";
 import { Swiper as SwiperComponent, SwiperSlide } from "swiper/vue";
+import 'swiper/css';
 
 import type { Component } from "@/types/config";
 import { nmComponentMap } from "@/components/nmComponentMap";

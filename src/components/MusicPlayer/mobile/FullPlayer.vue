@@ -3,6 +3,7 @@ import { computed, ref, watch } from 'vue';
 import { IonContent, IonModal } from '@ionic/vue';
 import type { Swiper } from 'swiper';
 import { Swiper as SwiperComponent, SwiperSlide } from 'swiper/vue';
+import 'swiper/css';
 
 import {
 	audioPlayer,

@@ -3,6 +3,7 @@ import { computed, ref, watch } from 'vue';
 import { IonContent, IonPage, IonSkeletonText, onIonViewWillEnter, onIonViewWillLeave } from '@ionic/vue';
 import { useRoute } from 'vue-router';
 import { Swiper as SwiperComponent, SwiperSlide } from 'swiper/vue';
+import 'swiper/css';
 
 import type { PersonResponseItem } from '@/types/api/base/person';
 

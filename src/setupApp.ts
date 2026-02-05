@@ -38,8 +38,6 @@ import router from './router';
 
 import Button from '@/components/Button.vue';
 import Modal from '@/components/Modal.vue';
-import { Swiper } from 'swiper';
-import { SwiperSlide } from 'swiper/vue';
 
 export async function setupApp(app: AppContext['app']) {
 	// Defer service worker setup - don't block app initialization
@@ -107,9 +105,6 @@ export async function setupApp(app: AppContext['app']) {
 	app.component('Select', Select);
 	app.component('Toast', Toast);
 	app.component('Textarea', Textarea);
-	app.component('Swiper', Swiper);
-	app.component('SwiperSlide', SwiperSlide);
-
 	app.directive('ripple', Ripple);
 	app.directive('tooltip', Tooltip);
 

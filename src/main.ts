@@ -29,9 +29,6 @@ import '@ionic/vue/css/palettes/dark.system.css';
 import './theme/variables.css';
 import './theme/app.scss';
 
-import 'swiper/css';
-import 'swiper/element/css/keyboard';
-
 import AppComponent from './App.vue';
 
 // Lazy imports - these will be loaded when needed
