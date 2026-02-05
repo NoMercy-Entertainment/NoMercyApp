@@ -168,5 +168,23 @@
   - Only items about to be replaced get a shallow copy (which is immediately overwritten anyway)
   - Reduces GC pressure and improves mutation performance
 
+### Phase 4.3: Implement Request Deduplication
+- Status: DONE
+- Date: 2026-02-05
+- Changes made:
+  1. Added `deduplicatedRequest` utility to src/lib/clients/serverClient.ts:
+     - Maintains a Map of in-flight requests keyed by a string identifier
+     - If a request with the same key is already pending, returns the existing promise
+     - Cleans up the Map entry when the request completes (success or failure)
+  2. Integrated into router middleware files that make direct serverClient calls:
+     - src/router/middleware/getServerSetup.ts - wraps `setup/server-info` request
+     - src/router/middleware/getLibraries.ts - wraps `setup/libraries` request
+     - src/router/middleware/getServerPermissions.ts - wraps `setup/permissions` request
+- Benefits:
+  - Prevents duplicate in-flight requests during rapid navigation
+  - Middleware functions that get called multiple times before completion share the same request
+  - TanStack Query already handles deduplication for useServerClient hook; this covers direct serverClient usage
+  - Zero overhead when no duplicate requests occur (just a Map lookup)
+
 ## Next Tasks (from PRD)
-- Phase 4.3: Implement Request Deduplication (src/lib/clients/serverClient.ts)
+- Phase 5.1: Optimize ScrollContainer (src/Layout/Desktop/components/ScrollContainer.vue)

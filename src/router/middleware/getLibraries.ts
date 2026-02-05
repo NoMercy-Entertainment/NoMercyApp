@@ -7,7 +7,7 @@ import { setupComplete } from '@/store/ui';
 import router from '@/router';
 import { redirectUrl } from '@/store/routeState';
 import { serverLibraries } from '@/store/servers.ts';
-import serverClient from '@/lib/clients/serverClient.ts';
+import serverClient, { deduplicatedRequest } from '@/lib/clients/serverClient.ts';
 
 const done = ref(false);
 
@@ -28,8 +28,9 @@ function getLibraries(): Promise<void> {
 			return;
 		}
 
-		serverClient(5)
-			.get<{ data: LibrariesResponse[] }>('setup/libraries')
+		deduplicatedRequest('setup/libraries', () =>
+			serverClient(5).get<{ data: LibrariesResponse[] }>('setup/libraries'),
+		)
 			.then(({ data }) => {
 				setLibraries(data.data);
 				setupComplete.value = true;

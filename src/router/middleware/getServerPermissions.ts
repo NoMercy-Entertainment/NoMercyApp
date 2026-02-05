@@ -4,7 +4,7 @@ import type { PermissionsResponse } from '@/types/api/dashboard/server';
 
 import { currentServer, setCurrentServer } from '@/store/currentServer';
 import router from '@/router';
-import serverClient from '@/lib/clients/serverClient.ts';
+import serverClient, { deduplicatedRequest } from '@/lib/clients/serverClient.ts';
 
 const done = ref(false);
 
@@ -20,8 +20,9 @@ function getServerPermissions(): Promise<void> {
 			return;
 		}
 
-		serverClient(5)
-			.get<PermissionsResponse>('setup/permissions')
+		deduplicatedRequest('setup/permissions', () =>
+			serverClient(5).get<PermissionsResponse>('setup/permissions'),
+		)
 			.then(({ data }) => {
 				setCurrentServer({
 					...currentServer.value!,
