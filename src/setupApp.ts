@@ -35,27 +35,9 @@ import i18next from '@/config/i18next';
 import { queryClient } from '@/config/tanstack-query';
 import konamiEnabled from '@/store/konami';
 import router from './router';
-import { isMobile } from '@/config/global.ts';
 
 import Button from '@/components/Button.vue';
 import Modal from '@/components/Modal.vue';
-import NMCard from '@/components/NMCard.vue';
-import NMCarousel from '@/components/NMCarousel.vue';
-import NMCarousel2 from '@/components/NMCarousel2.vue';
-
-import NMContainer from '@/components/NMContainer.vue';
-import NMGenreCard from '@/components/NMGenreCard.vue';
-import NMGrid from '@/components/NMGrid.vue';
-import HomeCard from '@/components/NMHomeCard.vue';
-import NMList from '@/components/NMList.vue';
-import NMSeasonCard from '@/components/NMSeasonCard.vue';
-import NMSeasonTitle from '@/components/NMSeasonTitle.vue';
-
-import NMMusicHomeCard from '@/components/NMMusicHomeCard.vue';
-import NMServerComponent from '@/components/NMServerComponent.vue';
-import NMTopResultCard from '@/components/NMTopResultCard.vue';
-import NMTrackRow from '@/components/NMTrackRow.vue';
-import NMMusicCard from '@/components/NMMusicCard.vue';
 import { Swiper } from 'swiper';
 import { SwiperSlide } from 'swiper/vue';
 
@@ -114,25 +96,7 @@ export async function setupApp(app: AppContext['app']) {
 
 	app.use(MasonryWall);
 
-	const supportsCarousel = CSS.supports('scroll-marker-group', 'after') && isMobile.value && false;
-
 	app.component('Modal', Modal);
-	app.component('NMCard', NMCard);
-	app.component('NMCarousel', supportsCarousel ? NMCarousel2 : NMCarousel);
-	app.component('NMCarousel2', supportsCarousel ? NMCarousel2 : NMCarousel);
-	app.component('NMContainer', NMContainer);
-	app.component('NMGenreCard', NMGenreCard);
-	app.component('NMGrid', NMGrid);
-	app.component('NMHomeCard', HomeCard);
-	app.component('NMList', NMList);
-	app.component('NMMusicCard', NMMusicCard);
-	app.component('NMMusicHomeCard', NMMusicHomeCard);
-	app.component('NMServerComponent', NMServerComponent);
-	app.component('NMTopResultCard', NMTopResultCard);
-	app.component('NMTrackRow', NMTrackRow);
-	app.component('NMSeasonCard', NMSeasonCard);
-	app.component('NMSeasonTitle', NMSeasonTitle);
-
 	app.component('Button', Button);
 	app.component('Card', Card);
 	app.component('Dialog', Dialog);

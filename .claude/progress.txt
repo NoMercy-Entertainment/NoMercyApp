@@ -41,5 +41,28 @@
   4. Added dns-prefetch for `https://cdn.nomercy.tv`
 - Font preloads already existed in the file, kept as is
 
+### Phase 2.1: Convert NM Components to Local Component Map with Lazy Loading
+- Status: DONE
+- Date: 2026-02-05
+- Changes made:
+  1. Updated src/components/NMComponent.vue:
+     - Added defineAsyncComponent import from 'vue'
+     - Created componentMap with lazy-loaded async components for all 15 NM components:
+       NMCarousel, NMCarousel2, NMCard, NMContainer, NMGenreCard, NMGrid, NMHomeCard,
+       NMList, NMSeasonCard, NMSeasonTitle, NMMusicCard, NMMusicHomeCard, NMServerComponent,
+       NMTopResultCard, NMTrackRow
+     - Updated template to use componentMap[render?.component] instead of render?.component
+  2. Updated src/setupApp.ts:
+     - Removed all NM component imports (NMCard, NMCarousel, NMCarousel2, NMContainer,
+       NMGenreCard, NMGrid, HomeCard, NMList, NMSeasonCard, NMSeasonTitle, NMMusicHomeCard,
+       NMServerComponent, NMTopResultCard, NMTrackRow, NMMusicCard)
+     - Removed all NM component global registrations (lines 102-117)
+     - Removed unused supportsCarousel variable
+     - Removed unused isMobile import
+- Benefits:
+  - NM components now load only when API requests them
+  - Reduces initial bundle size (components split into separate chunks)
+  - Each NM component becomes its own lazy-loaded chunk
+
 ## Next Tasks (from PRD)
-- Phase 2.1: Convert NM Components to Local Component Map with Lazy Loading
+- Phase 2.2: Use defineAsyncComponent for Heavy Components (VideoPlayer, MusicPlayer, Dashboard)

@@ -1,11 +1,29 @@
 <script lang="ts" setup>
-import type { PropType } from 'vue';
-import { onMounted, onUnmounted, watch } from 'vue';
+import type { Component, PropType } from 'vue';
+import { defineAsyncComponent, onMounted, onUnmounted, watch } from 'vue';
 import { useRoute } from 'vue-router';
 import { IonSpinner } from '@ionic/vue';
 import { useOnline } from '@vueuse/core';
 
 import { getMutating, getMutation, getQuery, queryKey as qk } from '@/lib/routerHelper';
+
+const componentMap: Record<string, Component> = {
+	NMCarousel: defineAsyncComponent(() => import('@/components/NMCarousel.vue')),
+	NMCarousel2: defineAsyncComponent(() => import('@/components/NMCarousel.vue')),
+	NMCard: defineAsyncComponent(() => import('@/components/NMCard.vue')),
+	NMContainer: defineAsyncComponent(() => import('@/components/NMContainer.vue')),
+	NMGenreCard: defineAsyncComponent(() => import('@/components/NMGenreCard.vue')),
+	NMGrid: defineAsyncComponent(() => import('@/components/NMGrid.vue')),
+	NMHomeCard: defineAsyncComponent(() => import('@/components/NMHomeCard.vue')),
+	NMList: defineAsyncComponent(() => import('@/components/NMList.vue')),
+	NMSeasonCard: defineAsyncComponent(() => import('@/components/NMSeasonCard.vue')),
+	NMSeasonTitle: defineAsyncComponent(() => import('@/components/NMSeasonTitle.vue')),
+	NMMusicCard: defineAsyncComponent(() => import('@/components/NMMusicCard.vue')),
+	NMMusicHomeCard: defineAsyncComponent(() => import('@/components/NMMusicHomeCard.vue')),
+	NMServerComponent: defineAsyncComponent(() => import('@/components/NMServerComponent.vue')),
+	NMTopResultCard: defineAsyncComponent(() => import('@/components/NMTopResultCard.vue')),
+	NMTrackRow: defineAsyncComponent(() => import('@/components/NMTrackRow.vue')),
+};
 
 const props = defineProps({
 	path: {
@@ -129,7 +147,7 @@ watch(
 	</template>
 	<template v-else-if="!isMutating">
 		<component
-			:is="render?.component"
+			:is="componentMap[render?.component]"
 			v-for="(render, index) in mutatedData ?? homeData ?? []"
 			:key="render.id"
 			:index="index"
