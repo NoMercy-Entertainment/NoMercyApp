@@ -42,7 +42,7 @@ export DEV_PORT=5502
 
 dev-start() {
     echo "Starting dev server on port $DEV_PORT..."
-    npm run dev
+    yarn dev
 }
 
 dev-stop() {
@@ -83,11 +83,11 @@ else
     echo "⚠ No Claude settings found - you may need to configure permissions"
 fi
 
-# Install npm dependencies
+# Install yarn dependencies
 echo ""
-echo "[4/5] Installing npm dependencies..."
+echo "[4/5] Installing yarn dependencies..."
 if [ -f "package.json" ]; then
-    npm install
+    yarn install
     echo "✓ Dependencies installed"
 else
     echo "⚠ No package.json found"
