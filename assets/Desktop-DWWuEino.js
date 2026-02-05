@@ -1,1 +1,0 @@
-import{Cl as a,D as r,Hl as t,bl as l,hl as n,ll as s}from"./index-DhiB0zJh.js";s();var u={};function o(_,e){return t(),a(n,null,[e[0]||(e[0]=l("h1",null,"Auth View Desktop",-1)),e[1]||(e[1]=l("div",{class:"overflow-auto h-available"},null,-1))],64)}var d=r(u,[["render",o]]);export{d as default};

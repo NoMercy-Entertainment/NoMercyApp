@@ -1,0 +1,1 @@
+import{Cl as e,D as _,Hl as a,ll as r}from"./index-CjyZVKul.js";r();var t={},l={class:"bg"};function c(n,s){return a(),e("div",l)}var d=_(t,[["render",c],["__scopeId","data-v-386a0916"]]);export{d as t};
