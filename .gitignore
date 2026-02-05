@@ -127,3 +127,4 @@ vite.config.ts.*
 # Sentry Config File
 .env.sentry-build-plugin
 lighthouse-report.html
+.claude/ralph-log-*
