@@ -27,5 +27,19 @@
 - The app now only uses Vue Swiper components (Swiper, SwiperSlide from 'swiper/vue')
 - This eliminates ~100KB of duplicate Swiper code (web component bundle)
 
+### Phase 1.4: Add Preconnect Hints (index.html)
+- Status: DONE
+- Date: 2026-02-05
+- Changes made:
+  1. Removed placeholder dns-prefetch for `//api.example.com`
+  2. Removed `x-dns-prefetch-control: off` meta tag
+  3. Added preconnect hints for external domains:
+     - `https://media.themoviedb.org` (TMDB images)
+     - `https://app.nomercy.tv` (app server)
+     - `https://auth-dev.nomercy.tv` (Keycloak auth)
+     - `https://fonts.bunny.net` (Google Fonts alternative)
+  4. Added dns-prefetch for `https://cdn.nomercy.tv`
+- Font preloads already existed in the file, kept as is
+
 ## Next Tasks (from PRD)
-- Phase 1.4: Add Preconnect Hints (index.html)
+- Phase 2.1: Convert NM Components to Local Component Map with Lazy Loading
