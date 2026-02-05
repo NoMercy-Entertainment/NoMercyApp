@@ -174,7 +174,7 @@ const workbox = {
 				cacheName: 'nomercy-fonts-v5', // Updated version for cache invalidation
 				expiration: {
 					maxEntries: 1000,
-					maxAgeSeconds: 365 * 24 * 60 * 60, // 1 year like enhanced-sw fonts
+					maxAgeSeconds: 365 * 24 * 60 * 60, // 1 year
 				},
 				cacheableResponse: {
 					statuses: [0, 200],
@@ -182,7 +182,7 @@ const workbox = {
 			},
 		},
 
-		// FONTS: Long-term cache for fonts (matches enhanced-sw FONT_CACHE strategy)
+		// FONTS: Long-term cache for fonts
 		{
 			urlPattern: ({ url }) => {
 				return (
@@ -203,7 +203,7 @@ const workbox = {
 			},
 		},
 
-		// IMAGES: Cache first strategy for images (matches enhanced-sw IMAGE_CACHE)
+		// IMAGES: Cache first strategy for images
 		{
 			urlPattern: ({ url }) => {
 				const isApiServer = /^[^.]+\.[^.]+\.nomercy\.tv/.test(
@@ -226,7 +226,7 @@ const workbox = {
 			},
 		},
 
-		// STATIC ASSETS: JS, CSS, JSON files (matches enhanced-sw STATIC_CACHE)
+		// STATIC ASSETS: JS, CSS, JSON files
 		// {
 		// 	urlPattern: ({ url }) => {
 		// 		const isLocalIP
@@ -254,7 +254,7 @@ const workbox = {
 		// 	},
 		// },
 
-		// API REQUESTS: Stale-while-revalidate strategy (matches enhanced-sw API_CACHE)
+		// API REQUESTS: Stale-while-revalidate strategy
 		{
 			urlPattern: ({ url }) => {
 				return /^api.nomercy\.tv/.test(url.hostname);
