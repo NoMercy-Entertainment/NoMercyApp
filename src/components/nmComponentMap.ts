@@ -2,10 +2,18 @@ import type { Component } from 'vue';
 import { defineAsyncComponent } from 'vue';
 
 import NMCardSkeleton from '@/components/Loading/NMCardSkeleton.vue';
+import NMCarouselSkeleton from '@/components/Loading/NMCarouselSkeleton.vue';
+import NMTrackRowSkeleton from '@/components/Loading/NMTrackRowSkeleton.vue';
 
 export const nmComponentMap: Record<string, Component> = {
-	NMCarousel: defineAsyncComponent(() => import('@/components/NMCarousel.vue')),
-	NMCarousel2: defineAsyncComponent(() => import('@/components/NMCarousel.vue')),
+	NMCarousel: defineAsyncComponent({
+		loader: () => import('@/components/NMCarousel.vue'),
+		loadingComponent: NMCarouselSkeleton,
+	}),
+	NMCarousel2: defineAsyncComponent({
+		loader: () => import('@/components/NMCarousel.vue'),
+		loadingComponent: NMCarouselSkeleton,
+	}),
 	NMCard: defineAsyncComponent({
 		loader: () => import('@/components/NMCard.vue'),
 		loadingComponent: NMCardSkeleton,
@@ -39,5 +47,8 @@ export const nmComponentMap: Record<string, Component> = {
 		loader: () => import('@/components/NMTopResultCard.vue'),
 		loadingComponent: NMCardSkeleton,
 	}),
-	NMTrackRow: defineAsyncComponent(() => import('@/components/NMTrackRow.vue')),
+	NMTrackRow: defineAsyncComponent({
+		loader: () => import('@/components/NMTrackRow.vue'),
+		loadingComponent: NMTrackRowSkeleton,
+	}),
 };

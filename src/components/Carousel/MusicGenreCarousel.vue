@@ -5,6 +5,7 @@ import { SwiperSlide } from 'swiper/vue';
 import type { HomeDataItem, MusicHomeResponseItem } from '@/types/api/music';
 
 import Carousel from '@/components/Carousel/Carousel.vue';
+import NMMusicCard from '@/components/NMMusicCard.vue';
 
 defineProps({
 	data: {

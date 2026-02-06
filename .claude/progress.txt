@@ -907,5 +907,29 @@ The optimization work successfully:
 - Added comprehensive cache invalidation
 - Added offline support
 
+### Post-Phase: Add Missing Loading Skeletons + Fix MusicCarousel Import
+- Status: DONE
+- Date: 2026-02-06
+- Changes made:
+  1. Fixed NMMusicCard import in src/components/Carousel/MusicCarousel.vue:
+     - Was using `<NMMusicCard>` in template without importing it (broke when global registration removed in Phase 2.1)
+     - Added `import NMMusicCard from '@/components/NMMusicCard.vue'`
+  2. Created src/components/Loading/NMCarouselSkeleton.vue:
+     - Matches NMCarousel layout: title bar + row of 8 card placeholders
+     - Responsive: uses `showBackdrops` store to show poster or backdrop aspect ratio
+     - Animated pulse placeholders matching card dimensions
+  3. Created src/components/Loading/NMTrackRowSkeleton.vue:
+     - Matches NMTrackRow `.home-grid` CSS grid layout (3 cols mobile / 5 cols desktop)
+     - Placeholder elements for index, cover art, track info, album, duration, and menu
+     - Animated pulse placeholders with correct sizing
+  4. Updated src/components/nmComponentMap.ts:
+     - Imported NMCarouselSkeleton and NMTrackRowSkeleton
+     - NMCarousel and NMCarousel2: added `loadingComponent: NMCarouselSkeleton`
+     - NMTrackRow: added `loadingComponent: NMTrackRowSkeleton`
+- Benefits:
+  - Prevents CLS (Cumulative Layout Shift) for carousels and track rows while loading
+  - All fixed-size NM components now have matching skeleton placeholders
+  - NMMusicCard renders correctly on artist page (MusicCarousel import fix)
+
 ## Next Tasks (from PRD)
 - All phases complete
