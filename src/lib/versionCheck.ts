@@ -1,5 +1,8 @@
 import { APP_VERSION } from './version';
 import { setUpdatePending } from '@/lib/auth/updateState';
+import { addNotification } from '@/store/notifications';
+import { pwaMessages } from '@/i18n/pwa';
+import type { Message } from '@/types/auth';
 
 const VERSION_CHECK_INTERVAL = 5 * 60 * 1000;
 const VERSION_ENDPOINT = '/version.json';
@@ -12,24 +15,30 @@ interface VersionInfo {
 
 let checkInterval: number | null = null;
 
-async function clearCachesAndReload(): Promise<void> {
-	try {
-		if ('caches' in window) {
-			const cacheNames = await caches.keys();
-			await Promise.all(cacheNames.map(name => caches.delete(name)));
-		}
-		if ('serviceWorker' in navigator) {
-			const reg = await navigator.serviceWorker.getRegistration();
-			if (reg?.waiting) {
-				reg.waiting.postMessage({ type: 'SKIP_WAITING' });
-			}
-		}
-	}
-	catch {
-		// Best effort
-	}
+function getCurrentLanguage(): string {
+	return (
+		localStorage.getItem('language') || navigator.language.split('-')[0] || 'en'
+	);
+}
 
-	window.location.reload();
+function showVersionUpdateNotification(): void {
+	const lang = getCurrentLanguage();
+	const messages = pwaMessages[lang as keyof typeof pwaMessages] || pwaMessages.en;
+
+	const notification: Message = {
+		id: 'version-update-pending',
+		type: 'update',
+		title: messages.newVersion,
+		body: messages.updateNow,
+		from: 'system',
+		read: false,
+		created_at: Date.now(),
+		updated_at: Date.now(),
+		notify: true,
+		link: 'reload',
+	};
+
+	addNotification(notification);
 }
 
 export async function checkForUpdates(): Promise<boolean> {
@@ -49,8 +58,10 @@ export async function checkForUpdates(): Promise<boolean> {
 		if (serverVersion.version !== APP_VERSION) {
 			setUpdatePending(serverVersion.version);
 
-			// Version mismatch means old chunks will 404 — clear caches and reload
-			clearCachesAndReload();
+			// Show notification so the user can reload when ready.
+			// Never force-reload — chunkErrorRecovery.ts handles that
+			// transparently when stale chunks 404 on navigation.
+			showVersionUpdateNotification();
 			return true;
 		}
 
@@ -63,7 +74,6 @@ export async function checkForUpdates(): Promise<boolean> {
 }
 
 export function startVersionChecks(): void {
-	// Initial check is done early in main.ts; this sets up periodic checks only
 	checkInterval = window.setInterval(checkForUpdates, VERSION_CHECK_INTERVAL);
 
 	document.addEventListener('visibilitychange', () => {
