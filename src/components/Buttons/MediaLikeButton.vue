@@ -55,10 +55,6 @@ const props = defineProps({
 
 const liked = ref(props.data?.favorite);
 
-watch(props, (prop) => {
-	liked.value = prop.data?.favorite;
-});
-
 function handleLike(e?: MouseEvent) {
 	e?.stopPropagation();
 	serverClient()
@@ -69,6 +65,10 @@ function handleLike(e?: MouseEvent) {
 			liked.value = data.args?.[0] === 'liked' || data.args?.[1] === 'liked';
 		});
 }
+
+watch(props, (prop) => {
+	liked.value = prop.data?.favorite;
+});
 </script>
 
 <template>

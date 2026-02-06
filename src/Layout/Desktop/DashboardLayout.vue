@@ -117,13 +117,6 @@ const error = computed(() => {
 	};
 });
 
-onMounted(() => {
-	setColorPalette(null);
-	setBackground(null);
-});
-
-useMounted(startDashboardSocket, stopDashboardSocket, 20);
-
 const showError = computed(() => {
 	return (
 		(accessError.value?.code
@@ -131,6 +124,13 @@ const showError = computed(() => {
 		&& !props.allowAnyone
 	);
 });
+
+onMounted(() => {
+	setColorPalette(null);
+	setBackground(null);
+});
+
+useMounted(startDashboardSocket, stopDashboardSocket, 20);
 
 watch(showError, (value) => {
 	if (value && addModalOpen.value !== undefined) {

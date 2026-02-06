@@ -45,6 +45,8 @@ import MoooomIcon from '@/components/Images/icons/MoooomIcon.vue';
 import { twMerge } from 'tailwind-merge';
 
 const route = useRoute();
+const { t } = useTranslation();
+const toast = useToast();
 
 const { data, isError, error } = useServerClient<InfoResponse>({
 	keepForever: true,
@@ -64,11 +66,40 @@ const trailerOpen = ref(false);
 const trailerState = ref<true | false | 'loading'>('loading');
 const trailerIndex = ref(-1);
 const interval = ref<NodeJS.Timeout | null>(null);
-const { t } = useTranslation();
-
-const toast = useToast();
-
 const missingEpisodesModalOpen = ref(false);
+
+interface IMenuItem {
+	icon: keyof typeof MoooomIcons;
+	onclick: () => void;
+	title: string;
+	privileged?: boolean;
+}
+
+const shareData = computed<ShareOptions>(() => ({
+	url: `https://app.nomercy.tv${route.fullPath}`,
+}));
+
+const duration = computed(() => convertToHumanReact(t, data.value?.duration ?? 0, true));
+
+const endTime = computed(() => {
+	if (!data?.value?.duration || !i18next?.language || i18next.language === 'undefined')
+		return null;
+	return new Date(new Date().getTime() + data.value.duration * 60 * 1000)
+		.toLocaleTimeString(i18next?.language ?? 'en-US', {
+			hour: '2-digit',
+			minute: '2-digit',
+		});
+});
+
+const endString = computed(() => {
+	if (!data?.value?.duration)
+		return t('Play');
+
+	if (endTime.value)
+		return t('Ends at {{time}}', { time: endTime.value });
+
+	return t('Play');
+});
 
 function openMissingEpisodesContentModal() {
 	missingEpisodesModalOpen.value = true;
@@ -90,22 +121,6 @@ function processTrailer(value: InfoResponse | undefined) {
 		return;
 	}
 
-	// axios
-	//     .head(
-	//         `https://trailer.nomercy.tv/${value.videos[trailerIndex.value]?.src}/${
-	//             value.videos[trailerIndex.value]?.src
-	//         }.webm`,
-	//         {
-	//           withCredentials: false,
-	//         },
-	//     )
-	//     .then(() => {
-	//       trailerState.value = true;
-	//     })
-	//     .catch(() => {
-	//       incrementTrailerIndex();
-	//       trailerState.value = false;
-	//     });
 	serverClient()
 		.head(
 			`trailer/${value.videos[trailerIndex.value]?.src}`,
@@ -121,45 +136,6 @@ function processTrailer(value: InfoResponse | undefined) {
 			trailerState.value = false;
 		});
 }
-
-watch(data, (value) => {
-	setTitle(value?.title ?? value?.name);
-	if (value?.backdrop && background.value !== value?.backdrop) {
-		setBackground(value?.backdrop);
-	}
-	if (value?.logo) {
-		setLogo(value?.logo);
-	}
-	if (value?.color_palette?.backdrop || value?.color_palette?.poster) {
-		setColorPalette(value?.color_palette?.poster || value?.color_palette?.backdrop);
-	}
-
-	processTrailer(value);
-});
-
-onMounted(() => {
-	trailerIndex.value = 0;
-	setTitle(data?.value?.name);
-
-	if (data?.value?.backdrop && background.value !== data?.value?.backdrop) {
-		setBackground(data?.value?.backdrop);
-	}
-	if (data?.value?.logo) {
-		setLogo(data?.value?.logo);
-	}
-	if (
-		data?.value?.color_palette?.backdrop
-		|| data?.value?.color_palette?.poster
-	) {
-		setColorPalette(data?.value?.color_palette?.poster ?? data?.value?.color_palette?.backdrop);
-	}
-
-	processTrailer(data?.value);
-});
-
-onUnmounted(() => {
-	clearInterval(interval.value ?? undefined);
-});
 
 function toggleTrailer(e?: MouseEvent) {
 	e?.stopPropagation();
@@ -185,13 +161,6 @@ function incrementTrailerIndex() {
 		trailerIndex.value++;
 	}
 }
-
-watch(trailerIndex, (value, oldValue) => {
-	if (!value || value === oldValue)
-		return;
-
-	processTrailer(data?.value);
-});
 
 function toggleWatched() {
 }
@@ -296,13 +265,6 @@ function handleAdd() {
 		});
 }
 
-interface IMenuItem {
-	icon: keyof typeof MoooomIcons;
-	onclick: () => void;
-	title: string;
-	privileged?: boolean;
-}
-
 const menuItems = computed<IMenuItem[]>(() => [
 	{
 		icon: 'arrowRefreshHorizontal',
@@ -343,30 +305,50 @@ const menuItems = computed<IMenuItem[]>(() => [
 	},
 ]);
 
-const shareData = computed<ShareOptions>(() => ({
-	url: `https://app.nomercy.tv${route.fullPath}`,
-}));
+onMounted(() => {
+	trailerIndex.value = 0;
+	setTitle(data?.value?.name);
 
-const duration = computed(() => convertToHumanReact(t, data.value?.duration ?? 0, true));
+	if (data?.value?.backdrop && background.value !== data?.value?.backdrop) {
+		setBackground(data?.value?.backdrop);
+	}
+	if (data?.value?.logo) {
+		setLogo(data?.value?.logo);
+	}
+	if (
+		data?.value?.color_palette?.backdrop
+		|| data?.value?.color_palette?.poster
+	) {
+		setColorPalette(data?.value?.color_palette?.poster ?? data?.value?.color_palette?.backdrop);
+	}
 
-const endTime = computed(() => {
-	if (!data?.value?.duration || !i18next?.language || i18next.language === 'undefined')
-		return null;
-	return new Date(new Date().getTime() + data.value.duration * 60 * 1000)
-		.toLocaleTimeString(i18next?.language ?? 'en-US', {
-			hour: '2-digit',
-			minute: '2-digit',
-		});
+	processTrailer(data?.value);
 });
 
-const endString = computed(() => {
-	if (!data?.value?.duration)
-		return t('Play');
+onUnmounted(() => {
+	clearInterval(interval.value ?? undefined);
+});
 
-	if (endTime.value)
-		return t('Ends at {{time}}', { time: endTime.value });
+watch(data, (value) => {
+	setTitle(value?.title ?? value?.name);
+	if (value?.backdrop && background.value !== value?.backdrop) {
+		setBackground(value?.backdrop);
+	}
+	if (value?.logo) {
+		setLogo(value?.logo);
+	}
+	if (value?.color_palette?.backdrop || value?.color_palette?.poster) {
+		setColorPalette(value?.color_palette?.poster || value?.color_palette?.backdrop);
+	}
 
-	return t('Play');
+	processTrailer(value);
+});
+
+watch(trailerIndex, (value, oldValue) => {
+	if (!value || value === oldValue)
+		return;
+
+	processTrailer(data?.value);
 });
 </script>
 

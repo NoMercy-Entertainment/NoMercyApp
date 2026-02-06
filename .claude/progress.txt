@@ -536,8 +536,49 @@
   - Fixed `pingServer()` anti-pattern that could leave promises hanging
   - All async flows have proper error boundaries
 
+### Phase 7.3: Standardize Component Script Structure
+- Status: DONE
+- Date: 2026-02-06
+- Files fixed (9 components with script ordering violations):
+  1. src/Layout/Desktop/components/Sidebar/Sidebar.vue:
+     - Grouped imports properly (moved useRoute, MoooomIcon, store imports into correct groups)
+     - Moved computed properties before functions
+     - Moved libraryIconName function before lifecycle hooks
+     - Moved onMounted and router.afterEach to lifecycle section
+     - Moved watch(playlists) to watchers section at end
+  2. src/Layout/ImageModal.vue:
+     - Moved enum WallpaperStyle and wallpaperStyle ref to state section
+     - Moved all functions (handleClose, handleShowButtonToggle, handleLoaded, handleClick, etc.) before lifecycle
+     - Moved onMounted and onBeforeUnmount to lifecycle section
+     - Moved watch(imageModalData) to watchers section at end
+  3. src/components/Cards/MusicCard.vue:
+     - Moved useTranslation() composable before state (was after watch)
+     - Moved ringColor ref to state section (was after computed)
+     - Moved watch(props) to watchers section at end
+  4. src/components/MusicPlayer/MusicPlayerDesktop.vue:
+     - Moved computed properties (leftSize, centerSize, rightSize, albumLink) before functions
+     - Moved submitPlayback function before onMounted
+     - Grouped all functions together before lifecycle
+  5. src/components/Buttons/MediaLikeButton.vue:
+     - Moved watch(props) after handleLike function (was between state and function)
+  6. src/views/Base/Info/Desktop.vue:
+     - Grouped composables together (useRoute, useTranslation, useToast, useServerClient)
+     - Grouped all state refs together
+     - Moved interface IMenuItem before computed that uses it
+     - Moved computed properties (shareData, duration, endTime, endString) before functions
+     - Moved menuItems computed after functions it references
+     - Moved onMounted/onUnmounted to lifecycle section
+     - Moved watch(data) and watch(trailerIndex) to watchers section at end
+  7. src/views/Base/Watch/Desktop.vue:
+     - Moved onMounted/onUnmounted before watch(data) (lifecycle before watchers)
+  8. src/components/Cards/HomeCard.vue:
+     - Moved toggleWatched function before watch(props)
+  9. src/Layout/Desktop/DashboardLayout.vue:
+     - Moved showError computed before onMounted (was after lifecycle)
+- Standard order enforced: Imports → Props → Emits → Composables → State → Computed → Functions → Lifecycle → Watchers
+- No new type errors introduced (all errors in type-check output are pre-existing)
+
 ## Next Tasks (from PRD)
-- Phase 7.3: Standardize Component Script Structure (next)
 - Phase 7.4: Remove `any` Types
 - Phase 7.5: Standardize File Naming (Libraries.ts done in 7.1)
 - Phase 7.6: Add Missing Emits Definitions

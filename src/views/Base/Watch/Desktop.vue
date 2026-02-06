@@ -112,12 +112,6 @@ function initPlayer(value?: NMPlaylistItem[] | undefined) {
 	});
 }
 
-watch(data, (value) => {
-	if (!value?.length)
-		return;
-	initPlayer(value);
-});
-
 onMounted(() => {
 	audioPlayer.stop();
 	if (user.value.features?.nomercyConnect) {
@@ -131,6 +125,12 @@ onMounted(() => {
 onUnmounted(() => {
 	player.value?.dispose();
 	setDisableScreensaver(false);
+});
+
+watch(data, (value) => {
+	if (!value?.length)
+		return;
+	initPlayer(value);
 });
 </script>
 

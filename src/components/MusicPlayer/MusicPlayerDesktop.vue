@@ -36,6 +36,33 @@ const supportsAudioContext = useLocalStorage(
 	false,
 );
 
+const leftSize = computed(() => {
+	if (sidebar.value === 'open') {
+		return 100 / 4;
+	}
+	else if (sidebar.value === 'closed') {
+		return 100 / 3.2;
+	}
+	return 100 / 3;
+});
+const centerSize = computed(() => {
+	return 100 / 3;
+});
+const rightSize = computed(() => {
+	if (sidebar.value === 'open') {
+		return 100 / 2.9;
+	}
+	else if (sidebar.value === 'closed') {
+		return 100 / 3;
+	}
+	return 100 / 3;
+});
+
+const albumLink = computed(() => {
+	const albumId = currentSong.value?.album_track.at(0)?.id;
+	return `/music/album/${albumId}`;
+});
+
 function createMusicDatasetAttribute(data: any) {
 	if (!data)
 		return;
@@ -49,6 +76,15 @@ function createMusicDatasetAttribute(data: any) {
 		Album: data?.Album,
 		playlists: data?.playlists,
 	});
+}
+
+async function submitPlayback() {
+	if (!currentSong.value)
+		return;
+
+	await serverClient().post<PlaylistItem>(
+		`music/tracks/${currentSong.value?.id}/playback`,
+	);
 }
 
 onMounted(() => {
@@ -89,42 +125,6 @@ onMounted(() => {
 			}
 		}
 	});
-});
-
-async function submitPlayback() {
-	if (!currentSong.value)
-		return;
-
-	await serverClient().post<PlaylistItem>(
-		`music/tracks/${currentSong.value?.id}/playback`,
-	);
-}
-
-const leftSize = computed(() => {
-	if (sidebar.value === 'open') {
-		return 100 / 4;
-	}
-	else if (sidebar.value === 'closed') {
-		return 100 / 3.2;
-	}
-	return 100 / 3;
-});
-const centerSize = computed(() => {
-	return 100 / 3;
-});
-const rightSize = computed(() => {
-	if (sidebar.value === 'open') {
-		return 100 / 2.9;
-	}
-	else if (sidebar.value === 'closed') {
-		return 100 / 3;
-	}
-	return 100 / 3;
-});
-
-const albumLink = computed(() => {
-	const albumId = currentSong.value?.album_track.at(0)?.id;
-	return `/music/album/${albumId}`;
 });
 </script>
 

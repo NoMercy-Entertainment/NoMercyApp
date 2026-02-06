@@ -26,6 +26,10 @@ const ringPosterColor = computed(() => pickPaletteColor(props.homeItem?.color_pa
 
 const ringBackdropColor = computed(() => pickPaletteColor(props.homeItem?.color_palette?.backdrop));
 
+function toggleWatched() {
+	// if (!homeItem?.value) return;
+}
+
 watch(props, (value) => {
 	if (!value.homeItem)
 		return;
@@ -43,10 +47,6 @@ watch(props, (value) => {
 				minute: '2-digit',
 			});
 });
-
-function toggleWatched() {
-	// if (!homeItem?.value) return;
-}
 </script>
 
 <template>
