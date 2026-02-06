@@ -1,13 +1,13 @@
 <script lang="ts" setup>
 import type { PropType } from 'vue';
-import { computed, ref } from 'vue';
+import { computed, nextTick, ref, watch } from 'vue';
 import { useRoute } from 'vue-router';
+import { useVirtualizer } from '@tanstack/vue-virtual';
 
 import type { PlaylistItem } from '@/types/musicPlayer';
+import { scrollContainerElement } from '@/store/ui';
 
 import TrackRow from './TrackRow.vue';
-
-const INITIAL_LIMIT = 20;
 
 const props = defineProps({
 	data: {
@@ -24,13 +24,27 @@ const route = useRoute();
 const isAlbumRoute = computed(() => route.path.startsWith('/music/album'));
 const isFavoritesRoute = computed(() => route.path.startsWith('/music/playlists'));
 
-const expanded = ref(false);
-const visibleData = computed(() => {
-	if (!props.data) return [];
-	if (expanded.value || props.data.length <= INITIAL_LIMIT) return props.data;
-	return props.data.slice(0, INITIAL_LIMIT);
+const virtualContainerRef = ref<HTMLDivElement>();
+const scrollMargin = ref(0);
+
+function measureScrollMargin() {
+	if (!virtualContainerRef.value || !scrollContainerElement.value) return;
+	const containerRect = virtualContainerRef.value.getBoundingClientRect();
+	const scrollRect = scrollContainerElement.value.getBoundingClientRect();
+	scrollMargin.value = containerRect.top - scrollRect.top + scrollContainerElement.value.scrollTop;
+}
+
+watch(() => props.data, () => {
+	nextTick(measureScrollMargin);
 });
-const hasMore = computed(() => (props.data?.length ?? 0) > INITIAL_LIMIT);
+
+const virtualizer = computed(() => useVirtualizer({
+	count: props.data?.length ?? 0,
+	getScrollElement: () => scrollContainerElement.value ?? null,
+	estimateSize: () => 52,
+	overscan: 10,
+	scrollMargin: scrollMargin.value,
+}));
 </script>
 
 <template>
@@ -61,17 +75,35 @@ const hasMore = computed(() => (props.data?.length ?? 0) > INITIAL_LIMIT);
 				</div>
 			</div>
 		</div>
-		<div class="flex flex-col items-start justify-start gap-1 self-stretch">
-			<template v-for="(item, index) in visibleData" :key="item.id + item?.favorite">
-				<TrackRow :data="item" :display-list="data" :index="index" :is-album-route="isAlbumRoute" :is-favorites-route="isFavoritesRoute" />
-			</template>
-		</div>
-		<button
-			v-if="hasMore && !expanded"
-			class="self-stretch py-3 text-sm font-medium text-surface-12/11 hover:text-surface-12 transition-colors"
-			@click="expanded = true"
+		<!-- Virtual list container -->
+		<div
+			ref="virtualContainerRef"
+			:style="{
+				height: `${virtualizer.value.getTotalSize()}px`,
+				width: '100%',
+				position: 'relative',
+			}"
 		>
-			{{ $t('Show all {0} songs', [data?.length]) }}
-		</button>
+			<div
+				v-for="virtualRow in virtualizer.value.getVirtualItems()"
+				:key="data[virtualRow.index]?.id + data[virtualRow.index]?.favorite"
+				:style="{
+					position: 'absolute',
+					top: 0,
+					left: 0,
+					width: '100%',
+					height: `${virtualRow.size}px`,
+					transform: `translateY(${virtualRow.start - scrollMargin}px)`,
+				}"
+			>
+				<TrackRow
+					:data="data[virtualRow.index]"
+					:display-list="data"
+					:index="virtualRow.index"
+					:is-album-route="isAlbumRoute"
+					:is-favorites-route="isFavoritesRoute"
+				/>
+			</div>
+		</div>
 	</div>
 </template>
