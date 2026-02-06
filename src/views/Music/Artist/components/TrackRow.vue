@@ -1,6 +1,9 @@
 <script lang="ts" setup>
 import type { PropType } from 'vue';
+import { useRoute } from 'vue-router';
 import type { PlaylistItem } from '@/types/musicPlayer';
+
+const route = useRoute();
 
 import { audioPlayer, currentSong, isPlaying, musicSize } from '@/store/audioPlayer';
 
@@ -64,7 +67,7 @@ function handleClick() {
 		data-target="track"
 		tabindex="0"
 		@click="handleClick()"
-		@contextmenu="onTrackRowRightClick($event, $route, data)"
+		@contextmenu="onTrackRowRightClick($event, route, data)"
 	>
 		<span class="flex w-10 justify-center text-center min-w-10">
 			<span

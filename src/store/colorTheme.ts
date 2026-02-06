@@ -3,13 +3,10 @@ import { isPlatform } from '@ionic/vue';
 import { useLocalStorage } from '@vueuse/core';
 import { hexToRgba, rgbaToHex } from '@uiw/color-convert';
 import { Preferences } from '@capacitor/preferences';
-import { NavigationBar } from '@hugotomazi/capacitor-navigation-bar';
 
 import { tooDark, tooLight } from '@/lib/colorHelper.ts';
 import { focusColor } from '@/store/ui';
 import { scheme } from '@/store/colorScheme.ts';
-import { StatusBar, Style } from '@capacitor/status-bar';
-import { EdgeToEdge } from '@capawesome/capacitor-android-edge-to-edge-support';
 
 export const topNavColor = computed(() => {
 	return rgbaToHex({
@@ -81,6 +78,12 @@ export async function applyNativeColor() {
 	if (tooLight(color, 160)) {
 		color = defaultColor;
 	}
+
+	const [{ StatusBar, Style }, { NavigationBar }, { EdgeToEdge }] = await Promise.all([
+		import('@capacitor/status-bar'),
+		import('@hugotomazi/capacitor-navigation-bar'),
+		import('@capawesome/capacitor-android-edge-to-edge-support'),
+	]);
 
 	await StatusBar.setOverlaysWebView({ overlay: false });
 	await EdgeToEdge.setBackgroundColor({ color });

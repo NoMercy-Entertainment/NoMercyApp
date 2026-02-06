@@ -162,6 +162,16 @@ export default defineConfig(({ command }) => {
 					) {
 						return false;
 					}
+					// Native-only Capacitor/Cordova plugins (removed from package.json)
+					if (
+						id.includes('@capacitor/status-bar')
+						|| id.includes('@capacitor-community/')
+						|| id.includes('@hugotomazi/capacitor-navigation-bar')
+						|| id.includes('@capawesome/capacitor-android-edge-to-edge-support')
+						|| id.includes('@awesome-cordova-plugins/')
+					) {
+						return true;
+					}
 					return false;
 				},
 				output: {

@@ -128,3 +128,4 @@ vite.config.ts.*
 .env.sentry-build-plugin
 lighthouse-report.html
 .claude/ralph-log-*
+Trace-*.json

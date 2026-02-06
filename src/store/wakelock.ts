@@ -1,19 +1,33 @@
-import { KeepAwake } from '@capacitor-community/keep-awake';
+import { isPlatform } from '@ionic/vue';
 
 export async function keepAwake() {
-	await KeepAwake.keepAwake();
+	if (isPlatform('capacitor')) {
+		const { KeepAwake } = await import('@capacitor-community/keep-awake');
+		await KeepAwake.keepAwake();
+	}
 }
 
 export async function allowSleep() {
-	await KeepAwake.allowSleep();
+	if (isPlatform('capacitor')) {
+		const { KeepAwake } = await import('@capacitor-community/keep-awake');
+		await KeepAwake.allowSleep();
+	}
 }
 
 export async function isSupported() {
-	const result = await KeepAwake.isSupported();
-	return result.isSupported;
+	if (isPlatform('capacitor')) {
+		const { KeepAwake } = await import('@capacitor-community/keep-awake');
+		const result = await KeepAwake.isSupported();
+		return result.isSupported;
+	}
+	return false;
 }
 
 export async function isKeptAwake() {
-	const result = await KeepAwake.isKeptAwake();
-	return result.isKeptAwake;
+	if (isPlatform('capacitor')) {
+		const { KeepAwake } = await import('@capacitor-community/keep-awake');
+		const result = await KeepAwake.isKeptAwake();
+		return result.isKeptAwake;
+	}
+	return false;
 }

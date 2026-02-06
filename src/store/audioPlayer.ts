@@ -2,12 +2,6 @@
 
 import { ref, toRaw, watch } from 'vue';
 import { createAnimation, isPlatform, modalController } from '@ionic/vue';
-import type {
-	VolumeButtonsCallback,
-	VolumeButtonsOptions,
-	VolumeButtonsResult,
-} from '@capacitor-community/volume-buttons';
-import { VolumeButtons } from '@capacitor-community/volume-buttons';
 import { PlayerCore as MusicPlayer } from '@nomercy-entertainment/nomercy-music-player';
 
 import type {
@@ -511,27 +505,28 @@ audioPlayer.on('volume', (value) => {
 });
 
 if (isPlatform('capacitor')) {
-	const options: VolumeButtonsOptions = {};
-	const callback: VolumeButtonsCallback = (
-		result: VolumeButtonsResult,
-		err?: unknown,
-	) => {
-		if (!result)
-			return;
-		audioPlayer.setVolume(
-			result.direction === 'up' ? volume.value + 10 : volume.value - 10,
-		);
-	};
+	import('@capacitor-community/volume-buttons').then(({ VolumeButtons }) => {
+		const options = {
+			disableSystemVolumeHandler: false,
+			suppressVolumeIndicator: false,
+		};
+		const callback = (result: { direction: string }, _err?: unknown) => {
+			if (!result)
+				return;
+			audioPlayer.setVolume(
+				result.direction === 'up' ? volume.value + 10 : volume.value - 10,
+			);
+		};
 
-	options.disableSystemVolumeHandler = false;
-	options.suppressVolumeIndicator = false;
-
-	VolumeButtons.watchVolume(options, callback).catch((err) => {
-		console.error('Failed to watch volume buttons:', err);
-	});
-	VolumeButtons.isWatching().then((result) => {
-		console.log(result);
-	}).catch((err) => {
-		console.error('Failed to check volume watching state:', err);
+		VolumeButtons.watchVolume(options, callback).catch((err: unknown) => {
+			console.error('Failed to watch volume buttons:', err);
+		});
+		VolumeButtons.isWatching().then((result: unknown) => {
+			console.log(result);
+		}).catch((err: unknown) => {
+			console.error('Failed to check volume watching state:', err);
+		});
+	}).catch((err: unknown) => {
+		console.error('Failed to load volume buttons plugin:', err);
 	});
 }

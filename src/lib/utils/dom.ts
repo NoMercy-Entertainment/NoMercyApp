@@ -6,8 +6,6 @@ import { twMerge } from 'tailwind-merge';
 import type { InfoResponse } from '@/types/api/base/info';
 
 import { isPlatform } from '@ionic/vue';
-import { AndroidFullScreen, AndroidSystemUiFlags } from '@awesome-cordova-plugins/android-full-screen';
-import { EdgeToEdge } from '@capawesome/capacitor-android-edge-to-edge-support';
 
 export function cn(...inputs: ClassValue[]) {
 	return twMerge(clsx(inputs));
@@ -228,53 +226,12 @@ export function isLandscape() {
 	return window.innerHeight < window.innerWidth;
 }
 
-const timeout = ref<NodeJS.Timeout>();
-const isLeanModeEnabled = ref(false);
-
 export async function enableImmersiveMode() {
-	if (isPlatform('capacitor') && !isLeanModeEnabled.value) {
-		isLeanModeEnabled.value = true;
-
-		window.addEventListener('touchstart', listener);
-		listener();
-
-		await AndroidFullScreen.setSystemUiVisibility(
-			AndroidSystemUiFlags.LayoutHideNavigation
-			| AndroidSystemUiFlags.HideNavigation
-			| AndroidSystemUiFlags.LayoutFullscreen
-			| AndroidSystemUiFlags.LayoutStable
-			| AndroidSystemUiFlags.Fullscreen,
-		);
-
-		await EdgeToEdge.disable();
-	}
+	// No-op: Cordova/Capacitor native plugins removed
 }
 
 export async function disableImmersiveMode() {
-	if (isPlatform('capacitor') && isLeanModeEnabled.value) {
-		isLeanModeEnabled.value = false;
-
-		window.removeEventListener('touchstart', listener);
-		clearInterval(timeout.value);
-
-		await AndroidFullScreen.showSystemUI();
-
-		await EdgeToEdge.enable();
-	}
-}
-
-function listener() {
-	clearInterval(timeout.value);
-
-	timeout.value = setInterval(async () => {
-		await AndroidFullScreen.setSystemUiVisibility(
-			AndroidSystemUiFlags.LayoutHideNavigation
-			| AndroidSystemUiFlags.HideNavigation
-			| AndroidSystemUiFlags.LayoutFullscreen
-			| AndroidSystemUiFlags.LayoutStable
-			| AndroidSystemUiFlags.Fullscreen,
-		);
-	}, 3000);
+	// No-op: Cordova/Capacitor native plugins removed
 }
 
 const clicks = ref(0);

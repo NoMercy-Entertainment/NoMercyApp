@@ -28,7 +28,6 @@ export class AutoSkipPlugin extends Plugin {
 		'^Opening Credits$',
 		'^Opening Theme$',
 		'^Opening Song$',
-		'^Epilogue$',
 	])
 		.value
 		.map(pattern => new RegExp(pattern, 'iu'));

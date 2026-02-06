@@ -56,7 +56,6 @@ const lazyImports = {
 	user: () => import('@/store/user'),
 	routeState: () => import('@/store/routeState'),
 	preloadService: () => import('@/services/PreloadService'),
-	Sentry: () => import('@sentry/vue'),
 };
 
 const app = createApp(AppComponent);
@@ -127,16 +126,3 @@ runCacheMigration().then(async () => {
 	}
 	initializeWebApp();
 });
-
-// Initialize Sentry in production (deferred, non-blocking)
-if (import.meta.env.PROD && import.meta.env.VITE_SENTRY_DSN) {
-	requestIdleCallback(async () => {
-		const Sentry = await lazyImports.Sentry();
-		Sentry.init({
-			app,
-			dsn: import.meta.env.VITE_SENTRY_DSN,
-			sendDefaultPii: false,
-			tracesSampleRate: 0.1,
-		});
-	});
-}

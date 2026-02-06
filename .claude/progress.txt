@@ -1008,5 +1008,55 @@ The optimization work successfully:
 - Build: passed (no errors)
 - Type-check: 286 errors (all pre-existing, 0 from changed files)
 
+### Post-Phase: Fix SW Update Button Not Triggering Reload
+- Status: DONE
+- Date: 2026-02-06
+- Root cause: Two bugs prevented the update notification's "Update" button from working:
+  1. `suffix !== '-dev'` guard in setupApp.ts prevented `setupServiceWorkerUpdates()` from running
+     on dev environments, so the `sw-update-accepted` event listener was never registered
+  2. No fallback timeout after sending SKIP_WAITING — if `controllerchange` didn't fire, page never reloaded
+- Changes made:
+  1. src/setupApp.ts: Removed `suffix !== '-dev'` guard from SW setup check; removed unused `suffix` import
+  2. src/lib/serviceWorkerUpdates.ts: Added 2-second fallback `setTimeout(() => window.location.reload())`
+     after sending SKIP_WAITING message, in case `controllerchange` event doesn't fire
+
+### Post-Phase: Remove Sentry (Performance Optimization)
+- Status: DONE
+- Date: 2026-02-06
+- Root cause: Chrome DevTools trace showed Sentry Vue tracing integration creating 6,428 setTimeout(2000ms)
+  calls during component mount/unmount cycles. Each Vue component lifecycle hook (beforeMount, mounted,
+  beforeUpdate, updated, beforeUnmount, unmounted) was being instrumented by Sentry, creating timers
+  that kept the main thread busy.
+- Changes made:
+  1. src/main.ts: Removed Sentry lazy import and entire initialization block
+  2. Uninstalled `@sentry/vue` and `@sentry/vite-plugin` packages
+
+### Post-Phase: Fix Build After Removing Native Capacitor/Cordova Packages
+- Status: DONE
+- Date: 2026-02-06
+- Root cause: User removed Capacitor and Cordova native packages from package.json (after removing
+  Android/iOS app targets from Cordova). Several source files still imported these packages.
+- Missing packages: @capacitor/status-bar, @hugotomazi/capacitor-navigation-bar,
+  @capawesome/capacitor-android-edge-to-edge-support, @capacitor-community/keep-awake,
+  @capacitor-community/volume-buttons, @awesome-cordova-plugins/android-full-screen
+- Changes made:
+  1. src/lib/utils/dom.ts: Removed AndroidFullScreen and EdgeToEdge static imports;
+     made enableImmersiveMode/disableImmersiveMode no-op functions
+  2. src/store/colorTheme.ts: Converted static imports (StatusBar, NavigationBar, EdgeToEdge) to
+     dynamic imports inside isPlatform('capacitor') guards
+  3. src/store/colorScheme.ts: Converted static EdgeToEdge import to dynamic import
+  4. src/store/imageModal.ts: Converted static imports to dynamic imports in both watch branches
+  5. src/store/wakelock.ts: Converted static KeepAwake import to dynamic import with
+     isPlatform('capacitor') guards on all 4 exported functions
+  6. src/store/audioPlayer.ts: Removed static VolumeButtons import; converted to dynamic import
+     inside existing isPlatform('capacitor') block
+  7. vite.config.ts: Added rollupOptions.external entries for all missing native packages
+     (@capacitor/status-bar, @capacitor-community/*, @hugotomazi/*, @capawesome/*, @awesome-cordova-plugins/*)
+     so Rolldown doesn't try to resolve dynamic imports at build time
+  8. Fixed TrackRow.vue $route template references: Added useRoute() back to both TrackRow components
+     for contextmenu handler (no reactive overhead since event handlers aren't tracked)
+- Build: passed (no errors)
+- Type-check: 302 errors (2 fewer than before — fixed $route errors, 0 new)
+
 ## Next Tasks (from PRD)
 - All phases complete
