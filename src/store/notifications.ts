@@ -6,7 +6,11 @@ const notifications = ref<Message[]>([]);
 const notificationsState = computed(() => notifications.value);
 
 export function setNotifications(data: Message[]) {
-	notifications.value = data;
+	// Preserve client-side notifications (SW/version updates) that the server doesn't know about
+	const localNotifications = notifications.value.filter(m =>
+		m.from === 'system' && (m.id.startsWith('sw-update') || m.id.startsWith('version-update'))
+	);
+	notifications.value = [...data, ...localNotifications];
 }
 
 export function addNotification(message: Message) {
@@ -19,6 +23,9 @@ export function removeNotification(message: Message) {
 	const index = notifications.value.indexOf(message);
 	if (index !== -1)
 		notifications.value = notifications.value.toSpliced(index, 1);
+
+	// Don't send API delete for client-side notifications
+	if (message.from === 'system') return;
 
 	apiClient()
 		.delete(`/notifications/${message.id}`)

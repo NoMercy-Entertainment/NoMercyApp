@@ -28,7 +28,7 @@ function createVersionUpdateNotification(): Message {
 	const messages = pwaMessages[lang as keyof typeof pwaMessages] || pwaMessages.en;
 
 	return {
-		id: `version-update-${Date.now()}`,
+		id: 'version-update-pending',
 		type: 'update',
 		title: messages.newVersion,
 		body: messages.updateNow,

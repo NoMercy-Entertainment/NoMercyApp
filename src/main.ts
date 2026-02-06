@@ -6,6 +6,17 @@ import { isPlatform } from '@ionic/vue';
 // Set up chunk error recovery immediately (before any dynamic imports can fail)
 setupChunkErrorRecovery();
 
+// Register controllerchange listener early so any SKIP_WAITING triggers a reload
+if ('serviceWorker' in navigator) {
+	let refreshing = false;
+	navigator.serviceWorker.addEventListener('controllerchange', () => {
+		if (!refreshing) {
+			refreshing = true;
+			window.location.reload();
+		}
+	});
+}
+
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/vue/css/core.css';
 
