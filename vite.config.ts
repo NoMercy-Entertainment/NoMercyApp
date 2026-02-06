@@ -3,6 +3,7 @@ import path from 'node:path';
 import fs from 'node:fs';
 import { execSync } from 'node:child_process';
 
+import type { Plugin } from 'vite';
 import { defineConfig } from 'vite';
 import { VitePWA } from 'vite-plugin-pwa';
 import { ViteCspPlugin } from 'vite-plugin-csp';
@@ -19,6 +20,28 @@ function getGitCommitHash(): string {
 	} catch {
 		return 'unknown';
 	}
+}
+
+function versionJsonPlugin(commitHash: string, buildTime: string): Plugin {
+	const handler = (_req: any, res: any) => {
+		res.setHeader('Content-Type', 'application/json');
+		res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate');
+		res.end(JSON.stringify({
+			version: commitHash,
+			buildTime,
+			forceUpdate: false,
+		}));
+	};
+
+	return {
+		name: 'version-json',
+		configureServer(server) {
+			server.middlewares.use('/version.json', handler);
+		},
+		configurePreviewServer(server) {
+			server.middlewares.use('/version.json', handler);
+		},
+	};
 }
 
 // @ts-ignore
@@ -50,6 +73,7 @@ export default defineConfig(({ command }) => {
 					},
 				},
 			}),
+			versionJsonPlugin(commitHash, buildTime),
 			VitePWA(pwaConfig),
 			ViteCspPlugin(cspConfig, {
 				enabled: true,
