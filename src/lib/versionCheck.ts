@@ -107,8 +107,7 @@ export async function checkForUpdates(): Promise<boolean> {
 }
 
 export function startVersionChecks(): void {
-	checkForUpdates();
-
+	// Initial check is done early in main.ts; this sets up periodic checks only
 	checkInterval = window.setInterval(checkForUpdates, VERSION_CHECK_INTERVAL);
 
 	document.addEventListener('visibilitychange', () => {

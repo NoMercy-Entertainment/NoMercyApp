@@ -98,6 +98,11 @@ async function initializeWebApp() {
 
 // Run one-time cache migration for existing users, then start the application
 runCacheMigration().then(() => {
+	// Run initial version check early, before Keycloak/app setup
+	// Force updates reload immediately; normal updates continue and notify later
+	if (!import.meta.env.DEV) {
+		import('@/lib/versionCheck').then(({ checkForUpdates }) => checkForUpdates()).catch(() => {});
+	}
 	initializeWebApp();
 });
 
