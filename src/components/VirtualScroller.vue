@@ -2,7 +2,7 @@
 import { computed, onMounted, ref, watch } from 'vue';
 
 interface Props {
-	items?: any[] | null;
+	items?: Record<string, unknown>[] | null;
 	itemHeight: number;
 	containerHeight: number;
 	buffer?: number;
@@ -34,7 +34,7 @@ const visibleItems = computed(() =>
 );
 const offsetY = computed(() => startIndex.value * props.itemHeight);
 
-function getItemKey(item: any, index: number) {
+function getItemKey(item: Record<string, unknown>, index: number) {
 	return item[props.keyField] || index;
 }
 

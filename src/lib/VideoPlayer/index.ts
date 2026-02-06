@@ -21,7 +21,7 @@ export interface NMPlaylistItem extends PlaylistItem {
 	tmdb_id: number;
 	video_type: string;
 	playlist_type: string;
-	fonts: any[];
+	fonts: { name: string; url: string }[];
 	fontsFile: string;
 	episode_id: number;
 	audio: Track[];

@@ -86,7 +86,11 @@ function error(err: Error) {
 	document.dispatchEvent(new Event('musicHub-error'));
 }
 
-export function handleMusicBroadcastStatus(data: any) {
+interface BroadcastStatusData {
+	events: { deviceBroadcastStatus: { device_id: string } }[];
+}
+
+export function handleMusicBroadcastStatus(data: BroadcastStatusData): void {
 	if (!data)
 		return;
 	for (const e of data.events) {

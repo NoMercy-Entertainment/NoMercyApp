@@ -80,7 +80,7 @@ watch([idle, images], async ([idleValue]) => {
 	}
 	else {
 		setShowScreensaver(false);
-		setImageModalData(null);
+		setImageModalData(undefined);
 		document.querySelector<HTMLDialogElement>('#imageModal')?.close();
 		if (isPlatform('capacitor')) {
 			try {

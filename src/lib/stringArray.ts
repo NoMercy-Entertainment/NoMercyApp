@@ -38,10 +38,12 @@ export function breakLogoTitle(str: string, characters = [':', '!', '?']) {
 			characters.map(l => (l === '?' ? `\\${l}\\s` : `${l}\\s`)).join('|'),
 			'u',
 		);
-		if (reg && reg2 && str.match(reg2)) {
+		const match2 = str.match(reg2);
+		const match1 = str.match(reg);
+		if (reg && reg2 && match2 && match1) {
 			return str.replace(
-				(str.match(reg2) as any)[0],
-				`${(str.match(reg) as any)[0]}\n`,
+				match2[0],
+				`${match1[0]}\n`,
 			);
 		}
 	}
@@ -53,9 +55,9 @@ export function breakLogoTitle(str: string, characters = [':', '!', '?']) {
  * Create Enum from an array of values.
  * @param {Array} array Array
  */
-export function createEnumFromArray(array: any[]) {
+export function createEnumFromArray(array: string[]) {
 	return array.reduce(
-		(res: { [x: string]: any }, key: string | number, index: number) => {
+		(res: Record<string, number>, key: string, index: number) => {
 			res[key] = index + 1;
 			return res;
 		},
@@ -102,7 +104,7 @@ export async function copyToClipboard(text: string): Promise<boolean> {
 
 export function find_most(array: Array<number>): number {
 	return array.reduce(
-		(a: number, b: number, _i, arr: any[]) =>
+		(a: number, b: number, _i, arr: number[]) =>
 			arr.filter(v => v === a).length >= arr.filter(v => v === b).length
 				? a
 				: b,
@@ -138,11 +140,12 @@ export function generateRandomString(length: number): string {
  * @param {Array} array Array
  * @param {string} key Group key
  */
-export function groupBy<T>(array: T[], key: string): T[][] {
-	const list: any = {};
+export function groupBy<T extends Record<string, unknown>>(array: T[], key: string): Record<string, T[]> {
+	const list: Record<string, T[]> = {};
 
-	array.forEach((element: any) => {
-		list[element[key]] = array.filter((el: any) => el[key] === element[key]);
+	array.forEach((element) => {
+		const groupKey = String(element[key]);
+		list[groupKey] = array.filter((el) => el[key] === element[key]);
 	});
 
 	return list;
@@ -169,16 +172,16 @@ export function isJsonString(str: string) {
 	return true;
 }
 
-export function isValidObject(str: any) {
-	return str.length > 0 && typeof str === 'object';
+export function isValidObject(str: unknown): boolean {
+	return Array.isArray(str) ? str.length > 0 : typeof str === 'object' && str !== null && Object.keys(str).length > 0;
 }
 
 export function limitSentenceByCharacters(str: string, characters = 340): string {
 	if (!str) {
 		return '';
 	}
-	const arr: any = str.substring(0, characters).split('.');
-	arr.pop(arr.length);
+	const arr: string[] = str.substring(0, characters).split('.');
+	arr.pop();
 	return `${arr.join('.')}.`;
 }
 
@@ -269,20 +272,22 @@ export function sort_updated_desc(a: Record<string, string | number | Date>, b: 
 	return 0;
 }
 
-export function sortBy<T>(arr: T[], key: string, direction = 'asc',	subKey?: string) {
-	return [...(arr ?? [])].sort((a: any, b: any) => {
-		let x: typeof a;
-		let y: typeof b;
+export function sortBy<T>(arr: T[], key: string, direction = 'asc',	subKey?: string): T[] {
+	return [...(arr ?? [])].sort((a, b) => {
+		const aRec = a as Record<string, Record<string, unknown> | unknown>;
+		const bRec = b as Record<string, Record<string, unknown> | unknown>;
+		let x: unknown;
+		let y: unknown;
 		if (direction === 'desc') {
-			x = subKey ? b[key]?.[subKey] ?? '0' : b[key] ?? '0';
-			y = subKey ? a[key]?.[subKey] ?? '0' : a[key] ?? '0';
+			x = subKey ? (bRec[key] as Record<string, unknown>)?.[subKey] ?? '0' : bRec[key] ?? '0';
+			y = subKey ? (aRec[key] as Record<string, unknown>)?.[subKey] ?? '0' : aRec[key] ?? '0';
 		}
 		else {
-			x = subKey ? a[key]?.[subKey] ?? '0' : a[key] ?? '0';
-			y = subKey ? b[key]?.[subKey] ?? '0' : b[key] ?? '0';
+			x = subKey ? (aRec[key] as Record<string, unknown>)?.[subKey] ?? '0' : aRec[key] ?? '0';
+			y = subKey ? (bRec[key] as Record<string, unknown>)?.[subKey] ?? '0' : bRec[key] ?? '0';
 		}
 
-		return x < y ? -1 : x > y ? 1 : 0;
+		return (x as string | number) < (y as string | number) ? -1 : (x as string | number) > (y as string | number) ? 1 : 0;
 	});
 }
 
@@ -293,9 +298,11 @@ export function sortBy2<T>(
 	direction: 'asc' | 'desc' = 'asc',
 	subKey?: string,
 ) {
-	return [...(arr ?? [])].sort((a: any, b: any) => {
-		const getVal = (obj: any, k: string) =>
-			subKey ? obj[k]?.[subKey] ?? '0' : obj[k] ?? '0';
+	return [...(arr ?? [])].sort((a, b) => {
+		const getVal = (obj: T, k: string) => {
+			const rec = obj as Record<string, Record<string, unknown> | unknown>;
+			return subKey ? (rec[k] as Record<string, unknown>)?.[subKey] ?? '0' : rec[k] ?? '0';
+		};
 
 		let x1 = getVal(a, key);
 		let y1 = getVal(b, key);
@@ -331,9 +338,9 @@ export function sortBy2<T>(
  */
 export function sortByPriorityKeyed<T = string>(sortingOrder: {
 	[x: string]: T;
-}, key: string, order = 'desc'): any {
+}, key: string, order = 'desc'): <U extends Record<string, unknown>>(a: U, b: U) => number {
 	if (Array.isArray(sortingOrder)) {
-		sortingOrder = createEnumFromArray(sortingOrder);
+		sortingOrder = createEnumFromArray(sortingOrder) as { [x: string]: T };
 	}
 	return function <T = string>(a: T, b: T): number {
 		if (
@@ -416,16 +423,16 @@ export function unique<T>(array: T[], key: string): T[] {
 	}
 
 	return array.filter(
-		(obj: any, pos, arr) =>
-			arr.map((mapObj: any) => mapObj[key]).indexOf(obj[key]) === pos,
+		(obj, pos, arr) =>
+			arr.map((mapObj) => (mapObj as Record<string, unknown>)[key]).indexOf((obj as Record<string, unknown>)[key]) === pos,
 	);
 }
 
-export function uniqueBy(array: any, key: any) {
+export function uniqueBy<T>(array: T[] | null | undefined, key: (item: T) => unknown): T[] {
 	if (!array) {
 		return [];
 	}
-	return Array.from(new Map(array.map((x: any) => [key(x), x])).values());
+	return Array.from(new Map(array.map((x) => [key(x), x])).values());
 }
 
 /**
@@ -434,14 +441,14 @@ export function uniqueBy(array: any, key: any) {
  * @param {string} index
  * @param {string} self
  */
-export function distinct(value: any, index: any, self: string | any[]) {
+export function distinct<T>(value: T, index: number, self: T[]): boolean {
 	return self.indexOf(value) === index;
 }
 
 /**
  * FilterCallback.
  */
-export function Unique(value: any, index: any, self: string | any[]) {
+export function Unique<T>(value: T, index: number, self: T[]): boolean {
 	return self.indexOf(value) === index;
 }
 
@@ -468,10 +475,10 @@ export function random_string(length: number) {
  * @param {string} key Group key
  * @param {string} key Sort key
  */
-export function sortByPriority(arr: any[], prefferedOrder: string | any[]) {
-	const result: any[] = [];
+export function sortByPriority<T>(arr: T[], prefferedOrder: T[]): T[] {
+	const result: T[] = [];
 	let i: number;
-	let j: any;
+	let j: number;
 	for (i = 0; i < prefferedOrder.length; i++) {
 		while ((j = arr.indexOf(prefferedOrder[i])) !== -1) {
 			result.push(arr.splice(j, 1)[0]);
@@ -505,18 +512,16 @@ export function sort_updated(
 	return 0;
 }
 
-export function trackSort(a: { disc: any; track: string | number }, b: { disc: any; track: string | number }) {
+export function trackSort(a: { disc: number | string; track: string | number }, b: { disc: number | string; track: string | number }): number {
 	if (a.disc === b.disc) {
 		return Number.parseInt(`${a.track}`, 10) - Number.parseInt(`${b.track}`, 10);
 	}
 	return Number.parseInt(`${a.track}`, 10) > Number.parseInt(`${b.track}`, 10) ? 1 : -1;
 }
 
-export function uniqBy(a: {
-	map: (arg0: (item: any) => any[]) => Iterable<readonly [unknown, unknown]>;
-}, key: string | number) {
+export function uniqBy<T extends Record<string, unknown>>(a: T[], key: string | number): T[] {
 	return Array.from(
-		new Map(a.map((item: { [x: string]: any }) => [item[key], item])).values(),
+		new Map(a.map((item) => [item[key], item])).values(),
 	);
 }
 
@@ -526,38 +531,33 @@ export function sortByPosterAlphabetized<T>(data: T[], sort = 'name',	uniqued: s
 		data = unique<T>(data, uniqued);
 	}
 
-	const current = Object.create(null);
-	const finalArr: any[] = [];
+	const current = Object.create(null) as Record<string, string[]>;
+	const finalArr: (T & { department: string[]; profile?: string | null })[] = [];
 
-	data.forEach((o: any) => {
-		if (!current[o.name]) {
-			current[o.name] = [];
-			finalArr.push({ ...o, department: current[o.name] });
+	data.forEach((o) => {
+		const rec = o as T & { name: string; department: string; profile?: string | null };
+		if (!current[rec.name]) {
+			current[rec.name] = [];
+			finalArr.push({ ...rec, department: current[rec.name] });
 		}
-		current[o.name].push(o.department);
+		current[rec.name].push(rec.department);
 	});
 
 	const hasPoster = finalArr
-		.filter((d: { profile: null }) => d.profile !== null)
-		.sort(
-			(
-				a: { [x: string]: number },
-				b: {
-					[x: string]: number;
-				},
-			) => +(a[sort] > b[sort]) || -(a[sort] < b[sort]),
-		);
+		.filter(d => d.profile !== null)
+		.sort((a, b) => {
+			const aVal = String((a as Record<string, unknown>)[sort]);
+			const bVal = String((b as Record<string, unknown>)[sort]);
+			return +(aVal > bVal) || -(aVal < bVal);
+		});
 
 	const nulled = finalArr
-		.filter((d: { profile: null }) => d.profile === null)
-		.sort(
-			(
-				a: { [x: string]: number },
-				b: {
-					[x: string]: number;
-				},
-			) => +(a[sort] > b[sort]) || -(a[sort] < b[sort]),
-		);
+		.filter(d => d.profile === null)
+		.sort((a, b) => {
+			const aVal = String((a as Record<string, unknown>)[sort]);
+			const bVal = String((b as Record<string, unknown>)[sort]);
+			return +(aVal > bVal) || -(aVal < bVal);
+		});
 
 	return hasPoster.concat(nulled);
 }
@@ -601,7 +601,7 @@ export function mathPercentage(strA: string, strB: string): number {
  * @param {string} key Group key
  * @param {string} match Match to
  */
-export function sortByMathPercentage(array: any[], key: string | number, match: string) {
+export function sortByMathPercentage<T extends Record<string | number, string>>(array: T[], key: string | number, match: string): T[] {
 	return array.sort((a, b) => {
 		const x = mathPercentage(match, a[key]);
 		const y = mathPercentage(match, b[key]);
@@ -681,7 +681,7 @@ export function translate(template: string, ...value: Array<string | number>) {
 // 	return stringFormat(translatedTemplate, ...value);
 // };
 
-type itemMap = (n: any) => any;
+type itemMap = (n: unknown) => unknown;
 
 interface SortConfig<T> {
 	key: keyof T;
@@ -714,9 +714,9 @@ export function byObjectValues<T extends object>(
 			return byObjectValues<T>(keys.slice(1))(a, b);
 		}
 		if (reverse) {
-			return valA > valB ? -1 : 1;
+			return (valA as string | number) > (valB as string | number) ? -1 : 1;
 		}
-		return valA > valB ? 1 : -1;
+		return (valA as string | number) > (valB as string | number) ? 1 : -1;
 	};
 }
 

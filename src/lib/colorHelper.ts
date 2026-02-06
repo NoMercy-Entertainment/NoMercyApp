@@ -110,10 +110,10 @@ export function setCustomColor(key: string, value: number[]) {
 	);
 }
 
-export function getLuminosity(c: any) {
-	c = RGBString2hex(c).substring(1);
+export function getLuminosity(c: string): number {
+	const hex = RGBString2hex(c).substring(1);
 
-	const rgb: number = Number.parseInt(c, 16);
+	const rgb: number = Number.parseInt(hex, 16);
 	const r = (rgb >> 16) & 0xFF;
 	const g = (rgb >> 8) & 0xFF;
 	const b = (rgb >> 0) & 0xFF;
@@ -121,27 +121,29 @@ export function getLuminosity(c: any) {
 	return 0.2126 * r + 0.7152 * g + 0.0722 * b;
 }
 
-export function tooLight(c: any, max = 130) {
+export function tooLight(c: string | null | undefined, max = 130): boolean {
 	if (c) {
-		if (c.includes('#')) {
-			const rgb = hexToRgba(c);
-			c = `rgb(${rgb.r} ${rgb.g} ${rgb.b})`;
+		let color = c;
+		if (color.includes('#')) {
+			const rgb = hexToRgba(color);
+			color = `rgb(${rgb.r} ${rgb.g} ${rgb.b})`;
 		}
 
-		const luminosity = getLuminosity(c);
+		const luminosity = getLuminosity(color);
 		return luminosity > max;
 	}
 	return false;
 }
 
-export function tooDark(c: any, min = 50) {
+export function tooDark(c: string | null | undefined, min = 50): boolean {
 	if (c) {
-		if (c.includes('#')) {
-			const rgb = hexToRgba(c);
-			c = `rgb(${rgb.r} ${rgb.g} ${rgb.b})`;
+		let color = c;
+		if (color.includes('#')) {
+			const rgb = hexToRgba(color);
+			color = `rgb(${rgb.r} ${rgb.g} ${rgb.b})`;
 		}
 
-		const luminosity = getLuminosity(c);
+		const luminosity = getLuminosity(color);
 		return luminosity < min;
 	}
 	return false;

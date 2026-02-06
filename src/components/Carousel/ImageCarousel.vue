@@ -70,7 +70,7 @@ function handleLeft() {
 
 	setTemp({
 		index: newIndex.value - 1,
-		type: temp.value.type,
+		type: temp.value!.type,
 	});
 
 	setImageModalData({
@@ -90,7 +90,7 @@ function handleRight() {
 
 	setTemp({
 		index: newIndex.value + 1,
-		type: temp.value.type,
+		type: temp.value!.type,
 	});
 
 	setImageModalData({
@@ -166,7 +166,7 @@ useEventListener(window, 'keyup', (event) => {
 	}
 
 	if (event.key === 'Escape' || event.key === 'Backspace') {
-		setImageModalData(null);
+		setImageModalData(undefined);
 		setImageModalOpen(false);
 		handleStop();
 	}

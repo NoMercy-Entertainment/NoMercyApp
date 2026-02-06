@@ -578,8 +578,87 @@
 - Standard order enforced: Imports → Props → Emits → Composables → State → Computed → Functions → Lifecycle → Watchers
 - No new type errors introduced (all errors in type-check output are pre-existing)
 
+### Phase 7.4: Remove `any` Types
+- Status: DONE
+- Date: 2026-02-06
+- Changes made (replaced `any` with proper types across ~30 files):
+  1. src/store/indexer.ts:
+     - Created `IndexerItemData` interface for typed property access
+     - Changed `Component<any>` → `Component<IndexerItemData>`
+     - Added type assertion for `props.name` access (not in `Props<T>` interface)
+  2. src/store/imageModal.ts:
+     - Changed `setImageModalData(data: any)` → `LogoResponse | undefined`
+     - Created `TempData` interface `{ type: string; index: number }`
+     - Changed `setTemp(temp: any)` → `TempData | null` with typed ref
+  3. src/store/contextMenuItems.ts:
+     - Changed `command?: any` → `string | (() => unknown)`
+     - Changed `args?: any` → `{ [arg: string]: unknown }`
+     - Changed request functions data params from `any` → `unknown`
+     - Added `as string` cast for `item.args?.url` in cmd call
+  4. src/store/musicSocket.ts:
+     - Created `BroadcastStatusData` interface replacing `any` parameter
+  5. src/store/audioPlayer.ts:
+     - Changed `err?: any` → `err?: unknown` in VolumeButtonsCallback
+  6. src/store/androidAppPrompt.ts:
+     - Replaced `(navigator as any)` with typed cast for `getInstalledRelatedApps`
+  7. src/store/screensaver.ts:
+     - Changed `setImageModalData(null)` → `setImageModalData(undefined)`
+  8. src/lib/dateTime.ts:
+     - Changed `humanTime`/`convertToHis` parameter types to `number | string`
+     - Fixed `hours === 0` → `hours === '00'` (dead code from `pad()` returning string)
+     - Fixed `minutes === 0` checks to also accept `'0'`
+  9. src/lib/colorHelper.ts:
+     - Changed `getLuminosity(c: any)` → `c: string`
+     - Changed `tooLight/tooDark(c: any)` → `c: string | null | undefined`
+  10. src/lib/sliderBar.ts:
+      - Changed `getScrubTime(e: any)` → `MouseEvent | TouchEvent`
+      - Used `Record<string, (value: number) => void>` for setter callbacks
+      - Used `Record<string, () => number>` for getter callbacks (getSizeFn)
+  11. src/lib/scrollHandlers.ts:
+      - Changed `player: any` → `PlayerCore<PlaylistItem>` with proper imports
+  12. src/lib/stringArray.ts:
+      - `sortBy`: Cast comparison values to `string | number` for `<`/`>` operators
+      - `sortByPriorityKeyed`: Cast `createEnumFromArray` result to match generic type
+      - `sortByPosterAlphabetized`: Removed explicit `{ [x: string]: number }` callback types,
+        used `String()` wrapper and `Record<string, unknown>` cast for dynamic key access
+      - `byObjectValues`: Cast `valA`/`valB` to `string | number` for comparisons
+      - Various other functions: `groupBy`, `unique`, `uniqueBy`, `uniqBy` typed properly
+  13. src/lib/clients/useServerClient.ts, useServerClient2.ts, useApiClient.ts:
+      - Changed `data?: any` → `Record<string, { value: unknown }>` or `Record<string, unknown>`
+      - Changed `params?: any` → `Record<string, unknown>`
+  14. src/lib/clients/useInfiniteServerClient.ts:
+      - Typed `getNextPageParam`/`getPreviousPageParam` with `T & { has_more?; next_page? }`
+      - Cast `response.data` in queryFn resolve
+  15. src/lib/clients/socketClient/SocketClient.ts:
+      - Added eslint-disable comments for SignalR's required `any[]` callback signatures
+  16. src/lib/clients/socketClient/events.ts:
+      - Created `NotifyData` interface, typed `onUpdateContent` and `onCommand`
+  17. src/config/global.ts:
+      - Changed `console.raw` from `(...arg: any)` → `(...arg: unknown[])`
+  18. src/hooks/useHubListener.ts:
+      - Added eslint-disable for SignalR compatibility, changed return `any` → `void`
+  19. src/components/VirtualScroller.vue, VirtualList.vue:
+      - Changed `items?: any[]` → `Record<string, unknown>[]`
+  20. src/components/ResponsiveComponent.vue:
+      - Changed `fallback/loading/error?: any` → `Component` type from Vue
+  21. src/components/Carousel/ImageCarousel.vue:
+      - Added non-null assertion for `temp.value!.type`
+      - Changed `setImageModalData(null)` → `setImageModalData(undefined)`
+  22. src/Layout/ImageModal.vue:
+      - Changed `setImageModalData(null)` → `setImageModalData(undefined)`
+  23. src/lib/VideoPlayer/index.ts:
+      - Changed `fonts: any[]` → `{ name: string; url: string }[]`
+- Notes:
+  - SignalR's `on()`, `off()`, and `invoke()` methods require `any[]` callback types (external library constraint) — kept with eslint-disable comments
+  - `objectsEqual` and `mappedEntries` in stringArray.ts still use `any` (complex recursive/generic patterns)
+  - Pre-existing type errors (284) not related to this change remain unchanged
+- Benefits:
+  - Eliminated ~50 `any` type usages across the codebase
+  - Improved type safety for store functions, utility functions, and API clients
+  - Created proper interfaces for previously untyped data structures
+  - Better IDE autocompletion and error detection
+
 ## Next Tasks (from PRD)
-- Phase 7.4: Remove `any` Types
 - Phase 7.5: Standardize File Naming (Libraries.ts done in 7.1)
 - Phase 7.6: Add Missing Emits Definitions
 - Phase 7.7: Reorganize Lib Utility Files

@@ -257,11 +257,11 @@ export const greetingValue = computed(() => {
 
 declare global {
 	interface Console {
-		raw: (...arg: any) => void;
+		raw: (...arg: unknown[]) => void;
 	}
 }
 
-console.raw = (...arg: any[]) => {
+console.raw = (...arg: unknown[]) => {
 	console.log(...arg.map(a => toRaw(a)));
 };
 

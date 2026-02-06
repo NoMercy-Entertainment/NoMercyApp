@@ -21,25 +21,25 @@ import type { ModalData } from '@/types';
 export interface ContextMenuItem {
 	label?: string;
 	icon?: `mooooom-${keyof typeof MoooomIcons}`;
-	command?: string | (() => any);
+	command?: string | (() => unknown);
 	method?: string;
 	confirm?: string;
-	args?: { [arg: string]: any };
+	args?: { [arg: string]: unknown };
 	separator?: boolean;
 	items?: ContextMenuItem[];
 }
 
-const getRequest = (url: string, data: any) => serverClient().get(url);
-function putRequest(url: string, data: any) {
+const getRequest = (url: string, _data: unknown) => serverClient().get(url);
+function putRequest(url: string, data: unknown) {
 	return serverClient().put(url, { data });
 }
-function postRequest(url: string, data: any) {
+function postRequest(url: string, data: unknown) {
 	return serverClient().post(url, { data });
 }
-function deleteRequest(url: string, data: any) {
+function deleteRequest(url: string, data: unknown) {
 	return serverClient().delete(url, { data });
 }
-function patchRequest(url: string, data: any) {
+function patchRequest(url: string, data: unknown) {
 	return serverClient().patch(url, { data });
 }
 
@@ -47,7 +47,7 @@ export function makeContextMenu(items: ContextMenuItem[]): (MenuItem & { icon?: 
 	return items.map((item) => {
 		let cmd: (
 			url: string,
-			data: any
+			data: unknown
 		) => Promise<AxiosResponse<unknown, unknown>>;
 		if (item.method === 'GET') {
 			cmd = getRequest;
@@ -65,7 +65,7 @@ export function makeContextMenu(items: ContextMenuItem[]): (MenuItem & { icon?: 
 			cmd = deleteRequest;
 		}
 		else {
-			cmd = item.command as () => any;
+			cmd = item.command as () => Promise<AxiosResponse<unknown, unknown>>;
 		}
 
 		return {
@@ -74,7 +74,7 @@ export function makeContextMenu(items: ContextMenuItem[]): (MenuItem & { icon?: 
 			confirm: item.confirm,
 			args: item.args,
 			// eslint-disable-next-line ts/no-use-before-define
-			command: () => cmd(item.args?.url, contextMenuContext.value).then(() => {
+			command: () => cmd(item.args?.url as string, contextMenuContext.value).then(() => {
 				if (item.args?.replaceKey) {
 					document.dispatchEvent(new CustomEvent('mutateId', { detail: { id: item.args?.replaceKey } }));
 				}
@@ -100,7 +100,7 @@ export function clearContextMenu() {
 const cmc = ref<{ [arg: string]: unknown | unknown[] } | null>(null);
 export const contextMenuContext = computed(() => cmc.value);
 
-export function setContextMenuContext(context: any) {
+export function setContextMenuContext(context: { [arg: string]: unknown | unknown[] } | null): void {
 	cmc.value = context;
 }
 

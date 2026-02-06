@@ -39,7 +39,7 @@ export function setDisableScreensaver(disable: boolean) {
 const imd = ref<LogoResponse>();
 export const imageModalData = computed(() => imd.value);
 
-export function setImageModalData(data: any) {
+export function setImageModalData(data: LogoResponse | undefined): void {
 	imd.value = data;
 }
 
@@ -57,10 +57,15 @@ export function setNewIndex(index: number) {
 	ni.value = index;
 }
 
-const tmp = ref();
+interface TempData {
+	type: string;
+	index: number;
+}
+
+const tmp = ref<TempData | null>(null);
 export const temp = computed(() => tmp.value);
 
-export function setTemp(temp: any) {
+export function setTemp(temp: TempData | null): void {
 	tmp.value = temp;
 }
 

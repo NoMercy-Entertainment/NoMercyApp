@@ -12,7 +12,7 @@ import { useRoute } from 'vue-router';
 
 export interface ServerClientProps {
 	path?: string;
-	data?: any;
+	data?: Record<string, { value: unknown }>;
 	cacheKey?: string;
 	keepForever?: boolean;
 	enabled?: Ref<boolean> | ComputedRef<boolean> | boolean;
@@ -39,7 +39,7 @@ function useServerClient<T>(options?: ServerClientProps): Return<T> {
 		return Object.keys(options?.data ?? {}).reduce((acc, key) => {
 			acc[key] = toRaw(options?.data![key].value);
 			return acc;
-		}, {} as Record<string | number, any>);
+		}, {} as Record<string, unknown>);
 	};
 
 	const type = ref<'get' | 'post' | 'put' | 'patch' | 'delete' | 'head'>(

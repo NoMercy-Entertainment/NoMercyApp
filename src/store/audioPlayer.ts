@@ -514,7 +514,7 @@ if (isPlatform('capacitor')) {
 	const options: VolumeButtonsOptions = {};
 	const callback: VolumeButtonsCallback = (
 		result: VolumeButtonsResult,
-		err?: any,
+		err?: unknown,
 	) => {
 		if (!result)
 			return;

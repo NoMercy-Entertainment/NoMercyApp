@@ -51,7 +51,7 @@ const delay = computed(() => {
 
 function handleClose() {
 	setImageModalOpen(false);
-	setImageModalData(null);
+	setImageModalData(undefined);
 	src.value = null;
 }
 

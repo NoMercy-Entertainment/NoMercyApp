@@ -56,25 +56,25 @@ export function convertToHumanReact(
 	return `${days} ${hours} ${minutes} ${seconds}`;
 }
 
-export function humanTime(time: any) {
-	time = Number.parseInt(time, 10);
-	let hours: any = pad(Number.parseInt(`${(time % 86400) / 3600}`, 10), 2);
+export function humanTime(time: number | string): string {
+	const timeParsed = Number.parseInt(`${time}`, 10);
+	let hours: number | string = pad(Number.parseInt(`${(timeParsed % 86400) / 3600}`, 10), 2);
 
-	let minutes: any = Number.parseInt(`${(time % 3600) / 60}`, 10);
-	let seconds: any = Number.parseInt(`${time % 60}`, 10);
+	let minutes: number | string = Number.parseInt(`${(timeParsed % 3600) / 60}`, 10);
+	let seconds: number | string = Number.parseInt(`${timeParsed % 60}`, 10);
 	if (`${minutes}`.length === 1) {
 		minutes = `0${minutes}`;
 	}
 	if (`${seconds}`.length === 1) {
 		seconds = `0${seconds}`;
 	}
-	if (hours === 0) {
+	if (hours === '00') {
 		hours = '00:';
 	}
 	else {
 		hours = `${hours}:`;
 	}
-	if (minutes === 0) {
+	if (minutes === '0' || minutes === 0) {
 		minutes = '00:';
 	}
 	else {
@@ -139,25 +139,25 @@ export function humanTimeExtended(
 	return `${days} ${hours} ${minutes} ${seconds}`;
 }
 
-export function convertToHis(time: any) {
-	time = Number.parseInt(time, 10);
-	let hours: any = pad(Number.parseInt(`${(time % 86400) / 3600}`, 10), 2);
+export function convertToHis(time: number | string): string {
+	const timeParsed = Number.parseInt(`${time}`, 10);
+	let hours: number | string = pad(Number.parseInt(`${(timeParsed % 86400) / 3600}`, 10), 2);
 
-	let minutes: any = Number.parseInt(`${(time % 3600) / 60}`, 10);
-	let seconds: any = Number.parseInt(`${time % 60}`, 10);
+	let minutes: number | string = Number.parseInt(`${(timeParsed % 3600) / 60}`, 10);
+	let seconds: number | string = Number.parseInt(`${timeParsed % 60}`, 10);
 	if (`${minutes}`.length === 1) {
 		minutes = `0${minutes}`;
 	}
 	if (`${seconds}`.length === 1) {
 		seconds = `0${seconds}`;
 	}
-	if (hours === 0) {
+	if (hours === '00') {
 		hours = '00:';
 	}
 	else {
 		hours = `${hours}:`;
 	}
-	if (minutes === 0) {
+	if (minutes === '0' || minutes === 0) {
 		minutes = '00:';
 	}
 	else {
