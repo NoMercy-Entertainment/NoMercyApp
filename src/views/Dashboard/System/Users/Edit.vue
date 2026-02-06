@@ -87,32 +87,46 @@ function handleCancel() {
 	router.back();
 }
 
-function handleSave() {
-	serverClient()
-		.patch<{ message: string; status: string; args: string[] }>(
-			`dashboard/users/${route.params.id}/permissions`,
-			{
-				allowed: allowed.value,
-				manage: manage.value,
-				audio_transcoding: audioTranscoding.value,
-				video_transcoding: videoTranscoding.value,
-				no_transcoding: noTranscoding.value,
-				libraries: allowedLibraries.value?.map(l => l.id),
-			},
-		)
-		.then(({ data }) => {
-			query.invalidateQueries({
-				queryKey: ['userPermissions', route.params.id],
-			});
+const isSaving = ref(false);
 
-			toast.add({
-				severity: data.status.toLowerCase(),
-				summary: translate(data.status),
-				detail: translate(data.message, ...data.args),
-				life: 5000,
-			});
-			handleCancel();
+async function handleSave() {
+	if (isSaving.value) return;
+	isSaving.value = true;
+
+	try {
+		const { data } = await serverClient()
+			.patch<{ message: string; status: string; args: string[] }>(
+				`dashboard/users/${route.params.id}/permissions`,
+				{
+					allowed: allowed.value,
+					manage: manage.value,
+					audio_transcoding: audioTranscoding.value,
+					video_transcoding: videoTranscoding.value,
+					no_transcoding: noTranscoding.value,
+					libraries: allowedLibraries.value?.map(l => l.id),
+				},
+			);
+		query.invalidateQueries({
+			queryKey: ['userPermissions', route.params.id],
 		});
+
+		toast.add({
+			severity: data.status.toLowerCase(),
+			summary: translate(data.status),
+			detail: translate(data.message, ...data.args),
+			life: 5000,
+		});
+		handleCancel();
+	} catch {
+		toast.add({
+			severity: 'error',
+			summary: translate('Error'),
+			detail: translate('An error occurred while saving permissions'),
+			life: 5000,
+		});
+	} finally {
+		isSaving.value = false;
+	}
 }
 
 watch(allowedAllLibraries, (value) => {
@@ -268,8 +282,8 @@ watch(allowedLibraries, (value) => {
 			>
 				{{ $t("Cancel") }}
 			</Button>
-			<Button id="save" color="theme" type="button" @click="handleSave">
-				{{ $t("Save") }}
+			<Button id="save" :disabled="isSaving" color="theme" type="button" @click="handleSave">
+				{{ isSaving ? $t("Saving...") : $t("Save") }}
 			</Button>
 		</template>
 

@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import type { PropType } from 'vue';
+import { ref } from 'vue';
 import { useQueryClient } from '@tanstack/vue-query';
 
 import serverClient from '@/lib/clients/serverClient';
@@ -35,21 +36,26 @@ const props = defineProps({
 
 const query = useQueryClient();
 const toast = useToast();
+const isDeleting = ref(false);
 
-function handleDelete() {
-	serverClient()
-		.delete<StatusResponse<string>>(`dashboard/libraries/${props.id}`)
-		.then(({ data }) => {
-			toast.add({
-				severity: data.status === 'ok' ? 'success' : 'error',
-				summary: translate(data.status === 'ok' ? 'Success' : 'Error'),
-				detail: translate(data.message, ...data.args ?? []),
-				life: 5000,
-			});
-			query.invalidateQueries({ queryKey: ['dashboard', 'libraries'] });
+async function handleDelete() {
+	if (isDeleting.value) return;
+	isDeleting.value = true;
+
+	try {
+		const { data } = await serverClient()
+			.delete<StatusResponse<string>>(`dashboard/libraries/${props.id}`);
+		toast.add({
+			severity: data.status === 'ok' ? 'success' : 'error',
+			summary: translate(data.status === 'ok' ? 'Success' : 'Error'),
+			detail: translate(data.message, ...data.args ?? []),
+			life: 5000,
 		});
-
-	props.close();
+		query.invalidateQueries({ queryKey: ['dashboard', 'libraries'] });
+		props.close();
+	} catch {
+		isDeleting.value = false;
+	}
 }
 </script>
 
@@ -68,16 +74,18 @@ function handleDelete() {
 		<template #actions>
 			<Button
 				id="yes"
+				:disabled="isDeleting"
 				:onclick="handleDelete"
 				color="red"
 				end-icon="trash"
 				type="button"
 				variant="contained"
 			>
-				{{ $t("Delete") }}
+				{{ isDeleting ? $t("Deleting...") : $t("Delete") }}
 			</Button>
 			<Button
 				id="no"
+				:disabled="isDeleting"
 				:onclick="close"
 				color="auto"
 				type="button"

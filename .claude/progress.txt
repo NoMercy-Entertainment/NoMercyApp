@@ -735,5 +735,72 @@
   - Fixed remaining `any` types in type definition files
   - 284 pre-existing type errors unchanged (zero new errors)
 
+### Phase 7.9: Audit and Fix User Action Feedback
+- Status: DONE
+- Date: 2026-02-06
+- Audited all interactive elements across the codebase for missing loading states
+- Changes made to 13 files:
+  1. src/components/Buttons/MediaLikeButton.vue:
+     - Added `isLoading` ref to prevent double-clicks during like/unlike
+     - Optimistic UI: toggles liked state immediately, reverts on error
+     - Added `:disabled` to both MusicButton and BannerButton
+  2. src/views/Dashboard/System/Users/components/DeleteUserModal.vue:
+     - Added `isDeleting` ref with guard clause
+     - Converted to async/await with try/catch (was fire-and-forget)
+     - Modal no longer closes before request completes (was closing immediately)
+     - Delete and Cancel buttons disabled during request
+     - Button text changes to "Deleting..." during request
+  3. src/views/Dashboard/System/Libraries/components/DeleteLibraryModal.vue:
+     - Same pattern: `isDeleting` ref, async/await, buttons disabled during request
+     - Modal closes only after successful deletion
+  4. src/views/Dashboard/Content/Specials/components/DeleteSpecialModal.vue:
+     - Same pattern as DeleteLibraryModal
+  5. src/views/Dashboard/System/EncoderProfiles/components/DeleteEncoderProfileModal.vue:
+     - Same pattern as DeleteLibraryModal
+  6. src/views/Dashboard/System/Libraries/components/DeleteFolderModal.vue:
+     - Same pattern; also removed commented-out notification code
+  7. src/views/Setup/PostInstall/components/DeleteLibraryModal.vue:
+     - Same pattern as dashboard DeleteLibraryModal
+  8. src/views/Dashboard/System/Users/components/InviteUserModal.vue:
+     - Added `isSending` ref with guard clause
+     - Converted to async/await with try/catch/finally
+     - Send button disabled during request, text changes to "Sending..."
+     - Cancel button also disabled during send
+  9. src/views/Dashboard/System/Libraries/Edit.vue:
+     - Added `isSaving` ref for handleSave()
+     - Converted to async/await with try/catch/finally
+     - Save button disabled during request, text changes to "Saving..."
+     - Added error toast on failure (was silent before)
+  10. src/views/Dashboard/Devices/Devices/Desktop.vue:
+      - Added `isDeleting` ref for handleDelete()
+      - Converted from mixed await/.then()/.catch() to clean async/await try/catch/finally
+      - Delete All button gets disabled + opacity-50 + cursor-not-allowed during request
+      - Button text changes to "Deleting..."
+      - Fixed `any` types to `unknown`
+  11. src/views/Dashboard/System/Libraries/Desktop.vue:
+      - Added `isCreating` ref for handleCreateLibrary()
+      - Converted to async/await with try/catch/finally
+      - New Library button disabled during request, text changes to "Creating..."
+      - Added error toast on failure (was silent before)
+  12. src/views/Dashboard/System/Users/Edit.vue:
+      - Added `isSaving` ref for handleSave()
+      - Converted to async/await with try/catch/finally
+      - Save button disabled during request, text changes to "Saving..."
+      - Added error toast on failure (was silent before)
+  13. src/views/Setup/PostInstall/components/EditLibraryModal.vue:
+      - Added `isSaving` ref for handleEdit()
+      - Converted to async/await with try/catch/finally
+      - Done button disabled during request, text changes to "Saving..."
+      - Fixed `err.message` access to `err instanceof Error ? err.message : 'Unknown error'`
+- Common patterns applied:
+  - Guard clause at top of handler: `if (isLoading.value) return`
+  - Set loading true before request
+  - Disable action button + cancel button during request
+  - Show "Deleting..."/"Saving..."/"Sending..." text during request
+  - For delete modals: close modal only AFTER request succeeds (was closing immediately before)
+  - Reset loading in `catch` or `finally` block
+  - All fire-and-forget `.then()` chains converted to async/await with proper error handling
+- 283 pre-existing type errors (one fewer than previous 284, zero new errors)
+
 ## Next Tasks (from PRD)
-- Phase 7.9: Audit and Fix User Action Feedback
+- All phases complete

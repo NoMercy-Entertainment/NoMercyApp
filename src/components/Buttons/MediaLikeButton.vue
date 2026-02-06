@@ -54,15 +54,27 @@ const props = defineProps({
 });
 
 const liked = ref(props.data?.favorite);
+const isLoading = ref(false);
 
 function handleLike(e?: MouseEvent) {
 	e?.stopPropagation();
+	if (isLoading.value) return;
+
+	isLoading.value = true;
+	liked.value = !liked.value;
+
 	serverClient()
 		.post<StatusResponse<string>>(`${props.data?.link}/like`, {
-			value: !liked.value,
+			value: liked.value,
 		})
 		.then(({ data }) => {
 			liked.value = data.args?.[0] === 'liked' || data.args?.[1] === 'liked';
+		})
+		.catch(() => {
+			liked.value = !liked.value;
+		})
+		.finally(() => {
+			isLoading.value = false;
 		});
 }
 
@@ -73,6 +85,7 @@ watch(props, (prop) => {
 
 <template>
 	<MusicButton v-if="type === 'music'"
+		:disabled="isLoading"
 		:no-background="noBackground"
 		:onclick="handleLike"
 		label="Favorite"
@@ -90,6 +103,7 @@ watch(props, (prop) => {
 	</MusicButton>
 
 	<BannerButton v-else
+		:disabled="isLoading"
 		:no-background="noBackground"
 		:title="liked ? 'Remove from liked' : 'Add to liked'"
 		label="Favorite"

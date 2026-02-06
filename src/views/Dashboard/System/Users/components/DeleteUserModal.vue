@@ -38,6 +38,7 @@ const props = defineProps({
 const { t } = useTranslation();
 const query = useQueryClient();
 
+const isDeleting = ref(false);
 const errorBucket = ref<
 	{
 		type: string;
@@ -46,7 +47,7 @@ const errorBucket = ref<
 	}[]
 >([]);
 
-function handleDelete() {
+async function handleDelete() {
 	if (!props.id) {
 		errorBucket.value.push({
 			type: 'error',
@@ -56,19 +57,21 @@ function handleDelete() {
 		return;
 	}
 
-	apiClient()
-		.post('server/server-users', {
+	if (isDeleting.value) return;
+	isDeleting.value = true;
+
+	try {
+		await apiClient().post('server/server-users', {
 			_method: 'delete',
 			id: currentServer.value?.id,
 			user_id: props.id,
-		})
-		.then(() => {
-			query.invalidateQueries({ queryKey: ['server_users'] }).then(() => {
-				router.back();
-			});
 		});
-
-	props.close();
+		await query.invalidateQueries({ queryKey: ['server_users'] });
+		props.close();
+		router.back();
+	} catch {
+		isDeleting.value = false;
+	}
 }
 </script>
 
@@ -92,15 +95,16 @@ function handleDelete() {
 		<template #actions>
 			<Button
 				id="yes"
+				:disabled="isDeleting"
 				color="red"
 				end-icon="userRemove"
 				type="button"
 				variant="contained"
 				@click="handleDelete"
 			>
-				{{ $t("Yes") }}
+				{{ isDeleting ? $t("Deleting...") : $t("Yes") }}
 			</Button>
-			<Button id="no" color="white" type="button" variant="text" @click="close">
+			<Button id="no" :disabled="isDeleting" color="white" type="button" variant="text" @click="close">
 				{{ $t("Cancel") }}
 			</Button>
 		</template>
