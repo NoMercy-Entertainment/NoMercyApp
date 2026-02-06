@@ -6,7 +6,7 @@ import serverClient from '@/lib/clients/serverClient';
 import type { AxiosResponse } from 'axios';
 import type { PlaylistItem } from '@/types/musicPlayer';
 import router from '@/router';
-import { copyToClipboard } from '@/lib/stringArray';
+import { copyToClipboard } from '@/lib/utils/string';
 import { t } from 'i18next';
 import { musicPlaylist } from '@/store/musicPlaylists';
 import { currentServer } from '@/store/currentServer';

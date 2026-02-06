@@ -8,7 +8,8 @@ import type { InfoResponse } from '@/types/api/base/info';
 import i18next from '@/config/i18next';
 import useServerClient from '@/lib/clients/useServerClient';
 import serverClient from '@/lib/clients/serverClient'; // Add this import
-import { breakTitle2, setTitle, sortByPosterAlphabetized } from '@/lib/stringArray';
+import { breakTitle2, setTitle } from '@/lib/utils/string';
+import { sortByPosterAlphabetized } from '@/lib/utils/array';
 import { background, setBackground, setColorPalette, setLogo, setPoster, title } from '@/store/ui';
 import { currentServer } from '@/store/currentServer';
 import router from '@/router';

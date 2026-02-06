@@ -6,7 +6,7 @@ import type { PlaylistItem } from '@/types/musicPlayer';
 import { user } from '@/store/user';
 
 import serverClient from '@/lib/clients/serverClient';
-import { setTitle } from '@/lib/stringArray';
+import { setTitle } from '@/lib/utils/string';
 import audioPlayer, { currentSong, musicSize, musicVisibility } from '@/store/audioPlayer';
 import { currentServer } from '@/store/currentServer';
 import sidebar from '@/store/sidebar';

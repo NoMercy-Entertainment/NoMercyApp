@@ -7,7 +7,7 @@ import serverClient from '@/lib/clients/serverClient';
 import Modal from '@/components/Modal.vue';
 import Button from '@/components/Button.vue';
 import { useToast } from 'primevue/usetoast';
-import { translate } from '@/lib/stringArray.ts';
+import { translate } from '@/lib/utils/string';
 import type { StatusResponse } from '@/types/api/base/library';
 
 const props = defineProps({

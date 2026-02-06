@@ -4,7 +4,8 @@ import { onMounted, ref, watch } from 'vue';
 
 import type { LogType } from '@/types/server';
 
-import { checkboxValue, groupBy } from '@/lib/stringArray';
+import { checkboxValue } from '@/lib/utils/validation';
+import { groupBy } from '@/lib/utils/array';
 
 import DropdownMenu from '@/Layout/Desktop/components/Menus/DropdownMenu.vue';
 import MoooomIcon from '@/components/Images/icons/MoooomIcon.vue';

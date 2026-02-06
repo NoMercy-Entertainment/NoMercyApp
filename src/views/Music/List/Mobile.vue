@@ -9,7 +9,8 @@ import type { DisplayList } from '@/types/api/music/musicPlayer';
 import type { PlaylistItem, SortOrder, SortType } from '@/types/musicPlayer';
 
 import useServerClient from '@/lib/clients/useServerClient';
-import { setTitle, sortByType } from '@/lib/stringArray';
+import { setTitle } from '@/lib/utils/string';
+import { sortByType } from '@/lib/utils/array';
 import { setColorPalette, setSortOrder, sortOrder, sortType } from '@/store/ui';
 import router from '@/router';
 

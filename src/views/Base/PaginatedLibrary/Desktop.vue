@@ -12,7 +12,7 @@ import useInfiniteServerClient from '@/lib/clients/useInfiniteServerClient';
 import { showBackdrops } from '@/store/preferences';
 import { setBackground, setColorPalette } from '@/store/ui';
 import router from '@/router';
-import { setTitle } from '@/lib/stringArray';
+import { setTitle } from '@/lib/utils/string';
 
 import MediaCard from '@/components/NMCard.vue';
 import PersonCard from '@/components/Cards/PersonCard.vue';

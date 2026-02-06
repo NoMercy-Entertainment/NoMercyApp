@@ -9,9 +9,9 @@ import type { Component } from "@/types/config";
 import { nmComponentMap } from "@/components/nmComponentMap";
 
 import { isMobile } from "@/config/global";
-import { mappedEntries } from "@/lib/stringArray";
+import { mappedEntries } from '@/lib/utils/array';
 import { Breakpoints, breakpoints, swiperConfig } from "@/lib/swiper-config";
-import { scrollCenter } from "@/lib/utils";
+import { scrollCenter } from "@/lib/utils/dom";
 import { scrollContainerElement } from "@/store/ui";
 import { showBackdrops } from "@/store/preferences.ts";
 

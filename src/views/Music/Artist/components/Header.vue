@@ -27,7 +27,7 @@ import { deviceId } from '@/store/deviceInfo.ts';
 import { pickPaletteColor, tooLight } from '@/lib/colorHelper.ts';
 import { colorPalette } from '@/store/ui.ts';
 import MoooomIcon from '@/components/Images/icons/MoooomIcon.vue';
-import { stringFormat } from '@/lib/stringArray.ts';
+import { stringFormat } from '@/lib/utils/string';
 
 const props = defineProps({
 	data: {

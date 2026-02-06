@@ -9,7 +9,8 @@ import type { PlaylistItem, SortOrder, SortType } from '@/types/musicPlayer';
 
 import { isNative } from '@/config/global';
 import useServerClient from '@/lib/clients/useServerClient';
-import { setTitle, sortByType } from '@/lib/stringArray';
+import { setTitle } from '@/lib/utils/string';
+import { sortByType } from '@/lib/utils/array';
 import { scrollContainerElement, setBackground, setColorPalette, setSortOrder, sortOrder, sortType } from '@/store/ui';
 import { currentSong } from '@/store/audioPlayer';
 

@@ -6,7 +6,7 @@ import { Swiper as SwiperComponent } from 'swiper/vue';
 import { Virtual } from 'swiper/modules';
 import 'swiper/css';
 
-import { mappedEntries } from '@/lib/stringArray';
+import { mappedEntries } from '@/lib/utils/array';
 import type { Breakpoints } from '@/lib/swiper-config';
 import { breakpoints, swiperConfig } from '@/lib/swiper-config';
 

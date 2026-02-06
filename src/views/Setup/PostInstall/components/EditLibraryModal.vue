@@ -18,7 +18,7 @@ import FolderItem from '@/views/Setup/PostInstall/components/FolderItem.vue';
 import NewFolderModal from './NewFolderModal.vue';
 import { useToast } from 'primevue/usetoast';
 import { useDebounce } from '@vueuse/core';
-import { translate } from '@/lib/stringArray.ts';
+import { translate } from '@/lib/utils/string';
 
 const props = defineProps({
 	open: {

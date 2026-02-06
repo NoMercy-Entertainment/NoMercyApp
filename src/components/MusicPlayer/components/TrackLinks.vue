@@ -5,7 +5,7 @@ import { onMounted, watch } from 'vue';
 import type { Artist } from '@/types/api/music/artist';
 import type { Album } from '@/types/api/music/album';
 import { closeFullPlayer, musicSize } from '@/store/audioPlayer';
-import { shouldMarquee } from '@/lib/utils';
+import { shouldMarquee } from '@/lib/utils/dom';
 
 const props = defineProps({
 	data: {

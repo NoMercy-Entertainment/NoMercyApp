@@ -5,7 +5,7 @@ import { useQueryClient } from '@tanstack/vue-query';
 import serverClient from '@/lib/clients/serverClient';
 
 import Modal from '@/components/Modal.vue';
-import { translate } from '@/lib/stringArray.ts';
+import { translate } from '@/lib/utils/string';
 import { useToast } from 'primevue/usetoast';
 
 const props = defineProps({

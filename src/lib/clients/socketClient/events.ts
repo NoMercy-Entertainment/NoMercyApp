@@ -4,7 +4,7 @@ import { queryClient } from '@/config/tanstack-query';
 import { useVideoSocket } from '@/store/videoSocket';
 import { Device } from '@capacitor/device';
 import i18next from 'i18next';
-import { translate } from '@/lib/stringArray.ts';
+import { translate } from '@/lib/utils/string';
 
 export function connect(socket?: HubConnection) {
 	if (!socket)

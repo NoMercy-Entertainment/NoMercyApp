@@ -8,7 +8,7 @@ import type { EncoderProfile, FolderLibrary, LibrariesResponse } from '@/types/a
 
 import useServerClient from '@/lib/clients/useServerClient.ts';
 import serverClient from '@/lib/clients/serverClient.ts';
-import { translate } from '@/lib/stringArray.ts';
+import { translate } from '@/lib/utils/string';
 
 import MoooomIcon from '@/components/Images/icons/MoooomIcon.vue';
 import DeleteFolderModal from './DeleteFolderModal.vue';

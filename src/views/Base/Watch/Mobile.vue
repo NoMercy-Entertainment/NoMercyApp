@@ -3,7 +3,7 @@ import { ref, watch } from 'vue';
 import { IonContent, IonPage, isPlatform, onIonViewDidEnter, onIonViewDidLeave } from '@ionic/vue';
 import { App } from '@capacitor/app';
 
-import { disableImmersiveMode, enableImmersiveMode, lockLandscape, lockPortrait, unlockOrientation } from '@/lib/utils';
+import { disableImmersiveMode, enableImmersiveMode, lockLandscape, lockPortrait, unlockOrientation } from '@/lib/utils/dom';
 import { isNative } from '@/config/global';
 import { currentServer } from '@/store/currentServer';
 import { user } from '@/store/user';

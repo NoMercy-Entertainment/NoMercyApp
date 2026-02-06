@@ -5,7 +5,7 @@ import { useIsFetching } from '@tanstack/vue-query';
 
 import { IonPage, IonProgressBar, IonRouterOutlet, IonTabs } from '@ionic/vue';
 
-import { lockPortrait, unlockOrientation } from '@/lib/utils';
+import { lockPortrait, unlockOrientation } from '@/lib/utils/dom';
 import { closeMenu } from '@/store/profileMenu';
 import { currentSong, fullPlayerModalOpen } from '@/store/audioPlayer';
 

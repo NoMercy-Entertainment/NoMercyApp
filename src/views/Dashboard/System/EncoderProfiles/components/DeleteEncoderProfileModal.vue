@@ -5,7 +5,7 @@ import { useToast } from 'primevue/usetoast';
 import { useQueryClient } from '@tanstack/vue-query';
 
 import serverClient from '@/lib/clients/serverClient';
-import { translate } from '@/lib/stringArray.ts';
+import { translate } from '@/lib/utils/string';
 import type { StatusResponse } from '@/types/api/base/library';
 import router from '@/router';
 

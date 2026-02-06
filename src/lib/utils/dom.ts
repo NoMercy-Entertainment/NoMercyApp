@@ -118,12 +118,7 @@ export function scrollTo(el: HTMLElement, options?: { duration?: number; margin?
 	requestAnimationFrame(scrollStep);
 }
 
-// let timeout: NodeJS.Timeout = <NodeJS.Timeout>{};
 export function scrollIntoBox() {
-	// clearTimeout(timeout!);
-
-	// timeout = setTimeout(() => {
-
 	const scrollDuration = 100;
 	const boundingRect = document.activeElement!.getBoundingClientRect();
 	const parentElement = document.activeElement!.parentElement!;
@@ -151,7 +146,6 @@ export function scrollIntoBox() {
 	}
 
 	requestAnimationFrame(scrollStep);
-	// }, 0);
 }
 
 /**

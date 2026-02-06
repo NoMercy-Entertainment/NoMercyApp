@@ -13,7 +13,8 @@ import { buttonClasses, isNative } from '@/config/global';
 import i18next from '@/config/i18next';
 
 import useServerClient from '@/lib/clients/useServerClient';
-import { setTitle, sortByPosterAlphabetized, translate } from '@/lib/stringArray';
+import { setTitle, translate } from '@/lib/utils/string';
+import { sortByPosterAlphabetized } from '@/lib/utils/array';
 import { pickPaletteColor } from '@/lib/colorHelper';
 import serverClient from '@/lib/clients/serverClient';
 import { background, setBackground, setColorPalette, setLogo } from '@/store/ui';

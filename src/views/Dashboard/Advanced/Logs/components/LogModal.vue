@@ -8,7 +8,7 @@ import 'vue-json-pretty/lib/styles.css';
 import type { LogEntry } from '@/types/server';
 
 import { userTime } from '@/lib/dateTime';
-import { censorPublicIpAddresses } from '@/lib/stringArray';
+import { censorPublicIpAddresses } from '@/lib/utils/string';
 import Modal from '@/components/Modal.vue';
 import ScrollContainer from '@/Layout/Desktop/components/ScrollContainer.vue';
 

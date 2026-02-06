@@ -4,7 +4,7 @@ import type { PropType } from 'vue';
 
 import type { Episode } from '@/types/api/base/info';
 
-import { scrollIntoView } from '@/lib/utils';
+import { scrollIntoView } from '@/lib/utils/dom';
 import { pickPaletteColor } from '@/lib/colorHelper';
 import type { ContextMenuItem } from '@/store/contextMenuItems.ts';
 

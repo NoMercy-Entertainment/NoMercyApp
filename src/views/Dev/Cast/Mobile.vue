@@ -8,7 +8,7 @@ import SliderBar from "@/components/MusicPlayer/components/SliderBar.vue";
 import MusicButton from "@/components/MusicPlayer/components/MusicButton.vue";
 import PlayerIcon from "@/components/Images/icons/PlayerIcon.vue";
 import {PlaylistItem, TimeData, Track,} from "@nomercy-entertainment/nomercy-video-player/src/types";
-import {pad} from "@/lib/stringArray";
+import { pad } from '@/lib/utils/string';
 import type {MediaPlaylist} from "hls.js";
 import MoooomIcon from "@/components/Images/icons/MoooomIcon.vue";
 

@@ -1,5 +1,5 @@
 import { hexToRgba, hsvaToHex } from '@uiw/color-convert';
-import { chunk } from '@/lib/stringArray';
+import { chunk } from '@/lib/utils/array';
 import { blue, brown, gray, green, red } from '@/config/global';
 import type { EdgeStyle } from '@/lib/VideoPlayer/plugins/UIPlugin/buttons.ts';
 

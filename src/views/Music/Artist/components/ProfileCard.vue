@@ -6,7 +6,7 @@ import type { ArtistResponse } from '@/types/api/music/artist';
 
 import CoverImage from '@/components/MusicPlayer/components/CoverImage.vue';
 import { setBackground, setColorPalette } from '@/store/ui';
-import { limitSentenceByCharacters } from '@/lib/stringArray.ts';
+import { limitSentenceByCharacters } from '@/lib/utils/string';
 import type { ModalData } from '@/types';
 
 const props = defineProps({

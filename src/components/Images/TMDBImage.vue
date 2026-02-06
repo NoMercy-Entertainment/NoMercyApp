@@ -8,7 +8,7 @@ import { isDarkMode } from '@/config/global';
 import { currentServer } from '@/store/currentServer';
 import { useAutoThemeColors } from '@/store/preferences';
 import AppLogoSquare from '@/components/Images/icons/AppLogoSquare.vue';
-import { getCommonSize } from '@/lib/stringArray.ts';
+import { getCommonSize } from '@/lib/utils/format';
 
 const props = defineProps({
 	path: {

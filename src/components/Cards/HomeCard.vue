@@ -10,7 +10,7 @@ import TMDBImage from '@/components/Images/TMDBImage.vue';
 import HomeCardActions from '@/components/Cards/HomeCardActions.vue';
 import type { LibraryResponse } from '@/types/api/base/library';
 import { setColorPalette } from '@/store/ui';
-import { breakLogoTitle } from '@/lib/stringArray.ts';
+import { breakLogoTitle } from '@/lib/utils/string';
 
 const props = defineProps({
 	homeItem: {

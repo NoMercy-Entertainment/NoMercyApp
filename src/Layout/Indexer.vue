@@ -4,7 +4,7 @@ import { RouterLink, useRoute } from 'vue-router';
 
 import { isMobile, isNative } from '@/config/global';
 import { keyHandler, scrollToDiv } from '@/lib/scrollHandlers';
-import { alphaNumericRange } from '@/lib/stringArray';
+import { alphaNumericRange } from '@/lib/utils/string';
 import router from '@/router';
 import indexer, { availableLetters, setIndexerOpen } from '@/store/indexer';
 

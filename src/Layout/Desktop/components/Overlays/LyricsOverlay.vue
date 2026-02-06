@@ -3,8 +3,8 @@ import { nextTick, onMounted, ref, watch } from 'vue';
 
 import type { Lyric } from '@/types/musicPlayer';
 
-import { random_string } from '@/lib/stringArray';
-import { scrollCenter } from '@/lib/utils';
+import { random_string } from '@/lib/utils/string';
+import { scrollCenter } from '@/lib/utils/dom';
 
 import { user } from '@/store/user';
 import { currentServer } from '@/store/currentServer';

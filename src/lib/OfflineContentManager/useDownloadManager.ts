@@ -4,7 +4,7 @@ import type { Track } from '@nomercy-entertainment/nomercy-video-player/dist/typ
 import serverClient from '@/lib/clients/serverClient';
 import { currentServer } from '@/store/currentServer';
 import { user } from '@/store/user';
-import { pad } from '@/lib/stringArray';
+import { pad } from '@/lib/utils/string';
 
 export interface PlaylistItem extends BasePlaylistItem {
 	duration: string;

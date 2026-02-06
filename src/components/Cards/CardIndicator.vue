@@ -5,7 +5,7 @@ import { computed } from 'vue';
 import type { InfoResponse } from '@/types/api/base/info';
 
 import { useTranslation } from 'i18next-vue';
-import { episodeCounter } from '@/lib/utils';
+import { episodeCounter } from '@/lib/utils/dom';
 import { getColorFromPercent, redToGreen } from '@/lib/colorHelper';
 
 const props = defineProps({

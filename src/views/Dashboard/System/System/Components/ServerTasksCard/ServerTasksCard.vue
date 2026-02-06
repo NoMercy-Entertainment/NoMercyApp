@@ -3,7 +3,7 @@ import { computed, onMounted, ref } from 'vue';
 
 import type { QueueResponse, ServerEncoderProgress } from '@/types/api/dashboard/server';
 
-import { sortBy } from '@/lib/stringArray';
+import { sortBy } from '@/lib/utils/array';
 import useServerClient from '@/lib/clients/useServerClient';
 import useHubListener from '@/hooks/useHubListener';
 import { connection } from '@/lib/clients/dashboardSocket';

@@ -16,7 +16,7 @@ import { currentServer } from '@/store/currentServer';
 import DashboardLayout from '@/Layout/Desktop/DashboardLayout.vue';
 import LibraryCard from './components/LibraryCard.vue';
 import { useToast } from 'primevue/usetoast';
-import { translate } from '@/lib/stringArray.ts';
+import { translate } from '@/lib/utils/string';
 
 const toast = useToast();
 

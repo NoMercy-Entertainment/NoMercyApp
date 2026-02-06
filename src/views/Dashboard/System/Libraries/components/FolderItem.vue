@@ -6,7 +6,8 @@ import type { Episode, FileItem } from '@/types/api/dashboard/newContent';
 import { tmdbImageBaseUrl } from '@/config/config';
 
 import Checkbox from '@/components/Forms/Checkbox.vue';
-import { humanFileSize, pad } from '@/lib/stringArray.ts';
+import { pad } from '@/lib/utils/string';
+import { humanFileSize } from '@/lib/utils/format';
 import MoooomIcon from '@/components/Images/icons/MoooomIcon.vue';
 
 const props = defineProps({

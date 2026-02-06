@@ -13,7 +13,7 @@ import HomeCardActions from '@/components/Cards/HomeCardActions.vue';
 import { scrollContainerElement, setBackground, setColorPalette, title } from '@/store/ui';
 import { onIonViewWillEnter, onIonViewWillLeave } from '@ionic/vue';
 import CardShadow from '@/components/Cards/CardShadow.vue';
-import { breakLogoTitle, breakTitle2 } from '@/lib/stringArray.ts';
+import { breakLogoTitle, breakTitle2 } from '@/lib/utils/string';
 
 const props = defineProps({
 	data: {

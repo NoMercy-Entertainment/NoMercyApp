@@ -11,7 +11,8 @@ import { tmdbImageBaseUrl } from '@/config/config';
 import { background, setBackground, setColorPalette } from '@/store/ui';
 
 import useServerClient from '@/lib/clients/useServerClient';
-import { breakTitle2, setTitle, unique } from '@/lib/stringArray';
+import { breakTitle2, setTitle } from '@/lib/utils/string';
+import { unique } from '@/lib/utils/array';
 
 import CreditGroup from '@/components/MusicPlayer/components/CreditGroup.vue';
 import MediaCarousel from '@/components/Carousel/MediaCarousel.vue';

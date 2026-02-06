@@ -18,7 +18,7 @@ import type { ServerUser } from '@/types/auth';
 import Select from '@/components/Forms/Select.vue';
 import { currentServer } from '@/store/currentServer';
 import { useToast } from 'primevue/usetoast';
-import { translate } from '@/lib/stringArray.ts';
+import { translate } from '@/lib/utils/string';
 import router from '@/router';
 
 const query = useQueryClient();

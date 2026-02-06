@@ -12,7 +12,7 @@ import { setBackground, setColorPalette, setPoster, setTitle } from '@/store/ui'
 
 import TMDBImage from '@/components/Images/TMDBImage.vue';
 import CardIndicator from '@/components/Cards/CardIndicator.vue';
-import { breakTitle } from '@/lib/stringArray.ts';
+import { breakTitle } from '@/lib/utils/string';
 
 const props = defineProps({
 	data: {

@@ -11,7 +11,7 @@ import useServerClient from '@/lib/clients/useServerClient';
 
 import type { ServerInfo } from '@/types/api/dashboard/server.ts';
 import { useToast } from 'primevue/usetoast';
-import { translate } from '@/lib/stringArray.ts';
+import { translate } from '@/lib/utils/string';
 
 const props = defineProps({
 	setNextButtonLocked: {

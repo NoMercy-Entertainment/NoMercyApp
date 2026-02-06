@@ -4,7 +4,7 @@ import { ref } from 'vue';
 
 import { humanTime } from '@/lib/dateTime';
 import ProgressBar from './ProgressBar.vue';
-import { stopPropagation } from '@/lib/utils';
+import { stopPropagation } from '@/lib/utils/dom';
 import {
 	currentTime,
 	duration,

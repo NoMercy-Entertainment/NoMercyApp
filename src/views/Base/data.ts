@@ -4,7 +4,7 @@ import type {
 	HomeResponse,
 } from '@/types/api/base/home';
 
-import { shuffle } from '@/lib/stringArray';
+import { shuffle } from '@/lib/utils/array';
 import type { InfiniteData } from '@tanstack/vue-query';
 import type { MobileLibrariesResponseItem } from '@/types/api/base/libraries';
 import type { LibraryResponse } from '@/types/api/base/library';

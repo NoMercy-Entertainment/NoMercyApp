@@ -4,7 +4,7 @@ import type { PropType } from 'vue';
 
 import type { HomeDataItem } from '@/types/api/music';
 
-import { breakTitle2 } from '@/lib/stringArray';
+import { breakTitle2 } from '@/lib/utils/string';
 import { focusColor, setColorPalette } from '@/store/ui';
 import { currentServer } from '@/store/currentServer';
 

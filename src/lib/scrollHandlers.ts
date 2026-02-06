@@ -1,7 +1,7 @@
 import type PlayerCore from '@nomercy-entertainment/nomercy-music-player';
 import type { PlaylistItem } from '@/types/musicPlayer';
 import { SliderBar } from '@/lib/sliderBar';
-import { alphaNumericRange } from '@/lib/stringArray';
+import { alphaNumericRange } from '@/lib/utils/string';
 
 HTMLElement.prototype.sliderBar = function (
 	player: PlayerCore<PlaylistItem>,

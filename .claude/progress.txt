@@ -658,9 +658,50 @@
   - Created proper interfaces for previously untyped data structures
   - Better IDE autocompletion and error detection
 
+### Phase 7.5: Standardize File Naming
+- Status: DONE (completed as part of Phase 7.1)
+- Libraries.ts → libraries.ts rename was done in Phase 7.1
+- No other file naming violations found
+
+### Phase 7.6: Add Missing Emits Definitions
+- Status: DONE (already compliant)
+- Date: 2026-02-06
+- Audited all Vue components that use `emit()` in their script sections
+- All 7 components with emit calls already have proper `defineEmits` declarations:
+  - ScrollContainer.vue, ControlHeader.vue, SliderBar.vue, LanguageSelect.vue,
+    Checkbox.vue, ImageDrop.vue, Watch/Mobile.vue
+- No changes needed
+
+### Phase 7.7: Reorganize Lib Utility Files
+- Status: DONE
+- Date: 2026-02-06
+- Changes made:
+  1. Created new organized module structure under src/lib/utils/:
+     - `dom.ts`: DOM manipulation, scroll, events, orientation, immersive mode (from old utils.ts)
+     - `string.ts`: String manipulation, formatting, title handling, translate (from old stringArray.ts)
+     - `array.ts`: Array operations, sorting, grouping, collection utilities (from old stringArray.ts)
+     - `format.ts`: Data formatting - formatDuration, humanFileSize, getCommonSize, getDataUrl (from old stringArray.ts)
+     - `validation.ts`: Type checks, validators - isJsonString, isValidObject, checkboxValue (from old stringArray.ts)
+     - `index.ts`: Barrel export re-exporting all submodules
+  2. Deleted src/lib/utils.ts (replaced by utils/index.ts)
+  3. Replaced src/lib/stringArray.ts with thin re-export shim (backward compat, no longer imported)
+  4. Updated all 15 consumer imports from `@/lib/utils` → `@/lib/utils/dom`
+  5. Updated all 59 consumer imports from `@/lib/stringArray` → appropriate submodule:
+     - 39 files → `@/lib/utils/string` (setTitle, translate, breakTitle, pad, etc.)
+     - 8 files → `@/lib/utils/array` (sortBy, sortByType, mappedEntries, shuffle, etc.)
+     - 2 files → `@/lib/utils/format` (getCommonSize, humanFileSize)
+     - 2 files → `@/lib/utils/validation` (checkboxValue, groupBy)
+     - 11 files required split imports (functions from multiple categories)
+  6. Cross-file dependencies handled:
+     - format.ts imports `pad` from string.ts (for formatDuration)
+     - array.ts imports `mathPercentage` from format.ts (for sortByMathPercentage)
+- Benefits:
+  - Clear import paths: `import { sortBy } from '@/lib/utils/array'`
+  - Functions organized by domain (DOM, string, array, format, validation)
+  - Better tree-shaking potential (imports from specific submodules)
+  - No more misleading `stringArray.ts` name
+  - 284 pre-existing type errors unchanged (zero new errors)
+
 ## Next Tasks (from PRD)
-- Phase 7.5: Standardize File Naming (Libraries.ts done in 7.1)
-- Phase 7.6: Add Missing Emits Definitions
-- Phase 7.7: Reorganize Lib Utility Files
 - Phase 7.8: Reorganize Type Definitions
 - Phase 7.9: Audit and Fix User Action Feedback

@@ -22,7 +22,7 @@ import { SizeState, VisibilityState } from '@/types/musicPlayer';
 
 import type { Device } from '@/types/server.ts';
 
-import { onDoubleClick } from '@/lib/utils';
+import { onDoubleClick } from '@/lib/utils/dom';
 import { siteTitle } from '@/config/config';
 
 import { deviceId } from '@/store/deviceInfo';

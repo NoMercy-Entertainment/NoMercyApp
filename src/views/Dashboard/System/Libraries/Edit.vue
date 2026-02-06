@@ -10,7 +10,7 @@ import type { EncoderProfile, FolderLibrary, LibrariesResponse, StatusResponse }
 import type { Language } from '@/types/api/shared';
 import type { Library, NameVal } from '@/types/api/dashboard/server';
 
-import { translate } from '@/lib/stringArray.ts';
+import { translate } from '@/lib/utils/string';
 import useServerClient from '@/lib/clients/useServerClient';
 import serverClient from '@/lib/clients/serverClient';
 import { currentServer } from '@/store/currentServer';

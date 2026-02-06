@@ -11,7 +11,7 @@ import serverClient from '@/lib/clients/serverClient';
 
 import DashboardLayout from '@/Layout/Desktop/DashboardLayout.vue';
 import ServerDeviceCard from '@/views/Dashboard/System/System/Components/ServerDeviceCard.vue';
-import { translate } from '@/lib/stringArray.ts';
+import { translate } from '@/lib/utils/string';
 import MoooomIcon from '@/components/Images/icons/MoooomIcon.vue';
 
 const query = useQueryClient();

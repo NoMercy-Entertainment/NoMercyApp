@@ -6,7 +6,8 @@ import { IonContent, IonPage } from '@ionic/vue';
 import type { PersonResponseItem } from '@/types/api/base/person';
 
 import { setBackground, setColorPalette } from '@/store/ui';
-import { breakDescription, breakTitle, setTitle, unique } from '@/lib/stringArray';
+import { breakDescription, breakTitle, setTitle } from '@/lib/utils/string';
+import { unique } from '@/lib/utils/array';
 import useServerClient from '@/lib/clients/useServerClient';
 import { isNative } from '@/config/global';
 import i18next from '@/config/i18next';

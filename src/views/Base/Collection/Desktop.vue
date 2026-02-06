@@ -9,7 +9,8 @@ import type {CollectionResponse} from '@/types/api/base/collection';
 import i18next from '@/config/i18next';
 import useServerClient from '@/lib/clients/useServerClient';
 import {setBackground, setColorPalette} from '@/store/ui';
-import {setTitle, sortByPosterAlphabetized, unique} from '@/lib/stringArray';
+import { setTitle } from '@/lib/utils/string';
+import { sortByPosterAlphabetized, unique } from '@/lib/utils/array';
 import {convertToHumanReact} from '@/lib/dateTime';
 
 import ScrollContainer from '@/Layout/Desktop/components/ScrollContainer.vue';

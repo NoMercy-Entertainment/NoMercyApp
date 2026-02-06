@@ -7,7 +7,7 @@ import { useQueryClient } from '@tanstack/vue-query';
 import type { StatusResponse } from '@/types/api/base/library';
 
 import serverClient from '@/lib/clients/serverClient';
-import { translate } from '@/lib/stringArray.ts';
+import { translate } from '@/lib/utils/string';
 
 import Modal from '@/components/Modal.vue';
 import router from '@/router';

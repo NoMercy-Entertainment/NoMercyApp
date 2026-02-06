@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { onMounted, ref, watch } from 'vue';
 
-import { shouldMarquee } from '@/lib/utils';
+import { shouldMarquee } from '@/lib/utils/dom';
 
 const props = defineProps({
 	text: {

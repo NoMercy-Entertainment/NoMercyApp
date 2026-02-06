@@ -4,7 +4,7 @@ import { IonContent, IonPage } from '@ionic/vue';
 
 import type { BluRayPlaylist, DriveState, Episode, RipperResponse } from '@/types/api/dashboard/ripper';
 
-import { pad } from '@/lib/stringArray';
+import { pad } from '@/lib/utils/string';
 import { discContents, discs, ripperPlaylist, ripperPlaylistLoading } from '@/store/ripper';
 import serverClient from '@/lib/clients/serverClient';
 import serverBaseClient from '@/lib/clients/serverBaseClient';
