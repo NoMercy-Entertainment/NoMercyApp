@@ -1,4 +1,5 @@
 import type { PaletteColors } from '../shared';
+import type { Count } from '@/types/api/music/index';
 
 export interface ArtistsResponse {
 	type: string;
@@ -18,9 +19,4 @@ export interface ArtistsData {
 	type: string;
 	titleSort: string;
 	origin: string;
-}
-
-export interface Count {
-	Album: number;
-	track: number;
 }

@@ -702,6 +702,38 @@
   - No more misleading `stringArray.ts` name
   - 284 pre-existing type errors unchanged (zero new errors)
 
+### Phase 7.8: Reorganize Type Definitions
+- Status: DONE
+- Date: 2026-02-06
+- Changes made:
+  1. Fixed undefined `ColorPaletteClass` in src/types/api/base/info.d.ts:
+     - Added `PaletteColors` import from `../shared`
+     - Replaced both usages of `ColorPaletteClass` with `PaletteColors` (in SeasonColorPalette and EpisodeColorPalette)
+  2. Consolidated duplicate `Device` and `ActivityLog` interfaces:
+     - Kept canonical definitions in src/types/server.ts (superset with `is_active` and `volume_percent` fields)
+     - Removed duplicate definitions from src/types/api/dashboard/server.ts
+     - Added `import type { Device, ActivityLog } from '@/types/server'` + `export type { Device, ActivityLog }` in dashboard/server.ts for backward compat
+     - All existing consumers continue to work (imports from either path resolve to same type)
+  3. Renamed ambiguous `Profile` interfaces across 3 files:
+     - src/types/api/base/person.d.ts: `Profile` → `ImageProfile` (image aspect ratio, vote info)
+     - src/types/api/base/library.d.ts: `Profile` → `CodecProfile` (audio/subtitle codec settings)
+     - src/types/api/dashboard/server.ts: `Profile` → `CodecProfile` (same purpose as library.d.ts)
+     - Fixed `any[]` → `string[]` for `opts` and `customArguments` in library.d.ts CodecProfile
+     - Fixed `any[]` → `string[]` for `opts` in library.d.ts VideoProfile
+     - No external imports of `Profile` type existed (only used internally within each file)
+  4. Consolidated duplicate `Count` interface (was defined in 4 music type files):
+     - Kept canonical unified definition in src/types/api/music/index.d.ts (all fields optional except `track`)
+     - Removed local `Count` from src/types/api/music/album.d.ts, added import from index
+     - Removed local `Count` from src/types/api/music/artist.d.ts, added import from index
+     - Removed local `Count` from src/types/api/music/artists.d.ts, added import from index
+  5. Fixed `value: any` → `value: number | string` in ServerEncoderProgress (dashboard/server.ts)
+- Benefits:
+  - No more undefined `ColorPaletteClass` type
+  - Device and ActivityLog have single source of truth (types/server.ts)
+  - Three different `Profile` interfaces now have distinct names matching their purpose
+  - Count interface consolidated to single definition with all optional fields
+  - Fixed remaining `any` types in type definition files
+  - 284 pre-existing type errors unchanged (zero new errors)
+
 ## Next Tasks (from PRD)
-- Phase 7.8: Reorganize Type Definitions
 - Phase 7.9: Audit and Fix User Action Feedback

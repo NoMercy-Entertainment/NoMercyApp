@@ -1,5 +1,8 @@
 import type { Country, Language } from '@/types/api/shared';
 import type { InfoResponse } from '@/types/api/base/info';
+import type { Device, ActivityLog } from '@/types/server';
+
+export type { Device, ActivityLog };
 
 export interface NameVal {
 	title: string;
@@ -25,35 +28,6 @@ export interface SystemPath {
 	value: string;
 }
 
-export interface Device {
-	id: string;
-	device_id: string;
-	browser: string;
-	os: string;
-	device?: string;
-	type: string;
-	name: string;
-	custom_name?: string;
-	version: string;
-	ip: string;
-	activity_logs: ActivityLog[];
-
-	created_at?: number;
-	updated_at?: number;
-}
-
-export interface ActivityLog {
-	id: string;
-	user_id: string;
-	device_id: string;
-	type: string;
-	device: number;
-	user: number;
-	time: number;
-	from: string;
-	created_at?: number;
-	updated_at?: number;
-}
 
 export interface ServerInfo {
 	server: string;
@@ -119,7 +93,7 @@ export interface ServerEncoderProgress {
 	id: number;
 	process_id: number;
 	title: string;
-	value: any;
+	value: number | string;
 	has_gpu: boolean;
 	is_hdr: boolean;
 	seconds: number;
@@ -199,14 +173,14 @@ export interface EncoderProfile {
 	container: string;
 	type: string;
 	videoProfiles: VideoProfile[];
-	audioProfiles: Profile[];
-	subtitleProfiles: Profile[];
+	audioProfiles: CodecProfile[];
+	subtitleProfiles: CodecProfile[];
 	encoder_profile_folder: null;
 	created_at: Date;
 	updated_at: Date;
 }
 
-export interface Profile {
+export interface CodecProfile {
 	codec: string;
 	channels?: number;
 	segmentName: string;
