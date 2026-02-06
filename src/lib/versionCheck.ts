@@ -81,6 +81,9 @@ export async function checkForUpdates(): Promise<boolean> {
 
 		if (!response.ok) return false;
 
+		const contentType = response.headers.get('content-type') ?? '';
+		if (!contentType.includes('application/json')) return false;
+
 		const serverVersion: VersionInfo = await response.json();
 
 		if (serverVersion.version !== APP_VERSION) {
