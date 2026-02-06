@@ -977,5 +977,36 @@ The optimization work successfully:
   - Double setupUpdateListeners call — FIXED
   - API DELETE for client-side notifications — FIXED
 
+### Post-Phase: Fix Navigation Performance Freeze (Artists → Artist)
+- Status: DONE
+- Date: 2026-02-06
+- Root cause: Chrome DevTools trace revealed a 17.3-second main thread freeze caused by Vue
+  reactivity cascade. Each TrackRow component created 5-7 computed properties depending on
+  route.path, and with hundreds of rows mounted, route changes triggered ~13,000 async tasks.
+- Changes made:
+  1. Lifted route computeds from per-row components to parent (computed once, passed as props):
+     - src/views/Music/List/components/TrackRow.vue: removed 5 route computeds + useRoute(),
+       replaced with 7 props (isAlbumRoute, isArtistRoute, isPlaylistsRoute, isFavoritesRoute,
+       isGenresRoute, routeType, routeParamId)
+     - src/views/Music/List/components/SortHeader.vue: removed 5 route computeds + useRoute(),
+       replaced with 5 props
+     - src/views/Music/List/Desktop.vue: computes route flags once, passes as props to both
+       SortHeader and TrackRow
+     - src/views/Music/List/Mobile.vue: same as Desktop.vue
+  2. Fixed Artist/components/TrackRow.vue:
+     - Removed 2 route computeds + useRoute(), replaced with 2 props
+     - Parent TrackCard.vue now computes route flags and passes them down
+  3. Added RouteType type to src/types/musicPlayer.ts
+  4. Fixed Marquee.vue timer explosion:
+     - Was creating 500ms setTimeout on EVERY mount and EVERY prop change (watch(props, ...))
+     - With virtual scrolling, items mount/unmount frequently → hundreds of timers
+     - Changed to: watch only `props.text`, debounce (skip if timer pending), clean up on unmount
+- Performance impact:
+  - Before: ~13,000 reactive tasks on navigation, 17.3s freeze
+  - After: Route computeds fire once in parent (not N×7 times per row)
+  - Timer creation reduced from unbounded to at most 1 per Marquee instance
+- Build: passed (no errors)
+- Type-check: 286 errors (all pre-existing, 0 from changed files)
+
 ## Next Tasks (from PRD)
 - All phases complete

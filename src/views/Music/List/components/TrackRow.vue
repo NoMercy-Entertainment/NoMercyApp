@@ -1,9 +1,8 @@
 <script lang="ts" setup>
 import type { PropType } from 'vue';
 import { computed } from 'vue';
-import { useRoute } from 'vue-router';
 
-import type { PlaylistItem } from '@/types/musicPlayer';
+import type { PlaylistItem, RouteType } from '@/types/musicPlayer';
 
 import { isMobile } from '@/config/global';
 import { musicSocketConnection } from '@/store/musicSocket';
@@ -35,41 +34,42 @@ const props = defineProps({
 		type: Array as PropType<PlaylistItem[] | undefined>,
 		required: true,
 	},
-});
-
-const route = useRoute();
-const isAlbumRoute = computed(() => route.path.startsWith('/music/album'));
-const isArtistRoute = computed(() => route.path.startsWith('/music/artist'));
-const isPlaylistsRoute = computed(() => route.path.startsWith('/music/playlists'));
-const isFavoritesRoute = computed(() => route.path.startsWith('/music/tracks'));
-const isGenresRoute = computed(() => route.path.startsWith('/music/genres'));
-
-const routeType = computed(() => {
-	if (isAlbumRoute.value)
-		return 'album';
-	if (isArtistRoute.value)
-		return 'artist';
-	if (isPlaylistsRoute.value)
-		return 'playlist';
-	if (isFavoritesRoute.value)
-		return 'favorite';
-	if (isGenresRoute.value)
-		return 'genre';
-	return 'unknown';
+	isAlbumRoute: {
+		type: Boolean,
+		default: false,
+	},
+	isArtistRoute: {
+		type: Boolean,
+		default: false,
+	},
+	isPlaylistsRoute: {
+		type: Boolean,
+		default: false,
+	},
+	isFavoritesRoute: {
+		type: Boolean,
+		default: false,
+	},
+	isGenresRoute: {
+		type: Boolean,
+		default: false,
+	},
+	routeType: {
+		type: String as PropType<RouteType>,
+		default: 'unknown',
+	},
+	routeParamId: {
+		type: String,
+		default: '',
+	},
 });
 
 const typeId = computed(() => {
-	if (isAlbumRoute.value)
+	if (props.isAlbumRoute)
 		return props.data?.album_track.at(0)?.id;
-	if (isArtistRoute.value)
+	if (props.isArtistRoute)
 		return props.data?.artist_track.at(0)?.id;
-	if (isPlaylistsRoute.value)
-		return route.params.id;
-	if (isFavoritesRoute.value)
-		return route.params.id;
-	if (isGenresRoute.value)
-		return route.params.id;
-	return 'unknown';
+	return props.routeParamId || 'unknown';
 });
 
 function handleClick() {
@@ -79,7 +79,7 @@ function handleClick() {
 	}
 	musicSocketConnection.value?.invoke(
 		'StartPlaybackCommand',
-		routeType.value,
+		props.routeType,
 		typeId.value,
 		props.data.id,
 	);

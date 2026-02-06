@@ -1,5 +1,7 @@
 <script lang="ts" setup>
 import type { PropType } from 'vue';
+import { computed } from 'vue';
+import { useRoute } from 'vue-router';
 
 import type { PlaylistItem } from '@/types/musicPlayer';
 
@@ -15,6 +17,10 @@ defineProps({
 		required: true,
 	},
 });
+
+const route = useRoute();
+const isAlbumRoute = computed(() => route.path.startsWith('/music/album'));
+const isFavoritesRoute = computed(() => route.path.startsWith('/music/playlists'));
 </script>
 
 <template>
@@ -47,7 +53,7 @@ defineProps({
 		</div>
 		<div class="flex flex-col items-start justify-start gap-1 self-stretch">
 			<template v-for="(item, index) in data" :key="item.id + item?.favorite">
-				<TrackRow :data="item" :display-list="data" :index="index" />
+				<TrackRow :data="item" :display-list="data" :index="index" :is-album-route="isAlbumRoute" :is-favorites-route="isFavoritesRoute" />
 			</template>
 		</div>
 	</div>

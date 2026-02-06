@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { onMounted, ref, watch } from 'vue';
+import { onBeforeUnmount, onMounted, ref, watch } from 'vue';
 
 import { shouldMarquee } from '@/lib/utils/dom';
 
@@ -16,21 +16,26 @@ const props = defineProps({
 });
 
 const marquee = ref<HTMLElement | null>();
+let pendingTimer: ReturnType<typeof setTimeout> | null = null;
 
-watch(props, () => {
-	setTimeout(() => {
-		if (!marquee.value)
-			return;
+function scheduleMarqueeCheck() {
+	if (pendingTimer) return;
+	pendingTimer = setTimeout(() => {
+		pendingTimer = null;
+		if (!marquee.value) return;
 		shouldMarquee(marquee.value);
 	}, 500);
-});
+}
 
-onMounted(() => {
-	setTimeout(() => {
-		if (!marquee.value)
-			return;
-		shouldMarquee(marquee.value);
-	}, 500);
+watch(() => props.text, scheduleMarqueeCheck);
+
+onMounted(scheduleMarqueeCheck);
+
+onBeforeUnmount(() => {
+	if (pendingTimer) {
+		clearTimeout(pendingTimer);
+		pendingTimer = null;
+	}
 });
 </script>
 

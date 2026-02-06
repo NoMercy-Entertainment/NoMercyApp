@@ -1,17 +1,31 @@
 <script lang="ts" setup>
 import { SortType } from '@/types/musicPlayer';
-import { computed } from 'vue';
 import { isPlatform } from '@ionic/vue';
 
 import SortButton from './SortButton.vue';
-import { useRoute } from 'vue-router';
 
-const route = useRoute();
-const isAlbumRoute = computed(() => route.path.startsWith('/music/album'));
-const isArtistRoute = computed(() => route.path.startsWith('/music/artist'));
-const isPlaylistsRoute = computed(() => route.path.startsWith('/music/playlists'));
-const isFavoritesRoute = computed(() => route.path.startsWith('/music/tracks'));
-const isGenresRoute = computed(() => route.path.startsWith('/music/genres'));
+defineProps({
+	isAlbumRoute: {
+		type: Boolean,
+		default: false,
+	},
+	isArtistRoute: {
+		type: Boolean,
+		default: false,
+	},
+	isPlaylistsRoute: {
+		type: Boolean,
+		default: false,
+	},
+	isFavoritesRoute: {
+		type: Boolean,
+		default: false,
+	},
+	isGenresRoute: {
+		type: Boolean,
+		default: false,
+	},
+});
 </script>
 
 <template>

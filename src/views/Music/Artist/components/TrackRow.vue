@@ -1,7 +1,5 @@
 <script lang="ts" setup>
 import type { PropType } from 'vue';
-import { computed } from 'vue';
-// import { useRoute } from 'vue-router';
 import type { PlaylistItem } from '@/types/musicPlayer';
 
 import { audioPlayer, currentSong, isPlaying, musicSize } from '@/store/audioPlayer';
@@ -18,7 +16,6 @@ import PlayerIcon from '@/components/Images/icons/PlayerIcon.vue';
 import { musicSocketConnection } from '@/store/musicSocket';
 import { user } from '@/store/user';
 import MoooomIcon from '@/components/Images/icons/MoooomIcon.vue';
-import { useRoute } from 'vue-router';
 
 const props = defineProps({
 	data: {
@@ -33,11 +30,15 @@ const props = defineProps({
 		type: Array as PropType<PlaylistItem[] | undefined>,
 		required: true,
 	},
+	isAlbumRoute: {
+		type: Boolean,
+		default: false,
+	},
+	isFavoritesRoute: {
+		type: Boolean,
+		default: false,
+	},
 });
-
-const route = useRoute();
-const isAlbumRoute = computed(() => route.path.startsWith('/music/album'));
-const isFavoritesRoute = computed(() => route.path.startsWith('/music/playlists'));
 
 function handleClick() {
 	if (!user.value.features?.nomercyConnect) {
@@ -47,8 +48,8 @@ function handleClick() {
 
 	musicSocketConnection.value?.invoke(
 		'StartPlaybackCommand',
-		isAlbumRoute.value ? 'album' : 'artist',
-		isAlbumRoute.value
+		props.isAlbumRoute ? 'album' : 'artist',
+		props.isAlbumRoute
 			? props.data?.album_track.at(0)?.id
 			: props.data?.artist_track.at(0)?.id,
 		props.data.id,
