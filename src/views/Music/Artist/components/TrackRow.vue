@@ -2,9 +2,6 @@
 import type { PropType } from 'vue';
 import { useRoute } from 'vue-router';
 import type { PlaylistItem } from '@/types/musicPlayer';
-
-const route = useRoute();
-
 import { audioPlayer, currentSong, isPlaying, musicSize } from '@/store/audioPlayer';
 
 import DropdownMenu from '@/Layout/Desktop/components/Menus/DropdownMenu.vue';
@@ -43,6 +40,8 @@ const props = defineProps({
 	},
 });
 
+const route = useRoute();
+
 function handleClick() {
 	if (!user.value.features?.nomercyConnect) {
 		audioPlayer.playTrack(props.data, props.displayList);
@@ -63,7 +62,7 @@ function handleClick() {
 <template>
 	<button
 		:data-track-id="data?.id"
-		class="grid justify-start items-center self-stretch pr-3 sm:px-3 rounded-lg hover:bg-surface-6/8 group/track text-sm font-medium py-2 z-0 group/track home-grid gap-2"
+		class="grid w-full justify-start items-center self-stretch pr-3 sm:px-3 rounded-lg hover:bg-surface-6/8 group/track text-sm font-medium py-2 z-0 group/track home-grid gap-2"
 		data-target="track"
 		tabindex="0"
 		@click="handleClick()"

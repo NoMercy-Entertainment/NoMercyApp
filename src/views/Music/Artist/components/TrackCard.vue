@@ -28,7 +28,8 @@ const virtualContainerRef = ref<HTMLDivElement>();
 const scrollMargin = ref(0);
 
 function measureScrollMargin() {
-	if (!virtualContainerRef.value || !scrollContainerElement.value) return;
+	if (!virtualContainerRef.value || !scrollContainerElement.value)
+		return;
 	const containerRect = virtualContainerRef.value.getBoundingClientRect();
 	const scrollRect = scrollContainerElement.value.getBoundingClientRect();
 	scrollMargin.value = containerRect.top - scrollRect.top + scrollContainerElement.value.scrollTop;
@@ -41,7 +42,7 @@ watch(() => props.data, () => {
 const virtualizer = computed(() => useVirtualizer({
 	count: props.data?.length ?? 0,
 	getScrollElement: () => scrollContainerElement.value ?? null,
-	estimateSize: () => 52,
+	estimateSize: () => 64,
 	overscan: 10,
 	scrollMargin: scrollMargin.value,
 }));
