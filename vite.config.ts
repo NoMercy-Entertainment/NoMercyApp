@@ -128,7 +128,7 @@ export default defineConfig(({ command }) => {
 			chunkSizeWarningLimit: 250,
 			emptyOutDir: true,
 			minify: 'esbuild',
-			cssMinify: 'lightningcss',
+			cssMinify: 'esbuild',
 			cssCodeSplit: true,
 			rollupOptions: {
 				external: (id) => {
