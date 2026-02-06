@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import type { ComponentPublicInstance } from 'vue';
-import { onMounted, onUnmounted, ref, shallowRef } from 'vue';
+import { computed, onMounted, onUnmounted, ref, shallowRef, watch } from 'vue';
 import type { VueScrollEvent } from '@/vite-env';
 
 import router from '@/router';
@@ -45,6 +45,14 @@ function setContainerRef(el: Element | ComponentPublicInstance | null) {
 		scrollContainerElement.value = div ?? undefined;
 	}
 }
+
+// Ionic's IonRouterOutlet keeps old pages mounted in the DOM.
+// Multiple static ScrollContainers can be alive simultaneously, each with a Teleported bar.
+// Only the instance that last set scrollContainerElement is the "active" one — its bar
+// teleports to body. Inactive instances render the bar in-place (hidden by Ionic's page stack).
+const isActive = computed(() =>
+	!props.static || (!!containerEl.value && scrollContainerElement.value === containerEl.value),
+);
 
 // --- All scrollbar state is plain JS, never Vue reactive ---
 let rafId: number | null = null;
@@ -208,7 +216,16 @@ function disable() {
 	document.removeEventListener('mouseup', onDragEnd);
 }
 
-onMounted(enable);
+// When this instance becomes/stops being the active one, enable/disable scrollbar logic.
+// This handles Ionic's page caching where multiple static instances are mounted simultaneously.
+watch(isActive, (active) => {
+	if (active) enable();
+	else disable();
+});
+
+onMounted(() => {
+	if (isActive.value) enable();
+});
 
 onUnmounted(() => {
 	disable();
@@ -217,8 +234,7 @@ onUnmounted(() => {
 
 let currentSection = '';
 const removeAfterEach = router.afterEach((to) => {
-	// Only the main (static) scroll container reacts to route changes
-	if (!props.static) return;
+	if (!props.static || !isActive.value) return;
 
 	const newSection = to.path.split('/')[1] ?? '';
 	if (newSection === currentSection) {
@@ -244,15 +260,17 @@ const removeAfterEach = router.afterEach((to) => {
 	>
 		<slot />
 
-		<Teleport v-if="static" to="body">
+		<!-- Static: Teleport to body when active, render in-place when inactive
+			 (Ionic keeps old pages mounted, so inactive bars stay inside the hidden page) -->
+		<Teleport v-if="static" :disabled="!isActive" to="body">
 			<div
 				ref="refBar"
 				:class="{
-					'top-16 bottom-6 mr-1': static,
+					'top-16 bottom-6 mr-1': isActive,
 					'bottom-20': musicVisibility === 'showing',
 					className,
 				}"
-				:style="`position: ${static ? 'fixed' : 'absolute'}; opacity: 0;`"
+				:style="`position: ${isActive ? 'fixed' : 'absolute'}; opacity: 0;`"
 				class="right-0 mt-2 mb-2 hidden rounded-full border-r-2 border-l-4 border-transparent w-3.5 hover:bg-surface-12/6 sm:flex transition-opacity duration-200"
 				data-scrollbar
 			>
@@ -265,6 +283,7 @@ const removeAfterEach = router.afterEach((to) => {
 			</div>
 		</Teleport>
 
+		<!-- Non-static: always inline (QueueOverlay, FolderBrowser, etc.) -->
 		<div
 			v-else
 			ref="refBar"
