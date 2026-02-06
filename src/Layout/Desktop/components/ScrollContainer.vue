@@ -1,12 +1,12 @@
 <script lang="ts" setup>
-import { onMounted, onUnmounted, ref } from 'vue';
+import { onMounted, onUnmounted, ref, shallowRef } from 'vue';
 import type { VueScrollEvent } from '@/vite-env';
 
 import router from '@/router';
 import { musicVisibility } from '@/store/audioPlayer';
 import { scrollContainerElement } from '@/store/ui.ts';
 
-defineProps({
+const props = defineProps({
 	autoHide: {
 		type: Boolean,
 		default: false,
@@ -29,6 +29,9 @@ defineEmits<{
 	(e: 'scroll', event: VueScrollEvent): void;
 }>();
 
+// Each instance owns its own container ref — only static instances
+// publish it to the store so other components (NMCarousel, TrackCard, etc.) can use it.
+const containerEl = shallowRef<HTMLDivElement>();
 const refHandle = ref<HTMLSpanElement>();
 const refBar = ref<HTMLDivElement>();
 
@@ -43,7 +46,7 @@ let hovered = false;
 let cached = { containerH: 0, scrollH: 0, barH: 0 };
 
 function recache() {
-	const container = scrollContainerElement.value;
+	const container = containerEl.value;
 	const bar = refBar.value;
 	if (!container || !bar) return;
 	cached.containerH = container.clientHeight;
@@ -70,7 +73,7 @@ function scheduleHide() {
 }
 
 function updatePosition() {
-	const container = scrollContainerElement.value;
+	const container = containerEl.value;
 	const handle = refHandle.value;
 	if (!container || !handle) return;
 
@@ -128,7 +131,7 @@ function onDrag(e: MouseEvent) {
 	e.preventDefault();
 	const handle = refHandle.value;
 	const bar = refBar.value;
-	const container = scrollContainerElement.value;
+	const container = containerEl.value;
 	if (!handle || !bar || !container) return;
 
 	const barRect = bar.getBoundingClientRect();
@@ -143,7 +146,7 @@ function onDrag(e: MouseEvent) {
 function enable() {
 	disable();
 
-	const container = scrollContainerElement.value;
+	const container = containerEl.value;
 	const handle = refHandle.value;
 	if (!container || !handle) return;
 
@@ -173,7 +176,7 @@ function disable() {
 	if (hideTimeout !== null) { clearTimeout(hideTimeout); hideTimeout = null; }
 	if (resizeObserver) { resizeObserver.disconnect(); resizeObserver = null; }
 
-	const container = scrollContainerElement.value;
+	const container = containerEl.value;
 	if (container) {
 		if (scrollFn) container.removeEventListener('scroll', scrollFn);
 		container.removeEventListener('pointerenter', onContainerEnter);
@@ -188,24 +191,42 @@ function disable() {
 	document.removeEventListener('mouseup', onDragEnd);
 }
 
-onMounted(enable);
-onUnmounted(disable);
+onMounted(() => {
+	// Static instances are the main page scroll container — publish to the store
+	if (props.static) {
+		scrollContainerElement.value = containerEl.value;
+	}
+	enable();
+});
+
+onUnmounted(() => {
+	disable();
+	// Only clear the store ref if we're the one that set it
+	if (props.static && scrollContainerElement.value === containerEl.value) {
+		scrollContainerElement.value = undefined;
+	}
+});
 
 let currentSection = '';
 router.afterEach((to) => {
+	// Only the main (static) scroll container reacts to route changes
+	if (!props.static) return;
+
 	const newSection = to.path.split('/')[1] ?? '';
 	if (newSection === currentSection) {
-		scrollContainerElement.value?.scrollTo(0, 0);
+		containerEl.value?.scrollTo(0, 0);
 		return;
 	}
 	currentSection = newSection;
+	// Re-publish to store in case the element was recreated
+	scrollContainerElement.value = containerEl.value;
 	enable();
 });
 </script>
 
 <template>
 	<div
-		ref="scrollContainerElement"
+		ref="containerEl"
 		:class="{
 			'group/scrollContainer': !frame,
 			'group/scrollContainer-frame': frame,
