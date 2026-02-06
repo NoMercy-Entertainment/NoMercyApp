@@ -69,9 +69,8 @@ function enable() {
 		if (!container || !handle || !bar)
 			return;
 
-		// Read fresh dimensions on each update for accuracy
-		const clientHeight = container.clientHeight;
-		const scrollHeight = container.scrollHeight;
+		// Use cached dimensions (updated by ResizeObserver) to avoid forced layout
+		const { clientHeight, scrollHeight } = cachedDimensions;
 		const scrollTop = container.scrollTop;
 
 		// Hide scrollbar if no scrolling is needed (unless actively scrolling)

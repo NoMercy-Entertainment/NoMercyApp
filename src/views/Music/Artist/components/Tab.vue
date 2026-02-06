@@ -8,7 +8,7 @@ defineProps({
 </script>
 
 <template>
-	<div v-show="isActive" class="contents">
+	<div v-if="isActive" class="contents">
 		<slot />
 	</div>
 </template>
