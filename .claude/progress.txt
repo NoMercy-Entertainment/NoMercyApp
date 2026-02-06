@@ -931,5 +931,51 @@ The optimization work successfully:
   - All fixed-size NM components now have matching skeleton placeholders
   - NMMusicCard renders correctly on artist page (MusicCarousel import fix)
 
+### Post-Phase: Fix Version Check JSON Error + Add Vite Middleware
+- Status: DONE
+- Date: 2026-02-06
+- Changes made:
+  1. Fixed version check failing with SyntaxError when /version.json returns HTML:
+     - Added Content-Type header check before parsing response as JSON
+     - Silently returns false for non-JSON responses (SPA fallback, missing file)
+  2. Added version.json Vite plugin (vite.config.ts):
+     - Created `versionJsonPlugin()` with proper `configureServer` and `configurePreviewServer` hooks
+     - Serves dynamic JSON with current git commit hash for both `vite dev` and `vite preview`
+     - Previous inline approach inside server/preview config objects didn't work (not plugin hooks)
+  3. Moved initial version check to run early in main.ts:
+     - Now runs right after cache migration, before Keycloak auth
+     - Force updates trigger reload before user sees stale content
+     - Periodic checks (5-min interval + visibility) still start in setupApp after UI is ready
+
+### Post-Phase: Fix SW Update Notifications Being Silently Discarded
+- Status: DONE
+- Date: 2026-02-06
+- Root cause: `setNotifications()` in router middleware `getLocations.ts` replaced the entire
+  notifications array with server-fetched data, wiping any locally-created update notifications
+  added by the version check or SW update detection before `getLocations` ran.
+- Changes made:
+  1. Fixed src/store/notifications.ts:
+     - `setNotifications()` now preserves client-side notifications (sw-update/version-update)
+       when merging with server-fetched notifications
+     - `removeNotification()` skips API DELETE call for system notifications (from === 'system')
+  2. Fixed notification ID deduplication:
+     - Changed `sw-update-${Date.now()}` → `sw-update-pending` (stable ID)
+     - Changed `version-update-${Date.now()}` → `version-update-pending` (stable ID)
+     - Both detection paths (version check + SW update) now properly deduplicate
+  3. Fixed controllerchange listener timing (src/main.ts):
+     - Moved `controllerchange` listener to main.ts, before any SKIP_WAITING can be sent
+     - Previously was inside `setupServiceWorkerUpdates()` which ran in a deferred queueMicrotask
+     - If SKIP_WAITING was sent before the listener was attached, the page never reloaded
+  4. Fixed double listener attachment (src/lib/serviceWorkerUpdates.ts):
+     - Added `listenersAttached` guard to prevent `setupUpdateListeners` from running twice
+     - Removed redundant `.ready` path that duplicated the `.getRegistration()` path
+     - Removed duplicate `controllerchange` listener (now in main.ts)
+- Failure points identified and fixed:
+  - setNotifications race condition (primary bug) — FIXED
+  - Date.now() IDs preventing deduplication — FIXED
+  - controllerchange registered too late — FIXED
+  - Double setupUpdateListeners call — FIXED
+  - API DELETE for client-side notifications — FIXED
+
 ## Next Tasks (from PRD)
 - All phases complete
