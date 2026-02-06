@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+import type { ComponentPublicInstance } from 'vue';
 import { onMounted, onUnmounted, ref, shallowRef } from 'vue';
 import type { VueScrollEvent } from '@/vite-env';
 
@@ -35,6 +36,16 @@ const containerEl = shallowRef<HTMLDivElement>();
 const refHandle = ref<HTMLSpanElement>();
 const refBar = ref<HTMLDivElement>();
 
+// Function ref: binds the container div and syncs to the store for static instances.
+// Vue calls this with the element on mount and null on unmount — so cleanup is automatic.
+function setContainerRef(el: Element | ComponentPublicInstance | null) {
+	const div = el as HTMLDivElement | null;
+	containerEl.value = div ?? undefined;
+	if (props.static) {
+		scrollContainerElement.value = div ?? undefined;
+	}
+}
+
 // --- All scrollbar state is plain JS, never Vue reactive ---
 let rafId: number | null = null;
 let hideTimeout: number | null = null;
@@ -42,15 +53,20 @@ let resizeObserver: ResizeObserver | null = null;
 let scrollFn: (() => void) | null = null;
 let hovered = false;
 
+// The container element we actually attached listeners to.
+// We track this separately because Vue clears template refs before onUnmounted,
+// so we can't rely on containerEl.value during cleanup.
+let activeContainer: HTMLDivElement | null = null;
+let activeHandle: HTMLSpanElement | null = null;
+
 // Cached dimensions — updated only by ResizeObserver
 let cached = { containerH: 0, scrollH: 0, barH: 0 };
 
 function recache() {
-	const container = containerEl.value;
 	const bar = refBar.value;
-	if (!container || !bar) return;
-	cached.containerH = container.clientHeight;
-	cached.scrollH = container.scrollHeight;
+	if (!activeContainer || !bar) return;
+	cached.containerH = activeContainer.clientHeight;
+	cached.scrollH = activeContainer.scrollHeight;
 	cached.barH = bar.clientHeight;
 }
 
@@ -73,9 +89,8 @@ function scheduleHide() {
 }
 
 function updatePosition() {
-	const container = containerEl.value;
 	const handle = refHandle.value;
-	if (!container || !handle) return;
+	if (!activeContainer || !handle) return;
 
 	const { containerH, scrollH, barH } = cached;
 	if (scrollH <= containerH) {
@@ -83,7 +98,7 @@ function updatePosition() {
 		return;
 	}
 
-	const scrollTop = container.scrollTop;
+	const scrollTop = activeContainer.scrollTop;
 	const handleHeight = Math.ceil((containerH / scrollH) * containerH);
 	const maxHandleTop = barH - handleHeight;
 	const maxScroll = scrollH - containerH;
@@ -131,14 +146,13 @@ function onDrag(e: MouseEvent) {
 	e.preventDefault();
 	const handle = refHandle.value;
 	const bar = refBar.value;
-	const container = containerEl.value;
-	if (!handle || !bar || !container) return;
+	if (!handle || !bar || !activeContainer) return;
 
 	const barRect = bar.getBoundingClientRect();
 	const y = Math.min(Math.max(0, e.clientY - barRect.top), barRect.height)
 		- handle.clientHeight / 2;
-	container.scrollTop
-		= (container.scrollHeight - container.clientHeight)
+	activeContainer.scrollTop
+		= (activeContainer.scrollHeight - activeContainer.clientHeight)
 			* (y / (barRect.height - handle.clientHeight));
 }
 
@@ -149,6 +163,9 @@ function enable() {
 	const container = containerEl.value;
 	const handle = refHandle.value;
 	if (!container || !handle) return;
+
+	activeContainer = container;
+	activeHandle = handle;
 
 	container.scrollTop = 0;
 
@@ -176,57 +193,46 @@ function disable() {
 	if (hideTimeout !== null) { clearTimeout(hideTimeout); hideTimeout = null; }
 	if (resizeObserver) { resizeObserver.disconnect(); resizeObserver = null; }
 
-	const container = containerEl.value;
-	if (container) {
-		if (scrollFn) container.removeEventListener('scroll', scrollFn);
-		container.removeEventListener('pointerenter', onContainerEnter);
-		container.removeEventListener('pointerleave', onContainerLeave);
+	if (activeContainer) {
+		if (scrollFn) activeContainer.removeEventListener('scroll', scrollFn);
+		activeContainer.removeEventListener('pointerenter', onContainerEnter);
+		activeContainer.removeEventListener('pointerleave', onContainerLeave);
 	}
+	activeContainer = null;
 	scrollFn = null;
 
-	const handle = refHandle.value;
-	if (handle) handle.removeEventListener('mousedown', onDragStart);
+	if (activeHandle) activeHandle.removeEventListener('mousedown', onDragStart);
+	activeHandle = null;
 
 	document.removeEventListener('mousemove', onDrag);
 	document.removeEventListener('mouseup', onDragEnd);
 }
 
-onMounted(() => {
-	// Static instances are the main page scroll container — publish to the store
-	if (props.static) {
-		scrollContainerElement.value = containerEl.value;
-	}
-	enable();
-});
+onMounted(enable);
 
 onUnmounted(() => {
 	disable();
-	// Only clear the store ref if we're the one that set it
-	if (props.static && scrollContainerElement.value === containerEl.value) {
-		scrollContainerElement.value = undefined;
-	}
+	removeAfterEach();
 });
 
 let currentSection = '';
-router.afterEach((to) => {
+const removeAfterEach = router.afterEach((to) => {
 	// Only the main (static) scroll container reacts to route changes
 	if (!props.static) return;
 
 	const newSection = to.path.split('/')[1] ?? '';
 	if (newSection === currentSection) {
-		containerEl.value?.scrollTo(0, 0);
+		activeContainer?.scrollTo(0, 0);
 		return;
 	}
 	currentSection = newSection;
-	// Re-publish to store in case the element was recreated
-	scrollContainerElement.value = containerEl.value;
 	enable();
 });
 </script>
 
 <template>
 	<div
-		ref="containerEl"
+		:ref="setContainerRef"
 		:class="{
 			'group/scrollContainer': !frame,
 			'group/scrollContainer-frame': frame,
