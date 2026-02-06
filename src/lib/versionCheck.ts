@@ -1,12 +1,8 @@
 import { APP_VERSION } from './version';
-import { addNotification } from '@/store/notifications';
-import { pwaMessages } from '@/i18n/pwa';
 import { setUpdatePending } from '@/lib/auth/updateState';
-import type { Message } from '@/types/auth';
 
 const VERSION_CHECK_INTERVAL = 5 * 60 * 1000;
 const VERSION_ENDPOINT = '/version.json';
-const AUTO_UPDATE_DELAY = 30 * 60 * 1000;
 
 interface VersionInfo {
 	version: string;
@@ -15,61 +11,25 @@ interface VersionInfo {
 }
 
 let checkInterval: number | null = null;
-let autoUpdateTimeout: number | null = null;
 
-function getCurrentLanguage(): string {
-	return (
-		localStorage.getItem('language') || navigator.language.split('-')[0] || 'en'
-	);
-}
-
-function createVersionUpdateNotification(): Message {
-	const lang = getCurrentLanguage();
-	const messages = pwaMessages[lang as keyof typeof pwaMessages] || pwaMessages.en;
-
-	return {
-		id: 'version-update-pending',
-		type: 'update',
-		title: messages.newVersion,
-		body: messages.updateNow,
-		from: 'system',
-		read: false,
-		created_at: Date.now(),
-		updated_at: Date.now(),
-		notify: true,
-		link: 'reload',
-	};
-}
-
-function forceUpdate(): void {
-	navigator.serviceWorker.getRegistration().then((reg) => {
-		if (reg?.waiting) {
-			reg.waiting.postMessage({ type: 'SKIP_WAITING' });
+async function clearCachesAndReload(): Promise<void> {
+	try {
+		if ('caches' in window) {
+			const cacheNames = await caches.keys();
+			await Promise.all(cacheNames.map(name => caches.delete(name)));
 		}
-	});
-
-	setTimeout(() => {
-		window.location.reload();
-	}, 100);
-}
-
-function showUpdateAvailable(): void {
-	addNotification(createVersionUpdateNotification());
-
-	if (autoUpdateTimeout) {
-		clearTimeout(autoUpdateTimeout);
-	}
-
-	autoUpdateTimeout = window.setTimeout(() => {
-		navigator.serviceWorker.getRegistration().then((reg) => {
+		if ('serviceWorker' in navigator) {
+			const reg = await navigator.serviceWorker.getRegistration();
 			if (reg?.waiting) {
 				reg.waiting.postMessage({ type: 'SKIP_WAITING' });
 			}
-			else {
-				window.location.reload();
-			}
-		});
-	}, AUTO_UPDATE_DELAY);
+		}
+	}
+	catch {
+		// Best effort
+	}
+
+	window.location.reload();
 }
 
 export async function checkForUpdates(): Promise<boolean> {
@@ -89,12 +49,8 @@ export async function checkForUpdates(): Promise<boolean> {
 		if (serverVersion.version !== APP_VERSION) {
 			setUpdatePending(serverVersion.version);
 
-			if (serverVersion.forceUpdate) {
-				forceUpdate();
-				return true;
-			}
-
-			showUpdateAvailable();
+			// Version mismatch means old chunks will 404 — clear caches and reload
+			clearCachesAndReload();
 			return true;
 		}
 
@@ -121,9 +77,5 @@ export function stopVersionChecks(): void {
 	if (checkInterval) {
 		clearInterval(checkInterval);
 		checkInterval = null;
-	}
-	if (autoUpdateTimeout) {
-		clearTimeout(autoUpdateTimeout);
-		autoUpdateTimeout = null;
 	}
 }

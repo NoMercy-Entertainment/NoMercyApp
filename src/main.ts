@@ -108,11 +108,22 @@ async function initializeWebApp() {
 }
 
 // Run one-time cache migration for existing users, then start the application
-runCacheMigration().then(() => {
-	// Run initial version check early, before Keycloak/app setup
-	// Force updates reload immediately; normal updates continue and notify later
+runCacheMigration().then(async () => {
+	// Run initial version check early and BLOCK app init if outdated
+	// This prevents loading stale chunks that will 404
 	if (!import.meta.env.DEV) {
-		import('@/lib/versionCheck').then(({ checkForUpdates }) => checkForUpdates()).catch(() => {});
+		try {
+			const { checkForUpdates } = await import('@/lib/versionCheck');
+			const isOutdated = await checkForUpdates();
+			if (isOutdated) {
+				// checkForUpdates already triggered forceUpdate/notification
+				// Don't proceed with loading stale chunks
+				return;
+			}
+		}
+		catch {
+			// Version check failed (network error, etc.) — continue with app init
+		}
 	}
 	initializeWebApp();
 });
