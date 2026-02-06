@@ -30,7 +30,6 @@ import PrimeVue from 'primevue/config';
 // @ts-ignore
 import KonamiCode from 'vue3-konami-code';
 
-import { suffix } from '@/config/config.ts';
 import i18next from '@/config/i18next';
 import { queryClient } from '@/config/tanstack-query';
 import konamiEnabled from '@/store/konami';
@@ -53,7 +52,7 @@ export async function setupApp(app: AppContext['app']) {
 			}
 
 			// Set up SW update detection after app renders
-			if ('serviceWorker' in navigator && suffix !== '-dev') {
+			if ('serviceWorker' in navigator) {
 				try {
 					await navigator.serviceWorker.ready;
 					const { setupServiceWorkerUpdates } = await import(

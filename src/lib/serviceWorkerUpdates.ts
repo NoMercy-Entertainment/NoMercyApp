@@ -58,6 +58,10 @@ export function setupServiceWorkerUpdates() {
 	document.addEventListener('sw-update-accepted', () => {
 		if (waitingServiceWorker) {
 			waitingServiceWorker.postMessage({ type: 'SKIP_WAITING' });
+			// Fallback: if controllerchange doesn't fire within 2s, force reload
+			setTimeout(() => {
+				window.location.reload();
+			}, 2000);
 		}
 		else {
 			window.location.reload();
