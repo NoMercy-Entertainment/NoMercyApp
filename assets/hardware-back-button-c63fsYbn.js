@@ -1,0 +1,1 @@
+import{da as r,fa as s,ma as t,pa as o,ua as B}from"./ionic-DIYphHxf.js";export{B as MENU_BACK_BUTTON_PRIORITY,r as OVERLAY_BACK_BUTTON_PRIORITY,s as blockHardwareBackButton,o as shouldUseCloseWatcher,t as startHardwareBackButton};

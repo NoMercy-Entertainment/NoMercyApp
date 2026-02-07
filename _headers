@@ -10,6 +10,10 @@
   Cache-Control: no-cache, no-store, must-revalidate
   X-Content-Type-Options: nosniff
 
+# Version endpoint - never cache, always fetch fresh
+/version.json
+  Cache-Control: no-cache, no-store, must-revalidate
+
 # Service Worker - never cache, always fresh
 /sw.js
   Cache-Control: no-cache, no-store, must-revalidate
