@@ -69,7 +69,8 @@ const error = ref(false);
 const devicePixelRatio = typeof window !== 'undefined' ? window.devicePixelRatio : 1;
 
 const optimizedSize = computed(() => {
-	if (!props.size) return null;
+	if (!props.size)
+		return null;
 	const multiplier = devicePixelRatio > 1.5 ? 2 : 1;
 	return props.size * multiplier;
 });
@@ -196,7 +197,7 @@ function onError(e: Event) {
 			'aspect-backdrop': aspect === 'backdrop',
 		}"
 		:style="style"
-		class="transform-gpu pointer-events-none bottom-0 mx-auto flex select-none place-self-start max-w-available w-available h-available"
+		class="pointer-events-none bottom-0 mx-auto flex select-none place-self-start max-w-available w-available h-available"
 	>
 		<div
 			v-if="opacity === 0 && type === 'image'"

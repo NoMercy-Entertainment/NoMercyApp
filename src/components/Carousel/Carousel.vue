@@ -59,6 +59,7 @@ const nextButtonEnabled = ref(true);
 const isLastSlide = ref(false);
 const hasScroll = ref(false);
 const swiper = ref<VueSwiperElement>();
+const carouselEl = ref<HTMLDivElement>();
 
 function onProgress(swiper: Swiper, progress: number) {
 	swiper.progress = Math.floor(((progress * 100) + 1) / 100);
@@ -78,10 +79,12 @@ function onSlideChange(swiper: Swiper) {
 	hasScroll.value = !swiper.isLocked;
 }
 
-function afterInit(swiper: Swiper) {
-	setTimeout(() => {
-		swiper.el?.classList.remove('opacity-0');
-	}, 150 * props.index);
+function afterInit() {
+	requestAnimationFrame(() => {
+		requestAnimationFrame(() => {
+			carouselEl.value?.classList.remove('opacity-0');
+		});
+	});
 }
 
 function reset() {
@@ -132,7 +135,8 @@ function focusMain() {
 
 <template>
 	<div
-		class="mb-1 flex w-auto flex-shrink-0 flex-grow-0 flex-col items-start justify-start gap-2 self-stretch text-left relative"
+		ref="carouselEl"
+		class="mb-1 flex w-auto flex-shrink-0 flex-grow-0 flex-col items-start justify-start gap-2 self-stretch text-left relative opacity-0 transition-opacity duration-150"
 		style="content-visibility: auto; contain-intrinsic-size: auto 280px;"
 	>
 		<div class="flex w-available flex-1 flex-col gap-2">
@@ -176,7 +180,7 @@ function focusMain() {
 				</div>
 			</div>
 			<div class="gap-3 py-1 pr-0 w-available swiper">
-				<SwiperComponent ref="swiper" :class="`swiper-${title?.replace(/[\s&#]/gu, '-')} opacity-0 transform-gpu`"
+				<SwiperComponent ref="swiper" :class="`swiper-${title?.replace(/[\s&#]/gu, '-')}`"
 					:modules="[Virtual]"
 					data-spatial-container="row"
 					v-bind="customSwiperConfig as any" @progress="onProgress" @after-init="afterInit"

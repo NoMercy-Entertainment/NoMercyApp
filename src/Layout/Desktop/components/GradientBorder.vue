@@ -20,7 +20,7 @@ const isMutating = useIsMutating();
 			'sm:border-4 border-surface-4 gradient-border':
 				isFetching === 0 && isMutating === 0 && !searchResultLoading,
 		}"
-		class="relative flex flex-1 overflow-clip text-start outline-none transition-all duration-200 h-available w-available scrollbar-none sm:rounded-3xl"
+		class="relative flex flex-1 overflow-clip text-start outline-none transition-[color,border-color,margin] duration-200 h-available w-available scrollbar-none sm:rounded-3xl"
 		no-ring
 		tabindex="-1"
 	>

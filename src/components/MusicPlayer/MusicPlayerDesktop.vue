@@ -134,7 +134,7 @@ onMounted(() => {
 		:data-music="musicVisibility"
 		:data-sidebar="sidebar"
 		:inert="musicVisibility === 'hidden'"
-		class="bg-surface-12/3 hidden h-0 music-showing:h-20 flex-shrink-0 flex-grow-0 flex-row items-center justify-start gap-12 self-stretch pr-6 sidebar-closed:ml-16 sidebar-open:ml-64 rounded-lg m-2 mt-2 mb-4 pl-4 mx-5 transition-all duration-200 sm:flex 2xl:sidebar-open:ml-[16.3rem]"
+		class="bg-surface-12/3 hidden h-0 music-showing:h-20 flex-shrink-0 flex-grow-0 flex-row items-center justify-start gap-12 self-stretch pr-6 sidebar-closed:ml-16 sidebar-open:ml-64 rounded-lg m-2 pl-4 mx-5 transition-all duration-200 sm:flex 2xl:sidebar-open:ml-[16.3rem]"
 	>
 		<div
 			v-if="currentSong"

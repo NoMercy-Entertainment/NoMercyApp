@@ -127,7 +127,6 @@ function onRightClick(event: Event, data: LibraryResponse | GenreResponse | Peop
 					:class="{
 						'pb-24': isNative && !currentSong,
 						'pb-40': isNative && currentSong,
-						'children:pb-4 sm:children:pb-3': !isNative && currentSong,
 					}"
 					class="z-0 flex flex-col gap-4 rounded-3xl border-0 p-4 w-available scrollbar-none border-surface-3 transform-gpu will-change-auto"
 				>

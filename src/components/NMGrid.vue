@@ -40,7 +40,6 @@ const useBackdropStyle = computed(() => {
 		:class="{
 			'pb-0': isNative && !currentSong,
 			'pb-40': isNative && currentSong,
-			'children:pb-4 sm:children:pb-3': !isNative && currentSong,
 		}"
 		class="border-0 p-4 w-available scrollbar-none"
 	>

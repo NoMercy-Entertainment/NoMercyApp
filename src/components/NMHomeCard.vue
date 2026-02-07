@@ -83,7 +83,7 @@ function scrollToTop() {
 		v-if="!isMobile"
 		class="card scheme-dark relative m-4 pb-0 mb-0 flex flex-col justify-end gap-4 rounded-md bg-black/50 p-4 min-h-[65vh] overflow-clip text-surface-12 before:content-[''] before:pointer-events-none before:absolute before:inset-0 before:z-0 before:mt-auto before:h-4/5 before:bg-gradient-to-t before:from-black before:via-black/60 before:bottom-0"
 		data-scroll
-		style="contain: layout style paint; will-change: transform;"
+		style="contain: layout style paint;"
 	>
 		<TMDBImage
 			v-if="data"

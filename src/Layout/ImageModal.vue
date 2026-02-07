@@ -1,17 +1,15 @@
 <script lang="ts" setup>
-import { computed, onBeforeUnmount, onMounted, ref, watch } from 'vue';
+import { computed, onBeforeUnmount, ref, watch } from 'vue';
 import axios from 'axios';
 import type { MenuItem } from 'primevue/menuitem';
 import ContextMenu from 'primevue/contextmenu';
 import { Portal } from '@headlessui/vue';
 import {
-	disableScreensaver,
-	imageModal,
-	imageModalData,
+	disableScreensaver, imageModalData,
 	setImageModalData,
 	setImageModalOpen,
 	showImageModal,
-	showScreensaver,
+	showScreensaver
 } from '@/store/imageModal';
 import { pickPaletteColor } from '@/lib/colorHelper';
 import AppLogoSquare from '@/components/Images/icons/AppLogoSquare.vue';
@@ -217,15 +215,14 @@ function onRightClick(e: MouseEvent) {
 	cardMenu.value.show(e);
 }
 
-onMounted(() => {
-	if (!showImageModal)
-		return;
-
-	window.addEventListener('mousemove', handleShowButtonToggle);
-	return () => {
+watch(showImageModal, (Value) => {
+	if (Value) {
+		window.addEventListener('mousemove', handleShowButtonToggle);
+	}
+	else {
 		window.removeEventListener('mousemove', handleShowButtonToggle);
 		clearTimeout(timeout.value);
-	};
+	}
 });
 
 onBeforeUnmount(() => {

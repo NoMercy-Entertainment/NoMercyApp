@@ -101,8 +101,7 @@ function handleClick(item: any) {
 		:style="focusColor ? `
        --color-theme-8: ${data.deathday ? '#fff' : focusColor};
        contain: layout style paint;
-       will-change: transform;
-    ` : 'contain: layout style paint; will-change: transform;'"
+    ` : 'contain: layout style paint;'"
 		:to="data.link"
 		class="group/card frosting flex flex-col h-full items-center focus-outline relative rounded-lg select-none shadow-[0px_0px_0_1px_rgb(from_var(--color-theme-8,var(--color-theme-6))_r_g_b/70%)] w-full z-0 bg-surface-50/70 flex-grow-0"
 		no-ring
@@ -168,7 +167,7 @@ function handleClick(item: any) {
 						}"
 						class="absolute -inset-1 z-0 transition-all duration-200 bg-surface-1/80 blur-sm"
 					/>
-					<div class="z-10 w-available text-xl font-bold line-clamp-2 leading-[1.2] text-surface-12 dark:text-slate-1 empty:hidden dark:font-medium font-semibold whitespace-pre-line text-xs">
+					<div class="z-10 w-available line-clamp-2 leading-[1.2] text-surface-12 dark:text-slate-1 empty:hidden dark:font-medium font-semibold whitespace-pre-line text-xs">
 						{{ data.title }}
 					</div>
 				</div>

@@ -164,7 +164,6 @@ const socialLinks = computed(() => [
 					:class="{
 						'pb-24': isNative && !currentSong,
 						'pb-40': isNative && currentSong,
-						'children:pb-4 sm:children:pb-3': !isNative && currentSong,
 					}"
 					class="flex bg-black/50 w-available relative text-surface-12"
 				>

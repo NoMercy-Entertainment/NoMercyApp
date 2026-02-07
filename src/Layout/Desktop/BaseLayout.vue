@@ -20,6 +20,7 @@ import { AsyncMusicPlayerDesktop } from '@/components/async';
 import EqualizerOverlay from '@/Layout/Desktop/components/Overlays/EqualizerOverlay.vue';
 import ChristmasSnow from '@/components/Seasonal/Christmas/ChristmasSnow.vue';
 import Shadow from '@/Layout/Desktop/components/Shadow.vue';
+import GlobalScrollbar from '@/Layout/Desktop/components/GlobalScrollbar.vue';
 import OfflineBanner from '@/components/OfflineBanner.vue';
 
 const route = useRoute();
@@ -79,9 +80,7 @@ function focusMain() {
 					/>
 				</GradientBorder>
 				<Indexer />
-				<div class="scrollbarContainer">
-					<!-- the ScrollContainer teleports here -->
-				</div>
+				<GlobalScrollbar />
 			</div>
 
 			<AsyncMusicPlayerDesktop />

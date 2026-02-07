@@ -94,8 +94,14 @@ const onSlideChange = (swiper: Swiper) => {
   hasScroll.value = !swiper.isLocked;
 };
 
-const afterInit = (swiper: Swiper) => {
-  swiper.el?.classList.remove("opacity-0");
+const carouselEl = ref<HTMLDivElement>();
+
+const afterInit = () => {
+  requestAnimationFrame(() => {
+    requestAnimationFrame(() => {
+      carouselEl.value?.classList.remove('opacity-0');
+    });
+  });
 };
 
 const reset = () => {
@@ -190,7 +196,8 @@ const scrollToCenter = () => {
       }"
       :data-next-id="`carousel_${next_id}`"
       :data-previous-id="`carousel_${previous_id}`"
-      class="mt-2 sm:mt-6 mb-2 flex w-auto flex-shrink-0 flex-grow-0 flex-col items-start justify-start gap-2 self-stretch text-left"
+      ref="carouselEl"
+      class="mt-2 sm:mt-6 mb-2 flex w-auto flex-shrink-0 flex-grow-0 flex-col items-start justify-start gap-2 self-stretch text-left opacity-0 transition-opacity duration-150"
   >
     <div class="flex w-available flex-1 flex-col gap-2 pb-1">
       <div
