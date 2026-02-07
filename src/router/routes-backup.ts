@@ -60,7 +60,7 @@ import SetupNoServer from '@/views/Setup/NoServers';
 import SetupServerOffline from '@/views/Setup/ServerOffline';
 
 import NotFound from '@/views/NotFound';
-import libraries from '@/store/Libraries';
+import libraries from '@/store/libraries';
 
 const baseLayout = computed(() => {
 	if (false) {

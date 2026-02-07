@@ -7,8 +7,8 @@ import type { LibrariesResponse } from '@/types/api/base/library';
 
 import router from '@/router';
 import serverClient from '@/lib/clients/serverClient.ts';
-import { translate } from '@/lib/stringArray.ts';
-import { setLibraries } from '@/store/Libraries.ts';
+import { translate } from '@/lib/utils/string';
+import { setLibraries } from '@/store/libraries';
 import { setupComplete } from '@/store/ui.ts';
 import { serverLibraries } from '@/store/servers.ts';
 

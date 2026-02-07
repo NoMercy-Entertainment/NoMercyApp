@@ -18,7 +18,7 @@ import FolderItem from '@/views/Setup/PostInstall/components/FolderItem.vue';
 import NewFolderModal from './NewFolderModal.vue';
 import { useToast } from 'primevue/usetoast';
 import { useDebounce } from '@vueuse/core';
-import { translate } from '@/lib/stringArray.ts';
+import { translate } from '@/lib/utils/string';
 
 const props = defineProps({
 	open: {
@@ -84,27 +84,31 @@ function closeNewModal() {
 	newModalOpen.value = false;
 }
 
-function handleEdit() {
-	serverClient()
-		.patch(`dashboard/libraries/${library.value.id}`, {
-			...library.value,
-			subtitles: subtitleLanguages.value.map(l => l.iso_639_1),
-			specialSeasonName: library.value.specialSeasonName,
-		})
-		.then(() => {
-			query.invalidateQueries({ queryKey: ['dashboard', 'libraries'] });
-			props.close();
-		})
-		.catch((err) => {
-			toast.add({
-				severity: 'error',
-				summary: translate('Error'),
-				detail: err.message,
-				life: 5000,
-			});
+const isSaving = ref(false);
 
-			props.close();
+async function handleEdit() {
+	if (isSaving.value) return;
+	isSaving.value = true;
+
+	try {
+		await serverClient()
+			.patch(`dashboard/libraries/${library.value.id}`, {
+				...library.value,
+				subtitles: subtitleLanguages.value.map(l => l.iso_639_1),
+				specialSeasonName: library.value.specialSeasonName,
+			});
+		query.invalidateQueries({ queryKey: ['dashboard', 'libraries'] });
+		props.close();
+	} catch (err) {
+		toast.add({
+			severity: 'error',
+			summary: translate('Error'),
+			detail: err instanceof Error ? err.message : 'Unknown error',
+			life: 5000,
 		});
+	} finally {
+		isSaving.value = false;
+	}
 }
 
 watch(debouncedTitle, (newTitle) => {
@@ -274,12 +278,13 @@ watch(selectedType, (newType) => {
 			>
 				<Button
 					id="done"
+					:disabled="isSaving"
 					color="theme"
 					type="button"
 					variant="contained"
 					@click="handleEdit"
 				>
-					{{ $t("Done") }}
+					{{ isSaving ? $t("Saving...") : $t("Done") }}
 				</Button>
 			</div>
 		</template>

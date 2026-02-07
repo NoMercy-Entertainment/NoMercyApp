@@ -49,9 +49,13 @@
     <meta content="black" name="mobile-web-app-status-bar-style"/>
 
     <meta content="light dark" name="color-scheme"/>
-    <link href="//api.example.com" rel="dns-prefetch"/>
-    
-    <meta content="off" http-equiv="x-dns-prefetch-control"/>
+
+    <!-- Preconnect to external domains for faster resource loading -->
+    <link rel="preconnect" href="https://media.themoviedb.org" crossorigin>
+    <link rel="preconnect" href="https://app.nomercy.tv" crossorigin>
+    <link rel="preconnect" href="https://auth-dev.nomercy.tv" crossorigin>
+    <link rel="dns-prefetch" href="https://cdn.nomercy.tv">
+    <link rel="preconnect" href="https://fonts.bunny.net" crossorigin>
 
     <meta content="NoMercy TV" name="apple-mobile-web-app-title"/>
     <meta

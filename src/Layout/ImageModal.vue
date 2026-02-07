@@ -1,17 +1,15 @@
 <script lang="ts" setup>
-import { computed, onBeforeUnmount, onMounted, ref, watch } from 'vue';
+import { computed, onBeforeUnmount, ref, watch } from 'vue';
 import axios from 'axios';
 import type { MenuItem } from 'primevue/menuitem';
 import ContextMenu from 'primevue/contextmenu';
 import { Portal } from '@headlessui/vue';
 import {
-	disableScreensaver,
-	imageModal,
-	imageModalData,
+	disableScreensaver, imageModalData,
 	setImageModalData,
 	setImageModalOpen,
 	showImageModal,
-	showScreensaver,
+	showScreensaver
 } from '@/store/imageModal';
 import { pickPaletteColor } from '@/lib/colorHelper';
 import AppLogoSquare from '@/components/Images/icons/AppLogoSquare.vue';
@@ -19,6 +17,15 @@ import TMDBImage from '@/components/Images/TMDBImage.vue';
 import { cardMenu, trackContextMenuItems } from '@/store/contextMenuItems';
 import serverClient from '@/lib/clients/serverClient';
 import MoooomIcon from '@/components/Images/icons/MoooomIcon.vue';
+
+enum WallpaperStyle {
+	Fill,
+	Fit,
+	Stretch,
+	Tile,
+	Center,
+	Span,
+}
 
 const showButton = ref(false);
 const src = ref<string | null>();
@@ -29,6 +36,7 @@ const overlayRef = ref<HTMLDivElement>();
 const timeout = ref<NodeJS.Timeout>();
 const timeout2 = ref<NodeJS.Timeout>();
 const timeout3 = ref<NodeJS.Timeout>();
+const wallpaperStyle = ref<WallpaperStyle>(WallpaperStyle.Fill);
 
 const imageBaseUrl = computed(() => {
 	// return `${currentServer.value?.serverBaseUrl}/images/original`;
@@ -39,53 +47,9 @@ const delay = computed(() => {
 	return showScreensaver.value ? 2400 : 400;
 });
 
-watch(imageModalData, async (data) => {
-	if (overlayRef?.value?.style) {
-		overlayRef.value.style.opacity = '1';
-	}
-
-	if (!data) {
-		return;
-	}
-
-	if (src.value === null && data.src) {
-		src.value = `${imageBaseUrl.value}${data.src}?width=3840`;
-		logoColor.value = pickPaletteColor(data.color_palette?.image);
-		// await applyNativeColor(logoColor.value);
-
-		timeout2.value = setTimeout(() => {
-			handleLoaded();
-			logoSrc.value = undefined;
-			setTimeout(() => {
-				logoSrc.value = data.meta?.logo?.src;
-				logoAspect.value = data.meta?.logo?.aspectRatio || 1;
-			}, 4000);
-		}, delay.value);
-	}
-	else if (data.src) {
-		timeout2.value = setTimeout(() => {
-			handleLoaded();
-			src.value = `${imageBaseUrl.value}${data.src}?width=3840`;
-			logoColor.value = pickPaletteColor(data.color_palette?.image);
-
-			logoSrc.value = undefined;
-			setTimeout(() => {
-				logoSrc.value = `${data.meta?.logo?.src}?width=3840`;
-				logoAspect.value = data.meta?.logo?.aspectRatio || 1;
-			}, 4000);
-		}, delay.value);
-	}
-});
-
-onBeforeUnmount(() => {
-	clearTimeout(timeout.value);
-	clearTimeout(timeout2.value);
-	clearTimeout(timeout3.value);
-});
-
 function handleClose() {
 	setImageModalOpen(false);
-	setImageModalData(null);
+	setImageModalData(undefined);
 	src.value = null;
 }
 
@@ -119,28 +83,6 @@ function handleClick(e: MouseEvent | TouchEvent) {
 	e.preventDefault();
 	cardMenu.value.hide(e);
 }
-
-onMounted(() => {
-	if (!showImageModal)
-		return;
-
-	window.addEventListener('mousemove', handleShowButtonToggle);
-	return () => {
-		window.removeEventListener('mousemove', handleShowButtonToggle);
-		clearTimeout(timeout.value);
-	};
-});
-
-enum WallpaperStyle {
-	Fill,
-	Fit,
-	Stretch,
-	Tile,
-	Center,
-	Span,
-}
-
-const wallpaperStyle = ref<WallpaperStyle>(WallpaperStyle.Fill);
 
 function setAsWallpaper() {
 	serverClient().post('dashboard/server/wallpaper', {
@@ -272,6 +214,60 @@ function onRightClick(e: MouseEvent) {
 
 	cardMenu.value.show(e);
 }
+
+watch(showImageModal, (Value) => {
+	if (Value) {
+		window.addEventListener('mousemove', handleShowButtonToggle);
+	}
+	else {
+		window.removeEventListener('mousemove', handleShowButtonToggle);
+		clearTimeout(timeout.value);
+	}
+});
+
+onBeforeUnmount(() => {
+	clearTimeout(timeout.value);
+	clearTimeout(timeout2.value);
+	clearTimeout(timeout3.value);
+});
+
+watch(imageModalData, async (data) => {
+	if (overlayRef?.value?.style) {
+		overlayRef.value.style.opacity = '1';
+	}
+
+	if (!data) {
+		return;
+	}
+
+	if (src.value === null && data.src) {
+		src.value = `${imageBaseUrl.value}${data.src}?width=3840`;
+		logoColor.value = pickPaletteColor(data.color_palette?.image);
+		// await applyNativeColor(logoColor.value);
+
+		timeout2.value = setTimeout(() => {
+			handleLoaded();
+			logoSrc.value = undefined;
+			setTimeout(() => {
+				logoSrc.value = data.meta?.logo?.src;
+				logoAspect.value = data.meta?.logo?.aspectRatio || 1;
+			}, 4000);
+		}, delay.value);
+	}
+	else if (data.src) {
+		timeout2.value = setTimeout(() => {
+			handleLoaded();
+			src.value = `${imageBaseUrl.value}${data.src}?width=3840`;
+			logoColor.value = pickPaletteColor(data.color_palette?.image);
+
+			logoSrc.value = undefined;
+			setTimeout(() => {
+				logoSrc.value = `${data.meta?.logo?.src}?width=3840`;
+				logoAspect.value = data.meta?.logo?.aspectRatio || 1;
+			}, 4000);
+		}, delay.value);
+	}
+});
 </script>
 
 <template>

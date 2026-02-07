@@ -29,6 +29,7 @@ const props = defineProps({
 const { t } = useTranslation();
 
 const error = ref(null);
+const isSending = ref(false);
 const email = ref<Nullable<string>>('');
 
 const errorBucket = ref<
@@ -68,7 +69,7 @@ const isValidEmail = computed(() => {
 	return validateEmail(email.value);
 });
 
-function handleInvite() {
+async function handleInvite() {
 	if (!email.value) {
 		errorBucket.value.push({
 			type: 'error',
@@ -87,36 +88,34 @@ function handleInvite() {
 		return;
 	}
 
-	apiClient()
-		.post('server/server-users', {
+	if (isSending.value) return;
+	isSending.value = true;
+
+	try {
+		await apiClient().post('server/server-users', {
 			id: currentServer.value?.id,
 			email: email.value,
 			libraries: allowedLibraries.value?.map(l => l.id),
-		})
-		.then(() => {
-			queryClient.invalidateQueries({ queryKey: ['server_users'] });
-
-			email.value = '';
-
-			props.close();
-		})
-		.catch(
-			({
-				response,
-			}: AxiosError<{
-				status: string;
-				message?: string;
-				exception?: string;
-			}>) => {
-				if (response?.status !== 200 && response?.data) {
-					errorBucket.value.push({
-						message: response.data.message ?? 'An error occurred',
-						place: 'email',
-						type: response.data.status ?? response.data.exception,
-					});
-				}
-			},
-		);
+		});
+		queryClient.invalidateQueries({ queryKey: ['server_users'] });
+		email.value = '';
+		props.close();
+	} catch (err) {
+		const { response } = err as AxiosError<{
+			status: string;
+			message?: string;
+			exception?: string;
+		}>;
+		if (response?.status !== 200 && response?.data) {
+			errorBucket.value.push({
+				message: response.data.message ?? 'An error occurred',
+				place: 'email',
+				type: response.data.status ?? response.data.exception,
+			});
+		}
+	} finally {
+		isSending.value = false;
+	}
 }
 </script>
 
@@ -161,16 +160,16 @@ function handleInvite() {
 		<template #actions>
 			<Button
 				id="yes"
-				:disabled="!isValidEmail"
+				:disabled="!isValidEmail || isSending"
 				color="theme"
 				end-icon="emailSend"
 				type="button"
 				variant="contained"
 				@click="handleInvite"
 			>
-				{{ $t("Send") }}
+				{{ isSending ? $t("Sending...") : $t("Send") }}
 			</Button>
-			<Button id="no" type="button" variant="text" @click="closeInviteModal">
+			<Button id="no" :disabled="isSending" type="button" variant="text" @click="closeInviteModal">
 				{{ $t("Cancel") }}
 			</Button>
 		</template>

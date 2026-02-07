@@ -16,7 +16,7 @@ import { currentServer } from '@/store/currentServer';
 import DashboardLayout from '@/Layout/Desktop/DashboardLayout.vue';
 import LibraryCard from './components/LibraryCard.vue';
 import { useToast } from 'primevue/usetoast';
-import { translate } from '@/lib/stringArray.ts';
+import { translate } from '@/lib/utils/string';
 
 const toast = useToast();
 
@@ -25,25 +25,39 @@ const { data: libraries, error } = useServerClient<LibrariesResponse[]>({
 	queryKey: ['dashboard', 'libraries', currentServer.value?.serverBaseUrl],
 });
 
-function handleCreateLibrary() {
-	serverClient()
-		.post<StatusResponse<Library>>('dashboard/libraries')
-		.then(({ data }) => {
-			toast.add({
-				severity: data.status === 'ok' ? 'success' : 'error',
-				summary: translate(data.status === 'ok' ? 'Success' : 'Error'),
-				detail: translate(data.message, ...data.args),
-				life: 5000,
-			});
+const isCreating = ref(false);
 
-			queryClient.invalidateQueries({
-				queryKey: [
-					'dashboard',
-					'libraries',
-					currentServer.value?.serverBaseUrl,
-				],
-			});
+async function handleCreateLibrary() {
+	if (isCreating.value) return;
+	isCreating.value = true;
+
+	try {
+		const { data } = await serverClient()
+			.post<StatusResponse<Library>>('dashboard/libraries');
+		toast.add({
+			severity: data.status === 'ok' ? 'success' : 'error',
+			summary: translate(data.status === 'ok' ? 'Success' : 'Error'),
+			detail: translate(data.message, ...data.args),
+			life: 5000,
 		});
+
+		queryClient.invalidateQueries({
+			queryKey: [
+				'dashboard',
+				'libraries',
+				currentServer.value?.serverBaseUrl,
+			],
+		});
+	} catch {
+		toast.add({
+			severity: 'error',
+			summary: translate('Error'),
+			detail: translate('An error occurred while creating the library'),
+			life: 5000,
+		});
+	} finally {
+		isCreating.value = false;
+	}
 }
 
 const loadingRefresh = ref(false);
@@ -111,11 +125,12 @@ function handleRescan() {
 				<template #cta>
 					<Button
 						id="newLibrary"
+						:disabled="isCreating"
 						color="theme"
 						start-icon="folderAdd"
 						@click="handleCreateLibrary"
 					>
-						{{ $t("New library") }}
+						{{ isCreating ? $t("Creating...") : $t("New library") }}
 					</Button>
 				</template>
 

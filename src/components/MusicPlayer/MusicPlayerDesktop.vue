@@ -6,7 +6,7 @@ import type { PlaylistItem } from '@/types/musicPlayer';
 import { user } from '@/store/user';
 
 import serverClient from '@/lib/clients/serverClient';
-import { setTitle } from '@/lib/stringArray';
+import { setTitle } from '@/lib/utils/string';
 import audioPlayer, { currentSong, musicSize, musicVisibility } from '@/store/audioPlayer';
 import { currentServer } from '@/store/currentServer';
 import sidebar from '@/store/sidebar';
@@ -36,6 +36,33 @@ const supportsAudioContext = useLocalStorage(
 	false,
 );
 
+const leftSize = computed(() => {
+	if (sidebar.value === 'open') {
+		return 100 / 4;
+	}
+	else if (sidebar.value === 'closed') {
+		return 100 / 3.2;
+	}
+	return 100 / 3;
+});
+const centerSize = computed(() => {
+	return 100 / 3;
+});
+const rightSize = computed(() => {
+	if (sidebar.value === 'open') {
+		return 100 / 2.9;
+	}
+	else if (sidebar.value === 'closed') {
+		return 100 / 3;
+	}
+	return 100 / 3;
+});
+
+const albumLink = computed(() => {
+	const albumId = currentSong.value?.album_track.at(0)?.id;
+	return `/music/album/${albumId}`;
+});
+
 function createMusicDatasetAttribute(data: any) {
 	if (!data)
 		return;
@@ -49,6 +76,15 @@ function createMusicDatasetAttribute(data: any) {
 		Album: data?.Album,
 		playlists: data?.playlists,
 	});
+}
+
+async function submitPlayback() {
+	if (!currentSong.value)
+		return;
+
+	await serverClient().post<PlaylistItem>(
+		`music/tracks/${currentSong.value?.id}/playback`,
+	);
 }
 
 onMounted(() => {
@@ -90,42 +126,6 @@ onMounted(() => {
 		}
 	});
 });
-
-async function submitPlayback() {
-	if (!currentSong.value)
-		return;
-
-	await serverClient().post<PlaylistItem>(
-		`music/tracks/${currentSong.value?.id}/playback`,
-	);
-}
-
-const leftSize = computed(() => {
-	if (sidebar.value === 'open') {
-		return 100 / 4;
-	}
-	else if (sidebar.value === 'closed') {
-		return 100 / 3.2;
-	}
-	return 100 / 3;
-});
-const centerSize = computed(() => {
-	return 100 / 3;
-});
-const rightSize = computed(() => {
-	if (sidebar.value === 'open') {
-		return 100 / 2.9;
-	}
-	else if (sidebar.value === 'closed') {
-		return 100 / 3;
-	}
-	return 100 / 3;
-});
-
-const albumLink = computed(() => {
-	const albumId = currentSong.value?.album_track.at(0)?.id;
-	return `/music/album/${albumId}`;
-});
 </script>
 
 <template>
@@ -134,7 +134,7 @@ const albumLink = computed(() => {
 		:data-music="musicVisibility"
 		:data-sidebar="sidebar"
 		:inert="musicVisibility === 'hidden'"
-		class="bg-surface-12/3 hidden h-0 music-showing:h-20 flex-shrink-0 flex-grow-0 flex-row items-center justify-start gap-12 self-stretch pr-6 sidebar-closed:ml-16 sidebar-open:ml-64 rounded-lg m-2 mt-2 mb-4 pl-4 mx-5 transition-all duration-200 sm:flex 2xl:sidebar-open:ml-[16.3rem]"
+		class="bg-surface-12/3 hidden h-0 music-showing:h-20 flex-shrink-0 flex-grow-0 flex-row items-center justify-start gap-12 self-stretch pr-6 sidebar-closed:ml-16 sidebar-open:ml-64 rounded-lg m-2 pl-4 mx-5 transition-all duration-200 sm:flex 2xl:sidebar-open:ml-[16.3rem]"
 	>
 		<div
 			v-if="currentSong"

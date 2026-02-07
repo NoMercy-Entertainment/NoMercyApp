@@ -13,7 +13,7 @@ import useInfiniteServerClient from '@/lib/clients/useInfiniteServerClient';
 import { showBackdrops } from '@/store/preferences';
 import { setBackground, setColorPalette } from '@/store/ui';
 import router from '@/router';
-import { setTitle } from '@/lib/stringArray';
+import { setTitle } from '@/lib/utils/string';
 
 import Indexer from '@/Layout/Indexer.vue';
 
@@ -133,7 +133,6 @@ function onRightClick(event: Event, data: LibraryResponse | GenreResponse | Peop
 					:key="router.currentRoute.value.params?.id as string"
 					:class="{
 						'pb-2': isNative && currentSong,
-						'children:pb-4 sm:children:pb-3': !isNative && currentSong,
 					}"
 					class="z-0 flex flex-col gap-4 rounded-3xl border-0 w-available scrollbar-none border-surface-3"
 				>

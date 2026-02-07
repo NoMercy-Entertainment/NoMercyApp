@@ -1,11 +1,12 @@
 <script lang="ts" setup>
 import type { PropType } from 'vue';
+import { ref } from 'vue';
 import { useToast } from 'primevue/usetoast';
 
 import { useQueryClient } from '@tanstack/vue-query';
 
 import serverClient from '@/lib/clients/serverClient';
-import { translate } from '@/lib/stringArray.ts';
+import { translate } from '@/lib/utils/string';
 import type { StatusResponse } from '@/types/api/base/library';
 import router from '@/router';
 
@@ -34,25 +35,29 @@ const props = defineProps({
 
 const query = useQueryClient();
 const toast = useToast();
+const isDeleting = ref(false);
 
-function handleDelete() {
-	serverClient()
-		.delete<StatusResponse<string>>(`dashboard/encoderprofiles/${props.id}`)
-		.then(({ data }) => {
-			toast.add({
-				severity: data.status === 'ok' ? 'success' : 'error',
-				summary: translate(data.status === 'ok' ? 'Success' : 'Error'),
-				detail: translate(data.message, ...data.args ?? []),
-				life: 5000,
-			});
-			query.invalidateQueries({ queryKey: ['dashboard', 'encoderProfiles'] });
+async function handleDelete() {
+	if (isDeleting.value) return;
+	isDeleting.value = true;
 
-			if (props.noRedirect)
-				return;
-			router.back();
+	try {
+		const { data } = await serverClient()
+			.delete<StatusResponse<string>>(`dashboard/encoderprofiles/${props.id}`);
+		toast.add({
+			severity: data.status === 'ok' ? 'success' : 'error',
+			summary: translate(data.status === 'ok' ? 'Success' : 'Error'),
+			detail: translate(data.message, ...data.args ?? []),
+			life: 5000,
 		});
+		query.invalidateQueries({ queryKey: ['dashboard', 'encoderProfiles'] });
+		props.close();
 
-	props.close();
+		if (!props.noRedirect)
+			router.back();
+	} catch {
+		isDeleting.value = false;
+	}
 }
 </script>
 
@@ -71,16 +76,18 @@ function handleDelete() {
 		<template #actions>
 			<Button
 				id="yes"
+				:disabled="isDeleting"
 				:onclick="handleDelete"
 				color="red"
 				end-icon="trash"
 				type="button"
 				variant="contained"
 			>
-				{{ $t("Delete") }}
+				{{ isDeleting ? $t("Deleting...") : $t("Delete") }}
 			</Button>
 			<Button
 				id="no"
+				:disabled="isDeleting"
 				:onclick="close"
 				color="auto"
 				type="button"

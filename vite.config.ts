@@ -1,24 +1,62 @@
 /// <reference types="vitest" />
 import path from 'node:path';
 import fs from 'node:fs';
+import { execSync } from 'node:child_process';
 
+import type { Plugin } from 'vite';
 import { defineConfig } from 'vite';
 import { VitePWA } from 'vite-plugin-pwa';
 import { ViteCspPlugin } from 'vite-plugin-csp';
 import { ViteMinifyPlugin } from 'vite-plugin-minify';
+import compression from 'vite-plugin-compression';
 import vue from '@vitejs/plugin-vue';
 
 import { pwaConfig } from './pwaConfig';
 import { cspConfig } from './cspConfig';
 
+function getGitCommitHash(): string {
+	try {
+		return execSync('git rev-parse --short HEAD').toString().trim();
+	} catch {
+		return 'unknown';
+	}
+}
+
+function versionJsonPlugin(commitHash: string, buildTime: string): Plugin {
+	const handler = (_req: any, res: any) => {
+		res.setHeader('Content-Type', 'application/json');
+		res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate');
+		res.end(JSON.stringify({
+			version: commitHash,
+			buildTime,
+			forceUpdate: false,
+		}));
+	};
+
+	return {
+		name: 'version-json',
+		configureServer(server) {
+			server.middlewares.use('/version.json', handler);
+		},
+		configurePreviewServer(server) {
+			server.middlewares.use('/version.json', handler);
+		},
+	};
+}
+
 // @ts-ignore
 export default defineConfig(({ command }) => {
+	const commitHash = getGitCommitHash();
+	const buildTime = new Date().toISOString();
+
 	return {
 		define: {
 			__BUILD_TIMESTAMP__: JSON.stringify(Date.now()),
 			__BUILD_VERSION__: JSON.stringify(
 				process.env.npm_package_version || '1.0.0',
 			),
+			__APP_VERSION__: JSON.stringify(commitHash),
+			__BUILD_TIME__: JSON.stringify(buildTime),
 		},
 		plugins: [
 			vue({
@@ -35,6 +73,7 @@ export default defineConfig(({ command }) => {
 					},
 				},
 			}),
+			versionJsonPlugin(commitHash, buildTime),
 			VitePWA(pwaConfig),
 			ViteCspPlugin(cspConfig, {
 				enabled: true,
@@ -52,7 +91,8 @@ export default defineConfig(({ command }) => {
 				// processFn: 'Nginx',
 			}),
 			ViteMinifyPlugin(),
-			// gzipPlugin(),
+			compression({ algorithm: 'gzip', ext: '.gz' }),
+			compression({ algorithm: 'brotliCompress', ext: '.br' }),
 		],
 		server: {
 			port: 5502,
@@ -109,10 +149,11 @@ export default defineConfig(({ command }) => {
 			outDir: 'docs',
 			sourcemap: false,
 			assetsDir: 'assets',
-			chunkSizeWarningLimit: 500,
+			chunkSizeWarningLimit: 250,
 			emptyOutDir: true,
 			minify: 'esbuild',
 			cssMinify: 'esbuild',
+			cssCodeSplit: true,
 			rollupOptions: {
 				external: (id) => {
 					if (
@@ -121,7 +162,49 @@ export default defineConfig(({ command }) => {
 					) {
 						return false;
 					}
+					// Native-only Capacitor/Cordova plugins (removed from package.json)
+					if (
+						id.includes('@capacitor/status-bar')
+						|| id.includes('@capacitor-community/')
+						|| id.includes('@hugotomazi/capacitor-navigation-bar')
+						|| id.includes('@capawesome/capacitor-android-edge-to-edge-support')
+						|| id.includes('@awesome-cordova-plugins/')
+					) {
+						return true;
+					}
 					return false;
+				},
+				output: {
+					manualChunks(id: string) {
+						if (id.includes('node_modules')) {
+							if (id.includes('vue-router') || id.includes('/vue/')) {
+								return 'vue-core';
+							}
+							if (id.includes('@ionic/vue') || id.includes('@ionic/vue-router') || id.includes('@ionic/core')) {
+								return 'ionic';
+							}
+							if (id.includes('primevue') || id.includes('@primevue/themes') || id.includes('@primeuix/styled')) {
+								return 'primevue';
+							}
+							if (id.includes('/swiper/')) {
+								return 'swiper';
+							}
+							if (id.includes('@tanstack/vue-query')) {
+								return 'query';
+							}
+							if (id.includes('i18next')) {
+								return 'i18n';
+							}
+							if (id.includes('@microsoft/signalr')) {
+								return 'signalr';
+							}
+							if (id.includes('/axios/') || id.includes('/clsx/') || id.includes('tailwind-merge') || id.includes('class-variance-authority')) {
+								return 'utils';
+							}
+						}
+					},
+					chunkFileNames: 'assets/[name]-[hash].js',
+					assetFileNames: 'assets/[name]-[hash].[ext]',
 				},
 			},
 		},
@@ -161,6 +244,7 @@ export default defineConfig(({ command }) => {
 			},
 		},
 		css: {
+			devSourcemap: false,
 			preprocessorOptions: {
 				scss: {
 					api: 'modern-compiler',

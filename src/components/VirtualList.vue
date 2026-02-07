@@ -2,7 +2,7 @@
 import VirtualScroller from './VirtualScroller.vue';
 
 interface Props {
-	items?: any[] | null;
+	items?: Record<string, unknown>[] | null;
 	itemHeight: number;
 	containerHeight?: number;
 	buffer?: number;

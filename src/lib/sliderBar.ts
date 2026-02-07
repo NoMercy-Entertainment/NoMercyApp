@@ -54,12 +54,12 @@ export class SliderBar<S extends PlaylistItem> {
 		this.init();
 	}
 
-	getScrubTime(e: any, parent: HTMLElement) {
+	getScrubTime(e: MouseEvent | TouchEvent, parent: HTMLElement) {
 		const elementRect = parent.getBoundingClientRect();
 
-		const x = e.clientX
-			?? e.touches?.[0]?.clientX
-			?? e.changedTouches?.[0]?.clientX
+		const x = ('clientX' in e ? e.clientX : undefined)
+			?? ('touches' in e ? e.touches?.[0]?.clientX : undefined)
+			?? ('changedTouches' in e ? e.changedTouches?.[0]?.clientX : undefined)
 			?? 0;
 
 		let offsetX = x - elementRect.left;
@@ -71,9 +71,9 @@ export class SliderBar<S extends PlaylistItem> {
 		let maxWidth = 100;
 		if (
 			this.getSizeFn
-			&& typeof (this.player as any)[this.getSizeFn] === 'function'
+			&& typeof (this.player as unknown as Record<string, (value: number) => void>)[this.getSizeFn] === 'function'
 		) {
-			maxWidth = (this.player as any)[this.getSizeFn]();
+			maxWidth = (this.player as unknown as Record<string, () => number>)[this.getSizeFn]();
 		}
 
 		return {
@@ -95,8 +95,8 @@ export class SliderBar<S extends PlaylistItem> {
 
 		const value = this.getScrubTime(e, this.sliderBar!);
 
-		if (typeof (this.player as any)[this.callbackFn] === 'function') {
-			(this.player as any)[this.callbackFn](value.scrubValuePlayer);
+		if (typeof (this.player as unknown as Record<string, (value: number) => void>)[this.callbackFn] === 'function') {
+			(this.player as unknown as Record<string, (value: number) => void>)[this.callbackFn](value.scrubValuePlayer);
 		}
 	}
 
@@ -115,10 +115,10 @@ export class SliderBar<S extends PlaylistItem> {
 
 			this.valuePercentage = value.scrubValue;
 			if (
-				typeof (this.player as any)[this.callbackFn] === 'function'
+				typeof (this.player as unknown as Record<string, (value: number) => void>)[this.callbackFn] === 'function'
 				&& !this.getSizeFn
 			) {
-				(this.player as any)[this.callbackFn](value.scrubValue);
+				(this.player as unknown as Record<string, (value: number) => void>)[this.callbackFn](value.scrubValue);
 			}
 		}
 
@@ -162,8 +162,8 @@ export class SliderBar<S extends PlaylistItem> {
 				`${value.scrubValue}%`,
 			);
 
-			if (typeof (this.player as any)[this.callbackFn] === 'function') {
-				(this.player as any)[this.callbackFn](value.scrubValuePlayer);
+			if (typeof (this.player as unknown as Record<string, (value: number) => void>)[this.callbackFn] === 'function') {
+				(this.player as unknown as Record<string, (value: number) => void>)[this.callbackFn](value.scrubValuePlayer);
 			}
 		}
 	}
@@ -178,8 +178,8 @@ export class SliderBar<S extends PlaylistItem> {
 
 		const value = this.getScrubTime(e, this.sliderBar!);
 
-		if (typeof (this.player as any)[this.callbackFn] === 'function') {
-			(this.player as any)[this.callbackFn](value.scrubValuePlayer);
+		if (typeof (this.player as unknown as Record<string, (value: number) => void>)[this.callbackFn] === 'function') {
+			(this.player as unknown as Record<string, (value: number) => void>)[this.callbackFn](value.scrubValuePlayer);
 		}
 	}
 

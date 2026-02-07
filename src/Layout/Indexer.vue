@@ -4,7 +4,7 @@ import { RouterLink, useRoute } from 'vue-router';
 
 import { isMobile, isNative } from '@/config/global';
 import { keyHandler, scrollToDiv } from '@/lib/scrollHandlers';
-import { alphaNumericRange } from '@/lib/stringArray';
+import { alphaNumericRange } from '@/lib/utils/string';
 import router from '@/router';
 import indexer, { availableLetters, setIndexerOpen } from '@/store/indexer';
 
@@ -124,12 +124,12 @@ onUnmounted(() => {
 <template>
 	<div
 		:class="{
-			'w-8': indexer,
-			'w-0': !indexer,
+			'w-8 opacity-100': indexer,
+			'w-0 opacity-0 translate-x-4 pointer-events-none!': !indexer,
 			'sm:ml-2': !isNative && indexer,
 			'bottom-0': isNative,
 		}"
-		class="pointer-events-none z-0 h-available sm:h-available flex flex-col items-center justify-between self-stretch overflow-clip transition-width duration-200  sm:-translate-x-3 pt-2 text-surface-12"
+		class="z-0 h-available sm:h-available flex flex-col items-center justify-between self-stretch overflow-clip transition-[width,opacity,transform] duration-200 sm:-translate-x-3 pt-2 text-surface-12"
 		indexer
 	>
 		<template v-for="letter in alphaNumericRange('#', 'Z')" :key="letter">
@@ -137,7 +137,7 @@ onUnmounted(() => {
 				<RouterLink
 					:data-indexer="letter"
 					:to="`${letter.replace('#', '_')}`"
-					class="pointer-events-auto relative flex p-1.5 size-6 sm:size-8 aspect-square rounded-lg overflow-clip cursor-pointer flex-col items-center justify-center hover:bg-surface-5"
+					class="pointer-events-auto relative flex p-1 size-6 sm:size-6 aspect-square rounded-lg overflow-clip cursor-pointer flex-col items-center justify-center hover:bg-surface-5"
 					tabindex="-1"
 				>
 					<p
@@ -150,7 +150,7 @@ onUnmounted(() => {
 			<button
 				v-else
 				:data-indexer="letter"
-				class="pointer-events-auto relative flex p-1.5 size-6 sm:size-8 aspect-square rounded-lg overflow-clip cursor-pointer flex-col items-center justify-center hover:bg-surface-5/11"
+				class="pointer-events-auto relative flex p-1 size-6 sm:size-6 aspect-square rounded-lg overflow-clip cursor-pointer flex-col items-center justify-center hover:bg-surface-5/11"
 				tabindex="-1"
 				@click="handleLetterClick(letter)"
 			>

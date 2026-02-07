@@ -8,3 +8,18 @@ export default <T>(timeout?: number) => {
 
 	return client<T>({ baseUrl: currentServer.value.serverApiUrl, timeout });
 };
+
+const pendingRequests = new Map<string, Promise<unknown>>();
+
+export function deduplicatedRequest<T>(key: string, requestFn: () => Promise<T>): Promise<T> {
+	if (pendingRequests.has(key)) {
+		return pendingRequests.get(key) as Promise<T>;
+	}
+
+	const promise = requestFn().finally(() => {
+		pendingRequests.delete(key);
+	});
+
+	pendingRequests.set(key, promise);
+	return promise;
+}

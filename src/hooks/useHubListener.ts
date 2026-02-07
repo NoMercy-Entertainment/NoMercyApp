@@ -3,7 +3,8 @@ import type { ComputedRef } from 'vue';
 import useMounted from '@/hooks/useMounted';
 import type { HubConnection } from '@microsoft/signalr';
 
-function useHubListener(connection: ComputedRef<HubConnection | null | undefined>, eventName: string, callback: (...args: any[]) => any) {
+// eslint-disable-next-line ts/no-explicit-any -- SignalR's on() requires (...args: any[]) => void
+function useHubListener(connection: ComputedRef<HubConnection | null | undefined>, eventName: string, callback: (...args: any[]) => void) {
 	const connectToHub = async () => {
 		setTimeout(() => {
 			try {

@@ -5,11 +5,12 @@ import { IonContent, IonPage } from '@ionic/vue';
 import { useVirtualizer } from '@tanstack/vue-virtual';
 
 import type { DisplayList } from '@/types/api/music/musicPlayer';
-import type { PlaylistItem, SortOrder, SortType } from '@/types/musicPlayer';
+import type { PlaylistItem, RouteType, SortOrder, SortType } from '@/types/musicPlayer';
 
 import { isNative } from '@/config/global';
 import useServerClient from '@/lib/clients/useServerClient';
-import { setTitle, sortByType } from '@/lib/stringArray';
+import { setTitle } from '@/lib/utils/string';
+import { sortByType } from '@/lib/utils/array';
 import { scrollContainerElement, setBackground, setColorPalette, setSortOrder, sortOrder, sortType } from '@/store/ui';
 import { currentSong } from '@/store/audioPlayer';
 
@@ -21,6 +22,24 @@ import ScrollContainer from '@/Layout/Desktop/components/ScrollContainer.vue';
 import NotFound from '@/Layout/Desktop/components/NotFound.vue';
 
 const route = useRoute();
+
+// Compute route flags once in the parent — avoids per-row reactive dependencies on route.path
+const isAlbumRoute = computed(() => route.path.startsWith('/music/album'));
+const isArtistRoute = computed(() => route.path.startsWith('/music/artist'));
+const isPlaylistsRoute = computed(() => route.path.startsWith('/music/playlists'));
+const isFavoritesRoute = computed(() => route.path.startsWith('/music/tracks'));
+const isGenresRoute = computed(() => route.path.startsWith('/music/genres'));
+
+const routeType = computed<RouteType>(() => {
+	if (isAlbumRoute.value) return 'album';
+	if (isArtistRoute.value) return 'artist';
+	if (isPlaylistsRoute.value) return 'playlist';
+	if (isFavoritesRoute.value) return 'favorite';
+	if (isGenresRoute.value) return 'genre';
+	return 'unknown';
+});
+
+const routeParamId = computed(() => String(route.params.id ?? ''));
 
 const { data, isError } = useServerClient<DisplayList>({
 	path: route.fullPath,
@@ -172,7 +191,15 @@ function onScroll() {
 							}"
 							class="flex flex-1 flex-shrink-0 flex-col items-start justify-start self-stretch bg-surface-3 flex-grow-1 gap-0.5 sm:p-4"
 						>
-							<SortHeader :key="data?.id" ref="sortHeader" />
+							<SortHeader
+								:key="data?.id"
+								ref="sortHeader"
+								:is-album-route="isAlbumRoute"
+								:is-artist-route="isArtistRoute"
+								:is-playlists-route="isPlaylistsRoute"
+								:is-favorites-route="isFavoritesRoute"
+								:is-genres-route="isGenresRoute"
+							/>
 
 							<!-- Virtual list container -->
 							<div
@@ -199,6 +226,13 @@ function onScroll() {
 										:data="displayList[virtualRow.index]"
 										:display-list="displayList"
 										:index="virtualRow.index"
+										:is-album-route="isAlbumRoute"
+										:is-artist-route="isArtistRoute"
+										:is-playlists-route="isPlaylistsRoute"
+										:is-favorites-route="isFavoritesRoute"
+										:is-genres-route="isGenresRoute"
+										:route-type="routeType"
+										:route-param-id="routeParamId"
 									/>
 								</div>
 							</div>

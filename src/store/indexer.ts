@@ -15,9 +15,15 @@ export function setIndexerOpen(open: boolean) {
 export const isIndexerOpen = () => indexer.value;
 
 // Track items for indexer letter availability
-const indexerItems = ref<Component<any>[]>([]);
+interface IndexerItemData {
+	title?: string;
+	name?: string;
+	[key: string]: unknown;
+}
 
-export function setIndexerItems(items: Component<any>[]) {
+const indexerItems = ref<Component<IndexerItemData>[]>([]);
+
+export function setIndexerItems(items: Component<IndexerItemData>[]): void {
 	indexerItems.value = items;
 }
 
@@ -25,10 +31,10 @@ export function setIndexerItems(items: Component<any>[]) {
 export const availableLetters = computed(() => {
 	const letters = new Set<string>();
 
-	indexerItems.value?.forEach((item: any) => {
+	indexerItems.value?.forEach((item) => {
 		const title = item.props?.data?.title
 			|| item.props?.data?.name
-			|| item.props?.name
+			|| (item.props as unknown as { name?: string })?.name
 			|| '';
 
 		if (title) {
@@ -48,13 +54,13 @@ export const availableLetters = computed(() => {
 });
 
 // Scroll to a specific letter using item index
-export function scrollToLetter(letter: string, items: Component<any>[], scrollToIndex: (index: number) => void) {
+export function scrollToLetter(letter: string, items: Component<IndexerItemData>[], scrollToIndex: (index: number) => void): void {
 	const targetLetter = letter === '#' ? letter : letter.toUpperCase();
 
-	const index = items.findIndex((item: any) => {
+	const index = items.findIndex((item) => {
 		const title = item.props?.data?.title
 			|| item.props?.data?.name
-			|| item.props?.name
+			|| (item.props as unknown as { name?: string })?.name
 			|| '';
 
 		if (!title)

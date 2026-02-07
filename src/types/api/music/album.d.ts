@@ -1,6 +1,7 @@
 import type { ColorPalettes } from '../shared';
 import type { Artist } from '@/types/api/music/artist';
 import type { PlaylistItem } from '@/types/musicPlayer';
+import type { Count } from '@/types/api/music/index';
 
 export interface AlbumResponse {
 	id: string;
@@ -18,12 +19,6 @@ export interface AlbumResponse {
 	_count: Count;
 	type: string;
 	track: PlaylistItem[];
-}
-
-interface Count {
-	track: number;
-	Artist: number;
-	File: number;
 }
 
 interface Album {

@@ -3,6 +3,7 @@ import { computed, ref, watch } from 'vue';
 import { IonContent, IonPage, IonSkeletonText, onIonViewWillEnter, onIonViewWillLeave } from '@ionic/vue';
 import { useRoute } from 'vue-router';
 import { Swiper as SwiperComponent, SwiperSlide } from 'swiper/vue';
+import 'swiper/css';
 
 import type { PersonResponseItem } from '@/types/api/base/person';
 
@@ -10,7 +11,8 @@ import { tmdbImageBaseUrl } from '@/config/config';
 import { background, setBackground, setColorPalette } from '@/store/ui';
 
 import useServerClient from '@/lib/clients/useServerClient';
-import { breakTitle2, setTitle, unique } from '@/lib/stringArray';
+import { breakTitle2, setTitle } from '@/lib/utils/string';
+import { unique } from '@/lib/utils/array';
 
 import CreditGroup from '@/components/MusicPlayer/components/CreditGroup.vue';
 import MediaCarousel from '@/components/Carousel/MediaCarousel.vue';

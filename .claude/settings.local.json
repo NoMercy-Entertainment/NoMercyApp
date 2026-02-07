@@ -1,13 +1,48 @@
 {
-	"permissions": {
-		"allow": [
-			"Bash(npx vue-tsc:*)",
-			"Bash(npm run build:*)",
-			"Bash(node analyze-divs.js:*)",
-			"Bash(node analyze-divs-fixed.js:*)",
-			"Bash(node:*)",
-			"Bash(python:*)",
-			"Bash(node_modules/.bin/vue-tsc:*)"
-		]
-	}
+  "permissions": {
+    "allow": [
+      "Bash(mkdir:*)",
+      "Bash(go:*)",
+      "Write(*)",
+      "Bash(ls:*)",
+      "Bash(git:*)",
+      "Update(*:*)",
+      "Bash(mv:*)",
+      "Bash(echo:*)",
+      "Bash(sed:*)",
+      "Bash(source:*)",
+      "Bash(head:*)",
+      "Bash(tail:*)",
+      "Bash(npm:*)",
+      "Bash(npx:*)",
+      "Bash(pkill:*)",
+      "Bash(touch:*)",
+      "Bash(grep:*)",
+      "Bash(deadcode:*)",
+      "Bash(sqlite3:*)",
+      "Bash(curl:*)",
+      "Bash(rg:*)",
+      "Bash(chmod:*)",
+      "Bash(lsof:*)",
+      "Bash(make:*)",
+      "Bash(PORT=:*)",
+      "Bash(find:*)",
+      "Bash(docker:*)",
+      "Bash(poetry:*)",
+      "Bash(python:*)",
+      "Bash(python3:*)",
+      "Update(*)",
+      "Bash(npx vue-tsc:*)",
+      "Bash(npm run build:*)",
+      "Bash(node analyze-divs.js:*)",
+      "Bash(node analyze-divs-fixed.js:*)",
+      "Bash(node:*)",
+      "Bash(python:*)",
+      "Bash(node_modules/.bin/vue-tsc:*)",
+      "Bash(tree:*)",
+      "Bash(wc:*)",
+      "WebFetch(domain:192-168-2-201.fcbb730a-a562-2ca5-d054-5d6acf2a1aaa.nomercy.tv)"
+    ]
+  },
+  "prefersReducedMotion": true
 }

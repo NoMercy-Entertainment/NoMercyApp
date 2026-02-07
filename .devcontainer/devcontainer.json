@@ -1,0 +1,71 @@
+{
+	"name": "NoMercy.App Development",
+	"image": "mcr.microsoft.com/devcontainers/javascript-node:22-bookworm",
+
+	"features": {
+		"ghcr.io/devcontainers/features/common-utils:2": {
+			"installZsh": true,
+			"configureZshAsDefaultShell": true,
+			"installOhMyZsh": true,
+			"upgradePackages": true
+		},
+		"ghcr.io/devcontainers/features/git:1": {},
+		"ghcr.io/devcontainers/features/github-cli:1": {}
+	},
+
+	"mounts": [
+		{
+			"source": "C:/Users/patri/AppData/Local/NoMercy_dev/config/token.json",
+			"target": "/home/vscode/.nomercy/token.json",
+			"type": "bind"
+		},
+		{
+			"source": "nomercy-app-node-modules",
+			"target": "/workspaces/NoMercy.App/node_modules",
+			"type": "volume"
+		},
+		{
+			"source": "nomercy-app-claude-data",
+			"target": "/home/vscode/.claude",
+			"type": "volume"
+		},
+		{
+			"source": "C:/Users/patri/.claude",
+			"target": "/tmp/.claude-host",
+			"type": "bind"
+		}
+	],
+
+	"forwardPorts": [],
+	"portsAttributes": {
+		"5502": {
+			"label": "NoMercy Dev Server",
+			"onAutoForward": "notify"
+		}
+	},
+
+	"containerEnv": {
+		"NOMERCY_TOKEN_PATH": "/home/vscode/.nomercy/token.json",
+		"DEV_PORT": "5502"
+	},
+
+	"customizations": {
+		"vscode": {
+			"extensions": [
+				"Vue.volar",
+				"dbaeumer.vscode-eslint",
+				"esbenp.prettier-vscode",
+				"bradlc.vscode-tailwindcss",
+				"ms-azuretools.vscode-docker"
+			],
+			"settings": {
+				"terminal.integrated.defaultProfile.linux": "zsh"
+			}
+		}
+	},
+
+	"postCreateCommand": "sudo chown -R vscode:vscode /workspaces/NoMercy.App/node_modules /home/vscode/.claude 2>/dev/null || true && bash .devcontainer/post-create.sh",
+	"postStartCommand": "bash .devcontainer/post-start.sh",
+
+	"remoteUser": "vscode"
+}

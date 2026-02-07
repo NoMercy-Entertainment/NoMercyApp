@@ -11,8 +11,8 @@ import router from '@/router';
 
 export interface ServerClientProps {
 	path?: string;
-	data?: any;
-	params?: any;
+	data?: Record<string, { value: unknown }>;
+	params?: Record<string, unknown>;
 	cacheKey?: string;
 	keepForever?: boolean;
 	enabled?: Ref<boolean> | ComputedRef<boolean> | boolean;
@@ -50,7 +50,7 @@ function useApiClient<T>(options?: ServerClientProps): Return<T> {
 		return Object.keys(options?.data ?? {}).reduce((acc, key) => {
 			acc[key] = toRaw(options?.data![key].value);
 			return acc;
-		}, {} as Record<string | number, any>);
+		}, {} as Record<string, unknown>);
 	};
 
 	const type = ref<'get' | 'post' | 'put' | 'patch' | 'delete' | 'head'>(

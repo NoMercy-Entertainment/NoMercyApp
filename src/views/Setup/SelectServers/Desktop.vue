@@ -10,7 +10,7 @@ import router from '@/router';
 import servers, { serverLibraries } from '@/store/servers';
 import { setCurrentServer } from '@/store/currentServer';
 import { setBackground, setColorPalette, setupComplete } from '@/store/ui';
-import { setLibraries } from '@/store/Libraries.ts';
+import { setLibraries } from '@/store/libraries';
 import serverClient from '@/lib/clients/serverClient.ts';
 
 import ServerCard from '@/views/Setup/SelectServers/components/ServerCard.vue';

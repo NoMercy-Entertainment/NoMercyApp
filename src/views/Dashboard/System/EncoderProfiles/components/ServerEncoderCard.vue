@@ -22,7 +22,9 @@ defineProps({
 				class="relative flex aspect-video flex-shrink-0 flex-grow-0 flex-col items-center justify-center self-stretch overflow-clip rounded-lg bg-theme-8"
 			>
 				<div class="backdropCard-overlay" />
-				<span class="text-xl font-bold">{{ data.name }}</span>
+				<span class="text-xl font-bold text-center">
+					{{ data.name }}
+				</span>
 			</div>
 		</template>
 	</DashboardCard>

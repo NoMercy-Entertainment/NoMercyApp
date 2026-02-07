@@ -4,7 +4,7 @@ import { useRoute } from 'vue-router';
 import { IonLabel, IonSegment, IonSegmentButton, IonToolbar } from '@ionic/vue';
 
 import router from '@/router';
-import libraries from '@/store/Libraries';
+import libraries from '@/store/libraries';
 import MoooomIcon from '@/components/Images/icons/MoooomIcon.vue';
 
 const shownRoutes = ['/libraries/', '/genre'];

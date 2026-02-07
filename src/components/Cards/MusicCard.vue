@@ -23,15 +23,10 @@ const props = defineProps({
 		default: '',
 	},
 });
-watch(props, (value) => {
-	if (!value)
-		return;
-	nextTick(() => {
-		document.dispatchEvent(new Event('indexer'));
-	});
-});
 
 const { t } = useTranslation();
+
+const ringColor = ref(pickPaletteColor(props.data.color_palette?.cover));
 
 const footText = computed(() => {
 	let text = '';
@@ -67,7 +62,13 @@ const footText = computed(() => {
 	return text;
 });
 
-const ringColor = ref(pickPaletteColor(props.data.color_palette?.cover));
+watch(props, (value) => {
+	if (!value)
+		return;
+	nextTick(() => {
+		document.dispatchEvent(new Event('indexer'));
+	});
+});
 </script>
 
 <template>

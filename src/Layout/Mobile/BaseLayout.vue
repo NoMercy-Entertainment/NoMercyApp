@@ -5,7 +5,7 @@ import { useIsFetching } from '@tanstack/vue-query';
 
 import { IonPage, IonProgressBar, IonRouterOutlet, IonTabs } from '@ionic/vue';
 
-import { lockPortrait, unlockOrientation } from '@/lib/utils';
+import { lockPortrait, unlockOrientation } from '@/lib/utils/dom';
 import { closeMenu } from '@/store/profileMenu';
 import { currentSong, fullPlayerModalOpen } from '@/store/audioPlayer';
 
@@ -13,8 +13,7 @@ import ImageModal from '@/Layout/ImageModal.vue';
 // import Screensaver from '@/Layout/Screensaver.vue';
 import DeviceOverlay from '@/Layout/Desktop/components/Overlays/DeviceOverlay.vue';
 
-import FullPlayer from '@/components/MusicPlayer/mobile/FullPlayer.vue';
-import MiniPlayer from '@/components/MusicPlayer/mobile/MiniPlayer.vue';
+import { AsyncMusicPlayerFull, AsyncMusicPlayerMini } from '@/components/async';
 import ChristmasSnow from '@/components/Seasonal/Christmas/ChristmasSnow.vue';
 
 import ProfileMenu from './components/menus/ProfileMenu.vue';
@@ -22,6 +21,7 @@ import BottomBar from './components/BottomBar.vue';
 import MobileLibraryHeader from '@/views/Base/Library/components/MobileLibraryHeader.vue';
 
 import { OpenInAppBanner, WelcomeAppModal } from '@/components/AndroidApp';
+import OfflineBanner from '@/components/OfflineBanner.vue';
 
 const isFetching = useIsFetching();
 
@@ -39,6 +39,7 @@ onUnmounted(() => {
 
 <template>
 	<IonPage id="main-content">
+		<OfflineBanner />
 		<IonTabs>
 			<IonProgressBar
 				v-if="isFetching > 0"
@@ -56,11 +57,11 @@ onUnmounted(() => {
 
 			<BottomBar />
 
-			<FullPlayer
+			<AsyncMusicPlayerFull
 				v-if="currentSong?.id"
 				:key="fullPlayerModalOpen ? 'full-player-open' : 'full-player-closed'"
 			/>
-			<MiniPlayer
+			<AsyncMusicPlayerMini
 				:key="!fullPlayerModalOpen ? 'mini-player-open' : 'mini-player-closed'"
 			/>
 			<Suspense>

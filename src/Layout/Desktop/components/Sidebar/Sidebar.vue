@@ -1,39 +1,27 @@
 <script lang="ts" setup>
 import { computed, onMounted, watch } from 'vue';
+import { useRoute } from 'vue-router';
 import { ScrollPanel } from 'primevue';
 
 import type { Playlist } from '@/types/api/music/playlists';
 
 import useServerClient from '@/lib/clients/useServerClient';
-
 import sidebar, { closeSidebar, hideSidebar, openSidebar, toggleSidebar } from '@/store/sidebar';
 import router from '@/router';
+import libraries from '@/store/libraries';
+import { setMusicPlaylists } from '@/store/musicPlaylists';
+import konamiEnabled from '@/store/konami';
+import { sidebarContainerElement } from '@/store/ui';
 
 import SidebarButtonGroup from './SidebarButtonGroup.vue';
 import SidebarButton from './SidebarButton.vue';
-import libraries from '@/store/Libraries';
-import { setMusicPlaylists } from '@/store/musicPlaylists';
-import { useRoute } from 'vue-router';
-import konamiEnabled from '@/store/konami';
 import MoooomIcon from '@/components/Images/icons/MoooomIcon.vue';
-import { sidebarContainerElement } from '@/store/ui';
-
-// const {data: libraries, refetch} = useServerClient<ServerLibrary[]>({
-//   path: '/dashboard/libraries',
-//   queryKey: ['libraries'],
-// });
 
 const route = useRoute();
 
 const { data: playlists } = useServerClient<Playlist[]>({
 	path: '/setup/music-playlists',
 	queryKey: ['music-playlists'],
-});
-
-watch(playlists, (value) => {
-	if (!value)
-		return;
-	setMusicPlaylists(value);
 });
 
 const isHomeRoute = computed(() => {
@@ -85,17 +73,6 @@ function handleSidebar() {
 	}
 }
 
-router.afterEach(() => {
-	setTimeout(() => {
-		handleSidebar();
-	}, 250);
-});
-
-onMounted(() => {
-	handleSidebar();
-	const _ = sidebarContainerElement?.value;
-});
-
 function libraryIconName(type: string) {
 	switch (type) {
 		case 'anime':
@@ -105,6 +82,23 @@ function libraryIconName(type: string) {
 			return 'movieClap';
 	}
 }
+
+onMounted(() => {
+	handleSidebar();
+	const _ = sidebarContainerElement?.value;
+});
+
+router.afterEach(() => {
+	setTimeout(() => {
+		handleSidebar();
+	}, 250);
+});
+
+watch(playlists, (value) => {
+	if (!value)
+		return;
+	setMusicPlaylists(value);
+});
 </script>
 
 <template>

@@ -6,6 +6,7 @@ import { IonSpinner } from '@ionic/vue';
 import { useOnline } from '@vueuse/core';
 
 import { getMutating, getMutation, getQuery, queryKey as qk } from '@/lib/routerHelper';
+import { nmComponentMap } from '@/components/nmComponentMap';
 
 const props = defineProps({
 	path: {
@@ -129,7 +130,7 @@ watch(
 	</template>
 	<template v-else-if="!isMutating">
 		<component
-			:is="render?.component"
+			:is="nmComponentMap[render?.component]"
 			v-for="(render, index) in mutatedData ?? homeData ?? []"
 			:key="render.id"
 			:index="index"

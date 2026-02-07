@@ -30,7 +30,7 @@ defineProps({
 			>
 				<div class="backdropCard-overlay" />
 				<TMDBImage v-if="data.image" :path="data.image" aspect="backdrop" class="z-0" />
-				<span v-else class="text-xl font-bold">
+				<span v-else class="text-xl font-bold text-center">
 					{{ data.title }}
 				</span>
 			</div>

@@ -43,10 +43,12 @@ export class SocketClient {
 		await this.connection.stop();
 	};
 
+	// eslint-disable-next-line ts/no-explicit-any -- SignalR's on() requires (...args: any[]) => void
 	on(methodName: string, callback: (...args: any[]) => void) {
 		this.connection?.on(methodName, callback);
 	}
 
+	// eslint-disable-next-line ts/no-explicit-any -- SignalR's off() requires (...args: any[]) => void
 	off(methodName: string, callback?: (...args: any[]) => void) {
 		if (callback) {
 			this.connection?.off(methodName, callback);
@@ -56,6 +58,7 @@ export class SocketClient {
 		}
 	}
 
+	// eslint-disable-next-line ts/no-explicit-any -- SignalR's invoke() requires any[]
 	async invoke(methodName: string, ...args: any[]) {
 		if (this.connection?.state === 'Connected') {
 			return await this.connection.invoke(methodName, ...args);

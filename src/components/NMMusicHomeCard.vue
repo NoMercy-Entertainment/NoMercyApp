@@ -40,8 +40,7 @@ const span = props.properties?.span ?? -1;
             --color-theme-8: ${ringColor};
             grid-column: span ${span};
             contain: layout style paint;
-            will-change: transform;
-          `"
+                      `"
 		:to="data?.link"
 		class="card relative flex flex-grow items-center justify-start gap-4 overflow-clip w-inherit rounded-2xl p-1.5 group/musicCard bg-gradient-to-b from-[#021c37]/[0.08] to-[#05294d]/[0.03] dark:from-[#e2f0fd]/[0.08] dark:to-[#d5feff]/[0.03]"
 	>
@@ -67,7 +66,7 @@ const span = props.properties?.span ?? -1;
 	</RouterLink>
 	<RouterLink
 		v-else-if="data?.type === 'playlists'"
-		:style="`--color-theme-8: ${ringColor}; contain: layout style paint; will-change: transform;`"
+		:style="`--color-theme-8: ${ringColor}; contain: layout style paint;`"
 		:to="data?.link"
 		class="relative flex flex-grow items-center justify-start gap-4 overflow-clip rounded-2xl p-1.5 bg-surface-9 dark:bg-surface-4 group/musicCard"
 	>

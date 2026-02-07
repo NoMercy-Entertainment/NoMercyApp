@@ -1,6 +1,6 @@
 import { computed } from 'vue';
 
-import libraries from '@/store/Libraries';
+import libraries from '@/store/libraries';
 import router from '@/router';
 import { useLocalStorage } from '@vueuse/core';
 

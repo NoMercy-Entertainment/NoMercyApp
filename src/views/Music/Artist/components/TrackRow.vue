@@ -1,9 +1,7 @@
 <script lang="ts" setup>
 import type { PropType } from 'vue';
-import { computed } from 'vue';
-// import { useRoute } from 'vue-router';
+import { useRoute } from 'vue-router';
 import type { PlaylistItem } from '@/types/musicPlayer';
-
 import { audioPlayer, currentSong, isPlaying, musicSize } from '@/store/audioPlayer';
 
 import DropdownMenu from '@/Layout/Desktop/components/Menus/DropdownMenu.vue';
@@ -18,7 +16,6 @@ import PlayerIcon from '@/components/Images/icons/PlayerIcon.vue';
 import { musicSocketConnection } from '@/store/musicSocket';
 import { user } from '@/store/user';
 import MoooomIcon from '@/components/Images/icons/MoooomIcon.vue';
-import { useRoute } from 'vue-router';
 
 const props = defineProps({
 	data: {
@@ -33,11 +30,17 @@ const props = defineProps({
 		type: Array as PropType<PlaylistItem[] | undefined>,
 		required: true,
 	},
+	isAlbumRoute: {
+		type: Boolean,
+		default: false,
+	},
+	isFavoritesRoute: {
+		type: Boolean,
+		default: false,
+	},
 });
 
 const route = useRoute();
-const isAlbumRoute = computed(() => route.path.startsWith('/music/album'));
-const isFavoritesRoute = computed(() => route.path.startsWith('/music/playlists'));
 
 function handleClick() {
 	if (!user.value.features?.nomercyConnect) {
@@ -47,8 +50,8 @@ function handleClick() {
 
 	musicSocketConnection.value?.invoke(
 		'StartPlaybackCommand',
-		isAlbumRoute.value ? 'album' : 'artist',
-		isAlbumRoute.value
+		props.isAlbumRoute ? 'album' : 'artist',
+		props.isAlbumRoute
 			? props.data?.album_track.at(0)?.id
 			: props.data?.artist_track.at(0)?.id,
 		props.data.id,
@@ -59,11 +62,11 @@ function handleClick() {
 <template>
 	<button
 		:data-track-id="data?.id"
-		class="grid justify-start items-center self-stretch pr-3 sm:px-3 rounded-lg hover:bg-surface-6/8 group/track text-sm font-medium py-2 z-0 group/track home-grid gap-2"
+		class="grid w-full justify-start items-center self-stretch pr-3 sm:px-3 rounded-lg hover:bg-surface-6/8 group/track text-sm font-medium py-2 z-0 group/track home-grid gap-2"
 		data-target="track"
 		tabindex="0"
 		@click="handleClick()"
-		@contextmenu="onTrackRowRightClick($event, $route, data)"
+		@contextmenu="onTrackRowRightClick($event, route, data)"
 	>
 		<span class="flex w-10 justify-center text-center min-w-10">
 			<span

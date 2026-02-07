@@ -15,6 +15,7 @@ import DropdownMenu from '@/Layout/Desktop/components/Menus/DropdownMenu.vue';
 import LogModal from '@/views/Dashboard/Advanced/Logs/components/LogModal.vue';
 import LogTypeSelector from '@/views/Dashboard/Advanced/Logs/components/LogTypeSelector.vue';
 import MoooomIcon from '@/components/Images/icons/MoooomIcon.vue';
+import { userTime } from '@/lib/dateTime';
 
 const selectedTypes = ref<LogType[]>([]);
 const selectedTypeNames = ref<string[]>([]);
@@ -248,7 +249,7 @@ function handleLevel(value: string) {
 					<tbody
 						class="overflow-auto divide-y divide-surface-12/5 max-h-available flex-1"
 					>
-						<template v-for="log in logs ?? []">
+						<template v-for="log in logs ?? []" :key="log.message">
 							<tr
 								class="flex h-12 w-full flex-1 justify-center gap-4 odd:bg-white/[0.04]"
 							>

@@ -122,8 +122,8 @@ export async function launchAndroidApp(path: string = '/') {
 export async function checkAppInstalled(): Promise<boolean> {
 	try {
 		if ('getInstalledRelatedApps' in navigator) {
-			const relatedApps = await (navigator as any).getInstalledRelatedApps();
-			return relatedApps.some((app: any) => app.id === 'tv.nomercy.app');
+			const relatedApps = await (navigator as unknown as { getInstalledRelatedApps: () => Promise<{ id: string }[]> }).getInstalledRelatedApps();
+			return relatedApps.some((app) => app.id === 'tv.nomercy.app');
 		}
 	}
 	catch (error) {

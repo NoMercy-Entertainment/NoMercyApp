@@ -1,4 +1,4 @@
-import type { ColorPalettes } from '../shared';
+import type { ColorPalettes, PaletteColors } from '../shared';
 import type { InfoCredit } from '@/types/server';
 import type { Item } from '@nomercy-entertainment/nomercy-music-player/types';
 import type { Rating } from '@/types/api/base/collection';
@@ -88,7 +88,7 @@ export interface WatchProvider {
 }
 
 export interface SeasonColorPalette {
-	poster: ColorPaletteClass;
+	poster: PaletteColors;
 }
 
 export interface Episode {
@@ -106,7 +106,7 @@ export interface Episode {
 }
 
 export interface EpisodeColorPalette {
-	still: ColorPaletteClass;
+	still: PaletteColors;
 }
 
 export interface MediaItem {

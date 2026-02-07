@@ -9,7 +9,7 @@ import serverClient from '@/lib/clients/serverClient';
 
 import audioPlayer, { currentSong } from '@/store/audioPlayer';
 import { useToast } from 'primevue/usetoast';
-import { translate } from '@/lib/stringArray.ts';
+import { translate } from '@/lib/utils/string';
 
 import MusicButton from './MusicButton.vue';
 import MoooomIcon from '@/components/Images/icons/MoooomIcon.vue';

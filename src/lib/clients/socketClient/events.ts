@@ -4,7 +4,7 @@ import { queryClient } from '@/config/tanstack-query';
 import { useVideoSocket } from '@/store/videoSocket';
 import { Device } from '@capacitor/device';
 import i18next from 'i18next';
-import { translate } from '@/lib/stringArray.ts';
+import { translate } from '@/lib/utils/string';
 
 export function connect(socket?: HubConnection) {
 	if (!socket)
@@ -68,7 +68,15 @@ export function onDisconnect(socket: HubConnection | null, endpoint: string) {
 	}));
 }
 
-function onNotify(data: any) {
+interface NotifyData {
+	type: string;
+	title: string;
+	args: Array<string | number>;
+	body: string;
+	duration: number;
+}
+
+function onNotify(data: NotifyData) {
 	document.dispatchEvent(new CustomEvent('toast', {
 		detail: {
 			severity: data.type,
@@ -79,11 +87,11 @@ function onNotify(data: any) {
 	}));
 }
 
-function onUpdateContent(data: any) {
+function onUpdateContent(data: { queryKey: string[] }) {
 	queryClient.invalidateQueries(data).then();
 }
 
-async function onCommand(data: any) {
+async function onCommand(data: { deviceId: string } & string) {
 	const deviceId = await Device.getId().then(device => device.identifier);
 	if (data.deviceId === deviceId)
 		return;

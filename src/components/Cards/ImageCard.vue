@@ -3,7 +3,7 @@ import type { PropType } from 'vue';
 
 import type { MediaItem } from '@/types/api/base/info';
 
-import { scrollIntoView } from '@/lib/utils';
+import { scrollIntoView } from '@/lib/utils/dom';
 import { pickPaletteColor } from '@/lib/colorHelper';
 
 import TMDBImage from '@/components/Images/TMDBImage.vue';

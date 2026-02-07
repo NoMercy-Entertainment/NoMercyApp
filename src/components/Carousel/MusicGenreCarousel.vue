@@ -5,6 +5,7 @@ import { SwiperSlide } from 'swiper/vue';
 import type { HomeDataItem, MusicHomeResponseItem } from '@/types/api/music';
 
 import Carousel from '@/components/Carousel/Carousel.vue';
+import NMMusicCard from '@/components/NMMusicCard.vue';
 
 defineProps({
 	data: {
@@ -50,9 +51,9 @@ function handleClick(item: HomeDataItem) {
 		:title="data.title"
 	>
 		<SwiperSlide
-			v-for="item in data.items"
+			v-for="(item, itemIndex) in data.items"
 			:key="item.id"
-			:virtual-index="index"
+			:virtual-index="itemIndex"
 			class="flex py-1"
 		>
 			<NMMusicCard

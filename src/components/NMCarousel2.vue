@@ -5,11 +5,12 @@ import { ref } from 'vue';
 import { useRoute } from 'vue-router';
 
 import type { Component } from '@/types/config';
+import { nmComponentMap } from '@/components/nmComponentMap';
 
 import { isMobile } from '@/config/global.ts';
 import { scrollContainerElement } from '@/store/ui.ts';
 import { showBackdrops, useOverlayCarouselButtons } from '@/store/preferences.ts';
-import { scrollCenter } from '@/lib/utils.ts';
+import { scrollCenter } from '@/lib/utils/dom';
 import MoooomIcon from '@/components/Images/icons/MoooomIcon.vue';
 
 const props = defineProps({
@@ -169,7 +170,7 @@ function scrollToCenter() {
 				<template v-for="item in items" :key="item.id">
 					<figure class="slide">
 						<component
-							:is="item.component"
+							:is="nmComponentMap[item.component]"
 							tabindex="1"
 							v-bind="item.props"
 						/>

@@ -6,7 +6,7 @@ import type { LibrariesResponse } from '@/types/api/base/library';
 
 import router from '@/router';
 import useServerClient from '@/lib/clients/useServerClient';
-import { setLibraries } from '@/store/Libraries';
+import { setLibraries } from '@/store/libraries';
 
 import type { Playlist } from '@/types/api/music/playlists';
 import { setMusicPlaylists } from '@/store/musicPlaylists';

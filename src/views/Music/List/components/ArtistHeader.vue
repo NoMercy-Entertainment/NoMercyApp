@@ -7,7 +7,7 @@ import { isPlatform } from '@ionic/vue';
 import type { DisplayList } from '@/types/api/music/musicPlayer';
 
 import { convertToHumanReact, convertToSeconds } from '@/lib/dateTime';
-import { breakTitle } from '@/lib/stringArray';
+import { breakTitle } from '@/lib/utils/string';
 import audioPlayer from '@/store/audioPlayer';
 
 import FavoriteImage from '@/components/Images/FavoriteImage.vue';

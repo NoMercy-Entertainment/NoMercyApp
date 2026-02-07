@@ -56,8 +56,13 @@ const styles = computed(() =>
 		: {},
 );
 
+let removeAfterEach: (() => void) | null = null;
+
 function handleClick() {
-	router.afterEach(() => {
+	if (removeAfterEach) removeAfterEach();
+	removeAfterEach = router.afterEach(() => {
+		removeAfterEach?.();
+		removeAfterEach = null;
 		setTimeout(() => {
 			document.querySelector<HTMLButtonElement>('main a, main button')?.focus();
 		}, 150);

@@ -10,7 +10,7 @@ import TMDBImage from '@/components/Images/TMDBImage.vue';
 import HomeCardActions from '@/components/Cards/HomeCardActions.vue';
 import type { LibraryResponse } from '@/types/api/base/library';
 import { setColorPalette } from '@/store/ui';
-import { breakLogoTitle } from '@/lib/stringArray.ts';
+import { breakLogoTitle } from '@/lib/utils/string';
 
 const props = defineProps({
 	homeItem: {
@@ -25,6 +25,10 @@ const endTime = ref<string | 0 | null | undefined>(null);
 const ringPosterColor = computed(() => pickPaletteColor(props.homeItem?.color_palette?.poster));
 
 const ringBackdropColor = computed(() => pickPaletteColor(props.homeItem?.color_palette?.backdrop));
+
+function toggleWatched() {
+	// if (!homeItem?.value) return;
+}
 
 watch(props, (value) => {
 	if (!value.homeItem)
@@ -43,10 +47,6 @@ watch(props, (value) => {
 				minute: '2-digit',
 			});
 });
-
-function toggleWatched() {
-	// if (!homeItem?.value) return;
-}
 </script>
 
 <template>

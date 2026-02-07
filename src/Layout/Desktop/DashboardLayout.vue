@@ -17,6 +17,7 @@ import ScrollContainer from '@/Layout/Desktop/components/ScrollContainer.vue';
 import RipperOverlay from '@/Layout/Desktop/components/Overlays/RipperOverlay.vue';
 import { ripperMenuOpen } from '@/store/ripper';
 import { currentServer } from '@/store/currentServer';
+import { musicVisibility } from '@/store/audioPlayer';
 
 const props = defineProps({
 	title: {
@@ -117,13 +118,6 @@ const error = computed(() => {
 	};
 });
 
-onMounted(() => {
-	setColorPalette(null);
-	setBackground(null);
-});
-
-useMounted(startDashboardSocket, stopDashboardSocket, 20);
-
 const showError = computed(() => {
 	return (
 		(accessError.value?.code
@@ -131,6 +125,13 @@ const showError = computed(() => {
 		&& !props.allowAnyone
 	);
 });
+
+onMounted(() => {
+	setColorPalette(null);
+	setBackground(null);
+});
+
+useMounted(startDashboardSocket, stopDashboardSocket, 20);
 
 watch(showError, (value) => {
 	if (value && addModalOpen.value !== undefined) {
@@ -168,9 +169,10 @@ watch(dataUpdatedAt, (value) => {
 
 		<div
 			v-else
+			:data-music="musicVisibility"
 			:class="{
-				' min-h-[92vh] sm:min-h-[92.75vh]': !$slots.cta,
-				' min-h-[92vh] sm:min-h-[90.1vh]': !!$slots.cta,
+				'min-h-[92vh] music-showing:min-h-[85vh] sm:min-h-[85.75vh] music-showing:sm:min-h-[92.75vh] children-not-first:mt-20': !$slots.cta,
+				'min-h-[92vh] music-showing:min-h-[92vh] sm:min-h-[82.1vh] music-showing:sm:min-h-[82.1vh] children-not-first:mt-20': !!$slots.cta,
 			}"
 			class="flex flex-col relative z-0 flex-1 h-available overflow-clip items-start justify-start self-stretch w-available text-surface-12"
 		>
@@ -252,7 +254,7 @@ watch(dataUpdatedAt, (value) => {
 
 			<div
 				v-if="!error && $slots.actions"
-				class="sticky bottom-0 z-0 flex w-full flex-wrap items-center gap-4 border-t px-4 py-4 border-surface-8/11 empty:hidden sm:h-16 xl:px-6"
+				class="mt-auto bottom-0 z-0 flex w-full flex-wrap items-center gap-4 border-t px-4 py-4 border-surface-8/11 empty:hidden sm:h-16 xl:px-6"
 			>
 				<div class="absolute inset-0 -z-10 h-full w-full" />
 				<slot name="actions" />

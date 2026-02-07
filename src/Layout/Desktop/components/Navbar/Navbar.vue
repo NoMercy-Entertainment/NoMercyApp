@@ -12,7 +12,7 @@ import AppLogo from '@/components/Images/icons/AppLogo.vue';
 import NavbarButton from './NavbarButton.vue';
 import { hasMusicLibrary, isHomeRoute, isLibraryRoute, isMusicRoute, searchUrl } from '@/store/routeState';
 import { currentServer } from '@/store/currentServer';
-import libraries from '@/store/Libraries.ts';
+import libraries from '@/store/libraries';
 
 import MessagesMenu from '@/Layout/Desktop/components/Menus/MessagesMenu.vue';
 import MoooomIcon from '@/components/Images/icons/MoooomIcon.vue';

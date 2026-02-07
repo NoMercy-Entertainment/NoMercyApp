@@ -3,9 +3,6 @@ import { computed, ref, watch } from 'vue';
 import type { LogoResponse } from '@/types/server';
 import { isPlatform } from '@ionic/vue';
 
-import { NavigationBar } from '@hugotomazi/capacitor-navigation-bar';
-import { EdgeToEdge } from '@capawesome/capacitor-android-edge-to-edge-support';
-import { StatusBar } from '@capacitor/status-bar';
 
 const sim = ref<boolean>(false);
 export const showImageModal = computed(() => sim.value);
@@ -39,7 +36,7 @@ export function setDisableScreensaver(disable: boolean) {
 const imd = ref<LogoResponse>();
 export const imageModalData = computed(() => imd.value);
 
-export function setImageModalData(data: any) {
+export function setImageModalData(data: LogoResponse | undefined): void {
 	imd.value = data;
 }
 
@@ -57,10 +54,15 @@ export function setNewIndex(index: number) {
 	ni.value = index;
 }
 
-const tmp = ref();
+interface TempData {
+	type: string;
+	index: number;
+}
+
+const tmp = ref<TempData | null>(null);
 export const temp = computed(() => tmp.value);
 
-export function setTemp(temp: any) {
+export function setTemp(temp: TempData | null): void {
 	tmp.value = temp;
 }
 
@@ -68,6 +70,11 @@ export const imageModal = ref<VNodeRef>();
 watch([sim, sss], async ([sim, sss]) => {
 	if ((sim || sss) && !dss.value) {
 		if (isPlatform('capacitor')) {
+			const [{ NavigationBar }, { EdgeToEdge }, { StatusBar }] = await Promise.all([
+				import('@hugotomazi/capacitor-navigation-bar'),
+				import('@capawesome/capacitor-android-edge-to-edge-support'),
+				import('@capacitor/status-bar'),
+			]);
 			await Promise.all([
 				NavigationBar.hide(),
 				EdgeToEdge.disable(),
@@ -79,6 +86,11 @@ watch([sim, sss], async ([sim, sss]) => {
 	}
 	else {
 		if (isPlatform('capacitor')) {
+			const [{ StatusBar }, { NavigationBar }, { EdgeToEdge }] = await Promise.all([
+				import('@capacitor/status-bar'),
+				import('@hugotomazi/capacitor-navigation-bar'),
+				import('@capawesome/capacitor-android-edge-to-edge-support'),
+			]);
 			await Promise.all([
 				StatusBar.show(),
 				NavigationBar.show(),

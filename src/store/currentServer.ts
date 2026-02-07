@@ -31,23 +31,29 @@ watch(isOnline, (value) => {
 				serverBaseUrl: url.replace(/\/$/, ''),
 				serverApiUrl: `${url.replace(/\/$/, '')}/api/v1`,
 			};
+		}).catch((err) => {
+			console.error('Failed to ping server:', err);
 		});
 	}
 });
 
 async function pingServer(server: Server): Promise<string> {
-	return new Promise(async (resolve) => {
-		const internalUrl = `https://${server.internal_domain}:${server.internal_port}`;
-		const externalUrl = `https://${server.external_domain}:${server.external_port}`;
-		await client({ baseUrl: internalUrl })
-			.get('/api/v1/dashboard/server')
-			.then(() => {
-				resolve(internalUrl);
-			});
-		await client({ baseUrl: externalUrl })
-			.get('/api/v1/dashboard/server')
-			.then(() => {
-				resolve(externalUrl);
-			});
-	});
+	const internalUrl = `https://${server.internal_domain}:${server.internal_port}`;
+	const externalUrl = `https://${server.external_domain}:${server.external_port}`;
+
+	try {
+		await client({ baseUrl: internalUrl }).get('/api/v1/dashboard/server');
+		return internalUrl;
+	}
+	catch {
+		// Internal URL failed, try external
+	}
+
+	try {
+		await client({ baseUrl: externalUrl }).get('/api/v1/dashboard/server');
+		return externalUrl;
+	}
+	catch {
+		throw new Error(`Both internal (${internalUrl}) and external (${externalUrl}) URLs unreachable`);
+	}
 }

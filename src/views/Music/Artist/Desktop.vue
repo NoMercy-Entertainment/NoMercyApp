@@ -7,7 +7,8 @@ import type { ArtistResponse } from '@/types/api/music/artist';
 import type { PlaylistItem, SortOrder, SortType } from '@/types/musicPlayer';
 
 import useServerClient from '@/lib/clients/useServerClient';
-import { setTitle, sortByType } from '@/lib/stringArray';
+import { setTitle } from '@/lib/utils/string';
+import { sortByType } from '@/lib/utils/array';
 import { setBackground, setColorPalette, setSortOrder, sortOrder, sortType } from '@/store/ui';
 
 import ScrollContainer from '@/Layout/Desktop/components/ScrollContainer.vue';

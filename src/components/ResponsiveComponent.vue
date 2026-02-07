@@ -1,12 +1,13 @@
 <script setup lang="ts">
+import type { Component } from 'vue';
 import { computed, defineAsyncComponent } from 'vue';
 import { useResponsiveComponent } from '@/composables/useResponsiveComponent';
 
 interface Props {
 	basePath: string;
-	fallback?: any;
-	loading?: any;
-	error?: any;
+	fallback?: Component;
+	loading?: Component;
+	error?: Component;
 }
 
 const props = defineProps<Props>();

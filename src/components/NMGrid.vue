@@ -7,6 +7,7 @@ import type { Component } from '@/lib/routerHelper';
 import { showBackdrops } from '@/store/preferences';
 import { currentSong } from '@/store/audioPlayer';
 import router from '@/router';
+import { nmComponentMap } from '@/components/nmComponentMap';
 
 const props = defineProps({
 	items: {
@@ -39,7 +40,6 @@ const useBackdropStyle = computed(() => {
 		:class="{
 			'pb-0': isNative && !currentSong,
 			'pb-40': isNative && currentSong,
-			'children:pb-4 sm:children:pb-3': !isNative && currentSong,
 		}"
 		class="border-0 p-4 w-available scrollbar-none"
 	>
@@ -49,7 +49,7 @@ const useBackdropStyle = computed(() => {
 			}`"
 		>
 			<component
-				:is="render.component"
+				:is="nmComponentMap[render.component]"
 				v-for="(render, index) in items ?? []"
 				:key="render.id"
 				:index="index"

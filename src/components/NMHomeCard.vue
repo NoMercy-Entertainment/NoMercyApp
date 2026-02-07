@@ -13,7 +13,7 @@ import HomeCardActions from '@/components/Cards/HomeCardActions.vue';
 import { scrollContainerElement, setBackground, setColorPalette, title } from '@/store/ui';
 import { onIonViewWillEnter, onIonViewWillLeave } from '@ionic/vue';
 import CardShadow from '@/components/Cards/CardShadow.vue';
-import { breakLogoTitle, breakTitle2 } from '@/lib/stringArray.ts';
+import { breakLogoTitle, breakTitle2 } from '@/lib/utils/string';
 
 const props = defineProps({
 	data: {
@@ -83,7 +83,7 @@ function scrollToTop() {
 		v-if="!isMobile"
 		class="card scheme-dark relative m-4 pb-0 mb-0 flex flex-col justify-end gap-4 rounded-md bg-black/50 p-4 min-h-[65vh] overflow-clip text-surface-12 before:content-[''] before:pointer-events-none before:absolute before:inset-0 before:z-0 before:mt-auto before:h-4/5 before:bg-gradient-to-t before:from-black before:via-black/60 before:bottom-0"
 		data-scroll
-		style="contain: layout style paint; will-change: transform;"
+		style="contain: layout style paint;"
 	>
 		<TMDBImage
 			v-if="data"

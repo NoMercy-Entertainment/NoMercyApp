@@ -8,7 +8,7 @@ import { isDarkMode } from '@/config/global';
 import { currentServer } from '@/store/currentServer';
 import { useAutoThemeColors } from '@/store/preferences';
 import AppLogoSquare from '@/components/Images/icons/AppLogoSquare.vue';
-import { getCommonSize } from '@/lib/stringArray.ts';
+import { getCommonSize } from '@/lib/utils/format';
 
 const props = defineProps({
 	path: {
@@ -66,17 +66,24 @@ const props = defineProps({
 const opacity = ref(0);
 const error = ref(false);
 
+const devicePixelRatio = typeof window !== 'undefined' ? window.devicePixelRatio : 1;
+
+const optimizedSize = computed(() => {
+	if (!props.size)
+		return null;
+	const multiplier = devicePixelRatio > 1.5 ? 2 : 1;
+	return props.size * multiplier;
+});
+
 const serverImageUrl = computed(() => {
 	if (!props.path || !currentServer.value)
 		return;
-	// return `${currentServer.value?.serverBaseUrl}/images/original${props.path}`;
-	return `https://app.nomercy.tv/tmdb-images${props.path}?width=${props.size ? props.size * 2 : null}`;
+	return `https://app.nomercy.tv/tmdb-images${props.path}?width=${optimizedSize.value}&format=webp`;
 });
 
 const tmdbImageUrl = computed(() => {
 	if (!props.path)
 		return;
-	// return `${tmdbImageBaseUrl}/original${props.path}`;
 	return `https://media.themoviedb.org/t/p/${getCommonSize(props?.size ?? 'original')}${props.path}`;
 });
 const luminosityValue = computed(() => {
@@ -190,7 +197,7 @@ function onError(e: Event) {
 			'aspect-backdrop': aspect === 'backdrop',
 		}"
 		:style="style"
-		class="transform-gpu pointer-events-none bottom-0 mx-auto flex select-none place-self-start max-w-available w-available h-available"
+		class="pointer-events-none bottom-0 mx-auto flex select-none place-self-start max-w-available w-available h-available"
 	>
 		<div
 			v-if="opacity === 0 && type === 'image'"
@@ -201,13 +208,7 @@ function onError(e: Event) {
 			:style="`opacity: ${opacity}; float: ${type === 'logo' ? 'right' : ''}`"
 			class="pointer-events-none absolute inset-0 h-full flex select-none flex-col items-end justify-end tv:justify-start self-end transition-all duration-500"
 		>
-			<source :srcset="`${serverImageUrl} 1x`">
-			<!--      <source -->
-			<!--          :srcset="`${serverImageUrl}?width=${size ? (size * 2) : null}&type=webp&aspect_ratio=${aspectRatio} 1x`" -->
-			<!--          type="image/webp" -->
-			<!--      /> -->
-			<!--      <source :srcset="`${serverImageUrl}?width=${size ? (size * 2) : null}&type=png&aspect_ratio=${aspectRatio} 1x`" -->
-			<!--              type="image/png"/> -->
+			<source :srcset="serverImageUrl" type="image/webp">
 			<img
 				:alt="`tmdb image for ${title ?? 'image'}`"
 				:class="{

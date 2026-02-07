@@ -16,7 +16,7 @@ import { useRoute } from 'vue-router';
 
 interface InfiniteServerClientProps {
 	path?: string;
-	data?: any;
+	data?: Record<string, { value: unknown }>;
 	cacheKey?: string;
 	keepForever?: boolean;
 	limit?: number;
@@ -61,7 +61,7 @@ type Return<T> = UseInfiniteQueryReturnType<
 
 function useInfiniteServerClient<T>(options?: {
 	path?: string;
-	data?: any;
+	data?: Record<string, { value: unknown }>;
 	cacheKey?: string;
 	keepForever?: boolean;
 	enabled?: boolean;
@@ -87,11 +87,11 @@ function useInfiniteServerClient<T>(options?: {
 		refetchOnWindowFocus: false,
 		refetchOnReconnect: true,
 		initialPageParam: 0,
-		getNextPageParam: (lastPage: any) => {
+		getNextPageParam: (lastPage: T & { has_more?: boolean; next_page?: number }) => {
 			return lastPage.has_more ? lastPage.next_page : undefined;
 		},
-		getPreviousPageParam: (lastPage: any) => {
-			return lastPage.has_more ? lastPage.next_page - 2 : undefined;
+		getPreviousPageParam: (lastPage: T & { has_more?: boolean; next_page?: number }) => {
+			return lastPage.has_more ? (lastPage.next_page ?? 2) - 2 : undefined;
 		},
 		queryFn: ({ pageParam = 0, signal }) =>
 			new Promise((resolve, reject) =>
@@ -105,7 +105,7 @@ function useInfiniteServerClient<T>(options?: {
 						},
 					})
 					.then((response) => {
-						resolve(response.data);
+						resolve(response.data as T & { has_more?: boolean; next_page?: number });
 					})
 					.catch(reject),
 			),

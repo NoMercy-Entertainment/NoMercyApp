@@ -7,7 +7,7 @@ import type { ActivityLog } from '@/types/server';
 import type { Device } from '@/types/api/dashboard/server';
 
 import { timeAgoShort } from '@/lib/dateTime';
-import { censorPublicIpAddresses } from '@/lib/stringArray';
+import { censorPublicIpAddresses } from '@/lib/utils/string';
 
 const props = defineProps({
 	activity: {

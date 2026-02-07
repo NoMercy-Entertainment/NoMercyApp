@@ -8,7 +8,7 @@ import type { LibrariesResponse } from '@/types/api/base/library';
 
 import serverClient from '@/lib/clients/serverClient';
 import useServerClient from '@/lib/clients/useServerClient';
-import { checkboxValue } from '@/lib/stringArray';
+import { checkboxValue } from '@/lib/utils/validation';
 import { currentServer } from '@/store/currentServer';
 
 import Button from '@/components/Button.vue';

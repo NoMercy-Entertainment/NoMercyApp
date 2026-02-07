@@ -1,38 +1,22 @@
+import { setupChunkErrorRecovery } from '@/lib/chunkErrorRecovery';
+import { runCacheMigration } from '@/lib/cacheMigration';
 import { createApp, watch } from 'vue';
 import { isPlatform } from '@ionic/vue';
-
-/* Core CSS required for Ionic components to work properly */
-import '@ionic/vue/css/core.css';
-
-/* Basic CSS for apps built with Ionic */
-import '@ionic/vue/css/normalize.css';
-import '@ionic/vue/css/structure.css';
-import '@ionic/vue/css/typography.css';
-
-/* Optional CSS utils that can be commented out */
-import '@ionic/vue/css/padding.css';
-import '@ionic/vue/css/float-elements.css';
-import '@ionic/vue/css/text-alignment.css';
-import '@ionic/vue/css/text-transformation.css';
-import '@ionic/vue/css/flex-utils.css';
-import '@ionic/vue/css/display.css';
-
-/**
- * Ionic Dark Mode
- * -----------------------------------------------------
- * For more info, please see:
- * https://ionicframework.com/docs/theming/dark-mode
- */
-import '@ionic/vue/css/palettes/dark.system.css';
-
-/* Theme variables */
-import './theme/variables.css';
-import './theme/app.scss';
-
-import 'swiper/css';
-import 'swiper/element/css/keyboard';
-
 import AppComponent from './App.vue';
+
+// Set up chunk error recovery immediately (before any dynamic imports can fail)
+setupChunkErrorRecovery();
+
+// Register controllerchange listener early so any SKIP_WAITING triggers a reload
+if ('serviceWorker' in navigator) {
+	let refreshing = false;
+	navigator.serviceWorker.addEventListener('controllerchange', () => {
+		if (!refreshing) {
+			refreshing = true;
+			window.location.reload();
+		}
+	});
+}
 
 // Lazy imports - these will be loaded when needed
 const lazyImports = {
@@ -43,7 +27,6 @@ const lazyImports = {
 	user: () => import('@/store/user'),
 	routeState: () => import('@/store/routeState'),
 	preloadService: () => import('@/services/PreloadService'),
-	Sentry: () => import('@sentry/vue'),
 };
 
 const app = createApp(AppComponent);
@@ -86,22 +69,31 @@ async function initializeWebApp() {
 		watch(kc.decodedToken, async () => {
 			setUserFromWebKeycloak(kc);
 			await setupApplication();
+
+			// After Keycloak redirect completes, apply any pending update
+			const { checkAndApplyPendingUpdate } = await import('@/lib/auth/updateState');
+			checkAndApplyPendingUpdate();
 		});
 	}
 }
 
-// Start the application
-initializeWebApp().then();
-
-// Initialize Sentry in production (deferred, non-blocking)
-if (import.meta.env.PROD && import.meta.env.VITE_SENTRY_DSN) {
-	requestIdleCallback(async () => {
-		const Sentry = await lazyImports.Sentry();
-		Sentry.init({
-			app,
-			dsn: import.meta.env.VITE_SENTRY_DSN,
-			sendDefaultPii: false,
-			tracesSampleRate: 0.1,
-		});
-	});
-}
+// Run one-time cache migration for existing users, then start the application
+runCacheMigration().then(async () => {
+	// Run initial version check early and BLOCK app init if outdated
+	// This prevents loading stale chunks that will 404
+	if (!import.meta.env.DEV) {
+		try {
+			const { checkForUpdates } = await import('@/lib/versionCheck');
+			const isOutdated = await checkForUpdates();
+			if (isOutdated) {
+				// checkForUpdates already triggered forceUpdate/notification
+				// Don't proceed with loading stale chunks
+				return;
+			}
+		}
+		catch {
+			// Version check failed (network error, etc.) — continue with app init
+		}
+	}
+	initializeWebApp();
+});

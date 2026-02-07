@@ -72,7 +72,7 @@ const ringColor = ref(pickPaletteColor(props.data.color_palette?.cover));
 <template>
 	<RouterLink
 		v-if="data?.link"
-		:style="ringColor ? `--ring-color: ${ringColor}; contain: layout style paint; will-change: transform;` : 'contain: layout style paint; will-change: transform;'"
+		:style="ringColor ? `--ring-color: ${ringColor}; contain: layout style paint;` : 'contain: layout style paint;'"
 		:to="data.link"
 		class="relative flex flex-grow flex-col items-center justify-end transition-transform duration-100 group/musicCard active:scale-[98%] w-full text-surface-12"
 	>

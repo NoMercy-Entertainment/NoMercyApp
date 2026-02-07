@@ -11,6 +11,34 @@ import '@/lib/scrollHandlers';
 import '@/store/deviceInfo';
 import '@/store/screensaver';
 
+/* Core CSS required for Ionic components to work properly */
+import '@ionic/vue/css/core.css';
+
+/* Basic CSS for apps built with Ionic */
+import '@ionic/vue/css/normalize.css';
+import '@ionic/vue/css/structure.css';
+import '@ionic/vue/css/typography.css';
+
+/* Optional CSS utils that can be commented out */
+import '@ionic/vue/css/padding.css';
+import '@ionic/vue/css/float-elements.css';
+import '@ionic/vue/css/text-alignment.css';
+import '@ionic/vue/css/text-transformation.css';
+import '@ionic/vue/css/flex-utils.css';
+import '@ionic/vue/css/display.css';
+
+/**
+ * Ionic Dark Mode
+ * -----------------------------------------------------
+ * For more info, please see:
+ * https://ionicframework.com/docs/theming/dark-mode
+ */
+import '@ionic/vue/css/palettes/dark.system.css';
+
+/* Theme variables */
+import './theme/variables.css';
+import './theme/app.scss';
+
 import {
 	Card,
 	ConfirmationService,
@@ -30,53 +58,39 @@ import PrimeVue from 'primevue/config';
 // @ts-ignore
 import KonamiCode from 'vue3-konami-code';
 
-import { suffix } from '@/config/config.ts';
 import i18next from '@/config/i18next';
 import { queryClient } from '@/config/tanstack-query';
 import konamiEnabled from '@/store/konami';
 import router from './router';
-import { isMobile } from '@/config/global.ts';
 
 import Button from '@/components/Button.vue';
 import Modal from '@/components/Modal.vue';
-import NMCard from '@/components/NMCard.vue';
-import NMCarousel from '@/components/NMCarousel.vue';
-import NMCarousel2 from '@/components/NMCarousel2.vue';
-
-import NMContainer from '@/components/NMContainer.vue';
-import NMGenreCard from '@/components/NMGenreCard.vue';
-import NMGrid from '@/components/NMGrid.vue';
-import HomeCard from '@/components/NMHomeCard.vue';
-import NMList from '@/components/NMList.vue';
-import NMSeasonCard from '@/components/NMSeasonCard.vue';
-import NMSeasonTitle from '@/components/NMSeasonTitle.vue';
-
-import NMMusicHomeCard from '@/components/NMMusicHomeCard.vue';
-import NMServerComponent from '@/components/NMServerComponent.vue';
-import NMTopResultCard from '@/components/NMTopResultCard.vue';
-import NMTrackRow from '@/components/NMTrackRow.vue';
-import NMMusicCard from '@/components/NMMusicCard.vue';
-import { Swiper } from 'swiper';
-import { SwiperSlide } from 'swiper/vue';
-import { register as registerSwiperElements } from 'swiper/element/bundle';
-
-// Register Swiper custom elements globally (once)
-registerSwiperElements();
 
 export async function setupApp(app: AppContext['app']) {
-	// Defer service worker setup - don't block app initialization
-	if ('serviceWorker' in navigator && !import.meta.env.DEV && suffix !== '-dev') {
-		// Non-blocking: set up SW update detection after app renders
+	// Defer service worker setup and version checks - don't block app initialization
+	if (!import.meta.env.DEV) {
 		queueMicrotask(async () => {
+			// Start periodic version checks against /version.json
 			try {
-				await navigator.serviceWorker.ready;
-				const { setupServiceWorkerUpdates } = await import(
-					'@/lib/serviceWorkerUpdates',
-				);
-				setupServiceWorkerUpdates();
+				const { startVersionChecks } = await import('@/lib/versionCheck');
+				startVersionChecks();
 			}
 			catch (error) {
-				console.warn('Service worker setup failed:', error);
+				console.warn('Version check setup failed:', error);
+			}
+
+			// Set up SW update detection after app renders
+			if ('serviceWorker' in navigator) {
+				try {
+					await navigator.serviceWorker.ready;
+					const { setupServiceWorkerUpdates } = await import(
+						'@/lib/serviceWorkerUpdates',
+					);
+					setupServiceWorkerUpdates();
+				}
+				catch (error) {
+					console.warn('Service worker setup failed:', error);
+				}
 			}
 		});
 	}
@@ -118,25 +132,7 @@ export async function setupApp(app: AppContext['app']) {
 
 	app.use(MasonryWall);
 
-	const supportsCarousel = CSS.supports('scroll-marker-group', 'after') && isMobile.value && false;
-
 	app.component('Modal', Modal);
-	app.component('NMCard', NMCard);
-	app.component('NMCarousel', supportsCarousel ? NMCarousel2 : NMCarousel);
-	app.component('NMCarousel2', supportsCarousel ? NMCarousel2 : NMCarousel);
-	app.component('NMContainer', NMContainer);
-	app.component('NMGenreCard', NMGenreCard);
-	app.component('NMGrid', NMGrid);
-	app.component('NMHomeCard', HomeCard);
-	app.component('NMList', NMList);
-	app.component('NMMusicCard', NMMusicCard);
-	app.component('NMMusicHomeCard', NMMusicHomeCard);
-	app.component('NMServerComponent', NMServerComponent);
-	app.component('NMTopResultCard', NMTopResultCard);
-	app.component('NMTrackRow', NMTrackRow);
-	app.component('NMSeasonCard', NMSeasonCard);
-	app.component('NMSeasonTitle', NMSeasonTitle);
-
 	app.component('Button', Button);
 	app.component('Card', Card);
 	app.component('Dialog', Dialog);
@@ -147,9 +143,6 @@ export async function setupApp(app: AppContext['app']) {
 	app.component('Select', Select);
 	app.component('Toast', Toast);
 	app.component('Textarea', Textarea);
-	app.component('Swiper', Swiper);
-	app.component('SwiperSlide', SwiperSlide);
-
 	app.directive('ripple', Ripple);
 	app.directive('tooltip', Tooltip);
 

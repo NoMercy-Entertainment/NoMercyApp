@@ -5,6 +5,7 @@ import type { ArtistResponse } from '@/types/api/music/artist';
 
 import TabFrame from './TabFrame.vue';
 import { currentSong } from '@/store/audioPlayer';
+import NMMusicCard from '@/components/NMMusicCard.vue';
 
 defineProps({
 	data: {

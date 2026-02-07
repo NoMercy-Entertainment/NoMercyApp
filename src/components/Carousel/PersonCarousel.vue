@@ -30,7 +30,7 @@ defineProps({
 		type="poster"
 		:disable-auto-aspect="true"
 	>
-		<SwiperSlide v-for="item in data" :key="item.id" class="flex sm:p-1 pl-0">
+		<SwiperSlide v-for="(item, itemIndex) in data" :key="item.id" :virtual-index="itemIndex" class="flex sm:p-1 pl-0">
 			<PersonCard :data="item" class="" />
 		</SwiperSlide>
 	</Carousel>

@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import type { PlaylistItem } from '@/types/musicPlayer';
-import { stopPropagation } from '@/lib/utils';
+import { stopPropagation } from '@/lib/utils/dom';
 import CoverImage from '@/components/MusicPlayer/components/CoverImage.vue';
 
 defineProps<{

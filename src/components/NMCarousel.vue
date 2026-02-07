@@ -2,13 +2,16 @@
 import { computed, onBeforeMount, PropType, ref } from "vue";
 import { Swiper } from "swiper";
 import { Swiper as SwiperComponent, SwiperSlide } from "swiper/vue";
+import { Virtual } from 'swiper/modules';
+import 'swiper/css';
 
 import type { Component } from "@/types/config";
+import { nmComponentMap } from "@/components/nmComponentMap";
 
 import { isMobile } from "@/config/global";
-import { mappedEntries } from "@/lib/stringArray";
+import { mappedEntries } from '@/lib/utils/array';
 import { Breakpoints, breakpoints, swiperConfig } from "@/lib/swiper-config";
-import { scrollCenter } from "@/lib/utils";
+import { scrollCenter } from "@/lib/utils/dom";
 import { scrollContainerElement } from "@/store/ui";
 import { showBackdrops } from "@/store/preferences.ts";
 
@@ -91,8 +94,14 @@ const onSlideChange = (swiper: Swiper) => {
   hasScroll.value = !swiper.isLocked;
 };
 
-const afterInit = (swiper: Swiper) => {
-  swiper.el?.classList.remove("opacity-0");
+const carouselEl = ref<HTMLDivElement>();
+
+const afterInit = () => {
+  requestAnimationFrame(() => {
+    requestAnimationFrame(() => {
+      carouselEl.value?.classList.remove('opacity-0');
+    });
+  });
 };
 
 const reset = () => {
@@ -187,7 +196,8 @@ const scrollToCenter = () => {
       }"
       :data-next-id="`carousel_${next_id}`"
       :data-previous-id="`carousel_${previous_id}`"
-      class="mt-2 sm:mt-6 mb-2 flex w-auto flex-shrink-0 flex-grow-0 flex-col items-start justify-start gap-2 self-stretch text-left"
+      ref="carouselEl"
+      class="mt-2 sm:mt-6 mb-2 flex w-auto flex-shrink-0 flex-grow-0 flex-col items-start justify-start gap-2 self-stretch text-left opacity-0 transition-opacity duration-150"
   >
     <div class="flex w-available flex-1 flex-col gap-2 pb-1">
       <div
@@ -284,6 +294,7 @@ const scrollToCenter = () => {
         <SwiperComponent
             ref="swiper"
             :breakpoints="bp"
+            :modules="[Virtual]"
             :slidesOffsetBefore="offsetBefore"
             data-spatial-container="row"
             v-bind="swiperConfig(backdropCards) as any"
@@ -291,10 +302,10 @@ const scrollToCenter = () => {
             @progress="onProgress"
             @slideChange="onSlideChange"
         >
-          <template v-for="item in items" :key="item?.id">
-            <SwiperSlide v-if="item?.id" class="flex">
+          <template v-for="(item, itemIndex) in items" :key="item?.id">
+            <SwiperSlide v-if="item?.id" :virtual-index="itemIndex" class="flex">
               <component
-                  :is="item.component"
+                  :is="nmComponentMap[item.component]"
                   :key="item.id"
                   v-bind="item.props"
               />

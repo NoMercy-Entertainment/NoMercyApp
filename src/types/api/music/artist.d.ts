@@ -2,6 +2,7 @@ import type { ColorPalettes, PaletteColors } from '../shared';
 import type { Genre } from '@/types/api/base/genre';
 import type { Album } from '@/types/api/music/album';
 import type { PlaylistItem } from '@/types/musicPlayer';
+import type { Count } from '@/types/api/music/index';
 
 export interface ArtistResponse {
 	id: string;
@@ -43,11 +44,6 @@ export interface Artist {
 	disambiguation?: string | null;
 	type?: string;
 	link: string;
-}
-
-export interface Count {
-	Album: number;
-	track: number;
 }
 
 export interface Image {

@@ -10,7 +10,7 @@ import type { EncoderProfile, FolderLibrary, LibrariesResponse, StatusResponse }
 import type { Language } from '@/types/api/shared';
 import type { Library, NameVal } from '@/types/api/dashboard/server';
 
-import { translate } from '@/lib/stringArray.ts';
+import { translate } from '@/lib/utils/string';
 import useServerClient from '@/lib/clients/useServerClient';
 import serverClient from '@/lib/clients/serverClient';
 import { currentServer } from '@/store/currentServer';
@@ -180,36 +180,50 @@ function handleCancel() {
 	router.back();
 }
 
-function handleSave() {
-	serverClient()
-		.patch<{
-		message: string;
-		status: string;
-		args: string[];
-	}>(`dashboard/libraries/${route.params.id}`, {
-			id: route.params.id,
-			title: title.value,
-			type: media_type.value?.value,
-			specialSeasonName: specialName.value,
-			subtitles: subtitleLanguages.value.map(l => l.iso_639_1),
-			autoRefreshInterval: autoRefreshInterval.value,
-			image: image.value,
-			perfectSubtitleMatch: perfectSubtitleMatch.value,
-			realtime: realtime.value,
-			folder_library: folders.value,
-		})
-		.then(({ data }) => {
-			query.invalidateQueries({ queryKey: ['dashboard', 'libraries'] });
+const isSaving = ref(false);
 
-			toast.add({
-				severity: data.status === 'ok' ? 'success' : 'error',
-				summary: translate(data.status === 'ok' ? 'Success' : 'Error'),
-				detail: translate(data.message, ...data.args),
-				life: 5000,
+async function handleSave() {
+	if (isSaving.value) return;
+	isSaving.value = true;
+
+	try {
+		const { data } = await serverClient()
+			.patch<{
+			message: string;
+			status: string;
+			args: string[];
+		}>(`dashboard/libraries/${route.params.id}`, {
+				id: route.params.id,
+				title: title.value,
+				type: media_type.value?.value,
+				specialSeasonName: specialName.value,
+				subtitles: subtitleLanguages.value.map(l => l.iso_639_1),
+				autoRefreshInterval: autoRefreshInterval.value,
+				image: image.value,
+				perfectSubtitleMatch: perfectSubtitleMatch.value,
+				realtime: realtime.value,
+				folder_library: folders.value,
 			});
+		query.invalidateQueries({ queryKey: ['dashboard', 'libraries'] });
 
-			handleCancel();
+		toast.add({
+			severity: data.status === 'ok' ? 'success' : 'error',
+			summary: translate(data.status === 'ok' ? 'Success' : 'Error'),
+			detail: translate(data.message, ...data.args),
+			life: 5000,
 		});
+
+		handleCancel();
+	} catch {
+		toast.add({
+			severity: 'error',
+			summary: translate('Error'),
+			detail: translate('An error occurred while saving library settings'),
+			life: 5000,
+		});
+	} finally {
+		isSaving.value = false;
+	}
 }
 
 function setEncoderQualities(folder: FolderLibrary, profiles: EncoderProfile[]) {
@@ -430,10 +444,11 @@ function handleDeleteFolder(folder: FolderLibrary) {
 						id="save"
 						color="theme"
 						type="button"
+						:disabled="isSaving"
 						variant="default"
 						@click="handleSave"
 					>
-						{{ $t("Save") }}
+						{{ isSaving ? $t("Saving...") : $t("Save") }}
 					</Button>
 				</template>
 

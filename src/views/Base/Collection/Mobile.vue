@@ -9,7 +9,8 @@ import type { CollectionResponse } from '@/types/api/base/collection';
 
 import i18next from '@/config/i18next.ts';
 import useServerClient from '@/lib/clients/useServerClient';
-import { breakTitle2, setTitle, sortByPosterAlphabetized } from '@/lib/stringArray';
+import { breakTitle2, setTitle } from '@/lib/utils/string';
+import { sortByPosterAlphabetized } from '@/lib/utils/array';
 import { background, setBackground, setColorPalette, setPoster } from '@/store/ui';
 import { currentServer } from '@/store/currentServer';
 import router from '@/router';

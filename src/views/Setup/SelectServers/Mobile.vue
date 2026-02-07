@@ -12,7 +12,7 @@ import servers, { serverLibraries } from '@/store/servers';
 import { redirectUrl } from '@/store/routeState';
 import { setBackground, setColorPalette, setupComplete } from '@/store/ui';
 import { setCurrentServer } from '@/store/currentServer';
-import { setLibraries } from '@/store/Libraries.ts';
+import { setLibraries } from '@/store/libraries';
 
 import ServerCard from '@/views/Setup/SelectServers/components/ServerCard.vue';
 import EmptyBackdrop from '@/components/Images/EmptyBackdrop.vue';

@@ -4,7 +4,6 @@ import type { BasicColorSchema } from '@vueuse/core';
 import { useColorMode } from '@vueuse/core';
 import { Preferences } from '@capacitor/preferences';
 import { SafeArea } from 'capacitor-plugin-safe-area';
-import { EdgeToEdge } from '@capawesome/capacitor-android-edge-to-edge-support';
 import type { ColorScheme } from '@/types/config';
 
 import { colorTheme, setColorTheme } from '@/store/colorTheme.ts';
@@ -69,6 +68,7 @@ watch(scheme, async (newValue) => {
 
 (async () => {
 	if (isPlatform('capacitor') && isPlatform('android')) {
+		const { EdgeToEdge } = await import('@capawesome/capacitor-android-edge-to-edge-support');
 		await EdgeToEdge.enable();
 	}
 	setTimeout(async () => {

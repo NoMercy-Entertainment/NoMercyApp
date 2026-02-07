@@ -1,10 +1,10 @@
 import type { NavigationGuardNext, RouteLocationNormalizedGeneric, RouteRecordRaw } from 'vue-router';
 import { isMobile } from '@/config/global';
-import libraries from '@/store/Libraries';
+import libraries from '@/store/libraries';
 
-// Lazy load layouts to reduce initial bundle size
-const MobileBaseLayout = import('@/Layout/Mobile/BaseLayout.vue');
-const DesktopBaseLayout = import('@/Layout/Desktop/BaseLayout.vue');
+// Lazy load layouts - wrapped in functions so they only load when needed
+const MobileBaseLayout = () => import('@/Layout/Mobile/BaseLayout.vue');
+const DesktopBaseLayout = () => import('@/Layout/Desktop/BaseLayout.vue');
 
 // Lazy load base views
 const BaseCollection = () => import('@/views/Base/Collection');
@@ -70,11 +70,9 @@ const NotFound = () => import('@/views/NotFound');
 
 function getBaseLayout() {
 	if (isMobile.value) {
-		return MobileBaseLayout;
+		return MobileBaseLayout();
 	}
-	else {
-		return DesktopBaseLayout;
-	}
+	return DesktopBaseLayout();
 }
 
 export const routes: Array<RouteRecordRaw> = [

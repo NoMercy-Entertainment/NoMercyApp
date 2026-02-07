@@ -9,7 +9,7 @@ import serverClient from '@/lib/clients/serverClient';
 import FolderBrowser from '@/components/FolderBrowser.vue';
 import Modal from '@/components/Modal.vue';
 import { useToast } from 'primevue/usetoast';
-import { translate } from '@/lib/stringArray.ts';
+import { translate } from '@/lib/utils/string';
 
 const props = defineProps({
 	open: {

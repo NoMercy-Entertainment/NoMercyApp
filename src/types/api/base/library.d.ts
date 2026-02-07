@@ -87,21 +87,21 @@ export interface EncoderProfile {
 	container: string;
 	type: string;
 	videoProfiles: VideoProfile[];
-	audioProfiles: Profile[];
-	subtitleProfiles: Profile[];
+	audioProfiles: CodecProfile[];
+	subtitleProfiles: CodecProfile[];
 	encoder_profile_folder: null;
 	created_at: Date;
 	updated_at: Date;
 }
 
-export interface Profile {
+export interface CodecProfile {
 	codec: string;
 	channels?: number;
 	segmentName: string;
 	playlistName: string;
 	allowedLanguages: string[];
-	opts: any[];
-	customArguments: any[];
+	opts: string[];
+	customArguments: string[];
 }
 
 export interface VideoProfile {
@@ -117,7 +117,7 @@ export interface VideoProfile {
 	colorSpace: string;
 	crf: number;
 	keyint: number;
-	opts: any[];
+	opts: string[];
 	customArguments: CustomArgument[];
 }
 

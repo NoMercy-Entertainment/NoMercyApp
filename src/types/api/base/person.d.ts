@@ -89,10 +89,10 @@ export interface KnownFor {
 }
 
 export interface Images {
-	profiles: Profile[];
+	profiles: ImageProfile[];
 }
 
-export interface Profile {
+export interface ImageProfile {
 	aspect_ratio: number;
 	src: string;
 	height: number;

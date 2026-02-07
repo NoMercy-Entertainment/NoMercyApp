@@ -5,6 +5,8 @@ import type { DisplayList } from '@/types/api/music/musicPlayer';
 // @ts-ignore
 import type { RepeatState } from '@nomercy-entertainment/nomercy-music-player/src/types';
 
+export type RouteType = 'album' | 'artist' | 'playlist' | 'favorite' | 'genre' | 'unknown';
+
 export enum VisibilityState {
 	hidden = 'hidden',
 	showing = 'showing',

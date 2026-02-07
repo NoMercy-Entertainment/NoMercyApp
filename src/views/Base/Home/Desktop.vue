@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { onMounted } from 'vue';
 import { IonContent, IonPage } from '@ionic/vue';
-import { setTitle } from '@/lib/stringArray';
+import { setTitle } from '@/lib/utils/string';
 import { setBackground, setColorPalette } from '@/store/ui';
 
 import ScrollContainer from '@/Layout/Desktop/components/ScrollContainer.vue';

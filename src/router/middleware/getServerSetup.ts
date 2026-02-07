@@ -7,7 +7,7 @@ import router from '@/router';
 import { currentServer } from '@/store/currentServer';
 import { serverInfoRequested, serverSetupComplete } from '@/store/servers.ts';
 import { redirectUrl } from '@/store/routeState.ts';
-import serverClient from '@/lib/clients/serverClient.ts';
+import serverClient, { deduplicatedRequest } from '@/lib/clients/serverClient.ts';
 
 const done = ref(false);
 
@@ -28,8 +28,9 @@ function getServerSetup(): Promise<void> {
 			return;
 		}
 
-		serverClient(5)
-			.get<StatusResponse<ServerInfo>>('setup/server-info')
+		deduplicatedRequest('setup/server-info', () =>
+			serverClient(5).get<StatusResponse<ServerInfo>>('setup/server-info'),
+		)
 			.then(({ data }) => {
 				serverSetupComplete.value = data.data?.setup_complete ?? false;
 				serverInfoRequested.value = true;

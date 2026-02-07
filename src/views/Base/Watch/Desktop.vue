@@ -35,7 +35,7 @@ function initPlayer(value?: NMPlaylistItem[] | undefined) {
 		disableMediaControls:
       'mediaSession' in navigator || isPlatform('capacitor'),
 		renderAhead: 100,
-		disableAutoPlayback: user.value.features?.nomercyConnect,
+		// disableAutoPlayback: user.value.features?.nomercyConnect,
 	} satisfies PlayerConfig<PlaylistItem>;
 
 	// @ts-ignore
@@ -112,12 +112,6 @@ function initPlayer(value?: NMPlaylistItem[] | undefined) {
 	});
 }
 
-watch(data, (value) => {
-	if (!value?.length)
-		return;
-	initPlayer(value);
-});
-
 onMounted(() => {
 	audioPlayer.stop();
 	if (user.value.features?.nomercyConnect) {
@@ -131,6 +125,12 @@ onMounted(() => {
 onUnmounted(() => {
 	player.value?.dispose();
 	setDisableScreensaver(false);
+});
+
+watch(data, (value) => {
+	if (!value?.length)
+		return;
+	initPlayer(value);
 });
 </script>
 

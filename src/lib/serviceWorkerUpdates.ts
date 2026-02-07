@@ -13,7 +13,7 @@ function createUpdateNotification(): Message {
 	const messages = pwaMessages[lang as keyof typeof pwaMessages] || pwaMessages.en;
 
 	return {
-		id: `sw-update-${Date.now()}`,
+		id: 'sw-update-pending',
 		type: 'update',
 		title: messages.newVersion,
 		body: messages.updateNow,
@@ -27,33 +27,20 @@ function createUpdateNotification(): Message {
 }
 
 let waitingServiceWorker: ServiceWorker | null = null;
-let refreshing = false;
+let listenersAttached = false;
 
 export function setupServiceWorkerUpdates() {
 	if (!('serviceWorker' in navigator)) {
-		console.log('Service worker not supported');
 		return;
 	}
 
-	console.log('Setting up service worker update detection...');
-
-	// Listen for controller changes (indicates new SW took over)
-	navigator.serviceWorker.addEventListener('controllerchange', () => {
-		if (!refreshing) {
-			refreshing = true;
-			window.location.reload();
-		}
-	});
+	// controllerchange listener is registered early in main.ts
 
 	// Check for updates immediately and set up listeners
 	navigator.serviceWorker.getRegistration()
 		.then((registration) => {
-			if (!registration) {
-				console.log('No service worker registration found');
-				return;
-			}
+			if (!registration) return;
 
-			console.log('Service worker registration found');
 			setupUpdateListeners(registration);
 
 			// Check if there's already an update waiting
@@ -63,28 +50,18 @@ export function setupServiceWorkerUpdates() {
 			}
 
 			// Force check for updates
-			registration.update().catch((error) => {
-				console.log('Manual update check failed:', error);
-			});
+			registration.update().catch(() => {});
 		})
-		.catch((error) => {
-			console.error('Failed to get service worker registration:', error);
-		});
-
-	// Also set up when service worker becomes ready
-	navigator.serviceWorker.ready
-		.then((registration) => {
-			console.log('Service worker ready, setting up update detection...');
-			setupUpdateListeners(registration);
-		})
-		.catch((error) => {
-			console.error('Service worker ready failed:', error);
-		});
+		.catch(() => {});
 
 	// Listen for user accepting the update
 	document.addEventListener('sw-update-accepted', () => {
 		if (waitingServiceWorker) {
 			waitingServiceWorker.postMessage({ type: 'SKIP_WAITING' });
+			// Fallback: if controllerchange doesn't fire within 2s, force reload
+			setTimeout(() => {
+				window.location.reload();
+			}, 2000);
 		}
 		else {
 			window.location.reload();
@@ -107,6 +84,9 @@ export function setupServiceWorkerUpdates() {
 }
 
 function setupUpdateListeners(registration: ServiceWorkerRegistration) {
+	if (listenersAttached) return;
+	listenersAttached = true;
+
 	// Listen for new service worker installations
 	registration.addEventListener('updatefound', () => {
 		console.log('New service worker found!');
