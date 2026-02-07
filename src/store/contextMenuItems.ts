@@ -20,6 +20,7 @@ import type { ModalData } from '@/types';
 
 export interface ContextMenuItem {
 	label?: string;
+	title?: string;
 	icon?: `mooooom-${keyof typeof MoooomIcons}`;
 	command?: string | (() => unknown);
 	method?: string;
@@ -69,7 +70,7 @@ export function makeContextMenu(items: ContextMenuItem[]): (MenuItem & { icon?: 
 		}
 
 		return {
-			label: item.label,
+			label: item.title,
 			icon: item.icon,
 			confirm: item.confirm,
 			args: item.args,

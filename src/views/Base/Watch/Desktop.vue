@@ -35,7 +35,7 @@ function initPlayer(value?: NMPlaylistItem[] | undefined) {
 		disableMediaControls:
       'mediaSession' in navigator || isPlatform('capacitor'),
 		renderAhead: 100,
-		disableAutoPlayback: user.value.features?.nomercyConnect,
+		// disableAutoPlayback: user.value.features?.nomercyConnect,
 	} satisfies PlayerConfig<PlaylistItem>;
 
 	// @ts-ignore
