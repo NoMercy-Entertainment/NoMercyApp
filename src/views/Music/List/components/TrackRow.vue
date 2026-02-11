@@ -9,7 +9,7 @@ const route = useRoute();
 
 import { isMobile } from '@/config/global';
 import { musicSocketConnection } from '@/store/musicSocket';
-import { audioPlayer, currentSong, isPlaying, musicSize } from '@/store/audioPlayer';
+import { audioPlayer, currentSong, isPlaying, musicSize, setCurrentPlaylist } from '@/store/audioPlayer';
 import { onTrackRowRightClick } from '@/store/contextMenuItems';
 import { user } from '@/store/user';
 import i18next from '@/config/i18next.ts';
@@ -77,7 +77,12 @@ const typeId = computed(() => {
 
 function handleClick() {
 	if (!user.value.features?.nomercyConnect) {
+		if (currentSong.value?.id === props.data.id) {
+			audioPlayer.togglePlayback();
+			return;
+		}
 		audioPlayer.playTrack(props.data, props.displayList);
+		setCurrentPlaylist(`/music/${props.routeType}/${props.routeParamId}`);
 		return;
 	}
 	musicSocketConnection.value?.invoke(

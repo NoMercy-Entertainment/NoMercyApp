@@ -40,10 +40,7 @@ function setCurrentList() {
 }
 
 function handleClick() {
-	if (!currentSong.value) {
-		setCurrentList();
-	}
-
+	setCurrentList();
 	audioPlayer.playTrack(props.data, props.displayList);
 }
 </script>

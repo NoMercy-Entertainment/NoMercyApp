@@ -191,38 +191,48 @@ export function sortByPriorityKeyed<T = string>(sortingOrder: {
 }
 
 export function sortByType<T>(itemList: T[], sortType: SortType, sortOrder: SortOrder, setSortOrder: (payload: SortOrder) => void): T[] {
+	// Determine effective order locally — only call setSortOrder if the value
+	// actually needs to change, to avoid re-triggering reactive watchers that
+	// call sort() again (infinite loop).
+	let effectiveOrder = sortOrder;
+
 	if (sortType === SortType.name) {
-		if (!sortOrder) {
-			setSortOrder(SortOrder.asc);
+		if (!effectiveOrder) {
+			effectiveOrder = SortOrder.asc;
+			setSortOrder(effectiveOrder);
 		}
-		return sortBy(itemList, 'name', sortOrder);
+		return sortBy(itemList, 'name', effectiveOrder);
 	}
 	if (sortType === SortType.artist) {
-		if (!sortOrder) {
-			setSortOrder(SortOrder.asc);
+		if (!effectiveOrder) {
+			effectiveOrder = SortOrder.asc;
+			setSortOrder(effectiveOrder);
 		}
-		return sortBy(itemList, 'artist_track[0]', sortOrder, SortType.name);
+		return sortBy(itemList, 'artist_track[0]', effectiveOrder, SortType.name);
 	}
 	if (sortType === SortType.album) {
-		if (!sortOrder) {
-			setSortOrder(SortOrder.asc);
+		if (!effectiveOrder) {
+			effectiveOrder = SortOrder.asc;
+			setSortOrder(effectiveOrder);
 		}
-		return sortBy(itemList, 'album_track[0]', sortOrder, SortType.name);
+		return sortBy(itemList, 'album_track[0]', effectiveOrder, SortType.name);
 	}
 	if (sortType === SortType.date) {
-		if (!sortOrder) {
-			setSortOrder(SortOrder.desc);
+		if (!effectiveOrder) {
+			effectiveOrder = SortOrder.desc;
+			setSortOrder(effectiveOrder);
 		}
-		return sortBy(itemList, 'date', sortOrder || SortOrder.desc);
+		return sortBy(itemList, 'date', effectiveOrder);
 	}
 	if (sortType === SortType.duration) {
-		if (!sortOrder) {
-			setSortOrder(SortOrder.desc);
+		if (!effectiveOrder) {
+			effectiveOrder = SortOrder.desc;
+			setSortOrder(effectiveOrder);
 		}
-		return sortBy(itemList, 'duration', sortOrder || SortOrder.desc);
+		return sortBy(itemList, 'duration', effectiveOrder);
 	}
 
-	return sortBy2<T>(itemList, 'disc', 'track', sortOrder || SortOrder.desc);
+	return sortBy2<T>(itemList, 'disc', 'track', effectiveOrder || SortOrder.desc);
 }
 
 /**

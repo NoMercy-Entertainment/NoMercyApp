@@ -39,13 +39,13 @@ watch(() => props.data, () => {
 	nextTick(measureScrollMargin);
 });
 
-const virtualizer = computed(() => useVirtualizer({
+const virtualizer = useVirtualizer(computed(() => ({
 	count: props.data?.length ?? 0,
 	getScrollElement: () => scrollContainerElement.value ?? null,
 	estimateSize: () => 64,
 	overscan: 10,
 	scrollMargin: scrollMargin.value,
-}));
+})));
 </script>
 
 <template>
@@ -80,13 +80,13 @@ const virtualizer = computed(() => useVirtualizer({
 		<div
 			ref="virtualContainerRef"
 			:style="{
-				height: `${virtualizer.value.getTotalSize()}px`,
+				height: `${virtualizer.getTotalSize()}px`,
 				width: '100%',
 				position: 'relative',
 			}"
 		>
 			<div
-				v-for="virtualRow in virtualizer.value.getVirtualItems()"
+				v-for="virtualRow in virtualizer.getVirtualItems()"
 				:key="data[virtualRow.index]?.id + data[virtualRow.index]?.favorite"
 				:style="{
 					position: 'absolute',

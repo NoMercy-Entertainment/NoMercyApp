@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { computed, onMounted, ref, watch } from 'vue';
+import { computed, onMounted, ref, shallowRef, watch } from 'vue';
 import { useRoute } from 'vue-router';
 import { IonContent, IonPage, isPlatform, onIonViewWillEnter } from '@ionic/vue';
 import { useVirtualizer } from '@tanstack/vue-virtual';
@@ -48,7 +48,7 @@ const { data, isError } = useServerClient<DisplayList>({
 
 const main = ref<HTMLDivElement | null>(null);
 
-const displayList = ref<PlaylistItem[]>([]);
+const displayList = shallowRef<PlaylistItem[]>([]);
 const filter = ref('');
 
 watch(data, (value) => {
@@ -129,13 +129,15 @@ const showScrollHeaderText = ref(false);
 const sortHeader = ref<VueDivElement>();
 const container = ref<VueDivElement>();
 
-// Virtual scrolling setup
-const virtualizer = computed(() => useVirtualizer({
+// Virtual scrolling — pass a computed options ref so tanstack watches it
+// internally. Never wrap useVirtualizer itself in computed() — that creates
+// a brand-new Virtualizer (with observers & watchers) on every re-evaluation.
+const virtualizer = useVirtualizer(computed(() => ({
 	count: displayList.value?.length ?? 0,
 	getScrollElement: () => container.value?.$el as HTMLElement ?? null,
-	estimateSize: () => 56, // Estimated height of each TrackRow
-	overscan: 10, // Render 10 extra items above/below viewport
-}));
+	estimateSize: () => 56,
+	overscan: 10,
+})));
 
 function onScroll() {
 	const headerScrollTop = 170;
@@ -247,14 +249,14 @@ function onScroll() {
 						<!-- Virtual list container -->
 						<div
 							:style="{
-								height: `${virtualizer.value.getTotalSize()}px`,
+								height: `${virtualizer.getTotalSize()}px`,
 								width: '100%',
 								position: 'relative',
 							}"
 						>
 							<!-- Only render visible items -->
 							<div
-								v-for="virtualRow in virtualizer.value.getVirtualItems()"
+								v-for="virtualRow in virtualizer.getVirtualItems()"
 								:key="displayList[virtualRow.index]?.id + displayList[virtualRow.index]?.favorite"
 								:style="{
 									position: 'absolute',

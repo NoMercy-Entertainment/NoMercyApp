@@ -2,7 +2,7 @@
 import type { PropType } from 'vue';
 import { useRoute } from 'vue-router';
 import type { PlaylistItem } from '@/types/musicPlayer';
-import { audioPlayer, currentSong, isPlaying, musicSize } from '@/store/audioPlayer';
+import { audioPlayer, currentSong, isPlaying, musicSize, setCurrentPlaylist } from '@/store/audioPlayer';
 
 import DropdownMenu from '@/Layout/Desktop/components/Menus/DropdownMenu.vue';
 
@@ -43,17 +43,23 @@ const props = defineProps({
 const route = useRoute();
 
 function handleClick() {
+	const type = props.isAlbumRoute ? 'album' : 'artist';
+	const pageId = route.params.id;
+
 	if (!user.value.features?.nomercyConnect) {
+		if (currentSong.value?.id === props.data.id) {
+			audioPlayer.togglePlayback();
+			return;
+		}
 		audioPlayer.playTrack(props.data, props.displayList);
+		setCurrentPlaylist(`/music/${type}/${pageId}`);
 		return;
 	}
 
 	musicSocketConnection.value?.invoke(
 		'StartPlaybackCommand',
-		props.isAlbumRoute ? 'album' : 'artist',
-		props.isAlbumRoute
-			? props.data?.album_track.at(0)?.id
-			: props.data?.artist_track.at(0)?.id,
+		type,
+		pageId,
 		props.data.id,
 	);
 }

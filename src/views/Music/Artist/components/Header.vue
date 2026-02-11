@@ -28,6 +28,8 @@ import { pickPaletteColor, tooLight } from '@/lib/colorHelper.ts';
 import { colorPalette } from '@/store/ui.ts';
 import MoooomIcon from '@/components/Images/icons/MoooomIcon.vue';
 import { stringFormat } from '@/lib/utils/string';
+import { sortByType } from '@/lib/utils/array';
+import { setSortOrder, sortOrder, sortType } from '@/store/ui';
 
 const props = defineProps({
 	data: {
@@ -71,7 +73,8 @@ function handleClick() {
 			audioPlayer.togglePlayback();
 			return;
 		}
-		audioPlayer.playTrack(props.data.tracks.at(0)!, props.data.tracks);
+		const sorted = sortByType(props.data.tracks, sortType.value, sortOrder.value, setSortOrder);
+		audioPlayer.playTrack(sorted.at(0)!, sorted);
 		setCurrentPlaylist(playlistName.value);
 		return;
 	}
@@ -87,9 +90,10 @@ function handleClick() {
 			});
 	}
 
-	const trackId = props.data.tracks.some(t => t.id === currentSong.value?.id)
+	const sorted = sortByType(props.data.tracks, sortType.value, sortOrder.value, setSortOrder);
+	const trackId = sorted.some(t => t.id === currentSong.value?.id)
 		? currentSong.value?.id
-		: props.data.tracks.at(0)?.id;
+		: sorted.at(0)?.id;
 
 	musicSocketConnection.value?.invoke(
 		'StartPlaybackCommand',

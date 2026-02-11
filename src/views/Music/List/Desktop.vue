@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { computed, onMounted, onUnmounted, ref, watch } from 'vue';
+import { computed, onMounted, onUnmounted, ref, shallowRef, watch } from 'vue';
 import { useRoute } from 'vue-router';
 import { IonContent, IonPage } from '@ionic/vue';
 import { useVirtualizer } from '@tanstack/vue-virtual';
@@ -45,16 +45,18 @@ const { data, isError } = useServerClient<DisplayList>({
 	path: route.fullPath,
 });
 
-const displayList = ref<PlaylistItem[]>([]);
+const displayList = shallowRef<PlaylistItem[]>([]);
 const filter = ref('');
 
-// Virtual scrolling setup
-const virtualizer = computed(() => useVirtualizer({
+// Virtual scrolling — pass a computed options ref so tanstack watches it
+// internally. Never wrap useVirtualizer itself in computed() — that creates
+// a brand-new Virtualizer (with observers & watchers) on every re-evaluation.
+const virtualizer = useVirtualizer(computed(() => ({
 	count: displayList.value?.length ?? 0,
 	getScrollElement: () => scrollContainerElement.value ?? null,
 	estimateSize: () => 64,
 	overscan: 10,
-}));
+})));
 
 watch(data, (value) => {
 	if (!value)
@@ -204,14 +206,14 @@ function onScroll() {
 							<!-- Virtual list container -->
 							<div
 								:style="{
-									height: `${virtualizer.value.getTotalSize()}px`,
+									height: `${virtualizer.getTotalSize()}px`,
 									width: '100%',
 									position: 'relative',
 								}"
 							>
 								<!-- Only render visible items -->
 								<div
-									v-for="virtualRow in virtualizer.value.getVirtualItems()"
+									v-for="virtualRow in virtualizer.getVirtualItems()"
 									:key="displayList[virtualRow.index]?.id + displayList[virtualRow.index]?.favorite"
 									:style="{
 										position: 'absolute',
