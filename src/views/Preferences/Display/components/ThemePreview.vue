@@ -96,28 +96,22 @@ const menuItems = [
 								v-for="(item, index) in colors"
 								:key="index"
 								:class="showBackdrops ? 'w-1/6' : 'w-1/6'"
-								class="relative h-auto pr-2 transition-transform duration-500 before:content-[''] before:absolute before:left-0 before:top-1.5 before:w-[2.5px] before:h-2.5 before:rounded-tr-[2.5px] before:rounded-br-[2.5px] before:transition-transform before:duration-500"
 								:style="`--item-color: ${item}; ${
 									showBackdrops
 										? (index !== 0 && (index % 6 === 4 || index % 6 === 5) ? '--item-opacity: 0' : '--item-opacity: 1')
 										: (index !== 0 && (index % 6 === 5 || index % 6 === 6) ? '--item-opacity: 0' : '--item-opacity: 1')
 								}`"
+								class="relative h-auto pr-2 transition-transform duration-500 before:content-[''] before:absolute before:left-0 before:top-1.5 before:w-[2.5px] before:h-2.5 before:rounded-tr-[2.5px] before:rounded-br-[2.5px] before:transition-transform before:duration-500"
 							>
 								<div
 									:class="[
 										showBackdrops ? 'aspect-backdrop' : 'aspect-poster',
 										showBackdrops
 											? (index !== 0 && index % 6 === 4 ? 'bg-surface-5/0' : 'bg-surface-12/10')
-											: (index !== 0 && index % 6 === 5 ? 'bg-surface-5/0' : 'bg-surface-12/10')
+											: (index !== 0 && index % 6 === 5 ? 'bg-surface-5/0' : 'bg-surface-12/10'),
 									]"
 									class="flex h-auto w-full overflow-clip transition-transform duration-500 rounded-[3px] bg-surface-12/2"
 								/>
-								<style scoped>
-									div[style*="--item-color"]::before {
-										background-color: var(--item-color);
-										opacity: var(--item-opacity, 1);
-									}
-								</style>
 							</div>
 						</div>
 					</div>
@@ -126,3 +120,10 @@ const menuItems = [
 		</div>
 	</section>
 </template>
+
+<style scoped>
+div[style*='--item-color']::before {
+	background-color: var(--item-color);
+	opacity: var(--item-opacity, 1);
+}
+</style>

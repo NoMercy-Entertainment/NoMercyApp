@@ -75,14 +75,6 @@ export default plugin(({ addBase, addUtilities }: PluginAPI) => {
 		'@media (prefers-color-scheme: dark)': {} as Record<string, Record<string, string>>,
 	};
 
-	const rootVars = Object.fromEntries(
-		mappedEntries(lightColors).map(([k, v]) => [`--${k}`, v]),
-	);
-
-	const darkRootVars = Object.fromEntries(
-		mappedEntries(darkColors).map(([k, v]) => [`--${k}`, v]),
-	);
-
 	for (const [name, modes] of mappedEntries(colorPalette)) {
 		const lightVars: Record<string, string> = {};
 		const darkVars: Record<string, string> = {};
@@ -150,8 +142,6 @@ export default plugin(({ addBase, addUtilities }: PluginAPI) => {
 	systemRules['@media (prefers-color-scheme: dark)']['[style*="--theme:"].scheme-system'] = dynamicThemeDark;
 
 	addBase({
-		':root': rootVars,
-		'.scheme-dark': darkRootVars,
 		...baseRules,
 		...systemRules,
 	});
