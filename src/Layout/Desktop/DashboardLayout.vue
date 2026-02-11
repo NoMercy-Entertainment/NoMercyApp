@@ -1,23 +1,23 @@
 <script lang="ts" setup>
-import type { PropType } from 'vue';
-import { computed, onMounted, watch } from 'vue';
-import type { AxiosError } from 'axios';
+import type {PropType} from 'vue';
+import {computed, onMounted, watch} from 'vue';
+import type {AxiosError} from 'axios';
 
-import type { ErrorResponse } from '@/types/server';
+import type {ErrorResponse} from '@/types/server';
 
-import { dashboardBigCardGrid, dashboardCardGrid, dashboardColumnGrid } from '@/config/global';
+import {dashboardBigCardGrid, dashboardCardGrid, dashboardColumnGrid} from '@/config/global';
 import useMounted from '@/hooks/useMounted';
 import useServerClient from '@/lib/clients/useServerClient';
-import { dashboardSocketIsConnected, startDashboardSocket, stopDashboardSocket } from '@/lib/clients/dashboardSocket';
-import { setBackground, setColorPalette } from '@/store/ui';
+import {dashboardSocketIsConnected, startDashboardSocket, stopDashboardSocket} from '@/lib/clients/dashboardSocket';
+import {setBackground, setColorPalette} from '@/store/ui';
 
 import FloatingBackButton from '@/components/Buttons/FloatingBackButton.vue';
 import HelpButton from '@/components/Buttons/HelpButton.vue';
 import ScrollContainer from '@/Layout/Desktop/components/ScrollContainer.vue';
 import RipperOverlay from '@/Layout/Desktop/components/Overlays/RipperOverlay.vue';
-import { ripperMenuOpen } from '@/store/ripper';
-import { currentServer } from '@/store/currentServer';
-import { musicVisibility } from '@/store/audioPlayer';
+import {ripperMenuOpen} from '@/store/ripper';
+import {currentServer} from '@/store/currentServer';
+import {musicVisibility} from '@/store/audioPlayer';
 
 const props = defineProps({
 	title: {
@@ -169,11 +169,11 @@ watch(dataUpdatedAt, (value) => {
 
 		<div
 			v-else
-			:data-music="musicVisibility"
 			:class="{
 				'min-h-[92vh] music-showing:min-h-[85vh] sm:min-h-[85.75vh] music-showing:sm:min-h-[92.75vh] children-not-first:mt-20': !$slots.cta,
 				'min-h-[92vh] music-showing:min-h-[92vh] sm:min-h-[82.1vh] music-showing:sm:min-h-[82.1vh] children-not-first:mt-20': !!$slots.cta,
 			}"
+			:data-music="musicVisibility"
 			class="flex flex-col relative z-0 flex-1 h-available overflow-clip items-start justify-start self-stretch w-available text-surface-12"
 		>
 			<div
@@ -256,7 +256,6 @@ watch(dataUpdatedAt, (value) => {
 				v-if="!error && $slots.actions"
 				class="mt-auto bottom-0 z-0 flex w-full flex-wrap items-center gap-4 border-t px-4 py-4 border-surface-8/11 empty:hidden sm:h-16 xl:px-6"
 			>
-				<div class="absolute inset-0 -z-10 h-full w-full" />
 				<slot name="actions" />
 			</div>
 

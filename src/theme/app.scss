@@ -185,7 +185,9 @@ html {
   .swiper {
     overflow-y: visible !important;
     overflow-x: clip !important;
+    padding: unset !important;
   }
+  
   /* Monospaced numeric figures */
   .monospace {
     font-feature-settings: 'tnum' on,
