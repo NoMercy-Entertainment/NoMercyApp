@@ -1,0 +1,1 @@
+import{K as e,T as _,c as r}from"./i18n-fABvX7Av.js";import{v as a}from"./index-D70HP9b0.js";r();var t={},c={class:"bg"};function o(n,s){return e(),_("div",c)}var p=a(t,[["render",o],["__scopeId","data-v-386a0916"]]);export{p as t};
