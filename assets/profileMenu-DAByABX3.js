@@ -1,1 +1,0 @@
-import{c as n,mt as u,x as a}from"./i18n-fABvX7Av.js";n();var e=u(!1);const l=a(()=>e.value);function s(){e.value=!e.value}function o(){e.value=!1}async function c(){e.value?o():s()}export{l as n,c as r,o as t};

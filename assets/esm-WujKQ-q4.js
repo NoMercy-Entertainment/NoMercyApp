@@ -1,2 +1,0 @@
-const __vite__mapDeps=(i,m=__vite__mapDeps,d=(m.f||(m.f=["assets/web-IUnZ7S0a.js","assets/dist-CJipjyJM.js","assets/rolldown-runtime-C0YIJfRR.js"])))=>i.map(i=>d[i]);
-import{o as r,s as i}from"./i18n-fABvX7Av.js";import{n as t,r as n}from"./dist-CJipjyJM.js";t();i();var _=n("ScreenOrientation",{web:()=>r(()=>import("./web-IUnZ7S0a.js"),__vite__mapDeps([0,1,2])).then(e=>new e.ScreenOrientationWeb)});export{_ as ScreenOrientation};
