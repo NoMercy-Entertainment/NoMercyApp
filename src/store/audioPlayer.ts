@@ -1,7 +1,7 @@
 // noinspection JSUnusedGlobalSymbols
 
 import { ref, toRaw, watch } from 'vue';
-import { createAnimation, isPlatform, modalController } from '@ionic/vue';
+import { createAnimation, modalController } from '@ionic/vue';
 import { PlayerCore as MusicPlayer } from '@nomercy-entertainment/nomercy-music-player';
 
 import type {
@@ -503,30 +503,3 @@ audioPlayer.on('repeat', (value) => {
 audioPlayer.on('volume', (value) => {
 	volume.value = value;
 });
-
-if (isPlatform('capacitor')) {
-	import('@capacitor-community/volume-buttons').then(({ VolumeButtons }) => {
-		const options = {
-			disableSystemVolumeHandler: false,
-			suppressVolumeIndicator: false,
-		};
-		const callback = (result: { direction: string }, _err?: unknown) => {
-			if (!result)
-				return;
-			audioPlayer.setVolume(
-				result.direction === 'up' ? volume.value + 10 : volume.value - 10,
-			);
-		};
-
-		VolumeButtons.watchVolume(options, callback).catch((err: unknown) => {
-			console.error('Failed to watch volume buttons:', err);
-		});
-		VolumeButtons.isWatching().then((result: unknown) => {
-			console.log(result);
-		}).catch((err: unknown) => {
-			console.error('Failed to check volume watching state:', err);
-		});
-	}).catch((err: unknown) => {
-		console.error('Failed to load volume buttons plugin:', err);
-	});
-}

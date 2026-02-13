@@ -177,17 +177,17 @@ html {
   }
 }
 
+/* Swiper adjustments */
+.swiper {
+  overflow-y: visible !important;
+  overflow-x: clip !important;
+  padding-bottom: 0.5em !important;
+}
+
 /*----------------------------------------------------------------------------
   7. Utility & Component-Specific Classes
 ----------------------------------------------------------------------------*/
 @layer utilities {
-  /* Swiper adjustments */
-  .swiper {
-    overflow-y: visible !important;
-    overflow-x: clip !important;
-    padding: unset !important;
-  }
-  
   /* Monospaced numeric figures */
   .monospace {
     font-feature-settings: 'tnum' on,

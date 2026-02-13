@@ -1,12 +1,8 @@
-import { computed } from 'vue';
-import { isPlatform } from '@ionic/vue';
-import { useLocalStorage } from '@vueuse/core';
-import { hexToRgba, rgbaToHex } from '@uiw/color-convert';
-import { Preferences } from '@capacitor/preferences';
-
-import { tooDark, tooLight } from '@/lib/colorHelper.ts';
-import { focusColor } from '@/store/ui';
-import { scheme } from '@/store/colorScheme.ts';
+import {computed} from 'vue';
+import {useLocalStorage} from '@vueuse/core';
+import {rgbaToHex} from '@uiw/color-convert';
+import {Preferences} from '@capacitor/preferences';
+import {focusColor} from '@/store/ui';
 
 export const topNavColor = computed(() => {
 	return rgbaToHex({
@@ -39,8 +35,6 @@ export async function setColorTheme(value: string) {
 		el.classList.add('theme-violet');
 	}
 
-	await applyNativeColor();
-
 	await Preferences.set({
 		key: 'colorTheme',
 		value,
@@ -54,48 +48,6 @@ export async function checkColorTheme() {
 
 export async function removeColorTheme() {
 	await Preferences.remove({ key: 'colorTheme' });
-}
-
-export async function applyNativeColor() {
-	if (!isPlatform('capacitor'))
-		return;
-
-	const { r, g, b } = hexToRgba(focusColor.value);
-
-	let color = rgbaToHex({
-		r: r * 0.35,
-		g: g * 0.35,
-		b: b * 0.35,
-		a: 1,
-	});
-
-	const style = window.getComputedStyle(document.body);
-	const defaultColor = style.getPropertyValue('--color-theme-8');
-
-	if (tooDark(color, 10)) {
-		color = defaultColor;
-	}
-	if (tooLight(color, 160)) {
-		color = defaultColor;
-	}
-
-	const [{ StatusBar, Style }, { NavigationBar }, { EdgeToEdge }] = await Promise.all([
-		import('@capacitor/status-bar'),
-		import('@hugotomazi/capacitor-navigation-bar'),
-		import('@capawesome/capacitor-android-edge-to-edge-support'),
-	]);
-
-	await StatusBar.setOverlaysWebView({ overlay: false });
-	await EdgeToEdge.setBackgroundColor({ color });
-
-	if (scheme.value === 'dark' || (scheme.value === 'system' && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-		await StatusBar.setStyle({ style: Style.Dark });
-		await NavigationBar.setColor({ color: '#000000', darkButtons: false });
-	}
-	else {
-		await StatusBar.setStyle({ style: Style.Light });
-		await NavigationBar.setColor({ color: '#ffffff', darkButtons: true });
-	}
 }
 
 (async () => {

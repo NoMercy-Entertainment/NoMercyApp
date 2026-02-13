@@ -5,11 +5,12 @@ import type { MenuItem } from 'primevue/menuitem';
 import ContextMenu from 'primevue/contextmenu';
 import { Portal } from '@headlessui/vue';
 import {
-	disableScreensaver, imageModalData,
+	disableScreensaver,
+	imageModalData,
 	setImageModalData,
 	setImageModalOpen,
 	showImageModal,
-	showScreensaver
+	showScreensaver,
 } from '@/store/imageModal';
 import { pickPaletteColor } from '@/lib/colorHelper';
 import AppLogoSquare from '@/components/Images/icons/AppLogoSquare.vue';
@@ -243,7 +244,6 @@ watch(imageModalData, async (data) => {
 	if (src.value === null && data.src) {
 		src.value = `${imageBaseUrl.value}${data.src}?width=3840`;
 		logoColor.value = pickPaletteColor(data.color_palette?.image);
-		// await applyNativeColor(logoColor.value);
 
 		timeout2.value = setTimeout(() => {
 			handleLoaded();

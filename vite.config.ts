@@ -17,7 +17,8 @@ import { cspConfig } from './cspConfig';
 function getGitCommitHash(): string {
 	try {
 		return execSync('git rev-parse --short HEAD').toString().trim();
-	} catch {
+	}
+	catch {
 		return 'unknown';
 	}
 }
@@ -161,16 +162,6 @@ export default defineConfig(({ command }) => {
 						&& process.env.NODE_ENV === 'production'
 					) {
 						return false;
-					}
-					// Native-only Capacitor/Cordova plugins (removed from package.json)
-					if (
-						id.includes('@capacitor/status-bar')
-						|| id.includes('@capacitor-community/')
-						|| id.includes('@hugotomazi/capacitor-navigation-bar')
-						|| id.includes('@capawesome/capacitor-android-edge-to-edge-support')
-						|| id.includes('@awesome-cordova-plugins/')
-					) {
-						return true;
 					}
 					return false;
 				},

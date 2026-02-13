@@ -7,8 +7,6 @@ import { useAutoThemeColors } from '@/store/preferences';
 import { isXmasTime } from '@/lib/dateTime';
 import { Keyboard } from '@capacitor/keyboard';
 
-import { applyNativeColor } from '@/store/colorTheme.ts';
-
 export const scrollContainerElement = shallowRef<HTMLDivElement>();
 export const sidebarContainerElement = shallowRef<HTMLElement>();
 export const setupComplete = ref(false);
@@ -52,8 +50,6 @@ export async function setColorPalette(value?: PaletteColors | null) {
 
 		document.documentElement.style.setProperty('--color-theme-8', focusColorData.value);
 	}
-
-	await applyNativeColor();
 }
 
 const logoData = ref<string | null>(null);
@@ -61,34 +57,6 @@ export const logo = computed(() => logoData.value);
 
 export function setLogo(value?: string | null) {
 	logoData.value = value ?? null;
-}
-
-interface StatusBarPlugin {
-	show: () => void;
-	hide: () => void;
-	setBackgroundColor: (options: { color: string }) => void;
-}
-
-export const statusbar = computed(() => {
-	if (isPlatform('capacitor')) {
-		return import('@capacitor/status-bar').then(({ StatusBar }) => {
-			return StatusBar;
-		});
-	}
-	return () => {
-	};
-});
-
-export async function showStatusbar() {
-	((await statusbar.value) as StatusBarPlugin)?.show();
-}
-
-export async function hideStatusbar() {
-	((await statusbar.value) as StatusBarPlugin).hide();
-}
-
-export async function setStatusBarColor(color: string) {
-	((await statusbar.value) as StatusBarPlugin)?.setBackgroundColor({ color });
 }
 
 const sortTypeData = ref<SortType>(SortType.index);

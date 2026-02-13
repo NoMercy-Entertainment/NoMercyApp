@@ -67,10 +67,6 @@ watch(scheme, async (newValue) => {
 });
 
 (async () => {
-	if (isPlatform('capacitor') && isPlatform('android')) {
-		const { EdgeToEdge } = await import('@capawesome/capacitor-android-edge-to-edge-support');
-		await EdgeToEdge.enable();
-	}
 	setTimeout(async () => {
 		const colorScheme = await checkColorScheme();
 
