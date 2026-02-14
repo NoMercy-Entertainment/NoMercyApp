@@ -71,7 +71,7 @@ function handleClick(song: PlaylistItem) {
 		<article
 			v-if="currentSong"
 			id="queue_container"
-			class="flex w-full flex-col px-4 h-available overflow-clip pb-4"
+			class="flex w-full flex-col p-4 h-available overflow-clip"
 		>
 			<!-- Now Playing Header -->
 			<header class="flex w-full items-center justify-between p-2 pr-6">
