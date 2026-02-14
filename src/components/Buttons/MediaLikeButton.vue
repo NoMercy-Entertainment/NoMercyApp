@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import type { PropType } from 'vue';
-import { ref, watch } from 'vue';
+import { ref, watch, computed } from 'vue';
 
 import type { InfoResponse } from '@/types/api/base/info';
 import type { PlaylistItem } from '@/types/musicPlayer';
@@ -55,6 +55,9 @@ const props = defineProps({
 
 const liked = ref(props.data?.favorite);
 const isLoading = ref(false);
+const hovered = ref(false);
+
+const heartIcon = computed(() => liked.value && hovered.value ? 'heartBroken' : 'heart');
 
 function handleLike(e?: MouseEvent) {
 	e?.stopPropagation();
@@ -89,16 +92,19 @@ watch(props, (prop) => {
 		:no-background="noBackground"
 		:onclick="handleLike"
 		label="Favorite"
+		@mouseenter="hovered = true"
+		@mouseleave="hovered = false"
 	>
 		<MoooomIcon
 			:class="{
-				'heart text-focus ![color:var(--fill-color)]': liked,
+				'heart text-focus ![color:var(--fill-color)]': liked && !hovered,
+				'text-focus ![color:var(--fill-color)]': liked && hovered,
 				' ': !liked,
 				className,
 			}"
 			:style="liked ? '--fill-color: rgb(from var(--color-theme-8, var(--color-red-8)) r g b)' : '--fill-color: transparent;'"
 			class="absolute inset-2 transition-all duration-150"
-			icon="heart"
+			:icon="heartIcon"
 		/>
 	</MusicButton>
 
@@ -108,16 +114,19 @@ watch(props, (prop) => {
 		:title="liked ? 'Remove from liked' : 'Add to liked'"
 		label="Favorite"
 		@click="handleLike"
+		@mouseenter="hovered = true"
+		@mouseleave="hovered = false"
 	>
 		<MoooomIcon
 			:class="{
-				'heart ![color:var(--fill-color)]': liked,
+				'heart ![color:var(--fill-color)]': liked && !hovered,
+				'![color:var(--fill-color)]': liked && hovered,
 				' ': !liked,
 				className,
 			}"
 			:style="liked ? '--fill-color: rgb(from var(--color-theme-8, var(--color-red-8)) r g b)' : '--fill-color: transparent;'"
 			class="absolute top-1.5 left-1.5 transition-all duration-150 w-7"
-			icon="heart"
+			:icon="heartIcon"
 		/>
 	</BannerButton>
 </template>
