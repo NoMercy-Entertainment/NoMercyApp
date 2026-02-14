@@ -67,7 +67,7 @@ watch(data, (value) => {
 	sort(value?.tracks ?? [], sortType.value, sortOrder.value, filter.value);
 
 	setColorPalette(value?.color_palette?.cover);
-});
+}, { immediate: true });
 
 watch(sortOrder, (value) => {
 	sort(data.value?.tracks ?? [], sortType.value, value, filter.value);
@@ -107,15 +107,6 @@ function sort(songs: PlaylistItem[], sortType: SortType, sortOrder: SortOrder, v
 }
 
 onMounted(() => {
-	if (data?.value?.tracks) {
-		sort(
-			data?.value?.tracks ?? [],
-			sortType.value,
-			sortOrder.value,
-			filter.value,
-		);
-	}
-
 	if (data.value?.color_palette?.cover) {
 		setColorPalette(data.value?.color_palette?.cover);
 	}

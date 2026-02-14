@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { computed, onMounted, ref, shallowRef, watch } from 'vue';
+import { computed, ref, shallowRef, watch } from 'vue';
 import { useRoute } from 'vue-router';
 import { IonContent, IonPage, isPlatform, onIonViewWillEnter } from '@ionic/vue';
 import { useVirtualizer } from '@tanstack/vue-virtual';
@@ -52,12 +52,15 @@ const displayList = shallowRef<PlaylistItem[]>([]);
 const filter = ref('');
 
 watch(data, (value) => {
+	if (!value)
+		return;
+
 	setTitle(value?.name ?? null);
 
 	sort(value?.tracks ?? [], sortType.value, sortOrder.value, filter.value);
 
 	setColorPalette(value?.color_palette?.cover);
-});
+}, { immediate: true });
 
 watch(sortOrder, (value) => {
 	sort(data.value?.tracks ?? [], sortType.value, value, filter.value);
@@ -96,25 +99,7 @@ function sort(songs: PlaylistItem[], sortType: SortType, sortOrder: SortOrder, v
 	}
 }
 
-onMounted(() => {
-	sort(
-		data?.value?.tracks ?? [],
-		sortType.value,
-		sortOrder.value,
-		filter.value,
-	);
-	if (data.value?.color_palette?.cover) {
-		setColorPalette(data.value?.color_palette?.cover);
-	}
-});
-
 onIonViewWillEnter(() => {
-	sort(
-		data?.value?.tracks ?? [],
-		sortType.value,
-		sortOrder.value,
-		filter.value,
-	);
 	if (data.value?.color_palette?.cover) {
 		setColorPalette(data.value?.color_palette?.cover);
 	}
