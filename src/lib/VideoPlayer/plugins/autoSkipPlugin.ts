@@ -55,6 +55,7 @@ export class AutoSkipPlugin extends Plugin {
 	autoSkip: boolean = false;
 	lastChapter: string = '';
 	skipButtonElement: HTMLElement | null = null;
+	skipIntroOnNext: boolean = false;
 
 	initialize(player: NMPlayer<AutoSkipPluginArgs>) {
 		this.player = player;
@@ -83,12 +84,27 @@ export class AutoSkipPlugin extends Plugin {
 		if (this.player.options.disableAutoPlayback)
 			return;
 		this.player.on('time', this.checkChapters.bind(this));
+		this.player.on('chapters', this.onChaptersLoaded.bind(this));
 	}
 
 	dispose() {
 		if (this.player.options.disableAutoPlayback)
 			return;
 		this.player.off('time', this.checkChapters.bind(this));
+		this.player.off('chapters', this.onChaptersLoaded.bind(this));
+	}
+
+	onChaptersLoaded(): void {
+		if (!this.skipIntroOnNext) return;
+		this.skipIntroOnNext = false;
+
+		const firstCue = this.player.chapters?.cues?.[0];
+		if (firstCue && this.introPatterns.some(p => p.test(firstCue.text))) {
+			const afterIntro = this.player.chapters.cues[1];
+			if (afterIntro) {
+				this.player.seek(afterIntro.startTime);
+			}
+		}
 	}
 
 	getChapterType(title: string): 'intro' | 'next' | null {
@@ -257,6 +273,10 @@ export class AutoSkipPlugin extends Plugin {
 		icon.classList.add('w-4', 'h-4');
 
 		button.addEventListener('click', () => {
+			const type = this.getChapterType(this.lastChapter);
+			if (type === 'next') {
+				this.skipIntroOnNext = true;
+			}
 			this.skipToNextPlayableChapter(this.player.getCurrentTime());
 			this.hideSkipButton();
 		});

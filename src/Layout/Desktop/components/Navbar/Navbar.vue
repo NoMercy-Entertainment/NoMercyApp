@@ -1,23 +1,41 @@
 <script lang="ts" setup>
-import { computed } from 'vue';
+import { computed, watch } from 'vue';
 import { RouterLink } from 'vue-router';
 import { isPlatform } from '@ionic/vue';
 
 import { user } from '@/store/user';
 
-import NotificationMenu from '@/Layout/Desktop/components/Menus/NotificationMenu.vue';
-import ProfileMenu from '@/Layout/Desktop/components/Menus/ProfileMenu.vue';
+import type { LibrariesResponse } from '@/types/api/base/library';
 
-import AppLogo from '@/components/Images/icons/AppLogo.vue';
-import NavbarButton from './NavbarButton.vue';
 import { hasMusicLibrary, isHomeRoute, isLibraryRoute, isMusicRoute, searchUrl } from '@/store/routeState';
 import { currentServer } from '@/store/currentServer';
-import libraries from '@/store/libraries';
+import useServerClient from '@/lib/clients/useServerClient.ts';
+import { setLibraries } from '@/store/libraries.ts';
+import { setupComplete } from '@/store/ui.ts';
+import { serverLibraries } from '@/store/servers.ts';
 
+import NotificationMenu from '@/Layout/Desktop/components/Menus/NotificationMenu.vue';
+import ProfileMenu from '@/Layout/Desktop/components/Menus/ProfileMenu.vue';
 import MessagesMenu from '@/Layout/Desktop/components/Menus/MessagesMenu.vue';
+
+import AppLogo from '@/components/Images/icons/AppLogo.vue';
 import MoooomIcon from '@/components/Images/icons/MoooomIcon.vue';
+import NavbarButton from './NavbarButton.vue';
+
+const { data: libraries } = useServerClient<LibrariesResponse[]>({
+	path: '/setup/libraries',
+	queryKey: ['libraries'],
+});
 
 const shouldShowLibraryLinks = computed(() => !!currentServer.value && (libraries.value?.length ?? 0) > 0);
+
+watch(libraries, (value) => {
+	if (!value)
+		return;
+	setLibraries(value);
+	setupComplete.value = true;
+	serverLibraries.value = true;
+});
 </script>
 
 <template>
