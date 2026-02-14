@@ -117,12 +117,17 @@ const container = ref<VueDivElement>();
 // Virtual scrolling — pass a computed options ref so tanstack watches it
 // internally. Never wrap useVirtualizer itself in computed() — that creates
 // a brand-new Virtualizer (with observers & watchers) on every re-evaluation.
-const virtualizer = useVirtualizer(computed(() => ({
-	count: displayList.value?.length ?? 0,
-	getScrollElement: () => container.value?.$el as HTMLElement ?? null,
-	estimateSize: () => 56,
-	overscan: 10,
-})));
+const virtualizer = useVirtualizer(computed(() => {
+	const el = container.value?.$el as HTMLElement ?? null;
+
+	return {
+		count: displayList.value?.length ?? 0,
+		getScrollElement: () => el,
+		estimateSize: () => 56,
+		overscan: 10,
+		initialRect: { width: 0, height: 800 },
+	};
+}));
 
 function onScroll() {
 	const headerScrollTop = 170;

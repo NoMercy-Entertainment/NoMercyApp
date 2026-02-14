@@ -51,12 +51,22 @@ const filter = ref('');
 // Virtual scrolling — pass a computed options ref so tanstack watches it
 // internally. Never wrap useVirtualizer itself in computed() — that creates
 // a brand-new Virtualizer (with observers & watchers) on every re-evaluation.
-const virtualizer = useVirtualizer(computed(() => ({
-	count: displayList.value?.length ?? 0,
-	getScrollElement: () => scrollContainerElement.value ?? null,
-	estimateSize: () => 64,
-	overscan: 10,
-})));
+const virtualizer = useVirtualizer(computed(() => {
+	// Access scrollContainerElement.value directly so Vue tracks it as a
+	// dependency of this computed. Without this, the computed only
+	// re-evaluates when displayList changes, and the options-watch that
+	// calls _willUpdate + triggerRef never fires when the scroll element
+	// arrives after initial mount (e.g. navigating from another page).
+	const el = scrollContainerElement.value ?? null;
+
+	return {
+		count: displayList.value?.length ?? 0,
+		getScrollElement: () => el,
+		estimateSize: () => 64,
+		overscan: 10,
+		initialRect: { width: 0, height: 800 },
+	};
+}));
 
 watch(data, (value) => {
 	if (!value)
