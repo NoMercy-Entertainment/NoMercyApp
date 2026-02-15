@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import type {PropType} from 'vue';
-import {computed, onMounted, watch} from 'vue';
+import {computed, onMounted, onUnmounted, watch} from 'vue';
 import type {AxiosError} from 'axios';
 
 import type {ErrorResponse} from '@/types/server';
@@ -66,11 +66,12 @@ const {
 	dataUpdatedAt,
 	error: permissionsError,
 	isPending,
+	refetch,
 } = useServerClient({
 	path: 'dashboard/server',
 	enabled: !props.allowAnyone,
 	refetchInterval: 10000,
-	queryKey: ['dashboard', 'server', dashboardSocketIsConnected.value],
+	queryKey: ['dashboard', 'server'],
 });
 
 const grid = computed(() => {
@@ -126,9 +127,28 @@ const showError = computed(() => {
 	);
 });
 
+function onSocketConnected() {
+	if (!props.allowAnyone) {
+		refetch();
+	}
+}
+
+function onSocketDisconnected() {
+	if (!props.allowAnyone) {
+		refetch();
+	}
+}
+
 onMounted(() => {
 	setColorPalette(null);
 	setBackground(null);
+	document.addEventListener('dashboardHub-connected', onSocketConnected);
+	document.addEventListener('dashboardHub-disconnected', onSocketDisconnected);
+});
+
+onUnmounted(() => {
+	document.removeEventListener('dashboardHub-connected', onSocketConnected);
+	document.removeEventListener('dashboardHub-disconnected', onSocketDisconnected);
 });
 
 useMounted(startDashboardSocket, stopDashboardSocket, 20);

@@ -83,55 +83,16 @@ onMounted(() => {
 const name = ref<string>(configuration.value?.name ?? "");
 watch(name, (value) => {
   updateState("name", value);
-  if (!currentServer.value) return;
-
-  setServers([
-    ...servers.value.filter((server) => server.id !== currentServer.value!.id),
-    {
-      ...currentServer.value,
-      name: value.toString(),
-    },
-  ]);
-  setCurrentServer({
-    ...currentServer.value,
-    name: value.toString(),
-  });
 });
 
 const external_port = ref<number>(configuration.value?.external_port ?? 0);
 watch(external_port, (value) => {
   updateState("external_port", value);
-  if (!currentServer.value) return;
-
-  setServers([
-    ...servers.value.filter((server) => server.id !== currentServer.value!.id),
-    {
-      ...currentServer.value,
-      external_port: value.toString(),
-    },
-  ]);
-  setCurrentServer({
-    ...currentServer.value,
-    external_port: value.toString(),
-  });
 });
 
 const internal_port = ref<number>(configuration.value?.internal_port ?? 0);
 watch(internal_port, (value) => {
   updateState("internal_port", value);
-  if (!currentServer.value) return;
-
-  setServers([
-    ...servers.value.filter((server) => server.id !== currentServer.value!.id),
-    {
-      ...currentServer.value,
-      internal_port: value.toString(),
-    },
-  ]);
-  setCurrentServer({
-    ...currentServer.value,
-    internal_port: value.toString(),
-  });
 });
 
 const queue_workers = ref<number>(configuration.value?.queue_workers ?? 0);
@@ -189,6 +150,22 @@ const save = () => {
   serverClient()
     .patch(`/dashboard/configuration`, newConfig.value)
     .then(() => {
+      if (currentServer.value) {
+        const updates: Record<string, any> = {};
+        if (newConfig.value.name !== undefined) updates.name = newConfig.value.name.toString();
+        if (newConfig.value.external_port !== undefined) updates.external_port = newConfig.value.external_port.toString();
+        if (newConfig.value.internal_port !== undefined) updates.internal_port = newConfig.value.internal_port.toString();
+
+        if (Object.keys(updates).length > 0) {
+          const updated = { ...currentServer.value, ...updates };
+          setServers([
+            ...servers.value.filter((server) => server.id !== currentServer.value!.id),
+            updated,
+          ]);
+          setCurrentServer(updated);
+        }
+      }
+
       invalidate();
       query.invalidateQueries({ queryKey: ["serverInfo"] });
     });

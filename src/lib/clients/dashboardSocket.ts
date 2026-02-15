@@ -37,14 +37,19 @@ function error(err: Error) {
 	document.dispatchEvent(new Event('dashboardHub-error'));
 }
 
+let lastServerBaseUrl: string | undefined;
+
 watch(currentServer, async (newServer) => {
 	const accessToken = user.value?.accessToken;
+	const newBaseUrl = newServer?.serverBaseUrl;
 
-	if (newServer && dashboardSocketIsConnected.value) {
+	// Only reconnect when the server URL actually changes, not on cosmetic property changes
+	if (newServer && dashboardSocketIsConnected.value && newBaseUrl && newBaseUrl !== lastServerBaseUrl) {
+		lastServerBaseUrl = newBaseUrl;
 		dashboardSocket.value?.connection?.stop().then();
 		dashboardSocket.value?.dispose();
 		dashboardSocket.value = new SocketClient(
-			currentServer.value!.serverBaseUrl!,
+			newBaseUrl,
 			accessToken,
 			'dashboardHub',
 		);
@@ -92,6 +97,7 @@ export async function startDashboardSocket() {
 			|| dashboardSocket.value?.connection?.state
 			=== HubConnectionState.Disconnected)
 	) {
+		lastServerBaseUrl = currentServer.value.serverBaseUrl;
 		dashboardSocket.value = new SocketClient(
 			currentServer.value.serverBaseUrl,
 			accessToken,
