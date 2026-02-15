@@ -5,9 +5,12 @@ import type { MoooomIcons } from '@Icons/icons';
 import type { NameVal } from '@/types/api/dashboard/server';
 import { Device } from '@capacitor/device';
 
-export const isMobile = useMediaQuery(
+const isSmallScreen = useMediaQuery(
 	'(max-width: 600px) and (orientation: portrait), (max-height: 600px) and (orientation: landscape)',
 );
+const isMobileDevice = isPlatform('mobile') || isPlatform('mobileweb');
+
+export const isMobile = computed(() => isMobileDevice && isSmallScreen.value);
 
 const nativeOverride = useLocalStorage('nativeOverride', false);
 
