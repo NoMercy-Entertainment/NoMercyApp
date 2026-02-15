@@ -23,7 +23,7 @@ import MoooomIcon from '@/components/Images/icons/MoooomIcon.vue';
 import NavbarButton from './NavbarButton.vue';
 
 const { data: libraries } = useServerClient<LibrariesResponse[]>({
-	path: '/setup/libraries',
+	path: '/dashboard/libraries',
 	queryKey: ['libraries'],
 });
 
