@@ -57,6 +57,7 @@ watch(configuration, (value) => {
   request_workers.value = value?.request_workers;
   encoder_workers.value = value?.encoder_workers;
   image_workers.value = value?.image_workers;
+  file_workers.value = value?.file_workers;
   swagger.value = value?.swagger;
   ready.value = true;
 });
@@ -74,6 +75,7 @@ onMounted(() => {
   request_workers.value = configuration.value?.request_workers;
   encoder_workers.value = configuration.value?.encoder_workers;
   image_workers.value = configuration.value?.image_workers;
+  file_workers.value = configuration.value?.file_workers;
   swagger.value = configuration.value?.swagger;
   ready.value = true;
 });
@@ -162,6 +164,11 @@ watch(encoder_workers, (value) => {
   updateState("encoder_workers", value);
 });
 
+const file_workers = ref<number>(configuration.value?.file_workers ?? 0);
+watch(file_workers, (value) => {
+  updateState("file_workers", value);
+});
+
 const swagger = ref<boolean>(configuration.value?.swagger ?? false);
 watch(swagger, (value) => {
   updateState("swagger", value);
@@ -229,28 +236,44 @@ const save = () => {
         </div>
 
         <div v-if="ready" class="col-span-2 col-start-1 2xl:col-start-3">
-          <!--          <div class="flex flex-col gap-2">-->
-          <!--            <label for="cron_workers">Cron workers</label>-->
-          <!--            <InputNumber-->
-          <!--                id="cron_workers" v-model="cron_workers" class="mb-4"-->
-          <!--                 :useGrouping="false" showButtons :min="0"/>-->
-          <!--          </div>-->
-          <!--          <div class="flex flex-col gap-2">-->
-          <!--            <label for="data_workers">Data workers</label>-->
-          <!--            <InputNumber-->
-          <!--                id="data_workers" v-model="data_workers" class="mb-4"-->
-          <!--                 :useGrouping="false" showButtons :min="0"/>-->
-          <!--          </div>-->
-          <!--          <div class="flex flex-col gap-2">-->
-          <!--            <label for="request_workers">Request workers</label>-->
-          <!--            <InputNumber id="request_workers" v-model="request_workers" class="mb-4"-->
-          <!--                          :useGrouping="false" showButtons :min="0"/>-->
-          <!--          </div>-->
+          <div class="flex flex-col gap-2">
+            <label for="queue_workers">Queue workers</label>
+            <InputNumber
+              id="queue_workers"
+              v-model="queue_workers"
+              :min="0"
+              :useGrouping="false"
+              class="mb-4"
+              showButtons
+            />
+          </div>
           <div class="flex flex-col gap-2">
             <label for="encoder_workers">Encoder workers</label>
             <InputNumber
               id="encoder_workers"
               v-model="encoder_workers"
+              :min="0"
+              :useGrouping="false"
+              class="mb-4"
+              showButtons
+            />
+          </div>
+          <div class="flex flex-col gap-2">
+            <label for="cron_workers">Cron workers</label>
+            <InputNumber
+              id="cron_workers"
+              v-model="cron_workers"
+              :min="0"
+              :useGrouping="false"
+              class="mb-4"
+              showButtons
+            />
+          </div>
+          <div class="flex flex-col gap-2">
+            <label for="data_workers">Data workers</label>
+            <InputNumber
+              id="data_workers"
+              v-model="data_workers"
               :min="0"
               :useGrouping="false"
               class="mb-4"
@@ -269,10 +292,21 @@ const save = () => {
             />
           </div>
           <div class="flex flex-col gap-2">
-            <label for="queue_workers">Queue workers</label>
+            <label for="file_workers">File workers</label>
             <InputNumber
-              id="queue_workers"
-              v-model="queue_workers"
+              id="file_workers"
+              v-model="file_workers"
+              :min="0"
+              :useGrouping="false"
+              class="mb-4"
+              showButtons
+            />
+          </div>
+          <div class="flex flex-col gap-2">
+            <label for="request_workers">Request workers</label>
+            <InputNumber
+              id="request_workers"
+              v-model="request_workers"
               :min="0"
               :useGrouping="false"
               class="mb-4"

@@ -122,6 +122,7 @@ export interface ConfigurationResponse {
 	request_workers: number;
 	encoder_workers: number;
 	image_workers: number;
+	file_workers: number;
 	swagger: boolean;
 }
 
