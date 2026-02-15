@@ -1,1 +1,0 @@
-import{C as e,Ct as t,K as r,c as _,j as a}from"./i18n-Rm1NkeNf.js";import"./ionic-vX7GXDhi.js";import{C as o}from"./vue-core-ChFWZS_w.js";_();var u=a({__name:"Mobile",setup(n){return(p,s)=>(r(),e(t(o)))}}),c=u;export{c as default};
