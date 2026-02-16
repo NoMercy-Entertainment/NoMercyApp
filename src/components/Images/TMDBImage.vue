@@ -206,7 +206,7 @@ function onError(e: Event) {
 		<picture
 			v-if="!error && path && !path?.includes?.('undefined')"
 			:style="`opacity: ${opacity}; float: ${type === 'logo' ? 'right' : ''}`"
-			class="pointer-events-none absolute inset-0 h-full flex select-none flex-col items-start justify-start tv:justify-start self-end transition-all duration-500"
+			class="pointer-events-none absolute inset-0 h-full flex select-none flex-col tv:justify-start self-end transition-all duration-500"
 		>
 			<source :srcset="serverImageUrl" type="image/webp">
 			<img

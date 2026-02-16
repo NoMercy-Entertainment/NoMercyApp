@@ -390,7 +390,7 @@ watch(trailerIndex, (value, oldValue) => {
 										:shadow="pickPaletteColor(data?.color_palette?.poster)"
 										:size="500"
 										:title="data?.title"
-										class="pointer-events-none relative mx-auto flex h-full w-full select-none place-self-start overflow-hidden p-4"
+										class="pointer-events-none relative mx-auto flex h-full w-full select-none place-self-start overflow-hidden p-4 items-end justify-end"
 										class-name="relative bottom-0 h-auto w-auto p-4"
 										type="logo"
 									/>

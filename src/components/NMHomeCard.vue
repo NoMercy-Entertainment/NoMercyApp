@@ -93,7 +93,7 @@ function scrollToTop() {
 			:title="data?.title"
 			:width="null"
 			aspect="backdrop"
-			class="!absolute !inset-0 children:!w-available flex overflow-clip border-2 border-focus rounded-md"
+			class="!absolute !inset-0 children:!w-available flex overflow-clip border-2 border-focus rounded-md items-start justify-start"
 			class-name="relative flex w-available items-end justify-start gap-4 self-stretch overflow-clip transition-opacity duration-700 bg-surface-1"
 			loading="eager"
 			priority="high"
@@ -184,8 +184,8 @@ function scrollToTop() {
 
 			<HomeCardActions
 				:data="data"
-				:link="data?.link ?? ''"
 				:is-mobile="true"
+				:link="data?.link ?? ''"
 				class="relative z-10 p-6"
 			/>
 		</div>
