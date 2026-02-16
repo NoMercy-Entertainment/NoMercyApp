@@ -25,8 +25,9 @@ defineProps({
 			<div
 				class="relative flex flex-shrink-0 flex-grow-0 items-center justify-start gap-4 self-stretch"
 			>
-				<p class="flex-grow text-xl font-medium">
-					{{ $t(title) }}
+				<p class="flex flex-grow flex-nowrap gap-2 text-xl font-medium">
+					<span>{{ $t(title) }}</span>
+					<slot name="count" />
 				</p>
 				<div class="ml-auto flex gap-2 text-surface-12 bg-surface-12/2">
 					<slot name="cta" />
@@ -50,8 +51,9 @@ defineProps({
 		<div
 			class="relative flex flex-shrink-0 flex-grow-0 items-center justify-start gap-4 self-stretch"
 		>
-			<p class="flex-grow text-xl font-medium">
-				{{ $t(title) }}
+			<p class="flex flex-grow flex-nowrap gap-2 text-xl font-medium">
+				<span>{{ $t(title) }}</span>
+				<slot name="count" />
 			</p>
 			<div class="ml-auto flex gap-2 bg-surface-12/2">
 				<slot name="cta" />

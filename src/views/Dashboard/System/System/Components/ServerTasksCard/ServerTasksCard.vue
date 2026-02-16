@@ -84,7 +84,15 @@ useHubListener(connection, 'disconnected', handleClear);
 		:background="false"
 		title="Running tasks"
 	>
+		<template #count>
+			<span
+				class="h-7 w-min flex rounded-lg px-2 border border-solid border-surface-12/11 text-surface-11 text-sm font-semibold"
+			>
+				{{ encoderData.length + (queueData?.length ?? 0) }}
+			</span>
+		</template>
 		<template #cta>
+			<!-- number pill with the amount of tasks -->
 			<button
 				class="relative h-7 flex flex-shrink-0 flex-grow-0 items-center justify-center gap-2 overflow-hidden border border-solid border-surface-12/11 rounded-lg pl-1 pr-2 py-1 text-surface-12/11"
 				@click="toggleDisplayAll"
