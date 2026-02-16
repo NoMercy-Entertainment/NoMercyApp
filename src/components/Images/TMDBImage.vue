@@ -3,8 +3,6 @@ import type { PropType } from 'vue';
 import { computed, ref, watch } from 'vue';
 
 import type { PaletteColors } from '@/types/api/shared';
-
-import { isDarkMode } from '@/config/global';
 import { currentServer } from '@/store/currentServer';
 import { useAutoThemeColors } from '@/store/preferences';
 import AppLogoSquare from '@/components/Images/icons/AppLogoSquare.vue';
@@ -61,6 +59,16 @@ const props = defineProps({
 		>,
 		required: false,
 	},
+	left: {
+		type: Boolean,
+		required: false,
+		default: false,
+	},
+	right: {
+		type: Boolean,
+		required: false,
+		default: false,
+	},
 });
 
 const opacity = ref(0);
@@ -85,9 +93,6 @@ const tmdbImageUrl = computed(() => {
 	if (!props.path)
 		return;
 	return `https://media.themoviedb.org/t/p/${getCommonSize(props?.size ?? 'original')}${props.path}`;
-});
-const luminosityValue = computed(() => {
-	return isDarkMode.value ? 0 : 20;
 });
 
 const style = computed(() => {
@@ -215,7 +220,7 @@ function onError(e: Event) {
 					'aspect-poster w-available min-w-available h-available': aspect === 'poster',
 					'aspect-backdrop w-auto h-available': aspect === 'backdrop',
 					'w-auto !h-inherit': aspect === null,
-					'object-fit w-auto h-available': type === 'logo',
+					'object-scale-down w-auto h-available': type === 'logo',
 					'object-cover object-top': type === 'image',
 					[`${widthClass}`]: true,
 					[`${className}`]: true,
@@ -229,7 +234,7 @@ function onError(e: Event) {
 				:src="tmdbImageUrl"
 				:style="`
 					float: ${type === 'logo' ? 'right' : ''};
-					object-position: top center;
+          object-position: ${left ? 'left' : ''} ${right ? 'right' : ''} ${type === 'logo' ? 'top' : ' top center'};
 				`"
 				:width="size"
 				class="pointer-events-auto bg-bottom transition-all duration-500"

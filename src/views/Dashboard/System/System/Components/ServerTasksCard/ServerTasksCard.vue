@@ -84,11 +84,11 @@ useHubListener(connection, 'disconnected', handleClear);
 		:background="false"
 		title="Running tasks"
 	>
-		<template #count>
+		<template v-if="queueData?.length" #count>
 			<span
 				class="h-7 w-min flex rounded-lg px-2 border border-solid border-surface-12/11 text-surface-11 text-sm font-semibold"
 			>
-				{{ encoderData.length + (queueData?.length ?? 0) }}
+				{{ queueData?.length }}
 			</span>
 		</template>
 		<template #cta>

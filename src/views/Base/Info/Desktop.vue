@@ -387,6 +387,7 @@ watch(trailerIndex, (value, oldValue) => {
 										:key="data?.logo"
 										:auto-shadow="true"
 										:path="data?.logo"
+										:right="true"
 										:shadow="pickPaletteColor(data?.color_palette?.poster)"
 										:size="500"
 										:title="data?.title"

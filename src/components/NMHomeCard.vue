@@ -108,6 +108,7 @@ function scrollToTop() {
 				<TMDBImage
 					v-if="data?.logo"
 					:color-palette="data?.color_palette?.backdrop"
+					:left="true"
 					:path="data?.logo"
 					:title="data?.title"
 					:width="500"
