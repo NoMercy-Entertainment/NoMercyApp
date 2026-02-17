@@ -146,6 +146,32 @@ function handleRefresh() {
 		});
 }
 
+const loadingMissing = ref(false);
+function handleMissing() {
+	loadingMissing.value = true;
+
+	serverClient()
+		.post<StatusResponse<string>>(`dashboard/libraries/${route.params.id}/scan-new`)
+		.then(({ data }) => {
+			loadingMissing.value = false;
+			toast.add({
+				severity: data.status === 'ok' ? 'success' : 'error',
+				summary: translate(data.status === 'ok' ? 'Success' : 'Error'),
+				detail: translate(data.message, ...data.args),
+				life: 5000,
+			});
+		})
+		.catch(() => {
+			loadingMissing.value = false;
+			toast.add({
+				severity: 'error',
+				summary: translate('Error'),
+				detail: translate('An error occurred while rescanning the library folders'),
+				life: 5000,
+			});
+		});
+}
+
 const loadingRescan = ref(false);
 function handleRescan() {
 	loadingRescan.value = true;
@@ -183,7 +209,8 @@ function handleCancel() {
 const isSaving = ref(false);
 
 async function handleSave() {
-	if (isSaving.value) return;
+	if (isSaving.value)
+		return;
 	isSaving.value = true;
 
 	try {
@@ -214,14 +241,16 @@ async function handleSave() {
 		});
 
 		handleCancel();
-	} catch {
+	}
+	catch {
 		toast.add({
 			severity: 'error',
 			summary: translate('Error'),
 			detail: translate('An error occurred while saving library settings'),
 			life: 5000,
 		});
-	} finally {
+	}
+	finally {
 		isSaving.value = false;
 	}
 }
@@ -289,7 +318,7 @@ function handleDeleteFolder(folder: FolderLibrary) {
 										v-model="title"
 										tabindex="-1"
 										type="text"
-										@change="title = $event.target.value"
+										@change="title = ($event.target as any)?.value ?? ''"
 									/>
 								</div>
 
@@ -317,7 +346,7 @@ function handleDeleteFolder(folder: FolderLibrary) {
 											id="special_name"
 											v-model="specialName"
 											tabindex="-1"
-											@change="specialName = $event.target.value"
+											@change="specialName = ($event.target as any)?.value ?? ''"
 										/>
 									</div>
 
@@ -391,7 +420,23 @@ function handleDeleteFolder(folder: FolderLibrary) {
 						variant="text"
 						@click="handleRefresh"
 					>
-						{{ $t("Refresh") }}
+						{{ $t("Rescan") }}
+					</Button>
+					<Button
+						id="missing"
+						:class="
+							loadingMissing
+								? 'first:children:animate-spin !cursor-not-allowed'
+								: ''
+						"
+						:disabled="loadingMissing"
+						color="auto"
+						start-icon="folderSwap"
+						type="button"
+						variant="text"
+						@click="handleMissing"
+					>
+						{{ $t("Find missing") }}
 					</Button>
 					<Button
 						id="rescan"
@@ -407,7 +452,7 @@ function handleDeleteFolder(folder: FolderLibrary) {
 						variant="text"
 						@click="handleRescan"
 					>
-						{{ $t("Rescan") }}
+						{{ $t("Rescan files") }}
 					</Button>
 					<Button
 						id="remove"
@@ -442,9 +487,9 @@ function handleDeleteFolder(folder: FolderLibrary) {
 					</Button>
 					<Button
 						id="save"
+						:disabled="isSaving"
 						color="theme"
 						type="button"
-						:disabled="isSaving"
 						variant="default"
 						@click="handleSave"
 					>

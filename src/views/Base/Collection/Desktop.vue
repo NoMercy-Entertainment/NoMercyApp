@@ -1,39 +1,42 @@
 <script lang="ts" setup>
-import {computed, onMounted, onUnmounted, ref, watch} from 'vue';
-import {useRoute} from 'vue-router';
-import {IonContent, IonPage} from '@ionic/vue';
-import {collect} from 'collect.js';
+import { computed, onMounted, onUnmounted, ref, watch } from 'vue';
+import { useRoute } from 'vue-router';
+import { IonContent, IonPage } from '@ionic/vue';
+import { collect } from 'collect.js';
 
-import type {CollectionResponse} from '@/types/api/base/collection';
+import type { CollectionResponse } from '@/types/api/base/collection';
 
 import i18next from '@/config/i18next';
 import useServerClient from '@/lib/clients/useServerClient';
-import {setBackground, setColorPalette} from '@/store/ui';
-import { setTitle } from '@/lib/utils/string';
-import { sortByPosterAlphabetized, unique } from '@/lib/utils/array';
-import {convertToHumanReact} from '@/lib/dateTime';
+import { setBackground, setColorPalette } from '@/store/ui';
+import { setTitle, translate } from '@/lib/utils/string';
+import { sortByPosterAlphabetized } from '@/lib/utils/array';
+import { convertToHumanReact } from '@/lib/dateTime';
 
 import ScrollContainer from '@/Layout/Desktop/components/ScrollContainer.vue';
 import FloatingBackButton from '@/components/Buttons/FloatingBackButton.vue';
 import GenrePill from '@/components/Buttons/GenrePill.vue';
 import MediaLikeButton from '@/components/Buttons/MediaLikeButton.vue';
-import {showBackdrops} from '@/store/preferences';
+import { showBackdrops } from '@/store/preferences';
 import MediaCard from '@/components/NMCard.vue';
 import ContentRating from '@/components/Images/ContentRating.vue';
-import {useTranslation} from 'i18next-vue';
+import { useTranslation } from 'i18next-vue';
 import InfoHeaderItem from '@/views/Base/Info/components/InfoHeaderItem.vue';
 import NotFound from '@/Layout/Desktop/components/NotFound.vue';
 import ShareButton from '@/components/Buttons/ShareButton.vue';
-import type {ShareOptions} from '@capacitor/share';
+import type { ShareOptions } from '@capacitor/share';
 import PersonCarousel from '@/components/Carousel/PersonCarousel.vue';
 import ImageCarousel from '@/components/Carousel/ImageCarousel.vue';
-import {buttonClasses} from '@/config/global.ts';
+import { buttonClasses } from '@/config/global.ts';
 import ListControlHeaderMoreMenu from '@/Layout/Desktop/components/Menus/ListControlHeaderMoreMenu.vue';
-import {MenuButton} from '@headlessui/vue';
 import MoooomIcon from '@/components/Images/icons/MoooomIcon.vue';
+import serverClient from '@/lib/clients/serverClient.ts';
+import type { IMenuItem } from '@/types';
+import { useToast } from 'primevue/usetoast';
 
-const { t } = useTranslation();
 const route = useRoute();
+const { t } = useTranslation();
+const toast = useToast();
 
 const { data, isError } = useServerClient<CollectionResponse>({
 	queryKey: ['base', 'collection', route.params.id],
@@ -131,6 +134,143 @@ const infoItems = computed(() => [
 		value: duration.value,
 	},
 ]);
+
+function toggleWatched() {
+}
+
+function handleRescan() {
+	serverClient()
+		.post<{
+		message: string;
+		status: string;
+		args: string[];
+	}>(`${route.fullPath}/rescan`)
+		.then(({ data }) => {
+			toast.add({
+				severity: data.status === 'ok' ? 'success' : 'error',
+				summary: translate('Success'),
+				detail: translate(data.message, ...data.args),
+				life: 5000,
+			});
+		})
+		.catch(() => {
+			toast.add({
+				severity: 'error',
+				summary: translate('error'),
+				detail: translate('An error occurred while rescanning the library folders'),
+				life: 5000,
+			});
+		});
+}
+
+function handleRefresh() {
+	serverClient()
+		.post<{
+		message: string;
+		status: string;
+		args: string[];
+	}>(`${route.fullPath}/refresh`)
+		.then(({ data }) => {
+			toast.add({
+				severity: data.status === 'ok' ? 'success' : 'error',
+				summary: translate(data.status === 'ok' ? 'Success' : 'Error'),
+				detail: translate(data.message, ...data.args),
+				life: 5000,
+			});
+		})
+		.catch(() => {
+			toast.add({
+				severity: 'error',
+				summary: translate('Error'),
+				detail: translate('An error occurred while rescanning the library folders'),
+				life: 5000,
+			});
+		});
+}
+
+function handleDelete() {
+	serverClient()
+		.delete<{
+		message: string;
+		status: string;
+		args: string[];
+	}>(`${route.fullPath}`)
+		.then(({ data }) => {
+			toast.add({
+				severity: data.status === 'ok' ? 'success' : 'error',
+				summary: translate(data.status === 'ok' ? 'Success' : 'Error'),
+				detail: translate(data.message, ...data.args),
+				life: 5000,
+			});
+		})
+		.catch(() => {
+			toast.add({
+				severity: 'error',
+				summary: translate('error'),
+				detail: translate('An error occurred while rescanning the library folders'),
+				life: 5000,
+			});
+		});
+}
+
+function handleAdd() {
+	serverClient()
+		.post<{
+		message: string;
+		status: string;
+		args: string[];
+	}>(`${route.fullPath}/add`)
+		.then(({ data }) => {
+			toast.add({
+				severity: data.status === 'ok' ? 'success' : 'error',
+				summary: translate(data.status === 'ok' ? 'Success' : 'Error'),
+				detail: translate(data.message, ...data.args),
+				life: 5000,
+			});
+		})
+		.catch(() => {
+			toast.add({
+				severity: 'error',
+				summary: translate('Error'),
+				detail: translate('An error occurred while rescanning the library folders'),
+				life: 5000,
+			});
+		});
+}
+
+const menuItems = computed<IMenuItem[]>(() => [
+	{
+		icon: 'arrowRefreshHorizontal',
+		onclick: handleRescan,
+		title: 'Rescan files',
+		privileged: true,
+	},
+	{
+		icon: 'arrowRefreshHorizontal',
+		onclick: handleRefresh,
+		title: 'Refresh data',
+		privileged: true,
+	},
+	{
+		icon: 'folderAdd',
+		onclick: handleAdd,
+		title: `Add ${data?.value?.media_type}`,
+		privileged: true,
+	},
+	{
+		icon: 'folderRemove',
+		onclick: handleDelete,
+		title: `Delete ${data?.value?.media_type}`,
+		privileged: true,
+	},
+	{
+		icon: 'edit',
+		onclick: () => {
+			window.open(`https://www.themoviedb.org/${data?.value?.media_type}/${data?.value?.id}/edit`, '_blank');
+		},
+		title: 'Edit on TMDb',
+	},
+]);
 </script>
 
 <template>
@@ -219,6 +359,7 @@ const infoItems = computed(() => [
 											</p>
 										</div>
 									</RouterLink>
+
 									<MediaLikeButton
 										v-if="data"
 										:data="data"
@@ -227,20 +368,11 @@ const infoItems = computed(() => [
 									/>
 
 									<ShareButton :share-data="shareData" class="!bg-surface-6/11 !p-0" />
+
 									<ListControlHeaderMoreMenu
-										:items="[]"
-										class="text-surface-12/70 dark:text-surface-12/80"
-										class-name="max-h-80 overflow-y-auto overflow-x-hidden !ml-0 !-translate-x-1/3"
-									>
-										<template #button>
-											<MenuButton
-												:class="buttonClasses"
-												class="!bg-surface-6/11"
-											>
-												<MoooomIcon class-name="w-6" icon="menuDotsVertical" />
-											</MenuButton>
-										</template>
-									</ListControlHeaderMoreMenu>
+										:items="menuItems"
+										class="text-surface-12/70 dark:text-surface-12/80 "
+									/>
 								</nav>
 							</div>
 						</section>
@@ -262,7 +394,7 @@ const infoItems = computed(() => [
 						<PersonCarousel
 							v-if="data?.cast && data?.cast?.length > 0"
 							id="cast"
-							:data="unique(data?.cast, 'id').slice(0, 50)"
+							:data="sortByPosterAlphabetized(data?.cast, 'order', 'id').slice(0, 50)"
 							:index="0"
 							next_id="crew"
 							previous_id="poster"

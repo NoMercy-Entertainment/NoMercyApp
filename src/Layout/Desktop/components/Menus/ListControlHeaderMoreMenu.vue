@@ -1,21 +1,14 @@
 <script lang="ts" setup>
 import type { PropType } from 'vue';
 import { computed } from 'vue';
+import { twMerge } from 'tailwind-merge';
+import Button from 'primevue/button';
 import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/vue';
+import type { IMenuItem } from '@/types';
 
-import type { MoooomIcons } from '@Icons/icons';
 import { buttonClasses } from '@/config/global.ts';
 import MoooomIcon from '@/components/Images/icons/MoooomIcon.vue';
-import { twMerge } from 'tailwind-merge';
 import { currentServer } from '@/store/currentServer.ts';
-import Button from 'primevue/button';
-
-interface IMenuItem {
-	icon: keyof typeof MoooomIcons;
-	onclick: () => void;
-	title: string;
-	privileged?: boolean;
-}
 
 const props = defineProps({
 	items: {
@@ -68,7 +61,7 @@ const filteredItems = computed(() => {
 			:aria-label="$t(title)"
 			:as="MenuButton"
 			:class="{
-				[twMerge(buttonClasses, 'flex flex-nowrap w-fit min-w-fit')]: true,
+				[twMerge(buttonClasses, 'flex flex-nowrap')]: true,
 			}"
 			:unstyled="true"
 			class="data-[headlessui-state='open']:bg-surface-12/6 sm:data-[headlessui-state='open']:bg-surface-12/6"

@@ -38,7 +38,7 @@ export function groupBy<T extends Record<string, unknown>>(array: T[], key: stri
 
 	array.forEach((element) => {
 		const groupKey = String(element[key]);
-		list[groupKey] = array.filter((el) => el[key] === element[key]);
+		list[groupKey] = array.filter(el => el[key] === element[key]);
 	});
 
 	return list;
@@ -247,7 +247,7 @@ export function unique<T>(array: T[], key: string): T[] {
 
 	return array.filter(
 		(obj, pos, arr) =>
-			arr.map((mapObj) => (mapObj as Record<string, unknown>)[key]).indexOf((obj as Record<string, unknown>)[key]) === pos,
+			arr.map(mapObj => (mapObj as Record<string, unknown>)[key]).indexOf((obj as Record<string, unknown>)[key]) === pos,
 	);
 }
 
@@ -255,7 +255,7 @@ export function uniqueBy<T>(array: T[] | null | undefined, key: (item: T) => unk
 	if (!array) {
 		return [];
 	}
-	return Array.from(new Map(array.map((x) => [key(x), x])).values());
+	return Array.from(new Map(array.map(x => [key(x), x])).values());
 }
 
 /**
@@ -328,11 +328,11 @@ export function trackSort(a: { disc: number | string; track: string | number }, 
 
 export function uniqBy<T extends Record<string, unknown>>(a: T[], key: string | number): T[] {
 	return Array.from(
-		new Map(a.map((item) => [item[key], item])).values(),
+		new Map(a.map(item => [item[key], item])).values(),
 	);
 }
 
-export function sortByPosterAlphabetized<T>(data: T[], sort = 'name',	uniqued: string | null = null): T[] {
+export function sortByPosterAlphabetized<T>(data: T[], sort = 'name', uniqued: string | null = null): T[] {
 	data = toRaw(data);
 	if (uniqued) {
 		data = unique<T>(data, uniqued);
