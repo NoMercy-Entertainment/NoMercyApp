@@ -154,12 +154,12 @@ watch(data, (value) => {
 
 onIonViewDidEnter(() => {
 	audioPlayer.stop();
-	if (user.value.features?.nomercyConnect) {
-		initPlayer();
-	}
-	else if (data.value?.length) {
-		initPlayer(data.value);
-	}
+	// if (user.value.features?.nomercyConnect) {
+	// 	initPlayer();
+	// }
+	// else if (data.value?.length) {
+	initPlayer(data.value);
+	// }
 });
 
 onIonViewDidLeave(() => {
