@@ -43,7 +43,7 @@ const props = defineProps({
 	},
 });
 
-watch(props, () => {
+watch(() => props.data, () => {
 	const el = document.querySelector<HTMLElement>(
 		`#trackLink-${props.type}-${props.id}-${props.suffix}`,
 	);

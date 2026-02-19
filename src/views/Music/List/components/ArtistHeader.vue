@@ -41,10 +41,10 @@ function calculateDuration(value?: typeof props.data) {
 	);
 }
 
-watch(props, (value) => {
+watch(() => props.data, (value) => {
 	if (!value)
 		return;
-	duration.value = calculateDuration(value.data);
+	duration.value = calculateDuration(value);
 });
 
 onMounted(() => {

@@ -81,8 +81,8 @@ function handleLike(e?: MouseEvent) {
 		});
 }
 
-watch(props, (prop) => {
-	liked.value = prop.data?.favorite;
+watch(() => props.data?.favorite, (favorite) => {
+	liked.value = favorite;
 });
 </script>
 

@@ -129,7 +129,7 @@ onMounted(() => {
 	image();
 });
 
-watch(props, () => {
+watch(() => props.data?.cover, () => {
 	image();
 });
 
