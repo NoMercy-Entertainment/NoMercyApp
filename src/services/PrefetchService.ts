@@ -58,6 +58,17 @@ async function prefetchPath(path: string): Promise<void> {
 	}
 }
 
+const PREFETCHABLE_ROUTES = new Set(['/home', '/', '/libraries']);
+
+export function prefetchRedirectRoute(path: string): void {
+	if (!PREFETCHABLE_ROUTES.has(path)) {
+		return;
+	}
+
+	const normalizedPath = path === '/' ? '/home' : path;
+	prefetchPath(normalizedPath);
+}
+
 export function prefetchForRoute(route: RouteLocationNormalized): void {
 	const routeName = route.name as string;
 	const pathsToPrefetch = PREFETCH_ROUTES[routeName];

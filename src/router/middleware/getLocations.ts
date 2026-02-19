@@ -10,6 +10,8 @@ import { setNotifications } from '@/store/notifications';
 
 import router from '@/router';
 import apiClient from '@/lib/clients/apiClient';
+import { redirectUrl } from '@/store/routeState';
+import { prefetchRedirectRoute } from '@/services/PrefetchService';
 
 const done = ref(false);
 
@@ -64,6 +66,8 @@ function getLocations(): Promise<void> {
 				else if (servers.value.length > 1) {
 					await router.replace({ name: 'Select Server' });
 				}
+
+				prefetchRedirectRoute(redirectUrl.value);
 
 				return resolve();
 			})
