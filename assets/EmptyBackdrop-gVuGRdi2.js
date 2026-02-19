@@ -1,1 +1,0 @@
-import{K as e,T as _,c as r}from"./i18n-Rm1NkeNf.js";import{v as a}from"./index-CNvw-Odg.js";r();var t={},c={class:"bg"};function o(n,s){return e(),_("div",c)}var p=a(t,[["render",o],["__scopeId","data-v-386a0916"]]);export{p as t};
