@@ -16,6 +16,7 @@ import LogModal from '@/views/Dashboard/Advanced/Logs/components/LogModal.vue';
 import LogTypeSelector from '@/views/Dashboard/Advanced/Logs/components/LogTypeSelector.vue';
 import MoooomIcon from '@/components/Images/icons/MoooomIcon.vue';
 import { userTime } from '@/lib/dateTime';
+import { censorPublicIpAddresses } from '@/lib/utils';
 
 const selectedTypes = ref<LogType[]>([]);
 const selectedTypeNames = ref<string[]>([]);
