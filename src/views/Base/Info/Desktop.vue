@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { computed, onMounted, onUnmounted, ref, watch } from 'vue';
+import { computed, onMounted, ref, watch } from 'vue';
 import { useRoute } from 'vue-router';
 import { useTranslation } from 'i18next-vue';
 import { IonContent, IonPage } from '@ionic/vue';
@@ -17,6 +17,7 @@ import { setTitle, translate } from '@/lib/utils/string';
 import { sortByPosterAlphabetized } from '@/lib/utils/array';
 import { pickPaletteColor } from '@/lib/colorHelper';
 import serverClient from '@/lib/clients/serverClient';
+import { useTrailerService } from '@/composables/useTrailerService';
 import { background, setBackground, setColorPalette, setLogo } from '@/store/ui';
 import { currentSong } from '@/store/audioPlayer';
 
@@ -63,10 +64,7 @@ const { data: hasItem } = useServerClient<{
 	path: `${route.fullPath}/available`,
 });
 
-const trailerOpen = ref(false);
-const trailerState = ref<true | false | 'loading'>('loading');
-const trailerIndex = ref(-1);
-const interval = ref<NodeJS.Timeout | null>(null);
+const { buttonState, trailerOpen, resolvedTrailer, toggleTrailer } = useTrailerService(data);
 const missingEpisodesModalOpen = ref(false);
 
 interface IMenuItem {
@@ -108,59 +106,6 @@ function openMissingEpisodesContentModal() {
 
 function closeMissingEpisodesModal() {
 	missingEpisodesModalOpen.value = false;
-}
-
-function processTrailer(value: InfoResponse | undefined) {
-	trailerState.value = 'loading';
-
-	if (
-		!value
-		|| value.videos?.length === 0
-		|| !value.videos?.[trailerIndex.value]
-	) {
-		trailerState.value = false;
-		return;
-	}
-
-	serverClient()
-		.head(
-			`trailer/${value.videos[trailerIndex.value]?.src}`,
-			{
-				withCredentials: false,
-			},
-		)
-		.then(() => {
-			trailerState.value = true;
-		})
-		.catch(() => {
-			incrementTrailerIndex();
-			trailerState.value = false;
-		});
-}
-
-function toggleTrailer(e?: MouseEvent) {
-	e?.stopPropagation();
-	if (!data?.value?.videos)
-		return;
-	trailerOpen.value = !trailerOpen.value;
-
-	const main = document.querySelector<HTMLDivElement>('#main');
-	if (!main)
-		return;
-
-	main.style.overflow = trailerOpen.value ? 'hidden' : 'auto';
-}
-
-function incrementTrailerIndex() {
-	if (!data?.value || data?.value?.videos?.length === 0)
-		return;
-
-	if (trailerIndex.value === data?.value?.videos.length - 1) {
-		trailerIndex.value = 0;
-	}
-	else {
-		trailerIndex.value++;
-	}
 }
 
 function toggleWatched() {
@@ -307,7 +252,6 @@ const menuItems = computed<IMenuItem[]>(() => [
 ]);
 
 onMounted(() => {
-	trailerIndex.value = 0;
 	setTitle(data?.value?.name);
 
 	if (data?.value?.backdrop && background.value !== data?.value?.backdrop) {
@@ -322,12 +266,6 @@ onMounted(() => {
 	) {
 		setColorPalette(data?.value?.color_palette?.poster ?? data?.value?.color_palette?.backdrop);
 	}
-
-	processTrailer(data?.value);
-});
-
-onUnmounted(() => {
-	clearInterval(interval.value ?? undefined);
 });
 
 watch(data, (value) => {
@@ -341,15 +279,6 @@ watch(data, (value) => {
 	if (value?.color_palette?.backdrop || value?.color_palette?.poster) {
 		setColorPalette(value?.color_palette?.poster || value?.color_palette?.backdrop);
 	}
-
-	processTrailer(value);
-});
-
-watch(trailerIndex, (value, oldValue) => {
-	if (!value || value === oldValue)
-		return;
-
-	processTrailer(data?.value);
 });
 </script>
 
@@ -553,13 +482,15 @@ watch(trailerIndex, (value, oldValue) => {
 												<BannerButton
 													class="bg-surface-6"
 													title="Watch trailer"
-													@click="trailerState === true ? toggleTrailer($event) : null"
+													@click="buttonState === 'available' ? toggleTrailer($event) : null"
 												>
 													<MoooomIcon
 														:style="`color: ${
-															trailerState === true
+															buttonState === 'available'
 																? 'var(--color-green-8)'
-																: 'var(--color-red-8)'
+																: buttonState === 'unavailable'
+																	? 'var(--color-red-8)'
+																	: 'var(--color-gray-8)'
 														}`"
 														class-name="w-6"
 														icon="film"
@@ -842,14 +773,9 @@ watch(trailerIndex, (value, oldValue) => {
 					</div>
 
 					<Trailer
-						v-if="data?.videos && data?.videos?.length > 0 && trailerOpen"
-						:key="trailerIndex"
-						:increment-trailer-index="incrementTrailerIndex"
-						:index="trailerIndex"
-						:open="trailerOpen"
-						:title="data?.title ?? data?.name"
+						v-if="resolvedTrailer && trailerOpen"
+						:resolved-trailer="resolvedTrailer"
 						:toggle="toggleTrailer"
-						:videos="data?.videos"
 						class="inset-0 h-full w-full z-999"
 					/>
 				</div>

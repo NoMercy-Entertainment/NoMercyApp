@@ -9,6 +9,7 @@ import type { InfoResponse } from '@/types/api/base/info';
 import type { ContinueWatching, HomeItem } from '@/types/api/base/home';
 import type { Collection, CollectionResponse } from '@/types/api/base/collection';
 import type { PlaylistItem } from '@/types/musicPlayer';
+import type { TrailerButtonState } from '@/types/api/trailerService';
 
 import { isNative } from '@/config/global';
 import useServerClient from '@/lib/clients/useServerClient';
@@ -34,7 +35,8 @@ const props = defineProps({
 		>,
 		required: false,
 	},
-	trailerState: {
+	buttonState: {
+		type: String as PropType<TrailerButtonState>,
 		required: false,
 	},
 	toggleTrailer: {
@@ -119,7 +121,7 @@ const shareData = computed<ShareOptions>(() => ({
 			</RouterLink>
 
 			<button
-				v-if="trailerState === true"
+				v-if="buttonState === 'available'"
 				class="frosting flex justify-start items-center flex-grow h-10 relative overflow-hidden gap-2 px-2 py-4 rounded-3xl text-surface-12 bg-black/80"
 				title="Watch trailer"
 				@click="toggleTrailer"
@@ -130,7 +132,7 @@ const shareData = computed<ShareOptions>(() => ({
 			</button>
 
 			<button
-				v-else-if="trailerState === false"
+				v-else-if="buttonState === 'unavailable'"
 				class="frosting flex justify-start items-center flex-grow h-10 relative overflow-hidden gap-2 px-2 py-4 rounded-3xl text-surface-12 bg-black/80"
 				disabled
 				title="Trailer unavailable"
@@ -141,7 +143,7 @@ const shareData = computed<ShareOptions>(() => ({
 			</button>
 
 			<button
-				v-else-if="trailerState === 'loading'"
+				v-else-if="buttonState && buttonState !== 'idle'"
 				class="frosting flex justify-start items-center flex-grow h-10 relative overflow-hidden gap-2 px-2 py-4 rounded-3xl text-surface-12 bg-black/80"
 				disabled
 				title="Loading trailer..."

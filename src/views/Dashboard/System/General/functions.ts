@@ -30,12 +30,14 @@ const newConfig = ref<ConfigurationResponse>({
 	name: '',
 	external_port: 0,
 	internal_port: 0,
-	queue_workers: 0,
-	cron_workers: 0,
-	data_workers: 0,
-	request_workers: 0,
-	encoder_workers: 0,
-	image_workers: 0,
+	library_workers: 1,
+	import_workers: 2,
+	extras_workers: 15,
+	encoder_workers: 1,
+	cron_workers: 1,
+	image_workers: 10,
+	file_workers: 4,
+	music_workers: 2,
 	swagger: false,
 });
 
@@ -64,46 +66,60 @@ watch(internal_port, (value) => {
 	updateState(configuration, newConfig, 'internal_port', value);
 });
 
-export const queue_workers = ref<Nullable<number>>(
-	configuration.value?.queue_workers ?? 0,
+export const library_workers = ref<Nullable<number>>(
+	configuration.value?.library_workers ?? 1,
 );
-watch(queue_workers, (value) => {
-	updateState(configuration, newConfig, 'queue_workers', value);
+watch(library_workers, (value) => {
+	updateState(configuration, newConfig, 'library_workers', value);
+});
+
+export const import_workers = ref<Nullable<number>>(
+	configuration.value?.import_workers ?? 2,
+);
+watch(import_workers, (value) => {
+	updateState(configuration, newConfig, 'import_workers', value);
+});
+
+export const extras_workers = ref<Nullable<number>>(
+	configuration.value?.extras_workers ?? 15,
+);
+watch(extras_workers, (value) => {
+	updateState(configuration, newConfig, 'extras_workers', value);
+});
+
+export const encoder_workers = ref<Nullable<number>>(
+	configuration.value?.encoder_workers ?? 1,
+);
+watch(encoder_workers, (value) => {
+	updateState(configuration, newConfig, 'encoder_workers', value);
 });
 
 export const cron_workers = ref<Nullable<number>>(
-	configuration.value?.cron_workers ?? 0,
+	configuration.value?.cron_workers ?? 1,
 );
 watch(cron_workers, (value) => {
 	updateState(configuration, newConfig, 'cron_workers', value);
 });
 
-export const data_workers = ref<Nullable<number>>(
-	configuration.value?.data_workers ?? 0,
-);
-watch(data_workers, (value) => {
-	updateState(configuration, newConfig, 'data_workers', value);
-});
-
-export const request_workers = ref<Nullable<number>>(
-	configuration.value?.request_workers ?? 0,
-);
-watch(request_workers, (value) => {
-	updateState(configuration, newConfig, 'request_workers', value);
-});
-
 export const image_workers = ref<Nullable<number>>(
-	configuration.value?.image_workers ?? 0,
+	configuration.value?.image_workers ?? 10,
 );
 watch(image_workers, (value) => {
 	updateState(configuration, newConfig, 'image_workers', value);
 });
 
-export const encoder_workers = ref<Nullable<number>>(
-	configuration.value?.encoder_workers ?? 0,
+export const file_workers = ref<Nullable<number>>(
+	configuration.value?.file_workers ?? 4,
 );
-watch(encoder_workers, (value) => {
-	updateState(configuration, newConfig, 'encoder_workers', value);
+watch(file_workers, (value) => {
+	updateState(configuration, newConfig, 'file_workers', value);
+});
+
+export const music_workers = ref<Nullable<number>>(
+	configuration.value?.music_workers ?? 2,
+);
+watch(music_workers, (value) => {
+	updateState(configuration, newConfig, 'music_workers', value);
 });
 
 watch(configuration, (value) => {
@@ -113,12 +129,14 @@ watch(configuration, (value) => {
 	name.value = value?.name;
 	external_port.value = value?.external_port;
 	internal_port.value = value?.internal_port;
-	queue_workers.value = value?.queue_workers;
-	cron_workers.value = value?.cron_workers;
-	data_workers.value = value?.data_workers;
-	request_workers.value = value?.request_workers;
+	library_workers.value = value?.library_workers;
+	import_workers.value = value?.import_workers;
+	extras_workers.value = value?.extras_workers;
 	encoder_workers.value = value?.encoder_workers;
+	cron_workers.value = value?.cron_workers;
 	image_workers.value = value?.image_workers;
+	file_workers.value = value?.file_workers;
+	music_workers.value = value?.music_workers;
 	ready.value = true;
 });
 

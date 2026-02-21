@@ -51,13 +51,14 @@ watch(configuration, (value) => {
   name.value = value?.name;
   external_port.value = value?.external_port;
   internal_port.value = value?.internal_port;
-  queue_workers.value = value?.queue_workers;
-  cron_workers.value = value?.cron_workers;
-  data_workers.value = value?.data_workers;
-  request_workers.value = value?.request_workers;
+  library_workers.value = value?.library_workers;
+  import_workers.value = value?.import_workers;
+  extras_workers.value = value?.extras_workers;
   encoder_workers.value = value?.encoder_workers;
+  cron_workers.value = value?.cron_workers;
   image_workers.value = value?.image_workers;
   file_workers.value = value?.file_workers;
+  music_workers.value = value?.music_workers;
   swagger.value = value?.swagger;
   ready.value = true;
 });
@@ -69,13 +70,14 @@ onMounted(() => {
   name.value = configuration.value?.name;
   external_port.value = configuration.value?.external_port;
   internal_port.value = configuration.value?.internal_port;
-  queue_workers.value = configuration.value?.queue_workers;
-  cron_workers.value = configuration.value?.cron_workers;
-  data_workers.value = configuration.value?.data_workers;
-  request_workers.value = configuration.value?.request_workers;
+  library_workers.value = configuration.value?.library_workers;
+  import_workers.value = configuration.value?.import_workers;
+  extras_workers.value = configuration.value?.extras_workers;
   encoder_workers.value = configuration.value?.encoder_workers;
+  cron_workers.value = configuration.value?.cron_workers;
   image_workers.value = configuration.value?.image_workers;
   file_workers.value = configuration.value?.file_workers;
+  music_workers.value = configuration.value?.music_workers;
   swagger.value = configuration.value?.swagger;
   ready.value = true;
 });
@@ -95,39 +97,44 @@ watch(internal_port, (value) => {
   updateState("internal_port", value);
 });
 
-const queue_workers = ref<number>(configuration.value?.queue_workers ?? 0);
-watch(queue_workers, (value) => {
-  updateState("queue_workers", value);
+const library_workers = ref<number>(configuration.value?.library_workers ?? 1);
+watch(library_workers, (value) => {
+  updateState("library_workers", value);
 });
 
-const cron_workers = ref<number>(configuration.value?.cron_workers ?? 0);
-watch(cron_workers, (value) => {
-  updateState("cron_workers", value);
+const import_workers = ref<number>(configuration.value?.import_workers ?? 2);
+watch(import_workers, (value) => {
+  updateState("import_workers", value);
 });
 
-const data_workers = ref<number>(configuration.value?.data_workers ?? 0);
-watch(data_workers, (value) => {
-  updateState("data_workers", value);
+const extras_workers = ref<number>(configuration.value?.extras_workers ?? 15);
+watch(extras_workers, (value) => {
+  updateState("extras_workers", value);
 });
 
-const request_workers = ref<number>(configuration.value?.request_workers ?? 0);
-watch(request_workers, (value) => {
-  updateState("request_workers", value);
-});
-
-const image_workers = ref<number>(configuration.value?.image_workers ?? 0);
-watch(image_workers, (value) => {
-  updateState("image_workers", value);
-});
-
-const encoder_workers = ref<number>(configuration.value?.encoder_workers ?? 0);
+const encoder_workers = ref<number>(configuration.value?.encoder_workers ?? 1);
 watch(encoder_workers, (value) => {
   updateState("encoder_workers", value);
 });
 
-const file_workers = ref<number>(configuration.value?.file_workers ?? 0);
+const cron_workers = ref<number>(configuration.value?.cron_workers ?? 1);
+watch(cron_workers, (value) => {
+  updateState("cron_workers", value);
+});
+
+const image_workers = ref<number>(configuration.value?.image_workers ?? 10);
+watch(image_workers, (value) => {
+  updateState("image_workers", value);
+});
+
+const file_workers = ref<number>(configuration.value?.file_workers ?? 4);
 watch(file_workers, (value) => {
   updateState("file_workers", value);
+});
+
+const music_workers = ref<number>(configuration.value?.music_workers ?? 2);
+watch(music_workers, (value) => {
+  updateState("music_workers", value);
 });
 
 const swagger = ref<boolean>(configuration.value?.swagger ?? false);
@@ -184,11 +191,11 @@ const save = () => {
         <template v-slot:cta> </template>
 
         <div v-if="ready" class="col-span-2 col-start-1 2xl:col-start-1">
-          <div class="flex flex-col gap-2">
+          <div class="flex flex-col gap-1">
             <label for="name">Server name</label>
             <InputText id="name" v-model="name" class="mb-4" />
           </div>
-          <div class="flex flex-col gap-2">
+          <div class="flex flex-col gap-1">
             <label for="internal_port">Secure internal port</label>
             <InputNumber
               id="internal_port"
@@ -199,7 +206,7 @@ const save = () => {
               showButtons
             />
           </div>
-          <div class="flex flex-col gap-2">
+          <div class="flex flex-col gap-1">
             <label for="external_port">Secure external port</label>
             <InputNumber
               id="external_port"
@@ -213,87 +220,98 @@ const save = () => {
         </div>
 
         <div v-if="ready" class="col-span-2 col-start-1 2xl:col-start-3">
-          <div class="flex flex-col gap-2">
-            <label for="queue_workers">Queue workers</label>
+          <div class="flex flex-col gap-1">
+            <label for="library_workers">Library runners <span class="text-xs opacity-60">(scanning and rescanning)</span></label>
             <InputNumber
-              id="queue_workers"
-              v-model="queue_workers"
+              id="library_workers"
+              v-model="library_workers"
               :min="0"
               :useGrouping="false"
-              class="mb-4"
+              class="mb-2"
               showButtons
             />
           </div>
-          <div class="flex flex-col gap-2">
-            <label for="encoder_workers">Encoder workers</label>
+          <div class="flex flex-col gap-1">
+            <label for="import_workers">Import runners <span class="text-xs opacity-60">(movies, shows, collections, audio)</span></label>
+            <InputNumber
+              id="import_workers"
+              v-model="import_workers"
+              :min="0"
+              :useGrouping="false"
+              class="mb-2"
+              showButtons
+            />
+          </div>
+          <div class="flex flex-col gap-1">
+            <label for="extras_workers">Extras runners <span class="text-xs opacity-60">(metadata fetching)</span></label>
+            <InputNumber
+              id="extras_workers"
+              v-model="extras_workers"
+              :min="0"
+              :useGrouping="false"
+              class="mb-2"
+              showButtons
+            />
+          </div>
+          <div class="flex flex-col gap-1">
+            <label for="encoder_workers">Encoder runners <span class="text-xs opacity-60">(video and music encoding)</span></label>
             <InputNumber
               id="encoder_workers"
               v-model="encoder_workers"
               :min="0"
               :useGrouping="false"
-              class="mb-4"
+              class="mb-2"
               showButtons
             />
           </div>
-          <div class="flex flex-col gap-2">
-            <label for="cron_workers">Cron workers</label>
+          <div class="flex flex-col gap-1">
+            <label for="cron_workers">Cron runners <span class="text-xs opacity-60">(scheduled/recurring jobs)</span></label>
             <InputNumber
               id="cron_workers"
               v-model="cron_workers"
               :min="0"
               :useGrouping="false"
-              class="mb-4"
+              class="mb-2"
               showButtons
             />
           </div>
-          <div class="flex flex-col gap-2">
-            <label for="data_workers">Data workers</label>
-            <InputNumber
-              id="data_workers"
-              v-model="data_workers"
-              :min="0"
-              :useGrouping="false"
-              class="mb-4"
-              showButtons
-            />
-          </div>
-          <div class="flex flex-col gap-2">
-            <label for="image_workers">Image workers</label>
+          <div class="flex flex-col gap-1">
+            <label for="image_workers">Image runners <span class="text-xs opacity-60">(FanArt, CoverArt, palettes)</span></label>
             <InputNumber
               id="image_workers"
               v-model="image_workers"
               :min="0"
               :useGrouping="false"
-              class="mb-4"
+              class="mb-2"
               showButtons
             />
           </div>
-          <div class="flex flex-col gap-2">
-            <label for="file_workers">File workers</label>
+          <div class="flex flex-col gap-1">
+            <label for="file_workers">File runners <span class="text-xs opacity-60">(rescanning and discovery)</span></label>
             <InputNumber
               id="file_workers"
               v-model="file_workers"
               :min="0"
               :useGrouping="false"
-              class="mb-4"
+              class="mb-2"
               showButtons
             />
           </div>
-          <div class="flex flex-col gap-2">
-            <label for="request_workers">Request workers</label>
+          <div class="flex flex-col gap-1">
+            <label for="music_workers">Music runners <span class="text-xs opacity-60">(metadata and lyrics)</span></label>
             <InputNumber
-              id="request_workers"
-              v-model="request_workers"
+              id="music_workers"
+              v-model="music_workers"
               :min="0"
               :useGrouping="false"
-              class="mb-4"
+              class="mb-2"
               showButtons
             />
           </div>
         </div>
 
         <div v-if="ready" class="col-span-2 col-start-1 2xl:col-start-5">
-          <div class="flex flex-col gap-2">
+          <div class="flex flex-col gap-1">
             <span class="flex gap-4">
               <label for="swagger">Open API / Swagger Ui</label>
               <a

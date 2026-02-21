@@ -116,13 +116,14 @@ export interface ConfigurationResponse {
 	name: string;
 	external_port: number;
 	internal_port: number;
-	queue_workers: number;
-	cron_workers: number;
-	data_workers: number;
-	request_workers: number;
+	library_workers: number;
+	import_workers: number;
+	extras_workers: number;
 	encoder_workers: number;
+	cron_workers: number;
 	image_workers: number;
 	file_workers: number;
+	music_workers: number;
 	swagger: boolean;
 }
 

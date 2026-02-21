@@ -1,13 +1,12 @@
 <script lang="ts" setup>
-import { computed, onUnmounted, ref, watch } from 'vue';
+import { computed, ref, watch } from 'vue';
 import { useRoute } from 'vue-router';
 import { IonContent, IonPage, IonSkeletonText, onIonViewWillEnter, onIonViewWillLeave } from '@ionic/vue';
 
 import type { InfoResponse } from '@/types/api/base/info';
 
-import i18next from '@/config/i18next';
 import useServerClient from '@/lib/clients/useServerClient';
-import serverClient from '@/lib/clients/serverClient'; // Add this import
+import { useTrailerService } from '@/composables/useTrailerService';
 import { breakTitle2, setTitle } from '@/lib/utils/string';
 import { sortByPosterAlphabetized } from '@/lib/utils/array';
 import { background, setBackground, setColorPalette, setLogo, setPoster, title } from '@/store/ui';
@@ -29,11 +28,6 @@ import { convertToHumanReact } from '@/lib/dateTime.ts';
 const route = useRoute();
 const enabled = ref(false);
 const showMore = ref(false);
-const trailerOpen = ref(false);
-const trailerState = ref<true | false | 'loading'>('loading');
-const trailerIndex = ref(-1);
-const endTime = ref<string | 0 | null | undefined>(null);
-const interval = ref<NodeJS.Timeout | null>(null);
 
 const content = ref<VueDivElement>();
 
@@ -42,10 +36,11 @@ const { data } = useServerClient<InfoResponse>({
 	path: route?.fullPath,
 });
 
+const { buttonState, trailerOpen, resolvedTrailer, toggleTrailer } = useTrailerService(data);
+
 watch(data, (value) => {
 	content.value?.$el?.scrollToTop(window.innerHeight);
 	enabled.value = true;
-	trailerIndex.value = 0;
 
 	setTitle(value?.title ?? value?.name);
 
@@ -61,8 +56,6 @@ watch(data, (value) => {
 	if (value?.color_palette?.poster) {
 		setColorPalette(value?.color_palette?.poster);
 	}
-
-	processTrailer(value);
 });
 
 const backgroundUrl = computed(() => {
@@ -74,7 +67,6 @@ const backgroundUrl = computed(() => {
 
 onIonViewWillEnter(() => {
 	content.value?.$el?.scrollToTop(window.innerHeight);
-	// trailerIndex.value = 0;
 	setTitle(data?.value?.name);
 
 	if (data?.value?.backdrop) {
@@ -114,83 +106,7 @@ watch(showMore, (value) => {
 	}
 });
 
-function toggleTrailer() {
-	if (!data?.value?.videos)
-		return;
-	trailerOpen.value = !trailerOpen.value;
 
-	const main = document.querySelector<HTMLDivElement>('#main');
-	if (!main)
-		return;
-
-	main.style.overflow = trailerOpen.value ? 'hidden' : 'auto';
-}
-
-function incrementTrailerIndex() {
-	if (!data?.value || data?.value?.videos?.length === 0)
-		return;
-
-	if (trailerIndex.value === data?.value?.videos.length - 1) {
-		trailerIndex.value = 0;
-	}
-	else {
-		trailerIndex.value++;
-	}
-}
-
-function processTrailer(value: InfoResponse | undefined) {
-	trailerState.value = 'loading';
-
-	if (
-		!value
-		|| value.videos?.length === 0
-		|| !value.videos?.[trailerIndex.value]
-	) {
-		trailerState.value = false;
-		return;
-	}
-
-	endTime.value = value.duration && new Date(
-		new Date().getTime() + value.duration * 60 * 1000,
-	).toLocaleTimeString(i18next.language ?? 'en-US', {
-		hour: '2-digit',
-		minute: '2-digit',
-	});
-
-	interval.value = setInterval(() => {
-		endTime.value = value.duration && new Date(
-			new Date().getTime() + value.duration * 60 * 1000,
-		).toLocaleTimeString(i18next.language ?? 'en-US', {
-			hour: '2-digit',
-			minute: '2-digit',
-		});
-	}, 1000);
-
-	// Use serverClient instead of axios for consistency
-	serverClient()
-		.head(`trailer/${value.videos[trailerIndex.value]?.src}`, {
-			withCredentials: false,
-		})
-		.then(() => {
-			trailerState.value = true;
-		})
-		.catch(() => {
-			incrementTrailerIndex();
-			trailerState.value = false;
-		});
-}
-
-watch(trailerIndex, (value, oldValue) => {
-	if (!value || value === oldValue)
-		return;
-
-	processTrailer(data?.value);
-});
-
-// Add cleanup on component unmount
-onUnmounted(() => {
-	clearInterval(interval.value ?? undefined);
-});
 </script>
 
 <template>
@@ -422,17 +338,12 @@ onUnmounted(() => {
 				</div>
 			</div>
 
-			<MobileInfoCard :data="data" :toggle-trailer="toggleTrailer" :trailer-state="trailerState" />
+			<MobileInfoCard :data="data" :toggle-trailer="toggleTrailer" :button-state="buttonState" />
 
 			<Trailer
-				v-if="data?.videos && data?.videos?.length > 0 && trailerOpen"
-				:key="trailerIndex"
-				:increment-trailer-index="incrementTrailerIndex"
-				:index="trailerIndex"
-				:open="trailerOpen"
-				:title="data?.title ?? data?.name"
+				v-if="resolvedTrailer && trailerOpen"
+				:resolved-trailer="resolvedTrailer"
 				:toggle="toggleTrailer"
-				:videos="data?.videos"
 				class="inset-0 h-full w-available z-999"
 			/>
 		</IonContent>
