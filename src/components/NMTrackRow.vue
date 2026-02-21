@@ -52,7 +52,12 @@ function handleClick() {
 		data-target="track"
 		tabindex="0"
 		@click="handleClick()"
-		@contextmenu="onTrackRowRightClick($event, $route, data)"
+		@contextmenu="onTrackRowRightClick($event, {
+			isAlbumRoute: route.path.startsWith('/music/album'),
+			isArtistRoute: route.path.startsWith('/music/artist'),
+			isPlaylistsRoute: route.path.startsWith('/music/playlists'),
+			routeParamId: route.params.id as string,
+		}, data)"
 	>
 		<span
 			class="flex w-10 h-10 justify-center text-center min-w-10 relative z-0"

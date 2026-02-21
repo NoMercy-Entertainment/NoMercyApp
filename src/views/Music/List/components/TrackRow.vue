@@ -1,11 +1,7 @@
 <script lang="ts" setup>
 import type { PropType } from 'vue';
 import { computed } from 'vue';
-import { useRoute } from 'vue-router';
-
 import type { PlaylistItem, RouteType } from '@/types/musicPlayer';
-
-const route = useRoute();
 
 import { isMobile } from '@/config/global';
 import { musicSocketConnection } from '@/store/musicSocket';
@@ -116,7 +112,7 @@ const date = computed(() => {
 		class="grid justify-start w-full children:pointer-events-none items-center self-stretch pr-3 sm:px-3 rounded-lg sm:hover:bg-surface-6/8 group/track text-sm font-medium py-2 z-10"
 		data-target="track"
 		tabindex="0"
-		@contextmenu="onTrackRowRightClick($event, route, data)"
+		@contextmenu="onTrackRowRightClick($event, { isAlbumRoute, isArtistRoute, isPlaylistsRoute, routeParamId }, data)"
 	>
 		<span class="flex justify-center text-center">
 			<span

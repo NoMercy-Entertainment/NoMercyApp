@@ -15,8 +15,14 @@ import { queryClient } from '@/config/tanstack-query.ts';
 import type { StatusResponse } from '@/types/api/base/library';
 import audioPlayer from '@/store/audioPlayer.ts';
 import { Share } from '@capacitor/share';
-import type { RouteLocationNormalizedLoadedGeneric } from 'vue-router';
 import type { ModalData } from '@/types';
+
+export interface TrackRowRouteInfo {
+	isAlbumRoute: boolean;
+	isArtistRoute: boolean;
+	isPlaylistsRoute: boolean;
+	routeParamId: string;
+}
 
 export interface ContextMenuItem {
 	label?: string;
@@ -115,12 +121,12 @@ export const cardMenu = ref();
 
 export const selectedTrackRow = ref<PlaylistItem>();
 
-export function onTrackRowRightClick(event: Event, route: RouteLocationNormalizedLoadedGeneric, data: PlaylistItem) {
+export function onTrackRowRightClick(event: Event, routeInfo: TrackRowRouteInfo, data: PlaylistItem) {
 	selectedTrackRow.value = data;
 
-	const isAlbumRoute = route.path.startsWith('/music/album');
-	const isArtistRoute = route.path.startsWith('/music/artist');
-	const isPlaylistsRoute = route.path.startsWith('/music/playlists');
+	const isAlbumRoute = routeInfo.isAlbumRoute;
+	const isArtistRoute = routeInfo.isArtistRoute;
+	const isPlaylistsRoute = routeInfo.isPlaylistsRoute;
 
 	const menuItems: ContextMenuItem[] = [];
 
@@ -152,14 +158,14 @@ export function onTrackRowRightClick(event: Event, route: RouteLocationNormalize
 	}
 
 	for (const playlist of musicPlaylist.value) {
-		if (route.path === `/music/playlists/${playlist.id}`)
+		if (isPlaylistsRoute && routeInfo.routeParamId === playlist.id)
 			continue;
 
 		addToPlaylistItem.items!.push({
 			label: playlist.name,
 			icon: 'mooooom-playlist1Add',
 			args: {
-				disabled: route.path === `/music/playlists/${playlist.id}`,
+				disabled: isPlaylistsRoute && routeInfo.routeParamId === playlist.id,
 			},
 			command: () => {
 				serverClient()
@@ -188,7 +194,7 @@ export function onTrackRowRightClick(event: Event, route: RouteLocationNormalize
 			icon: 'mooooom-remove',
 			command: () => {
 				serverClient()
-					.delete(`/music/playlists/${route.params.id}/tracks/${selectedTrackRow.value?.id}`)
+					.delete(`/music/playlists/${routeInfo.routeParamId}/tracks/${selectedTrackRow.value?.id}`)
 					.then(() => {
 						queryClient
 							.invalidateQueries({ queryKey: ['music', 'tracks'] })
