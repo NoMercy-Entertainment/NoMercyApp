@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { computed, onMounted, onUnmounted, ref, shallowRef, watch } from 'vue';
 import { useRoute } from 'vue-router';
-import { IonContent, IonPage } from '@ionic/vue';
+
 import { useVirtualizer } from '@tanstack/vue-virtual';
 
 import type { DisplayList } from '@/types/api/music/musicPlayer';
@@ -155,8 +155,6 @@ function onScroll() {
 </script>
 
 <template>
-	<IonPage>
-		<IonContent :fullscreen="true" class="flex">
 			<NotFound v-if="isError && !data" />
 			<ScrollContainer
 				v-else
@@ -243,6 +241,4 @@ function onScroll() {
 					</div>
 				</div>
 			</ScrollContainer>
-		</IonContent>
-	</IonPage>
 </template>

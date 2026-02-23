@@ -1,6 +1,5 @@
 <script lang="ts" setup>
 import { computed, onMounted, ref, watch } from 'vue';
-import { IonContent, IonPage } from '@ionic/vue';
 
 import { connection, dashboardSocketIsConnected } from '@/lib/clients/dashboardSocket';
 
@@ -41,8 +40,6 @@ const supportsMasonry = computed(() =>
 </script>
 
 <template>
-	<IonPage>
-		<IonContent :fullscreen="true">
 			<DashboardLayout
 				:grid-style="supportsMasonry ? 3 : 2"
 				styles="grid-template-rows: masonry; masonry-surface-flow: next;"
@@ -93,6 +90,4 @@ const supportsMasonry = computed(() =>
 					</div>
 				</template>
 			</DashboardLayout>
-		</IonContent>
-	</IonPage>
 </template>

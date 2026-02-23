@@ -1,5 +1,4 @@
 <script lang="ts" setup>
-import { IonContent, IonPage } from '@ionic/vue';
 
 import type { LibrariesResponse, StatusResponse } from '@/types/api/base/library';
 import type { Library } from '@/types/api/dashboard/server';
@@ -26,8 +25,6 @@ function handleCreateSpecial() {
 </script>
 
 <template>
-	<IonPage>
-		<IonContent :fullscreen="true">
 			<DashboardLayout
 				:error="error"
 				:grid-style="1"
@@ -49,6 +46,4 @@ function handleCreateSpecial() {
 					<SpecialCard :data="special" />
 				</template>
 			</DashboardLayout>
-		</IonContent>
-	</IonPage>
 </template>

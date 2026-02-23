@@ -1,7 +1,6 @@
 <script lang="ts" setup>
 import { onMounted, ref, watch } from 'vue';
 import { refDebounced } from '@vueuse/core';
-import { IonContent, IonPage } from '@ionic/vue';
 
 import type { LogEntry, LogType } from '@/types/server';
 
@@ -131,8 +130,6 @@ function handleLevel(value: string) {
 </script>
 
 <template>
-	<IonPage>
-		<IonContent :fullscreen="true">
 			<DashboardLayout :grid-style="4" description="" title="Logs">
 				<template #cta />
 
@@ -296,6 +293,4 @@ function handleLevel(value: string) {
 					:open="true"
 				/>
 			</DashboardLayout>
-		</IonContent>
-	</IonPage>
 </template>

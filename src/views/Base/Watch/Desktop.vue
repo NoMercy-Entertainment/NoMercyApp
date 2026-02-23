@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { onMounted, onUnmounted, ref, watch } from 'vue';
-import { IonContent, IonPage, isPlatform } from '@ionic/vue';
+import { isPlatform } from '@ionic/vue';
 
 import { setDisableScreensaver } from '@/store/imageModal';
 
@@ -135,8 +135,6 @@ watch(data, (value) => {
 </script>
 
 <template>
-	<IonPage>
-		<IonContent :fullscreen="true">
 			<Teleport to="body">
 				<!--				<div -->
 				<!--					class="absolute inset-0 flex h-full w-full overflow-clip bg-black z-1199" -->
@@ -144,8 +142,6 @@ watch(data, (value) => {
 				<div id="player1" class="group nomercyplayer text-white" />
 			<!--				</div> -->
 			</Teleport>
-		</IonContent>
-	</IonPage>
 </template>
 
 <style>

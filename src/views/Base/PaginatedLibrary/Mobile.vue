@@ -1,7 +1,6 @@
 <script lang="ts" setup>
 import { computed, onMounted, onUnmounted, ref, watch } from 'vue';
 import { useRoute } from 'vue-router';
-import { IonContent, IonPage, onIonViewDidEnter } from '@ionic/vue';
 
 import type { LibraryResponse } from '@/types/api/base/library';
 import type { PeopleResponse, PersonResponseItem } from '@/types/api/base/person';
@@ -93,9 +92,6 @@ onMounted(() => {
 	});
 });
 
-onIonViewDidEnter(() => {
-	document.dispatchEvent(new Event('indexer'));
-});
 
 watch(data, (value) => {
 	if (!value)
@@ -116,12 +112,6 @@ function onRightClick(event: Event, data: LibraryResponse | GenreResponse | Peop
 </script>
 
 <template>
-	<IonPage>
-		<IonContent
-			:fullscreen="true"
-			class="ion-padding"
-			style="--padding-bottom: 0"
-		>
 			<div
 				class="fixed top-0 pt-safe w-full bg-surface-1 z-1199"
 			/>
@@ -192,8 +182,6 @@ function onRightClick(event: Event, data: LibraryResponse | GenreResponse | Peop
 					class="w-8 fixed right-0 bg-surface-1 transition-all duration-200"
 				/>
 			</div>
-		</IonContent>
-	</IonPage>
 </template>
 
 <!-- <style scoped> -->

@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { computed } from 'vue';
-import { IonPage, IonRouterOutlet, IonTabs } from '@ionic/vue';
+import { useRoute } from 'vue-router';
 
 import { background } from '@/store/ui';
 import { currentServer } from '@/store/currentServer';
@@ -22,6 +22,8 @@ import Shadow from '@/Layout/Desktop/components/Shadow.vue';
 import GlobalScrollbar from '@/Layout/Desktop/components/GlobalScrollbar.vue';
 import OfflineBanner from '@/components/OfflineBanner.vue';
 
+const route = useRoute();
+
 const backgroundUrl = computed(() => {
 	if (!background.value)
 		return null;
@@ -34,7 +36,7 @@ function focusMain() {
 </script>
 
 <template>
-	<IonPage>
+	<div class="flex flex-col flex-1 min-h-0 w-full">
 		<OfflineBanner />
 		<button
 			:onclick="focusMain"
@@ -42,47 +44,43 @@ function focusMain() {
 		>
 			{{ $t("Skip navigation") }}
 		</button>
-		<div class="contents">
-			<Navbar />
-			<div
-				class="relative z-0 flex h-px flex-1 flex-grow items-start justify-start self-stretch overflow-clip w-available h-available scrollbar-none group"
-			>
-				<ChristmasSnow />
-				<Sidebar v-if="!!currentServer" />
+		<Navbar />
+		<div
+			class="relative z-0 flex flex-1 min-h-0 items-start justify-start self-stretch overflow-clip w-full scrollbar-none group"
+		>
+			<ChristmasSnow />
+			<Sidebar v-if="!!currentServer" />
 
-				<GradientBorder :hide-border="false">
-					<main
-						id="mainContent"
-						:style="backgroundUrl && !backgroundUrl.includes('null') ? `background-image: url(${backgroundUrl})` : ''"
-						class="flex w-px flex-1 flex-col relative overflow-clip justify-start items-start w-available h-available sm:rounded-2xl border-surface-2 !bg-cover children:scrollbar-none z-0 bg-center sm:border-3 before:content-[''] before:pointer-events-none before:absolute before:inset-0 before:w-full before:h-full before:bg-surface-12/9 dark:before:bg-surface-1/9"
-						style="box-shadow: 0 1px 3px 0 rgba(16,24,40,0.1), 0 1px 2px 0 rgba(16,24,40,0.06);"
-					>
-						<Shadow />
-						<slot v-if="$slots.default" />
-						<IonTabs v-else>
-							<IonRouterOutlet :animated="false" />
-						</IonTabs>
-					</main>
+			<GradientBorder :hide-border="false">
+				<main
+					id="mainContent"
+					:style="backgroundUrl && !backgroundUrl.includes('null') ? `background-image: url(${backgroundUrl})` : ''"
+					class="flex w-px flex-1 flex-col relative overflow-clip justify-start items-start w-available h-available sm:rounded-2xl border-surface-2 !bg-cover children:scrollbar-none z-0 bg-center sm:border-3 before:content-[''] before:pointer-events-none before:absolute before:inset-0 before:w-full before:h-full before:bg-surface-12/9 dark:before:bg-surface-1/9"
+					style="box-shadow: 0 1px 3px 0 rgba(16,24,40,0.1), 0 1px 2px 0 rgba(16,24,40,0.06);"
+				>
+					<Shadow />
+					<slot v-if="$slots.default" />
+					<RouterView v-else :key="route.fullPath" />
+				</main>
 
-					<div id="slide-container" class="contents" />
+				<div id="slide-container" class="contents" />
 
-					<LyricsOverlay
-						class="hidden sm:block bg-focus [transform:translateZ(0)]"
-					/>
-					<QueueOverlay />
-					<DeviceOverlay />
-					<EqualizerOverlay />
-					<RipperOverlay
-						v-if="currentServer?.is_owner || currentServer?.is_manager"
-					/>
-				</GradientBorder>
-				<Indexer />
-				<GlobalScrollbar />
-			</div>
-
-			<AsyncMusicPlayerDesktop />
+				<LyricsOverlay
+					class="hidden sm:block bg-focus [transform:translateZ(0)]"
+				/>
+				<QueueOverlay />
+				<DeviceOverlay />
+				<EqualizerOverlay />
+				<RipperOverlay
+					v-if="currentServer?.is_owner || currentServer?.is_manager"
+				/>
+			</GradientBorder>
+			<Indexer />
+			<GlobalScrollbar />
 		</div>
-	</IonPage>
+
+		<AsyncMusicPlayerDesktop />
+	</div>
 </template>
 
 <style scoped>

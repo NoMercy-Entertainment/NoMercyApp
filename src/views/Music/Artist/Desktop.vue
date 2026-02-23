@@ -1,7 +1,6 @@
 <script lang="ts" setup>
 import { computed, onMounted, onUnmounted, ref, watch } from 'vue';
 import { useRoute } from 'vue-router';
-import { IonContent, IonPage } from '@ionic/vue';
 
 import type { ArtistResponse } from '@/types/api/music/artist';
 import type { PlaylistItem, SortOrder, SortType } from '@/types/musicPlayer';
@@ -121,8 +120,6 @@ function setDisplayType(type: 'list' | 'card') {
 </script>
 
 <template>
-	<IonPage>
-		<IonContent :fullscreen="true">
 			<NotFound v-if="isError && !data" />
 			<ScrollContainer v-else :auto-hide="true" :static="true">
 				<div
@@ -195,6 +192,4 @@ function setDisplayType(type: 'list' | 'card') {
 					</Tabs>
 				</div>
 			</ScrollContainer>
-		</IonContent>
-	</IonPage>
 </template>

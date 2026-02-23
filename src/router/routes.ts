@@ -77,17 +77,30 @@ function getBaseLayout() {
 
 export const routes: Array<RouteRecordRaw> = [
 	{
-		path: '/',
-		redirect: '/home',
+		path: '/auth',
+		name: 'Auth',
+		component: AuthView,
+		meta: {
+			public: true,
+			bypassSetup: true,
+		},
 	},
+	{
+		path: '/logout',
+		name: 'Logout',
+		component: Logout,
+		meta: {
+			public: true,
+			bypassSetup: true,
+		},
+	},
+	// All app routes share ONE layout instance so the layout is never remounted on navigation
 	{
 		path: '/',
 		component: getBaseLayout,
+		redirect: '/home',
 		children: [
-			{
-				path: '',
-				redirect: '/home',
-			},
+			// Base
 			{
 				path: 'home',
 				name: 'Home',
@@ -97,9 +110,7 @@ export const routes: Array<RouteRecordRaw> = [
 				path: 'search',
 				name: 'Search',
 				component: Search,
-				meta: {
-					type: 'all',
-				},
+				meta: { type: 'all' },
 			},
 			{
 				path: 'libraries',
@@ -112,9 +123,7 @@ export const routes: Array<RouteRecordRaw> = [
 				) => {
 					const firstLibrary = libraries.value.at(0);
 					if (firstLibrary && !isMobile.value) {
-						next({
-							path: firstLibrary.link,
-						});
+						next({ path: firstLibrary.link });
 					}
 					else {
 						next();
@@ -188,323 +197,265 @@ export const routes: Array<RouteRecordRaw> = [
 				name: 'Watch',
 				component: BaseWatch,
 			},
-		],
-	},
-	{
-		path: '/music',
-		component: getBaseLayout,
-		children: [
+
+			// Music
 			{
 				path: 'music',
 				redirect: '/music/start',
 			},
 			{
-				path: 'start',
+				path: 'music/start',
 				name: 'Music Start',
 				component: MusicStart,
 			},
 			{
-				path: 'artists',
+				path: 'music/artists',
 				redirect: '/music/artists/_',
 			},
 			{
-				path: 'artists/:letter',
+				path: 'music/artists/:letter',
 				name: 'Artists',
 				component: MusicCards,
-				meta: {
-					type: 'artists',
-				},
+				meta: { type: 'artists' },
 			},
 			{
-				path: 'artist/:id',
+				path: 'music/artist/:id',
 				name: 'Artist',
 				component: MusicArtist,
-				meta: {
-					type: 'artists',
-				},
+				meta: { type: 'artists' },
 			},
 			{
-				path: 'albums',
+				path: 'music/albums',
 				redirect: '/music/albums/_',
 			},
 			{
-				path: 'albums/:letter',
+				path: 'music/albums/:letter',
 				name: 'Albums',
 				component: MusicCards,
-				meta: {
-					type: 'albums',
-				},
+				meta: { type: 'albums' },
 			},
 			{
-				path: 'album/:id',
+				path: 'music/album/:id',
 				name: 'Album',
 				component: MusicList,
-				meta: {
-					type: 'albums',
-				},
+				meta: { type: 'albums' },
 			},
 			{
-				path: 'genres',
+				path: 'music/genres',
 				redirect: '/music/genres/letter/_',
 			},
 			{
-				path: 'genres/letter/:letter',
+				path: 'music/genres/letter/:letter',
 				name: 'Music Genres',
 				component: MusicCards,
-				meta: {
-					type: 'genres',
-				},
+				meta: { type: 'genres' },
 			},
 			{
-				path: 'genres/:id',
+				path: 'music/genres/:id',
 				name: 'Music Genre',
 				component: MusicList,
-				meta: {
-					type: 'genres',
-				},
+				meta: { type: 'genres' },
 			},
 			{
-				path: 'playlists',
+				path: 'music/playlists',
 				name: 'Music Playlists',
 				component: MusicCards,
-				meta: {
-					type: 'playlists',
-				},
+				meta: { type: 'playlists' },
 			},
 			{
-				path: 'playlists/:id',
+				path: 'music/playlists/:id',
 				name: 'Music Playlist',
 				component: MusicList,
-				meta: {
-					type: 'playlists',
-				},
+				meta: { type: 'playlists' },
 			},
 			{
-				path: 'tracks',
+				path: 'music/tracks',
 				name: 'Tracks',
 				component: MusicList,
-				meta: {
-					type: 'tracks',
-				},
+				meta: { type: 'tracks' },
 			},
-		],
-	},
-	{
-		path: '/dashboard',
-		component: getBaseLayout,
-		children: [
+
+			// Dashboard
 			{
 				path: 'dashboard',
-				name: 'System',
 				redirect: '/dashboard/system',
 			},
 			{
-				path: 'system',
+				path: 'dashboard/system',
 				name: 'System',
 				component: DashboardSystem,
 			},
 			{
-				path: 'general',
+				path: 'dashboard/general',
 				name: 'General',
 				component: DashboardGeneral,
 			},
 			{
-				path: 'users',
+				path: 'dashboard/users',
 				name: 'Users',
 				component: DashboardUsers,
 			},
 			{
-				path: 'users/:id',
+				path: 'dashboard/users/:id',
 				name: 'Edit user',
 				component: () => import('@/views/Dashboard/System/Users/Edit.vue'),
 			},
 			{
-				path: 'libraries',
+				path: 'dashboard/libraries',
 				name: 'Dashboard Libraries',
 				component: DashboardLibraries,
 			},
 			{
-				path: 'libraries/:id',
+				path: 'dashboard/libraries/:id',
 				name: 'Dashboard Library',
 				component: () => import('@/views/Dashboard/System/Libraries/Edit.vue'),
 			},
 			{
-				path: 'specials',
+				path: 'dashboard/specials',
 				name: 'Dashboard Specials',
 				component: DashboardSpecials,
 			},
 			{
-				path: 'specials/:id',
+				path: 'dashboard/specials/:id',
 				name: 'Dashboard Special',
 				component: () => import('@/views/Dashboard/Content/Specials/Edit.vue'),
 			},
 			{
-				path: 'devices',
+				path: 'dashboard/devices',
 				name: 'Devices',
 				component: DashboardDevices,
 			},
 			{
-				path: 'devices/:id',
+				path: 'dashboard/devices/:id',
 				name: 'Device',
 				component: () => import('@/views/Dashboard/Devices/Devices/Show.vue'),
 			},
 			{
-				path: 'ripper',
+				path: 'dashboard/ripper',
 				name: 'Ripper',
 				component: DashboardRipper,
 			},
 			{
-				path: 'encoderprofiles',
+				path: 'dashboard/encoderprofiles',
 				name: 'Encoder Profiles',
 				component: DashboardEncoderProfiles,
 			},
 			{
-				path: 'encoderprofiles/:id',
+				path: 'dashboard/encoderprofiles/:id',
 				name: 'Encoder Profile',
-				component: () =>
-					import('@/views/Dashboard/System/EncoderProfiles/Edit.vue'),
+				component: () => import('@/views/Dashboard/System/EncoderProfiles/Edit.vue'),
 			},
 			{
-				path: 'notifications',
+				path: 'dashboard/notifications',
 				name: 'Notifications',
 				component: DashboardNotifications,
 			},
 			{
-				path: 'notifications/:id',
+				path: 'dashboard/notifications/:id',
 				name: 'Notification',
 				component: DashboardNotifications,
 			},
 			{
-				path: 'metadata',
+				path: 'dashboard/metadata',
 				name: 'Metadata',
 				component: DashboardMetadata,
 			},
 			{
-				path: 'activity',
+				path: 'dashboard/activity',
 				name: 'Activity',
 				component: DashboardActivity,
 			},
 			{
-				path: 'dlna',
+				path: 'dashboard/dlna',
 				name: 'DLNA',
 				component: DashboardDlna,
 			},
 			{
-				path: 'logs',
+				path: 'dashboard/logs',
 				name: 'Logs',
 				component: DashboardLogs,
 			},
 			{
-				path: 'plugins',
+				path: 'dashboard/plugins',
 				name: 'Plugins',
 				component: DashboardPlugins,
 			},
 			{
-				path: 'plugins/:id',
+				path: 'dashboard/plugins/:id',
 				name: 'Plugin',
 				component: DashboardPlugins,
 			},
 			{
-				path: 'schedule',
+				path: 'dashboard/schedule',
 				name: 'Scheduled Tasks',
 				component: DashboardSchedule,
 			},
 			{
-				path: 'schedule/:id',
+				path: 'dashboard/schedule/:id',
 				name: 'Scheduled Task',
 				component: DashboardSchedule,
 			},
-		],
-	},
-	{
-		path: '/preferences',
-		component: getBaseLayout,
-		children: [
+
+			// Preferences
 			{
-				path: 'display',
+				path: 'preferences/display',
 				name: 'Display',
 				component: PreferencesDisplay,
 			},
 			{
-				path: 'profile',
+				path: 'preferences/profile',
 				name: 'Profile',
 				component: PreferencesProfile,
 			},
 			{
-				path: 'controls',
+				path: 'preferences/controls',
 				name: 'Controls',
 				component: PreferencesControls,
 			},
 			{
-				path: 'subtitles',
+				path: 'preferences/subtitles',
 				name: 'Subtitles',
 				component: PreferencesSubtitles,
 			},
-		],
-	},
-	{
-		path: '/dev',
-		component: getBaseLayout,
-		children: [
+
+			// Dev
 			{
-				path: 'cast',
+				path: 'dev/cast',
 				name: 'Cast',
 				component: DevCast,
 			},
 			{
-				path: 'download',
+				path: 'dev/download',
 				name: 'Download',
 				component: DevDownload,
 			},
-		],
-	},
-	{
-		path: '/setup',
-		component: getBaseLayout,
-		children: [
+
+			// Setup
 			{
 				path: 'setup',
-				redirect: 'setup/select-servers',
+				redirect: '/setup/select-servers',
 			},
 			{
-				path: 'select-servers',
+				path: 'setup/select-servers',
 				name: 'Select Server',
 				component: SetupSelectServer,
 			},
 			{
-				path: 'no-servers',
+				path: 'setup/no-servers',
 				name: 'No Servers',
 				component: SetupNoServer,
 			},
 			{
-				path: 'server-offline',
+				path: 'setup/server-offline',
 				name: 'Server offline',
 				component: SetupServerOffline,
 			},
 			{
-				path: 'post-install',
+				path: 'setup/post-install',
 				name: 'Post Install',
 				component: SetupPostInstall,
 			},
 		],
-	},
-	{
-		path: '/auth',
-		name: 'Auth',
-		component: AuthView,
-		meta: {
-			public: true,
-			bypassSetup: true,
-		},
-	},
-	{
-		path: '/logout',
-		name: 'Logout',
-		component: Logout,
-		meta: {
-			public: true,
-			bypassSetup: true,
-		},
 	},
 	{
 		path: '/:catchAll(.*)*',

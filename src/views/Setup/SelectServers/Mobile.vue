@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { onMounted } from 'vue';
-import { IonContent, IonPage } from '@ionic/vue';
+
 import { useQueryClient } from '@tanstack/vue-query';
 
 import type { Server } from '@/types/auth';
@@ -60,8 +60,6 @@ onMounted(() => {
 </script>
 
 <template>
-	<IonPage>
-		<IonContent :fullscreen="true">
 			<div
 				class="flex h-full w-full flex-auto flex-col items-center justify-center gap-8"
 			>
@@ -88,6 +86,4 @@ onMounted(() => {
 					</div>
 				</div>
 			</div>
-		</IonContent>
-	</IonPage>
 </template>

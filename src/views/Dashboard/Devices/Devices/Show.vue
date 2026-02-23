@@ -1,7 +1,6 @@
 <script lang="ts" setup>
 import { computed } from 'vue';
 import { useRoute } from 'vue-router';
-import { IonContent, IonPage } from '@ionic/vue';
 
 import type { ActivityLog, Device } from '@/types/server';
 
@@ -34,8 +33,6 @@ const name = computed(() => {
 </script>
 
 <template>
-	<IonPage>
-		<IonContent :fullscreen="true">
 			<DashboardLayout
 				:error="devicesError || activityError"
 				:grid-style="2"
@@ -53,6 +50,4 @@ const name = computed(() => {
 					class="col-span-2 gap-3 w-full"
 				/>
 			</DashboardLayout>
-		</IonContent>
-	</IonPage>
 </template>

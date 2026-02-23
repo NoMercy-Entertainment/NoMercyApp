@@ -1,6 +1,5 @@
 <script lang="ts" setup>
 import { onMounted, watch } from 'vue';
-import { IonContent, IonPage } from '@ionic/vue';
 
 import type { LibrariesResponse } from '@/types/api/base/library';
 
@@ -74,8 +73,6 @@ onMounted(() => {
 </script>
 
 <template>
-	<IonPage>
-		<IonContent :fullscreen="true">
 			<div class="flex flex-col justify-center items-center w-full h-full">
 				<EmptyBackdrop />
 				<svg
@@ -122,6 +119,4 @@ onMounted(() => {
 					{{ $t("Server Offline") }}
 				</h1>
 			</div>
-		</IonContent>
-	</IonPage>
 </template>

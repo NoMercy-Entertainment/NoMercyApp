@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import type { PropType } from 'vue';
-import { computed, onMounted, ref } from 'vue';
+import { computed, onBeforeUnmount, onMounted, ref } from 'vue';
 
 import type { HomeItem } from '@/types/api/base/home';
 
@@ -11,7 +11,6 @@ import { pickPaletteColor } from '@/lib/colorHelper';
 import TMDBImage from '@/components/Images/TMDBImage.vue';
 import HomeCardActions from '@/components/Cards/HomeCardActions.vue';
 import { scrollContainerElement, setBackground, setColorPalette, title } from '@/store/ui';
-import { onIonViewWillEnter, onIonViewWillLeave } from '@ionic/vue';
 import CardShadow from '@/components/Cards/CardShadow.vue';
 import { breakLogoTitle, breakTitle2 } from '@/lib/utils/string';
 
@@ -58,13 +57,7 @@ onMounted(() => {
 	}
 });
 
-onIonViewWillEnter(() => {
-	if (props.data?.color_palette) {
-		setColorPalette(props.data?.color_palette?.backdrop);
-	}
-});
-
-onIonViewWillLeave(() => {
+onBeforeUnmount(() => {
 	setColorPalette(null);
 	setBackground(null);
 });

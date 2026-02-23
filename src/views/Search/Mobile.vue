@@ -1,6 +1,5 @@
 <script lang="ts" setup>
 import { onMounted, ref, watch } from 'vue';
-import { IonContent, IonPage, onIonViewDidEnter, onIonViewWillEnter } from '@ionic/vue';
 import { useRoute } from 'vue-router';
 
 import { setBackground, setColorPalette } from '@/store/ui';
@@ -24,17 +23,6 @@ import MoooomIcon from '@/components/Images/icons/MoooomIcon.vue';
 const route = useRoute();
 const content = ref<VueDivElement>();
 
-onIonViewWillEnter(() => {
-	searchType.value = route.query.from === 'music' ? 'music' : 'video';
-	setColorPalette(null);
-	setBackground(null);
-	setTimeout(() => {
-		search.value.focus();
-		// @ts-ignore
-		content.value?.$el?.scrollToBottom();
-	}, 100);
-});
-
 onMounted(() => {
 	searchType.value = route.query.from === 'music' ? 'music' : 'video';
 	setColorPalette(null);
@@ -44,11 +32,6 @@ onMounted(() => {
 		// @ts-ignore
 		content.value?.$el?.scrollToBottom();
 	}, 100);
-});
-
-onIonViewDidEnter(() => {
-	setColorPalette(null);
-	setBackground(null);
 });
 
 onMounted(() => {
@@ -77,8 +60,6 @@ watch(searchType, () => {
 </script>
 
 <template>
-	<IonPage>
-		<IonContent ref="content" :fullscreen="true">
 			<div
 				class="absolute inset-0 w-screen h-available flex flex-grow flex-col items-center justify-start gap-12 text-surface-12 overflow-clip  will-change-auto"
 			>
@@ -203,8 +184,6 @@ watch(searchType, () => {
 					</div>
 				</div>
 			</div>
-		</IonContent>
-	</IonPage>
 </template>
 
 <style lang="scss" scoped>

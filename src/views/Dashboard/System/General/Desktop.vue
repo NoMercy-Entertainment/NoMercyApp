@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import {computed, onMounted, ref, toRaw, watch} from "vue";
-import {IonContent, IonPage} from "@ionic/vue";
+
 import {useQueryClient} from "@tanstack/vue-query";
 import {InputNumber, InputText} from "primevue";
 

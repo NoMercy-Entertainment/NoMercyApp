@@ -1,6 +1,5 @@
 <script lang="ts" setup>
 import {onMounted, ref, watch} from "vue";
-import {IonContent, IonPage} from "@ionic/vue";
 
 import useMounted from "@/hooks/useMounted";
 import {castSocketIsConnected, connection, startCastSocket, stopCastSocket,} from "@/lib/clients/castSocket";

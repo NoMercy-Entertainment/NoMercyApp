@@ -3,8 +3,6 @@ import { onMounted, onUnmounted } from 'vue';
 import router from '@/router';
 import { useIsFetching } from '@tanstack/vue-query';
 
-import { IonPage, IonProgressBar, IonRouterOutlet, IonTabs } from '@ionic/vue';
-
 import { lockPortrait, unlockOrientation } from '@/lib/utils/dom';
 import { closeMenu } from '@/store/profileMenu';
 import { currentSong, fullPlayerModalOpen } from '@/store/audioPlayer';
@@ -38,40 +36,37 @@ onUnmounted(() => {
 </script>
 
 <template>
-	<IonPage id="main-content">
+	<div id="main-content" class="contents">
 		<OfflineBanner />
-		<IonTabs>
-			<IonProgressBar
-				v-if="isFetching > 0"
-				class="absolute top-0 z-1199 bg-black"
-				type="indeterminate"
-			/>
-			<ChristmasSnow />
-			<MobileLibraryHeader />
+		<div
+			v-if="isFetching > 0"
+			class="absolute top-0 z-1199 h-1 w-full bg-focus animate-pulse"
+		/>
+		<ChristmasSnow />
+		<MobileLibraryHeader />
 
-			<IonRouterOutlet />
+		<RouterView />
 
-			<ProfileMenu />
-			<!--			<EqualizerMenu /> -->
-			<DeviceOverlay class="!z-10" />
+		<ProfileMenu />
+		<!--			<EqualizerMenu /> -->
+		<DeviceOverlay class="!z-10" />
 
-			<BottomBar />
+		<BottomBar />
 
-			<AsyncMusicPlayerFull
-				v-if="currentSong?.id"
-				:key="fullPlayerModalOpen ? 'full-player-open' : 'full-player-closed'"
-			/>
-			<AsyncMusicPlayerMini
-				:key="!fullPlayerModalOpen ? 'mini-player-open' : 'mini-player-closed'"
-			/>
-			<Suspense>
-				<ImageModal />
-			</Suspense>
+		<AsyncMusicPlayerFull
+			v-if="currentSong?.id"
+			:key="fullPlayerModalOpen ? 'full-player-open' : 'full-player-closed'"
+		/>
+		<AsyncMusicPlayerMini
+			:key="!fullPlayerModalOpen ? 'mini-player-open' : 'mini-player-closed'"
+		/>
+		<Suspense>
+			<ImageModal />
+		</Suspense>
 
-			<OpenInAppBanner />
-			<WelcomeAppModal />
-		</IonTabs>
-	</IonPage>
+		<OpenInAppBanner />
+		<WelcomeAppModal />
+	</div>
 </template>
 
 <style scoped>
@@ -87,13 +82,5 @@ ion-menu ion-header ion-toolbar {
 
 ion-menu ion-content::part(background) {
 	background: var(--color-background);
-}
-
-ion-progress-bar::part(track) {
-	@apply bg-focus/50;
-}
-
-ion-progress-bar::part(progress) {
-	@apply bg-focus;
 }
 </style>

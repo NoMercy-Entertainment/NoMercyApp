@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { IonContent, IonPage } from '@ionic/vue';
 
 import type { EncoderProfile, StatusResponse } from '@/types/api/base/library';
 import type { Library } from '@/types/api/dashboard/server';
@@ -28,8 +27,6 @@ function handleCreateEncoderProfile() {
 </script>
 
 <template>
-	<IonPage>
-		<IonContent :fullscreen="true">
 			<DashboardLayout
 				:error="error"
 				:grid-style="1"
@@ -51,6 +48,4 @@ function handleCreateEncoderProfile() {
 					<ServerEncoderCard :data="profile" />
 				</template>
 			</DashboardLayout>
-		</IonContent>
-	</IonPage>
 </template>

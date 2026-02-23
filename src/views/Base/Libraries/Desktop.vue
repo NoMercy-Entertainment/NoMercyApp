@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { watch } from 'vue';
-import { IonContent, IonPage } from '@ionic/vue';
+
 import { setTitle } from '@/lib/utils/string';
 import { setBackground, setColorPalette } from '@/store/ui';
 
@@ -18,11 +18,7 @@ watch(route, () => {
 </script>
 
 <template>
-	<IonPage>
-		<IonContent :fullscreen="true">
 			<ScrollContainer :auto-hide="true" :static="true">
 				<NMComponent />
 			</ScrollContainer>
-		</IonContent>
-	</IonPage>
 </template>

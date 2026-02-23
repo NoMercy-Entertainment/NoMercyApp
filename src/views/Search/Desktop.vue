@@ -1,6 +1,5 @@
 <script lang="ts" setup>
 import { onMounted, watch } from 'vue';
-import { IonContent, IonPage, onIonViewWillEnter } from '@ionic/vue';
 import { useRoute } from 'vue-router';
 
 import { setBackground, setColorPalette } from '@/store/ui';
@@ -24,15 +23,6 @@ import MoooomIcon from '@/components/Images/icons/MoooomIcon.vue';
 
 const route = useRoute();
 
-onIonViewWillEnter(() => {
-	searchType.value = route.query.from === 'music' ? 'music' : 'video';
-	setColorPalette(null);
-	setBackground(null);
-	setTimeout(() => {
-		search.value.focus();
-	}, 100);
-});
-
 onMounted(() => {
 	searchType.value = route.query.from === 'music' ? 'music' : 'video';
 	setColorPalette(null);
@@ -52,8 +42,6 @@ watch(searchType, () => {
 </script>
 
 <template>
-	<IonPage>
-		<IonContent :fullscreen="true">
 			<div
 				:class="{
 					'h-24 min-h-24 ': searchValue?.length > 0,
@@ -221,8 +209,6 @@ watch(searchType, () => {
 					v-bind="render.props"
 				/>
 			</div>
-		</IonContent>
-	</IonPage>
 </template>
 
 <style scoped>

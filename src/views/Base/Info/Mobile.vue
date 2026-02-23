@@ -1,7 +1,7 @@
 <script lang="ts" setup>
-import { computed, ref, watch } from 'vue';
+import { computed, onBeforeUnmount, onMounted, ref, watch } from 'vue';
 import { useRoute } from 'vue-router';
-import { IonContent, IonPage, IonSkeletonText, onIonViewWillEnter, onIonViewWillLeave } from '@ionic/vue';
+import { IonSkeletonText } from '@ionic/vue';
 
 import type { InfoResponse } from '@/types/api/base/info';
 
@@ -65,7 +65,7 @@ const backgroundUrl = computed(() => {
 	}`;
 });
 
-onIonViewWillEnter(() => {
+onMounted(() => {
 	content.value?.$el?.scrollToTop(window.innerHeight);
 	setTitle(data?.value?.name);
 
@@ -83,7 +83,7 @@ onIonViewWillEnter(() => {
 	}
 });
 
-onIonViewWillLeave(() => {
+onBeforeUnmount(() => {
 	content.value?.$el?.scrollToTop(window.innerHeight);
 });
 
@@ -106,20 +106,9 @@ watch(showMore, (value) => {
 	}
 });
 
-
 </script>
 
 <template>
-	<IonPage>
-		<IonContent
-			ref="content"
-			:fullscreen="true"
-			:style="`--background-image: ${
-				backgroundUrl && !backgroundUrl.includes('null')
-					? `url(${backgroundUrl})`
-					: ''
-			};`"
-		>
 			<div
 				class="flex flex-col justify-start items-center self-stretch flex-grow h-auto gap-4 will-change-auto text-surface-12 z-0"
 				style="box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.16)"
@@ -346,8 +335,6 @@ watch(showMore, (value) => {
 				:toggle="toggleTrailer"
 				class="inset-0 h-full w-available z-999"
 			/>
-		</IonContent>
-	</IonPage>
 </template>
 
 <style scoped>

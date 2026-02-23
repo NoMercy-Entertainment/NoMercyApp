@@ -4,7 +4,6 @@ import { useRoute } from 'vue-router';
 import { useToast } from 'primevue/usetoast';
 
 import { useQueryClient } from '@tanstack/vue-query';
-import { IonContent, IonPage } from '@ionic/vue';
 
 import type { EncoderProfile, FolderLibrary, LibrariesResponse, StatusResponse } from '@/types/api/base/library';
 import type { Language } from '@/types/api/shared';
@@ -284,8 +283,6 @@ function handleDeleteFolder(folder: FolderLibrary) {
 </script>
 
 <template>
-	<IonPage>
-		<IonContent :fullscreen="true">
 			<DashboardLayout
 				v-model="addModalOpen"
 				:back="true"
@@ -519,6 +516,4 @@ function handleDeleteFolder(folder: FolderLibrary) {
 					:library-settings="settings"
 				/>
 			</DashboardLayout>
-		</IonContent>
-	</IonPage>
 </template>

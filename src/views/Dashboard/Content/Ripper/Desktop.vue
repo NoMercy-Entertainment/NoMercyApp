@@ -1,6 +1,5 @@
 <script lang="ts" setup>
 import { onMounted, ref, watch } from 'vue';
-import { IonContent, IonPage } from '@ionic/vue';
 
 import type { BluRayPlaylist, DriveState, Episode, RipperResponse } from '@/types/api/dashboard/ripper';
 
@@ -231,8 +230,6 @@ watch(discContents, async (value) => {
 </script>
 
 <template>
-	<IonPage>
-		<IonContent :fullscreen="true">
 			<DashboardLayout :grid-style="4" title="Ripper">
 				<template #cta>
 					<Select
@@ -603,6 +600,4 @@ watch(discContents, async (value) => {
 					</div>
 				</div>
 			</DashboardLayout>
-		</IonContent>
-	</IonPage>
 </template>

@@ -3,7 +3,6 @@ import { computed, onMounted, ref } from 'vue';
 import { useToast } from 'primevue/usetoast';
 import type { FileUploadBeforeSendEvent, FileUploadSelectEvent } from 'primevue/fileupload';
 import FileUpload from 'primevue/fileupload';
-import { IonContent, IonPage } from '@ionic/vue';
 
 import { user } from '@/store/user';
 import { suffix } from '@/config/config';
@@ -104,8 +103,6 @@ const description
 </script>
 
 <template>
-	<IonPage>
-		<IonContent :fullscreen="true">
 			<DashboardLayout :grid-style="3" title="Profile">
 				<template #cta>
 					<!--          <Button id="invite" color="theme" startIcon="userAdd" @click="{}"> -->
@@ -190,8 +187,6 @@ const description
 					</div>
 				</div>
 			</DashboardLayout>
-		</IonContent>
-	</IonPage>
 </template>
 
 <style scoped></style>

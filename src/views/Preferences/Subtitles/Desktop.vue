@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { computed, onMounted, ref, watch } from 'vue';
-import { IonContent, IonPage } from '@ionic/vue';
+
 import { useLocalStorage } from '@vueuse/core';
 
 import { defaultSubtitleStyles, edgeStyles, fontFamilies } from '@/lib/VideoPlayer/plugins/UIPlugin/buttons';
@@ -95,8 +95,6 @@ watch(currentEdgeStyle, (value) => {
 </script>
 
 <template>
-	<IonPage>
-		<IonContent :fullscreen="true">
 			<DashboardLayout
 				:allow-anyone="true"
 				:grid-style="4"
@@ -204,8 +202,6 @@ watch(currentEdgeStyle, (value) => {
 					</div>
 				</div>
 			</DashboardLayout>
-		</IonContent>
-	</IonPage>
 </template>
 
 <style scoped>

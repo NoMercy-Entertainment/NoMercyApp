@@ -1,6 +1,5 @@
 <script lang="ts" setup>
 import { ref } from 'vue';
-import { IonContent, IonPage } from '@ionic/vue';
 
 import type { LibrariesResponse, StatusResponse } from '@/types/api/base/library';
 import type { Library } from '@/types/api/dashboard/server';
@@ -140,8 +139,6 @@ function handleRescan() {
 </script>
 
 <template>
-	<IonPage>
-		<IonContent :fullscreen="true">
 			<DashboardLayout
 				:error="error"
 				:grid-style="1"
@@ -213,6 +210,4 @@ function handleRescan() {
 					</Button>
 				</template>
 			</DashboardLayout>
-		</IonContent>
-	</IonPage>
 </template>

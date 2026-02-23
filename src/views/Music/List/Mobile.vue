@@ -1,7 +1,7 @@
 <script lang="ts" setup>
-import { computed, ref, shallowRef, watch } from 'vue';
+import { computed, onMounted, ref, shallowRef, watch } from 'vue';
 import { useRoute } from 'vue-router';
-import { IonContent, IonPage, isPlatform, onIonViewWillEnter } from '@ionic/vue';
+import { isPlatform } from '@ionic/vue';
 import { useVirtualizer } from '@tanstack/vue-virtual';
 
 import type { DisplayList } from '@/types/api/music/musicPlayer';
@@ -99,7 +99,7 @@ function sort(songs: PlaylistItem[], sortType: SortType, sortOrder: SortOrder, v
 	}
 }
 
-onIonViewWillEnter(() => {
+onMounted(() => {
 	if (data.value?.color_palette?.cover) {
 		setColorPalette(data.value?.color_palette?.cover);
 	}
@@ -165,8 +165,6 @@ function onScroll() {
 </script>
 
 <template>
-	<IonPage>
-		<IonContent ref="container" :scroll-events="true" @ion-scroll="onScroll">
 			<NotFound v-if="isError && !data" />
 			<div
 				v-else-if="
@@ -274,6 +272,4 @@ function onScroll() {
 					</div>
 				</div>
 			</div>
-		</IonContent>
-	</IonPage>
 </template>

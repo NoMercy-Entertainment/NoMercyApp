@@ -1,6 +1,5 @@
 <script lang="ts" setup>
 import { ref } from 'vue';
-import { IonContent, IonPage } from '@ionic/vue';
 
 import { useDownloadManager } from '@/lib/OfflineContentManager/useDownloadManager';
 import DashboardLayout from '@/Layout/Desktop/DashboardLayout.vue';
@@ -28,8 +27,6 @@ async function downloadShow() {
 </script>
 
 <template>
-	<IonPage>
-		<IonContent :fullscreen="true">
 			<DashboardLayout :grid-style="3" title="Profile" class="grid gap-2 p-4 col-span-12">
 				<h2 class="text-lg mb-2">
 					Download for Offline Viewing
@@ -80,6 +77,4 @@ async function downloadShow() {
 					</div>
 				</div>
 			</DashboardLayout>
-		</IonContent>
-	</IonPage>
 </template>

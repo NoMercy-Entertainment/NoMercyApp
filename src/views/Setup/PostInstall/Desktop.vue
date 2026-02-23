@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { ref } from 'vue';
-import { IonContent, IonPage } from '@ionic/vue';
+
 import { useToast } from 'primevue/usetoast';
 
 import type { LibrariesResponse } from '@/types/api/base/library';
@@ -137,8 +137,6 @@ function setNextButtonLocked(value: boolean) {
 </script>
 
 <template>
-	<IonPage>
-		<IonContent :fullscreen="true">
 			<Frame
 				:current-step="currentStep"
 				:finish="finish"
@@ -158,6 +156,4 @@ function setNextButtonLocked(value: boolean) {
 					:set-next-button-locked="setNextButtonLocked"
 				/>
 			</Frame>
-		</IonContent>
-	</IonPage>
 </template>

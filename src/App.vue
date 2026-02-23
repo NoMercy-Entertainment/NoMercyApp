@@ -1,6 +1,5 @@
 <script lang="ts" setup>
 import { onMounted, ref, useId } from 'vue';
-import { IonApp, IonRouterOutlet } from '@ionic/vue';
 import { useToast } from 'primevue/usetoast';
 import { useEventListener } from '@vueuse/core';
 import serverClient from './lib/clients/serverClient';
@@ -95,23 +94,21 @@ useEventListener(document, 'showModal', (evt) => {
 </script>
 
 <template>
-	<IonApp>
-		<IonRouterOutlet animations="false" />
-		<Toast class="z-1199" />
-		<CreatePlaylistModal
-			v-if="playlistModalData"
-			:key="key"
-			:data="playlistModalData"
-			:on-close="onClose"
-			:on-delete="onDelete"
-		/>
+	<RouterView />
+	<Toast class="z-1199" />
+	<CreatePlaylistModal
+		v-if="playlistModalData"
+		:key="key"
+		:data="playlistModalData"
+		:on-close="onClose"
+		:on-delete="onDelete"
+	/>
 
-		<ContextMenu ref="cardMenu" :model="trackContextMenuItems as MenuItem[]" />
+	<ContextMenu ref="cardMenu" :model="trackContextMenuItems as MenuItem[]" />
 
-		<Suspense>
-			<ImageModal />
-		</Suspense>
-		<ConfirmDialog />
-		<ContextMenu ref="contextMenu" :model="contextMenuItems" />
-	</IonApp>
+	<Suspense>
+		<ImageModal />
+	</Suspense>
+	<ConfirmDialog />
+	<ContextMenu ref="contextMenu" :model="contextMenuItems" />
 </template>

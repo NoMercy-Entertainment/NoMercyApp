@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { computed, onMounted, onUnmounted, ref, watch } from 'vue';
 import { useRoute } from 'vue-router';
-import { IonContent, IonPage } from '@ionic/vue';
+
 import { collect } from 'collect.js';
 
 import type { CollectionResponse } from '@/types/api/base/collection';
@@ -274,8 +274,6 @@ const menuItems = computed<IMenuItem[]>(() => [
 </script>
 
 <template>
-	<IonPage>
-		<IonContent :fullscreen="true">
 			<NotFound v-if="isError && !data" />
 			<ScrollContainer v-else :auto-hide="true" :static="true">
 				<article class="w-available text-surface-12">
@@ -436,8 +434,6 @@ const menuItems = computed<IMenuItem[]>(() => [
 					</section>
 				</article>
 			</ScrollContainer>
-		</IonContent>
-	</IonPage>
 </template>
 
 <style scoped>

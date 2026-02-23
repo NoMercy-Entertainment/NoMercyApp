@@ -1,7 +1,7 @@
 <script lang="ts" setup>
-import { computed, ref, watch } from 'vue';
+import { computed, onBeforeUnmount, onMounted, ref, watch } from 'vue';
 import { useRoute } from 'vue-router';
-import { IonContent, IonPage, IonSkeletonText, onIonViewWillEnter, onIonViewWillLeave } from '@ionic/vue';
+import { IonSkeletonText } from '@ionic/vue';
 import { t } from 'i18next';
 import { collect } from 'collect.js';
 
@@ -88,7 +88,7 @@ watch(data, (value) => {
 	}, 1000);
 });
 
-onIonViewWillEnter(() => {
+onMounted(() => {
 	content.value?.$el?.scrollToTop(window.innerHeight);
 	// trailerIndex.value = 0;
 	setTitle(data?.value?.title);
@@ -106,7 +106,7 @@ onIonViewWillEnter(() => {
 	}
 });
 
-onIonViewWillLeave(() => {
+onBeforeUnmount(() => {
 	content.value?.$el?.scrollToTop(window.innerHeight);
 });
 
@@ -136,16 +136,6 @@ const yearSpan = computed(() => `${collect(data.value?.collection).min('year')} 
 </script>
 
 <template>
-	<IonPage>
-		<IonContent
-			ref="content"
-			:fullscreen="true"
-			:style="`--background-image: ${
-				backgroundUrl && !backgroundUrl.includes('null')
-					? `url(${backgroundUrl})`
-					: ''
-			};`"
-		>
 			<MobileInfoCard :data="data" />
 
 			<div
@@ -307,8 +297,6 @@ const yearSpan = computed(() => `${collect(data.value?.collection).min('year')} 
 					/>
 				</div>
 			</div>
-		</IonContent>
-	</IonPage>
 </template>
 
 <style scoped>

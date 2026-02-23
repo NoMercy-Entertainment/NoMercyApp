@@ -1,6 +1,6 @@
 <script lang="ts" setup>
-import { ref, watch } from 'vue';
-import { IonContent, IonPage, isPlatform, onIonViewDidEnter, onIonViewDidLeave } from '@ionic/vue';
+import { onBeforeUnmount, onMounted, ref, watch } from 'vue';
+import { isPlatform } from '@ionic/vue';
 import { App } from '@capacitor/app';
 
 import {
@@ -152,25 +152,18 @@ watch(data, (value) => {
 	initPlayer(value);
 });
 
-onIonViewDidEnter(() => {
+onMounted(() => {
 	audioPlayer.stop();
-	// if (user.value.features?.nomercyConnect) {
-	// 	initPlayer();
-	// }
-	// else if (data.value?.length) {
 	initPlayer(data.value);
-	// }
 });
 
-onIonViewDidLeave(() => {
+onBeforeUnmount(() => {
 	player.value?.dispose();
 	setDisableScreensaver(false);
 });
 </script>
 
 <template>
-	<IonPage>
-		<IonContent :fullscreen="true">
 			<Teleport to="body">
 				<div
 					:class="{
@@ -182,8 +175,6 @@ onIonViewDidLeave(() => {
 					<div id="player1" class="group nomercyplayer" />
 				</div>
 			</Teleport>
-		</IonContent>
-	</IonPage>
 </template>
 
 <style>

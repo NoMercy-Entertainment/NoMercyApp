@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { computed } from 'vue';
-import { IonContent, IonPage } from '@ionic/vue';
+
 import router from '@/router';
 
 const props = defineProps({
@@ -34,8 +34,6 @@ const description = computed(() => {
 </script>
 
 <template>
-	<IonPage>
-		<IonContent :fullscreen="true">
 			<div class="grid h-full w-full place-items-center">
 				<div
 					class="relative flex flex-col items-center justify-start gap-8 overflow-hidden"
@@ -64,6 +62,4 @@ const description = computed(() => {
 					</div>
 				</div>
 			</div>
-		</IonContent>
-	</IonPage>
 </template>

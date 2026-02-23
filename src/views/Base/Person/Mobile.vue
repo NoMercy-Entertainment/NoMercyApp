@@ -1,6 +1,6 @@
 <script lang="ts" setup>
-import { computed, ref, watch } from 'vue';
-import { IonContent, IonPage, IonSkeletonText, onIonViewWillEnter, onIonViewWillLeave } from '@ionic/vue';
+import { computed, onBeforeUnmount, onMounted, ref, watch } from 'vue';
+import { IonSkeletonText } from '@ionic/vue';
 import { useRoute } from 'vue-router';
 import { Swiper as SwiperComponent, SwiperSlide } from 'swiper/vue';
 import 'swiper/css';
@@ -85,13 +85,13 @@ watch(data, (value) => {
 	setColorPalette(value?.color_palette?.profile);
 });
 
-onIonViewWillEnter(() => {
+onMounted(() => {
 	setTitle(data?.value?.name);
 	setBackground(data?.value?.known_for?.at(0)?.backdrop ?? null);
 	setColorPalette(data?.value?.color_palette?.profile);
 });
 
-onIonViewWillLeave(() => {
+onBeforeUnmount(() => {
 	setBackground(null);
 	setColorPalette(null);
 });
@@ -106,16 +106,6 @@ watch(data, (value) => {
 </script>
 
 <template>
-	<IonPage>
-		<IonContent
-			ref="content"
-			:fullscreen="true"
-			:style="`--background-image: ${
-				backgroundUrl && !backgroundUrl.includes('null')
-					? `url(${backgroundUrl})`
-					: ''
-			};`"
-		>
 			<div
 				class="flex flex-col justify-start items-center self-stretch flex-grow h-auto gap-4 will-change-auto text-surface-12 z-10 absolute left-0 w-full"
 				style="box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.16)"
@@ -324,8 +314,6 @@ watch(data, (value) => {
 					/>
 				</div>
 			</div>
-		</IonContent>
-	</IonPage>
 </template>
 
 <style scoped>

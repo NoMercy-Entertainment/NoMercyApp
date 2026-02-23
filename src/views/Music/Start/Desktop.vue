@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { onMounted } from 'vue';
-import { IonContent, IonPage } from '@ionic/vue';
+
 import { setTitle } from '@/lib/utils/string';
 import { setBackground, setColorPalette } from '@/store/ui';
 
@@ -15,11 +15,7 @@ onMounted(() => {
 </script>
 
 <template>
-	<IonPage>
-		<IonContent :fullscreen="true">
 			<ScrollContainer :auto-hide="true" :static="true">
 				<NMComponent path="/music/start" />
 			</ScrollContainer>
-		</IonContent>
-	</IonPage>
 </template>

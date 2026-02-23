@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { IonContent, IonPage } from '@ionic/vue';
 
 import type { ActivityLog, Device } from '@/types/server';
 
@@ -27,8 +26,6 @@ const { data: devices, error: devicesError } = useServerClient<Device[]>({
 </script>
 
 <template>
-	<IonPage>
-		<IonContent :fullscreen="true">
 			<DashboardLayout
 				:error="activityError || devicesError"
 				title="Activity"
@@ -44,6 +41,4 @@ const { data: devices, error: devicesError } = useServerClient<Device[]>({
 					class="col-span-2 gap-3"
 				/>
 			</DashboardLayout>
-		</IonContent>
-	</IonPage>
 </template>

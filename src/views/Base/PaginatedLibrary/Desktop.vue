@@ -1,6 +1,5 @@
 <script lang="ts" setup>
 import { computed, onMounted, onUnmounted, ref, watch } from 'vue';
-import { IonContent, IonPage, onIonViewDidEnter } from '@ionic/vue';
 import { isNative } from '@/config/global';
 import { currentSong } from '@/store/audioPlayer';
 
@@ -90,9 +89,6 @@ onMounted(() => {
 	});
 });
 
-onIonViewDidEnter(() => {
-	document.dispatchEvent(new Event('indexer'));
-});
 
 watch(data, (value) => {
 	if (!value)
@@ -113,8 +109,6 @@ function onRightClick(event: Event, data: LibraryResponse | GenreResponse | Peop
 </script>
 
 <template>
-	<IonPage>
-		<IonContent :fullscreen="true">
 			<NotFound v-if="isError && !data?.pages" />
 			<ScrollContainer
 				v-else
@@ -173,6 +167,4 @@ function onRightClick(event: Event, data: LibraryResponse | GenreResponse | Peop
 					</div>
 				</div>
 			</ScrollContainer>
-		</IonContent>
-	</IonPage>
 </template>

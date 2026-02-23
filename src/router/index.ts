@@ -1,4 +1,4 @@
-import { createRouter, createWebHistory } from '@ionic/vue-router';
+import { createRouter, createWebHistory } from 'vue-router';
 import { isPlatform } from '@ionic/vue';
 
 import { user } from '@/store/user';

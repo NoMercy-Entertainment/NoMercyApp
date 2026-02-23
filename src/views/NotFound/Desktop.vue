@@ -1,6 +1,5 @@
 <script lang="ts" setup>
 import { computed } from 'vue';
-import { IonPage } from '@ionic/vue';
 
 const props = defineProps({
 	status: {
@@ -33,7 +32,6 @@ const description = computed(() => {
 </script>
 
 <template>
-	<IonPage>
 		<div class="grid h-full w-full place-items-center">
 			<div
 				class="relative flex flex-col items-center justify-start gap-8 overflow-hidden"
@@ -61,5 +59,4 @@ const description = computed(() => {
 				</div>
 			</div>
 		</div>
-	</IonPage>
 </template>

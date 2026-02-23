@@ -1,11 +1,9 @@
 <script lang="ts" setup>
-import { IonContent, IonPage } from '@ionic/vue';
+
 import EmptyBackdrop from '@/components/Images/EmptyBackdrop.vue';
 </script>
 
 <template>
-	<IonPage>
-		<IonContent :fullscreen="true">
 			<div class="flex flex-col justify-center items-center w-full h-full">
 				<EmptyBackdrop />
 				<svg
@@ -52,6 +50,4 @@ import EmptyBackdrop from '@/components/Images/EmptyBackdrop.vue';
 					{{ $t("No Servers") }}
 				</h1>
 			</div>
-		</IonContent>
-	</IonPage>
 </template>

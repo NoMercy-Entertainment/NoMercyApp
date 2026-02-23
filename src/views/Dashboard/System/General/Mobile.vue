@@ -1,12 +1,8 @@
 <script setup lang="ts">
-import { IonContent, IonPage } from '@ionic/vue';
+
 import ExploreContainer from '@/components/ExploreContainer.vue';
 </script>
 
 <template>
-	<IonPage>
-		<IonContent :fullscreen="true">
 			<ExploreContainer name="Dashboard General Mobile page" />
-		</IonContent>
-	</IonPage>
 </template>

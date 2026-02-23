@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { ref } from 'vue';
-import { IonContent, IonPage } from '@ionic/vue';
 
 import useApiClient from '@/lib/clients/useApiClient';
 
@@ -35,8 +34,6 @@ function closeInviteModal() {
 </script>
 
 <template>
-	<IonPage>
-		<IonContent :fullscreen="true">
 			<DashboardLayout
 				:grid-style="1"
 				title="Server members"
@@ -64,6 +61,4 @@ function closeInviteModal() {
 
 				<InviteUserModal :open="inviteModalOpen" :close="closeInviteModal" />
 			</DashboardLayout>
-		</IonContent>
-	</IonPage>
 </template>
