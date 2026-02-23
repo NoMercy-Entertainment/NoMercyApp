@@ -51,7 +51,7 @@ const { t } = useTranslation();
 const toast = useToast();
 
 /** Change this to slow down or speed up the stagger. Each step = staggerStep ms. */
-const staggerStep = 75;
+const staggerStep = 30;
 function staggerDelay(index: number): string {
 	return `animation-delay: ${index * staggerStep}ms`;
 }
