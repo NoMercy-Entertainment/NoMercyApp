@@ -452,7 +452,7 @@ audioPlayer.on('time', (timeState) => {
 		&& timeState.position - lastTime > 5
 	) {
 		lastTime = timeState.position;
-		// musicSocketConnection.value?.invoke('CurrentTimeCommand', timeState.position);
+		musicSocketConnection.value?.invoke('CurrentTimeCommand', timeState.position);
 	}
 });
 audioPlayer.on('song', (data) => {
