@@ -1,1 +1,0 @@
-import"./i18n-Bgv5p1Yb.js";import{Fr as o,Ir as r,Lr as s,Nr as _,Pr as B,Rr as e}from"./ionic-B1wlflFe.js";r();export{_ as MENU_BACK_BUTTON_PRIORITY,B as OVERLAY_BACK_BUTTON_PRIORITY,o as blockHardwareBackButton,s as shouldUseCloseWatcher,e as startHardwareBackButton};
