@@ -1,0 +1,1 @@
+import{J as t,S as r,T as a,c as l,g as n}from"./i18n-Cs-AFcrY.js";import{v as o}from"./index-BkcAxgfB.js";l();var s={};function u(_,e){return t(),a(n,null,[e[0]||(e[0]=r("h1",null,"Auth View Desktop",-1)),e[1]||(e[1]=r("div",{class:"overflow-auto h-available"},null,-1))],64)}var m=o(s,[["render",u]]);export{m as default};
