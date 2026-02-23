@@ -46,24 +46,22 @@ function getLocations(): Promise<void> {
 
 				done.value = true;
 
+				const storedServerId = localStorage.getItem('currentServer');
+				const storedServer = storedServerId
+					? servers.value.find(server => server.id === storedServerId)
+					: null;
+
 				if (servers.value.length === 0) {
 					await router.replace({ name: 'No Servers' })
 						.then(() => resolve());
 				}
+				else if (storedServer) {
+					setCurrentServer(storedServer);
+				}
 				else if (servers.value.length === 1) {
 					setCurrentServer(servers.value[0]);
 				}
-				else if (
-					servers.value.length > 1
-					&& !!localStorage.getItem('currentServer')
-				) {
-					setCurrentServer(
-						servers.value.find(
-							server => server.id === localStorage.getItem('currentServer'),
-						)!,
-					);
-				}
-				else if (servers.value.length > 1) {
+				else {
 					await router.replace({ name: 'Select Server' });
 				}
 
