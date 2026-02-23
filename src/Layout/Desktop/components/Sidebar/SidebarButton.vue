@@ -2,6 +2,7 @@
 import type { PropType } from 'vue';
 import { computed } from 'vue';
 import { useRoute } from 'vue-router';
+import { useTranslation } from 'i18next-vue';
 
 import router from '@/router';
 import { sidebar } from '@/store/sidebar';
@@ -38,7 +39,13 @@ const props = defineProps({
 	},
 });
 
+const { t } = useTranslation();
 const route = useRoute();
+
+const tooltipConfig = computed(() => ({
+	value: t(props.name),
+	disabled: sidebar.value === 'open',
+}));
 
 const classes = computed(() => {
 	return route.fullPath === props.href
@@ -73,10 +80,7 @@ function handleClick() {
 <template>
 	<Button
 		v-if="show"
-		v-tooltip.right="{
-			value: $t(name),
-			disabled: sidebar === 'open',
-		}"
+		v-tooltip.right="tooltipConfig"
 		:aria-label="$t(name)"
 		:class="classes"
 		:style="styles"

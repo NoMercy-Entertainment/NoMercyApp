@@ -44,6 +44,12 @@ const props = defineProps({
 	},
 });
 
+const scrollPanelDt = {
+	bar: {
+		background: 'rgb(var(--surface-1) / 60%)',
+	},
+};
+
 const visible = ref(props.open);
 
 watch(props, (value) => {
@@ -73,11 +79,7 @@ watch(visible, (value) => {
 	>
 		<!--		<Shadow v-if="background" class="-z-10 -translate-y-[10%] translate-x-[20%]" /> -->
 		<ScrollPanel
-			:dt="{
-				bar: {
-					background: 'rgb(var(--surface-1) / 60%)',
-				},
-			}"
+			:dt="scrollPanelDt"
 			class="w-available h-available"
 		>
 			<template #default>

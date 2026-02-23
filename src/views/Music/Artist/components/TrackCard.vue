@@ -1,11 +1,12 @@
 <script lang="ts" setup>
 import type { PropType } from 'vue';
 import { computed, nextTick, ref, watch } from 'vue';
-import { useRoute } from 'vue-router';
 import { useVirtualizer } from '@tanstack/vue-virtual';
 
 import type { PlaylistItem } from '@/types/musicPlayer';
 import { scrollContainerElement } from '@/store/ui';
+import { isAlbumRoute as isAlbumRouteComputed, isPlaylistRoute } from '@/store/routeState';
+import router from '@/router';
 
 import TrackRow from './TrackRow.vue';
 
@@ -20,9 +21,9 @@ const props = defineProps({
 	},
 });
 
-const route = useRoute();
-const isAlbumRoute = computed(() => route.path.startsWith('/music/album'));
-const isFavoritesRoute = computed(() => route.path.startsWith('/music/playlists'));
+const isAlbumRoute = isAlbumRouteComputed;
+const isFavoritesRoute = isPlaylistRoute;
+const routeParamId = computed(() => router.currentRoute.value.params.id as string);
 
 const virtualContainerRef = ref<HTMLDivElement>();
 const scrollMargin = ref(0);
@@ -103,6 +104,7 @@ const virtualizer = useVirtualizer(computed(() => ({
 					:index="virtualRow.index"
 					:is-album-route="isAlbumRoute"
 					:is-favorites-route="isFavoritesRoute"
+					:route-param-id="routeParamId"
 				/>
 			</div>
 		</div>

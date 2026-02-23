@@ -1,12 +1,13 @@
 <script lang="ts" setup>
 import type { PropType } from 'vue';
+import { computed } from 'vue';
 import { useTranslation } from 'i18next-vue';
 import Button from 'primevue/button';
 
 import { musicVisibility } from '@/store/audioPlayer';
 import { buttonClasses } from '@/config/global.ts';
 
-defineProps({
+const props = defineProps({
 	onclick: {
 		type: Function as PropType<(e?: MouseEvent) => void>,
 		required: true,
@@ -28,16 +29,18 @@ defineProps({
 });
 
 const { t } = useTranslation();
+
+const tooltipConfig = computed(() => ({
+	showDelay: 1500,
+	hideDelay: 300,
+	value: t(props.label),
+	disabled: props.noTooltip,
+}));
 </script>
 
 <template>
 	<Button
-		v-tooltip.top="{
-			showDelay: 1500,
-			hideDelay: 300,
-			value: $t(label),
-			disabled: noTooltip,
-		}"
+		v-tooltip.top="tooltipConfig"
 		:aria-label="t(label)"
 		:class="{
 			'!bg-transparent hover:!bg-surface-3/50': noBackground,

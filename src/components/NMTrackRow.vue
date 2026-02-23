@@ -1,13 +1,13 @@
 <script lang="ts" setup>
 import type { PropType } from 'vue';
 import { computed } from 'vue';
-import { useRoute } from 'vue-router';
 
 import type { PlaylistItem } from '@/types/musicPlayer';
 
 import { audioPlayer, currentSong, isPlaying, musicSize, setCurrentPlaylist } from '@/store/audioPlayer';
-import { isMusicSearchRoute } from '@/store/routeState';
+import { isAlbumRoute, isArtistRoute, isMusicSearchRoute, isPlaylistRoute } from '@/store/routeState';
 import { onTrackRowRightClick } from '@/store/contextMenuItems';
+import router from '@/router';
 
 import DropdownMenu from '@/Layout/Desktop/components/Menus/DropdownMenu.vue';
 import EqSpinner from '@/components/Images/EqSpinner.vue';
@@ -32,15 +32,10 @@ const props = defineProps({
 	},
 });
 
-const route = useRoute();
-const isFavoritesRoute = computed(() => route.path.startsWith('/music/playlists'));
-
-function setCurrentList() {
-	setCurrentPlaylist(route.fullPath);
-}
+const isFavoritesRoute = isPlaylistRoute;
 
 function handleClick() {
-	setCurrentList();
+	setCurrentPlaylist(router.currentRoute.value.fullPath);
 	audioPlayer.playTrack(props.data, props.displayList);
 }
 </script>
@@ -53,10 +48,10 @@ function handleClick() {
 		tabindex="0"
 		@click="handleClick()"
 		@contextmenu="onTrackRowRightClick($event, {
-			isAlbumRoute: route.path.startsWith('/music/album'),
-			isArtistRoute: route.path.startsWith('/music/artist'),
-			isPlaylistsRoute: route.path.startsWith('/music/playlists'),
-			routeParamId: route.params.id as string,
+			isAlbumRoute: isAlbumRoute,
+			isArtistRoute: isArtistRoute,
+			isPlaylistsRoute: isPlaylistRoute,
+			routeParamId: router.currentRoute.value.params.id as string,
 		}, data)"
 	>
 		<span

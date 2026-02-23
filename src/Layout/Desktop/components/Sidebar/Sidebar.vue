@@ -17,6 +17,12 @@ import SidebarButtonGroup from './SidebarButtonGroup.vue';
 import SidebarButton from './SidebarButton.vue';
 import MoooomIcon from '@/components/Images/icons/MoooomIcon.vue';
 
+const scrollPanelDt = {
+	bar: {
+		background: 'rgb(var(--surface-1) / 60%)',
+	},
+};
+
 const route = useRoute();
 
 const { data: playlists } = useServerClient<Playlist[]>({
@@ -113,11 +119,7 @@ watch(playlists, (value) => {
 			class="flex sidebar-open:w-64 flex-grow flex-col items-start justify-start self-stretch overflow-clip h-available sidebar-hidden:sm:w-4 sidebar-closed:sm:w-20 sm:mt-4 overflow-x-hidden"
 		>
 			<ScrollPanel
-				:dt="{
-					bar: {
-						background: 'rgb(var(--surface-1) / 60%)',
-					},
-				}"
+				:dt="scrollPanelDt"
 				:inert="sidebar === 'hidden'"
 				class="w-available h-available"
 			>

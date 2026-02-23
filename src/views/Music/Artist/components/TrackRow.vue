@@ -1,6 +1,5 @@
 <script lang="ts" setup>
 import type { PropType } from 'vue';
-import { useRoute } from 'vue-router';
 import type { PlaylistItem } from '@/types/musicPlayer';
 import { audioPlayer, currentSong, isPlaying, musicSize, setCurrentPlaylist } from '@/store/audioPlayer';
 
@@ -38,13 +37,15 @@ const props = defineProps({
 		type: Boolean,
 		default: false,
 	},
+	routeParamId: {
+		type: String,
+		default: '',
+	},
 });
-
-const route = useRoute();
 
 function handleClick() {
 	const type = props.isAlbumRoute ? 'album' : 'artist';
-	const pageId = route.params.id;
+	const pageId = props.routeParamId;
 
 	if (!user.value.features?.nomercyConnect) {
 		if (currentSong.value?.id === props.data.id) {
@@ -76,7 +77,7 @@ function handleClick() {
 			isAlbumRoute: isAlbumRoute,
 			isArtistRoute: true,
 			isPlaylistsRoute: false,
-			routeParamId: route.params.id as string,
+			routeParamId: routeParamId,
 		}, data)"
 	>
 		<span class="flex w-10 justify-center text-center min-w-10">
