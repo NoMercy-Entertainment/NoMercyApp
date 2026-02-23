@@ -282,7 +282,7 @@ watch(data, (value) => {
 
 <template>
 	<NotFound v-if="isError && !data" />
-	<ScrollContainer v-else
+	<ScrollContainer v-else-if="!isError"
 		:auto-hide="true"
 		:static="true"
 	>

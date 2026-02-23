@@ -57,12 +57,18 @@ function focusMain() {
 					class="flex w-px flex-1 flex-col relative overflow-clip justify-start items-start w-available h-available sm:rounded-2xl border-surface-2 children:scrollbar-none z-0 sm:border-3 before:content-[''] before:pointer-events-none before:absolute before:inset-0 before:w-full before:h-full before:bg-surface-12/9 dark:before:bg-surface-1/9"
 					style="box-shadow: 0 1px 3px 0 rgba(16,24,40,0.1), 0 1px 2px 0 rgba(16,24,40,0.06);"
 				>
-					<Transition name="bg-fade">
+					<Transition name="bg-fade" mode="out-in">
 						<div
 							v-if="backgroundUrl && !backgroundUrl.includes('null')"
 							:key="backgroundUrl"
-							:style="`background-image: url(${backgroundUrl})`"
-							class="absolute inset-0 -z-10 bg-cover bg-center pointer-events-none"
+							:style="`
+								background-image: url(${backgroundUrl});
+								width: 100vw;
+								height: 100vh;
+								right: -2rem;
+								left: unset;
+							`"
+							class="fixed bg-fixed inset-0 -z-10 bg-cover bg-center pointer-events-none"
 						/>
 					</Transition>
 					<Shadow />
