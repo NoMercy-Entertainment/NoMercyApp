@@ -157,7 +157,7 @@ const { isSwiping, lengthX } = useSwipe(target, {
 				class="flex flex-shrink-0 flex-grow-0 flex-col items-start justify-start gap-1 self-stretch px-3 py-2"
 			>
 				<SideFlyoutButton
-					v-if="currentServer"
+					v-if="currentServer?.is_owner || currentServer?.is_manager"
 					:active="isDashboardRoute"
 					href="/dashboard/system"
 					icon="gridMasonry"

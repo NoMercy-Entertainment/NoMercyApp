@@ -1,6 +1,5 @@
 <script lang="ts" setup>
 import { computed } from 'vue';
-import { useRoute } from 'vue-router';
 import { IonPage, IonRouterOutlet, IonTabs } from '@ionic/vue';
 
 import { background } from '@/store/ui';
@@ -22,8 +21,6 @@ import ChristmasSnow from '@/components/Seasonal/Christmas/ChristmasSnow.vue';
 import Shadow from '@/Layout/Desktop/components/Shadow.vue';
 import GlobalScrollbar from '@/Layout/Desktop/components/GlobalScrollbar.vue';
 import OfflineBanner from '@/components/OfflineBanner.vue';
-
-const route = useRoute();
 
 const backgroundUrl = computed(() => {
 	if (!background.value)
@@ -63,7 +60,7 @@ function focusMain() {
 						<Shadow />
 						<slot v-if="$slots.default" />
 						<IonTabs v-else>
-							<IonRouterOutlet :key="route.fullPath" :animated="false" />
+							<IonRouterOutlet :animated="false" />
 						</IonTabs>
 					</main>
 

@@ -133,11 +133,11 @@ export function handleMusicPlayerState(data: StateEvents) {
 		const seekValueSeconds = adjustedProgressMs / 1000;
 
 		// Update state refs
-		currentMusicDeviceId.value = state.device_id;
 		setCurrentPlaylist(state.current_list);
 
-		// Determine if this device is active
-		const isActiveDevice = state.device_id === deviceId.value;
+		// Determine if this device is active (use currentMusicDeviceId which is
+		// only changed by explicit ChangeDevice events, not by track changes)
+		const isActiveDevice = currentMusicDeviceId.value === deviceId.value;
 
 		// Mute/unmute based on active device
 		if (isActiveDevice && !state.muted_state) {
@@ -147,10 +147,12 @@ export function handleMusicPlayerState(data: StateEvents) {
 			audioPlayer.mute();
 		}
 
-		// Apply settings (don't mutate state)
+		// Apply settings - only update if values actually changed
 		const clampedVolume = Math.max(0, Math.min(100, state.volume_percentage));
-		audioPlayer.setVolume(clampedVolume);
-		volume.value = clampedVolume;
+		if (volume.value !== clampedVolume) {
+			audioPlayer.setVolume(clampedVolume);
+			volume.value = clampedVolume;
+		}
 
 		audioPlayer.repeat(state.repeat_state);
 		audioPlayer.shuffle(state.shuffle_state);
@@ -181,8 +183,11 @@ export function handleMusicPlayerState(data: StateEvents) {
 			});
 		}
 		else {
-			// Same track - sync position if drifted
-			currentSong.value = state.item; // Update metadata (favorite, etc.)
+			// Same track - only update metadata if it actually changed (e.g., favorite toggled)
+			// Avoid assigning new object references when data is identical to prevent cascading re-renders
+			if (state.item.favorite_track !== currentSong.value?.favorite_track) {
+				currentSong.value = state.item;
+			}
 
 			const drift = Math.abs((currentTime.value || 0) - seekValueSeconds);
 			const shouldSeek = isActiveDevice ? drift > 0.75 : drift > 2.0;

@@ -5,7 +5,7 @@ import { isPlatform } from '@ionic/vue';
 
 import { scheme } from '@/store/colorScheme';
 import { user } from '@/store/user';
-
+import { currentServer } from '@/store/currentServer';
 
 import { redirectUrl } from '@/store/routeState';
 import { konamiEnabledState } from '@/store/konami.ts';
@@ -89,6 +89,7 @@ function handleSelectServer() {
 						class="flex flex-shrink-0 flex-grow-0 flex-col items-start justify-start gap-1 self-stretch border-0 py-2"
 					>
 						<DropdownLink
+							v-if="currentServer?.is_owner || currentServer?.is_manager"
 							icon="gridMasonry"
 							name="System"
 							to="/dashboard/system"

@@ -11,6 +11,7 @@ import BottomFlyout from '@/Layout/Mobile/components/BottomFlyout.vue';
 import Toggle from '@/components/Forms/Toggle.vue';
 
 import { logout } from '@/lib/auth/index';
+import { currentServer } from '@/store/currentServer';
 import { closeMenu, menuOpen } from '@/store/profileMenu';
 import { launchAndroidApp, shouldShowAndroidPrompts } from '@/store/androidAppPrompt';
 import { phonePortrait } from 'ionicons/icons';
@@ -76,7 +77,7 @@ function handleOpenApp() {
 				</RouterLink>
 			</IonItem>
 
-			<IonItem v-if="servers.length > 0" lines="none">
+			<IonItem v-if="servers.length > 0 && (currentServer?.is_owner || currentServer?.is_manager)" lines="none">
 				<RouterLink
 					class="flex justify-center items-center self-stretch w-full h-full flex-grow-0 flex-shrink-0 relative pl-1 py-2.5 rounded-md bg-transparent border border-transparent"
 					to="/dashboard/system"
