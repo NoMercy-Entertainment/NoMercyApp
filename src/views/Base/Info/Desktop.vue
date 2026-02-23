@@ -50,6 +50,12 @@ const route = useRoute();
 const { t } = useTranslation();
 const toast = useToast();
 
+/** Change this to slow down or speed up the stagger. Each step = staggerStep ms. */
+const staggerStep = 75;
+function staggerDelay(index: number): string {
+	return `animation-delay: ${index * staggerStep}ms`;
+}
+
 const { data, isError, error } = useServerClient<InfoResponse>({
 	keepForever: true,
 	path: route?.fullPath,
@@ -281,8 +287,8 @@ watch(data, (value) => {
 </script>
 
 <template>
-	<NotFound v-if="isError && !data" />
-	<ScrollContainer v-else-if="!isError"
+	<NotFound v-if="isError" />
+	<ScrollContainer v-else
 		:auto-hide="true"
 		:static="true"
 	>
@@ -305,7 +311,7 @@ watch(data, (value) => {
 					<div class="z-0 flex w-full flex-grow flex-col min-h-40" />
 					<div class="z-0 flex w-full flex-grow flex-col items-end justify-end gap-2">
 						<div class="children:absolute relative right-1 bottom-0 col-start-1 col-end-2 flex h-auto w-auto select-none justify-end pb-2 max-w-[20vw] w-available translate-x-[4px] sm:h-40 lg:max-w-[30vw] aspect-[32/9] fade-up"
-							style="animation-delay: 0ms"
+							:style="staggerDelay(0)"
 						>
 							<TMDBImage v-if="data?.logo"
 								:key="data?.logo"
@@ -322,14 +328,14 @@ watch(data, (value) => {
 						</div>
 
 						<div class="relative col-start-2 col-end-4 grid flex-shrink-0 flex-grow-0 grid-cols-3 items-start justify-start self-stretch rounded-2xl bg-gradient-to-b p-6 from-surface-1/12 via-surface-2/12 to-surface-2/11 border-surface-5/8 border-1 min-h-[23.5rem] fade-up"
-							style="animation-delay: 100ms"
+							:style="staggerDelay(2)"
 						>
 							<div v-if="data?.poster"
 								:class="{
 									'': hasItem,
 								}"
 								class="absolute z-10 col-start-1 content-center col-end-2 h-auto w-full items-start justify-start rounded-lg top-0 -translate-y-[35%] sm:block fade-up"
-								style="animation-delay: 550ms"
+								:style="staggerDelay(11)"
 							>
 								<RouterLink :aria-label="$t('Play')"
 									:class="{
@@ -400,7 +406,7 @@ watch(data, (value) => {
 											:show-delay="0"
 											:title="endString"
 											class="bg-surface-6 fade-up"
-											style="animation-delay: 650ms"
+											:style="staggerDelay(13)"
 										>
 											<MoooomIcon class-name="w-6 text-surface-12/70  dark:text-surface-12/80"
 												icon="play"
@@ -410,7 +416,7 @@ watch(data, (value) => {
 										<ListControlHeaderMoreMenu v-else-if="data && data.watch_providers && data.watch_providers.length > 0"
 											:items="[]"
 											class="text-surface-12/70 dark:text-surface-12/80 fade-up"
-											style="animation-delay: 700ms"
+											:style="staggerDelay(14)"
 											class-name="max-h-80 overflow-y-auto overflow-x-hidden !ml-0 !-translate-x-1/3"
 										>
 											<template #button>
@@ -446,7 +452,7 @@ watch(data, (value) => {
 											no-tip
 											title="Not available"
 											class="fade-up"
-											style="animation-delay: 700ms"
+											:style="staggerDelay(14)"
 										>
 											<span class="whitespace-nowrap text-base font-semibold ml-1">
 												{{ $t("Not available") }}
@@ -457,7 +463,7 @@ watch(data, (value) => {
 										</BannerButton>
 
 										<BannerButton class="bg-surface-6 fade-up"
-											style="animation-delay: 700ms"
+											:style="staggerDelay(14)"
 											title="Watch trailer"
 											@click="buttonState === 'available' ? toggleTrailer($event) : null"
 										>
@@ -473,7 +479,7 @@ watch(data, (value) => {
 										</BannerButton>
 
 										<BannerButton class="bg-surface-6 fade-up"
-											style="animation-delay: 750ms"
+											:style="staggerDelay(15)"
 											title="Mark as watched"
 											@click="toggleWatched"
 										>
@@ -484,19 +490,19 @@ watch(data, (value) => {
 
 										<ShareButton :share-data="shareData"
 											class="!p-0 fade-up"
-											style="animation-delay: 800ms"
+											:style="staggerDelay(16)"
 										/>
 
 										<MediaLikeButton v-if="data"
 											:data="data"
 											type="video"
 											class="fade-up"
-											style="animation-delay: 850ms"
+											:style="staggerDelay(17)"
 										/>
 
 										<ListControlHeaderMoreMenu :items="menuItems"
 											class="text-surface-12/70 dark:text-surface-12/80 fade-up"
-											style="animation-delay: 900ms"
+											:style="staggerDelay(18)"
 										/>
 									</div>
 								</div>
@@ -506,7 +512,7 @@ watch(data, (value) => {
 								>
 									<InfoHeaderItem v-if="data?.year"
 										class="fade-up"
-										style="animation-delay: 950ms"
+										:style="staggerDelay(19)"
 									>
 										<p class="flex-shrink-0 text-sm font-bold uppercase">
 											{{ data?.year }}
@@ -514,7 +520,7 @@ watch(data, (value) => {
 									</InfoHeaderItem>
 									<InfoHeaderItem v-if="data?.number_of_items"
 										class="fade-up"
-										style="animation-delay: 1000ms"
+										:style="staggerDelay(20)"
 									>
 										<p class="flex-shrink-0 flex-grow-0 text-sm font-bold uppercase">
 											{{ data?.number_of_items }} {{ $t("ep") }}.
@@ -522,7 +528,7 @@ watch(data, (value) => {
 									</InfoHeaderItem>
 									<InfoHeaderItem v-if="data?.duration"
 										class="fade-up"
-										style="animation-delay: 1050ms"
+										:style="staggerDelay(21)"
 									>
 										<p class="flex-shrink-0 flex-grow-0 text-sm font-bold uppercase">
 											{{ duration }}
@@ -530,7 +536,7 @@ watch(data, (value) => {
 									</InfoHeaderItem>
 									<InfoHeaderItem v-if="data?.voteAverage"
 										class="fade-up"
-										style="animation-delay: 1100ms"
+										:style="staggerDelay(22)"
 									>
 										<p class="flex-shrink-0 flex-grow-0 text-sm font-bold -ml-0.5">
 											⭐ ️{{ data?.voteAverage?.toFixed(0) }}/10
@@ -538,7 +544,7 @@ watch(data, (value) => {
 									</InfoHeaderItem>
 									<div v-if="data?.content_ratings"
 										class="relative overflow-hidden fade-up"
-										style="animation-delay: 1150ms"
+										:style="staggerDelay(23)"
 									>
 										<ContentRating :ratings="data?.content_ratings"
 											:size="6"
@@ -551,10 +557,10 @@ watch(data, (value) => {
 									class="relative flex flex-col items-start justify-start gap-2 self-stretch"
 								>
 									<div class="h-px bg-surface-1/10 fade-up"
-										style="animation-delay: 1200ms"
+										:style="staggerDelay(24)"
 									/>
 									<div class="w-full text-lg font-medium mb-4 fade-up"
-										style="animation-delay: 1250ms"
+										:style="staggerDelay(25)"
 									>
 										<div v-if="!data?.overview"
 											class=""
@@ -579,7 +585,7 @@ watch(data, (value) => {
 										prefix="genres"
 										title="Genres"
 										class="fade-up"
-										style="animation-delay: 1300ms"
+										:style="staggerDelay(26)"
 									/>
 									<InfoItem v-if="data?.writer"
 										:data="{ writer: [data?.writer] }"
@@ -587,7 +593,7 @@ watch(data, (value) => {
 										prefix="person"
 										title="Writer"
 										class="fade-up"
-										style="animation-delay: 1350ms"
+										:style="staggerDelay(27)"
 									/>
 									<InfoItem v-if="data?.creator"
 										:data="{ creator: [data?.creator] }"
@@ -595,7 +601,7 @@ watch(data, (value) => {
 										prefix="person"
 										title="Creator"
 										class="fade-up"
-										style="animation-delay: 1400ms"
+										:style="staggerDelay(28)"
 									/>
 									<InfoItem v-if="data?.director"
 										:data="{ director: [data?.director] }"
@@ -603,7 +609,7 @@ watch(data, (value) => {
 										prefix="person"
 										title="Director"
 										class="fade-up"
-										style="animation-delay: 1450ms"
+										:style="staggerDelay(29)"
 									/>
 									<InfoItem v-if="data?.creators?.length > 0"
 										:data="data"
@@ -611,7 +617,7 @@ watch(data, (value) => {
 										prefix="person"
 										title="Creators"
 										class="fade-up"
-										style="animation-delay: 1500ms"
+										:style="staggerDelay(30)"
 									/>
 									<InfoItem v-if="data?.directors?.length > 0"
 										:data="data"
@@ -619,7 +625,7 @@ watch(data, (value) => {
 										prefix="person"
 										title="Directors"
 										class="fade-up"
-										style="animation-delay: 1550ms"
+										:style="staggerDelay(31)"
 									/>
 									<InfoItem v-if="data?.writers?.length > 0"
 										:data="data"
@@ -627,32 +633,32 @@ watch(data, (value) => {
 										prefix="person"
 										title="Writers"
 										class="fade-up"
-										style="animation-delay: 1600ms"
+										:style="staggerDelay(32)"
 									/>
 									<InfoItem v-if="data?.keywords?.length > 0"
 										:data="data"
 										key-name="keywords"
 										title="Keywords"
 										class="fade-up"
-										style="animation-delay: 1650ms"
+										:style="staggerDelay(33)"
 									/>
 									<InfoItem v-if="data?.networks?.length > 0"
 										:data="data"
 										key-name="networks"
 										title="Networks"
 										class="fade-up"
-										style="animation-delay: 1700ms"
+										:style="staggerDelay(34)"
 									/>
 									<InfoItem v-if="data?.companies?.length > 0"
 										:data="data"
 										key-name="companies"
 										title="Companies"
 										class="fade-up"
-										style="animation-delay: 1750ms"
+										:style="staggerDelay(35)"
 									/>
 
 									<div class="relative grid w-full flex-shrink-0 flex-grow-0 grid-cols-7 items-start justify-start gap-1 fade-up"
-										style="animation-delay: 1800ms"
+										:style="staggerDelay(36)"
 									>
 										<p class="grid-cols-3 text-xs font-bold uppercase text-surface-12/70 dark:text-surface-12/80">
 											{{ $t("External links") }}
