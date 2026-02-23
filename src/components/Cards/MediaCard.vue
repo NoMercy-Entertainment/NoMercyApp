@@ -14,6 +14,7 @@ import { showBackdrops } from '@/store/preferences';
 
 import TMDBImage from '@/components/Images/TMDBImage.vue';
 import CardIndicator from '@/components/Cards/CardIndicator.vue';
+import { prefetchOnHover } from '@/services/PrefetchService';
 
 const props = defineProps({
 	data: {
@@ -68,6 +69,12 @@ const color = computed(() => {
 		: '';
 });
 
+function onHover(event: Event) {
+	if (props.data?.link) {
+		prefetchOnHover(props.data.link);
+	}
+}
+
 function handleClick(item: any) {
 	if (props.data?.link.includes('watch'))
 		return;
@@ -92,15 +99,16 @@ function handleClick(item: any) {
 <template>
 	<RouterLink
 		v-if="data?.link"
-		v-once
 		:class="backdropStyle ? 'aspect-backdrop' : 'aspect-poster'"
 		:data-scroll="scrollLetter"
 		:onclick="() => handleClick(data)"
 		:style="color ? `
-       --color-theme-8: ${color};
-    ` : ''"
+			--color-theme-8: ${color};
+			` : ''"
 		:to="data?.link"
 		class="group/card flex flex-col h-full items-center focus-outline relative rounded-lg select-none shadow-[0px_0px_0_1px_rgb(from_var(--color-theme-8,var(--color-theme-6))_r_g_b/70%)] w-full z-0 bg-surface-50/70 flex-grow-0"
+		@mouseenter="onHover($event)"
+		@focusin="onHover($event)"
 	>
 		<div class="w-full h-full overflow-clip rounded-lg inset-0 absolute">
 			<div class="backdropCard-overlay" />

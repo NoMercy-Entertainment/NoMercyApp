@@ -58,13 +58,7 @@ async function prefetchPath(path: string): Promise<void> {
 	}
 }
 
-const PREFETCHABLE_ROUTES = new Set(['/home', '/', '/libraries']);
-
 export function prefetchRedirectRoute(path: string): void {
-	if (!PREFETCHABLE_ROUTES.has(path)) {
-		return;
-	}
-
 	const normalizedPath = path === '/' ? '/home' : path;
 	prefetchPath(normalizedPath);
 }
@@ -86,16 +80,16 @@ export function prefetchForRoute(route: RouteLocationNormalized): void {
 }
 
 export function prefetchOnHover(path: string): void {
-	// Debounce hover prefetch
-	requestIdleCallback(() => {
+	setTimeout(() => {
 		prefetchPath(path);
-	});
+	}, 100);
 }
 
 // Prefetch adjacent items in a list (e.g., next/prev in a collection)
 export function prefetchAdjacent(currentPath: string, items: Array<{ link?: string }>): void {
 	const currentIndex = items.findIndex(item => item.link === currentPath);
-	if (currentIndex === -1) return;
+	if (currentIndex === -1)
+		return;
 
 	const adjacentPaths: string[] = [];
 

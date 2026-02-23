@@ -13,6 +13,7 @@ import { setBackground, setColorPalette, setPoster, setTitle } from '@/store/ui'
 import TMDBImage from '@/components/Images/TMDBImage.vue';
 import CardIndicator from '@/components/Cards/CardIndicator.vue';
 import { breakTitle } from '@/lib/utils/string';
+import { prefetchOnHover } from '@/services/PrefetchService';
 
 const props = defineProps({
 	data: {
@@ -66,6 +67,12 @@ function onRightClick(event: Event) {
 	}
 }
 
+function onHover(event: Event) {
+	if (props.data?.link) {
+		prefetchOnHover(props.data.link);
+	}
+}
+
 function handleClick(item: any) {
 	if (props.data?.link.includes('watch'))
 		return;
@@ -106,9 +113,11 @@ function handleClick(item: any) {
 		class="group/card frosting flex flex-col h-full items-center focus-outline relative rounded-lg select-none shadow-[0px_0px_0_1px_rgb(from_var(--color-theme-8,var(--color-theme-6))_r_g_b/70%)] w-full z-0 bg-surface-50/70 flex-grow-0"
 		no-ring
 		@contextmenu="onRightClick($event)"
+		@mouseenter="onHover($event)"
+		@focusin="onHover($event)"
 	>
 		<div class="w-full h-full overflow-clip rounded-lg inset-0 absolute">
-			<div class="backdropCard-overlay" />
+			<div class="backdropCard-overlay" inert />
 
 			<TMDBImage
 				:aspect="showBackdrops ? 'backdrop' : 'poster'"
