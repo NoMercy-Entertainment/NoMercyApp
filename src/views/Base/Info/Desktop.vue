@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { computed, onMounted, ref, watch } from 'vue';
+import { computed, onMounted, onUnmounted, ref, watch } from 'vue';
 import { useRoute } from 'vue-router';
 import { useTranslation } from 'i18next-vue';
 
@@ -272,6 +272,12 @@ onMounted(() => {
 	}
 });
 
+onUnmounted(() => {
+	setBackground(null);
+	setColorPalette(null);
+	setLogo(null);
+});
+
 watch(data, (value) => {
 	setTitle(value?.title ?? value?.name);
 	if (value?.backdrop && background.value !== value?.backdrop) {
@@ -466,10 +472,10 @@ watch(data, (value) => {
 											:style="staggerDelay(14)"
 											:title="buttonState === 'available' ? 'Watch trailer'
 												: buttonState === 'processing' ? 'Trailer is being processed...'
-												: buttonState === 'queued' ? 'Trailer is queued for processing...'
-												: buttonState === 'validating' ? 'Checking trailer availability...'
-												: buttonState === 'unavailable' ? 'Trailer unavailable'
-												: 'Watch trailer'"
+													: buttonState === 'queued' ? 'Trailer is queued for processing...'
+														: buttonState === 'validating' ? 'Checking trailer availability...'
+															: buttonState === 'unavailable' ? 'Trailer unavailable'
+																: 'Watch trailer'"
 											@click="buttonState === 'available' ? toggleTrailer($event) : null"
 										>
 											<div class="relative flex items-center justify-center">
