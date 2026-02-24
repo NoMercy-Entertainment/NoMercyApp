@@ -236,13 +236,13 @@ onUnmounted(() => {
 		<div
 			v-if="!static"
 			ref="refBar"
-			class="group/bar absolute top-0 mr-1 z-10 h-available right-0 bottom-0 hidden rounded-full border-r-2 border-l-4 border-transparent w-3.5 hover:bg-surface-12/6 sm:flex scale-[100%_96%] transition-opacity duration-200"
+			class="group/bar absolute top-2 mr-1 z-10 right-0 bottom-6 hidden rounded-full border-r-2 border-l-4 border-transparent w-3.5 hover:bg-surface-12/6 sm:flex transition-opacity duration-200"
 			data-scrollbar
 			style="opacity: 0;"
 		>
 			<span
 				ref="refHandle"
-				class="scrollbar-handle absolute top-0 z-10 h-available right-0 bottom-0 hidden rounded-full border-r-2 border-l-4 border-transparent w-2.5 bg-surface-12/11 sm:flex scale-y-[105%]"
+				class="scrollbar-handle absolute top-0 z-10 h-available right-0 bottom-0 hidden rounded-full border-r-2 border-l-4 border-transparent w-2.5 bg-surface-12/11 sm:flex"
 				data-scrollbar
 				draggable="true"
 			/>

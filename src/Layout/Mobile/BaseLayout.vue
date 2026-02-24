@@ -8,7 +8,7 @@ import { closeMenu } from '@/store/profileMenu';
 import { currentSong, fullPlayerModalOpen } from '@/store/audioPlayer';
 
 import ImageModal from '@/Layout/ImageModal.vue';
-// import Screensaver from '@/Layout/Screensaver.vue';
+import Screensaver from '@/Layout/Screensaver.vue';
 import DeviceOverlay from '@/Layout/Desktop/components/Overlays/DeviceOverlay.vue';
 
 import { AsyncMusicPlayerFull, AsyncMusicPlayerMini } from '@/components/async';
@@ -66,6 +66,7 @@ onUnmounted(() => {
 
 		<OpenInAppBanner />
 		<WelcomeAppModal />
+		<Screensaver />
 	</div>
 </template>
 

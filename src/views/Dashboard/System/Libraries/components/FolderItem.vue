@@ -100,46 +100,46 @@ watch(props, (value) => {
 				</span>
 				<div
 					v-if="data.path"
-					class="relative flex items-center justify-start self-stretch gap-0.5"
+					class="relative flex items-center justify-start self-stretch gap-1"
 				>
-					<MoooomIcon class-name="w-3.5" icon="folder" />
-					<p class="w-full flex-grow text-xs leading-none">
+					<MoooomIcon class-name="w-5" icon="folder" />
+					<p class="w-full flex-grow text-xs leading-snug text-balance">
 						{{ data.path }}
 					</p>
 				</div>
 				<div
 					v-if="data?.match?.id"
-					class="relative flex items-center justify-start self-stretch gap-0.5"
+					class="relative flex items-center justify-start self-stretch gap-1"
 				>
-					<MoooomIcon class-name="w-3.5" icon="infoCircle" />
-					<p class="w-full flex-grow text-xs leading-none">
+					<MoooomIcon class-name="w-5" icon="infoCircle" />
+					<p class="w-full flex-grow text-xs leading-snug text-balance">
 						{{ data?.match?.id }}
 					</p>
 				</div>
 				<div
 					v-if="data.size"
-					class="relative flex items-center justify-start self-stretch gap-0.5"
+					class="relative flex items-center justify-start self-stretch gap-1"
 				>
-					<MoooomIcon class-name="w-3.5" icon="server" />
-					<p class="w-full flex-grow text-xs leading-none">
+					<MoooomIcon class-name="w-5" icon="server" />
+					<p class="w-full flex-grow text-xs leading-snug text-balance">
 						{{ humanFileSize(data.size) }}
 					</p>
 				</div>
 				<div
 					v-if="data.tracks"
-					class="relative flex items-center justify-start self-stretch gap-0.5"
+					class="relative flex items-center justify-start self-stretch gap-1"
 				>
-					<MoooomIcon class-name="w-3.5" icon="audioFile" />
-					<p class="w-full flex-grow text-xs leading-none">
+					<MoooomIcon class-name="w-5" icon="audioFile" />
+					<p class="w-full flex-grow text-xs leading-snug text-balance">
 						{{ data.tracks }}
 					</p>
 				</div>
 				<div
 					v-if="data.streams.video?.length > 0"
-					class="relative flex items-center justify-start self-stretch gap-0.5"
+					class="relative flex items-center justify-start self-stretch gap-1"
 				>
-					<MoooomIcon class-name="w-3.5" icon="film" />
-					<p class="w-full flex-grow text-xs leading-none">
+					<MoooomIcon class-name="w-5" icon="film" />
+					<p class="w-full flex-grow text-xs leading-snug text-balance">
 						<template v-for="(video, index) in data.streams.video">
 							{{ video.width }}x{{
 								video.height
@@ -149,10 +149,10 @@ watch(props, (value) => {
 				</div>
 				<div
 					v-if="data.streams.audio?.length > 0"
-					class="relative flex items-center justify-start self-stretch gap-0.5"
+					class="relative flex items-center justify-start self-stretch gap-1"
 				>
-					<MoooomIcon class-name="w-3.5" icon="audioFile" />
-					<p class="w-full flex-grow text-xs leading-none">
+					<MoooomIcon class-name="w-5" icon="audioFile" />
+					<p class="w-full flex-grow text-xs leading-snug text-balance">
 						<template v-for="(audio, index) in data.streams.audio">
 							{{
 								audio.language
@@ -162,10 +162,10 @@ watch(props, (value) => {
 				</div>
 				<div
 					v-if="data.streams.subtitle?.length > 0"
-					class="relative flex items-center justify-start self-stretch gap-0.5"
+					class="relative flex items-center justify-start self-stretch gap-1"
 				>
-					<MoooomIcon class-name="w-3.5" icon="chatBubble" />
-					<p class="w-full flex-grow text-xs leading-none">
+					<MoooomIcon class-name="w-5" icon="chatBubble" />
+					<p class="w-full flex-grow text-xs leading-snug text-balance">
 						<template v-for="(subtitle, index) in data.streams.subtitle">
 							{{
 								subtitle.language

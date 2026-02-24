@@ -6,7 +6,7 @@ import { background } from '@/store/ui';
 import { currentServer } from '@/store/currentServer';
 
 import Indexer from '@/Layout/Indexer.vue';
-// import Screensaver from '@/Layout/Screensaver.vue';
+import Screensaver from '@/Layout/Screensaver.vue';
 import Navbar from './components/Navbar/Navbar.vue';
 import Sidebar from './components/Sidebar/Sidebar.vue';
 import GradientBorder from './components/GradientBorder.vue';
@@ -93,6 +93,7 @@ function focusMain() {
 		</div>
 
 		<AsyncMusicPlayerDesktop />
+		<Screensaver />
 	</div>
 </template>
 

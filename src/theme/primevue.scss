@@ -489,3 +489,7 @@ $toast-types: (
 .p-toggleswitch.p-toggleswitch-checked .p-toggleswitch-handle  {
   //--p-toggleswitch-gap: 15px;
 }
+
+.p-scrollpanel-content {
+  padding-block: 0 !important;
+}
