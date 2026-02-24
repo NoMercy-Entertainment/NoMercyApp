@@ -464,7 +464,12 @@ watch(data, (value) => {
 
 										<BannerButton class="bg-surface-6 fade-up"
 											:style="staggerDelay(14)"
-											title="Watch trailer"
+											:title="buttonState === 'available' ? 'Watch trailer'
+												: buttonState === 'processing' ? 'Trailer is being processed...'
+												: buttonState === 'queued' ? 'Trailer is queued for processing...'
+												: buttonState === 'validating' ? 'Checking trailer availability...'
+												: buttonState === 'unavailable' ? 'Trailer unavailable'
+												: 'Watch trailer'"
 											@click="buttonState === 'available' ? toggleTrailer($event) : null"
 										>
 											<div class="relative flex items-center justify-center">

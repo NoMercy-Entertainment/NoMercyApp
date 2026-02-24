@@ -23,9 +23,19 @@ function filterTrailerCandidates(videos: ExtendedVideo[]): ExtendedVideo[] {
 	return videos
 		.filter(v => extractYouTubeId(v.src))
 		.sort((a, b) => {
+			// Prioritize items with "trailer" in the name
+			const aNameTrailer = a.name?.toLowerCase().includes('trailer') ? 1 : 0;
+			const bNameTrailer = b.name?.toLowerCase().includes('trailer') ? 1 : 0;
+			if (bNameTrailer !== aNameTrailer) return bNameTrailer - aNameTrailer;
+
+			// Then by type === 'trailer'
 			const aTrailer = a.type?.toLowerCase() === 'trailer' ? 1 : 0;
 			const bTrailer = b.type?.toLowerCase() === 'trailer' ? 1 : 0;
 			if (bTrailer !== aTrailer) return bTrailer - aTrailer;
+
+			// Then by size (largest first)
+			if ((b.size ?? 0) !== (a.size ?? 0)) return (b.size ?? 0) - (a.size ?? 0);
+
 			return (b.official ? 1 : 0) - (a.official ? 1 : 0);
 		});
 }
