@@ -7,7 +7,7 @@ import SliderBar from "@/components/MusicPlayer/components/SliderBar.vue";
 import MusicButton from "@/components/MusicPlayer/components/MusicButton.vue";
 import PlayerIcon from "@/components/Images/icons/PlayerIcon.vue";
 import {PlaylistItem, TimeData, Track,} from "@nomercy-entertainment/nomercy-video-player/src/types";
-import { pad } from '@/lib/utils/string';
+import {pad} from '@/lib/utils/string';
 import type {MediaPlaylist} from "hls.js";
 import MoooomIcon from "@/components/Images/icons/MoooomIcon.vue";
 
@@ -537,7 +537,6 @@ const setPlaylistItem = (value: number) => {
 </script>
 
 <template>
-  <ion-page>
     <ion-content :fullscreen="true">
       <div class="flex flex-col gap-4 items-center justify-center p-4">
         <Select
@@ -703,5 +702,4 @@ const setPlaylistItem = (value: number) => {
       <!--            {{ subtitleTracks }}-->
       <!--        </pre>-->
     </ion-content>
-  </ion-page>
 </template>

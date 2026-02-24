@@ -180,7 +180,6 @@ const save = () => {
 </script>
 
 <template>
-  <ion-page>
     <ion-content :fullscreen="true">
       <DashboardLayout
         :error="error"
@@ -351,5 +350,4 @@ const save = () => {
         </template>
       </DashboardLayout>
     </ion-content>
-  </ion-page>
 </template>

@@ -222,9 +222,9 @@ watch(playlists, (value) => {
 							name="System info"
 						/>
 						<SidebarButton
-							href="/dashboard/general"
+							href="/dashboard/configuration"
 							icon="settings"
-							name="General"
+							name="Configuration"
 						/>
 						<SidebarButton href="/dashboard/users" icon="users" name="Users" />
 						<SidebarButton

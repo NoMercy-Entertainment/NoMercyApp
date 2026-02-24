@@ -286,7 +286,7 @@ export const routes: Array<RouteRecordRaw> = [
 				component: DashboardSystem,
 			},
 			{
-				path: 'dashboard/general',
+				path: 'dashboard/configuration',
 				name: 'General',
 				component: DashboardGeneral,
 			},
@@ -455,12 +455,22 @@ export const routes: Array<RouteRecordRaw> = [
 				name: 'Post Install',
 				component: SetupPostInstall,
 			},
+
+			// Catch-all inside layout
+			{
+				path: ':catchAll(.*)*',
+				component: NotFound,
+				props: {
+					message: 'Page not found',
+					status: 404,
+				},
+			},
 		],
 	},
 	{
 		path: '/:catchAll(.*)*',
 		component: NotFound,
-		meta: {
+		props: {
 			message: 'Page not found',
 			status: 404,
 		},
