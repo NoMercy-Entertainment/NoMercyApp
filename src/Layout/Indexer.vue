@@ -2,7 +2,7 @@
 import { onMounted, onUnmounted } from 'vue';
 import { RouterLink, useRoute } from 'vue-router';
 
-import { isMobile, isNative } from '@/config/global';
+import { isNative } from '@/config/global';
 import { keyHandler, scrollToDiv } from '@/lib/scrollHandlers';
 import { alphaNumericRange } from '@/lib/utils/string';
 import router from '@/router';
@@ -30,24 +30,18 @@ const route = useRoute();
 function updateScrollableTargets() {
 	setTimeout(() => {
 		document
-			.querySelector(
-				isMobile.value
-					? 'ion-tabs ion-router-outlet  div.ion-page:not(.ion-page-hidden) [indexer]'
-					: '[indexer]',
-			)
+			.querySelector('[indexer]')
 			?.querySelectorAll<HTMLDivElement>('[data-indexer]')
 			.forEach((el) => {
 				const letter = el.dataset.indexer ?? '';
 				let target;
 
 				if (letter === '#') {
-					target = document.querySelector?.(
-						'ion-tabs ion-router-outlet div.ion-page:not(.ion-page-hidden) [data-scroll]',
-					);
+					target = document.querySelector?.('[data-scroll]');
 				}
 				else {
 					target = document.querySelector?.(
-						`ion-tabs ion-router-outlet div.ion-page:not(.ion-page-hidden) [data-scroll='scroll_${letter}']`,
+						`[data-scroll='scroll_${letter}']`,
 					);
 				}
 
@@ -76,11 +70,7 @@ function handleLetterClick(letter: string) {
 
 function disableScrollableTargets() {
 	document
-		.querySelector(
-			isMobile.value
-				? 'ion-tabs ion-router-outlet  div.ion-page:not(.ion-page-hidden) [indexer]'
-				: '[indexer]',
-		)
+		.querySelector('[indexer]')
 		?.querySelectorAll<HTMLDivElement>('[data-indexer]')
 		.forEach((el) => {
 			el.classList.add('opacity-20', '!cursor-not-allowed');

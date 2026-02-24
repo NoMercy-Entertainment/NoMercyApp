@@ -1,12 +1,8 @@
 import { defineAsyncComponent } from 'vue';
 
-import MusicPlayerSkeleton from '@/components/Loading/MusicPlayerSkeleton.vue';
-
-export const AsyncMusicPlayerDesktop = defineAsyncComponent({
-	loader: () => import('@/components/MusicPlayer/MusicPlayerDesktop.vue'),
-	loadingComponent: MusicPlayerSkeleton,
-	delay: 200,
-});
+export const AsyncMusicPlayerDesktop = defineAsyncComponent(
+	() => import('@/components/MusicPlayer/MusicPlayerDesktop.vue'),
+);
 
 export const AsyncMusicPlayerFull = defineAsyncComponent({
 	loader: () => import('@/components/MusicPlayer/mobile/FullPlayer.vue'),

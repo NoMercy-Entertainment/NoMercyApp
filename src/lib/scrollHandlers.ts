@@ -133,13 +133,11 @@ export function scrollToDiv(i: string) {
 
 	let target: HTMLDivElement | null = null;
 	if (i === '#') {
-		target = document.querySelector<HTMLDivElement>(
-			'ion-tabs ion-router-outlet div.ion-page:not(.ion-page-hidden) [data-scroll]',
-		);
+		target = document.querySelector<HTMLDivElement>('[data-scroll]');
 	}
 	else {
 		target = document.querySelector<HTMLDivElement>(
-			`ion-tabs ion-router-outlet div.ion-page:not(.ion-page-hidden) [data-scroll='scroll_${i}']`,
+			`[data-scroll='scroll_${i}']`,
 		);
 	}
 
@@ -148,11 +146,11 @@ export function scrollToDiv(i: string) {
 	);
 
 	let scrollContainer = document.querySelector<HTMLDivElement>(
-		'.ion-page:not(.ion-page-hidden) main .group\\/scrollContainer',
+		'main .group\\/scrollContainer',
 	)!;
 	if (!scrollContainer) {
 		scrollContainer = document.querySelector<HTMLDivElement>(
-			'.ion-page:not(.ion-page-hidden) ion-content .scroll-container',
+			'.scroll-container',
 		)!;
 	}
 
