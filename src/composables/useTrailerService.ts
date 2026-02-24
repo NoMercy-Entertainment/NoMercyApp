@@ -76,7 +76,7 @@ export function useTrailerService(data: Ref<InfoResponse | undefined>) {
 			if (result.data.cached) {
 				resolvedTrailer.value = {
 					videoId,
-					videoUrl: `${TRAILER_BASE_URL}${result.data.downloadUrl}`,
+					videoUrl: `${TRAILER_BASE_URL}${result.data.downloadUrl}?v=${Date.now()}`,
 					thumbnailUrl: `${TRAILER_BASE_URL}/${videoId}/${videoId}.jpg`,
 					title,
 					subtitles: buildSubtitles(result.data.subtitles ?? []),
@@ -88,6 +88,11 @@ export function useTrailerService(data: Ref<InfoResponse | undefined>) {
 
 			if (result.data.processing) {
 				buttonState.value = 'processing';
+				return await pollUntilCached(video, videoId, signal, title);
+			}
+
+			if (result.status === 'queued') {
+				buttonState.value = 'queued';
 				return await pollUntilCached(video, videoId, signal, title);
 			}
 
@@ -136,7 +141,7 @@ export function useTrailerService(data: Ref<InfoResponse | undefined>) {
 						pollTimer = null;
 						resolvedTrailer.value = {
 							videoId,
-							videoUrl: `${TRAILER_BASE_URL}${result.data.downloadUrl}`,
+							videoUrl: `${TRAILER_BASE_URL}${result.data.downloadUrl}?v=${Date.now()}`,
 							thumbnailUrl: `${TRAILER_BASE_URL}/${videoId}/${videoId}.jpg`,
 							title,
 							subtitles: buildSubtitles(result.data.subtitles ?? []),
@@ -144,6 +149,9 @@ export function useTrailerService(data: Ref<InfoResponse | undefined>) {
 						};
 						buttonState.value = 'available';
 						resolve(true);
+					}
+					else if (result?.success && (result.data.processing || result.status === 'processing')) {
+						buttonState.value = 'processing';
 					}
 				}
 				catch {

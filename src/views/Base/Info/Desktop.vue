@@ -467,15 +467,32 @@ watch(data, (value) => {
 											title="Watch trailer"
 											@click="buttonState === 'available' ? toggleTrailer($event) : null"
 										>
-											<MoooomIcon :style="`color: ${buttonState === 'available'
-													? 'var(--color-green-8)'
-													: buttonState === 'unavailable'
-														? 'var(--color-red-8)'
-														: 'var(--color-gray-8)'
-												}`"
-												class-name="w-6"
-												icon="film"
-											/>
+											<div class="relative flex items-center justify-center">
+												<MoooomIcon :style="`color: ${buttonState === 'available' || buttonState === 'processing'
+														? 'var(--color-green-8)'
+														: buttonState === 'unavailable'
+															? 'var(--color-red-8)'
+															: 'var(--color-gray-8)'
+													}`"
+													class-name="w-6"
+													icon="film"
+												/>
+												<svg
+													v-if="buttonState === 'processing' || buttonState === 'queued'"
+													class="absolute inset-0 w-full h-full animate-spin"
+													viewBox="0 0 24 24"
+													fill="none"
+												>
+													<circle
+														cx="12" cy="12" r="10"
+														stroke="currentColor"
+														stroke-width="2"
+														stroke-dasharray="31.4 31.4"
+														stroke-linecap="round"
+														:class="buttonState === 'processing' ? 'text-green-8' : 'text-gray-8'"
+													/>
+												</svg>
+											</div>
 										</BannerButton>
 
 										<BannerButton class="bg-surface-6 fade-up"

@@ -1,7 +1,7 @@
 import type { Track } from '@nomercy-entertainment/nomercy-video-player/src/types';
 import type { ExtendedVideo } from '@/types/api/base/info';
 
-export type TrailerButtonState = 'idle' | 'validating' | 'processing' | 'available' | 'unavailable';
+export type TrailerButtonState = 'idle' | 'validating' | 'queued' | 'processing' | 'available' | 'unavailable';
 
 export interface TrailerSubtitle {
 	language: string;
@@ -11,6 +11,7 @@ export interface TrailerSubtitle {
 
 export interface TrailerServiceResponse {
 	success: boolean;
+	status?: 'queued' | 'processing' | 'ready';
 	data: {
 		cached: boolean;
 		processing: boolean;

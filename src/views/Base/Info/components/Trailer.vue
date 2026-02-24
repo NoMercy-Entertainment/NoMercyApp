@@ -23,7 +23,6 @@ const props = defineProps({
 	},
 });
 
-const trailerContainer = ref<HTMLElement>();
 const sidebarState = ref();
 const trailer = ref<NMPlayer<PlaylistItem>>();
 
@@ -159,7 +158,6 @@ onUnmounted(() => {
 			class="absolute inset-0 w-full h-auto max-w-full max-h-full sm:w-full sm:h-auto sm:overflow-hidden sm:inset-1/2 sm:aspect-video sm:-translate-y-[50%] px-4 py-2 xl:px-[1.8rem] sidebar-closed:xl:py-4 sm:-translate-x-[50%] sidebar-open:px-4 sidebar-open:py-6 sidebar-open:xl:px-[2.8rem] sidebar-open:xl:py-6"
 		>
 			<div
-				ref="trailerContainer"
 				class="relative rounded-2xl flex overflow-clip mx-auto children:overflow-clip h-auto top-1/4 sm:top-1/2 sm:-translate-y-1/2 w-auto sm:w-fit max-w-available sm:h-full"
 				@click.stop=""
 			>
