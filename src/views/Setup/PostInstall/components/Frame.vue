@@ -50,7 +50,7 @@ function previousStep() {
 </script>
 
 <template>
-	<div class="mx-auto grid h-available place-content-center px-4 sm:px-6 lg:px-8 text-surface-12">
+	<div class="mx-auto grid h-available place-content-center px-4 sm:px-6 lg:px-8 text-surface-12 z-10">
 		<div class="mx-auto w-screen max-w-6xl">
 			<div
 				:class="true ? 'animate-loading' : ''"

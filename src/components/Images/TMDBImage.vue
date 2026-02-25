@@ -244,10 +244,10 @@ function onError(e: Event) {
 		<div
 			v-else-if="type === 'image'"
 			:class="type === 'image' ? 'bg-surface-1' : ''"
-			class="inset-0 grid aspect-video h-available w-available place-items-center place-center"
+			class="inset-0 grid aspect-video h-full w-full place-items-center place-center"
 		>
 			<div
-				class="w-available h-available inset-0 grid place-items-center place-center bg-[rgb(from_var(--color-logo-dark)_r_g_b/20%)]"
+				class="w-full h-full inset-0 grid place-items-center place-center bg-[rgb(from_var(--color-logo-dark)_r_g_b/20%)]"
 			>
 				<AppLogoSquare class="h-auto w-3/5 max-h-[60%] -translate-y-[5%]" />
 			</div>
