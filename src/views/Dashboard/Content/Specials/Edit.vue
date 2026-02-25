@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import { onBeforeMount, onMounted, ref, watch } from 'vue';
 import { useRoute } from 'vue-router';
+import { Image, InputText } from 'primevue';
 
 import type { LibrariesResponse } from '@/types/api/base/library';
 
@@ -8,8 +9,8 @@ import useServerClient from '@/lib/clients/useServerClient';
 
 import DashboardLayout from '@/Layout/Desktop/DashboardLayout.vue';
 import DeleteSpecialModal from './components/DeleteSpecialModal.vue';
+import PlaylistEditor from './components/PlaylistEditor.vue';
 import Button from '@/components/Button.vue';
-import { InputText } from 'primevue';
 import { currentServer } from '@/store/currentServer';
 import serverClient from '@/lib/clients/serverClient';
 import router from '@/router';
@@ -73,29 +74,64 @@ watch(settings, (value) => {
 	logo.value = value?.logo;
 });
 
-function handleSave() {
-	serverClient()
-		.patch(`/dashboard/specials/${settings.value?.id}`, {
-			title: title.value,
-			overview: overview.value,
-			backdrop: backdrop.value,
-			poster: poster.value,
-			logo: logo.value,
-		})
-		.then(({ data }) => {
-			console.log(data);
-		});
+const activeTab = ref<'Details' | 'Playlist'>('Details');
+const playlistEditorRef = ref<InstanceType<typeof PlaylistEditor>>();
+const isSaving = ref(false);
+
+async function handleSave() {
+	if (isSaving.value)
+		return;
+	isSaving.value = true;
+
+	try {
+		await Promise.all([
+			serverClient()
+				.patch(`/dashboard/specials/${settings.value?.id}`, {
+					title: title.value,
+					overview: overview.value,
+					backdrop: backdrop.value,
+					poster: poster.value,
+					logo: logo.value,
+				}),
+			playlistEditorRef.value?.save(),
+		]);
+	}
+	finally {
+		isSaving.value = false;
+	}
 }
 </script>
 
 <template>
 	<DashboardLayout
 		:error="error"
-		:grid-style="1"
+		:grid-style="4"
 		:params="{ title: settings?.title }"
+		class-name="!m-0"
 		title="Special: {{title}}"
 	>
-		<template #cta />
+		<template #pre-cta>
+			<nav class="flex items-center gap-2">
+				<button
+					:class="activeTab === 'Details'
+						? 'bg-focus/11 border-focus/4'
+						: 'border-transparent hover:bg-focus/10 hover:border-focus/4'"
+					class="flex items-center gap-2 rounded-md border px-3 py-1.5 text-sm font-semibold transition-colors duration-200"
+					@click="activeTab = 'Details'"
+				>
+					{{ $t('Details') }}
+				</button>
+				<button
+					:class="activeTab === 'Playlist'
+						? 'bg-focus/11 border-focus/4'
+						: 'border-transparent hover:bg-focus/10 hover:border-focus/4'"
+					class="flex items-center gap-2 rounded-md border px-3 py-1.5 text-sm font-semibold transition-colors duration-200"
+					@click="activeTab = 'Playlist'"
+				>
+					{{ $t('Playlist') }}
+				</button>
+			</nav>
+		</template>
 		<template #actions>
 			<Button
 				id="remove"
@@ -119,93 +155,132 @@ function handleSave() {
 			</Button>
 			<Button
 				id="save"
+				:disabled="isSaving"
 				class="ml-auto"
 				color="theme"
 				type="button"
 				@click="handleSave"
 			>
-				{{ $t("Save") }}
+				{{ isSaving ? $t("Saving...") : $t("Save") }}
 			</Button>
 		</template>
 
-		<div class="flex flex-col gap-5 col-span-5 col-start-1 2xl:col-start-1">
-			<div class="flex flex-col gap-2">
-				<label for="name">Name</label>
-				<InputText id="name" v-model="title" class="w-full" variant="filled" />
-			</div>
-			<div class="flex flex-col gap-2">
-				<label for="overview">Overview</label>
-				<Textarea
-					id="overview"
-					v-model="overview"
-					:rows="8"
-					class="w-full"
-					variant="filled"
-				/>
-			</div>
-
-			<div class="flex gap-4 w-full">
-				<div class="flex flex-col gap-4 w-full">
-					<div class="flex flex-col gap-2">
-						<label for="backdrop">Backdrop</label>
-						<InputText
-							id="backdrop"
-							v-model="backdrop"
-							class="w-full"
-							variant="filled"
-						/>
-					</div>
-					<Image
-						:src="`${currentServer?.serverBaseUrl}/images/original${backdrop}`"
-						alt="Image"
-						class="mx-2"
-						preview
-						width="100%"
-					/>
-				</div>
-				<div class="flex flex-col gap-4 w-full">
-					<div class="flex flex-col gap-2">
-						<label for="logo">Logo</label>
-						<InputText
-							id="logo"
-							v-model="logo"
-							class="w-full"
-							variant="filled"
-						/>
-					</div>
-					<Image
-						:src="`${currentServer?.serverBaseUrl}/images/original${logo}`"
-						alt="Image"
-						class="mx-2"
-						preview
-						width="100%"
-					/>
-				</div>
-			</div>
-		</div>
-
-		<div
-			class="flex flex-col gap-4 col-span-2 row-start-1 col-start-1 2xl:col-start-6"
-		>
-			<div class="flex flex-col gap-5">
+		<div v-if="activeTab === 'Details'" class="flex gap-6 w-full p-4">
+			<!-- General section -->
+			<section class="flex flex-col gap-4 rounded-xl bg-surface-12/3 p-5 w-full">
+				<h3 class="text-base font-semibold text-surface-12">
+					{{ $t('General') }}
+				</h3>
 				<div class="flex flex-col gap-2">
-					<label for="poster">Poster</label>
-					<InputText
-						id="poster"
-						v-model="poster"
+					<label class="text-sm font-medium text-surface-12/60" for="name">{{ $t('Name') }}</label>
+					<InputText id="name" v-model="title" class="w-full" variant="filled" />
+				</div>
+				<div class="flex flex-col gap-2">
+					<label class="text-sm font-medium text-surface-12/60" for="overview">{{ $t('Overview') }}</label>
+					<Textarea
+						id="overview"
+						v-model="overview"
+						:rows="6"
 						class="w-full"
 						variant="filled"
 					/>
 				</div>
-				<Image
-					:src="`${currentServer?.serverBaseUrl}/images/original${poster}`"
-					alt="Image"
-					class="mx-2"
-					preview
-					width="100%"
-				/>
-			</div>
+			</section>
+
+			<!-- Artwork section -->
+			<section class="flex flex-col gap-4 rounded-xl bg-surface-12/3 p-5 w-full">
+				<h3 class="text-base font-semibold text-surface-12">
+					{{ $t('Artwork') }}
+				</h3>
+				<div class="flex flex-col gap-4">
+					<!-- Backdrop -->
+					<div class="flex items-start gap-4">
+						<Image
+							v-if="backdrop"
+							:src="`${currentServer?.serverBaseUrl}/images/original${backdrop}`"
+							alt="Backdrop"
+							class="w-28 flex-shrink-0 rounded-lg overflow-hidden aspect-backdrop"
+							preview
+						/>
+						<div
+							v-else
+							class="w-28 flex-shrink-0 rounded-lg bg-surface-12/6 aspect-backdrop flex items-center justify-center"
+						>
+							<span class="text-xs text-surface-9">{{ $t('No image') }}</span>
+						</div>
+						<div class="flex flex-col gap-1.5 flex-1 min-w-0">
+							<label class="text-sm font-medium text-surface-12/60" for="backdrop">{{ $t('Backdrop') }}</label>
+							<InputText
+								id="backdrop"
+								v-model="backdrop"
+								class="w-full"
+								size="small"
+								variant="filled"
+							/>
+						</div>
+					</div>
+					<!-- Logo -->
+					<div class="flex items-start gap-4">
+						<Image
+							v-if="logo"
+							:src="`${currentServer?.serverBaseUrl}/images/original${logo}`"
+							alt="Logo"
+							class="w-28 flex-shrink-0 rounded-lg overflow-hidden aspect-backdrop bg-surface-12/6"
+							preview
+						/>
+						<div
+							v-else
+							class="w-28 flex-shrink-0 rounded-lg bg-surface-12/6 aspect-backdrop flex items-center justify-center"
+						>
+							<span class="text-xs text-surface-9">{{ $t('No image') }}</span>
+						</div>
+						<div class="flex flex-col gap-1.5 flex-1 min-w-0">
+							<label class="text-sm font-medium text-surface-12/60" for="logo">{{ $t('Logo') }}</label>
+							<InputText
+								id="logo"
+								v-model="logo"
+								class="w-full"
+								size="small"
+								variant="filled"
+							/>
+						</div>
+					</div>
+					<!-- Poster -->
+					<div class="flex items-start gap-4">
+						<Image
+							v-if="poster"
+							:src="`${currentServer?.serverBaseUrl}/images/original${poster}`"
+							alt="Poster"
+							class="w-20 flex-shrink-0 rounded-lg overflow-hidden aspect-poster"
+							preview
+						/>
+						<div
+							v-else
+							class="w-20 flex-shrink-0 rounded-lg bg-surface-12/6 aspect-poster flex items-center justify-center"
+						>
+							<span class="text-xs text-surface-9">{{ $t('No image') }}</span>
+						</div>
+						<div class="flex flex-col gap-1.5 flex-1 min-w-0">
+							<label class="text-sm font-medium text-surface-12/60" for="poster">{{ $t('Poster') }}</label>
+							<InputText
+								id="poster"
+								v-model="poster"
+								class="w-full"
+								size="small"
+								variant="filled"
+							/>
+						</div>
+					</div>
+				</div>
+			</section>
 		</div>
+
+		<PlaylistEditor
+			v-if="activeTab === 'Playlist' && settings?.id"
+			ref="playlistEditorRef"
+			:special-id="settings.id"
+			class="w-full flex-1 min-full"
+		/>
 
 		<DeleteSpecialModal
 			v-if="settings?.id"
@@ -216,5 +291,3 @@ function handleSave() {
 		/>
 	</DashboardLayout>
 </template>
-
-<style scoped></style>

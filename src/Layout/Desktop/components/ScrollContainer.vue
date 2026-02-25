@@ -236,7 +236,7 @@ onUnmounted(() => {
 		<div
 			v-if="!static"
 			ref="refBar"
-			class="group/bar absolute top-2 mr-1 z-10 right-0 bottom-6 hidden rounded-full border-r-2 border-l-4 border-transparent w-3.5 hover:bg-surface-12/6 sm:flex transition-opacity duration-200"
+			class="group/bar absolute top-2 mr-1 z-10 right-0 bottom-2 hidden rounded-full border-r-2 border-l-4 border-transparent w-3.5 hover:bg-surface-12/6 sm:flex transition-opacity duration-200"
 			data-scrollbar
 			style="opacity: 0;"
 		>
