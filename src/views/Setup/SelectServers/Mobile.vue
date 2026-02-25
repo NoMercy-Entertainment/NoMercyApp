@@ -6,6 +6,9 @@ import { useQueryClient } from '@tanstack/vue-query';
 import type { Server } from '@/types/auth';
 import type { LibrariesResponse } from '@/types/api/base/library';
 
+import type { ServerInfo } from '@/types/api/dashboard/server.ts';
+import type { StatusResponse } from '@/types/api/base/library';
+
 import router from '@/router';
 import serverClient from '@/lib/clients/serverClient.ts';
 import servers, { serverLibraries } from '@/store/servers';
@@ -13,6 +16,7 @@ import { redirectUrl } from '@/store/routeState';
 import { setBackground, setColorPalette, setupComplete } from '@/store/ui';
 import { setCurrentServer } from '@/store/currentServer';
 import { setLibraries } from '@/store/libraries';
+import { resetServerSetup } from '@/router/middleware/getServerSetup.ts';
 
 import ServerCard from '@/views/Setup/SelectServers/components/ServerCard.vue';
 import EmptyBackdrop from '@/components/Images/EmptyBackdrop.vue';
@@ -24,6 +28,20 @@ const query = useQueryClient();
 
 async function handleSelectServer(server: Server) {
 	setCurrentServer(server);
+
+	try {
+		const { data: serverInfo } = await serverClient(5).get<StatusResponse<ServerInfo>>('setup/server-info');
+
+		if (!serverInfo.data?.setup_complete) {
+			redirectUrl.value = '/setup/post-install';
+			await router.replace({ name: 'Post Install' });
+			return;
+		}
+	}
+	catch {
+		await router.replace({ name: 'Server offline' });
+		return;
+	}
 
 	await serverClient()
 		.get<{ data: LibrariesResponse[] }>('libraries')
@@ -50,6 +68,7 @@ onMounted(() => {
 	setCurrentServer(null);
 	setColorPalette(null);
 	setBackground(null);
+	resetServerSetup();
 
 	query.removeQueries();
 

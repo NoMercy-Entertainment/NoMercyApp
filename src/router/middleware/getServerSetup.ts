@@ -11,6 +11,12 @@ import serverClient, { deduplicatedRequest } from '@/lib/clients/serverClient.ts
 
 const done = ref(false);
 
+export function resetServerSetup() {
+	done.value = false;
+	serverInfoRequested.value = false;
+	serverSetupComplete.value = false;
+}
+
 function getServerSetup(): Promise<void> {
 	return new Promise((resolve, reject) => {
 		if (done.value) {
