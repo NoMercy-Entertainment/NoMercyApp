@@ -28,6 +28,12 @@ export async function runCacheMigration(): Promise<void> {
 	}
 	catch (error) {
 		console.error('Cache migration failed:', error);
-		localStorage.setItem(MIGRATION_KEY, MIGRATION_VERSION);
+		try {
+			localStorage.clear();
+			localStorage.setItem(MIGRATION_KEY, MIGRATION_VERSION);
+		}
+		catch {
+			// Storage completely unavailable, skip migration
+		}
 	}
 }

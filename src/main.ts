@@ -7,8 +7,39 @@ import AppComponent from './App.vue';
 // Set up chunk error recovery immediately (before any dynamic imports can fail)
 setupChunkErrorRecovery();
 
+// In dev mode, clean up stale service workers and caches (runs once per session)
+async function devStorageCleanup(): Promise<void> {
+	if (!import.meta.env.DEV) return;
+	if (sessionStorage.getItem('dev_cleanup_done')) return;
+
+	try {
+		if ('serviceWorker' in navigator) {
+			const registrations = await navigator.serviceWorker.getRegistrations();
+			await Promise.all(registrations.map(reg => reg.unregister()));
+		}
+	}
+	catch { /* ignore */ }
+
+	try {
+		if ('caches' in window) {
+			const names = await caches.keys();
+			await Promise.all(names.map(name => caches.delete(name)));
+		}
+	}
+	catch { /* ignore */ }
+
+	try {
+		const dbs = await indexedDB.databases();
+		dbs.forEach(db => { if (db.name) indexedDB.deleteDatabase(db.name); });
+	}
+	catch { /* ignore */ }
+
+	try { sessionStorage.setItem('dev_cleanup_done', '1'); }
+	catch { /* ignore */ }
+}
+
 // Register controllerchange listener early so any SKIP_WAITING triggers a reload
-if ('serviceWorker' in navigator) {
+if (!import.meta.env.DEV && 'serviceWorker' in navigator) {
 	let refreshing = false;
 	navigator.serviceWorker.addEventListener('controllerchange', () => {
 		if (!refreshing) {
@@ -78,7 +109,7 @@ async function initializeWebApp() {
 }
 
 // Run one-time cache migration for existing users, then start the application
-runCacheMigration().then(async () => {
+(import.meta.env.DEV ? devStorageCleanup() : runCacheMigration()).then(async () => {
 	// Run initial version check early and BLOCK app init if outdated
 	// This prevents loading stale chunks that will 404
 	if (!import.meta.env.DEV) {
