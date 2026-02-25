@@ -54,6 +54,9 @@ export default <T>({
 		},
 		timeout: timeout ? timeout * 1000 : undefined,
 		baseURL: baseUrl,
+		paramsSerializer: {
+			indexes: null,
+		},
 	});
 
 	axiosInstance.interceptors.request.use(

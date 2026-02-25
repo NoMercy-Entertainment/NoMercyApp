@@ -51,7 +51,6 @@ function useServerClient<T>(options?: ServerClientProps): Return<T> {
 		throw new Error('Invalid path');
 	}
 
-	const dataValues = getDataValues(options);
 	const client = serverClient<T>();
 
 	const useQueryC = useQuery({
@@ -63,6 +62,7 @@ function useServerClient<T>(options?: ServerClientProps): Return<T> {
 		refetchOnWindowFocus: false,
 		staleTime: options?.keepForever ? Infinity : 1000 * 60 * 5,
 		queryFn: async ({ signal }): Promise<T> => {
+			const dataValues = getDataValues(options);
 			let response;
 
 			switch (type) {

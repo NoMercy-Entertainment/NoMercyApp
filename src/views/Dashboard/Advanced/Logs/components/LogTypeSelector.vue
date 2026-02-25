@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import type { PropType } from 'vue';
-import { onMounted, ref, watch } from 'vue';
+import Checkbox from '@/components/Forms/Checkbox.vue';
 
 import type { LogType } from '@/types/server';
 
@@ -11,17 +11,11 @@ import DropdownMenu from '@/Layout/Desktop/components/Menus/DropdownMenu.vue';
 import MoooomIcon from '@/components/Images/icons/MoooomIcon.vue';
 
 const props = defineProps({
-	refetch: {
-		type: Function as PropType<() => void>,
-		required: true,
-	},
 	logTypes: {
 		type: Array as PropType<LogType[]>,
 		required: true,
 	},
 });
-
-const checkboxState = ref<false | null | true>(false);
 
 const selectedTypes = defineModel('selectedTypes', {
 	type: Array as PropType<LogType[]>,
@@ -29,32 +23,22 @@ const selectedTypes = defineModel('selectedTypes', {
 	default: () => [],
 });
 
-watch(checkboxState, (value) => {
+function toggleAll() {
 	if (!props.logTypes)
 		return;
-	console.log('checkboxState', value);
-});
 
-watch(props, () => {
-	if (!selectedTypes.value)
-		return;
-
-	checkboxState.value = checkboxValue(selectedTypes.value, props.logTypes);
-	props.refetch();
-});
-
-onMounted(() => {
-	if (!props.logTypes)
-		return;
-	// selectedTypes.value.value = props.logTypes;
-});
+	if (selectedTypes.value.length === props.logTypes.length) {
+		selectedTypes.value = [];
+	}
+	else {
+		selectedTypes.value = [...props.logTypes];
+	}
+}
 
 function handleType(value: LogType) {
-	if (
-		selectedTypes.value.some(selectedType => selectedType.name === value.name)
-	) {
+	if (selectedTypes.value.some(st => st.name === value.name)) {
 		selectedTypes.value = selectedTypes.value.filter(
-			selectedType => selectedType.name !== value.name,
+			st => st.name !== value.name,
 		);
 	}
 	else {
@@ -67,25 +51,23 @@ function toggleGroup(group: LogType) {
 		return;
 
 	const groupLogTypes = props.logTypes.filter(
-		logType => logType.type === group.type,
+		lt => lt.type === group.type,
 	);
 
-	if (
-		groupLogTypes.every(logType =>
-			selectedTypes.value.some(
-				selectedType => selectedType.name === logType.name,
-			),
-		)
-	) {
-		// All log types of the group are already selected, so remove them
+	const allGroupSelected = groupLogTypes.every(lt =>
+		selectedTypes.value.some(st => st.name === lt.name),
+	);
+
+	if (allGroupSelected) {
 		selectedTypes.value = selectedTypes.value.filter(
-			selectedType =>
-				!groupLogTypes.some(logType => logType.name === selectedType.name),
+			st => !groupLogTypes.some(lt => lt.name === st.name),
 		);
 	}
 	else {
-		// Not all log types of the group are selected, so add them
-		selectedTypes.value = [...selectedTypes.value, ...groupLogTypes];
+		const missing = groupLogTypes.filter(
+			lt => !selectedTypes.value.some(st => st.name === lt.name),
+		);
+		selectedTypes.value = [...selectedTypes.value, ...missing];
 	}
 }
 </script>
@@ -100,9 +82,12 @@ function toggleGroup(group: LogType) {
 
 		<div class="flex flex-col gap-2 overflow-auto py-2 max-h-[60vh]">
 			<div
-				class="-mb-2 flex flex-grow items-center justify-start gap-3 rounded-md px-2.5"
+				class="-mb-2 flex flex-grow items-center justify-start gap-3 rounded-md px-2.5 cursor-pointer"
+				@click="toggleAll"
 			>
-				<Checkbox v-model="checkboxState" label="All" />
+				<Checkbox
+					:model-value="checkboxValue(selectedTypes, logTypes)"
+				/>
 				<p class="text-center text-xs font-semibold uppercase">
 					{{ $t("All") }}
 				</p>
@@ -113,7 +98,7 @@ function toggleGroup(group: LogType) {
 				:key="group[0].type"
 			>
 				<div
-					class="relative mt-2 -mb-1 flex items-center justify-start gap-2 self-stretch px-2.5"
+					class="relative mt-2 -mb-1 flex items-center justify-start gap-2 self-stretch px-2.5 cursor-pointer"
 					@click="() => toggleGroup(group[0])"
 				>
 					<Checkbox
@@ -140,8 +125,8 @@ function toggleGroup(group: LogType) {
 
 				<template v-for="logType in group" :key="logType.name">
 					<button
-						:onclick="() => handleType(logType)"
 						class="flex flex-grow items-center justify-start gap-3 rounded-md px-2.5"
+						@click="() => handleType(logType)"
 					>
 						<Checkbox
 							:color="
