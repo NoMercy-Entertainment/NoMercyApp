@@ -8,6 +8,10 @@ import serverClient, { deduplicatedRequest } from '@/lib/clients/serverClient.ts
 
 const done = ref(false);
 
+export function resetServerPermissions() {
+	done.value = false;
+}
+
 function getServerPermissions(): Promise<void> {
 	return new Promise((resolve, reject) => {
 		if (done.value) {

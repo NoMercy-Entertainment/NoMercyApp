@@ -1,6 +1,6 @@
 import { ref } from 'vue';
 import { currentServer } from '@/store/currentServer';
-import libraries, { setLibraries } from '@/store/libraries';
+import libraries, { clearLibraries, setLibraries } from '@/store/libraries';
 
 import type { LibrariesResponse } from '@/types/api/base/library';
 import { setupComplete } from '@/store/ui';
@@ -10,6 +10,12 @@ import { serverLibraries } from '@/store/servers.ts';
 import serverClient, { deduplicatedRequest } from '@/lib/clients/serverClient.ts';
 
 const done = ref(false);
+
+export function resetLibraries() {
+	done.value = false;
+	serverLibraries.value = false;
+	clearLibraries();
+}
 
 function getLibraries(): Promise<void> {
 	return new Promise((resolve, reject) => {

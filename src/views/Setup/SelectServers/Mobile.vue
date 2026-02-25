@@ -17,6 +17,9 @@ import { setBackground, setColorPalette, setupComplete } from '@/store/ui';
 import { setCurrentServer } from '@/store/currentServer';
 import { setLibraries } from '@/store/libraries';
 import { resetServerSetup } from '@/router/middleware/getServerSetup.ts';
+import { resetServerPermissions } from '@/router/middleware/getServerPermissions.ts';
+import { resetLibraries } from '@/router/middleware/getLibraries.ts';
+import { resetScreensaver } from '@/store/screensaver.ts';
 
 import ServerCard from '@/views/Setup/SelectServers/components/ServerCard.vue';
 import EmptyBackdrop from '@/components/Images/EmptyBackdrop.vue';
@@ -69,6 +72,9 @@ onMounted(() => {
 	setColorPalette(null);
 	setBackground(null);
 	resetServerSetup();
+	resetServerPermissions();
+	resetLibraries();
+	resetScreensaver();
 
 	query.removeQueries();
 

@@ -21,6 +21,13 @@ const { idle, reset } = useIdle((screensaverDelay.value ?? 0) * 60 * 1000, {
 const index = ref(-1);
 const images = ref<LogoResponse[] | null>(null);
 
+export function resetScreensaver() {
+	images.value = null;
+	index.value = -1;
+	setShowScreensaver(false);
+	setImageModalData(undefined);
+}
+
 watch(currentServer, async (value, prevValue) => {
 	if (!value || value.id === prevValue?.id)
 		return;
