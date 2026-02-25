@@ -1,1 +1,0 @@
-import"./i18n-Cs-AFcrY.js";import"./ionic-XwZpO7IE.js";import"./vue-core-CKeWI2Kt.js";import{Bt as i,Ft as o,It as p,Lt as m,Nt as r,Pt as I,Rt as c,Vt as d,zt as f}from"./index-BnnbGJJT.js";export{r as appInfo,I as appState,o as batteryInfo,p as clientInfo,m as deviceId,c as deviceInfo,f as deviceName,i as setDeviceId,d as setDeviceName};
