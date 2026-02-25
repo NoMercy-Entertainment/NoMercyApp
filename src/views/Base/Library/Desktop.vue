@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import { onMounted } from 'vue';
 import { useRoute } from 'vue-router';
 
@@ -16,7 +16,7 @@ onMounted(() => {
 </script>
 
 <template>
-			<ScrollContainer :auto-hide="true" :static="true">
-				<NMComponent :path="route.path" />
-			</ScrollContainer>
+	<ScrollContainer :auto-hide="true" :static="true">
+		<NMComponent :path="route.path" />
+	</ScrollContainer>
 </template>

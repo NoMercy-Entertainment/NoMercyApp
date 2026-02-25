@@ -46,7 +46,7 @@ const value = computed(() => {
 
 <template>
 	<span
-		v-if="isMovie"
+		v-if="isMovie && number_of_items !== 0 && have_items !== 0"
 		:class="{
 			'bg-[#94f]': number_of_items === 1,
 			'!text-transparent': !(number_of_items === 1 && have_items === 1),

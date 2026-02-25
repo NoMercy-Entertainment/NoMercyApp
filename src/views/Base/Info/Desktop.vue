@@ -316,8 +316,8 @@ watch(data, (value) => {
 				>
 					<div class="z-0 flex w-full flex-grow flex-col min-h-40" />
 					<div class="z-0 flex w-full flex-grow flex-col items-end justify-end gap-2">
-						<div class="children:absolute relative right-1 bottom-0 col-start-1 col-end-2 flex h-auto w-auto select-none justify-end pb-2 max-w-[20vw] w-available translate-x-[4px] sm:h-40 lg:max-w-[30vw] aspect-[32/9] fade-up"
-							:style="staggerDelay(0)"
+						<div :style="staggerDelay(0)"
+							class="children:absolute relative right-1 bottom-0 col-start-1 col-end-2 flex h-auto w-auto select-none justify-end pb-2 max-w-[20vw] w-available translate-x-[4px] sm:h-40 lg:max-w-[30vw] aspect-[32/9] fade-up"
 						>
 							<TMDBImage v-if="data?.logo"
 								:key="data?.logo"
@@ -333,15 +333,15 @@ watch(data, (value) => {
 							/>
 						</div>
 
-						<div class="relative col-start-2 col-end-4 grid flex-shrink-0 flex-grow-0 grid-cols-3 items-start justify-start self-stretch rounded-2xl bg-gradient-to-b p-6 from-surface-1/12 via-surface-2/12 to-surface-2/11 border-surface-5/8 border-1 min-h-[23.5rem] fade-up"
-							:style="staggerDelay(2)"
+						<div :style="staggerDelay(2)"
+							class="relative col-start-2 col-end-4 grid flex-shrink-0 flex-grow-0 grid-cols-3 items-start justify-start self-stretch rounded-2xl bg-gradient-to-b p-6 from-surface-1/12 via-surface-2/12 to-surface-2/11 border-surface-5/8 border-1 min-h-[23.5rem] fade-up"
 						>
 							<div v-if="data?.poster"
 								:class="{
 									'': hasItem,
 								}"
-								class="absolute z-10 col-start-1 content-center col-end-2 h-auto w-full items-start justify-start rounded-lg top-0 -translate-y-[35%] sm:block fade-up"
 								:style="staggerDelay(11)"
+								class="absolute z-10 col-start-1 content-center col-end-2 h-auto w-full items-start justify-start rounded-lg top-0 -translate-y-[35%] sm:block fade-up"
 							>
 								<RouterLink :aria-label="$t('Play')"
 									:class="{
@@ -389,7 +389,7 @@ watch(data, (value) => {
 							</p>
 
 							<div class="col-start-2 col-end-4 flex w-full flex-grow flex-col items-start justify-start gap-4">
-								<div class="relative flex flex-shrink-0 flex-grow-0 items-center justify-start gap-4 self-stretch">
+								<div class="relative flex flex-shrink-0 flex-grow-0 items-end justify-end gap-4 self-stretch">
 									<p class="flex-grow text-5xl font-bold w-[806px] fade-up"
 										style="
                           animation-delay: 600ms;
@@ -405,14 +405,14 @@ watch(data, (value) => {
 									</p>
 
 									<div v-if="data"
-										class="relative flex flex-shrink-0 flex-grow-0 items-center justify-start gap-4"
+										class="relative flex flex-shrink-0 flex-grow-0 items-end justify-end gap-4"
 									>
 										<BannerButton v-if="hasItem"
 											:href="`${data?.link}/watch`"
 											:show-delay="0"
+											:style="staggerDelay(13)"
 											:title="endString"
 											class="bg-surface-6 fade-up"
-											:style="staggerDelay(13)"
 										>
 											<MoooomIcon class-name="w-6 text-surface-12/70  dark:text-surface-12/80"
 												icon="play"
@@ -421,8 +421,8 @@ watch(data, (value) => {
 
 										<ListControlHeaderMoreMenu v-else-if="data && data.watch_providers && data.watch_providers.length > 0"
 											:items="[]"
-											class="text-surface-12/70 dark:text-surface-12/80 fade-up"
 											:style="staggerDelay(14)"
+											class="text-surface-12/70 dark:text-surface-12/80 fade-up"
 											class-name="max-h-80 overflow-y-auto overflow-x-hidden !ml-0 !-translate-x-1/3"
 										>
 											<template #button>
@@ -455,10 +455,10 @@ watch(data, (value) => {
 										</ListControlHeaderMoreMenu>
 
 										<BannerButton v-else
+											:style="staggerDelay(14)"
+											class="fade-up"
 											no-tip
 											title="Not available"
-											class="fade-up"
-											:style="staggerDelay(14)"
 										>
 											<span class="whitespace-nowrap text-base font-semibold ml-1">
 												{{ $t("Not available") }}
@@ -468,14 +468,14 @@ watch(data, (value) => {
 											/>
 										</BannerButton>
 
-										<BannerButton class="bg-surface-6 fade-up"
-											:style="staggerDelay(14)"
+										<BannerButton :style="staggerDelay(14)"
 											:title="buttonState === 'available' ? 'Watch trailer'
 												: buttonState === 'processing' ? 'Trailer is being processed...'
 													: buttonState === 'queued' ? 'Trailer is queued for processing...'
 														: buttonState === 'validating' ? 'Checking trailer availability...'
 															: buttonState === 'unavailable' ? 'Trailer unavailable'
 																: 'Watch trailer'"
+											class="bg-surface-6 fade-up"
 											@click="buttonState === 'available' ? toggleTrailer($event) : null"
 										>
 											<div class="relative flex items-center justify-center">
@@ -491,23 +491,23 @@ watch(data, (value) => {
 												<svg
 													v-if="buttonState === 'processing' || buttonState === 'queued'"
 													class="absolute inset-0 w-full h-full animate-spin"
-													viewBox="0 0 24 24"
 													fill="none"
+													viewBox="0 0 24 24"
 												>
 													<circle
-														cx="12" cy="12" r="10"
+														:class="buttonState === 'processing' ? 'text-green-8' : 'text-gray-8'" cx="12" cy="12"
+														r="10"
 														stroke="currentColor"
-														stroke-width="2"
 														stroke-dasharray="31.4 31.4"
 														stroke-linecap="round"
-														:class="buttonState === 'processing' ? 'text-green-8' : 'text-gray-8'"
+														stroke-width="2"
 													/>
 												</svg>
 											</div>
 										</BannerButton>
 
-										<BannerButton class="bg-surface-6 fade-up"
-											:style="staggerDelay(15)"
+										<BannerButton :style="staggerDelay(15)"
+											class="bg-surface-6 fade-up"
 											title="Mark as watched"
 											@click="toggleWatched"
 										>
@@ -517,20 +517,20 @@ watch(data, (value) => {
 										</BannerButton>
 
 										<ShareButton :share-data="shareData"
-											class="!p-0 fade-up"
 											:style="staggerDelay(16)"
+											class="!p-0 fade-up"
 										/>
 
 										<MediaLikeButton v-if="data"
 											:data="data"
-											type="video"
-											class="fade-up"
 											:style="staggerDelay(17)"
+											class="fade-up"
+											type="video"
 										/>
 
 										<ListControlHeaderMoreMenu :items="menuItems"
-											class="text-surface-12/70 dark:text-surface-12/80 fade-up"
 											:style="staggerDelay(18)"
+											class="text-surface-12/70 dark:text-surface-12/80 fade-up"
 										/>
 									</div>
 								</div>
@@ -539,40 +539,40 @@ watch(data, (value) => {
 									class="flex flex-shrink-0 items-center justify-start gap-4 self-stretch"
 								>
 									<InfoHeaderItem v-if="data?.year"
-										class="fade-up"
 										:style="staggerDelay(19)"
+										class="fade-up"
 									>
 										<p class="flex-shrink-0 text-sm font-bold uppercase">
 											{{ data?.year }}
 										</p>
 									</InfoHeaderItem>
 									<InfoHeaderItem v-if="data?.number_of_items"
-										class="fade-up"
 										:style="staggerDelay(20)"
+										class="fade-up"
 									>
 										<p class="flex-shrink-0 flex-grow-0 text-sm font-bold uppercase">
 											{{ data?.number_of_items }} {{ $t("ep") }}.
 										</p>
 									</InfoHeaderItem>
 									<InfoHeaderItem v-if="data?.duration"
-										class="fade-up"
 										:style="staggerDelay(21)"
+										class="fade-up"
 									>
 										<p class="flex-shrink-0 flex-grow-0 text-sm font-bold uppercase">
 											{{ duration }}
 										</p>
 									</InfoHeaderItem>
 									<InfoHeaderItem v-if="data?.voteAverage"
-										class="fade-up"
 										:style="staggerDelay(22)"
+										class="fade-up"
 									>
 										<p class="flex-shrink-0 flex-grow-0 text-sm font-bold -ml-0.5">
 											⭐ ️{{ data?.voteAverage?.toFixed(0) }}/10
 										</p>
 									</InfoHeaderItem>
 									<div v-if="data?.content_ratings"
-										class="relative overflow-hidden fade-up"
 										:style="staggerDelay(23)"
+										class="relative overflow-hidden fade-up"
 									>
 										<ContentRating :ratings="data?.content_ratings"
 											:size="6"
@@ -584,11 +584,11 @@ watch(data, (value) => {
 								<div v-if="data"
 									class="relative flex flex-col items-start justify-start gap-2 self-stretch"
 								>
-									<div class="h-px bg-surface-1/10 fade-up"
-										:style="staggerDelay(24)"
+									<div :style="staggerDelay(24)"
+										class="h-px bg-surface-1/10 fade-up"
 									/>
-									<div class="w-full text-lg font-medium mb-4 fade-up"
-										:style="staggerDelay(25)"
+									<div :style="staggerDelay(25)"
+										class="w-full text-lg font-medium mb-4 fade-up"
 									>
 										<div v-if="!data?.overview"
 											class=""
@@ -609,84 +609,84 @@ watch(data, (value) => {
 
 									<InfoItem v-if="data?.genres"
 										:data="data"
+										:style="staggerDelay(26)"
+										class="fade-up"
 										key-name="genres"
 										prefix="genres"
 										title="Genres"
-										class="fade-up"
-										:style="staggerDelay(26)"
 									/>
 									<InfoItem v-if="data?.writer"
 										:data="{ writer: [data?.writer] }"
+										:style="staggerDelay(27)"
+										class="fade-up"
 										key-name="writer"
 										prefix="person"
 										title="Writer"
-										class="fade-up"
-										:style="staggerDelay(27)"
 									/>
 									<InfoItem v-if="data?.creator"
 										:data="{ creator: [data?.creator] }"
+										:style="staggerDelay(28)"
+										class="fade-up"
 										key-name="creator"
 										prefix="person"
 										title="Creator"
-										class="fade-up"
-										:style="staggerDelay(28)"
 									/>
 									<InfoItem v-if="data?.director"
 										:data="{ director: [data?.director] }"
+										:style="staggerDelay(29)"
+										class="fade-up"
 										key-name="director"
 										prefix="person"
 										title="Director"
-										class="fade-up"
-										:style="staggerDelay(29)"
 									/>
 									<InfoItem v-if="data?.creators?.length > 0"
 										:data="data"
+										:style="staggerDelay(30)"
+										class="fade-up"
 										key-name="creators"
 										prefix="person"
 										title="Creators"
-										class="fade-up"
-										:style="staggerDelay(30)"
 									/>
 									<InfoItem v-if="data?.directors?.length > 0"
 										:data="data"
+										:style="staggerDelay(31)"
+										class="fade-up"
 										key-name="directors"
 										prefix="person"
 										title="Directors"
-										class="fade-up"
-										:style="staggerDelay(31)"
 									/>
 									<InfoItem v-if="data?.writers?.length > 0"
 										:data="data"
+										:style="staggerDelay(32)"
+										class="fade-up"
 										key-name="writers"
 										prefix="person"
 										title="Writers"
-										class="fade-up"
-										:style="staggerDelay(32)"
 									/>
 									<InfoItem v-if="data?.keywords?.length > 0"
 										:data="data"
+										:style="staggerDelay(33)"
+										class="fade-up"
 										key-name="keywords"
 										title="Keywords"
-										class="fade-up"
-										:style="staggerDelay(33)"
 									/>
 									<InfoItem v-if="data?.networks?.length > 0"
 										:data="data"
+										:style="staggerDelay(34)"
+										class="fade-up"
 										key-name="networks"
 										title="Networks"
-										class="fade-up"
-										:style="staggerDelay(34)"
 									/>
 									<InfoItem v-if="data?.companies?.length > 0"
 										:data="data"
+										:style="staggerDelay(35)"
+										class="fade-up"
 										key-name="companies"
 										title="Companies"
-										class="fade-up"
-										:style="staggerDelay(35)"
 									/>
 
-									<div class="relative grid w-full flex-shrink-0 flex-grow-0 grid-cols-7 items-start justify-start gap-1 fade-up"
-										:style="staggerDelay(36)"
+									<div :style="staggerDelay(36)"
+										class="relative grid w-full flex-shrink-0 flex-grow-0 grid-cols-7 items-start justify-start gap-1 fade-up"
 									>
 										<p class="grid-cols-3 text-xs font-bold uppercase text-surface-12/70 dark:text-surface-12/80">
 											{{ $t("External links") }}

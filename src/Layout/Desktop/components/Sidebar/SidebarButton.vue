@@ -66,7 +66,8 @@ const styles = computed(() =>
 let removeAfterEach: (() => void) | null = null;
 
 function handleClick() {
-	if (removeAfterEach) removeAfterEach();
+	if (removeAfterEach)
+		removeAfterEach();
 	removeAfterEach = router.afterEach(() => {
 		removeAfterEach?.();
 		removeAfterEach = null;

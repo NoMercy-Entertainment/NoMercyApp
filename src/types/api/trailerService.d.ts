@@ -13,6 +13,11 @@ export interface TrailerServiceResponse {
 	success: boolean;
 	status?: 'queued' | 'processing' | 'ready';
 	data: {
+		videoId: string;
+		title: string;
+		duration: number;
+		width: number;
+		height: number;
 		cached: boolean;
 		processing: boolean;
 		downloadUrl: string;

@@ -20,7 +20,7 @@ export interface LibrariesResponse {
 	country: string;
 	language: string;
 	blurHash: null;
-	color_palette: null;
+	color_palette: ColorPalettes;
 	created_at: string;
 	poster: string;
 	overview: string;

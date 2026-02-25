@@ -292,3 +292,13 @@ export class ClickEventHandler {
 		}, this.doubleClickLength);
 	}
 }
+
+export function libraryIconName(type: string) {
+	switch (type) {
+		case 'anime':
+		case 'tv':
+			return 'monitor';
+		case 'movie':
+			return 'movieClap';
+	}
+}

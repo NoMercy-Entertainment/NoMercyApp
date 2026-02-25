@@ -1,23 +1,23 @@
 <script lang="ts" setup>
-import type {PropType} from 'vue';
-import {computed, onMounted, onUnmounted, watch} from 'vue';
-import type {AxiosError} from 'axios';
+import type { PropType } from 'vue';
+import { computed, onMounted, onUnmounted, watch } from 'vue';
+import type { AxiosError } from 'axios';
 
-import type {ErrorResponse} from '@/types/server';
+import type { ErrorResponse } from '@/types/server';
 
-import {dashboardBigCardGrid, dashboardCardGrid, dashboardColumnGrid} from '@/config/global';
+import { dashboardBigCardGrid, dashboardCardGrid, dashboardColumnGrid } from '@/config/global';
 import useMounted from '@/hooks/useMounted';
 import useServerClient from '@/lib/clients/useServerClient';
-import {dashboardSocketIsConnected, startDashboardSocket, stopDashboardSocket} from '@/lib/clients/dashboardSocket';
-import {setBackground, setColorPalette} from '@/store/ui';
+import { dashboardSocketIsConnected, startDashboardSocket, stopDashboardSocket } from '@/lib/clients/dashboardSocket';
+import { setBackground, setColorPalette } from '@/store/ui';
 
 import FloatingBackButton from '@/components/Buttons/FloatingBackButton.vue';
 import HelpButton from '@/components/Buttons/HelpButton.vue';
 import ScrollContainer from '@/Layout/Desktop/components/ScrollContainer.vue';
 import RipperOverlay from '@/Layout/Desktop/components/Overlays/RipperOverlay.vue';
-import {ripperMenuOpen} from '@/store/ripper';
-import {currentServer} from '@/store/currentServer';
-import {musicVisibility} from '@/store/audioPlayer';
+import { ripperMenuOpen } from '@/store/ripper';
+import { currentServer } from '@/store/currentServer';
+import { musicVisibility } from '@/store/audioPlayer';
 
 const props = defineProps({
 	title: {
@@ -52,6 +52,10 @@ const props = defineProps({
 		default: false,
 	},
 	styles: {
+		type: String,
+		required: false,
+	},
+	className: {
 		type: String,
 		required: false,
 	},
@@ -230,6 +234,7 @@ watch(dataUpdatedAt, (value) => {
 					<div
 						class="flex flex-col flex-nowrap items-end justify-center gap-x-3 gap-y-1 sm:flex-row"
 					>
+						<slot name="pre-cta" />
 						<HelpButton />
 						<slot name="cta" />
 					</div>
@@ -259,6 +264,7 @@ watch(dataUpdatedAt, (value) => {
 			</div>
 			<ScrollContainer
 				v-else
+				:class="className"
 				:static="true"
 				class="z-0 w-full flex-1 overflow-y-auto overflow-x-hidden pt-2 sm:p-4"
 				frame

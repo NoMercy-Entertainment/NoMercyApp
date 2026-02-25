@@ -1,21 +1,23 @@
-import { onUnmounted, ref, watch } from 'vue';
 import type { Ref } from 'vue';
+import { onUnmounted, ref, watch } from 'vue';
 import { onBeforeRouteLeave } from 'vue-router';
 
 import type { Track } from '@nomercy-entertainment/nomercy-video-player/src/types';
-import type { InfoResponse, ExtendedVideo } from '@/types/api/base/info';
+import type { ExtendedVideo, InfoResponse } from '@/types/api/base/info';
 import type { ResolvedTrailer, TrailerButtonState, TrailerServiceResponse } from '@/types/api/trailerService';
 
-const YOUTUBE_ID_REGEX = /(?:youtube\.com\/(?:watch\?v=|embed\/)|youtu\.be\/)([a-zA-Z0-9_-]{11})/;
-const BARE_ID_REGEX = /^[a-zA-Z0-9_-]{11}$/;
+const YOUTUBE_ID_REGEX = /(?:youtube\.com\/(?:watch\?v=|embed\/)|youtu\.be\/)([\w-]{11})/;
+const BARE_ID_REGEX = /^[\w-]{11}$/;
 const TRAILER_BASE_URL = 'https://trailer.nomercy.tv';
 const POLL_INTERVAL_MS = 10_000;
 const MAX_POLL_ATTEMPTS = 30;
 
 function extractYouTubeId(src: string): string | null {
 	const match = src.match(YOUTUBE_ID_REGEX);
-	if (match) return match[1];
-	if (BARE_ID_REGEX.test(src)) return src;
+	if (match)
+		return match[1];
+	if (BARE_ID_REGEX.test(src))
+		return src;
 	return null;
 }
 
@@ -26,15 +28,18 @@ function filterTrailerCandidates(videos: ExtendedVideo[]): ExtendedVideo[] {
 			// Prioritize items with "trailer" in the name
 			const aNameTrailer = a.name?.toLowerCase().includes('trailer') ? 1 : 0;
 			const bNameTrailer = b.name?.toLowerCase().includes('trailer') ? 1 : 0;
-			if (bNameTrailer !== aNameTrailer) return bNameTrailer - aNameTrailer;
+			if (bNameTrailer !== aNameTrailer)
+				return bNameTrailer - aNameTrailer;
 
 			// Then by type === 'trailer'
 			const aTrailer = a.type?.toLowerCase() === 'trailer' ? 1 : 0;
 			const bTrailer = b.type?.toLowerCase() === 'trailer' ? 1 : 0;
-			if (bTrailer !== aTrailer) return bTrailer - aTrailer;
+			if (bTrailer !== aTrailer)
+				return bTrailer - aTrailer;
 
 			// Then by size (largest first)
-			if ((b.size ?? 0) !== (a.size ?? 0)) return (b.size ?? 0) - (a.size ?? 0);
+			if ((b.size ?? 0) !== (a.size ?? 0))
+				return (b.size ?? 0) - (a.size ?? 0);
 
 			return (b.official ? 1 : 0) - (a.official ? 1 : 0);
 		});
@@ -71,7 +76,7 @@ export function useTrailerService(data: Ref<InfoResponse | undefined>) {
 		video: ExtendedVideo,
 		videoId: string,
 		signal: AbortSignal,
-		title: string,
+		fallbackTitle: string,
 	): Promise<boolean> {
 		try {
 			const response = await fetch(
@@ -79,9 +84,25 @@ export function useTrailerService(data: Ref<InfoResponse | undefined>) {
 				{ signal },
 			);
 
-			const result: TrailerServiceResponse = await response.json().catch(() => null);
+			let result: TrailerServiceResponse = await response.json().catch(() => null);
 
-			if (!result?.success) return false;
+			if (!result?.success)
+				return false;
+
+			// Detect stale metadata (webm exists but info.json was missing on server)
+			// and request revalidation to get correct duration/width/height/title
+			if (result.data.cached && result.data.duration === 0 && result.data.width === 0 && result.data.height === 0) {
+				const revalidateResponse = await fetch(
+					`${TRAILER_BASE_URL}/${videoId}?revalidate=1&v=${Date.now()}`,
+					{ signal },
+				);
+				const revalidated: TrailerServiceResponse = await revalidateResponse.json().catch(() => null);
+				if (revalidated?.success)
+					result = revalidated;
+			}
+
+			const apiTitle = result.data.title && result.data.title !== videoId ? result.data.title : fallbackTitle;
+			const title = apiTitle.replace(/\\\s*/g, '/').trim();
 
 			if (result.data.cached) {
 				resolvedTrailer.value = {
@@ -98,12 +119,12 @@ export function useTrailerService(data: Ref<InfoResponse | undefined>) {
 
 			if (result.data.processing) {
 				buttonState.value = 'processing';
-				return await pollUntilCached(video, videoId, signal, title);
+				return await pollUntilCached(video, videoId, signal, fallbackTitle);
 			}
 
 			if (result.status === 'queued') {
 				buttonState.value = 'queued';
-				return await pollUntilCached(video, videoId, signal, title);
+				return await pollUntilCached(video, videoId, signal, fallbackTitle);
 			}
 
 			return false;
@@ -117,7 +138,7 @@ export function useTrailerService(data: Ref<InfoResponse | undefined>) {
 		video: ExtendedVideo,
 		videoId: string,
 		signal: AbortSignal,
-		title: string,
+		fallbackTitle: string,
 	): Promise<boolean> {
 		return new Promise((resolve) => {
 			let attempts = 0;
@@ -153,7 +174,7 @@ export function useTrailerService(data: Ref<InfoResponse | undefined>) {
 							videoId,
 							videoUrl: `${TRAILER_BASE_URL}${result.data.downloadUrl}?v=${Date.now()}`,
 							thumbnailUrl: `${TRAILER_BASE_URL}/${videoId}/${videoId}.jpg`,
-							title,
+							title: (result.data.title && result.data.title !== videoId ? result.data.title : fallbackTitle).replace(/\\\s*/g, '/').trim(),
 							subtitles: buildSubtitles(result.data.subtitles ?? []),
 							sourceVideo: video,
 						};
@@ -193,10 +214,12 @@ export function useTrailerService(data: Ref<InfoResponse | undefined>) {
 		const title = info.title ?? info.name ?? '';
 
 		for (const video of candidates) {
-			if (signal.aborted) return;
+			if (signal.aborted)
+				return;
 
 			const videoId = extractYouTubeId(video.src);
-			if (!videoId) continue;
+			if (!videoId)
+				continue;
 
 			const videoTitle = `${
 				video.name?.toLowerCase().includes(title.toLowerCase())
@@ -205,7 +228,8 @@ export function useTrailerService(data: Ref<InfoResponse | undefined>) {
 			}${video.name}`;
 
 			const found = await validateCandidate(video, videoId, signal, videoTitle);
-			if (found) return;
+			if (found)
+				return;
 		}
 
 		if (!signal.aborted) {
@@ -215,18 +239,21 @@ export function useTrailerService(data: Ref<InfoResponse | undefined>) {
 
 	function toggleTrailer(e?: MouseEvent) {
 		e?.stopPropagation();
-		if (!resolvedTrailer.value) return;
+		if (!resolvedTrailer.value)
+			return;
 		trailerOpen.value = !trailerOpen.value;
 
 		const main = document.querySelector<HTMLDivElement>('#main');
-		if (!main) return;
+		if (!main)
+			return;
 		main.style.overflow = trailerOpen.value ? 'hidden' : 'auto';
 	}
 
 	function closeTrailer() {
 		trailerOpen.value = false;
 		const main = document.querySelector<HTMLDivElement>('#main');
-		if (main) main.style.overflow = 'auto';
+		if (main)
+			main.style.overflow = 'auto';
 	}
 
 	watch(data, () => {
