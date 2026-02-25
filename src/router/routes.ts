@@ -34,6 +34,7 @@ const DashboardSchedule = () => import('@/views/Dashboard/Advanced/Schedule');
 const DashboardMetadata = () => import('@/views/Dashboard/Content/Metadata');
 const DashboardRipper = () => import('@/views/Dashboard/Content/Ripper');
 const DashboardSpecials = () => import('@/views/Dashboard/Content/Specials');
+const DashboardRecommendations = () => import('@/views/Dashboard/Content/Recommendations');
 
 const DashboardActivity = () => import('@/views/Dashboard/Devices/Activity');
 const DashboardDevices = () => import('@/views/Dashboard/Devices/Devices');
@@ -319,6 +320,16 @@ export const routes: Array<RouteRecordRaw> = [
 				path: 'dashboard/specials/:id',
 				name: 'Dashboard Special',
 				component: () => import('@/views/Dashboard/Content/Specials/Edit.vue'),
+			},
+			{
+				path: 'dashboard/recommendations/:type',
+				name: 'Dashboard Recommendations',
+				component: DashboardRecommendations,
+			},
+			{
+				path: 'dashboard/recommendations/:type/:id',
+				name: 'Dashboard Recommendation',
+				component: () => import('@/views/Dashboard/Content/Recommendations/Detail.vue'),
 			},
 			{
 				path: 'dashboard/devices',

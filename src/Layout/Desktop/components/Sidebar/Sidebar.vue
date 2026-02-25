@@ -16,6 +16,7 @@ import { sidebarContainerElement } from '@/store/ui';
 import SidebarButtonGroup from './SidebarButtonGroup.vue';
 import SidebarButton from './SidebarButton.vue';
 import MoooomIcon from '@/components/Images/icons/MoooomIcon.vue';
+import { libraryIconName } from '@/lib/utils';
 
 const scrollPanelDt = {
 	bar: {
@@ -76,16 +77,6 @@ function handleSidebar() {
 	}
 	else {
 		closeSidebar();
-	}
-}
-
-function libraryIconName(type: string) {
-	switch (type) {
-		case 'anime':
-		case 'tv':
-			return 'monitor';
-		case 'movie':
-			return 'movieClap';
 	}
 }
 
@@ -250,6 +241,11 @@ watch(playlists, (value) => {
 							href="/dashboard/specials"
 							icon="sparkles"
 							name="Specials"
+						/>
+						<SidebarButton
+							href="/dashboard/recommendations/movies"
+							icon="ticket"
+							name="Recommendations"
 						/>
 						<SidebarButton href="/dashboard/ripper" icon="disk" name="Ripper" />
 					</SidebarButtonGroup>
