@@ -363,12 +363,12 @@ watch(data, (value) => {
 										:title="data?.title"
 										aspect="poster"
 										class="m-auto scale-100 rounded-2xl"
-										class-name="pointer-events-none absolute -inset-1 z-20 flex scale-100 select-none items-center place-self-start overflow-hidden rounded-2xl"
+										class-name="pointer-events-none absolute z-20 flex scale-100 select-none items-center place-self-start overflow-hidden rounded-2xl"
 										priority="high"
 										type="image"
 									/>
 
-									<span :class="`tv:group-focus-visible/card:bg-black/3 absolute -inset-1 z-20 grid h-available w-full items-center transition-transform duration-200 opacity-0 [background:radial-gradient(75%_50%_at_50%_50%,_rgba(0,_0,_0,_0.40)_0%,_rgba(0,_0,_0,_0.00)_100%),_rgba(0,_0,_0,_0.09)] mx-auto ${hasItem ? 'group-hover/card:opacity-100' : ''
+									<span :class="`tv:group-focus-visible/card:bg-black/3 absolute z-20 grid h-available w-full items-center transition-transform duration-200 opacity-0 [background:radial-gradient(75%_50%_at_50%_50%,_rgba(0,_0,_0,_0.40)_0%,_rgba(0,_0,_0,_0.00)_100%),_rgba(0,_0,_0,_0.09)] mx-auto ${hasItem ? 'group-hover/card:opacity-100' : ''
 									}`"
 									>
 										<span
