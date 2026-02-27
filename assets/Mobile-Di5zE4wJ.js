@@ -1,0 +1,1 @@
+import{C as e,Y as a,c as r,j as t}from"./i18n-DBb78QAI.js";import{t as _}from"./ExploreContainer-D9pBZGtq.js";r();var o=t({__name:"Mobile",setup(n){return(l,u)=>(a(),e(_,{name:"Dashboard General Mobile page"}))}}),s=o;export{s as default};
