@@ -132,7 +132,10 @@ watch(user, (value) => {
 export default audioPlayer;
 
 export function ensureActiveDevice(): void {
-	if (!currentMusicDeviceId.value && deviceId.value) {
+	const activeDeviceConnected = currentMusicDeviceId.value
+		&& connectedMusicDevices.value.some(d => d.device_id === currentMusicDeviceId.value);
+
+	if (!activeDeviceConnected && deviceId.value) {
 		currentMusicDeviceId.value = deviceId.value;
 		audioPlayer.unmute();
 		musicSocketConnection.value
