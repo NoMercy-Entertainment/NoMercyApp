@@ -122,7 +122,7 @@ export interface StateEvent {
 
 export interface MusicPlayerState {
 	actions: Actions;
-	device_id: null;
+	device_id: string | null;
 	is_playing: boolean;
 	item: PlaylistItem;
 	playlist: PlaylistItem[];

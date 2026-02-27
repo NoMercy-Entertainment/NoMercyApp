@@ -127,6 +127,11 @@ export function handleMusicPlayerState(data: StateEvents) {
 			continue; // Not return - process other events
 		}
 
+		// Set current device from server state if not yet known
+		if (!currentMusicDeviceId.value && state.device_id) {
+			currentMusicDeviceId.value = state.device_id;
+		}
+
 		// Calculate seek position (all in milliseconds, then convert)
 		const latencyCompensationMs = (Date.now() - state.timestamp) / 2;
 		const adjustedProgressMs = state.progress_ms + latencyCompensationMs;

@@ -7,6 +7,7 @@ export interface CollectionResponse {
 	overview: string;
 	backdrop: string;
 	poster: string;
+	logo?: string;
 	titleSort: string;
 	type: string;
 	id: string;
