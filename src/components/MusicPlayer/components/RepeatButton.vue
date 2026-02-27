@@ -2,7 +2,7 @@
 import { onMounted } from 'vue';
 import { useCycleList } from '@vueuse/core';
 
-import audioPlayer, { isRepeating } from '@/store/audioPlayer';
+import audioPlayer, { ensureActiveDevice, isRepeating } from '@/store/audioPlayer';
 import { musicSocketConnection } from '@/store/musicSocket';
 import { user } from '@/store/user';
 import MusicButton from './MusicButton.vue';
@@ -30,6 +30,7 @@ function handleClick(e?: MouseEvent) {
 		audioPlayer.repeat(state.value);
 		return;
 	}
+	ensureActiveDevice();
 	musicSocketConnection.value?.invoke('PlaybackCommand', 'repeat', null);
 }
 </script>

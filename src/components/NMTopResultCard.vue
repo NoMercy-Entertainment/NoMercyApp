@@ -9,7 +9,7 @@ import TrackLinks from '@/views/Music/List/components/TrackLinks.vue';
 import BigPlayButton from '@/components/Buttons/BigPlayButton.vue';
 import type { PlaylistItem } from '@/types/musicPlayer';
 import { musicSocketConnection } from '@/store/musicSocket';
-import audioPlayer from '@/store/audioPlayer';
+import audioPlayer, { ensureActiveDevice } from '@/store/audioPlayer';
 import { user } from '@/store/user';
 
 const props = defineProps({
@@ -41,6 +41,7 @@ function handleClick() {
 		audioPlayer.playTrack(props.data.track);
 		return;
 	}
+	ensureActiveDevice();
 	musicSocketConnection.value?.invoke(
 		'StartPlaybackCommand',
 		props.data?.type.replace(/s$/u, ''),

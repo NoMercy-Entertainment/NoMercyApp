@@ -5,7 +5,7 @@ import type { PlaylistItem, RouteType } from '@/types/musicPlayer';
 
 import { isMobile } from '@/config/global';
 import { musicSocketConnection } from '@/store/musicSocket';
-import { audioPlayer, currentSong, isPlaying, musicSize, setCurrentPlaylist } from '@/store/audioPlayer';
+import { audioPlayer, currentSong, ensureActiveDevice, isPlaying, musicSize, setCurrentPlaylist } from '@/store/audioPlayer';
 import { onTrackRowRightClick } from '@/store/contextMenuItems';
 import { user } from '@/store/user';
 import i18next from '@/config/i18next.ts';
@@ -81,6 +81,7 @@ function handleClick() {
 		setCurrentPlaylist(`/music/${props.routeType}/${props.routeParamId}`);
 		return;
 	}
+	ensureActiveDevice();
 	musicSocketConnection.value?.invoke(
 		'StartPlaybackCommand',
 		props.routeType,

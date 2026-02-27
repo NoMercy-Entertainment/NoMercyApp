@@ -4,9 +4,11 @@ import { computed } from 'vue';
 
 import type { PlaylistItem } from '@/types/musicPlayer';
 
-import { audioPlayer, currentSong, isPlaying, musicSize, setCurrentPlaylist } from '@/store/audioPlayer';
+import { audioPlayer, currentSong, ensureActiveDevice, isPlaying, musicSize, setCurrentPlaylist } from '@/store/audioPlayer';
 import { isAlbumRoute, isArtistRoute, isMusicSearchRoute, isPlaylistRoute } from '@/store/routeState';
 import { onTrackRowRightClick } from '@/store/contextMenuItems';
+import { musicSocketConnection } from '@/store/musicSocket';
+import { user } from '@/store/user';
 import router from '@/router';
 
 import DropdownMenu from '@/Layout/Desktop/components/Menus/DropdownMenu.vue';
@@ -35,8 +37,19 @@ const props = defineProps({
 const isFavoritesRoute = isPlaylistRoute;
 
 function handleClick() {
-	setCurrentPlaylist(router.currentRoute.value.fullPath);
-	audioPlayer.playTrack(props.data, props.displayList);
+	if (!user.value.features?.nomercyConnect) {
+		setCurrentPlaylist(router.currentRoute.value.fullPath);
+		audioPlayer.playTrack(props.data, props.displayList);
+		return;
+	}
+
+	ensureActiveDevice();
+	musicSocketConnection.value?.invoke(
+		'StartPlaybackCommand',
+		(router.currentRoute.value.meta.type as string)?.replace(/s$/u, ''),
+		router.currentRoute.value.params.id as string,
+		props.data.id,
+	);
 }
 </script>
 

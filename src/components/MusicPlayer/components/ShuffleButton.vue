@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import audioPlayer, { isShuffling } from '@/store/audioPlayer';
+import audioPlayer, { ensureActiveDevice, isShuffling } from '@/store/audioPlayer';
 import { musicSocketConnection } from '@/store/musicSocket';
 import { user } from '@/store/user';
 
@@ -12,6 +12,7 @@ function handleClick(e?: MouseEvent) {
 		audioPlayer.shuffle(!isShuffling.value);
 		return;
 	}
+	ensureActiveDevice();
 	musicSocketConnection.value?.invoke('PlaybackCommand', 'shuffle', null);
 }
 </script>

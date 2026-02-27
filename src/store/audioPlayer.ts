@@ -79,16 +79,7 @@ export const audioPlayer = new MusicPlayer<PlaylistItem>({
 				});
 				return;
 			}
-			if (!currentMusicDeviceId.value) {
-				musicSocketConnection.value
-					?.invoke('ChangeDeviceCommand', deviceId.value)
-					.then(() => {
-						console.log('Switched to device:', deviceId.value);
-					})
-					.catch((error) => {
-						console.error('Error switching device:', error);
-					});
-			}
+			ensureActiveDevice();
 			musicSocketConnection.value?.invoke('PlaybackCommand', 'play', null);
 		},
 		pause: () => {
@@ -96,16 +87,7 @@ export const audioPlayer = new MusicPlayer<PlaylistItem>({
 				audioPlayer.pause();
 				return;
 			}
-			if (!currentMusicDeviceId.value) {
-				musicSocketConnection.value
-					?.invoke('ChangeDeviceCommand', deviceId.value)
-					.then(() => {
-						console.log('Switched to device:', deviceId.value);
-					})
-					.catch((error) => {
-						console.error('Error switching device:', error);
-					});
-			}
+			ensureActiveDevice();
 			musicSocketConnection.value?.invoke('PlaybackCommand', 'pause', null);
 		},
 		stop: () => {
@@ -116,6 +98,7 @@ export const audioPlayer = new MusicPlayer<PlaylistItem>({
 				audioPlayer.stop();
 				return;
 			}
+			ensureActiveDevice();
 			musicSocketConnection.value?.invoke('PlaybackCommand', 'stop', null);
 		},
 		previous: () => {
@@ -123,6 +106,7 @@ export const audioPlayer = new MusicPlayer<PlaylistItem>({
 				audioPlayer.previous();
 				return;
 			}
+			ensureActiveDevice();
 			musicSocketConnection.value?.invoke('PlaybackCommand', 'previous', null);
 		},
 		next: () => {
@@ -130,9 +114,11 @@ export const audioPlayer = new MusicPlayer<PlaylistItem>({
 				audioPlayer.next();
 				return;
 			}
+			ensureActiveDevice();
 			musicSocketConnection.value?.invoke('PlaybackCommand', 'next', null);
 		},
 		seek: (position: number) => {
+			ensureActiveDevice();
 			musicSocketConnection.value?.invoke('PlaybackCommand', 'seek', position);
 			audioPlayer.seek(position);
 		},
@@ -144,6 +130,22 @@ watch(user, (value) => {
 });
 
 export default audioPlayer;
+
+export function ensureActiveDevice(): void {
+	if (!currentMusicDeviceId.value && deviceId.value) {
+		currentMusicDeviceId.value = deviceId.value;
+		audioPlayer.unmute();
+		musicSocketConnection.value
+			?.invoke('ChangeDeviceCommand', deviceId.value)
+			.then(() => {
+				console.log('Switched to device:', deviceId.value);
+			})
+			.catch((error) => {
+				console.error('Error switching device:', error);
+				currentMusicDeviceId.value = null;
+			});
+	}
+}
 
 export function setLyricsMenuOpen(value: boolean): void {
 	lyricsMenuOpen.value = value;

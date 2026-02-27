@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import type { PropType } from 'vue';
 import type { PlaylistItem } from '@/types/musicPlayer';
-import { audioPlayer, currentSong, isPlaying, musicSize, setCurrentPlaylist } from '@/store/audioPlayer';
+import { audioPlayer, currentSong, ensureActiveDevice, isPlaying, musicSize, setCurrentPlaylist } from '@/store/audioPlayer';
 
 import DropdownMenu from '@/Layout/Desktop/components/Menus/DropdownMenu.vue';
 
@@ -57,6 +57,7 @@ function handleClick() {
 		return;
 	}
 
+	ensureActiveDevice();
 	musicSocketConnection.value?.invoke(
 		'StartPlaybackCommand',
 		type,

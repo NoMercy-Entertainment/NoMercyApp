@@ -6,6 +6,7 @@ import { useDebounce } from '@vueuse/core';
 import audioPlayer, {
 	currentTime,
 	duration,
+	ensureActiveDevice,
 	percentage,
 } from '@/store/audioPlayer';
 
@@ -31,6 +32,7 @@ const seekValue = ref(0);
 const debouncedSeekValue = useDebounce(seekValue, 200);
 
 watch(debouncedSeekValue, (value) => {
+	ensureActiveDevice();
 	musicSocketConnection.value?.invoke('PlaybackCommand', 'seek', value);
 });
 

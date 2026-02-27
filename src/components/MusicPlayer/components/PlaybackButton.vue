@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import audioPlayer, { isPlaying } from '@/store/audioPlayer';
+import audioPlayer, { ensureActiveDevice, isPlaying } from '@/store/audioPlayer';
 
 import MusicButton from './MusicButton.vue';
 import PlayerIcon from '@/components/Images/icons/PlayerIcon.vue';
@@ -14,6 +14,7 @@ function handleClick(e?: MouseEvent) {
 			: audioPlayer?.actions?.play?.();
 		return;
 	}
+	ensureActiveDevice();
 	musicSocketConnection.value?.invoke(
 		'PlaybackCommand',
 		isPlaying.value ? 'pause' : 'play',

@@ -9,9 +9,9 @@ import { calculateDuration } from '@/lib/dateTime';
 
 import { currentServer } from '@/store/currentServer';
 import audioPlayer, {
-	currentMusicDeviceId,
 	currentPlaylist,
 	currentSong,
+	ensureActiveDevice,
 	isPlaying,
 	setCurrentPlaylist,
 } from '@/store/audioPlayer';
@@ -23,7 +23,6 @@ import { musicSocketConnection } from '@/store/musicSocket';
 import ShareButton from '@/components/Buttons/ShareButton.vue';
 import type { ShareOptions } from '@capacitor/share';
 import { user } from '@/store/user';
-import { deviceId } from '@/store/deviceInfo.ts';
 import { pickPaletteColor, tooLight } from '@/lib/colorHelper.ts';
 import { colorPalette } from '@/store/ui.ts';
 import MoooomIcon from '@/components/Images/icons/MoooomIcon.vue';
@@ -79,16 +78,7 @@ function handleClick() {
 		return;
 	}
 
-	if (!currentMusicDeviceId.value) {
-		musicSocketConnection.value
-			?.invoke('ChangeDeviceCommand', deviceId.value)
-			.then(() => {
-				console.log('Switched to device:', deviceId.value);
-			})
-			.catch((error) => {
-				console.error('Error switching device:', error);
-			});
-	}
+	ensureActiveDevice();
 
 	const sorted = sortByType(props.data.tracks, sortType.value, sortOrder.value, setSortOrder);
 	const trackId = sorted.some(t => t.id === currentSong.value?.id)

@@ -4,9 +4,9 @@ import { computed } from 'vue';
 
 import type { AlbumResponse, ArtistResponse, DisplayList } from '@/types/api/music/musicPlayer';
 import audioPlayer, {
-	currentMusicDeviceId,
 	currentPlaylist,
 	currentSong,
+	ensureActiveDevice,
 	isPlaying,
 	setCurrentPlaylist,
 } from '@/store/audioPlayer';
@@ -15,7 +15,6 @@ import PlayerIcon from '@/components/Images/icons/PlayerIcon.vue';
 import MusicButton from '@/components/MusicPlayer/components/MusicButton.vue';
 import { musicSocketConnection } from '@/store/musicSocket';
 import { user } from '@/store/user';
-import { deviceId } from '@/store/deviceInfo';
 import { sortByType } from '@/lib/utils/array';
 import { setSortOrder, sortOrder, sortType } from '@/store/ui';
 
@@ -56,16 +55,7 @@ function handleClick() {
 		return;
 	}
 
-	if (!currentMusicDeviceId.value) {
-		musicSocketConnection.value
-			?.invoke('ChangeDeviceCommand', deviceId.value)
-			.then(() => {
-				console.log('Switched to device:', deviceId.value);
-			})
-			.catch((error) => {
-				console.error('Error switching device:', error);
-			});
-	}
+	ensureActiveDevice();
 
 	const sorted = sortByType(props.data.tracks, sortType.value, sortOrder.value, setSortOrder);
 	const trackId = sorted.some(t => t.id === currentSong.value?.id)

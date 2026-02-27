@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref, watch } from 'vue';
 
-import { audioPlayer, volume } from '@/store/audioPlayer';
+import { audioPlayer, ensureActiveDevice, volume } from '@/store/audioPlayer';
 
 import SliderBar from '@/components/MusicPlayer/components/SliderBar.vue';
 import { musicSocketConnection } from '@/store/musicSocket';
@@ -11,6 +11,7 @@ const seekValue = ref(0);
 const debouncedSeekValue = useDebounce(seekValue, 50);
 
 watch(debouncedSeekValue, (value) => {
+	ensureActiveDevice();
 	musicSocketConnection.value?.invoke('ChangeVolumeCommand', value);
 });
 

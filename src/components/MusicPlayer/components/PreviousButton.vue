@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import audioPlayer from '@/store/audioPlayer';
+import audioPlayer, { ensureActiveDevice } from '@/store/audioPlayer';
 
 import MusicButton from './MusicButton.vue';
 import PlayerIcon from '@/components/Images/icons/PlayerIcon.vue';
@@ -12,6 +12,7 @@ function handleClick(e?: MouseEvent) {
 		audioPlayer?.actions?.previous?.();
 		return;
 	}
+	ensureActiveDevice();
 	musicSocketConnection.value?.invoke('PlaybackCommand', 'previous', null);
 }
 </script>

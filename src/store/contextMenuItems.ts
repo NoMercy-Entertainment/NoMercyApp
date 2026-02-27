@@ -13,7 +13,9 @@ import { currentServer } from '@/store/currentServer';
 import { testUserToken } from '@/store/user';
 import { queryClient } from '@/config/tanstack-query.ts';
 import type { StatusResponse } from '@/types/api/base/library';
-import audioPlayer from '@/store/audioPlayer.ts';
+import audioPlayer, { ensureActiveDevice } from '@/store/audioPlayer.ts';
+import { musicSocketConnection } from '@/store/musicSocket';
+import { user } from '@/store/user';
 import { Share } from '@capacitor/share';
 import type { ModalData } from '@/types';
 
@@ -231,11 +233,19 @@ export function onTrackRowRightClick(event: Event, routeInfo: TrackRowRouteInfo,
 			command: () => {
 				if (selectedTrackRow.value) {
 					if (audioPlayer.currentSong === null) {
-						console.log('playing track');
-						audioPlayer.playTrack(selectedTrackRow.value);
+						if (!user.value.features?.nomercyConnect) {
+							audioPlayer.playTrack(selectedTrackRow.value);
+							return;
+						}
+						ensureActiveDevice();
+						musicSocketConnection.value?.invoke(
+							'StartPlaybackCommand',
+							(router.currentRoute.value.meta.type as string)?.replace(/s$/u, ''),
+							router.currentRoute.value.params.id as string,
+							selectedTrackRow.value.id,
+						);
 						return;
 					}
-					console.log('adding track to queue');
 					audioPlayer.addToQueue(selectedTrackRow.value);
 				}
 			},

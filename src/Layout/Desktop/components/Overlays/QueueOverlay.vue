@@ -4,6 +4,7 @@ import type { PlaylistItem } from '@/types/musicPlayer';
 import audioPlayer, {
 	currentPlaylist,
 	currentSong,
+	ensureActiveDevice,
 	musicSize,
 	queue,
 	queueMenuOpen,
@@ -45,6 +46,7 @@ function handleClick(song: PlaylistItem) {
 		}
 	}
 
+	ensureActiveDevice();
 	musicSocketConnection.value?.invoke(
 		'StartPlaybackCommand',
 		(route.meta.type as string)?.replace(/s$/u, ''),
