@@ -1,0 +1,1 @@
+import{_t as n,c as i,x as s}from"./i18n-DXLa9EKW.js";i();var e=n("hidden");const o=s(()=>e.value);function u(a){e.value=a}function r(){e.value=e.value==="open"?"closed":"open"}function t(){e.value="hidden"}function l(){e.value="open"}function c(){e.value="closed"}var v=o;export{o as a,u as i,t as n,v as o,l as r,r as s,c as t};
