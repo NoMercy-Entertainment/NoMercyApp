@@ -15,7 +15,7 @@ onMounted(() => {
 </script>
 
 <template>
-			<ScrollContainer :auto-hide="true" :static="true" class="pb-2">
-				<NMComponent />
-			</ScrollContainer>
+	<ScrollContainer :auto-hide="true" :static="true" class="pb-2">
+		<NMComponent />
+	</ScrollContainer>
 </template>

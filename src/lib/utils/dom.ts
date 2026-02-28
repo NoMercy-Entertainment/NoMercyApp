@@ -182,12 +182,18 @@ export async function lockPortrait() {
 	if (isPlatform('capacitor')) {
 		const { ScreenOrientation } = await import('@capacitor/screen-orientation');
 		try {
-			await ScreenOrientation.lock({
-				orientation: 'portrait',
-			});
+			await ScreenOrientation.lock({ orientation: 'portrait' });
 		}
-		catch (e) {
+		catch {
 			//
+		}
+	}
+	else {
+		try {
+			await screen.orientation.lock('portrait');
+		}
+		catch {
+			// Not supported or not in fullscreen/PWA context
 		}
 	}
 }
@@ -196,12 +202,18 @@ export async function lockLandscape() {
 	if (isPlatform('capacitor')) {
 		const { ScreenOrientation } = await import('@capacitor/screen-orientation');
 		try {
-			await ScreenOrientation.lock({
-				orientation: 'landscape',
-			});
+			await ScreenOrientation.lock({ orientation: 'landscape' });
 		}
 		catch {
 			//
+		}
+	}
+	else {
+		try {
+			await screen.orientation.lock('landscape');
+		}
+		catch {
+			// Not supported or not in fullscreen/PWA context
 		}
 	}
 }
@@ -214,6 +226,14 @@ export async function unlockOrientation() {
 		}
 		catch {
 			//
+		}
+	}
+	else {
+		try {
+			screen.orientation.unlock();
+		}
+		catch {
+			// Not supported or not in fullscreen/PWA context
 		}
 	}
 }

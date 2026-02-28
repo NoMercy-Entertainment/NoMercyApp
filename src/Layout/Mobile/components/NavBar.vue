@@ -1,14 +1,13 @@
 <script lang="ts" setup>
 import { RouterLink } from 'vue-router';
 
-import { IonHeader, IonProgressBar, IonToolbar, isPlatform } from '@ionic/vue';
+import { isPlatform } from '@ionic/vue';
 import { useIsFetching } from '@tanstack/vue-query';
 
 import { closeSidebar, sidebar, toggleSidebar } from '@/store/sidebar';
 
 import { searchUrl } from '@/store/routeState';
 
-import MobileLibraryHeader from '@/views/Base/Library/components/MobileLibraryHeader.vue';
 import AppLogo from '@/components/Images/icons/AppLogo.vue';
 import MoooomIcon from '@/components/Images/icons/MoooomIcon.vue';
 
@@ -16,74 +15,49 @@ const isFetching = useIsFetching();
 </script>
 
 <template>
-	<IonHeader class="pt-safe transition-all duration-200">
-		<IonToolbar v-if="!isPlatform('capacitor')" class="toolbar">
-			<div
-				class="pt-safe flex justify-between items-center self-stretch flex-grow-0 flex-shrink-0 h-[50px] overflow-hidden px-1 py-1.5"
+	<header
+		v-if="!isPlatform('capacitor')"
+		class="pt-safe bg-background shrink-0 z-40"
+	>
+		<div
+			class="flex justify-between items-center h-[50px] px-1 py-1.5"
+		>
+			<button
+				aria-label="menu"
+				class="flex justify-center items-center h-14 w-14 relative overflow-hidden gap-2 p-2.5 rounded-lg bg-transparent children:absolute children:transition-opacity children:duration-100 children:inset-4"
+				@click="toggleSidebar"
 			>
-				<button
-					aria-label="menu"
-					class=" flex justify-center items-center flex-grow-0 flex-shrink-0 h-14 w-14 relative overflow-hidden gap-2 p-2.5 rounded-lg bg-transparent children:absolute children:transition-opacity children:duration-100 children:inset-4"
-					@click="toggleSidebar"
-				>
-					<MoooomIcon
-						:class="{
-							'opacity-0': sidebar === 'closed' || sidebar === 'hidden',
-							'opacity-100': sidebar === 'open',
-						}"
-						icon="cross"
-					/>
-					<MoooomIcon
-						:class="{
-							'opacity-100': sidebar === 'closed' || sidebar === 'hidden',
-							'opacity-0': sidebar === 'open',
-						}"
-						icon="menuBurger"
-					/>
-				</button>
-				<div
-					class="flex justify-center items-center flex-grow-0 flex-shrink-0 relative gap-2 px-1 h-available"
-				>
-					<AppLogo />
-				</div>
-				<RouterLink
-					:to="searchUrl"
-					aria-label="search"
-					class="flex justify-center items-center flex-grow-0 flex-shrink-0 h-14 w-14 relative overflow-hidden gap-2 p-2.5 rounded-lg bg-transparent"
-					@click="closeSidebar"
-				>
-					<MoooomIcon
-						class=""
-						icon="searchMagnifyingGlass"
-					/>
-				</RouterLink>
+				<MoooomIcon
+					:class="{
+						'opacity-0': sidebar === 'closed' || sidebar === 'hidden',
+						'opacity-100': sidebar === 'open',
+					}"
+					icon="cross"
+				/>
+				<MoooomIcon
+					:class="{
+						'opacity-100': sidebar === 'closed' || sidebar === 'hidden',
+						'opacity-0': sidebar === 'open',
+					}"
+					icon="menuBurger"
+				/>
+			</button>
+			<div class="flex justify-center items-center relative gap-2 px-1 h-available">
+				<AppLogo />
 			</div>
-		</IonToolbar>
-		<MobileLibraryHeader />
-	</IonHeader>
+			<RouterLink
+				:to="searchUrl"
+				aria-label="search"
+				class="flex justify-center items-center h-14 w-14 relative overflow-hidden gap-2 p-2.5 rounded-lg bg-transparent"
+				@click="closeSidebar"
+			>
+				<MoooomIcon icon="searchMagnifyingGlass" />
+			</RouterLink>
+		</div>
+	</header>
 
-	<IonProgressBar
+	<div
 		v-if="isFetching > 0"
-		class="absolute top-0 z-1199 bg-black"
-		type="indeterminate"
+		class="absolute top-0 left-0 right-0 z-1199 h-1 bg-focus animate-pulse"
 	/>
 </template>
-
-<style scoped>
-ion-header {
-	background: var(--color-background);
-	box-shadow: none;
-}
-
-ion-toolbar {
-	--background: var(--color-background);
-}
-
-ion-progress-bar::part(track) {
-	@apply bg-focus/50;
-}
-
-ion-progress-bar::part(progress) {
-	@apply bg-focus;
-}
-</style>

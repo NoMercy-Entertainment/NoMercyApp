@@ -1,6 +1,5 @@
 <script lang="ts" setup>
 import type { PropType } from 'vue';
-import { IonItem, IonList } from '@ionic/vue';
 
 import type { KnownFor } from '@/types/api/base/person';
 import type { Crew } from '@/types/api/shared';
@@ -23,12 +22,12 @@ defineProps({
 		v-if="items && items?.length > 0"
 		class="relative flex w-available flex-col items-start justify-start gap-2 -mx-3"
 	>
-		<p class="text-left text-xl font-bold ml-4">
+		<p class="text-left text-xl font-bold">
 			{{ $t(title) }}
 		</p>
 
-		<IonList class="w-available" lines="inset">
-			<IonItem v-for="item in items" :key="item?.id">
+		<ul class="w-available divide-y divide-surface-5/50">
+			<li v-for="item in items" :key="item?.id">
 				<div
 					:class="{
 						'grid-cols-[[year]_5ch_[title]_minmax(auto,100%)_[buttons]_5ch]': (item as KnownFor)?.hasItem,
@@ -96,17 +95,7 @@ defineProps({
 						<MoooomIcon class-name="h-5 w-5" icon="play" />
 					</RouterLink>
 				</div>
-			</IonItem>
-		</IonList>
+			</li>
+		</ul>
 	</div>
 </template>
-
-<style scoped>
-ion-list {
-	--ion-item-background: transparent;
-}
-
-ion-item::part(native) {
-	--background: transparent;
-}
-</style>

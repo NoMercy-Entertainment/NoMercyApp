@@ -13,7 +13,7 @@ defineProps({
 </script>
 
 <template>
-	<div class="flex flex-col sm:flex-row gap-4 mx-2 my-4 sm:m-4 w-available empty:hidden">
+	<div class="flex flex-col sm:flex-row gap-4 m-4 w-available empty:hidden">
 		<component
 			:is="nmComponentMap[render.component]"
 			v-for="(render, index) in items ?? []"

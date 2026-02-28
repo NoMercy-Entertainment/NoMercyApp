@@ -1,7 +1,5 @@
 <script lang="ts" setup>
 import { useRoute } from 'vue-router';
-import { IonIcon, IonRippleEffect } from '@ionic/vue';
-import { checkmarkCircle, closeOutline } from 'ionicons/icons';
 
 import {
 	closeWelcomeModal,
@@ -10,6 +8,7 @@ import {
 	showWelcomeModal,
 } from '@/store/androidAppPrompt';
 import AppLogoSquare from '@/components/Images/icons/AppLogoSquare.vue';
+import MoooomIcon from '@/components/Images/icons/MoooomIcon.vue';
 import Button from '@/components/Button.vue';
 
 const route = useRoute();
@@ -49,11 +48,10 @@ function handleDontShowAgain() {
 						class="relative w-full max-w-sm rounded-2xl bg-surface-1 p-6 shadow-2xl"
 					>
 						<button
-							class="ion-activatable absolute right-3 top-3 flex h-8 w-8 items-center justify-center rounded-full text-text/60 hover:text-text overflow-hidden"
+							class="absolute right-3 top-3 flex h-8 w-8 items-center justify-center rounded-full text-text/60 hover:text-text overflow-hidden active:bg-surface-3 transition-colors"
 							@click="handleContinueInBrowser"
 						>
-							<IonRippleEffect />
-							<IonIcon :icon="closeOutline" class="text-xl" />
+							<MoooomIcon class-name="w-5 h-5" icon="cross" />
 						</button>
 
 						<div class="mb-4 flex justify-center">
@@ -76,7 +74,7 @@ function handleDontShowAgain() {
 								:key="benefit"
 								class="flex items-center gap-2 text-sm text-text/80"
 							>
-								<IonIcon :icon="checkmarkCircle" class="text-lg text-[var(--color-theme-8)]" />
+								<MoooomIcon class-name="w-5 h-5 text-[var(--color-theme-8)]" icon="check" />
 								{{ $t(benefit) }}
 							</li>
 						</ul>

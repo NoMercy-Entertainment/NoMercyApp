@@ -1,5 +1,4 @@
 <script lang="ts" setup>
-import { IonHeader, IonTitle, IonToolbar } from '@ionic/vue';
 import PerformanceDashboard from '@/components/PerformanceDashboard.vue';
 import { addNotification } from '@/store/notifications';
 import { pwaMessages } from '@/i18n/pwa';
@@ -60,11 +59,11 @@ function handleTestUpdateNotification() {
 </script>
 
 <template v-if="!isProduction">
-		<IonHeader>
-			<IonToolbar>
-				<IonTitle>Performance Dashboard</IonTitle>
-			</IonToolbar>
-		</IonHeader>
+		<header class="border-b border-surface-6 mb-4">
+			<div class="px-4 py-3">
+				<h1 class="text-lg font-semibold">Performance Dashboard</h1>
+			</div>
+		</header>
 
 			<div class="max-w-7xl mx-auto">
 				<div class="mb-6">

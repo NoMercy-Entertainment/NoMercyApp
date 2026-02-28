@@ -12,8 +12,6 @@ import serverClient from '@/lib/clients/serverClient';
 import Button from '@/components/Button.vue';
 import LibraryItem from './LibraryItem.vue';
 import useServerClient from '@/lib/clients/useServerClient';
-import { IonSpinner } from '@ionic/vue';
-
 const props = defineProps({
 	setNextButtonLocked: {
 		type: Function as PropType<(value: boolean) => void>,
@@ -81,8 +79,8 @@ useSortable(el, list, {
 			{{ $t('Add your media libraries to organize your content.') }}
 		</p>
 		<template v-if="isLoading">
-			<div class="grid w-available h-available place-items-center overflow-hidden">
-				<IonSpinner class="ion-padding" name="crescent" />
+			<div class="grid w-available h-available place-items-center overflow-hidden p-4">
+				<div class="w-8 h-8 border-2 border-focus border-t-transparent rounded-full animate-spin" />
 			</div>
 		</template>
 		<div ref="el" class="flex h-auto w-full flex-col overflow-y-auto text-start gap-1">

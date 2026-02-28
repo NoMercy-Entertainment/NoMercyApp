@@ -1,6 +1,4 @@
 <script lang="ts" setup>
-import { IonItem } from '@ionic/vue';
-
 import { dashboardSocketIsConnected } from '@/lib/clients/dashboardSocket';
 import { isMobile } from '@/config/global';
 
@@ -18,7 +16,7 @@ defineProps({
 </script>
 
 <template>
-	<IonItem v-if="isMobile && dashboardSocketIsConnected">
+	<div v-if="isMobile && dashboardSocketIsConnected">
 		<div
 			class="flex flex-shrink-0 flex-grow-0 flex-col items-start justify-start gap-3 self-stretch w-full pt-1 text-surface-12"
 		>
@@ -43,7 +41,7 @@ defineProps({
 				<slot />
 			</div>
 		</div>
-	</IonItem>
+	</div>
 	<div
 		v-else-if="dashboardSocketIsConnected"
 		class="flex flex-shrink-0 flex-grow-0 flex-col items-start justify-start gap-3 self-stretch text-surface-12"

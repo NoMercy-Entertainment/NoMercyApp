@@ -6,7 +6,6 @@ import { Swiper as SwiperComponent } from 'swiper/vue';
 import { Virtual } from 'swiper/modules';
 import 'swiper/css';
 
-import { mappedEntries } from '@/lib/utils/array';
 import type { Breakpoints } from '@/lib/swiper-config';
 import { breakpoints, swiperConfig } from '@/lib/swiper-config';
 
@@ -102,23 +101,17 @@ function prev() {
 }
 
 const backdropCards = computed(() => {
-	return showBackdrops && !props.disableAutoAspect;
+	if (props.type === 'backdrop')
+		return true;
+	if (props.disableAutoAspect)
+		return false;
+	return showBackdrops.value;
 });
 
 const beforeOffset = computed(() => window.innerWidth < 800 ? 24 : 20);
 
 const customSwiperConfig = computed(() => {
-	const newBp: Breakpoints = breakpoints(backdropCards.value);
-
-	if (props.limitCardCountBy) {
-		for (const [key, value] of mappedEntries(breakpoints(backdropCards.value))) {
-			newBp[key] = {
-				...value,
-				slidesPerView: value.slidesPerView - props.limitCardCountBy,
-				slidesPerGroup: value.slidesPerGroup - props.limitCardCountBy,
-			};
-		}
-	}
+	const newBp: Breakpoints = breakpoints(backdropCards.value, props.limitCardCountBy ?? 0);
 
 	return {
 		...swiperConfig(backdropCards.value),
@@ -179,7 +172,7 @@ function focusMain() {
 					</button>
 				</div>
 			</div>
-			<div class="gap-3 py-1 pr-0 w-available swiper">
+			<div class="gap-2 py-1 pr-0 w-available swiper">
 				<SwiperComponent ref="swiper" :class="`swiper-${title?.replace(/[\s&#]/gu, '-')}`"
 					:modules="[Virtual]"
 					data-spatial-container="row"

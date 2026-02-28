@@ -6,6 +6,7 @@ import type { LibraryResponse } from '@/types/api/base/library';
 
 import { pickPaletteColor } from '@/lib/colorHelper';
 import { showBackdrops } from '@/store/preferences';
+import { isMobile } from '@/config/global';
 import type { ContextMenuItem } from '@/store/contextMenuItems';
 import { contextMenu, makeContextMenu, setContextMenu, setContextMenuContext } from '@/store/contextMenuItems';
 import { setBackground, setColorPalette, setPoster, setTitle } from '@/store/ui';
@@ -62,12 +63,12 @@ const focusColor = computed(() => {
 function onRightClick(event: Event) {
 	if (props.contextMenuItems) {
 		setContextMenu(makeContextMenu(props.contextMenuItems));
-		setContextMenuContext(props.data);
+		setContextMenuContext(props.data as unknown as { [arg: string]: unknown });
 		contextMenu.value.show(event);
 	}
 }
 
-function onHover(event: Event) {
+function onHover(_event: Event) {
 	if (props.data?.link) {
 		prefetchOnHover(props.data.link);
 	}
@@ -110,13 +111,13 @@ function handleClick(item: any) {
        contain: layout style paint;
     ` : `contain: layout style paint; --focus-theme-8: ${data.deathday ? '#fff' : ''}`"
 		:to="data.link"
-		class="group/card frosting flex flex-col h-full items-center focus-outline relative rounded-lg select-none shadow-[0px_0px_0_1px_rgb(from_var(--color-theme-8,var(--color-theme-6))_r_g_b/70%)] w-full z-0 bg-surface-50/70 flex-grow-0"
+		class="group/card frosting flex flex-col h-full items-center focus-outline relative rounded-md select-none shadow-[0px_0px_0_1px_rgb(from_var(--color-theme-8,var(--color-theme-6))_r_g_b/70%)] w-full z-0 bg-surface-50/70 flex-grow-0"
 		no-ring
 		@contextmenu="onRightClick($event)"
 		@focusin="onHover($event)"
 		@mouseenter="onHover($event)"
 	>
-		<div class="w-full h-full overflow-clip rounded-lg inset-0 absolute">
+		<div class="w-full h-full overflow-clip rounded-md inset-0 absolute">
 			<div class="backdropCard-overlay" inert />
 
 			<TMDBImage
@@ -127,7 +128,7 @@ function handleClick(item: any) {
 				:path="image"
 				:size="showBackdrops ? 330 : 180"
 				:title="data.title"
-				class-name="h-full overflow-clip rounded-lg"
+				class-name="h-full overflow-clip rounded-md"
 				loading="lazy"
 			/>
 
@@ -162,7 +163,16 @@ function handleClick(item: any) {
 					</div>
 				</div>
 			</template>
-			<template v-else>
+			<!-- Mobile: always-visible solid surface overlay matching Android -->
+			<template v-if="!backdropStyle && isMobile">
+				<div class="absolute bottom-0 left-0 w-full bg-surface-1/75 z-0 text-left">
+					<div class="overflow-hidden h-[37px] leading-[1.2] text-surface-12 font-medium text-xs px-2 py-1 whitespace-normal break-words">
+						{{ data.title }}
+					</div>
+				</div>
+			</template>
+			<!-- Desktop: hover reveal with blur -->
+			<template v-else-if="!backdropStyle">
 				<div
 					:class="{
 						'-bottom-20': image,

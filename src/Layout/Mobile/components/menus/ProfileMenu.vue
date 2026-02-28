@@ -1,7 +1,5 @@
 <script lang="ts" setup>
 import { RouterLink, useRoute } from 'vue-router';
-import { IonIcon, IonItem, IonList, IonRippleEffect } from '@ionic/vue';
-import { arrowRefreshVertical, doorOpen, gridMasonry, monitor, moonDiagonal, serverSwitch } from '@Icons/index';
 
 import { scheme } from '@/store/colorScheme';
 
@@ -9,12 +7,12 @@ import ProfileMenuServerSection from '@/Layout/Mobile/components/ProfileMenuServ
 import BottomFlyout from '@/Layout/Mobile/components/BottomFlyout.vue';
 
 import Toggle from '@/components/Forms/Toggle.vue';
+import MoooomIcon from '@/components/Images/icons/MoooomIcon.vue';
 
 import { logout } from '@/lib/auth/index';
 import { currentServer } from '@/store/currentServer';
 import { closeMenu, menuOpen } from '@/store/profileMenu';
 import { launchAndroidApp, shouldShowAndroidPrompts } from '@/store/androidAppPrompt';
-import { phonePortrait } from 'ionicons/icons';
 import servers from '@/store/servers.ts';
 
 const reload = () => window.location.reload();
@@ -28,194 +26,104 @@ function handleOpenApp() {
 
 <template>
 	<BottomFlyout :close-menu="closeMenu" :menu-open="menuOpen">
-		<IonList>
-			<IonItem lines="inset">
+		<div class="flex flex-col w-[96%] mx-auto">
+			<div class="py-2 border-b border-surface-12/[0.08]">
 				<ProfileMenuServerSection />
-			</IonItem>
+			</div>
 
-			<IonItem v-if="servers.length > 0" lines="inset">
+			<div v-if="servers.length > 0" class="py-1 border-b border-surface-12/[0.08]">
 				<RouterLink
-					class="flex justify-center items-center self-stretch w-full h-full flex-grow-0 flex-shrink-0 relative pl-1 py-2.5 rounded-md bg-transparent border border-transparent"
+					class="flex items-center w-full pl-2 py-2.5 rounded-md bg-transparent active:bg-surface-3 transition-colors"
 					to="/setup/select-servers"
 				>
-					<IonRippleEffect />
-					<div class="flex-grow-0 flex-shrink-0 w-1 h-3.5" />
-					<IonIcon
-						:icon="serverSwitch"
-						aria-hidden="true"
-						class-name="size-8 min-w-8"
-					/>
-					<div
-						class="flex justify-center items-center flex-grow relative gap-2 pl-2"
-					>
-						<p class="flex-grow w-full text-lg font-medium text-left">
-							{{ $t("Switch server") }}
-						</p>
-					</div>
+					<MoooomIcon class-name="w-8 h-8" icon="serverSwitch" />
+					<p class="flex-grow pl-2 text-lg font-medium text-left">
+						{{ $t("Switch server") }}
+					</p>
 				</RouterLink>
-			</IonItem>
+			</div>
 
-			<IonItem v-if="servers.length > 0" lines="none">
+			<div v-if="servers.length > 0" class="py-1">
 				<RouterLink
-					class="flex justify-center items-center self-stretch w-full h-full flex-grow-0 flex-shrink-0 relative pl-1 py-2.5 rounded-md bg-transparent border border-transparent"
+					class="flex items-center w-full pl-2 py-2.5 rounded-md bg-transparent active:bg-surface-3 transition-colors"
 					to="/preferences/display"
 				>
-					<IonRippleEffect />
-					<div class="flex-grow-0 flex-shrink-0 w-1 h-3.5" />
-					<IonIcon
-						:icon="monitor"
-						aria-hidden="true"
-						class-name="size-8 min-w-8"
-					/>
-					<div
-						class="flex justify-center items-center flex-grow relative gap-2 pl-2"
-					>
-						<p class="flex-grow w-full text-lg font-medium text-left">
-							{{ $t("Preferences") }}
-						</p>
-					</div>
+					<MoooomIcon class-name="w-8 h-8" icon="monitor" />
+					<p class="flex-grow pl-2 text-lg font-medium text-left">
+						{{ $t("Preferences") }}
+					</p>
 				</RouterLink>
-			</IonItem>
+			</div>
 
-			<IonItem v-if="servers.length > 0 && (currentServer?.is_owner || currentServer?.is_manager)" lines="none">
+			<div v-if="servers.length > 0 && (currentServer?.is_owner || currentServer?.is_manager)" class="py-1">
 				<RouterLink
-					class="flex justify-center items-center self-stretch w-full h-full flex-grow-0 flex-shrink-0 relative pl-1 py-2.5 rounded-md bg-transparent border border-transparent"
+					class="flex items-center w-full pl-2 py-2.5 rounded-md bg-transparent active:bg-surface-3 transition-colors"
 					to="/dashboard/system"
 				>
-					<IonRippleEffect />
-					<div class="flex-grow-0 flex-shrink-0 w-1 h-3.5" />
-					<IonIcon
-						:icon="gridMasonry"
-						aria-hidden="true"
-						class-name="size-8 min-w-8"
-					/>
-					<div
-						class="flex justify-center items-center flex-grow relative gap-2 pl-2"
-					>
-						<p class="flex-grow w-full text-lg font-medium text-left">
-							{{ $t("System") }}
-						</p>
-					</div>
+					<MoooomIcon class-name="w-8 h-8" icon="gridMasonry" />
+					<p class="flex-grow pl-2 text-lg font-medium text-left">
+						{{ $t("System") }}
+					</p>
 				</RouterLink>
-			</IonItem>
+			</div>
 
-			<IonItem lines="none">
+			<div class="py-1">
 				<button
-					class="flex justify-center items-center self-stretch w-full h-full flex-grow-0 flex-shrink-0 relative pl-1 py-2.5 rounded-md bg-transparent border border-transparent"
-					no-ring
+					class="flex items-center w-full pl-2 py-2.5 rounded-md bg-transparent active:bg-surface-3 transition-colors"
 					@click="reload()"
 				>
-					<IonRippleEffect />
-					<div class="flex-grow-0 flex-shrink-0 w-1 h-3.5" />
-					<IonIcon
-						:icon="arrowRefreshVertical"
-						aria-hidden="true"
-						class-name="size-8 min-w-8"
-					/>
-					<div
-						class="flex justify-center items-center flex-grow relative gap-2 pl-2"
-					>
-						<p class="flex-grow w-full text-lg font-medium text-left">
-							{{ $t("Refresh") }}
-						</p>
-					</div>
+					<MoooomIcon class-name="w-8 h-8" icon="arrowRefreshVertical" />
+					<p class="flex-grow pl-2 text-lg font-medium text-left">
+						{{ $t("Refresh") }}
+					</p>
 				</button>
-			</IonItem>
+			</div>
 
-			<IonItem
-				v-if="shouldShowAndroidPrompts"
-				lines="none"
-			>
+			<div v-if="shouldShowAndroidPrompts" class="py-1">
 				<button
-					class="flex justify-center items-center self-stretch w-full h-full flex-grow-0 flex-shrink-0 relative pl-1 py-2.5 rounded-md bg-transparent border border-transparent"
-					no-ring
+					class="flex items-center w-full pl-2 py-2.5 rounded-md bg-transparent active:bg-surface-3 transition-colors"
 					@click="handleOpenApp"
 				>
-					<IonRippleEffect />
-					<div class="flex-grow-0 flex-shrink-0 w-1 h-3.5" />
-					<IonIcon
-						:icon="phonePortrait"
-						aria-hidden="true"
-						class-name="size-8 min-w-8"
-					/>
-					<div
-						class="flex justify-center items-center flex-grow relative gap-2 pl-2"
-					>
-						<p class="flex-grow w-full text-lg font-medium text-left">
-							{{ $t("Open in App") }}
-						</p>
-					</div>
+					<MoooomIcon class-name="w-8 h-8" icon="mobilePhone" />
+					<p class="flex-grow pl-2 text-lg font-medium text-left">
+						{{ $t("Open in App") }}
+					</p>
 				</button>
-			</IonItem>
+			</div>
 
-			<IonItem lines="none">
+			<div class="py-1">
 				<button
-					class="flex justify-center items-center self-stretch w-available h-full flex-grow-0 flex-shrink-0 relative pl-2 py-2.5 rounded-md bg-transparent border border-transparent"
-					no-ring
+					class="flex items-center w-full pl-2 py-2.5 rounded-md bg-transparent active:bg-surface-3 transition-colors"
 					@click="scheme = scheme === 'light' ? 'dark' : 'light'"
 				>
-					<IonIcon
-						:icon="moonDiagonal"
-						aria-hidden="true"
-						class-name="size-8 min-w-8"
-					/>
-
+					<MoooomIcon class-name="w-8 h-8" icon="moonDiagonal" />
 					<label
-						class="flex justify-center items-center flex-grow relative gap-2 px-2 w-available"
-						for="ion-tg-0"
+						class="flex items-center flex-grow gap-2 px-2 w-available"
+						for="toggleScheme"
 					>
-						<span class="flex-grow w-full text-lg font-medium text-left">
+						<span class="flex-grow text-lg font-medium text-left">
 							{{ $t("Dark mode") }}
 						</span>
 					</label>
-
 					<Toggle
 						id="toggleScheme"
 						:model-value="scheme === 'dark'"
 						@update:model-value="value => scheme = value ? 'dark' : 'light'"
 					/>
 				</button>
-			</IonItem>
+			</div>
 
-			<IonItem lines="none">
+			<div class="py-1 border-t border-surface-12/[0.08]">
 				<button
-					class="flex justify-center items-center self-stretch w-full h-full flex-grow-0 flex-shrink-0 relative pl-1 py-2.5 rounded-md bg-transparent border border-transparent"
-					no-ring
+					class="flex items-center w-full pl-2 py-2.5 rounded-md bg-transparent active:bg-surface-3 transition-colors"
 					@click="logout()"
 				>
-					<IonRippleEffect />
-					<div class="flex-grow-0 flex-shrink-0 w-1 h-3.5" />
-					<IonIcon
-						:icon="doorOpen"
-						aria-hidden="true"
-						class-name="size-8 min-w-8"
-					/>
-					<div
-						class="flex justify-center items-center flex-grow relative gap-2 pl-2"
-					>
-						<p class="flex-grow w-full text-lg font-medium text-left">
-							{{ $t("Logout") }}
-						</p>
-					</div>
+					<MoooomIcon class-name="w-8 h-8" icon="doorOpen" />
+					<p class="flex-grow pl-2 text-lg font-medium text-left">
+						{{ $t("Logout") }}
+					</p>
 				</button>
-			</IonItem>
-		</IonList>
+			</div>
+		</div>
 	</BottomFlyout>
 </template>
-
-<style scoped>
-ion-list {
-	@apply bg-transparent w-[96%];
-}
-
-ion-item {
-	--background: transparent;
-	--color: var(--color-text);
-}
-
-ion-item::part(detail-icon) {
-	color: white;
-	opacity: 1;
-	font-size: 20px;
-}
-</style>

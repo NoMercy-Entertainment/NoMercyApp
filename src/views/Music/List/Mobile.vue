@@ -11,9 +11,10 @@ import type { PlaylistItem, RouteType, SortOrder, SortType } from '@/types/music
 import useServerClient from '@/lib/clients/useServerClient';
 import { setTitle } from '@/lib/utils/string';
 import { sortByType } from '@/lib/utils/array';
-import { setColorPalette, setSortOrder, sortOrder, sortType } from '@/store/ui';
+import { scrollContainerElement, setColorPalette, setSortOrder, sortOrder, sortType } from '@/store/ui';
 import router from '@/router';
 
+import ScrollContainer from '@/Layout/Desktop/components/ScrollContainer.vue';
 import ControlHeader from '@/views/Music/List/components/ControlHeader.vue';
 import ArtistHeader from '@/views/Music/List/components/ArtistHeader.vue';
 import SortHeader from '@/views/Music/List/components/SortHeader.vue';
@@ -32,11 +33,16 @@ const isFavoritesRoute = computed(() => route.path.startsWith('/music/tracks'));
 const isGenresRoute = computed(() => route.path.startsWith('/music/genres'));
 
 const routeType = computed<RouteType>(() => {
-	if (isAlbumRoute.value) return 'album';
-	if (isArtistRoute.value) return 'artist';
-	if (isPlaylistsRoute.value) return 'playlist';
-	if (isFavoritesRoute.value) return 'favorite';
-	if (isGenresRoute.value) return 'genre';
+	if (isAlbumRoute.value)
+		return 'album';
+	if (isArtistRoute.value)
+		return 'artist';
+	if (isPlaylistsRoute.value)
+		return 'playlist';
+	if (isFavoritesRoute.value)
+		return 'favorite';
+	if (isGenresRoute.value)
+		return 'genre';
 	return 'unknown';
 });
 
@@ -112,22 +118,17 @@ function handleBack() {
 const showScrollHeader = ref(false);
 const showScrollHeaderText = ref(false);
 const sortHeader = ref<VueDivElement>();
-const container = ref<VueDivElement>();
 
 // Virtual scrolling — pass a computed options ref so tanstack watches it
 // internally. Never wrap useVirtualizer itself in computed() — that creates
 // a brand-new Virtualizer (with observers & watchers) on every re-evaluation.
-const virtualizer = useVirtualizer(computed(() => {
-	const el = container.value?.$el as HTMLElement ?? null;
-
-	return {
-		count: displayList.value?.length ?? 0,
-		getScrollElement: () => el,
-		estimateSize: () => 56,
-		overscan: 10,
-		initialRect: { width: 0, height: 800 },
-	};
-}));
+const virtualizer = useVirtualizer(computed(() => ({
+	count: displayList.value?.length ?? 0,
+	getScrollElement: () => scrollContainerElement.value ?? null,
+	estimateSize: () => 56,
+	overscan: 10,
+	initialRect: { width: 0, height: 800 },
+})));
 
 function onScroll() {
 	const headerScrollTop = 170;
@@ -165,111 +166,115 @@ function onScroll() {
 </script>
 
 <template>
-			<NotFound v-if="isError && !data" />
+	<NotFound v-if="isError && !data" />
+	<ScrollContainer
+		v-else
+		:auto-hide="true"
+		:static="true"
+		@scroll="onScroll"
+	>
+		<div
+			ref="main"
+			class="flex flex-col h-auto overflow-x-clip w-available sm:rounded-2xl -mt-6 text-surface-12"
+		>
+			<ArtistHeader :data="data" />
+
 			<div
-				v-else-if="
-					!route.params.id || (route.params.id && data?.id === route.params.id)
-				"
-				ref="main"
-				class="flex flex-col h-auto overflow-x-clip w-available sm:rounded-2xl -mt-6 text-surface-12"
+				class="relative z-0 flex h-auto flex-shrink-0 flex-grow flex-col items-start justify-start self-stretch"
 			>
-				<ArtistHeader :data="data" />
+				<div
+					class="pointer-events-none absolute z-0 h-96 w-full bg-spotifyBottom"
+				/>
 
 				<div
-					class="relative z-0 flex h-auto flex-shrink-0 flex-grow flex-col items-start justify-start self-stretch"
+					id="navbar"
+					:class="{
+						'opacity-0 pointer-events-none': !showScrollHeader,
+						'opacity-100 pointer-events-auto': showScrollHeader,
+					}"
+					class="fixed z-1099 -mx-2 flex gap-4 p-2 px-4 w-available sm:hidden bg-surface-11 dark:bg-surface-1 top-0 pt-4 transition-all duration-200"
 				>
 					<div
-						class="pointer-events-none absolute z-0 h-96 w-full bg-spotifyBottom"
+						id="navBg"
+						class="z-20 absolute flex items-center inset-0 w-available h-full bg-focus/12 dark:bg-focus transition-all duration-200 bg-spotifyTop opacity-50 pointer-events-none"
 					/>
 
+					<button
+						class="z-30 flex h-10 w-11 items-center justify-center rounded-md"
+						@click="handleBack"
+					>
+						<MoooomIcon icon="arrowLeft" />
+					</button>
+
 					<div
-						id="navbar"
+						id="navText"
 						:class="{
 							'opacity-0 pointer-events-none': !showScrollHeader,
 							'opacity-100 pointer-events-auto': showScrollHeader,
 						}"
-						class="fixed z-1099 -mx-2 flex gap-4 p-2 px-4 w-available sm:hidden bg-surface-11 dark:bg-surface-1 top-0 pt-4 transition-all duration-200"
+						class="pointer-events-none whitespace-pre text-left relative z-20 line-clamp-1 h-auto self-center font-bold leading-none transition-all duration-200 w-[70%] overflow-clip text-xl"
 					>
-						<div
-							id="navBg"
-							class="z-20 absolute flex items-center inset-0 w-available h-full bg-focus/12 dark:bg-focus transition-all duration-200 bg-spotifyTop opacity-50 pointer-events-none"
-						/>
-
-						<button
-							class="z-30 flex h-10 w-11 items-center justify-center rounded-md"
-							@click="handleBack"
-						>
-							<MoooomIcon icon="arrowLeft" />
-						</button>
-
-						<div
-							id="navText"
-							:class="{
-								'opacity-0 pointer-events-none': !showScrollHeader,
-								'opacity-100 pointer-events-auto': showScrollHeader,
-							}"
-							class="pointer-events-none whitespace-pre text-left relative z-20 line-clamp-1 h-auto self-center font-bold leading-none transition-all duration-200 w-[70%] overflow-clip text-xl"
-						>
-							<Marquee :text="data?.name" />
-						</div>
+						<Marquee :text="data?.name" />
 					</div>
+				</div>
 
-					<ControlHeader
+				<ControlHeader
+					:key="data?.id"
+					:data="data"
+					:filter="filter"
+					@filter-change="(e: string) => filter = e"
+				/>
+
+				<div
+					class="flex flex-1 flex-shrink-0 flex-col items-start justify-start self-stretch bg-surface-12 dark:bg-transparent flex-grow-1 gap-0.5 sm:p-4"
+				>
+					<SortHeader
 						:key="data?.id"
-						:data="data"
-						:filter="filter"
-						@filter-change="(e: string) => filter = e"
+						ref="sortHeader"
+						:is-album-route="isAlbumRoute"
+						:is-artist-route="isArtistRoute"
+						:is-favorites-route="isFavoritesRoute"
+						:is-genres-route="isGenresRoute"
+						:is-playlists-route="isPlaylistsRoute"
 					/>
 
+					<!-- Virtual list container -->
 					<div
-						class="flex flex-1 flex-shrink-0 flex-col items-start justify-start self-stretch bg-surface-12 dark:bg-transparent flex-grow-1 gap-0.5 sm:p-4"
+						:style="{
+							height: `${virtualizer.getTotalSize()}px`,
+							width: '100%',
+							position: 'relative',
+						}"
 					>
-						<SortHeader
-							:key="data?.id"
-							ref="sortHeader"
-							:is-album-route="isAlbumRoute"
-							:is-artist-route="isArtistRoute"
-							:is-playlists-route="isPlaylistsRoute"
-							:is-favorites-route="isFavoritesRoute"
-							:is-genres-route="isGenresRoute"
-						/>
-
-						<!-- Virtual list container -->
+						<!-- Only render visible items -->
 						<div
+							v-for="virtualRow in virtualizer.getVirtualItems()"
+							:key="displayList[virtualRow.index]?.id + displayList[virtualRow.index]?.favorite"
 							:style="{
-								height: `${virtualizer.getTotalSize()}px`,
+								position: 'absolute',
+								top: 0,
+								left: 0,
 								width: '100%',
-								position: 'relative',
+								height: `${virtualRow.size}px`,
+								transform: `translateY(${virtualRow.start}px)`,
 							}"
 						>
-							<!-- Only render visible items -->
-							<div
-								v-for="virtualRow in virtualizer.getVirtualItems()"
-								:key="displayList[virtualRow.index]?.id + displayList[virtualRow.index]?.favorite"
-								:style="{
-									position: 'absolute',
-									top: 0,
-									left: 0,
-									width: '100%',
-									height: `${virtualRow.size}px`,
-									transform: `translateY(${virtualRow.start}px)`,
-								}"
-							>
-								<TrackRow
-									:data="displayList[virtualRow.index]"
-									:display-list="displayList"
-									:index="virtualRow.index"
-									:is-album-route="isAlbumRoute"
-									:is-artist-route="isArtistRoute"
-									:is-playlists-route="isPlaylistsRoute"
-									:is-favorites-route="isFavoritesRoute"
-									:is-genres-route="isGenresRoute"
-									:route-type="routeType"
-									:route-param-id="routeParamId"
-								/>
-							</div>
+							<TrackRow
+								:data="displayList[virtualRow.index]"
+								:display-list="displayList"
+								:index="virtualRow.index"
+								:is-album-route="isAlbumRoute"
+								:is-artist-route="isArtistRoute"
+								:is-favorites-route="isFavoritesRoute"
+								:is-genres-route="isGenresRoute"
+								:is-playlists-route="isPlaylistsRoute"
+								:route-param-id="routeParamId"
+								:route-type="routeType"
+							/>
 						</div>
 					</div>
 				</div>
 			</div>
+		</div>
+	</ScrollContainer>
 </template>

@@ -21,17 +21,13 @@ const BACKDROP_FULL: Record<number, number> = {
 	2500: 8,
 };
 
-const POSTER_PREVIEW: Record<number, number> = {
-	0: 0.41,
-	768: 0.41,
-	1194: 0.41,
-	1280: 0.40,
-	1536: 0.32,
-	1740: 0.37,
-	2500: 0.34,
-};
+const SPACE_BETWEEN = 8;
+// 36px target produces native-equivalent fractions on mobile:
+// 2 cards → ~0.25 peek fraction, 3 cards → ~0.40 peek fraction, both ≈ 36px peek
+const TARGET_PEEK_PX = 40;
 
-const BACKDROP_PREVIEW: Record<number, number> = {
+// Static fractions for backdrop carousels — original tuned values kept as-is.
+const STATIC_PREVIEW_BACKDROP: Record<number, number> = {
 	0: 0.26,
 	768: 0.21,
 	1194: 0.21,
@@ -41,18 +37,37 @@ const BACKDROP_PREVIEW: Record<number, number> = {
 	2500: 0.17,
 };
 
+/**
+ * Compute the fractional slidesPerView to show a target number of pixels of
+ * the next card. Backdrop uses static tuned values. Poster uses pixel-based
+ * calculation: TARGET_PEEK_PX=36 naturally produces ~0.25 for 2 cards and
+ * ~0.40 for 3 cards, giving equal pixel peek (~36px) on both — matching native.
+ */
+function computePreview(limited: number, bp: number, isBackdrop: boolean): number {
+	if (isBackdrop) {
+		return STATIC_PREVIEW_BACKDROP[bp] ?? 0.26;
+	}
+	const bpWidth = bp === 0 ? window.innerWidth : bp;
+	const offsetBefore = bpWidth < 800 ? 24 : 20;
+	const offsetAfter = 44;
+	const availableForCards = bpWidth - offsetBefore - offsetAfter - (limited - 1) * SPACE_BETWEEN;
+	const target = TARGET_PEEK_PX;
+	const preview = (target * limited) / Math.max(1, availableForCards - target);
+	return Math.min(0.7, Math.max(0.05, preview));
+}
+
 export function breakpoints(isBackdrop: boolean, limitCardCountBy = 0) {
 	const FULL = isBackdrop ? BACKDROP_FULL : POSTER_FULL;
-	const PREVIEW = isBackdrop ? BACKDROP_PREVIEW : POSTER_PREVIEW;
 
 	return Object.fromEntries(
 		Object.entries(FULL).map(([bp, full]) => {
 			const limited = Math.max(1, full - limitCardCountBy);
+			const preview = computePreview(limited, Number(bp), isBackdrop);
 
 			return [
 				bp,
 				{
-					slidesPerView: limited + PREVIEW[Number(bp)],
+					slidesPerView: limited + preview,
 					slidesPerGroup: limited,
 				},
 			];
@@ -63,7 +78,7 @@ export function breakpoints(isBackdrop: boolean, limitCardCountBy = 0) {
 export type Breakpoints = ReturnType<typeof breakpoints>;
 
 export function swiperConfig(isBackdrop: boolean) {
-	const offsetBefore = window.innerWidth < 800 ? 24 : 20;
+	const offsetBefore = window.innerWidth < 800 ? 16 : 20;
 
 	return {
 		breakpoints: breakpoints(isBackdrop),
@@ -77,7 +92,7 @@ export function swiperConfig(isBackdrop: boolean) {
 		},
 
 		speed: 100,
-		spaceBetween: 12,
+		spaceBetween: SPACE_BETWEEN,
 
 		slidesOffsetBefore: offsetBefore,
 		slidesOffsetAfter: 44,

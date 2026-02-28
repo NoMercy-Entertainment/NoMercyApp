@@ -1,6 +1,5 @@
 <script lang="ts" setup>
 import { computed, ref, watch } from 'vue';
-import { IonContent, IonModal } from '@ionic/vue';
 import type { Swiper } from 'swiper';
 import { Swiper as SwiperComponent, SwiperSlide } from 'swiper/vue';
 import 'swiper/css';
@@ -32,7 +31,7 @@ import ButtonContainer from '../mobile/ButtonContainer.vue';
 import MoooomIcon from '@/components/Images/icons/MoooomIcon.vue';
 
 const lyricsSize = ref<'small' | 'full'>('small');
-const content = ref<VueDivElement>();
+const content = ref<HTMLElement>();
 const lyricsContainer = ref<HTMLElement>();
 const oldColorPalette = ref<PaletteColors | null | undefined>();
 const currentFullPlaylistItem = ref(0);
@@ -110,8 +109,7 @@ function handleExpand() {
 	lyricsSize.value = lyricsSize.value === 'small' ? 'full' : 'small';
 
 	if (lyricsSize.value === 'small') {
-		// @ts-ignore
-		content.value?.$el?.scrollToTop();
+		content.value?.scrollTo({ top: 0, behavior: 'smooth' });
 		setTimeout(() => {
 			lyricsContainer.value!.style.height = '25rem';
 		}, 500);
@@ -119,137 +117,131 @@ function handleExpand() {
 	else {
 		lyricsContainer.value!.style.height = `${window.innerHeight * 0.915}px`;
 		setTimeout(() => {
-			// @ts-ignore
-			content.value.$el?.scrollToBottom();
+			content.value?.scrollTo({ top: content.value.scrollHeight, behavior: 'smooth' });
 		}, 0);
 	}
 }
 
-async function onWillDismiss() {
+function handleDismiss() {
 	setFullPlayerModalOpen(false);
 }
 </script>
 
 <template>
-	<IonModal
-		id="fullPlayer"
-		key="fullPlayer"
-		:breakpoints="[0, 1]"
-		:initial-breakpoint="1"
-		:is-open="fullPlayerModalOpen"
-		@will-dismiss="onWillDismiss"
-	>
-		<IonContent
-			ref="content"
-			:class="{
-				'is-open': lyricsSize === 'full',
-			}"
-			:fullscreen="true"
-			:style="
-				focusColor
-					? `--color-theme-8: ${focusColor};`
-					: ''"
-		>
-			<ChristmasSnow />
-
+	<Teleport to="body">
+		<Transition name="slide-up">
 			<div
-				class="relative z-0 flex h-screen min-h-screen flex-col items-center justify-between gap-2 w-inherit scrollbar-none text-surface-12 overflow-clip"
+				v-if="fullPlayerModalOpen"
+				class="fixed inset-0 z-[9999] flex flex-col"
 			>
+				<!-- Backdrop -->
 				<div
-					class="pointer-events-none absolute inset-0 w-full transition-all duration-500"
-					style="background: linear-gradient(to bottom, hsl(from var(--color-theme-8) h s 30%), hsl(from var(--color-theme-8) h s 5%));"
+					class="absolute inset-0 bg-black/50"
+					@click="handleDismiss"
 				/>
 
-				<TopRow class="pt-safe px-6" />
-
-				<SwiperComponent
-					:key="currentPlaylist!"
-					ref="swiper"
-					:initial-slide="currentFullPlaylistItem"
-					:loop="true"
-					:slides-per-view="1"
-					class="w-available swiper isolate z-0 mb-4"
-					@touch-end="handleSwiperChange"
-				>
-					<template v-for="(item, index) in fullPlaylist ?? []" :key="item.id">
-						<SwiperSlide :data-id="item.id" :data-index="index" class="h-full">
-							<div
-								class="frosting w-available max-w-2xl h-auto aspect-square shadow mx-6 relative items-center flex"
-							>
-								<CoverImage
-									:key="item.id"
-									:data="item"
-									:loading="
-										index === currentFullPlaylistItem ? 'eager' : loading
-									"
-									class-name="pointer-events-none relative aspect-square h-auto overflow-clip rounded-md w-inherit shadow"
-								/>
-							</div>
-						</SwiperSlide>
-					</template>
-				</SwiperComponent>
-
-				<TrackRow class="px-6" />
-
-				<ProgressBarContainer class="children:!mx-0 gap-4 px-6" />
-				<ButtonContainer />
-			</div>
-
-			<div
-				class="frosting relative mx-3 mb-0 -mt-8 rounded-2xl pt-10 w-available bg-focus/60 shadow text-surface-12"
-			>
+				<!-- Modal content -->
 				<div
-					class="absolute top-0 z-10 flex w-full items-center rounded-t-2xl pr-2 pl-4 font-semibold"
+					ref="content"
+					:class="{ 'is-open': lyricsSize === 'full' }"
+					:style="focusColor
+						? `--color-theme-8: ${focusColor};`
+						: ''"
+					class="relative flex flex-col h-full w-full overflow-y-auto overflow-x-hidden"
+					style="background: linear-gradient(to bottom, hsl(from var(--color-theme-8) h s 16%), hsl(from var(--color-theme-8) h s 0%));"
 				>
-					<span>{{ $t("Lyrics") }}</span>
-					<MusicButton :onclick="handleExpand" class="ml-auto" label="expand">
-						<MoooomIcon
-							v-if="lyricsSize === 'full'"
-							class="h-5 w-5"
-							icon="arrowExitFullscreen"
+					<ChristmasSnow />
+
+					<div
+						class="relative z-0 flex h-screen min-h-screen flex-col items-center justify-between gap-2 w-inherit scrollbar-none text-surface-12 overflow-clip"
+					>
+						<div
+							class="pointer-events-none absolute inset-0 w-full transition-all duration-500"
+							style="background: linear-gradient(to bottom, hsl(from var(--color-theme-8) h s 30%), hsl(from var(--color-theme-8) h s 5%));"
 						/>
-						<MoooomIcon v-else class="h-5 w-5" icon="arrowEnterFullscreen" />
-					</MusicButton>
-				</div>
-				<div
-					class="pointer-events-none absolute inset-0 flex items-center justify-center rounded-xl bg-black opacity-3"
-				/>
 
-				<div
-					ref="lyricsContainer"
-					class="relative w-full mb-0 flex-col overflow-auto scroll-smooth rounded-b-2xl p-4 transition-transform duration-150 h-[25rem]"
-				>
-					<LyricsOverlay class="sm:hidden" />
+						<TopRow class="pt-safe px-6" />
+
+						<SwiperComponent
+							:key="currentPlaylist!"
+							ref="swiper"
+							:initial-slide="currentFullPlaylistItem"
+							:loop="true"
+							:slides-per-view="1"
+							class="w-available swiper isolate z-0 mb-4"
+							@touch-end="handleSwiperChange"
+						>
+							<template v-for="(item, index) in fullPlaylist ?? []" :key="item.id">
+								<SwiperSlide :data-id="item.id" :data-index="index" class="h-full">
+									<div
+										class="frosting w-available max-w-2xl h-auto aspect-square shadow mx-6 relative items-center flex"
+									>
+										<CoverImage
+											:key="item.id"
+											:data="item"
+											:loading="
+												index === currentFullPlaylistItem ? 'eager' : loading
+											"
+											:size="500"
+											class-name="pointer-events-none relative aspect-square h-auto overflow-clip rounded-md w-inherit shadow"
+										/>
+									</div>
+								</SwiperSlide>
+							</template>
+						</SwiperComponent>
+
+						<TrackRow class="px-6" />
+
+						<ProgressBarContainer class="children:!mx-0 gap-4 px-6" />
+						<ButtonContainer />
+					</div>
+
+					<div
+						class="frosting relative mx-3 mb-0 -mt-8 rounded-2xl pt-10 w-available bg-focus/60 shadow text-surface-12"
+					>
+						<div
+							class="absolute top-0 z-10 flex w-full items-center rounded-t-2xl pr-2 pl-4 font-semibold"
+						>
+							<span>{{ $t("Lyrics") }}</span>
+							<MusicButton :onclick="handleExpand" class="ml-auto" label="expand">
+								<MoooomIcon
+									v-if="lyricsSize === 'full'"
+									class="h-5 w-5"
+									icon="arrowExitFullscreen"
+								/>
+								<MoooomIcon v-else class="h-5 w-5" icon="arrowEnterFullscreen" />
+							</MusicButton>
+						</div>
+						<div
+							class="pointer-events-none absolute inset-0 flex items-center justify-center rounded-xl bg-black opacity-3"
+						/>
+
+						<div
+							ref="lyricsContainer"
+							class="relative w-full mb-0 flex-col overflow-auto scroll-smooth rounded-b-2xl p-4 transition-transform duration-150 h-[25rem]"
+						>
+							<LyricsOverlay class="sm:hidden" />
+						</div>
+					</div>
 				</div>
 			</div>
-		</IonContent>
-	</IonModal>
+		</Transition>
+	</Teleport>
 </template>
 
-<style lang="scss" scoped>
-ion-modal {
-	--height: 100%;
-	--ion-color-step-350: transparent;
-	@apply absolute mt-0 -mb-safe-offset-16;
+<style scoped>
+.slide-up-enter-active,
+.slide-up-leave-active {
+	transition: transform 0.3s ease;
+}
+.slide-up-enter-from {
+	transform: translateY(100%);
+}
+.slide-up-leave-to {
+	transform: translateY(100%);
 }
 
-html.plt-mobileweb:has(#miniPlayer) ion-content::part(scroll) {
-	--offset-bottom: -0rem !important;
-}
-
-ion-modal#fullPlayer ion-content::part(scroll) {
-	--offset-bottom: -1rem;
-	@apply absolute pt-0 mt-0 pb-0 #{!important};
-}
-
-ion-modal::part(content) {
-	border-radius: 0;
-}
-
-ion-content::part(background) {
-	background: linear-gradient(to bottom, hsl(from var(--color-theme-8) h s 16%), hsl(from var(--color-theme-8) h s 0%));
-}
-ion-content.is-open::part(background) {
+.is-open {
 	background: linear-gradient(to bottom, hsl(from var(--color-theme-8) h s 6%), hsl(from var(--color-theme-8) h s 0%));
 }
 </style>

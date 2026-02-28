@@ -19,6 +19,6 @@ watch(route, () => {
 
 <template>
 			<ScrollContainer :auto-hide="true" :static="true" class="!pb-5">
-				<NMComponent />
+				<NMComponent :path="route.path" />
 			</ScrollContainer>
 </template>

@@ -2,7 +2,6 @@
 import type { PropType } from 'vue';
 import { onMounted, onUnmounted, watch } from 'vue';
 import { useRoute } from 'vue-router';
-import { IonSpinner } from '@ionic/vue';
 import { useOnline } from '@vueuse/core';
 
 import { getMutating, getMutation, getQuery, queryKey as qk } from '@/lib/routerHelper';
@@ -124,11 +123,11 @@ watch(
 
 <template>
 	<template v-if="isLoading">
-		<div class="grid w-available h-available place-items-center">
-			<IonSpinner class="ion-padding" name="crescent" />
+		<div class="grid w-available h-available place-items-center p-4">
+			<div class="w-8 h-8 border-2 border-focus border-t-transparent rounded-full animate-spin" />
 		</div>
 	</template>
-	<template v-else-if="!isMutating">
+	<template v-else>
 		<component
 			:is="nmComponentMap[render?.component]"
 			v-for="(render, index) in mutatedData ?? homeData ?? []"

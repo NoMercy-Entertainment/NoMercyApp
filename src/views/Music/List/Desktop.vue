@@ -31,11 +31,16 @@ const isFavoritesRoute = computed(() => route.path.startsWith('/music/tracks'));
 const isGenresRoute = computed(() => route.path.startsWith('/music/genres'));
 
 const routeType = computed<RouteType>(() => {
-	if (isAlbumRoute.value) return 'album';
-	if (isArtistRoute.value) return 'artist';
-	if (isPlaylistsRoute.value) return 'playlist';
-	if (isFavoritesRoute.value) return 'favorite';
-	if (isGenresRoute.value) return 'genre';
+	if (isAlbumRoute.value)
+		return 'album';
+	if (isArtistRoute.value)
+		return 'artist';
+	if (isPlaylistsRoute.value)
+		return 'playlist';
+	if (isFavoritesRoute.value)
+		return 'favorite';
+	if (isGenresRoute.value)
+		return 'genre';
 	return 'unknown';
 });
 
@@ -155,90 +160,90 @@ function onScroll() {
 </script>
 
 <template>
-			<NotFound v-if="isError && !data" />
-			<ScrollContainer
-				v-else
-				:auto-hide="true"
-				:static="true"
-				@scroll="onScroll"
+	<NotFound v-if="isError && !data" />
+	<ScrollContainer
+		v-else
+		:auto-hide="true"
+		:static="true"
+		@scroll="onScroll"
+	>
+		<div
+			v-if="
+				!route.params.id || (route.params.id && data?.id === route.params.id)
+			"
+			ref="main"
+			class="flex flex-col w-available h-available sm:rounded-2xl"
+		>
+			<ArtistHeader :data="data" />
+			<div
+				class="relative z-0 flex h-auto flex-shrink-0 flex-grow flex-col items-start justify-start self-stretch"
 			>
 				<div
-					v-if="
-						!route.params.id || (route.params.id && data?.id === route.params.id)
-					"
-					ref="main"
-					class="flex flex-col w-available h-available sm:rounded-2xl"
+					class="pointer-events-none absolute z-0 h-96 w-full bg-spotifyBottom"
+				/>
+
+				<ControlHeader
+					:key="data?.id"
+					:data="data"
+					:filter="filter"
+					@filter-change="(e: string) => filter = e"
+				/>
+
+				<div
+					:class="{
+						'pb-24': isNative && !currentSong,
+						'pb-40': isNative && currentSong,
+						'pb-4 sm:pb-4': !isNative && currentSong,
+					}"
+					class="flex flex-1 flex-shrink-0 flex-col items-start justify-start self-stretch bg-surface-3 flex-grow-1 gap-0.5 sm:p-4"
 				>
-					<ArtistHeader :data="data" />
+					<SortHeader
+						:key="data?.id"
+						ref="sortHeader"
+						:is-album-route="isAlbumRoute"
+						:is-artist-route="isArtistRoute"
+						:is-favorites-route="isFavoritesRoute"
+						:is-genres-route="isGenresRoute"
+						:is-playlists-route="isPlaylistsRoute"
+					/>
+
+					<!-- Virtual list container -->
 					<div
-						class="relative z-0 flex h-auto flex-shrink-0 flex-grow flex-col items-start justify-start self-stretch"
+						:style="{
+							height: `${virtualizer.getTotalSize()}px`,
+							width: '100%',
+							position: 'relative',
+						}"
 					>
+						<!-- Only render visible items -->
 						<div
-							class="pointer-events-none absolute z-0 h-96 w-full bg-spotifyBottom"
-						/>
-
-						<ControlHeader
-							:key="data?.id"
-							:data="data"
-							:filter="filter"
-							@filter-change="(e: string) => filter = e"
-						/>
-
-						<div
-							:class="{
-								'pb-24': isNative && !currentSong,
-								'pb-40': isNative && currentSong,
-								'pb-4 sm:pb-4': !isNative && currentSong,
+							v-for="virtualRow in virtualizer.getVirtualItems()"
+							:key="displayList[virtualRow.index]?.id + displayList[virtualRow.index]?.favorite"
+							:style="{
+								position: 'absolute',
+								top: 0,
+								left: 0,
+								width: '100%',
+								height: `${virtualRow.size}px`,
+								transform: `translateY(${virtualRow.start}px)`,
 							}"
-							class="flex flex-1 flex-shrink-0 flex-col items-start justify-start self-stretch bg-surface-3 flex-grow-1 gap-0.5 sm:p-4"
 						>
-							<SortHeader
-								:key="data?.id"
-								ref="sortHeader"
+							<TrackRow
+								:data="displayList[virtualRow.index]"
+								:display-list="displayList"
+								:index="virtualRow.index"
 								:is-album-route="isAlbumRoute"
 								:is-artist-route="isArtistRoute"
-								:is-playlists-route="isPlaylistsRoute"
 								:is-favorites-route="isFavoritesRoute"
 								:is-genres-route="isGenresRoute"
+								:is-playlists-route="isPlaylistsRoute"
+								:route-param-id="routeParamId"
+								:route-type="routeType"
 							/>
-
-							<!-- Virtual list container -->
-							<div
-								:style="{
-									height: `${virtualizer.getTotalSize()}px`,
-									width: '100%',
-									position: 'relative',
-								}"
-							>
-								<!-- Only render visible items -->
-								<div
-									v-for="virtualRow in virtualizer.getVirtualItems()"
-									:key="displayList[virtualRow.index]?.id + displayList[virtualRow.index]?.favorite"
-									:style="{
-										position: 'absolute',
-										top: 0,
-										left: 0,
-										width: '100%',
-										height: `${virtualRow.size}px`,
-										transform: `translateY(${virtualRow.start}px)`,
-									}"
-								>
-									<TrackRow
-										:data="displayList[virtualRow.index]"
-										:display-list="displayList"
-										:index="virtualRow.index"
-										:is-album-route="isAlbumRoute"
-										:is-artist-route="isArtistRoute"
-										:is-playlists-route="isPlaylistsRoute"
-										:is-favorites-route="isFavoritesRoute"
-										:is-genres-route="isGenresRoute"
-										:route-type="routeType"
-										:route-param-id="routeParamId"
-									/>
-								</div>
-							</div>
 						</div>
 					</div>
 				</div>
-			</ScrollContainer>
+			</div>
+		</div>
+	</ScrollContainer>
 </template>

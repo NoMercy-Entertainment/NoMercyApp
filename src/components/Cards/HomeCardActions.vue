@@ -69,23 +69,23 @@ const infoIcon = computed(() => props.isMobile ? 'add' : 'infoCircle');
 	<!-- Mobile Actions -->
 	<div v-else class="flex w-full gap-4">
 		<RouterLink
-			:aria-label="$t('Play')"
+			:aria-label="$t('Watch')"
 			:to="`${link}/watch`"
-			class="flex h-10 flex-1 items-center justify-between gap-2 whitespace-nowrap rounded-md px-4 py-1.5 text-black bg-surface-1"
+			class="flex h-10 flex-1 items-center justify-center gap-1 whitespace-nowrap rounded-lg px-4 text-black bg-white"
 			@focus="onFocus"
 		>
-			<MoooomIcon class-name="w-6" icon="playCircle" />
-			<span class="flex-1 text-center">{{ $t("Play") }}</span>
+			<MoooomIcon class-name="w-5" icon="playCircle" />
+			<span class="text-center font-medium">{{ $t("Watch") }}</span>
 		</RouterLink>
 
 		<RouterLink
-			:aria-label="$t('Info')"
+			:aria-label="$t('Details')"
 			:to="link"
-			class="flex items-center gap-2 p-2 rounded-lg hover:bg-surface-5/6 transition-colors"
+			class="flex h-10 flex-1 items-center justify-center gap-1 whitespace-nowrap rounded-lg px-4 text-white bg-black"
 			@focus="onFocus"
 		>
-			<MoooomIcon class-name="w-6" :icon="infoIcon" />
-			<span class="whitespace-nowrap">{{ $t("Info") }}</span>
+			<MoooomIcon class-name="w-5" icon="infoCircle" />
+			<span class="text-center font-medium">{{ $t("Details") }}</span>
 		</RouterLink>
 	</div>
 </template>

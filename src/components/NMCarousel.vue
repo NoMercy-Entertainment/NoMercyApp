@@ -168,16 +168,16 @@ function scrollToCenter() {
 		}"
 		:data-next-id="`carousel_${next_id}`"
 		:data-previous-id="`carousel_${previous_id}`"
-		class="mt-2 sm:mt-6 mb-2 flex w-auto flex-shrink-0 flex-grow-0 flex-col items-start justify-start gap-2 self-stretch text-left opacity-0 transition-opacity duration-150"
+		class="mt-2 sm:mt-6 sm:mb-2 flex w-auto flex-shrink-0 flex-grow-0 flex-col items-start justify-start gap-0.5 sm:gap-2 self-stretch text-left opacity-0 transition-opacity duration-150"
 	>
-		<div class="flex w-available flex-1 flex-col gap-2 pb-1">
+		<div class="flex w-available flex-1 flex-col gap-0.5 sm:gap-2 pb-1">
 			<div
-				class="relative ml-2 flex flex-shrink-0 flex-grow-0 items-center self-stretch"
+				class="relative flex flex-shrink-0 flex-grow-0 items-center self-stretch h-[52px] sm:h-auto pl-4 sm:pl-2 pr-4 sm:pr-0 pt-3 pb-1 sm:py-0"
 			>
 				<h3
 					v-if="title"
 					ref="title"
-					class="mr-2 ml-3 sm:ml-3 my-2 text-surface-12/90 self-stretch flex-grow-0 flex-shrink-0 text-xl font-bold"
+					class="mr-2 sm:ml-3 text-surface-12 self-stretch flex-grow flex-shrink-0 text-xl font-bold content-center"
 				>
 					{{ title }}
 				</h3>
@@ -200,7 +200,15 @@ function scrollToCenter() {
 				<RouterLink
 					v-if="more_link"
 					:to="more_link"
-					class="text-base flex items-center ml-auto sm:ml-4 mr-2 sm:mr-auto"
+					class="sm:hidden flex items-center ml-auto rounded px-1.5 text-xs text-surface-12 bg-surface-12/25 whitespace-nowrap"
+				>
+					{{ more_link_text }}
+				</RouterLink>
+
+				<RouterLink
+					v-if="more_link"
+					:to="more_link"
+					class="hidden sm:flex text-base items-center ml-4 mr-auto"
 				>
 					<span class="leading-none pt-0.5">{{ more_link_text }}</span>
 					<MoooomIcon class-name="w-6 mt-1" icon="chevronRight" />

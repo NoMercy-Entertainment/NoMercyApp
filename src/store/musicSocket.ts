@@ -7,6 +7,7 @@ import audioPlayer, {
 	currentMusicDeviceId,
 	currentSong,
 	currentTime,
+	isPlaying,
 	setCurrentPlaylist,
 	volume,
 } from '@/store/audioPlayer';
@@ -195,19 +196,23 @@ export function handleMusicPlayerState(data: StateEvents) {
 			}
 
 			const drift = Math.abs((currentTime.value || 0) - seekValueSeconds);
-			const shouldSeek = isActiveDevice ? drift > 0.75 : drift > 2.0;
+			// Active device: only correct major drift (latency compensation can cause false 0.75s hits).
+			// Passive devices: sync more aggressively at 2s.
+			const shouldSeek = isActiveDevice ? drift > 5.0 : drift > 2.0;
 
 			if (shouldSeek) {
 				audioPlayer.seek(seekValueSeconds);
 			}
 
-			// Sync play/pause state
-			if (state.is_playing) {
+			// Only transition play/pause when the state actually needs to change.
+			// Calling play() on an already-playing native audio pipeline (Capacitor) causes
+			// a brief restart/skip on mobile. Desktop Web Audio ignores redundant play() calls silently.
+			if (state.is_playing && !isPlaying.value) {
 				audioPlayer.play().catch((err: unknown) => {
 					console.error('Failed to sync play state:', err);
 				});
 			}
-			else {
+			else if (!state.is_playing && isPlaying.value) {
 				audioPlayer.pause();
 			}
 		}

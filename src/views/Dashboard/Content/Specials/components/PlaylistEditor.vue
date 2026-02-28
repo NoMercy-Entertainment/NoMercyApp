@@ -14,7 +14,6 @@ import ScrollContainer from '@/Layout/Desktop/components/ScrollContainer.vue';
 import Checkbox from '@/components/Forms/Checkbox.vue';
 import Button from '@/components/Button.vue';
 import MoooomIcon from '@/components/Images/icons/MoooomIcon.vue';
-import { IonSpinner } from '@ionic/vue';
 
 const props = defineProps<{ specialId: string }>();
 const availableItems = ref<SpecialItem[]>([]);
@@ -284,7 +283,7 @@ defineExpose({ save, isSaving });
 					v-if="isSearching"
 					class="flex items-center justify-center h-16 text-sm text-surface-9"
 				>
-					<IonSpinner class="ion-padding" name="crescent" />
+					<div class="w-8 h-8 border-2 border-focus border-t-transparent rounded-full animate-spin" />
 				</div>
 
 				<!-- Results -->

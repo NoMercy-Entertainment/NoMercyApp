@@ -76,7 +76,7 @@ const { isSwiping, lengthX } = useSwipe(target, {
 		id="miniPlayer"
 		ref="container"
 		:style="`--color-theme-8: ${focusColor}`"
-		class="flex absolute w-available justify-between items-center self-stretch bottom-0 h-14 overflow-hidden p-2 bg-surface-1 mt-auto z-0"
+		class="flex absolute w-available justify-between items-center self-stretch bottom-safe-offset-[60px] h-14 overflow-hidden p-2 bg-surface-1 mt-auto z-10"
 		@click="openFullPlayer()"
 	>
 		<div

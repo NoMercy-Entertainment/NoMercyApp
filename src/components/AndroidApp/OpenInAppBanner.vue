@@ -1,10 +1,9 @@
 <script lang="ts" setup>
 import { useRoute } from 'vue-router';
-import { IonIcon, IonRippleEffect } from '@ionic/vue';
-import { closeOutline } from 'ionicons/icons';
 
 import { dismissAppBanner, launchAndroidApp, showAppBanner } from '@/store/androidAppPrompt';
 import AppLogoSquare from '@/components/Images/icons/AppLogoSquare.vue';
+import MoooomIcon from '@/components/Images/icons/MoooomIcon.vue';
 import Button from '@/components/Button.vue';
 
 const route = useRoute();
@@ -51,12 +50,11 @@ function handleDismissPermanently() {
 			</Button>
 
 			<button
-				class="ion-activatable relative flex h-8 w-8 items-center justify-center rounded-full text-text/60 hover:text-text overflow-hidden"
+				class="relative flex h-8 w-8 items-center justify-center rounded-full text-text/60 hover:text-text overflow-hidden active:bg-surface-3 transition-colors"
 				@click="handleDismiss"
 				@long-press="handleDismissPermanently"
 			>
-				<IonRippleEffect />
-				<IonIcon :icon="closeOutline" class="text-lg" />
+				<MoooomIcon class-name="w-5 h-5" icon="cross" />
 			</button>
 		</div>
 	</Transition>

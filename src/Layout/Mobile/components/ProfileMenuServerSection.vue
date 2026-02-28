@@ -1,10 +1,8 @@
 <script lang="ts" setup>
-import { link } from '@Icons/index';
-import { IonIcon } from '@ionic/vue';
-
 import { currentServer } from '@/store/currentServer';
 
 import NoMercyAvatar from '@/components/Images/NoMercyAvatar.vue';
+import MoooomIcon from '@/components/Images/icons/MoooomIcon.vue';
 import { user } from '@/store/user';
 import { RouterLink } from 'vue-router';
 </script>
@@ -26,13 +24,12 @@ import { RouterLink } from 'vue-router';
 			<div
 				class="flex justify-start items-center self-stretch flex-grow-0 flex-shrink-0 relative gap-0.5"
 			>
-				<IonIcon
+				<MoooomIcon
 					v-if="currentServer"
-					:icon="link"
-					aria-hidden="true"
-					class="w-4 h-4"
+					class-name="w-4 h-4"
+					icon="link"
 				/>
-				<IonIcon v-else :icon="link" aria-hidden="true" class="w-4 h-4" />
+				<MoooomIcon v-else class-name="w-4 h-4" icon="link" />
 				<p
 					class="flex-grow text-sm text-left text-slate-3 dark:text-slate-3"
 				>

@@ -3,7 +3,6 @@ import { computed } from 'vue';
 import type { PropType } from 'vue';
 import { useTranslation } from 'i18next-vue';
 import md5 from 'md5';
-import { IonAvatar } from '@ionic/vue';
 
 import type { User } from '@/types/auth';
 import type { VueKeycloakTokenParsed } from '@dsb-norge/vue-keycloak-js/dist/types';
@@ -31,7 +30,7 @@ function remove(e: ErrorEvent) {
 </script>
 
 <template>
-	<IonAvatar style="max-width: 100%; max-height: 100%;">
+	<div class="inline-flex rounded-full overflow-hidden" style="max-width: 100%; max-height: 100%;">
 		<img
 			v-if="user && !user.avatarUrl"
 			:onerror="remove"
@@ -57,7 +56,5 @@ function remove(e: ErrorEvent) {
 			:width="`${size}`"
 			crossorigin="anonymous"
 		>
-	</IonAvatar>
+	</div>
 </template>
-
-<style scoped></style>

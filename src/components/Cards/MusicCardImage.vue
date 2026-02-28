@@ -35,7 +35,7 @@ const color = computed(() => pickPaletteColor(props.data?.color_palette?.cover))
 			<CoverImage
 				v-else
 				:data="data"
-				:size="180"
+				:size="250"
 				class-name="absolute top-1/2 left-1/2 z-0 h-full -translate-x-1/2 -translate-y-1/2"
 				type="image"
 			/>
@@ -51,7 +51,7 @@ const color = computed(() => pickPaletteColor(props.data?.color_palette?.cover))
 			<CoverImage
 				v-else
 				:data="data"
-				:size="180"
+				:size="250"
 				class-name="frosting absolute top-1/2 left-1/2 h-full w-available -translate-x-1/2 -translate-y-1/2 group-hover/musicCard:rounded-xl transition-all duration-200 rounded-[0.65rem]"
 				type="image"
 			/>
@@ -91,7 +91,7 @@ const color = computed(() => pickPaletteColor(props.data?.color_palette?.cover))
 			<CoverImage
 				v-else
 				:data="data"
-				:size="180"
+				:size="250"
 				class-name="h-full"
 				type="image"
 			/>

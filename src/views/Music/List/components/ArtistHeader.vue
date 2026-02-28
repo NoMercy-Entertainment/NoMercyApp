@@ -128,7 +128,7 @@ function openEdit() {
 				v-if="data?.cover"
 				id="image"
 				:data="data"
-				:size="250"
+				:size="500"
 				class-name="aspect-square rounded-xl w-full"
 				loading="eager"
 			/>

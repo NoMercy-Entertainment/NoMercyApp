@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { IonSkeletonText } from '@ionic/vue';
-
 import { ref } from 'vue';
 
 defineProps({
@@ -47,10 +45,9 @@ const showMore = ref(false);
 			</button>
 		</div>
 	</div>
-	<IonSkeletonText
+	<div
 		v-else
-		:animated="true"
-		class="h-[4.55rem] will-change-auto"
+		class="h-[4.55rem] w-full rounded bg-surface-4 animate-pulse"
 	/>
 	<div
 		class="self-stretch h-px bg-[#05294d]/[0.08] dark:bg-[#e2f0fd]/[0.08]"

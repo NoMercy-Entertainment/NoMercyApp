@@ -1,7 +1,6 @@
 <script lang="ts" setup>
 import { computed, onBeforeUnmount, onMounted, onUnmounted, ref, watch } from 'vue';
 import { useRoute } from 'vue-router';
-import { IonSkeletonText } from '@ionic/vue';
 
 import type { InfoResponse } from '@/types/api/base/info';
 
@@ -11,7 +10,6 @@ import { breakTitle2, setTitle } from '@/lib/utils/string';
 import { sortByPosterAlphabetized } from '@/lib/utils/array';
 import { background, setBackground, setColorPalette, setLogo, setPoster, title } from '@/store/ui';
 import { currentServer } from '@/store/currentServer';
-import router from '@/router';
 
 import ImageCarousel from '@/components/Carousel/ImageCarousel.vue';
 import PersonCarousel from '@/components/Carousel/PersonCarousel.vue';
@@ -26,10 +24,9 @@ import SeasonCarousel from '@/components/Carousel/SeasonCarousel.vue';
 import { convertToHumanReact } from '@/lib/dateTime.ts';
 
 const route = useRoute();
-const enabled = ref(false);
 const showMore = ref(false);
 
-const content = ref<VueDivElement>();
+const scrollContainer = ref<HTMLElement>();
 
 const { data } = useServerClient<InfoResponse>({
 	keepForever: true,
@@ -39,8 +36,7 @@ const { data } = useServerClient<InfoResponse>({
 const { buttonState, trailerOpen, resolvedTrailer, toggleTrailer } = useTrailerService(data);
 
 watch(data, (value) => {
-	content.value?.$el?.scrollToTop(window.innerHeight);
-	enabled.value = true;
+	scrollContainer.value?.scrollTo({ top: 0, behavior: 'smooth' });
 
 	setTitle(value?.title ?? value?.name);
 
@@ -59,14 +55,13 @@ watch(data, (value) => {
 });
 
 const backgroundUrl = computed(() => {
-	// return `${tmdbImageBaseUrl}/original${data.value?.backdrop ?? background.value}`;
 	return `${currentServer.value?.serverBaseUrl}/images/original${
 		data.value?.backdrop ?? background.value
 	}`;
 });
 
 onMounted(() => {
-	content.value?.$el?.scrollToTop(window.innerHeight);
+	scrollContainer.value?.scrollTo({ top: 0 });
 	setTitle(data?.value?.name);
 
 	if (data?.value?.backdrop) {
@@ -90,13 +85,7 @@ onUnmounted(() => {
 });
 
 onBeforeUnmount(() => {
-	content.value?.$el?.scrollToTop(window.innerHeight);
-});
-
-router.afterEach(() => {
-	setTimeout(() => {
-		content.value?.$el?.scrollToTop(window.innerHeight);
-	}, 100);
+	scrollContainer.value?.scrollTo({ top: 0 });
 });
 
 const overview = ref<VueDivElement>();
@@ -115,235 +104,222 @@ watch(showMore, (value) => {
 
 <template>
 	<div
-		class="flex flex-col justify-start items-center self-stretch flex-grow h-auto gap-4 will-change-auto text-surface-12 z-0"
-		style="box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.16)"
+		ref="scrollContainer"
+		class="flex flex-col flex-1 h-full overflow-y-auto overflow-x-hidden"
 	>
 		<div
-			class="flex justify-start items-end -mx-4 w-available h-[410px] relative gap-2"
+			class="flex flex-col justify-start items-center self-stretch flex-grow will-change-auto text-surface-12 z-0 bg-surface-3 dark:bg-surface-1"
+			style="box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.16)"
 		>
 			<div
-				class="absolute flex flex-col justify-start items-end flex-grow w-available -mx-20 h-[410px] bg-cover bg-top"
-				style="
-              background: linear-gradient(
-                  0deg,
-                  rgba(0, 0, 0, 0.5) 0%,
-                  rgba(0, 0, 0, 0.5) 100%
-                ),
-                var(--background-image) lightgray 50% / cover no-repeat;
-            "
-			/>
-			<div
-				class="absolute flex flex-col justify-start items-end flex-grow w-available -mx-20 h-[410px] bg-cover dark:bg-black/50"
-			/>
-		</div>
-
-		<div
-			class="flex bg-surface-3 dark:bg-surface-1 flex-col justify-start items-start self-stretch flex-grow-0 flex-shrink-0 gap-3 pt-16 pb-5 will-change-auto w-inherit px-6"
-		>
-			<p
-				class="self-stretch flex-grow-0 flex-shrink-0 w-[351px] text-2xl font-bold text-left z-10"
-				v-html="
-					breakTitle2(data?.title || title || '', 'text-lg line-clamp-2')
-				"
-			/>
-
-			<Collapsible
-				v-if="data?.overview"
-				:max-lines="3"
-				:text="data?.overview"
-			/>
-
-			<div
-				v-if="data"
-				class="flex justify-start items-center self-stretch flex-grow-0 flex-shrink-0 relative gap-2 flex-wrap"
+				class="flex justify-start items-end -mx-4 w-available h-[410px] relative gap-2"
 			>
-				<HeaderItem
-					v-if="data?.year"
-					:data="data?.year.toString()"
-					title=""
+				<div
+					class="absolute flex flex-col justify-start items-end flex-grow w-available -mx-20 h-[410px] bg-cover bg-top"
+					:style="`background: linear-gradient(0deg, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0.5) 100%), url('${backgroundUrl}') lightgray 50% / cover no-repeat`"
 				/>
-
-				<HeaderItem v-if="data?.content_ratings.length" title="">
-					<ContentRating
-						:ratings="data?.content_ratings"
-						:size="4"
-						class="h-full object-scale-down rounded-lg overflow-clip"
-					/>
-				</HeaderItem>
-
-				<HeaderItem
-					v-if="data?.have_items"
-					:data="`${data?.have_items}/${data?.number_of_items}`"
-					title=""
-				/>
-
-				<HeaderItem v-if="data?.duration" title="">
-					<span class="whitespace-nowrap">
-						{{ convertToHumanReact($t, data.duration, true) }}
-					</span>
-				</HeaderItem>
-
-				<HeaderItem v-if="data?.voteAverage" title="">
-					<span class="whitespace-nowrap">⭐ ️{{ data?.voteAverage?.toFixed(0) }}/10</span>
-				</HeaderItem>
+				<MobileInfoCard :data="data" :toggle-trailer="toggleTrailer" :button-state="buttonState" />
 			</div>
 
-			<IonSkeletonText
-				v-else
-				:animated="true"
-				class="h-6 will-change-auto"
-			/>
 			<div
-				class="self-stretch flex-grow-0 flex-shrink-0 h-px bg-surface-7/[0.1] dark:bg-surface-11/[0.1]"
-			/>
+				class="flex flex-col justify-start items-start self-stretch flex-grow-0 flex-shrink-0 gap-2 pt-16 pb-5 will-change-auto w-inherit px-6"
+			>
+				<p
+					class="self-stretch flex-grow-0 flex-shrink-0 w-[351px] text-2xl font-bold text-left z-10"
+					v-html="
+						breakTitle2(data?.title || title || '', 'text-lg line-clamp-2')
+					"
+				/>
 
-			<InfoItem
-				v-if="data?.genres"
-				:data="data"
-				key-name="genres"
-				prefix="genres"
-				title="Genres"
-			/>
-			<IonSkeletonText
-				v-else
-				:animated="true"
-				class="h-12 will-change-auto"
-			/>
+				<Collapsible
+					v-if="data?.overview"
+					:max-lines="3"
+					:text="data?.overview"
+				/>
 
-			<div
-				class="self-stretch flex-grow-0 flex-shrink-0 h-px bg-surface-7/[0.1] dark:bg-surface-11/[0.1]"
-			/>
+				<div
+					v-if="data"
+					class="flex justify-start items-center self-stretch flex-grow-0 flex-shrink-0 relative gap-2 flex-wrap"
+				>
+					<HeaderItem
+						v-if="data?.year"
+						:data="data?.year.toString()"
+						title=""
+					/>
 
-			<InfoItem
-				v-if="data?.writer"
-				:data="{ writer: [data?.writer] }"
-				key-name="writer"
-				prefix="person"
-				title="Writer"
-			/>
+					<HeaderItem v-if="data?.content_ratings.length" title="">
+						<ContentRating
+							:ratings="data?.content_ratings"
+							:size="4"
+							class="h-full object-scale-down rounded-lg overflow-clip"
+						/>
+					</HeaderItem>
 
-			<InfoItem
-				v-if="data?.creator"
-				:data="{ creator: [data?.creator] }"
-				key-name="creator"
-				prefix="person"
-				title="Creator"
-			/>
+					<HeaderItem
+						v-if="data?.have_items"
+						:data="`${data?.have_items}/${data?.number_of_items}`"
+						title=""
+					/>
 
-			<InfoItem
-				v-if="data?.director"
-				:data="{ director: [data?.director] }"
-				key-name="director"
-				prefix="person"
-				title="Director"
-			/>
+					<HeaderItem v-if="data?.duration" title="">
+						<span class="whitespace-nowrap">
+							{{ convertToHumanReact($t, data.duration, true) }}
+						</span>
+					</HeaderItem>
 
-			<InfoItem
-				v-if="data?.creators"
-				:data="data"
-				key-name="creators"
-				prefix="person"
-				title="Creators"
-			/>
+					<HeaderItem v-if="data?.voteAverage" title="">
+						<span class="whitespace-nowrap">{{ data?.voteAverage?.toFixed(0) }}/10</span>
+					</HeaderItem>
+				</div>
 
-			<InfoItem
-				v-if="data?.directors"
-				:data="data"
-				key-name="directors"
-				prefix="person"
-				title="Directors"
-			/>
+				<div
+					v-else
+					class="h-6 w-full rounded bg-surface-4 animate-pulse"
+				/>
 
-			<InfoItem
-				v-if="data?.writers"
-				:data="data"
-				key-name="writers"
-				prefix="person"
-				title="Writers"
-			/>
+				<div
+					class="self-stretch flex-grow-0 flex-shrink-0 h-px bg-surface-7/[0.1] dark:bg-surface-11/[0.1]"
+				/>
 
-			<InfoItem
-				v-if="data?.keywords"
-				:data="data"
-				key-name="keywords"
-				title="Keywords"
-			/>
+				<InfoItem
+					v-if="data?.genres"
+					:data="data"
+					key-name="genres"
+					prefix="genres"
+					title="Genres"
+				/>
+				<div
+					v-else
+					class="h-12 w-full rounded bg-surface-4 animate-pulse"
+				/>
 
-			<div
-				class="self-stretch flex-grow-0 flex-shrink-0 h-px bg-surface-7/[0.1] dark:bg-surface-11/[0.1]"
-			/>
+				<div
+					class="self-stretch flex-grow-0 flex-shrink-0 h-px bg-surface-7/[0.1] dark:bg-surface-11/[0.1]"
+				/>
 
-			<SeasonCarousel
-				v-if="data?.seasons && data?.seasons?.length > 0"
-				:data="data?.seasons"
-				:limit-card-count-by="0"
-				class="-mx-6"
-				type="backdrop"
-			/>
+				<InfoItem
+					v-if="data?.writer"
+					:data="{ writer: [data?.writer] }"
+					key-name="writer"
+					prefix="person"
+					title="Writer"
+				/>
 
-			<PersonCarousel
-				v-if="data?.cast && data?.cast?.length > 0"
-				:data="data?.cast"
-				class="-mx-6"
-				title="Cast"
-			/>
+				<InfoItem
+					v-if="data?.creator"
+					:data="{ creator: [data?.creator] }"
+					key-name="creator"
+					prefix="person"
+					title="Creator"
+				/>
 
-			<PersonCarousel
-				v-if="data?.crew && data?.crew?.length > 0"
-				:data="sortByPosterAlphabetized(data?.crew, 'profile', 'id')"
-				class="-mx-6"
-				title="Crew"
-			/>
+				<InfoItem
+					v-if="data?.director"
+					:data="{ director: [data?.director] }"
+					key-name="director"
+					prefix="person"
+					title="Director"
+				/>
 
-			<ImageCarousel
-				v-if="data?.posters && data?.posters?.length > 0"
-				:data="data?.posters"
-				class="-mx-6"
-				title="Poster"
-				type="poster"
-			/>
+				<InfoItem
+					v-if="data?.creators"
+					:data="data"
+					key-name="creators"
+					prefix="person"
+					title="Creators"
+				/>
 
-			<ImageCarousel
-				v-if="data?.backdrops && data?.backdrops?.length > 0"
-				:color-palette="data?.color_palette?.poster"
-				:data="data?.backdrops"
-				class="-mx-6"
-				title="Backdrop"
-				type="backdrop"
-			/>
+				<InfoItem
+					v-if="data?.directors"
+					:data="data"
+					key-name="directors"
+					prefix="person"
+					title="Directors"
+				/>
 
-			<MediaCarousel
-				v-if="data?.recommendations && data?.recommendations?.length > 0"
-				:color-palette="data?.color_palette"
-				:data="data?.recommendations"
-				class="-mx-6"
-				title="Recommendations"
-				type="poster"
-			/>
+				<InfoItem
+					v-if="data?.writers"
+					:data="data"
+					key-name="writers"
+					prefix="person"
+					title="Writers"
+				/>
 
-			<MediaCarousel
-				v-if="data?.similar && data?.similar?.length > 0"
-				:color-palette="data?.color_palette"
-				:data="data?.similar"
-				class="-mx-6"
-				title="Similar"
-				type="poster"
-			/>
+				<InfoItem
+					v-if="data?.keywords"
+					:data="data"
+					key-name="keywords"
+					title="Keywords"
+				/>
+
+				<div
+					class="self-stretch flex-grow-0 flex-shrink-0 h-px bg-surface-7/[0.1] dark:bg-surface-11/[0.1]"
+				/>
+
+				<SeasonCarousel
+					v-if="data?.seasons && data?.seasons?.length > 0"
+					:data="data?.seasons"
+					:limit-card-count-by="0"
+					class="-mx-6"
+					type="backdrop"
+				/>
+
+				<PersonCarousel
+					v-if="data?.cast && data?.cast?.length > 0"
+					:data="data?.cast"
+					class="-mx-6"
+					title="Cast"
+				/>
+
+				<PersonCarousel
+					v-if="data?.crew && data?.crew?.length > 0"
+					:data="sortByPosterAlphabetized(data?.crew, 'profile', 'id')"
+					class="-mx-6"
+					title="Crew"
+				/>
+
+				<ImageCarousel
+					v-if="data?.posters && data?.posters?.length > 0"
+					:data="data?.posters"
+					class="-mx-6"
+					title="Poster"
+					type="poster"
+				/>
+
+				<ImageCarousel
+					v-if="data?.backdrops && data?.backdrops?.length > 0"
+					:color-palette="data?.color_palette?.poster"
+					:data="data?.backdrops"
+					class="-mx-6"
+					title="Backdrop"
+					type="backdrop"
+				/>
+
+				<MediaCarousel
+					v-if="data?.recommendations && data?.recommendations?.length > 0"
+					:color-palette="data?.color_palette"
+					:data="data?.recommendations"
+					class="-mx-6"
+					title="Recommendations"
+					type="poster"
+				/>
+
+				<MediaCarousel
+					v-if="data?.similar && data?.similar?.length > 0"
+					:color-palette="data?.color_palette"
+					:data="data?.similar"
+					class="-mx-6"
+					title="Similar"
+					type="poster"
+				/>
+			</div>
 		</div>
+
+		<Trailer
+			v-if="resolvedTrailer && trailerOpen"
+			:resolved-trailer="resolvedTrailer"
+			:toggle="toggleTrailer"
+			class="inset-0 h-full w-available z-999"
+		/>
 	</div>
-
-	<MobileInfoCard :data="data" :toggle-trailer="toggleTrailer" :button-state="buttonState" />
-
-	<Trailer
-		v-if="resolvedTrailer && trailerOpen"
-		:resolved-trailer="resolvedTrailer"
-		:toggle="toggleTrailer"
-		class="inset-0 h-full w-available z-999"
-	/>
 </template>
-
-<style scoped>
-:root {
-	--background-image: none;
-}
-</style>

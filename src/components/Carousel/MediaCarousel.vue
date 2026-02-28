@@ -119,7 +119,7 @@ function onRightClick(event: MouseEvent, item: any) {
 		:index="index"
 		:limit-card-count-by="limitCardCountBy"
 		:title="title"
-		:type="!backdropCards ? 'backdrop' : 'poster'"
+		:type="backdropCards ? 'backdrop' : 'poster'"
 		class=""
 	>
 		<template #link>
@@ -141,7 +141,7 @@ function onRightClick(event: MouseEvent, item: any) {
 					:disable-auto-aspect="!backdropCards"
 					:index="itemIndex"
 					:onclick="() => handleClick(item as LibraryResponse | InfoResponse | HomeItem | ContinueWatching | Collection | KnownFor)"
-					:type="!backdropCards ? 'backdrop' : 'poster'"
+					:type="backdropCards ? 'backdrop' : 'poster'"
 					:watch="suffix === '/watch'"
 					class=""
 					@contextmenu="onRightClick($event, item)"

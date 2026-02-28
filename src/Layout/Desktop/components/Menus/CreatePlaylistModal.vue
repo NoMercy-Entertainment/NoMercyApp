@@ -116,7 +116,7 @@ watch(name, (value) => {
 							id="image"
 							:data="data2"
 							:img-ref="imgRef"
-							:size="250"
+							:size="500"
 							class-name="aspect-square min-w-72"
 							loading="eager"
 						/>

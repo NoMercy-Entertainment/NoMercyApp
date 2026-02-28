@@ -1,6 +1,5 @@
 import { computed, ref } from 'vue';
 import { Preferences } from '@capacitor/preferences';
-import { useLocalStorage } from '@vueuse/core';
 import { isPlatform } from '@ionic/vue';
 import { Browser } from '@capacitor/browser';
 
@@ -9,41 +8,23 @@ export const shouldShowAndroidPrompts = computed(
 	() => !isPlatform('capacitor') && isPlatform('android'),
 );
 
-// Banner visibility preference
-const bannerDismissed = useLocalStorage<boolean>('androidAppBannerDismissed', false);
-export const showAppBanner = computed(() => !bannerDismissed.value && shouldShowAndroidPrompts.value);
-(async () => {
-	const { value } = await Preferences.get({ key: 'androidAppBannerDismissed' });
-	if (value !== null) {
-		bannerDismissed.value = value === 'true';
-	}
-})();
-
-export function dismissAppBanner(permanently = false) {
-	bannerDismissed.value = true;
-	if (permanently) {
-		Preferences.set({
-			key: 'androidAppBannerDismissed',
-			value: 'true',
-		});
-	}
-}
-
-export function resetAppBanner() {
-	bannerDismissed.value = false;
-	Preferences.remove({ key: 'androidAppBannerDismissed' });
-}
-
-// Welcome modal - shows every session unless permanently disabled
-const welcomeModalPermanentlyDisabled = ref(false);
+// --- Welcome modal ---
+// Shows ONCE EVER on first visit. After that, replaced by the small banner.
+const welcomeModalShownBefore = ref(false);
+const allPromptsPermanentlyDisabled = ref(false);
 export const showWelcomeModal = ref(false);
-(async () => {
-	const { value } = await Preferences.get({ key: 'androidWelcomeModalDisabled' });
-	welcomeModalPermanentlyDisabled.value = value === 'true';
 
-	// Show welcome modal on each session unless permanently disabled
-	if (!welcomeModalPermanentlyDisabled.value && shouldShowAndroidPrompts.value) {
-		// Delay to let the app load first
+(async () => {
+	const [shown, disabled, legacy] = await Promise.all([
+		Preferences.get({ key: 'androidWelcomeModalShown' }),
+		Preferences.get({ key: 'androidAppPromptsDisabled' }),
+		Preferences.get({ key: 'androidWelcomeModalDisabled' }), // legacy key
+	]);
+
+	welcomeModalShownBefore.value = shown.value === 'true';
+	allPromptsPermanentlyDisabled.value = disabled.value === 'true' || legacy.value === 'true';
+
+	if (!welcomeModalShownBefore.value && !allPromptsPermanentlyDisabled.value && shouldShowAndroidPrompts.value) {
 		setTimeout(() => {
 			showWelcomeModal.value = true;
 		}, 1500);
@@ -52,27 +33,69 @@ export const showWelcomeModal = ref(false);
 
 export function closeWelcomeModal() {
 	showWelcomeModal.value = false;
+	if (!welcomeModalShownBefore.value) {
+		welcomeModalShownBefore.value = true;
+		Preferences.set({ key: 'androidWelcomeModalShown', value: 'true' });
+	}
 }
 
 export function disableWelcomeModalPermanently() {
 	showWelcomeModal.value = false;
-	welcomeModalPermanentlyDisabled.value = true;
-	Preferences.set({
-		key: 'androidWelcomeModalDisabled',
-		value: 'true',
-	});
+	welcomeModalShownBefore.value = true;
+	allPromptsPermanentlyDisabled.value = true;
+	Preferences.set({ key: 'androidWelcomeModalShown', value: 'true' });
+	Preferences.set({ key: 'androidAppPromptsDisabled', value: 'true' });
 }
 
 export function resetWelcomeModal() {
-	welcomeModalPermanentlyDisabled.value = false;
+	welcomeModalShownBefore.value = false;
+	allPromptsPermanentlyDisabled.value = false;
+	Preferences.remove({ key: 'androidWelcomeModalShown' });
+	Preferences.remove({ key: 'androidAppPromptsDisabled' });
 	Preferences.remove({ key: 'androidWelcomeModalDisabled' });
 }
 
-// Contextual prompts preference (can be disabled by user)
-const contextualPromptsEnabled = useLocalStorage<boolean>('androidContextualPromptsEnabled', true);
-export const showContextualPrompts = computed(
-	() => contextualPromptsEnabled.value && shouldShowAndroidPrompts.value,
+// --- App banner ---
+// Shows ONCE PER APP LOAD after the welcome modal has been seen.
+// Permanent dismiss suppresses it forever.
+const bannerPermanentlyDismissed = ref(false);
+const bannerDismissedThisSession = ref(false);
+
+export const showAppBanner = computed(
+	() =>
+		welcomeModalShownBefore.value
+		&& !bannerPermanentlyDismissed.value
+		&& !bannerDismissedThisSession.value
+		&& !allPromptsPermanentlyDisabled.value
+		&& shouldShowAndroidPrompts.value,
 );
+
+(async () => {
+	const { value } = await Preferences.get({ key: 'androidAppBannerDismissed' });
+	bannerPermanentlyDismissed.value = value === 'true';
+})();
+
+export function dismissAppBanner(permanently = false) {
+	bannerDismissedThisSession.value = true;
+	if (permanently) {
+		bannerPermanentlyDismissed.value = true;
+		Preferences.set({ key: 'androidAppBannerDismissed', value: 'true' });
+	}
+}
+
+export function resetAppBanner() {
+	bannerPermanentlyDismissed.value = false;
+	bannerDismissedThisSession.value = false;
+	Preferences.remove({ key: 'androidAppBannerDismissed' });
+}
+
+// --- Contextual prompts ---
+// Inline prompts shown in content areas, dismissible per session.
+const contextualPromptsEnabled = ref(true);
+export const showContextualPrompts = computed(
+	() => contextualPromptsEnabled.value && !allPromptsPermanentlyDisabled.value && shouldShowAndroidPrompts.value,
+);
+
 (async () => {
 	const { value } = await Preferences.get({ key: 'androidContextualPromptsEnabled' });
 	if (value !== null) {
@@ -88,7 +111,6 @@ export function setContextualPromptsEnabled(enabled: boolean) {
 	});
 }
 
-// Track contextual prompt dismissals per session
 const contextualPromptDismissedThisSession = ref(false);
 export const canShowContextualPrompt = computed(
 	() => showContextualPrompts.value && !contextualPromptDismissedThisSession.value,
@@ -98,7 +120,7 @@ export function dismissContextualPromptForSession() {
 	contextualPromptDismissedThisSession.value = true;
 }
 
-// App launch utility with deep linking
+// --- App launch utility ---
 export async function launchAndroidApp(path: string = '/') {
 	if (!isPlatform('android')) {
 		return;
@@ -108,7 +130,6 @@ export async function launchAndroidApp(path: string = '/') {
 
 	try {
 		await Browser.open({ url: deepLink });
-		// Retry after a short delay as a fallback
 		setTimeout(async () => {
 			await Browser.open({ url: deepLink });
 		}, 1000);
